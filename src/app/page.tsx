@@ -1,70 +1,70 @@
 import Image from "next/image";
+import Hero from "@/components/home/Hero";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div>
+      <main>
+        {/* <h1 className="text-4xl font-bold text-center sm:text-left">
+          Welcome to Hand Made Art
+        </h1>
+        <p className="text-lg text-center sm:text-left">
+          Discover our unique handmade products crafted with love and care.
+        </p>
+        <div className="flex gap-[24px] flex-wrap items-center justify-center">
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="/productos"
+          >
+            <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+              <rect x="1" y="1" width="218" height="58" rx="10" fill="#C0C0C0" stroke="#444" strokeWidth="2" />
+
+
+              <g transform="translate(20, 12)">
+
+                <rect x="0" y="10" width="30" height="30" rx="4" fill="#C0C0C0" stroke="#444" strokeWidth="2" />
+
+
+                <path d="M6 10 C6 3, 24 3, 24 10" fill="none" stroke="#444" strokeWidth="2" />
+
+
+                <circle cx="6" cy="10" r="1.8" fill="#444" />
+                <circle cx="24" cy="10" r="1.8" fill="#444" />
+              </g>
+
+
+              <text x="70" y="38" fontFamily="Arial, sans-serif" fontSize="20" fill="#444">Shop Now</text>
+            </svg>
+
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="/contacto"
           >
-            Read our docs
+            <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+              <rect x="1" y="1" width="218" height="58" rx="10" fill="#C0C0C0" stroke="#444" strokeWidth="2" />
+
+
+              <text x="20" y="37" fontFamily="Arial, sans-serif" fontSize="20" fill="#444">Contact Us</text>
+
+
+              <path d="M170 30 L180 22 L180 27 L195 27 L195 33 L180 33 L180 38 Z" fill="#444" />
+            </svg>
+
           </a>
-        </div>
+        </div> */}
+        <Hero />
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
+        {/* <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
+         
           Learn
         </a>
         <a
@@ -73,13 +73,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
+          
           Examples
         </a>
         <a
@@ -88,15 +82,9 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
+          
           Go to nextjs.org →
-        </a>
+        </a> */}
       </footer>
     </div>
   );
