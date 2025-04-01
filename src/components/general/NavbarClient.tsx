@@ -32,25 +32,25 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  //const [isScrolled, setIsScrolled] = useState(false);
   
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
   const categoryMenuRef = useRef<HTMLDivElement>(null);
   
   // Efecto para manejar el scroll y cambiar la apariencia del navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       if (window.scrollY > 10) {
+//         setIsScrolled(true);
+//       } else {
+//         setIsScrolled(false);
+//       }
+//     };
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
   
   // Efecto para cerrar menús al hacer clic fuera
   useEffect(() => {
