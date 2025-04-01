@@ -64,16 +64,16 @@ export default function Hero() {
 
 
               {/* Producto destacado flotante */}
-                <div className="absolute top-2 right-2 max-w-xs bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
+              <div className="absolute bottom-2 top-auto lg:top-2 lg:bottom-auto right-2 max-w-xs bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
                 <h3 className="text-sm font-semibold text-gray-800">Juego artesanal dragón</h3>
                 <p className="text-xs text-gray-600">Hecho con maderas sostenibles</p>
                 {/* <p className="mt-0.5 text-teal-700 font-bold">$120.00</p> */}
                 <div className="flex justify-center mt-1">
                   <Link href="/productos" className="inline-flex items-center gap-1 rounded-md bg-teal-700 px-2 py-1 text-sm text-white shadow transition hover:bg-teal-800">
-                  <ShoppingBag className="h-4 w-4" /> $120
+                    <ShoppingBag className="h-4 w-4" /> $120
                   </Link>
                 </div>
-                </div>
+              </div>
               {/* Testimonial flotante */}
               <div className="absolute bottom-2 left-2 max-w-xs bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg hidden md:block">
                 <div className="flex items-center gap-3">
