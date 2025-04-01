@@ -67,7 +67,7 @@ export default function Hero() {
                   </div>
                 </div>
                 <p className="mt-2 text-sm text-gray-700 italic">
-                  "El arte me dio un nuevo propósito y una forma de expresión."
+                  &ldquo;El arte me dio un nuevo propósito y una forma de expresión.&rdquo;
                 </p>
               </div>
 
