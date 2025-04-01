@@ -101,12 +101,12 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
     <>
       {/* Desktop Navigation */}
       <nav className="hidden items-center md:flex">
-        <ul className="flex items-center space-x-1 lg:space-x-2">
+        <ul className="flex items-center gap-x-1 lg:gap-x-2">
           {navigationLinks.map((link) => (
             <li key={link.path}>
               <Link 
                 href={link.path} 
-                className="block rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                className="block rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
                 {link.name}
               </Link>
@@ -116,7 +116,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
             <div ref={categoryMenuRef}>
               <button 
                 onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-                className="category-trigger flex items-center rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                className="category-trigger flex items-center rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                 aria-expanded={isCategoryMenuOpen}
                 aria-haspopup="true"
               >

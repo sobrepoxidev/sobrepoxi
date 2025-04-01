@@ -22,15 +22,17 @@ const navigationLinks = [
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 backdrop-blur-md transition-all duration-300 max-w-full w-full ">
-      <div className="flex max-w-full items-center justify-between px-4  md:px-6 md:py-1 bg-fuchsia-400 ">
+      <div className="flex max-w-full items-center justify-between px-2  md:px-6 py-1 bg-white/95">
         {/* Logo - SSR */}
         <Link href="/" className="flex items-center space-x-2 focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
           <div className="relative overflow-hidden rounded-md">
             <Image 
               src="/logohma.png" 
               alt="Hand Made Art Logo" 
+
               width={150} 
               height={0} 
+              className="max-lg:w-[120px] object-contain"
               priority
             />
           </div>
