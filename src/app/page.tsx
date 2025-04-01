@@ -1,4 +1,4 @@
-import Image from "next/image";
+//1import Image from "next/image";
 import Hero from "@/components/home/Hero";
 
 export default function Home() {
