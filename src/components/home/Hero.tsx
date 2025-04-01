@@ -2,7 +2,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  ShoppingBag
+  ShoppingBag,
+  ShoppingCartIcon,
+  
 } from 'lucide-react';
 
 export default function Hero() {
@@ -22,7 +24,7 @@ export default function Hero() {
             <p className="mb-8 max-w-lg mx-auto lg:mx-0 text-lg text-gray-600">
               Descubre piezas únicas creadas por artesanos que transforman materiales simples en obras de arte, mientras transforman sus propias vidas.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 ">
+            <div className="flex flex-col items-center justify-center sm:flex-row gap-4 ">
               <Link href="/productos" className="rounded-md bg-teal-700 px-6 py-3 text-white shadow transition hover:bg-teal-800 flex items-center justify-center gap-1">
                 <ShoppingBag className="h-5 w-5" /> Explorar productos
               </Link>
@@ -72,7 +74,7 @@ export default function Hero() {
                 {/* <p className="mt-0.5 text-teal-700 font-bold">$120.00</p> */}
                 <div className="flex justify-center">
                   <Link href="/productos" className="inline-flex items-center gap-1 rounded-md bg-teal-700 px-2 py-1 text-sm text-white shadow transition hover:bg-teal-800">
-                    <ShoppingBag className="h-4 w-4" /> $120
+                    <ShoppingCartIcon className="h-4 w-4" /> $120
                   </Link>
                 </div>
               </div>
