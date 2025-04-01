@@ -7,7 +7,7 @@ import {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 to-white">
+    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 to-white h-full lg:h-[88vh] ">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 lg:py-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
@@ -93,7 +93,7 @@ export default function Hero() {
                     <p className="text-xs text-gray-600">Artesano desde 2020</p>
                   </div>
                 </div>
-                <p className="mt-1 text-sm text-gray-700 italic bg-fuchsia-200">
+                <p className="mt-1 text-sm text-gray-700 italic ">
                   &ldquo;El arte me dio un nuevo propósito y una forma de expresión.&rdquo;
                 </p>
               </div>
