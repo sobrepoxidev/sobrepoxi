@@ -15,7 +15,7 @@ export default function Hero() {
 
           {/* Contenido de texto */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left">
-            <span className="inline-block mb-4 rounded-full bg-teal-100 px-4 py-1 text-sm font-medium text-teal-800">
+            <span className="inline-block mb-4 rounded-full bg-teal-100 px-4 py-1 text-sm font-medium text-teal-700">
               Arte con propósito
             </span>
             <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
@@ -25,12 +25,12 @@ export default function Hero() {
               Descubre piezas únicas creadas por artesanos que transforman materiales simples en obras de arte, mientras transforman sus propias vidas.
             </p>
             <div className="flex flex-col items-center justify-center sm:flex-row gap-4 ">
-              <Link href="/productos" className="rounded-md bg-teal-700 px-6 py-3 text-white shadow transition hover:bg-teal-800 flex items-center justify-center gap-1">
+              <Link href="/products" className="rounded-md bg-teal-500 px-6 py-3 text-teal-900 shadow transition hover:bg-teal-800 flex items-center justify-center gap-1">
                 <ShoppingBag className="h-5 w-5" /> Explorar productos
               </Link>
 
-              <Link href="/impacto" className="rounded-md border border-gray-300 px-6 py-3 text-gray-700 shadow transition hover:bg-gray-50">
-                Conocer nuestro impacto
+              <Link href="/impact" className="rounded-md border border-gray-300 px-6 py-3 text-gray-900 shadow transition hover:bg-gray-50">
+                Conoce nuestro impacto
               </Link>
             </div>
             {/* Trust badges */}
@@ -53,7 +53,7 @@ export default function Hero() {
 
           {/* Imagen destacada */}
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start ">
-            <div className="relative max-w-full rounded-2xl overflow-hidden shadow-xl ">
+            <div className="relative max-w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF]">
               <Image
                 src="/product1.png"
                 alt="Artesanía destacada"
@@ -66,27 +66,27 @@ export default function Hero() {
 
 
               {/* Producto destacado flotante */}
-              <div className="absolute flex bottom-2 top-auto md:top-2 md:bottom-auto right-2 max-w-xs bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
+              <div className="absolute flex bottom-2 top-auto md:top-2 md:bottom-auto right-2 max-w-xs bg-[#EFE9DB] bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
                 <div className="mr-1">
                   <h3 className="text-sm font-semibold text-gray-800">Juego artesanal dragón</h3>
                   <p className="text-xs text-gray-600">Hecho con maderas sostenibles</p>
                 </div>
                 {/* <p className="mt-0.5 text-teal-700 font-bold">$120.00</p> */}
                 <div className="flex justify-center">
-                  <Link href="/productos" className="inline-flex items-center gap-1 rounded-md bg-teal-700 px-2 py-1 text-sm text-white shadow transition hover:bg-teal-800">
+                  <Link href="/productos" className="inline-flex items-center gap-1 rounded-md bg-teal-500 px-2 py-1 text-sm text-teal-900 shadow transition hover:bg-teal-800">
                     <ShoppingCartIcon className="h-4 w-4" /> $120
                   </Link>
                 </div>
               </div>
               {/* Testimonial flotante */}
-              <div className="absolute bottom-2 left-2 max-w-xl bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg hidden md:block">
+              <div className="absolute bottom-2 left-2 max-w-xl bg-[#EFE9DB] bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg hidden md:block">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-gray-300">
                     <Image
                       src="/p1.png"
                       alt="Perfil del artesano"
-                      width={40}
-                      height={40}
+                      width={30}
+                      height={30}
                       className="h-full w-full rounded-full object-cover"
                     />
                   </div>

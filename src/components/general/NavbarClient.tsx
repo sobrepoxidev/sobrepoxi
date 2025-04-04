@@ -130,7 +130,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                 >
                   <div className="p-1 md:p-2">
                     <Link
-                      href="/productos"
+                      href="/products"
                       className="block rounded-md px-3 py-2 font-medium text-gray-800 transition hover:bg-teal-50 hover:text-teal-700"
                       onClick={() => setIsCategoryMenuOpen(false)}
                       role="menuitem"
@@ -144,7 +144,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                       {categories.map((category) => (
                         <li key={category.slug}>
                           <Link 
-                            href={`/productos/${category.slug}`} 
+                            href={`/products/${category.slug}`} 
                             className="block rounded-md px-3 py-2 text-gray-700 transition hover:bg-teal-50 hover:text-teal-700"
                             onClick={() => setIsCategoryMenuOpen(false)}
                             role="menuitem"
@@ -280,7 +280,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                 <ul className="ml-2 space-y-1 border-l border-gray-100 pl-2">
                   <li>
                     <Link 
-                      href="/productos" 
+                      href="/products" 
                       className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -290,7 +290,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                   {categories.map((category) => (
                     <li key={category.slug}>
                       <Link 
-                        href={`/productos/${category.slug}`} 
+                        href={`/products/${category.slug}`} 
                         className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
                         onClick={() => setIsMenuOpen(false)}
                       >

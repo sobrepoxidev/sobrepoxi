@@ -7,9 +7,8 @@ import NavbarClient from './NavbarClient';
 // Datos que podrían venir de una API o CMS (esto iría en el SSR)
 const categories = [
   { name: 'Decoración', slug: 'decoracion' },
-  { name: 'Joyería', slug: 'joyeria' },
+  { name: 'Chorreadores', slug: 'joyeria' },
   { name: 'Artesanía en madera', slug: 'madera' },
-  { name: 'Textiles', slug: 'textiles' }
 ];
 
 const navigationLinks = [
