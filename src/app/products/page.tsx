@@ -44,7 +44,7 @@ const ServicesPage: React.FC = async () => {
       transition-colors flex flex-col justify-start items-center"
     >
       <section className="w-full max-w-7xl 2 flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative ">
-        <h1 className="w-full text-xl sm:text-5xl font-extrabold bg-teal-100 text-teal-800 leading-tight inline-block rounded-full shadow-sm">
+        <h1 className="w-full text-xl sm:text-5xl font-extrabold bg-teal-100 text-teal-800 leading-tight inline-block rounded-full shadow-sm mt-1">
          Todos los Productos
         </h1>
         <p className="w-full text-sm sm:text-lg  text-gray-400 mt-2">
