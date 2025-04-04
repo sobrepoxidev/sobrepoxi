@@ -9,17 +9,17 @@ import {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50 to-white h-full lg:h-[88vh] ">
+    <section className="relative overflow-hidden  h-full lg:h-[88vh] bg-gradient-to-b from-amber-50 to-white">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 lg:py-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
           {/* Contenido de texto */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left">
-            <span className="inline-block mb-4 rounded-full bg-teal-100 px-4 py-1 text-sm font-medium text-teal-700">
+            <span className="inline-block mb-4 max-md:items-center max-md:justify-center md:w-2/3  rounded-full bg-teal-100 px-4 py-1 text-sm font-medium text-teal-700">
               Arte con propósito
             </span>
             <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
-              Arte hecho <span className="text-teal-700">a mano</span> con historia
+              Arte hecho <span className="text-teal-700">a mano</span> en Hand Made Art
             </h1>
             <p className="mb-8 max-w-lg mx-auto lg:mx-0 text-lg text-gray-600">
               Descubre piezas únicas creadas por artesanos que transforman materiales simples en obras de arte, mientras transforman sus propias vidas.
@@ -42,7 +42,7 @@ export default function Hero() {
                     key={i}
                     src={`/${i}`}
                     alt={`Logo apoyo: ${i}`}
-                    width={100}
+                    width={75}
                     height={0}
                     className="object-contain opacity-70"
                   />
@@ -53,12 +53,12 @@ export default function Hero() {
 
           {/* Imagen destacada */}
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start ">
-            <div className="relative max-w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF]">
+            <div className="relative max-w-full w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-300">
               <Image
                 src="/product1.png"
                 alt="Artesanía destacada"
-                width={600}
-                height={600}
+                width={1500}
+                height={0}
                 className="h-full w-full object-cover"
                 priority
               />
@@ -104,12 +104,12 @@ export default function Hero() {
         </div>
 
         {/* Indicador de scroll */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-12 flex justify-center ">
           <button
-            className="animate-bounce rounded-full border border-gray-300 p-3 text-gray-400 hover:bg-gray-50"
+            className="animate-bounce rounded-full border border-gray-300 p-3 text-gray-400 hover:bg-gray-50 z-50"
             aria-label="Scroll abajo"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 z-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
             </svg>
           </button>

@@ -120,7 +120,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                 aria-expanded={isCategoryMenuOpen}
                 aria-haspopup="true"
               >
-                Productos <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200" style={{transform: isCategoryMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)'}} />
+                Tienda <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200" style={{transform: isCategoryMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)'}} />
               </button>
               
               {isCategoryMenuOpen && (
@@ -275,7 +275,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
               
               <li className="pt-2">
                 <p className="px-3 py-2 text-base font-medium text-gray-700">
-                  Productos
+                  Tienda
                 </p>
                 <ul className="ml-2 space-y-1 border-l border-gray-100 pl-2">
                   <li>
