@@ -27,14 +27,14 @@ export default function Impact() {
 
                         {/* Imagen principal con borde y diseño distintivo */}
                         <div className=" relative bottom-1 top-auto md:top-2 md:bottom-auto lg:right-2 w-full shadow-lg items-center justify-center">
-                            <div className="flex items-center justify-center w-full h-full rounded-lg overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
+                            <div className="flex items-center justify-center h-full rounded-lg overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
                                 
                                 <Image
-                                    src="/product2.png"
+                                    src="/product2.jpeg"
                                     alt="Artesanos trabajando"
                                     width={400}
                                     height={0}
-                                    className="object-cover aspect-square items-center justify-center rounded-lg p-5"
+                                    className="object-cover items-center justify-center rounded-lg p-2"
                                 />
 
                                 {/* Testimonial flotante */}

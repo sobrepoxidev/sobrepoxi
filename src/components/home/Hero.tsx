@@ -25,11 +25,11 @@ export default function Hero() {
               Descubre piezas únicas creadas por artesanos que transforman materiales simples en obras de arte, mientras transforman sus propias vidas.
             </p>
             <div className="flex flex-col items-center justify-center sm:flex-row gap-4 ">
-              <Link href="/products" className="rounded-md bg-teal-500 px-6 py-3 text-teal-900 shadow transition hover:bg-teal-800 flex items-center justify-center gap-1">
+              <Link href="/products" className="rounded-md bg-teal-600 px-6 py-3 text-white shadow transition hover:bg-teal-700 flex items-center justify-center gap-1">
                 <ShoppingBag className="h-5 w-5" /> Explorar productos
               </Link>
 
-              <Link href="/impact" className="rounded-md border border-gray-300 px-6 py-3 text-gray-900 shadow transition hover:bg-gray-50">
+              <Link href="/impact" className="rounded-md border bg-white border-teal-200 hover:bg-teal-50  px-6 py-3 text-teal-700 shadow transition ">
                 Conoce nuestro impacto
               </Link>
             </div>
