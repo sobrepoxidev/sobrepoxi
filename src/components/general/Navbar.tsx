@@ -26,7 +26,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center space-x-2 focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
           <div className="relative overflow-hidden rounded-md">
             <Image 
-              src="/logohma.png" 
+              src="/final3.png" 
               alt="Hand Made Art Logo" 
 
               width={150} 

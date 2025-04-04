@@ -36,14 +36,14 @@ export default function Hero() {
             {/* Trust badges */}
             <div className="mt-10">
               <p className="mb-4 text-sm font-medium text-gray-500">Con el apoyo de:</p>
-              <div className="flex justify-center lg:justify-start gap-4">
-                {[1, 2, 3].map((i) => (
+              <div className="flex justify-center lg:justify-start gap-1 md:gap-4 mx-1">
+                {["mainlogo.png", "mainlogonav1.png", "final3.png"].map((i) => (
                   <Image
                     key={i}
-                    src="/logohma.png"
-                    alt={`Logo apoyo ${i}`}
+                    src={`/${i}`}
+                    alt={`Logo apoyo: ${i}`}
                     width={100}
-                    height={30}
+                    height={0}
                     className="object-contain opacity-70"
                   />
                 ))}
