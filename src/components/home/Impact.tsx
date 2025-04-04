@@ -5,7 +5,7 @@ import { Users, Heart, ShoppingBag } from 'lucide-react';
 
 export default function Impact() {
     return (
-        <section className="relative overflow-hidden  h-full  py-10 bg-gradient-to-b from-white to-amber-50 ">
+        <section className="relative overflow-hidden  h-full  bg-gradient-to-b from-white to-amber-50 ">
             {/* Elemento decorativo */}
             {/* <div className="absolute inset-0 bg-teal-50/60 skew-y-3 transform -translate-y-12 z-0"></div> */}
 
@@ -26,21 +26,21 @@ export default function Impact() {
                         
 
                         {/* Imagen principal con borde y diseño distintivo */}
-                        <div className=" relative bottom-1 top-auto md:top-2 md:bottom-auto right-2 w-full shadow-lg items-center justify-center">
-                            <div className="flex items-center justify-center w-full h-full rounded-lg overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-300">
+                        <div className=" relative bottom-1 top-auto md:top-2 md:bottom-auto lg:right-2 w-full shadow-lg items-center justify-center">
+                            <div className="flex items-center justify-center w-full h-full rounded-lg overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
                                 
                                 <Image
-                                    src="/product1.png"
+                                    src="/product2.png"
                                     alt="Artesanos trabajando"
                                     width={400}
                                     height={0}
-                                    className="object-cover aspect-square items-center justify-center p-6"
+                                    className="object-cover aspect-square items-center justify-center rounded-lg p-5"
                                 />
 
                                 {/* Testimonial flotante */}
                                 <div className="absolute bottom-4 right-4 bg-[#EFE9DB] backdrop-blur-sm p-3 rounded-lg shadow-lg max-w-xs z-20 text-gray-900">
-                                    <p className="text-sm italic">"El arte me dio un nuevo propósito y una forma de expresión."</p>
-                                    <p className="text-xs font-bold mt-1 text-teal-700">— Carlos M., Artesano desde 2019</p>
+                                    <p className="text-sm italic">"Arte como propósito y expresión."</p>
+                                    <p className="text-xs font-bold mt-1 text-teal-700">— MCB, Artesano desde 2020</p>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ export default function Impact() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-2">
-                            <Link href="/tienda" className="rounded-lg bg-teal-600 px-5 py-3 text-white font-medium shadow hover:bg-teal-700 transition flex items-center justify-center gap-2">
+                            <Link href="/products" className="rounded-lg bg-teal-600 px-5 py-3 text-white font-medium shadow hover:bg-teal-700 transition flex items-center justify-center gap-2">
                                 <ShoppingBag className="h-5 w-5" />
                                 Explorar productos
                             </Link>

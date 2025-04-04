@@ -13,9 +13,7 @@ const categories = [
 
 const navigationLinks = [
   { name: 'Inicio', path: '/' },
-  { name: 'Nuestro Impacto', path: '/impacto' },
-  { name: 'Artesanos', path: '/artesanos' },
-  { name: 'Sobre Nosotros', path: '/nosotros' }
+  { name: 'Acerca de', path: '/about' },
 ];
 
 export default function Navbar() {

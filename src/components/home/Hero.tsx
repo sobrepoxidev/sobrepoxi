@@ -4,13 +4,13 @@ import Image from 'next/image';
 import {
   ShoppingBag,
   ShoppingCartIcon,
-  
+
 } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden  h-full lg:h-[88vh] bg-gradient-to-b from-amber-50 to-white">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 lg:py-12">
+    <section className="relative overflow-hidden  h-full md:h-[84vh]  bg-gradient-to-b  from-amber-50 to-white ">
+      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8 lg:pt-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
           {/* Contenido de texto */}
@@ -53,7 +53,7 @@ export default function Hero() {
 
           {/* Imagen destacada */}
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start ">
-            <div className="relative max-w-full w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-300">
+            <div className="relative max-w-full w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
               <Image
                 src="/product1.png"
                 alt="Artesanía destacada"
@@ -104,15 +104,17 @@ export default function Hero() {
         </div>
 
         {/* Indicador de scroll */}
-        <div className="mt-12 flex justify-center ">
-          <button
-            className="animate-bounce rounded-full border border-gray-300 p-3 text-gray-400 hover:bg-gray-50 z-50"
-            aria-label="Scroll abajo"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 z-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-            </svg>
-          </button>
+        <div className="relative mb-13 z-auto">
+          <div className="absolute inset-0 flex items-center justify-center pt-8">
+            <button
+              className="animate-bounce rounded-full border border-gray-300 p-1 text-gray-400 hover:bg-gray-50 z-auto"
+              aria-label="Scroll abajo"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 z-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
