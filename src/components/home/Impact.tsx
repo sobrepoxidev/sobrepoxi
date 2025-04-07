@@ -39,7 +39,7 @@ export default function Impact() {
 
                                 {/* Testimonial flotante */}
                                 <div className="absolute bottom-4 right-4 bg-[#EFE9DB] backdrop-blur-sm p-3 rounded-lg shadow-lg max-w-xs z-20 text-gray-900">
-                                    <p className="text-sm italic">"Arte como propósito y expresión."</p>
+                                    <p className="text-sm italic">&ldquo;Arte como propósito y expresión.&rdquo;</p>
                                     <p className="text-xs font-bold mt-1 text-teal-700">— MCB, Artesano desde 2020</p>
                                 </div>
                             </div>
