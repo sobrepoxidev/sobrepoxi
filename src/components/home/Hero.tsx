@@ -104,8 +104,8 @@ export default function Hero() {
         </div>
 
         {/* Indicador de scroll */}
-        <div className="relative mb-13 z-auto">
-          <div className="absolute inset-0 flex items-center justify-center pt-8">
+        <div className="relative mb-14 z-auto">
+          <div className="absolute inset-0 flex items-center justify-center my-8">
             <button
               className="animate-bounce rounded-full border border-gray-300 p-1 text-gray-400 hover:bg-gray-50 z-auto"
               aria-label="Scroll abajo"
