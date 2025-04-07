@@ -159,6 +159,14 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
               )}
             </div>
           </li>
+          <li >
+              <Link 
+                href={"/contact"} 
+                className="block rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+              >
+                Contacto
+              </Link>
+            </li>
         </ul>
       </nav>
 
@@ -261,7 +269,8 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
             </div>
             
             <ul className="space-y-1">
-              {navigationLinks.map((link) => (
+              {
+              navigationLinks.map((link) => (
                 <li key={link.path}>
                   <Link 
                     href={link.path} 
@@ -271,7 +280,17 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                     {link.name}
                   </Link>
                 </li>
+
               ))}
+              <li>
+              <Link 
+                    href={"/contact"} 
+                    className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Contacto
+                  </Link>
+              </li>
               
               <li className="pt-2">
                 <p className="px-3 py-2 text-base font-medium text-gray-700">
