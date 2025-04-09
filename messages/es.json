@@ -1,0 +1,427 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "tours": "Tours",
+    "destinations": "Destinos",
+    "services": "Servicios",
+    "about": "Sobre Nosotros",
+    "payments": "Pagos",
+    "contact": "Contacto",
+    "adventure": "Aventura",
+    "cultural": "Cultural",
+    "marine": "Marino",
+    "rentals": "Alquileres",
+    "transportation": "Transporte",
+    "business": "Negocios",
+    "otherServices": "Otros Servicios"
+  },
+  "LocaleSwitcher": {
+    "label": "Cambiar idioma",
+    "locale": "{locale, select, es {🇪🇸 Español} en {🇺🇸 Inglés} other {Desconocido}}"
+  },
+  "buildvacation": {
+    "title": "Crea tus Vacaciones",
+    "description": "Diseña tu paquete vacacional perfecto adaptado a tus preferencias",
+    "cta": "Comenzar",
+    "ariaLabel": "Empieza a construir tu paquete vacacional",
+    "imageAlt": "Aguas del océano"
+  },
+  "destinationGallery": {
+    "heading": "¡Garantizamos los precios más atractivos y diversión! Contáctanos para más información y crea tu paquete personalizado.",
+    "destination1": {
+      "alt": "Cascada en Costa Rica",
+      "label": "Cascada en Costa Rica"
+    },
+    "destination2": {
+      "alt": "Playa tropical en Costa Rica",
+      "label": "Playa tropical en Costa Rica"
+    },
+    "destination3": {
+      "alt": "Palmeras al atardecer",
+      "label": "Palmeras al atardecer"
+    },
+    "destination4": {
+      "alt": "Atardecer oceánico en Costa Rica",
+      "label": "Atardecer oceánico en Costa Rica"
+    }
+  },
+  "exploreCR": {
+    "title": "¡Queremos que explores Costa Rica y crees una relación de viaje con nosotros!",
+    "description": "Descubre las maravillas naturales y experiencias únicas que te esperan.",
+    "cta": "Comienza a Explorar",
+    "ariaLabel": "Empieza a construir tu paquete vacacional"
+  },
+  "specialties": {
+    "mainImageAlt": "Especialidad principal de Costa Rica",
+    "titlePrefix": "Además de un gran viaje a nuestro país",
+    "titleSuffix": "ofrecemos otras especialidades de nuestra empresa.",
+    "justTitle": "ofrece turismo enfocado en salud y bienestar.",
+    "thisIs": "Esto es",
+    "costaRica": "Costa Rica",
+    "sports": {
+      "name": "DEPORTE PARA VIAJEROS",
+      "description": "Viajeros disfrutando de deportes activos en los mejores lugares de Costa Rica"
+    },
+    "fishHikeFlySwim": {
+      "name": "PESCA - CAMINATA - VUELO Y NADO",
+      "description": "Descubre nuevas técnicas de pesca en agua salada y destinos con vistas panorámicas. Ideal para amantes de deportes extremos y la naturaleza."
+    },
+    "football": {
+      "name": "FÚTBOL",
+      "description": "El fútbol es el deporte más popular en Costa Rica. El país ha sido históricamente exportador de futbolistas hacia Centroamérica y Europa."
+    },
+    "surf": {
+      "name": "SURF",
+      "description": "Costa Rica cuenta con dos costas — el Océano Pacífico y el Mar Caribe — ofreciendo rompientes perfectas para surfistas."
+    },
+    "health": {
+      "name": "SALUD",
+      "description": "Con nosotros puedes integrar tus necesidades médicas, estéticas y mentales. Ofrecemos bienestar para cuerpo y mente con médicos profesionales acreditados."
+    },
+    "beautyWellness": {
+      "name": "BELLEZA Y BIENESTAR ESTÉTICO",
+      "description": "Just Costa Rica Travel quiere que pruebes estas exquisitas combinaciones en nuestros mejores entornos naturales, caracterizados por su clima único y paisajes."
+    },
+    "dental": {
+      "name": "TRATAMIENTOS DENTALES",
+      "description": "Contamos con los servicios profesionales de una de las clínicas dentales más importantes del país, ubicada en San José, a solo 45 minutos del aeropuerto internacional."
+    },
+    "medical": {
+      "name": "TRATAMIENTOS MÉDICOS",
+      "description": "También puedes contar con los servicios de los mejores hospitales y cirujanos privados de Costa Rica. Cotiza aquí una valoración médica."
+    }
+  },
+  "flightSearch": {
+    "title": "Búsqueda de Vuelos",
+    "description": "Si deseas comprar tus vuelos directamente en Skyscanner, haz clic en el enlace a continuación. Luego regresa a",
+    "descriptionSuffix": "para más ofertas.",
+    "cta": "Comprar vuelos en Skyscanner",
+    "ariaLabel": "Comprar vuelos en Skyscanner"
+  },
+  "WAButton": {
+    "label": "Conversemos en WhatsApp"
+  },
+  "adventure": {
+    "title": "AVENTURA",
+    "atv": {
+      "name": "Cuadraciclos",
+      "description": "Este es un tour lleno de diversión por kilómetros de ruta en nuestras playas, perfecto para hacer amigos, disfrutar en familia y liberar tu lado salvaje en la naturaleza. El tour se puede dividir en etapas con obstáculos, curvas y miradores. También podrás hacer paradas para disfrutar vistas al océano y montañas mientras degustas comida típica. ¡No te lo podés perder!",
+      "items": []
+    },
+    "bikeKayak": {
+      "name": "Bicicleta y Kayak",
+      "description": "Este tour te da la oportunidad de experimentar dos deportes de adrenalina en un entorno natural y paisajístico único. Diseñado para parejas, familias, grupos de amigos o estudiantes. No se requiere una condición física fuera de lo común. Disponible en Fortuna y Puerto Viejo.",
+      "items": [
+        "Equipo",
+        "Agua",
+        "Transporte y frutas"
+      ]
+    },
+    "bungee": {
+      "name": "Puenting",
+      "description": "¿Te animás a saltar desde un lugar muy alto? Tranquilo, estarás sujeto a una cuerda larga y resistente que te mantendrá a salvo. Al hacerlo sentirás una libertad increíble y una alegría inmensa por estar vivo. Es uno de nuestros deportes de adrenalina favoritos en Costa Rica.",
+      "items": []
+    },
+    "canopy": {
+      "name": "Canopy",
+      "description": "Una experiencia única llena de adrenalina, donde podés volar entre árboles gigantes, balancearte sobre bosques nublados, ver volcanes y vistas del Golfo de Nicoya. El tour incluye 5 cables o más, todo con equipo seguro y guías profesionales. También podés pedir el tour nocturno para descubrir los misterios de la noche.",
+      "items": []
+    },
+    "waterfalls": {
+      "name": "Cascadas y Cañonismo",
+      "description": "Costa Rica ofrece más de 50 escenarios de aguas cristalinas donde podés combinar tus aventuras favoritas como canopy, puentes colgantes, rappel y cañonismo. Elegí tu lugar favorito:",
+      "items": [
+        "Arenal – Fortuna Alajuela",
+        "Caribe Sur y Puerto Viejo",
+        "Incluye tour de fábrica de chocolate"
+      ]
+    },
+    "caves": {
+      "name": "Tour de Cavernas",
+      "description": "Una experiencia física y de adrenalina única en su atractivo. Estas cavernas cuentan una historia de más de 70 millones de años. Disponible en el Parque Nacional Barra Honda y Cavernas del Venado.",
+      "items": [
+        "Transporte",
+        "Snacks saludables",
+        "Equipo si es necesario"
+      ]
+    },
+    "bridges": {
+      "name": "Puentes Colgantes",
+      "description": "Un tour en teleférico que te permite explorar la cima del bosque lluvioso, disfrutar vistas panorámicas, ver el Lago y Volcán Arenal. Se realiza con guía naturalista que te enseñará sobre la riqueza del bosque tropical. Un tour mágico y refrescante.",
+      "items": []
+    },
+    "hiking": {
+      "name": "Senderismo",
+      "description": "Descubrí la magia del bosque nuboso caminando por senderos en Santa Elena, la Reserva Curi-Cancha en Monteverde, o disfrutando tours de café y caminatas nocturnas. Observá aves en Arenal, colibríes y más. También podés hacer senderismo en el Río Celeste, famoso por su color azul puro gracias al volcán Tenorio. Nuestros guías te explicarán sobre la agricultura, economía y cultura local.",
+      "items": []
+    },
+    "horse": {
+      "name": "Cabalgata",
+      "description": "Recorré la naturaleza de Costa Rica a caballo, como un verdadero sabanero. Este tour incluye guía, vistas increíbles y aprenderás sobre ecología e historia local. También podés vivir los famosos 'topes', donde la gente se reúne y desfila con sus caballos, muy comunes en Liberia y Cañas, Guanacaste.",
+      "items": []
+    },
+    "skyBoard": {
+      "name": "Sky Board",
+      "description": "Probá esta nueva y divertida actividad de 25 minutos llenos de adrenalina, rodeado de naturaleza y paisajes hermosos. Podrás hacer sky surf sobre una tabla ligera. En menos de 5 minutos estarás en el aire disfrutando una experiencia única.",
+      "items": []
+    },
+    "skyDiving": {
+      "name": "Paracaidismo",
+      "description": "¡Te damos la bienvenida a volar como humano acompañado de profesionales sobre playas, ríos, islas o montañas! Seguridad y el mejor equipo del mercado garantizados.",
+      "items": [
+        "Incluye: transporte y snacks saludables"
+      ]
+    }
+  },
+  "cultural": {
+    "title": "CULTURAL",
+    "cities": {
+      "name": "Tour de Ciudades",
+      "description": "Las principales ciudades de Costa Rica tienen mucho que ofrecer: desde museos hermosos, mercados con artesanías hechas por costarricenses, hasta deliciosa comida típica. Es un lugar perfecto para hacer amigos y conocer nuestra cultura y tradiciones. La historia y los edificios clásicos están presentes en cada rincón. Siempre contarás con guía durante el recorrido.",
+      "items": ["Heredia", "San José", "Cartago", "Alajuela"]
+    },
+    "nightLife": {
+      "name": "Vida Nocturna",
+      "description": "Te ofrecemos transporte privado y seguro a los mejores y más alocados lugares de nuestras principales ciudades.",
+      "items": ["La Sabana", "Escazú", "San José y Paseo Colón"]
+    },
+    "parks": {
+      "name": "Parques Nacionales",
+      "description": "Costa Rica tiene una gran historia y un sistema de parques nacionales que es nuestro mayor tesoro. Nuestra red protege bosques lluviosos, bosques secos, bosques nubosos y áreas marinas. Más del 25% del país está protegido, siendo uno de los más altos del mundo. También ofrecemos reservas privadas que protegen la biodiversidad. Algunos parques incluyen: Corcovado, Manuel Antonio, Gandoca, Tortuguero, Hitoy Cerere, Braulio Carrillo, Volcán Poás, Volcán Arenal, Volcán Tenorio, Monteverde, Chirripó, Volcán Turrialba, Tapantí, Rincón de la Vieja, Santa Rosa, Caño Negro, Marino Las Baulas, Lomas Barbudal, Palo Verde, Isla del Coco, Ostional.",
+      "items": []
+    },
+    "indigenous": {
+      "name": "Reserva Indígena",
+      "description": "Malekus o Guatusos: Conocé uno de los grupos indígenas más pequeños de Costa Rica. Esta gente increíble conserva sus rasgos físicos y expresiones culturales. Viven en tres asentamientos: El Palenque Margarita, Tonjibe y El Sol. Su actividad principal es la agricultura (cacao, pejibaye, palmito) y la pesca en ríos. También elaboran artesanías como figuras de cerámica y artículos de madera. ¡Una experiencia fascinante! Además, son conocidos por sus fiestas salvajes y llenas de alegría.",
+      "items": []
+    }
+  },
+  "marine": {
+  "title": "MARINA",
+  "diving": {
+    "name": "Buceo y Catamarán",
+    "description": "Ofrecemos un tour muy popular de navegación, snorkel y atardecer desde Tamarindo y Playa del Coco, donde puedes comer, beber, relajarte, disfrutar de la naturaleza y si es temporada, navegar con delfines y ballenas. Nuestros tours incluyen: Snorkel – Kayak – Buceo – Pesca o solo relajarse – Barra libre."
+  },
+  "paddles": {
+    "name": "Tabla de Remo",
+    "description": "Las tablas de remo ofrecen una forma divertida y relajante de disfrutar del agua. Con equipo mínimo, puedes remar en el mar en Guanacaste, Sámara y Playa Chiquita en Limón."
+  },
+  "rafting": {
+    "name": "Rafting",
+    "description": "Momento de aventura en un entorno seguro y bello, su flora y fauna son de gran atractivo. Te divertirás en rápidos emocionantes, además de poder darte un chapuzón en sus pozas. Clasificación de rápidos: II-III-IV."
+  },
+  "snorkeling": {
+    "name": "Snorkel",
+    "description": "Si buscas nadar con peces del Pacífico y Atlántico costarricense, esta es tu oportunidad. Nuestros océanos albergan diversos sitios de snorkel con vistas impresionantes de corales, delfines, tortugas, mantarrayas y muchas especies tropicales."
+  }
+},
+"destinations": {
+  "title": "DESTINOS",
+  "arenal": {
+    "title": "ARENAL",
+    "image": "destinations/destinity-1.webp",
+    "description": "La Fortuna se encuentra en la provincia de Alajuela. Fortuna es la ciudad más cercana al Volcán Arenal, uno de los volcanes más activos del mundo. La Fortuna es uno de los destinos más visitados de Costa Rica y tiene muchas actividades para todos. En este destino, los turistas pueden disfrutar de aguas termales, puentes colgantes, rafting en aguas bravas, cascadas, paseos por la historia natural, tours de canopy y, sobre todo, la atracción principal: el Volcán Arenal (consulta la lista de tours en La Fortuna). En 1968, el Volcán Arenal entró en erupción y destruyó todo el pueblo, que en ese entonces se conocía como Pueblo Nuevo. En ese tiempo, la agricultura era la principal fuente de recursos en la zona. Tras la gran erupción, el volcán continuó teniendo pequeñas erupciones de forma constante, lo que permitió que el Volcán Arenal se hiciera famoso, ya que los visitantes podían disfrutar de los flujos de lava que salían del volcán. Hoy en día, el turismo es la actividad más importante en la región. En La Fortuna, los visitantes pueden encontrar alojamientos para todos los gustos y presupuestos: desde bed & breakfast y pequeñas cabañas, hasta hoteles de gama media y de lujo. Hay muchísimas cosas que hacer en La Fortuna y vale la pena pasar al menos dos noches en este hermoso pueblo. Encontrarás restaurantes, bancos, cajeros automáticos, asesores turísticos, compañías de alquiler de autos y muchas aventuras por experimentar. Se puede llegar a La Fortuna sin un itinerario, pero el tiempo no sería suficiente para disfrutar de todas las atracciones más importantes del área. Una vez que los visitantes dejan La Fortuna, la mayoría se dirige principalmente a Monteverde, Manuel Antonio y a las playas de Guanacaste."
+  },
+  "jaco": {
+    "title": "PLAYA JACÓ",
+    "image": "destinations/destinity-2.webp",
+    "description": "La Playa Jacó es un lugar vibrante y emocionante en la costa del Pacífico de Costa Rica. Ubicada en la provincia de Puntarenas, Jacó es uno de los destinos más populares del país. Aquí encontrarás alojamientos, restaurantes, bares, operadores turísticos y todo tipo de servicios para satisfacer incluso las necesidades más exigentes. Puedes almorzar en restaurantes con vistas espectaculares, bailar en una discoteca junto al mar o simplemente disfrutar de una caminata romántica a lo largo de sus tres kilómetros de playa, famosa por los deportes acuáticos, el surf y sus impresionantes atardeceres. En todo el entorno se pueden apreciar vistas panorámicas increíbles, con palmeras, hamacas y sillas donde podrás descansar, tomar el sol o relajarte leyendo un buen libro. Si buscas algo con más adrenalina o movimiento, puedes jugar tenis, participar en torneos de voleibol de playa, o rentar una bicicleta o un caballo para explorar la zona por tu cuenta. La pesca deportiva, el surf y muchos otros deportes acuáticos te esperan. Jacó se ha convertido en un destino turístico clave y es considerada una de las comunidades costeras más grandes de Centroamérica. Algunos de los tours que puedes disfrutar en Playa Jacó incluyen recorridos en cuadraciclo (ATV), canopy, tranvía aéreo, tours en Jet Ski, kayak, cruceros al atardecer y muchas otras experiencias para unas vacaciones inolvidables."
+  },
+  "malpais": {
+    "title": "MAL PAÍS",
+    "image": "destinations/destinity-3.webp",
+    "description": "Malpaís se encuentra en la Península de Nicoya. Es una comunidad costera tranquila y pequeña, con casas y unos pocos hoteles dispersos a lo largo de cinco kilómetros de carretera. En este punto de surf se hallan encantadores hoteles y alquileres vacacionales que van del lujo al estilo rústico, muchos con vistas a una playa pintoresca donde las olas se estrellan contra rocas dentadas. En el extremo sur de Malpaís encontrarás el pequeño puerto pesquero, desde donde saldrán tours en bote y excursiones de pesca que te llevarán hasta el extremo de la península. En español, Malpaís significa “tierra mala”—pero este es un lugar donde la playa se extiende por millas y las olas pueden hacer babear hasta al surfista más curtido. Malpaís y sus alrededores se han convertido en uno de los destinos de surf más candentes de Costa Rica. Existe un pequeño pueblo que se sostenía con una combinación de agricultura y pesca, aunque eso cambió cuando tanto surfistas nacionales como internacionales se enteraron de las olas consistentemente buenas que recibe la zona durante todo el año. Ahora es el paraíso del surf, con olas constantes, buenos swells y una larga playa de rompientes. La gente quedó enganchada por las olas y la belleza natural del lugar."
+  },
+  "manuelAntonio": {
+    "title": "MANUEL ANTONIO",
+    "image": "destinations/destinity-4.webp",
+    "description": "Manuel Antonio se encuentra en la provincia de Puntarenas. Se puede decir que Manuel Antonio es un pequeño rincón de Costa Rica. En este lugar, los turistas pueden encontrar la emoción y aventura de unas vacaciones en la selva tropical, rodeados de uno de los entornos naturales más bellos de Costa Rica, sin renunciar a las comodidades modernas. Manuel Antonio, Costa Rica, es el hábitat natural de especies como el mono ardilla en peligro de extinción (endémico de la zona), el mono capuchino de cara blanca, mapaches, perezosos de tres y dos dedos, coatis de nariz blanca, pelícanos marrones, halcones de collar negro y martines pescadores verdes. Estas especies comparten el espacio con bosques primarios y secundarios. Además, hay un manglar que abarca aproximadamente 44.5 acres, lo que incrementa la biodiversidad de la región. Este es uno de los destinos turísticos más visitados en Costa Rica. Manuel Antonio es único por la fusión de la belleza escénica de sus montañas y un estilo de vida activo que incluye actividades como senderismo, rafting/kayak, canopy, observación de aves y pesca deportiva. Aquí encontrarás una gran variedad de opciones de alojamiento, restaurantes y recreación, junto con paisajes costeros espectaculares. Según el Washington Times, Manuel Antonio ofrece “una de las vistas más impresionantes del Océano Pacífico en el mundo”."
+  },
+  "montezuma": {
+    "title": "MONTEZUMA",
+    "image": "destinations/destinity-5.webp",
+    "description": "Montezuma se encuentra en el sur de la Península de Nicoya. Solía ser un pequeño y remoto pueblo de pescadores, hasta principios de los años 80, cuando personas de todo el mundo llegaron a descubrir la belleza y la magia de este lugar, que es bastante diferente a otros pueblos de Costa Rica. Algunas personas se han quedado de forma permanente, creando una próspera comunidad de artistas, conservacionistas, músicos y chefs. Este lugar es muy famoso por su belleza impresionante y su vibrante cultura y gastronomía internacional. Es un excelente pueblo para evitar multitudes, casinos, restaurantes de comida rápida, centros comerciales y el ajetreo de la vida. A diferencia de muchas otras áreas de Costa Rica, Montezuma no ha sido tocada por el desarrollo comercial. Montezuma se ha convertido en un popular destino vacacional de playa debido a su estilo de vida “hippie”, es un excelente lugar para alojarse, con sus encantadoras playas, hoteles y alojamientos económicos, y buenos restaurantes."
+  },
+  "monteverde": {
+    "title": "MONTEVERDE",
+    "image": "destinations/destinity-6.webp",
+    "description": "Monteverde es una pequeña localidad situada en la provincia de Puntarenas. Monteverde, que significa “Montaña Verde” en español, fue fundada por la comunidad cuáquera que emigró desde Norteamérica a Costa Rica en los años 50 por sus valores pacifistas. Aunque no es un pueblo en sentido estricto, ya que muchas de las viviendas están dispersas en una amplia área, este lugar se ha desarrollado para atender al gran número de turistas. Monteverde, Costa Rica, es considerado un importante destino turístico, principalmente frecuentado por amantes de la naturaleza, atraídos por la alta biodiversidad de la zona. Es muy famoso por sus bosques lluviosos, o más bien, por sus “bosques nubosos”, que albergan cientos de especies de mamíferos, aves, insectos y plantas. La biodiversidad de la Reserva de Monteverde ha atraído a turistas y biólogos durante décadas, enamorándolos con su increíble variedad de flora y fauna. Conocido como uno de los destinos de ecoturismo más célebres de Centroamérica, se recomienda permanecer al menos unos días para explorar la zona. National Geographic lo ha calificado como “la joya de la corona de las reservas de bosques nubosos”. En Monteverde, los visitantes pueden disfrutar de numerosas actividades: caminatas en la Reserva de Monteverde, senderismo en el Bosque Eterno de los Niños, tour de canopy, puentes colgantes, granjas de mariposas, tours en ATV, exhibiciones de insectos y principalmente, caminatas nocturnas. Además, el lugar cuenta con facilidades para hacer la visita más segura y cómoda: bancos, farmacia, hospital local, librería, gasolinera, cajeros automáticos, restaurantes, bares y alojamientos para todos los presupuestos y necesidades."
+  },
+  "osa": {
+    "title": "OSA",
+    "image": "destinations/destinity-7.webp",
+    "description": "La Península de Osa se encuentra en la provincia de Puntarenas. Aquí encontrarás selvas tropicales prístinas y una belleza natural indómita. La revista National Geographic la declaró “uno de los lugares biológicamente más intensos del planeta”, y junto con Drake Bay, la Península de Osa se ha convertido en uno de los destinos de ecoturismo más importantes del país. Los alojamientos en esta región ofrecen a los turistas desde guías expertos para recorrer la selva, hasta tours para avistar ballenas y delfines, o simplemente la posibilidad de tumbarse en la playa y relajarse al sol. Además, hay varias cabañas encantadoras y asequibles para quienes no quieren gastar mucho. Con una amplia oferta de tours de aventura, tanto costosos como económicos, esta zona te permite experimentar un estilo de vida completamente distinto al del resto del país. Es un paraíso natural apartado, hogar de muchas de las especies animales y aves raras y en peligro, como el puma, el jaguar, el águila arpía y la guacamaya escarlata. El Parque Nacional Corcovado se encuentra en la Península de Osa y posee la mayor extensión de selva tropical de tierras bajas en Centroamérica, siendo una de las selvas más imponentes del mundo. La mejor manera de visitarlo es a través del pueblo de Puerto Jiménez, un excelente punto de partida para explorar, ya que desde allí se extiende una amplia red de senderos, y en el mismo pueblo encontrarás una estación de guardabosques con información detallada para hacer trekking y acampar en el parque."
+  },
+  "papagayo": {
+    "title": "GOLFO DE PAPAGAYO",
+    "image": "destinations/destinity-8.webp",
+    "description": "Puerto Viejo se encuentra en la provincia de Limón; es un pueblo costero a orillas del Mar Caribe. Este lugar ofrece una flora y fauna exóticas, un pueblo vibrante con excelentes playas, aguas azules cristalinas y es increíble para los surfistas. En la comunidad del surf se le conoce mundialmente por tener la ola más grande y poderosa de Costa Rica: salsa brava. Anteriormente era un pequeño y tranquilo pueblo pesquero, pero ahora se ha vuelto popular, especialmente entre el público joven y moderno, posicionándose entre los destinos de surf mejor valorados del mundo. En este lugar se puede encontrar la mezcla perfecta y única de culturas latina, afrocaribeña e indígena bribri. De hecho, la mayoría de los habitantes son indígenas bribri, aunque suelen vivir fuera del centro y no ser muy visibles. Puerto Viejo, Costa Rica, ofrece una gran variedad de bares, clubes, restaurantes y hoteles para todos los gustos. Sus playas de arena dorada, la vegetación tropical y numerosas atracciones interesantes hacen de Puerto Viejo un destino imprescindible en Costa Rica. Sin embargo, no es ideal para nadar debido a sus corrientes. El kayak, el surf, el snorkel, la equitación y el senderismo son algunas de las actividades más destacadas que se pueden disfrutar en esta área."
+  },
+  "puertoViejo": {
+    "title": "PUERTO VIEJO",
+    "image": "destinations/destinity-9.webp",
+    "description": "Puerto Viejo se encuentra en la costa caribeña sur de Costa Rica, en la provincia de Limón. Conocido por su vibrante cultura afrocaribeña, hermosas playas, frondosos bosques tropicales y un ambiente relajado, Puerto Viejo se ha convertido en uno de los destinos de playa favoritos del país. Rodeado de aguas turquesas, palmeras y arenas doradas, este pintoresco pueblo es popular tanto entre los surfistas como entre los viajeros que buscan relajarse. La mundialmente famosa ola de surf, Salsa Brava, atrae a surfistas experimentados en busca de emociones fuertes. Los visitantes también pueden disfrutar de playas más tranquilas en las cercanías, como Playa Cocles y Playa Punta Uva, ideales para nadar, hacer snorkel, kayak y relajarse bajo el sol. Los amantes de la naturaleza no querrán perderse el Centro de Rescate del Jaguar, donde se rehabilitan animales heridos como monos, perezosos y felinos salvajes. Cerca de Puerto Viejo se encuentra el Parque Nacional Cahuita, que ofrece senderos naturales, snorkel en arrecifes de coral y oportunidades para observar monos, perezosos, iguanas y aves exóticas. En el pueblo, los visitantes pueden explorar animados mercados locales, encantadoras tiendas y diversas opciones gastronómicas, que van desde platos de estilo caribeño hasta cocina internacional. Por la noche, el lugar se llena de vida con música reggae, bares acogedores y locales amigables disfrutando de una vibrante vida nocturna. Los alojamientos en Puerto Viejo se adaptan a todos los presupuestos y gustos, desde eco-albergues y cabañas rústicas hasta hoteles boutique y alquileres vacacionales. Se recomienda una estadía de al menos dos o tres noches para sumergirse por completo en la mezcla única de diversión en la playa, aventuras en la naturaleza y experiencias culturales. Tras visitar Puerto Viejo, los viajeros suelen dirigirse hacia Tortuguero, Bocas del Toro (Panamá) o regresar al Valle Central."
+  },
+  "samara": {
+    "title": "SÁMARA",
+    "image": "destinations/destinity-10.webp",
+    "description": "Samara se encuentra en la provincia de Guanacaste, Costa Rica. Este es un paraíso tropical en el Océano Pacífico, perfecto para unas vacaciones de playa y en familia. Samara es el lugar ideal ya que cuenta con una extensa playa de arena blanca y aguas poco profundas y suaves. Se ha vuelto popular entre nadadores y surfistas, y es una playa ideal para los niños. Aquí puedes encontrar hoteles acogedores y atractivos, bed & breakfast, casas en alquiler, restaurantes, bares y discotecas, pero, a diferencia de otros destinos de Costa Rica, también es una próspera comunidad pesquera y agrícola. Las principales actividades en Samara son los deportes acuáticos, paseos a caballo, snorkel, buceo y tours de canopy. Este es un excelente lugar para quienes buscan unas vacaciones tranquilas o una divertida escapada en familia."
+  },
+  "tamarindo": {
+    "title": "TAMARINDO / FLAMINGO / CONCHAL",
+    "image": "destinations/destinity-11.webp",
+    "description": "Tamarindo se encuentra en la provincia de Guanacaste. Tamarindo, Costa Rica, es un lugar genial para lunas de miel, bodas, parejas y familias, y está perfectamente preparado para aventuras ecológicas. Aquí puedes disfrutar de la pesca deportiva, navegación, surf, golf, tours en ATV, observación de tortugas, buceo, paseos a caballo, tours de canopy, paseos en bote por la jungla, spa de belleza y tiendas de cerámica. Tamarindo es una comunidad multicultural; gente de todo el mundo ha hecho de Tamarindo su nuevo hogar. Con más de 30 restaurantes—vegetarianos, comida costarricense, italiana o de mariscos, ¡todo está aquí! Los alojamientos se adaptan a cualquier presupuesto, desde hoteles lujosos frente a la playa hasta hostales. Tamarindo tiene una playa de arena blanca y aguas azules y cálidas; aquí puedes ver tortugas laúd, monos aulladores, iguanas gigantes y periquitos. Lo que fue un antiguo pueblo pesquero se ha transformado en el destino vacacional más popular de Costa Rica. Tamarindo es perfecto para todos: si buscas paz y tranquilidad, la playa es lo suficientemente amplia para relajarte; si prefieres la pesca deportiva, aquí se pueden encontrar marlín y atún; para los amantes de la naturaleza, hay muchas actividades ecológicas; y para los que buscan vida nocturna, los mejores bares y clubes están a la orden del día. Eso sí, ten en cuenta que en Tamarindo hay fuertes corrientes y algunas rocas sumergidas, así que nada con precaución. Tamarindo saltó al radar mundial del surf gracias a la clásica película Endless Summer II, cuando Patrick y Wingnut se detuvieron aquí para visitar a su amigo Robert August (¡quien aún vive aquí!)."
+  }
+},
+"rentals": {
+    "title": "Alquileres",
+    "subtitle": "Casas, condominios, apartamentos",
+    "description": "Ofrecemos condominios y apartamentos para tu familia o escapada privada en los mejores sitios de Costa Rica.",
+    "locations": "Consulta por tu ubicación favorita en: Tamarindo – Conchal – Área de Papagayo – Playa Flamingo – Playa Jacó – Playa Puerto Viejo – Playa Chiquita – Playa Manzanillo",
+    "moreInfo": "Más información",
+    "altImage": "Automóvil de alquiler"
+  },
+  "transportation": {
+    "title": "TRANSPORTE",
+    "services": [
+      "Vehículo privado con guía turístico y conductor.",
+      "Renta de vehículos con nuestros socios de alto estándar.",
+      "Autobuses privados familiares o minivans.",
+      "Vuelos locales"
+    ],
+    "moreInfo": "Más información",
+    "altImage": "Servicios de transporte"
+  },
+  "business": {
+    "title": "Negocios",
+    "description1": "Para su empresa le ofrecemos las mejores ubicaciones y alojamientos según las necesidades de su organización, a los mejores precios del mercado actual.",
+    "description2": "Nuestros asociados están enfocados en ayudar a los empresarios a trabajar y relajarse al mismo tiempo que recuperan energías. Le garantizamos un trato profesional según los requerimientos de su empresa o personales.",
+    "description3": "Cotice aquí su grupo y evento. Elija ubicación en playa, montaña o ciudad. Transporte incluido.",
+    "moreInfo": "Más información",
+    "altImage": "Evento de negocios"
+  },
+  "otherServices": {
+    "moreInfo": "Más información",
+    "students": {
+      "title": "Estudiantes",
+      "description": "Si eres estudiante y necesitas o quieres aprender español mientras conoces los hermosos lugares de Costa Rica, esta es tu mejor opción. Puedes elegir un intercambio universitario o hospedarte con una familia local.",
+      "altImage": "Intercambio estudiantil"
+    },
+    "eventPlanning": {
+      "title": "Planificación de Eventos",
+      "description": "Organizamos tus eventos en Costa Rica con excelencia y profesionalismo. Bodas, eventos corporativos o reuniones sociales en lugares impresionantes. Todo adaptado a tus necesidades y presupuesto.",
+      "altImage": "Planificación de eventos"
+    },
+    "shopProducts": {
+      "title": "Compra productos hechos en Costa Rica",
+      "description": "Elemental Herbs Costa Rica. Hechos para costarricenses amantes del yoga, instructores de artes marciales y la medicina alternativa.\n\nIdeales para tu salud y bienestar diario.",
+      "altImage": "Productos costarricenses"
+    }
+  },
+  "about": {
+    "altCover": "Sobre nosotros",
+    "buidVacations": "Crea tus Vacaciones",
+    "title": "Sobre la compañía",
+    "description": {
+      "part1": "Somos simplemente dos ticos que tuvimos una idea hace algunos años: mostrar nuestro país a viajeros. En ese momento no teníamos la experiencia ni la preparación que tenemos ahora.",
+      "part2": "Nuestro objetivo principal sigue siendo el mismo, pero ha mejorado. Ahora queremos ofrecer a nuestros visitantes un servicio de alta calidad según las necesidades del cliente. Queremos marcar la diferencia permitiendo que nuestros clientes creen sus vacaciones según sus necesidades, presupuestos y deseos.",
+      "part3": "Queremos que nuestros clientes conozcan Costa Rica en su totalidad, ofreciendo un paquete completo que lo incluye todo."
+    },
+    "mission": {
+      "title": "Misión",
+      "description": "Somos una empresa turística innovadora ubicada en Costa Rica que busca dar a conocer nuestro hermoso país a viajeros de todo el mundo: mostrando nuestros valores, cultura, historia, naturaleza, servicios médicos y atractivos turísticos competitivos."
+    },
+    "vision": {
+      "title": "Visión",
+      "description": "Nuestro principal objetivo es proporcionar un servicio turístico de alto estándar, siendo una agencia de viajes multitarea que promueve la belleza natural y la cultura de Costa Rica, dejando una huella inolvidable en la memoria de nuestros clientes."
+    },
+    "teamTitle": "Nuestro Equipo",
+    "teamSubtitle": "Las personas que hacen posible tu visita a Costa Rica",
+    "team": {
+      "paola": {
+        "name": "Paola Pastor Villalobos",
+        "role": "Gerente general",
+        "bio": "Paola es graduada de la Universidad Latina Costa Rica en Turismo con énfasis en hotelería y restaurantes. Posee experiencia en organización de congresos nacionales turísticos y empresariales."
+      },
+      "jorge": {
+        "name": "Jorge Antonio Zavaleta Fallas",
+        "role": "Gerente financiero",
+        "bio": "Jorge es técnico en computación y redes, con estudios avanzados en ingeniería electrónica, conocimientos que ha utilizado para asesorar oficinas empresariales en Costa Rica. Tiene 17 años de experiencia en atención al cliente."
+      }
+    }
+  },
+  "travelPack": {
+    "itemName": "Pack de viaje",
+    "title": "Pack",
+    "highlight": "viajero",
+    "buyButton": "Comprar Ahora"
+  },
+  "payments": {
+    "title": "Disfruta Tu Aventura en Costa Rica",
+    "subtitle": "Paga directamente con PayPal o Tarjeta",
+    "help": {
+      "title": "¿Necesitas ayuda con los pagos?",
+      "description": "Nuestro equipo está listo para ayudarte con cualquier duda sobre métodos de pago. Soportamos múltiples opciones para que tu proceso de reserva sea fluido y sin complicaciones."
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Estamos aquí para hacer realidad tus vacaciones soñadas en Costa Rica",
+    "usCanada": {
+      "title": "Llamada Gratuita EEUU/Canadá",
+      "number": "866-319-6020"
+    },
+    "costaRica": {
+      "title": "Número Local Costa Rica",
+      "number": "(506) 8585-0000"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "number": "(506) 7296-6451"
+    },
+    "emergency": {
+      "title": "Contactos de Emergencia",
+      "description": "En caso de situaciones urgentes, por favor contacte a nuestra línea de emergencia:",
+      "number": "(506) 7252-0958"
+    }
+  },
+  "buildVacation": {
+    "title": "Crea tu Vacación",
+
+    "activities": {
+      "label": "Actividades",
+      "multi": "(Selección múltiple)",
+      "placeholder": "Elige Actividades"
+    },
+
+    "destinations": {
+      "label": "Destinos",
+      "multi": "(Selección múltiple)",
+      "placeholder": "Elige Destinos"
+    },
+
+    "arrival": "Llegada",
+    "departure": "Salida",
+    "adults": "Adultos",
+    "kids": "Niños",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phone": "Teléfono",
+    "email": "Correo",
+
+    "comments": {
+      "label": "Notas Adicionales / Peticiones Especiales",
+      "placeholder": "Comparte detalles adicionales, restricciones alimenticias, necesidades de accesibilidad u otras peticiones..."
+    },
+
+    "submit": "Enviar Solicitud",
+    "submitting": "Enviando..."
+  },
+  "footer": {
+    "buildVacation": "Crea tus Vacaciones",
+    "rights": "Just Costa Rica Travel",
+    "builtBy": "Desarrollado por",
+    "office": "Oficina",
+    "tollFree": "Llamada gratuita desde EE.UU./Canadá"
+  }
+}

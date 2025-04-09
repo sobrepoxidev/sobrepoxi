@@ -11,6 +11,8 @@ import {
   ChevronDown,
   Globe 
 } from 'lucide-react';
+import { Session } from '@supabase/supabase-js';
+import { useSupabase } from '@/app/supabase-provider/provider';
 
 type Category = {
   name: string;
@@ -32,6 +34,8 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const { supabase } = useSupabase()
+  const [session, setSession] = useState<Session | null>(null);
   //const [isScrolled, setIsScrolled] = useState(false);
   
   // Refs para cerrar menús al hacer clic fuera
@@ -97,6 +101,33 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
     return () => document.removeEventListener('keydown', handleEscKey);
   }, []);
 
+  // Cargar la sesión inicial y escuchar cambios
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data } = await supabase.auth.getSession()
+      setSession(data.session)
+    }
+    fetchSession()
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession)
+    })
+    return () => {
+      authListener.subscription.unsubscribe()
+    }
+  }, [supabase])
+
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      // Redirect to home or login page
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <>
       {/* Desktop Navigation */}
@@ -161,7 +192,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
           </li>
           <li >
               <Link 
-                href={"/contact"} 
+                href="/contact" 
                 className="block rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
                 Contacto
@@ -241,6 +272,41 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
           <Globe className="h-4 w-4" />
           <span className="hidden sm:inline">ES</span>
         </button>
+
+        {/* Auth buttons - Desktop */}
+        <div className="hidden md:flex items-center space-x-2">
+          {session ? (
+            <>
+              <Link
+                href="/account"
+                className="px-3 py-2 text-sm text-gray-700 hover:text-teal-700 transition rounded-md hover:bg-gray-50"
+              >
+                Mi cuenta
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-3 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 transition rounded-md"
+              >
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="px-3 py-2 text-sm text-gray-700 hover:text-teal-700 transition rounded-md hover:bg-gray-50"
+              >
+                Iniciar sesión
+              </Link>
+              <Link
+                href="/register"
+                className="px-3 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 transition rounded-md"
+              >
+                Registrarse
+              </Link>
+            </>
+          )}
+        </div>
         
         {/* Mobile menu toggle */}
         <button 
@@ -252,7 +318,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
           {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
-      
+
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-gray-100 bg-white shadow-lg md:hidden">
@@ -284,7 +350,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
               ))}
               <li>
               <Link 
-                    href={"/contact"} 
+                    href="/contact" 
                     className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -339,6 +405,46 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                 <span>Ver carrito (0)</span>
               </Link>
             </div>
+
+            {/* Mobile Auth Links */}
+            <li className="pt-4 border-t border-gray-100 mt-4">
+              <div className="space-y-1">
+                {session ? (
+                  <>
+                    <Link 
+                      href="/account"
+                      className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Mi cuenta
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link 
+                      href="/login"
+                      className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Iniciar sesión
+                    </Link>
+                    <Link 
+                      href="/register"
+                      className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Registrarse
+                    </Link>
+                  </>
+                )}
+              </div>
+            </li>
           </nav>
         </div>
       )}

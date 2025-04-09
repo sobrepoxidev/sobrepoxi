@@ -47,7 +47,7 @@ const ServicesPage: React.FC = async () => {
         <h1 className="w-full text-xl sm:text-5xl font-extrabold bg-teal-100 text-teal-800 leading-tight inline-block rounded-full shadow-sm mt-1">
          Todos los Productos
         </h1>
-        <p className="w-full text-sm sm:text-lg  text-gray-400 mt-2">
+        <p className="w-full text-sm sm:text-lg  text-gray-600 mt-2">
             Aquí encontrarás nuestros productos. Expándelos para verlos más detalladamente.
         </p>
 
