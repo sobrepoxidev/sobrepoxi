@@ -12,7 +12,7 @@ const ServicesPage: React.FC = async () => {
     .from("products")
     .select(`
       id,
-      album_title,
+      category,
       name,
       media,
       description,
