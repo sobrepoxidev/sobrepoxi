@@ -1,3 +1,9 @@
+interface MediaItem {
+    url: string;
+    type: string;
+    caption: string;
+}
+
 export type Database = {
     products: {
         id: number;
@@ -5,7 +11,7 @@ export type Database = {
         name: string | null;
         description: string | null;
         category: string | null;
-        media: any[] | null;
+        media: MediaItem[] | null;
         price: number | null;
     }
 }
