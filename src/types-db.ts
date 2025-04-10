@@ -1,7 +1,7 @@
 interface MediaItem {
     url: string;
-    type: string;
-    caption: string;
+    type: "image" | "video";
+    caption?: string;
 }
 
 export type Database = {

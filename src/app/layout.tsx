@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
 
 // export const metadata: Metadata = {
 //   title: "Just Costa Rica Travel",
@@ -22,5 +23,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <CartProvider>
+      {children}
+    </CartProvider>
+  );
 }

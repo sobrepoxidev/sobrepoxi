@@ -16,7 +16,8 @@ const ServicesPage: React.FC = async () => {
       name,
       media,
       description,
-      price
+      price,
+      created_at
     `);
 
   if (error) {

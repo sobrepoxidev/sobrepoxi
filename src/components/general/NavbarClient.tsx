@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
+import { useCart } from '@/context/CartContext';
 
 type Category = {
   name: string;
@@ -41,6 +42,8 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
   const categoryMenuRef = useRef<HTMLDivElement>(null);
+  const { cart } = useCart();
+  const cardQuantity = cart.length;
   
   // Efecto para manejar el scroll y cambiar la apariencia del navbar
 //   useEffect(() => {
@@ -260,7 +263,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
         >
           <ShoppingBag className="h-5 w-5" />
           <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
-            0
+            {cardQuantity}
           </span>
         </Link>
 
@@ -402,7 +405,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
                 onClick={() => setIsMenuOpen(false)}
               >
                 <ShoppingBag className="h-5 w-5" />
-                <span>Ver carrito (0)</span>
+                <span>Ver carrito ({cardQuantity})</span>
               </Link>
             </div>
 
