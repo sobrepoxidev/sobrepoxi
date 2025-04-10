@@ -79,11 +79,11 @@ export default function RegisterPage() {
   if (!mounted) return null
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-amber-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-amber-50 to-white py-1 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg px-4 py-1 md:p-8">
+          <div className="text-center mb-1 md:mb-3">
+            <h1 className="text-3xl font-bold text-gray-900 mb-1 ">
               Regístrate
             </h1>
             <p className="text-gray-600">
@@ -91,15 +91,15 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-6">
-            <div className="space-y-6">
+          <form onSubmit={handleRegister} className="space-y-1 md:space-y-6">
+            <div className="space-y-1 md:space-y-6">
               {confirmationMsg && (
-                <div className="mb-6 p-4 rounded-lg bg-teal-50 text-teal-700">
+                <div className="mb-1 p-4 rounded-lg bg-teal-50 text-teal-700">
                   {confirmationMsg}
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-6">
                 {/* Left Column */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -112,7 +112,7 @@ export default function RegisterPage() {
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                       required
                     />
                   </div>
@@ -129,14 +129,14 @@ export default function RegisterPage() {
                       id="phone"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                       required
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-6">
                 {/* Right Column */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -149,7 +149,7 @@ export default function RegisterPage() {
                       id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                       required
                     />
                   </div>
@@ -166,7 +166,7 @@ export default function RegisterPage() {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                       required
                     />
                   </div>
@@ -184,7 +184,7 @@ export default function RegisterPage() {
                     id="confirmPass"
                     value={confirmPass}
                     onChange={(e) => setConfirmPass(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full pl-10 pr-4 py-1 mb-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                     required
                   />
                 </div>
@@ -231,7 +231,7 @@ export default function RegisterPage() {
               </button>
 
               {/* Google Sign In Button */}
-              <div className="mt-6">
+              <div className="mt-3">
                 <button
                   onClick={handleGoogleSignIn}
                   className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -241,7 +241,7 @@ export default function RegisterPage() {
                 </button>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-2">
                 <p className="text-sm text-gray-600 text-center">
                   ¿Ya tienes una cuenta?
                   <Link href="/login" className="font-medium text-teal-600 hover:text-teal-500 ml-2">
