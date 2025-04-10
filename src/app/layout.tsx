@@ -2,20 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 
-// export const metadata: Metadata = {
-//   title: "Just Costa Rica Travel",
-//   description: "Descubre Costa Rica con los mejores paquetes turísticos personalizados",
-//   keywords: "costa rica, viajes, turismo, aventura, naturaleza, vacaciones",
-// };
-
 export const metadata: Metadata = {
   title: {
-    default: 'Just Costa Rica Travel',
-    template: '%s | Just Costa Rica Travel'
+    default: 'Hand Made Art',
+    template: '%s | Hand Made Art'
   },
-  description: 'Tourism agency in Costa Rica: adventures, destinations and more.',
-  keywords: "Costa Rica, travel, tourism, adventure, nature, vacations",
-  metadataBase: new URL('https://justcostaricatravel.com')
+  description: 'Discover unique handmade art pieces crafted with passion. Browse our collection of original paintings, sculptures, and artisanal works.',
+  keywords: "handmade art, original paintings, sculptures, artisanal works, art gallery, contemporary art, unique art pieces, art collection",
+  metadataBase: new URL('https://hand-made-art.vercel.app')
 };
 
 export default function RootLayout({
