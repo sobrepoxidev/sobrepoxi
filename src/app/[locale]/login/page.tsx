@@ -125,16 +125,18 @@ export default function LoginPage() {
             >
               {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </button>
-             {/* Google Sign In Button */}
-                          <div className="mt-6">
-                            <button
-                              onClick={handleGoogleSignIn}
-                              className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                            >
-                              <FaGoogle className="mr-2 h-5 w-5" />
-                              Iniciar sesión con Google
-                            </button>
-                          </div>
+            
+          </form>
+          {/* Google Sign In Button */}
+          <div className="mt-6">
+              <button
+                onClick={handleGoogleSignIn}
+                className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              >
+                <FaGoogle className="mr-2 h-5 w-5" />
+                Iniciar sesión con Google
+              </button>
+            </div>
 
             <div className="text-center text-sm text-gray-600">
               ¿No tienes una cuenta?{' '}
@@ -145,7 +147,6 @@ export default function LoginPage() {
                 Regístrate aquí
               </Link>
             </div>
-          </form>
         </div>
       </div>
     </section>
