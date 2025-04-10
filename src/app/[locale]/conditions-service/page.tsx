@@ -16,7 +16,7 @@ export default function TerminosCondicionesPage() {
         <div className="px-6 py-8 prose prose-gray max-w-none text-gray-700 leading-relaxed">
           <div className="mb-12">
             <p className="text-lg font-medium">
-              Bienvenido a nuestro servicio. Estos Términos y Condiciones ("Términos") constituyen un acuerdo legal entre usted y nuestra plataforma de autenticación. Lea detenidamente estos Términos antes de utilizar nuestro sistema de inicio de sesión.
+              Bienvenido a nuestro servicio. Estos Términos y Condiciones (&ldquo;Términos&rdquo;) constituyen un acuerdo legal entre usted y nuestra plataforma de autenticación. Lea detenidamente estos Términos antes de utilizar nuestro sistema de inicio de sesión.
             </p>
             <p>
               Al registrarse, acceder o utilizar nuestros servicios de autenticación, usted acepta estar legalmente vinculado por estos Términos. Si no está de acuerdo con alguna parte de estos Términos, le pedimos que no utilice nuestros servicios.

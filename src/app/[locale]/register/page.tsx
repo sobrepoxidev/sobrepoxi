@@ -66,8 +66,9 @@ export default function RegisterPage() {
         },
       })
       if (error) throw error
-    } catch (error) {
-      setErrorMsg('Error al iniciar sesión con Google. Por favor, intenta de nuevo.')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
+      setErrorMsg(errorMessage)
     }
   }
 
