@@ -257,7 +257,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
         
         {/* Cart */}
         <Link 
-          href="/carrito" 
+          href="/cart" 
           className="relative flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
           aria-label="Carrito de compras"
         >
@@ -400,7 +400,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
               </button>
               
               <Link
-                href="/carrito"
+                href="/cart"
                 className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm font-medium text-teal-700 transition hover:bg-teal-50"
                 onClick={() => setIsMenuOpen(false)}
               >

@@ -8,22 +8,22 @@ export default function ContactPage() {
 
 
   return (
-    <main className="w-full min-h-screen bg-gradient-to-b from-amber-50 to-white
+    <div className="w-full min-h-screen bg-gradient-to-b from-amber-50 to-white
     transition-colors flex flex-col justify-start items-center">
-    <section className="w-full max-w-7xl flex flex-col items-center text-center py-2 px-4 md:py-8 md:px-8 lg:px-10 relative">
-      <motion.div
+    <section className="w-full max-w-7xl 2 flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative ">
+      <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-8"
+        className="w-full max-w-7xl 2 flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative "
       >
-        <h1 className="w-full text-2xl sm:text-4xl md:text-5xl font-extrabold bg-teal-100 text-teal-800 leading-tight py-2 px-6 rounded-full shadow-sm mt-4 mb-4">
+        <h1 className=" w-full text-xl sm:text-5xl font-extrabold text-start   text-teal-800 mt-1">
           Contáctanos
         </h1>
-        <p className="w-full text-sm sm:text-base md:text-lg text-gray-600 mt-2 max-w-2xl mx-auto">
+        <p className="w-full text-sm sm:text-lg  text-gray-600 mt-2 text-start">
           Estamos aquí para ayudarte. ¡No dudes en ponerte en contacto!
         </p>
-      </motion.div>
+      </motion.section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 w-full max-w-5xl">
         {/* Contact Information */}
@@ -90,6 +90,6 @@ export default function ContactPage() {
         </motion.div>
       </div>
     </section>
-  </main>
+  </div>
   );
 }

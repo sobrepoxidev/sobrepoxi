@@ -95,7 +95,7 @@ export function ProductCard({ product }: { product: Product }) {
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-500 px-6 py-3 text-teal-900 font-medium shadow-lg transition-all hover:bg-teal-700 active:scale-95 active:shadow-none"
               onClick={handleAddToCart}
             >
-              <ShoppingCartIcon className="w-5 h-5" /> ${product.price ? product.price.toFixed(2) : 'Price not available'}
+              <ShoppingCartIcon className="w-5 h-5" /> ₡{product.price ? product.price.toFixed(2) : 'Price not available'}
             </button>
           </div>
         </div>
