@@ -5,7 +5,6 @@ import { ShoppingCartIcon, Share2, Info } from 'lucide-react';
 import { useState } from 'react';
 import { Database } from "@/types-db";
 import { useCart } from "@/context/CartContext";
-import { div } from "framer-motion/client";
 
 type Product = Database['products'];
 
@@ -39,7 +38,7 @@ export function ProductCardModal({
         addToCart(product, quantity);
     };
 
-    const { media = [], name, category, description, price } = product;
+    const { name, category, description, price } = product;
 
     // Use different layouts for fullscreen mode vs card mode
     if (fullscreenMode) {

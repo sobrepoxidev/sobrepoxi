@@ -17,9 +17,6 @@ type CartItem = {
 export default function StepTwo({
     paymentMethod,
     setPaymentMethod,
-    onContinue,
-    cart,
-    removeFromCart,
     bancoSeleccionado,
     setBancoSeleccionado,
     ultimos4,
@@ -31,7 +28,6 @@ export default function StepTwo({
   }: {
     paymentMethod: PaymentMethod | null;
     setPaymentMethod: (m: PaymentMethod) => void;
-    onContinue: () => void;
     cart: CartItem[];
     removeFromCart: (id: number) => void;
     bancoSeleccionado: Banco | null;
