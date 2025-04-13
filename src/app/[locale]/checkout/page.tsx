@@ -11,7 +11,7 @@ import { supabase } from "@/lib/supabaseClient";
 //import { sendCartEmail } from "@/app/actions/sendCartEmail";
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
-type PaymentStatus = "pending" | "paid";
+//type PaymentStatus = "pending" | "paid";
 type Banco = {
     nombre: string;
     sms?: string;
