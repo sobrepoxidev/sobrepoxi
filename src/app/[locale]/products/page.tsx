@@ -22,7 +22,7 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
   const idCardOpen = (await searchParams)['id'];
   // Parámetros de Paginación (con valores por defecto y conversión a número)
   const pageParam = (await searchParams)['page'];
-  
+
   const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : '1', 10) || 1;
 
   // --- Cálculo de Rango para Supabase ---
@@ -56,29 +56,52 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
 
  // --- Ejecución de Consulta ---
  const { data: products, error, count: totalCount } = await query;
+ if (error) {
+  console.error("Error obteniendo productos:", error.message);
+  return (
+    <main className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-10 text-red-500">
+      Error al cargar la galería de productos: {error.message}
+    </main>
+  );
+}
 
  console.log(`Supabase returned ${products?.length} products, total count: ${totalCount}`);
 
- if (idCardOpen && typeof idCardOpen === 'string' && products) {
-  const productFound = products.find((p) => p.id.toString() === idCardOpen);
-  if (productFound) {
-    console.log("Producto encontrado en página actual para modal inicial:", productFound);
-    initialProductForModal = productFound;
-  } else {
-    console.log("Producto con ID", idCardOpen, "no encontrado en la página actual.");
-  }
-}
+ let productFetchError: string | null = null; // Para error específico del fetch del modal
+
+ if (idCardOpen && typeof idCardOpen === 'string') {
+   console.log(`Buscando ID ${idCardOpen} para modal inicial.`);
+   // 1. Buscar en los productos ya cargados de la página actual
+   const productFoundOnPage = products?.find(p => p.id.toString() === idCardOpen);
+
+   if (productFoundOnPage) {
+     console.log("Producto encontrado en los datos de la página actual. Usando ese.");
+     initialProductForModal = productFoundOnPage;
+   } else {
+     // 2. Si no está en la página actual, BUSCAR en la BD
+     console.log(`Producto ${idCardOpen} no encontrado en página actual. Realizando fetch específico.`);
+     const { data: modalProductData, error: modalProductError } = await supabase
+       .from("products")
+       .select('*') // O los campos necesarios para el modal
+       .eq('id', idCardOpen)
+       .maybeSingle();
+
+     if (modalProductError) {
+       console.error("Error buscando el producto específico para el modal:", modalProductError.message);
+       productFetchError = `Error al buscar detalles del producto con ID ${idCardOpen}.`;
+     } else if (modalProductData) {
+       console.log("Producto específico encontrado en la BD:", modalProductData);
+       initialProductForModal = modalProductData as Product;
+     } else {
+       console.log(`Producto con ID ${idCardOpen} no encontrado en la BD.`);
+       productFetchError = `Producto con ID ${idCardOpen} no encontrado.`;
+     }
+   }
+ }
 
 
 
-  if (error) {
-    console.error("Error obteniendo productos:", error.message);
-    return (
-      <main className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-10 text-red-500">
-        Error al cargar: {error.message}
-      </main>
-    );
-  }
+ 
 
   const totalPages = totalCount ? Math.ceil(totalCount / PRODUCTS_PER_PAGE) : 0;
   console.log(`Total pages calculated: ${totalPages}`);
