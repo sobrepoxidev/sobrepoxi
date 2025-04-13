@@ -8,14 +8,14 @@ import PaginationControls from "@/components/products/PaginationControls";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { Database } from "@/types-db";
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
+
+type tParams = Promise<{ searchParams: { [key: string]: string | string[] | undefined }; }>;
 
 type Product = Database['products'];
 const PRODUCTS_PER_PAGE = 12; // Puedes ajustar este valor
 
-const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) => {
+export default async function ServicesPage (props: { params: tParams }) {
+  const { searchParams } = await props.params;
   const category = searchParams['category']; // ejemplo: ?category=valor
   const idCardOpen = searchParams['id'];
   // Parámetros de Paginación (con valores por defecto y conversión a número)
@@ -152,5 +152,3 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
     </div>
   );
 }
-
-export default ServicesPage;
