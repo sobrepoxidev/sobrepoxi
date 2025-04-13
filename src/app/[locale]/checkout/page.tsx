@@ -22,13 +22,12 @@ export default function CheckoutWizardPage() {
     const router = useRouter();
     const {
       cart,
-      clearCart,
       removeFromCart, 
     } = useCart();
   
     const [currentStep, setCurrentStep] = useState(1);
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
-    const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
+    //const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
   
     // SINPE
     const [bancoSeleccionado, setBancoSeleccionado] = useState<Banco | null>(null);
@@ -37,7 +36,7 @@ export default function CheckoutWizardPage() {
   
     const { session } = useSupabase();
     const userId = session?.user?.id || null;
-    const correo = session?.user?.email;
+    //const correo = session?.user?.email;
     //const nombreUsuario = session?.user?.user_metadata?.name;
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
   
@@ -89,9 +88,9 @@ export default function CheckoutWizardPage() {
       goNext();
     };
   
-    const validateStep3 = () => {
-      goNext();
-    };
+    // const validateStep3 = () => {
+    //   goNext();
+    // };
   
     // const handlePayment = async () => {
     //   // ... Mismo que tu ejemplo, pero a la hora de insertar en user_tickets,
@@ -206,7 +205,7 @@ export default function CheckoutWizardPage() {
     // };
   
     // -------------- Render principal --------------
-    if (cart.length === 0 && paymentStatus === null) {
+    if (cart.length === 0) {
       return (
         <main className="w-full mx-auto px-6 py-14 flex flex-row gap-4">
           <button onClick={() => router.back()} className="bg-teal-600 p-2 rounded-md text-gray-800 hover:bg-teal-700 transition">
