@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 // Swiper y módulos
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,6 +13,12 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Database } from "@/types-db";
+import { ProductCardModal } from "./ProductModal";
+
+
+
+type Product = Database['products'];
 
 // ---------------------------------------------------------
 // 1) Tipos e iconos
@@ -23,11 +30,16 @@ export interface MediaItem {
 }
 
 interface OpenGalleryModalEventDetail {
-  item: MediaItem;
-  productName?: string;
+  product: Product;
 }
 
-export function ExpandIcon() {
+interface ExpandIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+
+
+function ExpandIcon({ className, ...props }: ExpandIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +51,8 @@ export function ExpandIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="w-5 h-5"
+      className={className}
+      {...props}
       aria-hidden="true"
     >
       <path d="M15 3h6v6" />
@@ -50,23 +63,26 @@ export function ExpandIcon() {
   );
 }
 
-export function CloseIcon() {
+interface CloseIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+function CloseIcon({ className, ...props }: CloseIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
       fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-5 h-5"
-      aria-hidden="true"
+      className={className}
+      {...props}
     >
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
     </svg>
   );
 }
@@ -75,27 +91,29 @@ export function CloseIcon() {
 // 2) Botón de expandir (abre el modal)
 // ---------------------------------------------------------
 export function ExpandButton({
-  mediaUrl,
-  mediaType,
-  caption,
-  productName,
+  product
 }: {
-  mediaUrl: string;
-  mediaType: "image" | "video";
-  caption?: string;
-  productName: string;
+  product: Product;
 }) {
+  const searchParams = useSearchParams();
+const pathname = usePathname();
+const { replace } = useRouter();
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
+    e.preventDefault(); 
+
+    const params = new URLSearchParams(searchParams);
+    params.set("id", product.id.toString());
+    const url = `${pathname}?${params.toString()}`;
+    replace(url);
 
     // Evento custom tipado
     const event = new CustomEvent<OpenGalleryModalEventDetail>(
       "openGalleryModal",
       {
         detail: {
-          item: { type: mediaType, url: mediaUrl, caption },
-          productName,
+          product: product,
         },
       }
     );
@@ -105,9 +123,10 @@ export function ExpandButton({
 
   return (
     <button
-      className="absolute top-3 right-3 z-10 bg-black/70 bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-full transition-all duration-200 transform hover:scale-110"
+      className="absolute top-3 right-3 z-50 bg-black/70 bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-full transition-all duration-200 transform hover:scale-110"
       onClick={handleClick}
       aria-label="Ver en pantalla completa"
+      title="Ver en pantalla completa"
     >
       <ExpandIcon />
     </button>
@@ -118,29 +137,26 @@ export function ExpandButton({
 // 3) Card individual para cada MediaItem (imagen o video)
 // ---------------------------------------------------------
 interface MediaItemCardProps {
-  item: MediaItem;
-  altText: string;
-  productName: string;
+  product: Product;
+  activeExpandButton: boolean;
 }
 
-function MediaItemCard({ item, altText, productName }: MediaItemCardProps) {
+function MediaItemCard({ product, activeExpandButton }: MediaItemCardProps) {
   return (
     <div className="relative w-full h-full ">
-      <ExpandButton
-        mediaUrl={item.url}
-        mediaType={item.type}
-        caption={item.caption}
-        productName={productName}
-      />
 
-      {item.type === "image" ? (
+      {activeExpandButton && (
+        <ExpandButton product={product} />
+      )}
+
+      {product.media && product.media[0]?.type === "image" ? (
         <div className="relative w-full h-full ">
           <Image
-            src={item.url}
-            alt={altText}
+            src={product.media[0].url}
+            alt={product.name ?? ""}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover "
+            className="object-contain scale-125 "
             loading="lazy"
           />
         </div>
@@ -151,7 +167,7 @@ function MediaItemCard({ item, altText, productName }: MediaItemCardProps) {
           controls
           poster="/video-thumbnail.jpg"
         >
-          <source src={item.url} type="video/mp4" />
+          <source src={(product.media?.[0]?.url ?? '/default-video.mp4')} type="video/mp4" />
           Tu navegador no soporta video HTML5.
         </video>
       )}
@@ -169,43 +185,40 @@ function MediaItemCard({ item, altText, productName }: MediaItemCardProps) {
 // 4) Carrusel con Swiper (Client Component)
 // ---------------------------------------------------------
 interface MediaCarouselProps {
-  media: MediaItem[];
-  productName: string;
+  product: Product;
+  activeExpandButton: boolean;
 }
-export function MediaCarousel({ media, productName }: MediaCarouselProps) {
+export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProps) {
   return (
-    <div className="relative w-full " style={{ aspectRatio: "4/3" }}>
-      <Swiper
-        modules={[Navigation, Pagination]}
-        navigation
-        pagination={{ clickable: true }}
-        className="h-full "
-        loop={media.length > 1}
-      >
-        {media.map((item, index) => (
-          <SwiperSlide key={index} className="flex items-center justify-center ">
-            <MediaItemCard
-              item={item}
-              altText={productName}
-              productName={productName}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <div className="relative w-full" style={activeExpandButton ? { aspectRatio: "4/3" } : { height: "100%" }}>
+  <Swiper
+    modules={[Navigation, Pagination]}
+    navigation
+    pagination={{ clickable: true }}
+    className="h-full w-full"
+    loop={product.media ? product.media.length > 1 : false}
+  >
+    {product.media?.map((item, index) => (
+      <SwiperSlide key={index} className="flex items-center justify-center h-full">
+        <MediaItemCard
+          product={product}
+          activeExpandButton={activeExpandButton}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</div>
   );
 }
 
 // ---------------------------------------------------------
 // 5) Modal de galería en pantalla completa
 // ---------------------------------------------------------
-function FullscreenModal({
-  item,
-  altText,
+export function FullscreenModal({
+  product,
   onClose,
 }: {
-  item: MediaItem;
-  altText: string;
+  product: Product;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -224,97 +237,128 @@ function FullscreenModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#E0D5BF]/50 bg-opacity-90 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4"
       onClick={onClose}
     >
       <div
-        className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
+        className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-white sm:rounded-lg shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-4 right-4 z-10 bg-white dark:bg-gray-800 text-black dark:text-white p-2 rounded-full shadow-lg transition-transform duration-200 hover:scale-110"
+          className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
           onClick={onClose}
           aria-label="Cerrar"
         >
-          <CloseIcon />
+          <CloseIcon className="w-5 h-5" />
         </button>
 
-        <div className="w-full h-full flex flex-col">
-          {item.type === "image" ? (
-            <div
-              className="relative w-full"
-              style={{ height: "calc(90vh - 80px)" }}
-            >
-              <Image
-                src={item.url}
-                alt={altText}
-                fill
-                sizes="100vw"
-                className="object-contain"
-                priority
-              />
-            </div>
-          ) : (
-            <video className="max-h-[90vh] w-auto mx-auto" controls autoPlay>
-              <source src={item.url} type="video/mp4" />
-              Tu navegador no soporta video HTML5.
-            </video>
-          )}
-
-          {item.caption && (
-            <div className="mt-4 text-gray-900 text-center text-lg">
-              {item.caption}
-            </div>
-          )}
-        </div>
+        {/* Pass the improved ProductModal with fullscreenMode enabled */}
+        <ProductCardModal
+          product={product}
+          activeExpandButton={false}
+          fullscreenMode={true}
+        />
       </div>
     </div>
   );
 }
-
+interface GalleryModalProps {
+  initialProduct?: Product | null; // Nueva prop opcional
+}
 // ---------------------------------------------------------
 // 6) Modal global que escucha el evento 'openGalleryModal'
 // ---------------------------------------------------------
-export function GalleryModal() {
+export function GalleryModal({ initialProduct }: GalleryModalProps) {
   const [modalContent, setModalContent] = useState<{
     isOpen: boolean;
-    item?: MediaItem;
-    productName?: string;
-  }>({ isOpen: false });
+    product: Product | null;
+  }>({ isOpen: false, product: null });
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
   const closeModal = () => {
-    setModalContent({ isOpen: false });
+    console.log("Cerrando modal..."); // Log para depuración
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("id");
+    const url = `${pathname}?${params.toString()}`;
+    replace(url, { scroll: false });
+    setModalContent({ isOpen: false, product: null });
   };
 
+  // --- Efecto 1: Abrir modal SI initialProduct se proporciona Y coincide con la URL inicial ---
+  // Este efecto ahora SOLO depende de initialProduct. Se ejecutará si esa prop cambia.
   useEffect(() => {
-    // Maneja el evento custom de abrir modal
+    // Obtiene el ID de la URL *en el momento en que este efecto se ejecuta*
+    const urlId = searchParams.get('id');
+    console.log(`Efecto 1 (initialProduct): initialProduct=`, initialProduct ? initialProduct.id : 'null', `urlId=${urlId}`);
+
+    // Si tenemos la prop initialProduct, y coincide con el ID en la URL actual...
+    if (initialProduct && urlId === initialProduct.id.toString()) {
+        // ... y el modal NO está ya abierto (para evitar bucles si algo más lo abre)...
+        if (!modalContent.isOpen) {
+            console.log("Efecto 1: Abriendo modal basado en initialProduct coincidente.");
+            setModalContent({ isOpen: true, product: initialProduct });
+        } else {
+             console.log("Efecto 1: initialProduct coincide con URL, pero modal ya está abierto.");
+        }
+    }
+    // IMPORTANTE: Depender solo de initialProduct. No queremos que este efecto
+    // se vuelva a ejecutar solo porque la URL cambió al cerrar el modal.
+  }, [initialProduct]); // <--- Solo depende de initialProduct
+
+  // --- Efecto 2: Listener para el evento custom (para el botón Expand) ---
+  // Este efecto maneja la apertura por evento y necesita reaccionar a cambios en searchParams/isOpen
+  useEffect(() => {
     const handleOpenModal = (event: Event) => {
+      // Prevenir si ya está abierto
+      if (modalContent.isOpen) {
+          console.log("Evento openGalleryModal ignorado: modal ya abierto.");
+          return;
+      }
+
       const customEvent = event as CustomEvent<OpenGalleryModalEventDetail>;
+      const productToOpen = customEvent.detail.product;
+      console.log(`Evento openGalleryModal recibido para producto ID: ${productToOpen.id}`);
+
       setModalContent({
         isOpen: true,
-        item: customEvent.detail.item,
-        productName: customEvent.detail.productName,
+        product: productToOpen,
       });
+
+      // Asegurar que la URL se actualice (ExpandButton ya lo hace, pero es buena práctica aquí también)
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("id", productToOpen.id.toString());
+      // Comprobar si la URL ya tiene el ID correcto para evitar un replace innecesario
+      if (searchParams.get('id') !== productToOpen.id.toString()) {
+         console.log("Efecto 2: Actualizando URL por evento.");
+         replace(`${pathname}?${params.toString()}`, { scroll: false });
+      }
     };
 
+    console.log("Efecto 2: Añadiendo listener para openGalleryModal");
     window.addEventListener("openGalleryModal", handleOpenModal as EventListener);
 
     return () => {
-      window.removeEventListener(
-        "openGalleryModal",
-        handleOpenModal as EventListener
-      );
+      console.log("Efecto 2: Eliminando listener para openGalleryModal");
+      window.removeEventListener("openGalleryModal", handleOpenModal as EventListener);
     };
-  }, []);
+    // Dependencias: Necesita saber si está abierto para evitar reapertura,
+    // y necesita las funciones de routing/params para actualizar URL si es necesario.
+  }, [modalContent.isOpen, pathname, replace, searchParams]);
 
-  if (!modalContent.isOpen || !modalContent.item) {
+
+  // Renderizado condicional
+  if (!modalContent.isOpen || !modalContent.product) {
+    // console.log("Render: Modal no está abierto o no tiene producto."); // Mucho log, quitar si funciona
     return null;
   }
 
+  // console.log("Render: Renderizando FullscreenModal."); // Mucho log, quitar si funciona
   return (
     <FullscreenModal
-      item={modalContent.item}
-      altText={modalContent.productName ?? ""}
+      product={modalContent.product}
       onClose={closeModal}
     />
   );

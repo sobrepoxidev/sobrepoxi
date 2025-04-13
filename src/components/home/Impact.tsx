@@ -5,7 +5,7 @@ import { Users, Heart, ShoppingBag } from 'lucide-react';
 
 export default function Impact() {
     return (
-        <section className="relative overflow-hidden  h-full  bg-gradient-to-b from-white to-amber-50 ">
+        <section className="relative overflow-hidden  h-full">
             {/* Elemento decorativo */}
             {/* <div className="absolute inset-0 bg-teal-50/60 skew-y-3 transform -translate-y-12 z-0"></div> */}
 
@@ -26,8 +26,8 @@ export default function Impact() {
                         
 
                         {/* Imagen principal con borde y diseño distintivo */}
-                        <div className=" relative bottom-1 top-auto md:top-2 md:bottom-auto lg:right-2 w-full shadow-lg items-center justify-center">
-                            <div className="flex items-center justify-center h-full rounded-lg overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
+                        <div className=" relative bottom-1 top-auto md:top-2 md:bottom-auto lg:right-2 w-full items-center justify-center">
+                            <div className="flex items-center justify-center h-full  overflow-hidden  bg-gray-50 sm:border-r sm:border-gray-400">
                                 
                                 <Image
                                     src="/product2.jpeg"
@@ -38,8 +38,8 @@ export default function Impact() {
                                 />
 
                                 {/* Testimonial flotante */}
-                                <div className="absolute bottom-4 right-4 bg-[#EFE9DB] backdrop-blur-sm p-3 rounded-lg shadow-lg max-w-xs z-20 text-gray-900">
-                                    <p className="text-sm italic">&ldquo;Arte como propósito y expresión.&rdquo;</p>
+                                <div className="absolute bottom-4 right-4 bg-gray-50 backdrop-blur-sm p-1 rounded-lg shadow-lg max-w-xs z-20 text-gray-900">
+                                    <p className="mt-1 text-sm text-gray-700 italic ">&ldquo;Arte como propósito y expresión.&rdquo;</p>
                                     <p className="text-xs font-bold mt-1 text-teal-700">— MCB, Artesano desde 2020</p>
                                 </div>
                             </div>

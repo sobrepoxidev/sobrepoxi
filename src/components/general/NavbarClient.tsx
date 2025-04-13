@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react';
+
 import Link from 'next/link';
 import { 
   ShoppingBag, 
@@ -37,6 +38,8 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const { supabase } = useSupabase()
   const [session, setSession] = useState<Session | null>(null);
+
+
   //const [isScrolled, setIsScrolled] = useState(false);
   
   // Refs para cerrar menús al hacer clic fuera

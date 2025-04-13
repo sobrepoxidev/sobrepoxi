@@ -6,7 +6,7 @@ import { ArrowRight, Facebook, Instagram } from 'lucide-react';
 export default function Footer() {
 
   return (
-    <footer className="bg-teal-100 px-4 py-2 sm:py-6">
+    <footer className="bg-white px-4 py-2 sm:py-6">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Logo section */}
@@ -25,7 +25,7 @@ export default function Footer() {
           <div className="flex justify-center">
             <Link
               href="/contact"
-              className="bg-[#EFE9DB] hover:bg-[#E0D5BF] text-gray-900 font-semibold py-3 px-6 rounded-full flex items-center gap-2 transition-transform hover:scale-105"
+              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-full flex items-center gap-2 transition-transform hover:scale-105"
             >
               Contáctanos
               <ArrowRight className="h-5 w-5" />

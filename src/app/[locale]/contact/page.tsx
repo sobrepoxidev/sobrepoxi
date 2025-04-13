@@ -8,8 +8,7 @@ export default function ContactPage() {
 
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-amber-50 to-white
-    transition-colors flex flex-col justify-start items-center">
+    <div className="w-full transition-colors flex flex-col justify-start items-center">
     <section className="w-full max-w-7xl 2 flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative ">
       <motion.section
         initial={{ opacity: 0, y: 20 }}

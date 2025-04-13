@@ -9,7 +9,7 @@ import {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden  h-full md:h-[84vh]  bg-gradient-to-b  from-amber-50 to-white ">
+    <section className="relative overflow-hidden  h-full md:h-[84vh] ">
       <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8 lg:pt-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
@@ -29,8 +29,8 @@ export default function Hero() {
                 <ShoppingBag className="h-5 w-5" /> Explorar productos
               </Link>
 
-              <Link href="/impact" className="rounded-md border bg-white border-teal-200 hover:bg-teal-50  px-6 py-3 text-teal-700 shadow transition ">
-                Conoce nuestro impacto
+              <Link href="/about" className="rounded-md border bg-white border-teal-200 hover:bg-teal-50  px-6 py-3 text-teal-700 shadow transition ">
+               Sobre nosotros
               </Link>
             </div>
             {/* Trust badges */}
@@ -53,7 +53,7 @@ export default function Hero() {
 
           {/* Imagen destacada */}
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start ">
-            <div className="relative max-w-full w-full rounded-2xl overflow-hidden shadow-xl bg-[#E0D5BF] border border-gray-400">
+            <div className="relative max-w-full w-full rounded-2xl overflow-hidden shadow-sm bg-gray-50 border border-gray-300">
               <Image
                 src="/product1.png"
                 alt="Artesanía destacada"
@@ -66,7 +66,7 @@ export default function Hero() {
 
 
               {/* Producto destacado flotante */}
-              <div className="absolute flex bottom-2 top-auto md:top-2 md:bottom-auto right-2 max-w-xs bg-[#EFE9DB] bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
+              <div className="absolute flex bottom-2 top-auto md:top-2 md:bottom-auto right-2 max-w-xs bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg">
                 <div className="mr-1">
                   <h3 className="text-sm font-semibold text-gray-800">Juego artesanal dragón</h3>
                   <p className="text-xs text-gray-600">Hecho con maderas sostenibles</p>
@@ -79,25 +79,12 @@ export default function Hero() {
                 </div>
               </div>
               {/* Testimonial flotante */}
-              <div className="absolute bottom-2 left-2 max-w-xl bg-[#EFE9DB] bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg hidden md:block">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gray-300">
-                    <Image
-                      src="/p1.png"
-                      alt="Perfil del artesano"
-                      width={30}
-                      height={30}
-                      className="h-full w-full rounded-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Mario T.</p>
-                    <p className="text-xs text-gray-600">Artesano desde 2020</p>
-                  </div>
-                </div>
+              <div className="absolute bottom-2 left-2 max-w-xl bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-xl p-1 shadow-lg hidden md:block">
+                
                 <p className="mt-1 text-sm text-gray-700 italic ">
                   &ldquo;El arte me dio un nuevo propósito y una forma de expresión.&rdquo;
                 </p>
+                <p className="text-xs font-bold mt-1 text-teal-700">— MCB, Artesano desde 2020</p>
               </div>
             </div>
           </div>
