@@ -7,7 +7,6 @@ import { useSearchParams } from "next/navigation";
 interface PaginationControlsProps {
   currentPage: number;
   totalPages: number;
-  searchParams: { [key: string]: string | string[] | undefined }; // Recibe los params del servidor
 }
 
 export default function PaginationControls({
@@ -15,6 +14,7 @@ export default function PaginationControls({
   totalPages,
 }: PaginationControlsProps) {
     const searchParams = useSearchParams();
+
     console.log("searchParams PaginationControls:", searchParams);
   // Función para crear la URL de una página específica,
   // manteniendo los parámetros existentes (como 'category')
