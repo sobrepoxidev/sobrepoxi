@@ -139,6 +139,7 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
             Aquí encontrarás nuestros productos. Expándelos para verlos más detalladamente.
             {totalPages > 1 && ` (Página ${currentPage} de ${totalPages})`}
         </p>
+        {productFetchError && <p className="text-red-500 mt-4 text-start">{productFetchError}</p>}
 
         {/* Fallback mientras se cargan datos o client components */}
         <Suspense fallback={<Loading />}>
