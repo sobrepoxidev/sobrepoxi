@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Database } from '@/types-db';
 
 type Product = Database['products'];
@@ -26,27 +27,65 @@ const CartContext = createContext<CartContextProps>({
   clearCart: () => {},
 });
 
+// Helpers
+function encodeCartToBase64(cart: CartItem[]): string {
+  const minimalCart = cart.map(item => ({ id: item.product.id, qty: item.quantity }));
+  return btoa(JSON.stringify(minimalCart));
+}
+
+function decodeCartFromBase64(encoded: string): { id: number; qty: number }[] {
+  try {
+    return JSON.parse(atob(encoded));
+  } catch (error) {
+    console.error("Error decoding cart:", error);
+    return [];
+  }
+}
+
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
+  // 🔄 Control para evitar el sync en el primer render
+  const firstRender = useRef(true);
+
+  // 🧠 Efecto: sincronizar carrito con URL solo cuando el carrito cambie
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams(searchParams.toString());
+    if (cart.length > 0) {
+      params.set('cart', encodeCartToBase64(cart));
+    } else {
+      params.delete('cart');
+    }
+
+    router.replace(`${pathname}?${params.toString()}`);
+  }, [cart, pathname, router, searchParams]);
+
+  // 🎁 Funciones del carrito
   const addToCart = (product: Product, quantity: number = 1) => {
-    console.log("Add To Card Called");
-    setCart((prev) => {
+    setCart(prev => {
       const existing = prev.find(item => item.product.id === product.id);
-      if (existing) {
-        return prev.map(item => item.product.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item);
-      } else {
-        return [...prev, { product, quantity }];
-      }
+      return existing
+        ? prev.map(item =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item
+          )
+        : [...prev, { product, quantity }];
     });
-    console.log("cart:", cart.length);
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
     setCart(prev => prev.map(item =>
-      item.product.id === productId ? { ...item, quantity } : item));
+      item.product.id === productId ? { ...item, quantity } : item
+    ));
   };
 
   const removeFromCart = (productId: number) => {
@@ -56,6 +95,20 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const clearCart = () => {
     setCart([]);
   };
+
+  // 🚀 Al montar: reconstruir carrito desde URL (solo los IDs y cantidades)
+  useEffect(() => {
+    const encoded = searchParams.get('cart');
+    if (!encoded) return;
+
+    const parsed = decodeCartFromBase64(encoded);
+    if (parsed.length === 0) return;
+
+    // Aquí deberías hacer un fetch a Supabase para obtener los productos por ID
+    // Por ahora solo logueamos lo detectado
+    console.log("Reconstrucción del carrito requerida:", parsed);
+    // setCart(...) ← con productos reales después del fetch
+  }, []);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, clearCart }}>
