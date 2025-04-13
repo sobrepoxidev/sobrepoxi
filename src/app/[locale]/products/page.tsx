@@ -8,16 +8,22 @@ import PaginationControls from "@/components/products/PaginationControls";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { Database } from "@/types-db";
 
+type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-type tParams = Promise<{ category: string | undefined; id: string | undefined; page: string | undefined }>;
+interface PageProps {
+  searchParams: searchParams;
+}
 
 type Product = Database['products'];
 const PRODUCTS_PER_PAGE = 12; // Puedes ajustar este valor
 
-export default async function ServicesPage (props: { params: tParams }) {
-  const { category, id, page } = await props.params;
+const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) => {
+  const category = (await searchParams)['category']; // ejemplo: ?category=valor
+  const idCardOpen = (await searchParams)['id'];
   // Parámetros de Paginación (con valores por defecto y conversión a número)
-  const currentPage = parseInt(typeof page === 'string' ? page : '1', 10) || 1;
+  const pageParam = (await searchParams)['page'];
+  
+  const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : '1', 10) || 1;
 
   // --- Cálculo de Rango para Supabase ---
   const from = (currentPage - 1) * PRODUCTS_PER_PAGE;
@@ -53,13 +59,13 @@ export default async function ServicesPage (props: { params: tParams }) {
 
  console.log(`Supabase returned ${products?.length} products, total count: ${totalCount}`);
 
- if (id && typeof id === 'string' && products) {
-  const productFound = products.find((p) => p.id.toString() === id);
+ if (idCardOpen && typeof idCardOpen === 'string' && products) {
+  const productFound = products.find((p) => p.id.toString() === idCardOpen);
   if (productFound) {
     console.log("Producto encontrado en página actual para modal inicial:", productFound);
     initialProductForModal = productFound;
   } else {
-    console.log("Producto con ID", id, "no encontrado en la página actual.");
+    console.log("Producto con ID", idCardOpen, "no encontrado en la página actual.");
   }
 }
 
@@ -141,6 +147,7 @@ export default async function ServicesPage (props: { params: tParams }) {
                 totalPages={totalPages}
                 // Pasamos los searchParams actuales para que los controles
                 // puedan preservar filtros como 'category' al cambiar de página
+               
               />
           )}
         </Suspense>
@@ -148,3 +155,5 @@ export default async function ServicesPage (props: { params: tParams }) {
     </div>
   );
 }
+
+export default ServicesPage;
