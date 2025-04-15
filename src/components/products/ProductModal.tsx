@@ -122,100 +122,91 @@ export function ProductCardModal({
 
     // Original compact layout with improvements
     return (
-        <div className="w-full  ">
-            {/* Carrusel: delegamos a un Client Component */}
-            <div className="relative">
-                <MediaCarousel product={product} activeExpandButton={activeExpandButton} />
-
-                {/* Quick info overlay button */}
-                {description && (
-                    <>
-                        {/* <button 
-                            className="absolute bottom-3 left-3 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10 transition-colors"
-                        >
-                            <Heart className="w-5 h-5 text-gray-700" />
-                        </button> */}
-                        <button
-                            className="absolute bottom-3 right-3 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10 transition-colors"
-                            onClick={() => setShowDescription(!showDescription)}
-                            aria-label="Toggle description"
-                            title="Toggle description"
-                        >
-                            <Info className="w-5 h-5 text-gray-700" />
-                        </button></>
-                )}
-
-                {/* Description overlay */}
-                {showDescription && description && (
-                    <div className="absolute inset-0 bg-white/90 backdrop-blur-sm p-4 overflow-auto z-20 transition-opacity">
-                        <button
-                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                            onClick={() => setShowDescription(false)}
-                        >
-                            ×
-                        </button>
-                        <h3 className=" mb-2 text-xl font-bold text-gray-800">Description</h3>
-                        <p className="text-sm text-gray-700">{description}</p>
-                    </div>
-                )}
+        <div className="w-full h-full flex flex-col justify-between">
+          {/* Carrusel de imágenes */}
+          <div className="relative">
+            <MediaCarousel product={product} activeExpandButton={activeExpandButton} />
+      
+            {description && (
+              <>
+                <button
+                  className="absolute bottom-3 right-3 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10 transition-colors"
+                  onClick={() => setShowDescription(!showDescription)}
+                  aria-label="Toggle description"
+                  title="Toggle description"
+                >
+                  <Info className="w-5 h-5 text-gray-700" />
+                </button>
+              </>
+            )}
+      
+            {showDescription && (
+              <div className="absolute inset-0 bg-white/90 backdrop-blur-sm p-4 overflow-auto z-20 transition-opacity">
+                <button
+                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowDescription(false)}
+                >
+                  ×
+                </button>
+                <h3 className="mb-2 text-xl font-bold text-gray-800">Description</h3>
+                <p className="text-sm text-gray-700">{description}</p>
+              </div>
+            )}
+          </div>
+      
+          {/* Línea divisoria */}
+          <div className="flex flex-row justify-center font-thin border-t border-gray-300 mb-1 mt-2 mx-4" />
+      
+          {/* Contenido principal del producto */}
+          <div className="flex flex-col flex-grow items-center justify-start text-center px-0">
+            {/* Info: nombre y categoría */}
+            <div className="flex-grow px-4">
+              <h2 className="text-lg lg:text-xl font-semibold text-gray-900 break-words">
+                {name}
+              </h2>
+              <p className="text-sm text-gray-600">{category}</p>
             </div>
+      
 
-            <div className="flex flex-row justify-center font-thin border-t border-gray-300 mb-1 mt-2 mx-4" />
-
-            {/* Product info */}
-            <div className="flex flex-col flex-grow items-center justify-center text-center px-0">
-                <div>
-                    <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
-                        {name}
-                    </h2>
-                    <p className="text-sm text-gray-600">
-                        {category}
-                    </p>
+      
+            {/* Selector y botón */}
+            <div className="mt-1 w-full flex flex-col gap-3 px-4">
+              {/* Selector de cantidad */}
+              <div className="flex justify-center">
+                <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+                  <button
+                    className="px-3 hover:bg-gray-200 text-gray-700 transition-colors duration-200 h-10"
+                    onClick={handleDecrement}
+                    title="Disminuir cantidad"
+                  >
+                    −
+                  </button>
+                  <div className="flex items-center justify-center w-12 h-8 text-base font-semibold text-gray-700">
+                    {quantity}
+                  </div>
+                  <button
+                    className="px-3 py-2 hover:bg-gray-200 text-gray-700 transition-colors duration-200 h-10"
+                    onClick={handleIncrement}
+                    title="Aumentar cantidad"
+                  >
+                    +
+                  </button>
                 </div>
-
-                <div className="flex-grow"></div>
-
-                {/* Selector de cantidad y Precio/Carrito mejorados */}
-                <div className="mt-3 w-full flex flex-col gap-3 ">
-                    {/* Selector de Cantidad Mejorado */}
-                    <div className="flex justify-center">
-                        <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
-                            <button
-                                className="px-3 hover:bg-gray-200 text-gray-700 transition-colors duration-200 h-10"
-                                aria-label="Disminuir cantidad"
-                                onClick={handleDecrement}
-                                title="Disminuir cantidad"
-
-                            >
-                                −
-                            </button>
-                            <div className="flex items-center justify-center w-12 h-8 text-base font-semibold text-gray-700">
-                                {quantity}
-                            </div>
-                            <button
-                                className="px-3 py-2 hover:bg-gray-200 text-gray-700 transition-colors duration-200 h-10"
-                                aria-label="Aumentar cantidad"
-                                onClick={handleIncrement}
-                                title="Aumentar cantidad"
-                            >
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Precio y botón de agregar al carrito Mejorado */}
-                    <div className="w-full ">
-                        <button
-                            className="w-full inline-flex items-center justify-center gap-2 rounded-b-lg bg-teal-600 py-3 text-white font-medium shadow-lg transition-all hover:bg-teal-700 active:scale-95 active:shadow-none"
-                            onClick={handleAddToCart}
-                            aria-label="Agregar al carrito"
-                            title="Agregar al carrito"
-                        >
-                            <ShoppingCartIcon className="w-5 h-5" /> ₡{price ? price.toFixed(0) : 'Price not available'}
-                        </button>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
+      
+          {/* Botón de precio/carrito fijo abajo */}
+          <div className="w-full mt-2">
+            <button
+              className="w-full inline-flex items-center justify-center gap-2 rounded-b-lg bg-teal-600 py-3 text-white font-medium shadow-lg transition-all hover:bg-teal-700 active:scale-95 active:shadow-none"
+              onClick={handleAddToCart}
+              aria-label="Agregar al carrito"
+            >
+              <ShoppingCartIcon className="w-5 h-5" /> ₡{price ? price.toFixed(0) : 'Price not available'}
+            </button>
+          </div>
         </div>
-    );
+      );
+      
 }

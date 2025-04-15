@@ -20,6 +20,7 @@ const categories = [
   { name: 'Guacamayas y aves', slug: '?category=macaws-and-birds' },
   { name: 'Caballos y figuras ecuestres', slug: '?category=horse-figures' },
   { name: 'Marcos decorativos', slug: '?category=decorative-frames' },
+  { name: 'Utensilios y sets de cocina', slug: '?category=kitchen-sets' }
 ];
 
 

@@ -139,9 +139,10 @@ const { replace } = useRouter();
 interface MediaItemCardProps {
   product: Product;
   activeExpandButton: boolean;
+  index: number;
 }
 
-function MediaItemCard({ product, activeExpandButton }: MediaItemCardProps) {
+function MediaItemCard({ product, activeExpandButton, index }: MediaItemCardProps) {
   return (
     <div className="relative w-full h-full ">
 
@@ -149,10 +150,10 @@ function MediaItemCard({ product, activeExpandButton }: MediaItemCardProps) {
         <ExpandButton product={product} />
       )}
 
-      {product.media && product.media[0]?.type === "image" ? (
+      {product.media && product.media[index]?.type === "image" ? (
         <div className="relative w-full h-full ">
           <Image
-            src={product.media[0].url}
+            src={product.media[index].url}
             alt={product.name ?? ""}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -195,14 +196,16 @@ export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProp
     modules={[Navigation, Pagination]}
     navigation
     pagination={{ clickable: true }}
-    className="h-full w-full"
+    className="h-full w-full "
     loop={product.media ? product.media.length > 1 : false}
   >
-    {product.media?.map((item, index) => (
-      <SwiperSlide key={index} className="flex items-center justify-center h-full">
+    
+    {product.media?.map((_, index) => (
+      <SwiperSlide key={index} className="flex items-center justify-center h-full ">
         <MediaItemCard
           product={product}
           activeExpandButton={activeExpandButton}
+          index={index}
         />
       </SwiperSlide>
     ))}
