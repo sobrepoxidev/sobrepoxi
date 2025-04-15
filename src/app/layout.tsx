@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -18,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <CartProvider>
-      {children}
-    </CartProvider>
+    <Suspense>
+      <CartProvider>
+        {children}
+      </CartProvider>
+    </Suspense>
   );
 }

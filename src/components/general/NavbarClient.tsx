@@ -150,51 +150,59 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
             </li>
           ))}
           <li>
-            <div ref={categoryMenuRef}>
-              <button 
-                onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-                className="category-trigger flex items-center rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                aria-expanded={isCategoryMenuOpen}
-                aria-haspopup="true"
+          <div ref={categoryMenuRef} className="relative">
+  <button 
+    onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
+    className="category-trigger flex items-center rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+    aria-expanded={isCategoryMenuOpen}
+    aria-haspopup="true"
+  >
+    Tienda 
+    <ChevronDown 
+      className="ml-1 h-4 w-4 transition-transform duration-200" 
+      style={{ transform: isCategoryMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} 
+    />
+  </button>
+  
+  {isCategoryMenuOpen && (
+    <div 
+      className="absolute left-0 right-0 top-full z-50 md:left-auto md:right-auto md:w-[28rem] border-t border-gray-100 bg-white shadow-lg md:rounded-lg md:border md:border-gray-100"
+      role="menu"
+    >
+      <div className="p-1 md:p-3 max-h-[36rem] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-300 scrollbar-track-gray-100">
+        
+        {/* Enlace a todos los productos */}
+        <Link
+          href="/products"
+          className="block rounded-md px-3 py-2 font-medium text-gray-800 transition hover:bg-teal-50 hover:text-teal-700"
+          onClick={() => setIsCategoryMenuOpen(false)}
+          role="menuitem"
+        >
+          Todos los productos
+        </Link>
+
+        <div className="my-2 h-px bg-gray-100" />
+
+        {/* Lista de categorías en 2 columnas */}
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-4">
+          {categories.map((category) => (
+            <li key={category.slug}>
+              <Link 
+                href={`/products/${category.slug}`} 
+                className="block rounded-md px-3 py-2 text-gray-700 transition hover:bg-teal-50 hover:text-teal-700 leading-tight"
+                onClick={() => setIsCategoryMenuOpen(false)}
+                role="menuitem"
               >
-                Tienda <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200" style={{transform: isCategoryMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)'}} />
-              </button>
-              
-              {isCategoryMenuOpen && (
-                <div 
-                  className="absolute left-0 right-0 top-full z-50 border-t border-gray-100 bg-white shadow-lg md:left-auto md:right-auto md:w-56 md:rounded-lg md:border md:border-gray-100"
-                  role="menu"
-                >
-                  <div className="p-1 md:p-2">
-                    <Link
-                      href="/products"
-                      className="block rounded-md px-3 py-2 font-medium text-gray-800 transition hover:bg-teal-50 hover:text-teal-700"
-                      onClick={() => setIsCategoryMenuOpen(false)}
-                      role="menuitem"
-                    >
-                      Todos los productos
-                    </Link>
-                    
-                    <div className="my-1 h-px bg-gray-100"></div>
-                    
-                    <ul className="space-y-1">
-                      {categories.map((category) => (
-                        <li key={category.slug}>
-                          <Link 
-                            href={`/products/${category.slug}`} 
-                            className="block rounded-md px-3 py-2 text-gray-700 transition hover:bg-teal-50 hover:text-teal-700"
-                            onClick={() => setIsCategoryMenuOpen(false)}
-                            role="menuitem"
-                          >
-                            {category.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </div>
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )}
+</div>
+
           </li>
           <li >
               <Link 
@@ -326,134 +334,136 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-gray-100 bg-white shadow-lg md:hidden">
-          <nav className="px-4 py-1">
-            <div className="mb-2 rounded-lg bg-gray-50 p-1">
-              <div className="flex items-center rounded-md border border-gray-300 bg-white px-3 py-2">
-                <Search className="h-5 w-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Buscar productos o artesanos..."
-                  className="ml-2 w-full border-0 bg-transparent text-gray-700 focus:outline-none focus:ring-0"
-                />
-              </div>
-            </div>
-            
-            <ul className="space-y-0">
-              {
-              navigationLinks.map((link) => (
-                <li key={link.path}>
-                  <Link 
-                    href={link.path} 
-                    className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-
-              ))}
-              <li>
+{isMenuOpen && (
+  <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto  bg-white shadow-lg md:hidden">
+    <nav className="px-4 py-1">
+      <div className="flex items-center justify-between">
+        <button className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm text-gray-700 transition hover:bg-gray-50">
+          <Globe className="h-5 w-5" />
+          <span>Español</span>
+          <ChevronDown className="h-4 w-4" />
+        </button>
+        
+        <Link
+          href="/cart"
+          className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm font-medium text-teal-700 transition hover:bg-teal-50"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <ShoppingBag className="h-5 w-5" />
+          <span>Ver carrito ({cardQuantity})</span>
+        </Link>
+      </div>
+      
+      <div className="my-4 h-px bg-gray-100"></div>
+      
+      {/* Mobile Auth Links */}
+{/* Mobile Auth Links */}
+<div className="pt-2 pb-3">
+  <div className="space-y-3">
+    {session ? (
+      <>
+        <Link 
+          href="/account"
+          className="block text-base font-medium text-teal-600 px-1"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Mi cuenta
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="inline-block rounded-md border border-red-200 px-4 py-2 text-base font-medium text-red-600 transition hover:bg-red-50"
+        >
+          Cerrar sesión
+        </button>
+      </>
+    ) : (
+      <>
+        <Link 
+          href="/login"
+          className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Iniciar sesión
+        </Link>
+        <Link 
+          href="/register"
+          className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Registrarse
+        </Link>
+      </>
+    )}
+  </div>
+</div>
+      
+      {/* <div className="my-4 h-px bg-gray-100"></div> */}
+      
+      <div className="my-2 rounded-lg bg-gray-50 p-1">
+        <div className="flex items-center rounded-md border border-gray-300 bg-white px-3 py-2">
+          <Search className="h-5 w-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Buscar productos o categorías..."
+            className="ml-2 w-full border-0 bg-transparent text-gray-700 focus:outline-none focus:ring-0"
+          />
+        </div>
+      </div>
+      
+      <ul className="space-y-0">
+        {navigationLinks.map((link) => (
+          <li key={link.path}>
+            <Link 
+              href={link.path} 
+              className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          </li>
+        ))}
+        
+        <li>
+          <Link 
+            href="/contact" 
+            className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contacto
+          </Link>
+        </li>
+        
+        <li className="pt-1">
+          <p className="px-3 py-1 text-base font-medium text-gray-700">
+            Tienda
+          </p>
+          <ul className="ml-2 space-y-0 border-l border-gray-100 pl-2">
+            <li>
               <Link 
-                    href="/contact" 
-                    className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Contacto
-                  </Link>
-              </li>
-              
-              <li className="pt-1">
-                <p className="px-3 py-1 text-base font-medium text-gray-700">
-                  Tienda
-                </p>
-                <ul className="ml-2 space-y-0 border-l border-gray-100 pl-2">
-                  <li>
-                    <Link 
-                      href="/products" 
-                      className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Todos los productos
-                    </Link>
-                  </li>
-                  {categories.map((category) => (
-                    <li key={category.slug}>
-                      <Link 
-                        href={`/products/${category.slug}`} 
-                        className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {category.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-            
-            <div className="my-4 h-px bg-gray-100"></div>
-            
-            <div className="flex items-center justify-between">
-              <button className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm text-gray-700 transition hover:bg-gray-50">
-                <Globe className="h-5 w-5" />
-                <span>Español</span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-              
-              <Link
-                href="/cart"
-                className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm font-medium text-teal-700 transition hover:bg-teal-50"
+                href="/products" 
+                className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <ShoppingBag className="h-5 w-5" />
-                <span>Ver carrito ({cardQuantity})</span>
+                Todos los productos
               </Link>
-            </div>
-
-            {/* Mobile Auth Links */}
-            <li className="pt-4 border-t border-gray-100 mt-4">
-              <div className="space-y-1">
-                {session ? (
-                  <>
-                    <Link 
-                      href="/account"
-                      className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Mi cuenta
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
-                    >
-                      Cerrar sesión
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link 
-                      href="/login"
-                      className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Iniciar sesión
-                    </Link>
-                    <Link 
-                      href="/register"
-                      className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Registrarse
-                    </Link>
-                  </>
-                )}
-              </div>
             </li>
-          </nav>
-        </div>
-      )}
+            {categories.map((category) => (
+              <li key={category.slug}>
+                <Link 
+                  href={`/products/${category.slug}`} 
+                  className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+)}
     </>
   );
 }

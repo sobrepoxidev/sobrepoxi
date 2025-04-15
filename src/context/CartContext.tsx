@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Database } from '@/types-db';
+ 
 
 type Product = Database['products'];
 
@@ -41,13 +42,12 @@ function decodeCartFromBase64(encoded: string): { id: number; qty: number }[] {
     return [];
   }
 }
-
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-
+  
   // 🔄 Control para evitar el sync en el primer render
   const firstRender = useRef(true);
 
