@@ -1,14 +1,22 @@
 //1import Image from "next/image";
 import Hero from "@/components/home/Hero";
-import Impact from "@/components/home/Impact";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
+import ValueProposition from "@/components/home/ValueProposition";
+import Testimonials from "@/components/home/Testimonials";
+import PopularCategories from "@/components/home/PopularCategories";
+import CallToAction from "@/components/home/CallToAction";
 
 export default function Home() {
   return (
     <div>
       <main>
-        
+
         <Hero />
-        <Impact />
+        <FeaturedProducts />
+        <ValueProposition />
+        <Testimonials />
+        <PopularCategories />
+        <CallToAction />
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         {/* <a

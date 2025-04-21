@@ -144,7 +144,7 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
         {/* Fallback mientras se cargan datos o client components */}
         <Suspense fallback={<Loading />}>
     
-        <GalleryModal initialProduct={initialProductForModal} />
+        <GalleryModal initialProduct={initialProductForModal as Product} />
 
          
           {/* Grid de Productos (ahora muestra solo la página actual) */}

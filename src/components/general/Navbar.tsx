@@ -27,6 +27,7 @@ const categories = [
 const navigationLinks = [
   { name: 'Inicio', path: '/' },
   { name: 'Acerca de', path: '/about' },
+  { name: 'Impacto', path: '/impact' },
 ];
 
 export default function Navbar() {
@@ -37,12 +38,12 @@ export default function Navbar() {
         <Link href="/" className="flex items-center space-x-2 focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
           <div className="relative overflow-hidden rounded-md">
             <Image 
-              src="/logo.webp" 
+              src="/nuevoLogo.webp" 
               alt="Hand Made Art Logo" 
 
-              width={140} 
+              width={100} 
               height={0} 
-              className="max-lg:w-[110px] object-contain"
+              className="max-lg:w-[70px] object-contain"
               priority
             />
           </div>

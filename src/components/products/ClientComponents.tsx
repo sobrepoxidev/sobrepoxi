@@ -123,7 +123,7 @@ const { replace } = useRouter();
 
   return (
     <button
-      className="absolute top-3 right-3 z-50 bg-black/70 bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-full transition-all duration-200 transform hover:scale-110"
+      className="absolute top-1 right-1 z-50 bg-black/70 bg-opacity-60 hover:bg-opacity-80 text-white p-1.5 rounded-full transition-all duration-200 transform hover:scale-110"
       onClick={handleClick}
       aria-label="Ver en pantalla completa"
       title="Ver en pantalla completa"
@@ -241,11 +241,9 @@ export function FullscreenModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4"
-      onClick={onClose}
     >
       <div
         className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-white sm:rounded-lg shadow-xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
       >
         <button
           className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
@@ -266,12 +264,13 @@ export function FullscreenModal({
   );
 }
 interface GalleryModalProps {
-  initialProduct?: Product | null; // Nueva prop opcional
+  initialProduct?: Product; // Nueva prop opcional
+  from?: string;
 }
 // ---------------------------------------------------------
 // 6) Modal global que escucha el evento 'openGalleryModal'
 // ---------------------------------------------------------
-export function GalleryModal({ initialProduct }: GalleryModalProps) {
+export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
   const [modalContent, setModalContent] = useState<{
     isOpen: boolean;
     product: Product | null;
@@ -284,7 +283,11 @@ export function GalleryModal({ initialProduct }: GalleryModalProps) {
   const closeModal = () => {
     console.log("Cerrando modal..."); // Log para depuración
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("id");
+    if(from && from === "hero") {
+      params.delete("idh");
+    } else {
+      params.delete("id");
+    }
     const url = `${pathname}?${params.toString()}`;
     replace(url, { scroll: false });
     setModalContent({ isOpen: false, product: null });
@@ -294,7 +297,8 @@ export function GalleryModal({ initialProduct }: GalleryModalProps) {
   // Este efecto ahora SOLO depende de initialProduct. Se ejecutará si esa prop cambia.
   useEffect(() => {
     // Obtiene el ID de la URL *en el momento en que este efecto se ejecuta*
-    const urlId = searchParams.get('id');
+
+    const urlId =  from ? from === "hero" ? searchParams.get('idh') : searchParams.get('id') : searchParams.get('id') ;
     console.log(`Efecto 1 (initialProduct): initialProduct=`, initialProduct ? initialProduct.id : 'null', `urlId=${urlId}`);
 
     // Si tenemos la prop initialProduct, y coincide con el ID en la URL actual...
@@ -332,12 +336,22 @@ export function GalleryModal({ initialProduct }: GalleryModalProps) {
 
       // Asegurar que la URL se actualice (ExpandButton ya lo hace, pero es buena práctica aquí también)
       const params = new URLSearchParams(searchParams.toString());
-      params.set("id", productToOpen.id.toString());
-      // Comprobar si la URL ya tiene el ID correcto para evitar un replace innecesario
-      if (searchParams.get('id') !== productToOpen.id.toString()) {
-         console.log("Efecto 2: Actualizando URL por evento.");
-         replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+      if(from && from === "hero") {
+        params.set("idh", productToOpen.id.toString());
+        if(searchParams.get('idh') !== productToOpen.id.toString()) {
+          console.log("Efecto 2: Actualizando URL por evento.");
+          replace(`${pathname}?${params.toString()}`, { scroll: false });
+        }
+      } else {
+        params.set("id", productToOpen.id.toString());
+        // Comprobar si la URL ya tiene el ID correcto para evitar un replace innecesario
+        if (searchParams.get('id') !== productToOpen.id.toString()) {
+          console.log("Efecto 2: Actualizando URL por evento.");
+          replace(`${pathname}?${params.toString()}`, { scroll: false });
+        }
       }
+     
     };
 
     console.log("Efecto 2: Añadiendo listener para openGalleryModal");
