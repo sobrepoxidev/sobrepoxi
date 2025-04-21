@@ -136,7 +136,7 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
          {category ? category : 'Todos los Productos'}
         </h1>
         <p className="w-full text-sm sm:text-lg  text-gray-600 mt-2 text-start">
-            Aquí encontrarás nuestros {category ? `${category} ` : 'productos'}. Expándelos para verlos más detalladamente.
+            Aquí encontrarás nuestros {category ? `${category}` : 'productos'}. Expándelos para verlos más detalladamente.
             {totalPages > 1 && ` (Página ${currentPage} de ${totalPages})`}
         </p>
         {productFetchError && <p className="text-red-500 mt-4 text-start">{productFetchError}</p>}

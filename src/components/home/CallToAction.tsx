@@ -43,7 +43,7 @@ export default function CallToAction() {
             <input 
               type="email" 
               placeholder="Tu correo electrónico" 
-              className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
+              className="flex-grow px-4 py-3 border border-white/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
               required
             />
             <button 
