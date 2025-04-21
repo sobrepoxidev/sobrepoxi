@@ -215,7 +215,7 @@ export function TransformationStories() {
                 </div>
               </div>
               <div className="p-6">
-                <div className="mb-4 italic text-gray-600">"{story.quote}"</div>
+                <div className="mb-4 italic text-gray-600">&quot;{story.quote}&quot;</div>
                 <p className="mb-4 text-gray-700">{story.story}</p>
                 <div className="border-t border-gray-200 pt-4 mt-4">
                   <div className="flex items-center gap-2 mb-2">
