@@ -95,7 +95,7 @@ export default function ImpactPage() {
 }
 
 // impact/components/ImpactStatistics.tsx - Server Component
-export function ImpactStatistics() {
+function ImpactStatistics() {
   const stats = [
     { number: "25+", label: "Artesanos apoyados", description: "Personas privadas de libertad que han participado en nuestro programa" },
     { number: "5", label: "Años de trayectoria", description: "Transformando vidas a través del arte y la formación profesional" },
@@ -157,7 +157,7 @@ export function ImpactStatistics() {
 }
 
 // impact/components/TransformationStories.tsx - Server Component
-export function TransformationStories() {
+function TransformationStories() {
   const stories = [
     {
       name: "Manuel Rojas",
@@ -253,7 +253,7 @@ export function TransformationStories() {
 }
 
 // impact/components/RehabilitationProcess.tsx - Server Component
-export function RehabilitationProcess() {
+function RehabilitationProcess() {
   const steps = [
     {
       title: "Capacitación inicial",
@@ -394,7 +394,7 @@ export function RehabilitationProcess() {
 }
 
 // impact/components/Collaborations.tsx - Server Component
-export function Collaborations() {
+function Collaborations() {
   const partners = [
     {
       name: "Asamblea Legislativa de Costa Rica",
@@ -490,7 +490,7 @@ export function Collaborations() {
   );
 }
 
-export function WorkshopGallery() {
+function WorkshopGallery() {
   const workshopImages = [
     {
       src: "/img.webp",
@@ -620,7 +620,7 @@ export function WorkshopGallery() {
 }
 
 
-export function ArtisanTestimonials() {
+function ArtisanTestimonials() {
   const testimonials = [
     {
       quote: "Nunca pensé que podría crear algo tan hermoso con mis propias manos. Este programa me ha devuelto la dignidad y me hace sentir orgulloso de lo que puedo lograr.",
@@ -799,8 +799,7 @@ export function ArtisanTestimonials() {
 }
 
 // impact/components/ReintegrationProgram.tsx - Server Component
-
-export function ReintegrationProgram() {
+ function ReintegrationProgram() {
   const reintegrationSteps = [
     {
       title: "Preparación pre-liberación",
