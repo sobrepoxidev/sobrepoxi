@@ -399,22 +399,22 @@ export function Collaborations() {
     {
       name: "Asamblea Legislativa de Costa Rica",
       logo: "/logoasamble.webp",
-      description: "Colabora en la implementación de políticas que apoyan los programas de reinserción social y ofrece espacios para la exposición y venta de artesanías en eventos oficiales."
+      description: "Colabora en la implementación de políticas que apoyan los programas de reinserción social y ofrece espacios para la exposición y venta de artesanías en eventos oficiales.",
     },
     {
       name: "Grupo Café Britt",
       logo: "/img.webp",
-      description: "Aliado estratégico que comercializa algunas de nuestras artesanías en sus tiendas, especialmente los chorreadores de café tradicionales, dándoles visibilidad nacional e internacional."
+      description: "Aliado estratégico que comercializa algunas de nuestras artesanías en sus tiendas, especialmente los chorreadores de café tradicionales, dándoles visibilidad nacional e internacional.",
     },
     {
       name: "Ministerio de Justicia y Paz",
       logo: "/img.webp",
-      description: "Facilita el acceso a los centros penitenciarios y proporciona espacios adecuados para los talleres de formación y producción artesanal."
+      description: "Facilita el acceso a los centros penitenciarios y proporciona espacios adecuados para los talleres de formación y producción artesanal.",
     },
     {
       name: "Instituto Nacional de Aprendizaje (INA)",
       logo: "/img.webp",
-      description: "Proporciona capacitación técnica certificada en diversas disciplinas artesanales, elevando la calidad de los productos y la empleabilidad de los participantes."
+      description: "Proporciona capacitación técnica certificada en diversas disciplinas artesanales, elevando la calidad de los productos y la empleabilidad de los participantes.",
     }
   ];
 
@@ -469,6 +469,8 @@ export function Collaborations() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                   </svg>
                 </div>
                 <span className="font-medium text-gray-700">{diputado}</span>
@@ -478,7 +480,7 @@ export function Collaborations() {
           
           <div className="mt-8 text-center">
             <p className="text-gray-600 italic">
-              "Este proyecto demuestra que la reinserción social es posible cuando se combina la voluntad política con el talento y la determinación de quienes buscan una segunda oportunidad."
+              &quot;Este proyecto demuestra que la reinserción social es posible cuando se combina la voluntad política con el talento y la determinación de quienes buscan una segunda oportunidad.&quot;
             </p>
             <p className="mt-2 font-medium text-teal-700">— Rodrigo Arias Sánchez, Presidente de la Asamblea Legislativa 2022-2023</p>
           </div>
@@ -758,7 +760,6 @@ export function ArtisanTestimonials() {
                     <div className="bg-white/20 rounded-full p-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
                       </svg>
                     </div>
                     <span className="text-teal-50">5 ex-participantes han establecido talleres propios</span>
@@ -767,7 +768,6 @@ export function ArtisanTestimonials() {
                     <div className="bg-white/20 rounded-full p-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
                       </svg>
                     </div>
                     <span className="text-teal-50">12 artesanos han participado en ferias nacionales</span>
@@ -776,7 +776,6 @@ export function ArtisanTestimonials() {
                     <div className="bg-white/20 rounded-full p-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
                       </svg>
                     </div>
                     <span className="text-teal-50">3 participantes han ganado premios de artesanía</span>
@@ -785,7 +784,6 @@ export function ArtisanTestimonials() {
                     <div className="bg-white/20 rounded-full p-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
                       </svg>
                     </div>
                     <span className="text-teal-50">7 se han integrado a cooperativas artesanales</span>
