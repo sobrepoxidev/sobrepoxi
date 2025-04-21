@@ -133,10 +133,10 @@ const ServicesPage: React.FC<PageProps> = async ({ searchParams }: PageProps) =>
     >
       <section className="w-full max-w-7xl 2 flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative ">
         <h1 className="w-full text-xl sm:text-5xl font-extrabold text-start   text-teal-800 mt-1">
-         Todos los Productos
+         {category ? category : 'Todos los Productos'}
         </h1>
         <p className="w-full text-sm sm:text-lg  text-gray-600 mt-2 text-start">
-            Aquí encontrarás nuestros productos. Expándelos para verlos más detalladamente.
+            Aquí encontrarás nuestros {category ? `${category} ` : 'productos'}. Expándelos para verlos más detalladamente.
             {totalPages > 1 && ` (Página ${currentPage} de ${totalPages})`}
         </p>
         {productFetchError && <p className="text-red-500 mt-4 text-start">{productFetchError}</p>}
