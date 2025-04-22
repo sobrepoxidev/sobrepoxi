@@ -92,10 +92,10 @@ export default function About() {
           <div className="flex flex-col lg:flex-row items-center gap-8">
             <div className="w-full lg:w-1/2">
               <Image
-                src="/img.webp"
+                src="/creators.webp"
                 alt="Fundadores de Hand Made Art"
-                width={600}
-                height={400}
+                width={500}
+                height={0}
                 className="rounded-lg shadow-md"
               />
             </div>
