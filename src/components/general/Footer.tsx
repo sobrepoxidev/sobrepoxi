@@ -37,7 +37,7 @@ export default function Footer() {
       </div>
       <div className="text-xs text-neutral-400 text-center mt-4">
         2025 Hand Made Art. Desarrollado por{' '}
-        <Link href="https://sobrepoxi.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:underline text-primary font-semibold">
+        <Link href="https://sobrepoxi.com" target="_blank" rel="noopener noreferrer" className="hover:underline text-primary font-semibold">
           Sobrepoxi IT
         </Link>
       </div>

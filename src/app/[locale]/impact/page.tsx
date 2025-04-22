@@ -12,9 +12,20 @@ export default function ImpactPage() {
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-teal-800 text-white">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 lg:hidden">
           <Image
-            src="/images/impact-hero.jpg"
+            src="/impact/banner.webp"
+            alt="Impacto social"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+        </div>
+
+        {/* 👉 Visible solo en pantallas lg en adelante */}
+        <div className="absolute inset-0 z-0 hidden lg:block">
+          <Image
+            src="/impact/banner-lg.webp"
             alt="Impacto social"
             fill
             className="object-cover opacity-20"
@@ -56,13 +67,13 @@ export default function ImpactPage() {
       {/* Collaborations */}
       <Collaborations />
 
-      
+
       <WorkshopGallery />
 
-      
+
       <ArtisanTestimonials />
 
-    
+
       <ReintegrationProgram />
 
       {/* CTA Section */}
@@ -104,10 +115,10 @@ function ImpactStatistics() {
   ];
 
   return (
-    <section id="impact-stats"  className="py-28 bg-white">
+    <section id="impact-stats" className=" py-6 lg:py-28 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <span  className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
             En números
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Nuestro impacto en cifras</h2>
@@ -116,7 +127,7 @@ function ImpactStatistics() {
           </p>
         </div>
 
-        <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <div key={index} className="bg-teal-50 rounded-xl p-6 text-center hover:shadow-md transition border border-teal-100">
               <div className="text-4xl md:text-5xl font-bold text-teal-700 mb-2">{stat.number}</div>
@@ -160,28 +171,29 @@ function ImpactStatistics() {
 function TransformationStories() {
   const stories = [
     {
-      name: "Manuel Rojas",
-      image: "/img.webp",
-      quote: "Este programa me dio la oportunidad de descubrir un talento que no sabía que tenía. Ahora tengo una profesión y la esperanza de un nuevo comienzo cuando salga.",
-      story: "Manuel pasó de no tener ninguna habilidad técnica a convertirse en uno de nuestros mejores talladores de madera. Sus diseños de flora y fauna costarricense son de los más solicitados.",
+      name: "Marvin Alonso Brenes Oviedo",
+      image: "/impact/artesano-Eduardo.webp",
+      quote: "Este proyecto me ha llenado de fortaleza y motivación. Ha impulsado mi crecimiento personal y profesional. Como publicista y diseñador gráfico de profesión, he podido aplicar mis conocimientos, compartiendo lo que he aprendido en la comunidad con mis compañeros privados de libertad. Les he enseñado la importancia de sentirse útiles, productivos, y de reconocer que todos podemos desarrollar nuestras habilidades, talentos y destrezas.\n\nAprender el valor del trabajo en equipo sirve como base para realizar labores dignas, sin tener que recurrir al crimen. Nos demuestra que, con esfuerzo y dedicación, podemos convertirnos en mejores personas cada día.\n\nTambién me ha ayudado a entender que esta prueba, este encierro, no es para siempre. La libertad llegará, y debemos estar preparados para valorar las oportunidades que se nos presenten.\n\nLa mayoría de personas privadas de libertad crecieron en barrios marginados, donde las oportunidades son escasas y donde las drogas y los homicidios son parte del día a día. Por eso, es fundamental que comprendan que sí es posible llevar una vida recta, sin importar de dónde vienen ni cómo crecieron. Pueden elegir el camino correcto, dejar atrás todo lo negativo y canalizar sus capacidades para sembrar en tierra fértil y construir un futuro mejor para ellos y sus familias.",
+      story: "Jorge pasó de no tener ninguna habilidad técnica a convertirse en uno de nuestros mejores talladores de madera. Sus diseños son de los más solicitados.",
       beforeSkill: "Ninguna experiencia en artesanía",
-      afterSkill: "Maestro tallador especializado en fauna costarricense"
+      afterSkill: "Maestro tallador especializado en flora y fauna costarricense"
     },
     {
-      name: "Carolina Mendoza",
-      image: "/img.webp",
-      quote: "Aprender a crear con mis manos me ha dado paz y propósito. Cada pieza que hago es un paso más hacia mi reinserción en la sociedad.",
-      story: "Durante sus tres años en el programa, Carolina ha desarrollado técnicas innovadoras para trabajar con materiales reciclados, transformándolos en hermosas piezas decorativas.",
+      name: "Eduardo Gutiérrez Salazar",
+
+      image: "/impact/artesano-Jorge.webp",
+      quote: "A quién interese, el proyecto de Handmade Art ha sido una gran oportunidad para mí. A través de este proyecto, he podido cubrir mis necesidades básicas, como pasta de dientes, jabón, papel higiénico, etc. En mi situación, como persona privada de libertad, me ha ayudado a desarrollar habilidades que no sabía que tenía. He aprendido a hacer cosas que nunca pensé que podría lograr, lo cual me está preparando para un posible futuro, para crecer como persona y evitar volver a conductas delictivas. Muchísimas gracias.",
+      story: "Durante sus tres años en el programa, Eduardo ha desarrollado técnicas innovadoras para trabajar con materiales reciclados, transformándolos en hermosas piezas decorativas.",
       beforeSkill: "Conocimientos básicos de costura",
-      afterSkill: "Artesana especializada en upcycling y materiales sostenibles"
+      afterSkill: "Artesano especializado en upcycling y materiales sostenibles"
     },
     {
-      name: "Roberto Jiménez",
-      image: "/img.webp",
-      quote: "Esta oportunidad cambió mi perspectiva sobre mí mismo y mi futuro. Ahora tengo un oficio que me apasiona y me permitirá salir adelante.",
-      story: "Roberto ha destacado en la creación de chorreadores de café tradicionales con toques modernos. Desde que salió en 2022, ha establecido su propio taller artesanal.",
-      beforeSkill: "Trabajos informales sin especialización",
-      afterSkill: "Emprendedor con taller propio de artesanías en madera"
+      name: "Jonathan A. Sandoval Martínez",
+       image: "/impact/artesano-Jonathan.webp",
+      quote: "Recibe un cordial saludo de mi parte, Jonathan Sandoval Martínez. Te escribo para agradecerte por adquirir una de mis piezas de arte. Quiero que sepas que, a través de la artesanía, otras personas privadas de libertad y sus familias también se benefician, ya que este trabajo les ayuda a cubrir los gastos de las visitas. Para mí, es un honor formar parte de Handmade Art, ya que mejora mi vida y la de mi familia, al mismo tiempo que contribuyo a la sociedad mediante el arte. Saber que puedo retribuir a la sociedad me motiva, y ser visto como una persona productiva, dedicada y responsable con mis deberes me llena de orgullo. Este es mi mayor agradecimiento, ya que tengo una hija que padece leucemia, y a través del arte, con la ayuda de Handmade Art, estoy cubriendo los gastos médicos. Mi más sincero agradecimiento a Handmade Art.",
+      story: "Jonathan ha destacado en la creación de chorreadores de café tradicionales y marcos de espejo con toques modernos.",
+      beforeSkill: "Ninguna experiencia en artesanía",
+      afterSkill: "Artesano especializado en chorreadores de café y marcos de espejo"
     }
   ];
 
@@ -206,7 +218,7 @@ function TransformationStories() {
                   src={story.image}
                   alt={story.name}
                   fill
-                  className="object-fit"
+                  className="object-cover object-top"
                   priority={index === 0}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -340,14 +352,14 @@ function RehabilitationProcess() {
               {index < steps.length - 1 && (
                 <div className="absolute top-16 left-6 md:left-10 w-0.5 h-24 bg-teal-200 hidden md:block"></div>
               )}
-              
+
               {/* Icono */}
               <div className="bg-teal-100 rounded-full p-4 z-10">
                 <div className="bg-teal-600 text-white rounded-full p-3">
                   {step.icon}
                 </div>
               </div>
-              
+
               {/* Contenido */}
               <div className="flex-1 bg-teal-50 rounded-lg p-6 border border-teal-100">
                 <h3 className="text-xl font-semibold text-teal-800 mb-2">{step.title}</h3>
@@ -360,7 +372,7 @@ function RehabilitationProcess() {
         <div className="mt-16 bg-teal-700 text-white rounded-xl p-8 relative overflow-hidden">
           <div className="absolute right-0 bottom-0 w-64 h-64 bg-teal-600/30 rounded-full -mr-20 -mb-20"></div>
           <div className="absolute left-0 top-0 w-32 h-32 bg-teal-600/30 rounded-full -ml-10 -mt-10"></div>
-          
+
           <div className="relative z-10">
             <h3 className="text-2xl font-bold mb-4">Resultados del programa</h3>
             <p className="text-teal-50 mb-6">
@@ -403,23 +415,23 @@ function Collaborations() {
     },
     {
       name: "Grupo Café Britt",
-      logo: "/img.webp",
+      logo: "/impact/logo-cafe-britt-.svg",
       description: "Aliado estratégico que comercializa algunas de nuestras artesanías en sus tiendas, especialmente los chorreadores de café tradicionales, dándoles visibilidad nacional e internacional.",
     },
     {
       name: "Ministerio de Justicia y Paz",
-      logo: "/img.webp",
+      logo: "/impact/Ministerio-de-Justicia y-Paz.webp",
       description: "Facilita el acceso a los centros penitenciarios y proporciona espacios adecuados para los talleres de formación y producción artesanal.",
     },
     {
       name: "Instituto Nacional de Aprendizaje (INA)",
-      logo: "/img.webp",
+      logo: "/impact/ina-logo.webp",
       description: "Proporciona capacitación técnica certificada en diversas disciplinas artesanales, elevando la calidad de los productos y la empleabilidad de los participantes.",
     }
   ];
 
   const diputados = [
-    "María Fernández Quirós", "Carlos Jiménez Mora", "Silvia Hernández Sánchez", 
+    "María Fernández Quirós", "Carlos Jiménez Mora", "Silvia Hernández Sánchez",
     "Jonathan Acuña Soto", "Pilar Cisneros Gallo", "Rodrigo Arias Sánchez"
   ];
 
@@ -461,7 +473,7 @@ function Collaborations() {
           <p className="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
             Contamos con el respaldo de diversos diputados que han impulsado iniciativas legislativas para fortalecer los programas de reinserción social a través del arte y la artesanía.
           </p>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {diputados.map((diputado, index) => (
               <div key={index} className="bg-teal-50 rounded-lg p-4 flex items-center gap-3">
@@ -477,7 +489,7 @@ function Collaborations() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-8 text-center">
             <p className="text-gray-600 italic">
               &quot;Este proyecto demuestra que la reinserción social es posible cuando se combina la voluntad política con el talento y la determinación de quienes buscan una segunda oportunidad.&quot;
@@ -493,32 +505,32 @@ function Collaborations() {
 function WorkshopGallery() {
   const workshopImages = [
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-tallado-animales.webp",
       alt: "Taller de tallado en madera",
       caption: "Taller de tallado en madera donde se elaboran figuras de animales autóctonos"
     },
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-creacion-de-chorreadores-de-cafe.webp",
       alt: "Elaboración de chorreadores de café",
       caption: "Proceso de creación de chorreadores de café tradicionales costarricenses"
     },
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-marcos-y-espejos.webp",
       alt: "Taller de marcos y espejos",
       caption: "Artesanos trabajando en marcos decorativos con motivos tropicales"
     },
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-detalle-de-madera.webp",
       alt: "Trabajo en detalle de madera",
       caption: "Detalles finos en piezas decorativas inspiradas en la flora costarricense"
     },
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-capacitacion-tecnica.webp",
       alt: "Capacitación técnica",
       caption: "Sesión de capacitación en técnicas avanzadas de acabado en madera"
     },
     {
-      src: "/img.webp",
+      src: "/impact/Taller-de-exhibicion.webp",
       alt: "Exhibición de artesanías",
       caption: "Muestra de productos finalizados listos para su comercialización"
     }
@@ -623,31 +635,31 @@ function WorkshopGallery() {
 function ArtisanTestimonials() {
   const testimonials = [
     {
-      quote: "Nunca pensé que podría crear algo tan hermoso con mis propias manos. Este programa me ha devuelto la dignidad y me hace sentir orgulloso de lo que puedo lograr.",
-      name: "José Antonio Campos",
+      quote: "Este proyecto me ha enseñado muchas cosas. He aprendido nuevas habilidades, cómo sobrevivir, y me ha llenado de fuerza para seguir adelante. Me ayuda a aprender mucho más sobre este proyecto.",
+      name: "Mario Gerson Ugalde Aguilar",
       role: "Especialista en tallado de aves",
       image: "/home/face-m.webp",
       years: "2 años en el programa"
     },
     {
-      quote: "Cada pieza que creo me conecta con mi tierra y me recuerda que tengo mucho que aportar. Estoy agradecido por la oportunidad de transformar mi vida a través del arte.",
-      name: "Luisa Ramírez Mora",
-      role: "Artesana de marcos decorativos",
-      image: "/home/face-f.webp",
+      quote: "Handmade Art, le agradezco a Dios todos los días al despertar, porque cada día me levanto con un poco de trabajo, creando esas hermosas piezas que realizamos a diario. Nos esforzamos por crear cosas cada vez más bellas para superarnos como personas y como trabajadores. Nuestro objetivo es hacer lo mejor posible para que las personas se sientan satisfechas con nuestro trabajo cada día que pasa.",
+      name: "Ángel Muñoz Azofeifa",
+      role: "Artesano de marcos decorativos",
+      image: "/home/face-m.webp",
       years: "3 años en el programa"
     },
     {
-      quote: "Aprender este oficio cambió mi perspectiva. Ahora sé que puedo ser productivo y crear belleza, incluso en las circunstancias más difíciles.",
-      name: "Fernando Solís Gutiérrez",
+      quote: "Me gusta este proyecto de artesanía porque con él he desarrollado habilidades que tenía ocultas, además me veo en un futuro teniendo mi propio taller de ebanistería en la calle, y con el crecer como persona y empresario poder mantenerme económicamente y ayudar a mi familia y a otras personas, como trabajadores de mi futura empresa.",
+      name: "Jorge Vinicio Guzmán Guzmán",
       role: "Creador de chorreadores de café",
       image: "/home/face-m.webp",
       years: "18 meses en el programa"
     },
     {
-      quote: "Este trabajo me ha enseñado paciencia y perseverancia. Me llena de esperanza saber que al salir tendré un oficio que me apasiona y me permitirá mantener a mi familia.",
-      name: "María Elena Jiménez",
-      role: "Artesana de adornos en madera",
-      image: "/home/face-f.webp",
+      quote: "Este proyecto me ha ayudado a desarrollar mis habilidades y el don que Dios me ha dado, permitiéndome explotarlo al máximo. También me ha ayudado a ser una mejor persona y a vivir de los talentos con los que Dios me ha bendecido. Es una forma de cubrir mis necesidades personales.",
+      name: "Didier Hernández Obando",
+      role: "Artesano de adornos en madera",
+      image: "/home/face-m.webp",
       years: "2 años y medio en el programa"
     }
   ];
@@ -703,7 +715,7 @@ function ArtisanTestimonials() {
               Más allá de las estadísticas, estos testimonios reflejan el verdadero valor del programa en las vidas humanas.
             </p>
           </div>
-          
+
           <div className="flex flex-col md:flex-row justify-between gap-8">
             <div className="md:w-1/2">
               <div className="bg-white rounded-lg p-6 shadow-sm">
@@ -799,7 +811,7 @@ function ArtisanTestimonials() {
 }
 
 // impact/components/ReintegrationProgram.tsx - Server Component
- function ReintegrationProgram() {
+function ReintegrationProgram() {
   const reintegrationSteps = [
     {
       title: "Preparación pre-liberación",
@@ -875,7 +887,7 @@ function ArtisanTestimonials() {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2 relative h-64 md:h-auto">
               <Image
-                src="/img.webp"
+                src="/impact/goals.webp"
                 alt="Reinserción social a través del arte"
                 fill
                 className="object-fit"
