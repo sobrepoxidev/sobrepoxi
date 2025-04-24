@@ -11,7 +11,7 @@ export default function CallToAction() {
           <div className="absolute bottom-0 right-0 w-32 h-32 bg-teal-500/20 rounded-full translate-x-1/3 translate-y-1/3"></div>
           
           <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Únete a nuestro movimiento de cambio social</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Únete a nuestro movimiento de cambio social</h2>
             <p className="text-gray-800 text-lg mb-8">
               Al adquirir nuestras artesanías, no solo embelleces tu hogar con piezas únicas, sino que también contribuyes a 
               transformar vidas y crear oportunidades para personas privadas de libertad en Costa Rica.
