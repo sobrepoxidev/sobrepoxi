@@ -183,7 +183,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/homeimages/chorreadores-1-2-bg-1.webp?v=2"
+                      src="/home/chorreadores-1-2-bg-1.webp?v=2"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -201,7 +201,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/homeimages/chorreadores-13-bg-1.webp?v=2"
+                      src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -219,7 +219,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/homeimages/chorreadores-19-bg-1.webp?v=2"
+                      src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -237,7 +237,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/homeimages/chorreadores-bgt-15-1.webp?v=2"
+                      src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
@@ -264,7 +264,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/homeimages/chorreadores-1-2-bg-1.webp?v=2"
+                      src="/home/chorreadores-1-2-bg-1.webp?v=2"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -282,7 +282,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/homeimages/chorreadores-13-bg-1.webp?v=2"
+                      src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -300,7 +300,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/homeimages/chorreadores-19-bg-1.webp?v=2"
+                      src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -318,7 +318,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/homeimages/chorreadores-bgt-15-1.webp?v=2"
+                      src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
@@ -344,7 +344,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/homeimages/chorreadores-1-2-bg-1.webp?v=2"
+                      src="/home/chorreadores-1-2-bg-1.webp?v=2"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -362,7 +362,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/homeimages/chorreadores-13-bg-1.webp?v=2"
+                      src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -380,7 +380,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/homeimages/chorreadores-19-bg-1.webp?v=2"
+                      src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -398,7 +398,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/homeimages/chorreadores-bgt-15-1.webp?v=2"
+                      src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
