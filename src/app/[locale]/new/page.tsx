@@ -156,7 +156,7 @@ export default function NewHome() {
         </BannerTemplate>
 
         {/* Banner 3: Personalizado completamente diferente */}
-        <BannerTemplate linkHref="/products?category=drippers" bgColor="bg-gradient-to-r from-blue-500 to-purple-600">
+        <BannerTemplate linkHref="/products-images?category=drippers" bgColor="bg-gradient-to-r from-blue-500 to-purple-600">
           <div className="h-full flex flex-col items-center justify-center text-white text-center px-4">
             <h2 className="text-md lg:text-2xl font-light">Descubre nuestra</h2>
             <h1 className="text-3xl lg:text-4xl font-bold my-0.5 lg:my-4">NUEVA COLECCIÓN</h1>
@@ -183,7 +183,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/products/chorreadores-1-2-bg-1.webp"
+                      src="/products-images/chorreadores-1-2-bg-1.webp"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -201,7 +201,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/products/chorreadores-13-bg-1.webp"
+                      src="/products-images/chorreadores-13-bg-1.webp"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -219,7 +219,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/products/chorreadores-19-bg-1.webp"
+                      src="/products-images/chorreadores-19-bg-1.webp"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -237,7 +237,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/products/chorreadores-bgt-15-1.webp"
+                      src="/products-images/chorreadores-bgt-15-1.webp"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
@@ -264,7 +264,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/products/chorreadores-1-2-bg-1.webp"
+                      src="/products-images/chorreadores-1-2-bg-1.webp"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -282,7 +282,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/products/chorreadores-13-bg-1.webp"
+                      src="/products-images/chorreadores-13-bg-1.webp"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -300,7 +300,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/products/chorreadores-19-bg-1.webp"
+                      src="/products-images/chorreadores-19-bg-1.webp"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -318,7 +318,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/products/chorreadores-bgt-15-1.webp"
+                      src="/products-images/chorreadores-bgt-15-1.webp"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
@@ -344,7 +344,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
-                      src="/products/chorreadores-1-2-bg-1.webp"
+                      src="/products-images/chorreadores-1-2-bg-1.webp"
                       alt="Chorreador artesanal 1"
                       width={96}
                       height={0}
@@ -362,7 +362,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/products/chorreadores-13-bg-1.webp"
+                      src="/products-images/chorreadores-13-bg-1.webp"
                       alt="Chorreador artesanal 2"
                       width={99}
                       height={0}
@@ -380,7 +380,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/products/chorreadores-19-bg-1.webp"
+                      src="/products-images/chorreadores-19-bg-1.webp"
                       alt="Chorreador artesanal 3"
                       width={96}
                       height={0}
@@ -398,7 +398,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=15" className="block">
                     <Image
-                      src="/products/chorreadores-bgt-15-1.webp"
+                      src="/products-images/chorreadores-bgt-15-1.webp"
                       alt="Chorreador artesanal 4"
                       width={96}
                       height={0}
