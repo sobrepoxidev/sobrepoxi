@@ -140,7 +140,7 @@ const CarouselClient = ({ children }: CarouselProps) => {
 
   const handleTouchEnd = () => {
     const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) diff > 0 ? goToNext() : goToPrevious();
+    if (Math.abs(diff) > 50) (diff > 0 ? goToNext() : goToPrevious());
     touchStartX.current = 0;
     touchEndX.current = 0;
   };
