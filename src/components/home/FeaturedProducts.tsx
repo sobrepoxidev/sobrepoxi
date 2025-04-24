@@ -30,13 +30,14 @@ export default async function FeaturedProducts() {
           {products?.map((product) => (
             <div key={product.id} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
               <Link href={`/products?id=${product.id}`} className="block">
-                <div className="relative h-56 overflow-hidden bg-gray-50">
+                <div className="relative h-56 overflow-hidden bg-gray-50 flex items-center justify-center">
                   <Image
                     src={product.media?.[0]?.url || '/product-placeholder.png'}
                     alt={product.name || ''}
-                    fill
+                    width={110}
+                    height={0}
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    
                   />
                   <span className="absolute top-3 left-3 bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">
                     {product.category || 'Artesanía'}

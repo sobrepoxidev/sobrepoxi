@@ -51,7 +51,7 @@ export const metadata = {
 
 export default function NewHome() {
   return (
-    <div className=" max-w-[1500px] mx-auto relative z-0 min-h-screen bg-[#d7eee8]">
+    <div className=" max-w-[1500px] mx-auto relative z-0 h-full bg-[#d7eee8]">
       <Carousel>
         {/* Banner 1: Artesanías (tu banner original) */}
         <BannerTemplate linkHref="/impact">
