@@ -51,8 +51,7 @@ const supabase = createServerComponentClient({ cookies: () => cookieStore });
       >
         <NextIntlClientProvider locale={locale}>
         <SupabaseProvider session={session}>
-
-        <Navbar />
+          <Navbar locale={locale} />
           {children}
           <Footer />
           <Analytics />

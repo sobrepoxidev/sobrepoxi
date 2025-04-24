@@ -30,20 +30,21 @@ const navigationLinks = [
   { name: 'Impacto', path: '/impact' },
 ];
 
-export default function Navbar() {
+export default async function Navbar({ locale }: { locale: string }) {
+  console.log("locale: ", locale);
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 backdrop-blur-md transition-all duration-300 max-w-full w-full ">
       <div className="flex max-w-full items-center justify-between px-2  md:px-6 py-0.5 bg-white/95">
         {/* Logo - SSR */}
-        <Link href="/" className="flex items-center space-x-2 focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
+        <Link href="/" className="flex items-center space-x-2  focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
           <div className="relative overflow-hidden rounded-md">
-            <Image 
-              src="/logo3.webp" 
+          <Image 
+              src={locale === 'es' ? '/logo3es.webp' : '/logo3en.webp'}
               alt="Hand Made Art Logo" 
 
-              width={100 } 
+              width={250} 
               height={0} 
-              className="w-[50px] md:w-[70px] object-fill"
+              className="w-[75px] md:w-[100px] object-cover"
               priority
             />
           </div>

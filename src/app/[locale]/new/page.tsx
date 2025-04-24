@@ -185,9 +185,9 @@ export default function NewHome() {
                     <Image
                       src="/home/1.webp?v=2"
                       alt="Chorreador artesanal 1"
-                      width={120}
+                      width={150}
                       height={0}
-                      className="object-contain"
+                      className="object-cover pt-4"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -205,7 +205,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 2"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -223,7 +223,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 3"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -241,7 +241,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 4"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -268,7 +268,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 1"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -286,7 +286,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 2"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -304,7 +304,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 3"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -322,7 +322,7 @@ export default function NewHome() {
                       alt="Chorreador artesanal 4"
                       width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -339,16 +339,16 @@ export default function NewHome() {
             title: 'Más de nuestros chorreadores',
             className: 'bg-indigo-200',
             content: (
-              <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+              <div className="grid  grid-cols-2 w-full p-1 gap-1 h-full">
                 {/* Product 1 */}
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=1" className="block">
                     <Image
                       src="/home/chorreadores-1-2-bg-1.webp?v=2"
                       alt="Chorreador artesanal 1"
-                      width={96}
+                      width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -364,9 +364,9 @@ export default function NewHome() {
                     <Image
                       src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
-                      width={99}
+                      width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -382,9 +382,9 @@ export default function NewHome() {
                     <Image
                       src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
-                      width={96}
+                      width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
@@ -400,9 +400,9 @@ export default function NewHome() {
                     <Image
                       src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
-                      width={96}
+                      width={85}
                       height={0}
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
