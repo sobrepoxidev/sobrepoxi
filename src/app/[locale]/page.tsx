@@ -1,9 +1,9 @@
 //1import Image from "next/image";
-import Hero from "@/components/home/Hero";
+//import Hero from "@/components/home/Hero";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
-import ValueProposition from "@/components/home/ValueProposition";
-import Testimonials from "@/components/home/Testimonials";
-import PopularCategories from "@/components/home/PopularCategories";
+//import ValueProposition from "@/components/home/ValueProposition";
+//import Testimonials from "@/components/home/Testimonials";
+//import PopularCategories from "@/components/home/PopularCategories";
 import CallToAction from "@/components/home/CallToAction";
 import NewHome from "./new/page";
 
