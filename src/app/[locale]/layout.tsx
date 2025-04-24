@@ -45,7 +45,7 @@ const supabase = createServerComponentClient({ cookies: () => cookieStore });
   } = await supabase.auth.getSession();
 
   return (
-    <html lang={locale} className="">
+    <html lang={locale}>
       <body
         className={` ${geistSans.variable} ${geistMono.variable} antialiased `} //min-h-screen flex flex-col
       >

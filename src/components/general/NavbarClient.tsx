@@ -137,7 +137,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden items-center md:flex">
+      <nav className="hidden items-center lg:flex">
         <ul className="flex items-center gap-x-1 lg:gap-x-2">
           {navigationLinks.map((link) => (
             <li key={link.path}>
@@ -166,7 +166,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   
   {isCategoryMenuOpen && (
     <div 
-      className="absolute left-0 right-0 top-full z-50 md:left-auto md:right-auto md:w-[28rem] border-t border-gray-100 bg-white shadow-lg md:rounded-lg md:border md:border-gray-100"
+      className="absolute left-0 right-0 top-full z-50 md:left-auto md:right-auto md:w-[28rem] border-t border-gray-900 bg-white shadow-lg md:rounded-lg md:border md:border-gray-100"
       role="menu"
     >
       <div className="p-1 md:p-3 max-h-[36rem] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-300 scrollbar-track-gray-100">
