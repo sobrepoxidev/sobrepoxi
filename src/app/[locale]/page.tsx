@@ -5,17 +5,18 @@ import ValueProposition from "@/components/home/ValueProposition";
 import Testimonials from "@/components/home/Testimonials";
 import PopularCategories from "@/components/home/PopularCategories";
 import CallToAction from "@/components/home/CallToAction";
+import NewHome from "./new/page";
 
 export default function Home() {
   return (
     <div>
       <main>
 
-        <Hero />
+        <NewHome />
         <FeaturedProducts />
-        <ValueProposition />
-        <Testimonials />
-        <PopularCategories />
+        {/* <ValueProposition /> */}
+        {/* <Testimonials /> */}
+        {/* <PopularCategories /> */}
         <CallToAction />
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

@@ -17,22 +17,19 @@ export default async function FeaturedProducts() {
     .limit(4);
 
   return (
-    <section className="bg-white py-8">
+    <section className="max-w-[1500px] mx-auto relative z-0 h-full bg-[#d7eee8]">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Descubre nuestras artesanías
+            Destacados
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">Productos destacados</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Cada pieza es única, creada a mano por artesanos que transforman su arte en oportunidades
-          </p>
+          
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products?.map((product) => (
             <div key={product.id} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
-              <Link href={`/products/${product.id}`} className="block">
+              <Link href={`/products?id=${product.id}`} className="block">
                 <div className="relative h-56 overflow-hidden bg-gray-50">
                   <Image
                     src={product.media?.[0]?.url || '/product-placeholder.png'}
@@ -50,7 +47,7 @@ export default async function FeaturedProducts() {
               <div className="p-4">
                 <div className="mb-4">
                   <h3 className="font-semibold text-gray-800 mb-1">{product.name}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-2">{product.description}</p>
+                  {/* <p className="text-sm text-gray-600 line-clamp-2 mb-2">{product.description}</p> */}
                   <div className="flex items-center justify-between">
                     <p className="font-bold text-teal-700">
                       {product.price ? `₡${product.price}` : 'Consultar'}

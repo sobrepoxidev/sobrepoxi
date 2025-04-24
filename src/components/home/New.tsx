@@ -185,14 +185,14 @@ export default function NewHome() {
                     <Image
                       src="/home/1.webp?v=2"
                       alt="Chorreador artesanal 1"
-                      width={120}
+                      width={85}
                       height={0}
                       className="object-contain"
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Piñas decorativas
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                      Chorreador
                     </span>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=2" className="block">
                     <Image
-                      src="/home/2.webp?v=2"
+                      src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
                       width={85}
                       height={0}
@@ -209,8 +209,8 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                    Jarra y vasos en madera
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                      Hecho a mano
                     </span>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function NewHome() {
                 <div className="bg-[#d7eee8] rounded-sm flex flex-col items-center justify-between pt-4 h-full">
                   <Link href="/new?id=3" className="block">
                     <Image
-                      src="/home/3.webp?v=2"
+                      src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
                       width={85}
                       height={0}
@@ -227,8 +227,8 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Dispensador
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                      Hecho a mano
                     </span>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -272,7 +272,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -290,7 +290,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -308,7 +308,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -326,7 +326,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -336,7 +336,7 @@ export default function NewHome() {
             link: '/link1'
           },
           {
-            title: 'Más de nuestros chorreadores',
+            title: 'Chorreadores',
             className: 'bg-indigo-200',
             content: (
               <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
@@ -352,7 +352,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -370,7 +370,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -388,7 +388,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>
@@ -406,7 +406,7 @@ export default function NewHome() {
                     />
                   </Link>
                   <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                    <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
                       Hecho a mano
                     </span>
                   </div>

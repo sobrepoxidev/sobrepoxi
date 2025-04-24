@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ title, content, link }) => (
       <div className="pl-4 pt-4 bg-gradient-to-b from-white to-transparent">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
       </div>
-      <div className="flex-grow pl-4 pt-1">
+      <div className="flex-grow pt-1">
         {content}
       </div>
       <div className="pl-4 pt-0.5 bg-gradient-to-t from-white to-transparent flex items-center justify-center">

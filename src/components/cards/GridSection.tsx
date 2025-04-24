@@ -14,145 +14,652 @@ interface CardData {
 const GridSection = () => {
   const cards: CardData[] = [
     {
-      title: "Chorreadores",
+      title: 'Regalos con significado',
+    
       content: (
-        <div className="grid grid-cols-2 w-full gap-0.5 h-full">
-              {/* Product 1 */}
-
-              <div className=" bg-white rounded-sm flex flex-col items-center justify-start">
-                <Link href="/products?id=1" className="block">
-                  <Image
-                    src="/products/chorreadores-1-2-bg.webp"
-                    alt="Dinoco T-Shirt"
-                    width={85}
-                    height={0}
-                    className="object-cover"
-                  />
-                </Link>
-                <div className="mt-0 flex flex-col  items-start justify-start">
-                  <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block mt-0.5">Hecho a mano</span>
-                </div>
-              </div>
-
-              {/* Product 2 */}
-              <div className=" bg-white  rounded-sm flex flex-col items-center justify-start">
-                <Link href="/products?id=2" className="block">
-                  <Image
-                    src="/products/chorreadores-13-bg.webp"
-                    alt="Dinoco T-Shirt"
-                    width={85}
-                    height={0}
-                    className="object-cover"
-                  />
-                </Link>
-                <div className="mt-0 flex flex-col   items-start justify-between">
-                  <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block mt-0.5">Hecho a mano</span>
-                </div>
-              </div>
-              {/* Product 3 */}
-              <div className=" bg-white  rounded-sm flex flex-col items-center justify-start">
-                <Link href="/products?id=3" className="block">
-                  <Image
-                    src="/products/chorreadores-19-bg.webp"
-                    alt="Dinoco T-Shirt"
-                    width={85}
-                    height={0}
-                    className="object-cover"
-                  />
-                </Link>
-                <div className="mt-0 flex flex-col  items-start justify-between">
-                  <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded mt-0.5">Hecho a mano</span>
-                </div>
-              </div>
-
-              {/* Product 4 */}
-              <div className=" bg-white  rounded-sm flex flex-col items-center justify-start">
-                <Link href="/products?id=15" className="block">
-                  <Image
-                    src="/products/chorreadores-bgt-15.webp"
-                    alt="Dinoco T-Shirt"
-                    width={85}
-                    height={0}
-                    className="object-cover"
-                  />
-                </Link>
-                <div className="mt-0 flex flex-col  items-start justify-between">
-                  <span className="bg-indigo-200 text-black text-[8px] font-medium p-0.5 inline-block rounded mt-0.5">Hecho a mano</span>
-                </div>
-              </div>
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=42" className="block">
+              <Image
+                src="/home/1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={130}
+                height={0}
+                className="object-cover"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Piñas dragón 
+              </span>
             </div>
-      ),
-      link: "/card-1"
-    },
-    {
-      title: "Card 2",
-      content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 2</p>
-          {/* Add any other TSX content here */}
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/2.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Set de jarra y vasos en madera
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Chorreador de colibrí morado
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/3.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Molino dispensador
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-2"
+      link: '/link1',
+      
     },
     {
-      title: "Card 3",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 3</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=1" className="block">
+              <Image
+                src="/home/chorreadores-1-2-bg-1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Rana de árbol
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/chorreadores-13-bg-1.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Aqua tiburón
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Colibrí morada
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/chorreadores-bgt-15-1.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Par de tucanes
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-3"
+      link: '/link1',
+      
     },
     {
-      title: "Card 4",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 4</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=42" className="block">
+              <Image
+                src="/home/1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={130}
+                height={0}
+                className="object-cover"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Piñas dragón 
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/2.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Set de jarra y vasos en madera
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Chorreador de colibrí morado
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/3.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Molino dispensador
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-4"
+      link: '/link1',
+      
     },
     {
-      title: "Card 5",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 5</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=1" className="block">
+              <Image
+                src="/home/chorreadores-1-2-bg-1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Rana de árbol
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/chorreadores-13-bg-1.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Aqua tiburón
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Colibrí morada
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/chorreadores-bgt-15-1.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Par de tucanes
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-5"
+      link: '/link1',
+      
     },
     {
-      title: "Card 6",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 6</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=42" className="block">
+              <Image
+                src="/home/1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={130}
+                height={0}
+                className="object-cover"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Piñas dragón 
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/2.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Set de jarra y vasos en madera
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Chorreador de colibrí morado
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/3.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Molino dispensador
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-6"
+      link: '/link1',
+      
     },
     {
-      title: "Card 7",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 7</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=1" className="block">
+              <Image
+                src="/home/chorreadores-1-2-bg-1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Rana de árbol
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/chorreadores-13-bg-1.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Aqua tiburón
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Colibrí morada
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/chorreadores-bgt-15-1.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Par de tucanes
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-7"
+      link: '/link1',
+      
     },
     {
-      title: "Card 8",
+      title: 'Regalos con significado',
+    
       content: (
-        <div>
-          <p className="text-gray-600">Contenido del card 8</p>
-          {/* Add any other TSX content here */}
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=42" className="block">
+              <Image
+                src="/home/1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={130}
+                height={0}
+                className="object-cover"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Piñas dragón 
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/2.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+              Set de jarra y vasos en madera
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Chorreador de colibrí morado
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/3.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Molino dispensador
+              </span>
+            </div>
+          </div>
         </div>
       ),
-      link: "/card-8"
+      link: '/link1',
+      
+    },
+    {
+      title: 'Regalos con significado',
+    
+      content: (
+        <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
+          {/* Product 1 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=1" className="block">
+              <Image
+                src="/home/chorreadores-1-2-bg-1.webp?v=2"
+                alt="Chorreador artesanal 1"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Rana de árbol
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 2 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=2" className="block">
+              <Image
+                src="/home/chorreadores-13-bg-1.webp?v=2"
+                alt="Chorreador artesanal 2"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Aqua tiburón
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 3 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=3" className="block">
+              <Image
+                src="/home/chorreadores-19-bg-1.webp?v=2"
+                alt="Chorreador artesanal 3"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Colibrí morada
+              </span>
+            </div>
+          </div>
+    
+          {/* Product 4 */}
+          <div className=" rounded-sm flex flex-col items-center justify-between pt-4 h-full">
+            <Link href="/new?id=15" className="block">
+              <Image
+                src="/home/chorreadores-bgt-15-1.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={85}
+                height={0}
+                className="object-contain"
+              />
+            </Link>
+            <div className="flex flex-col items-end justify-end">
+              <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
+                Par de tucanes
+              </span>
+            </div>
+          </div>
+        </div>
+      ),
+      link: '/link1',
+      
     }
   ];
 
