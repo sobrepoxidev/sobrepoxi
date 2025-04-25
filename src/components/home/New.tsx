@@ -7,8 +7,8 @@ import CarrucelSection from '@/components/cards/CarrucelSection';
 import Link from 'next/link';
 import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
 //import { supabase } from "@/lib/supabaseClient";
-import { Database } from "@/types-db";
-type Product = Database['products'];
+//import { Database } from "@/types-db";
+//type Product = Database['products'];
 
 export const metadata = {
   // Meta por defecto del Home (Banner 1)

@@ -17,7 +17,7 @@ interface PageProps {
 }
 export default async function Home({ searchParams }: PageProps) {
   let initialProductForModal: Product | null = null; // Variable para el producto inicial
-  let productFetchError: string | null = null; // Para error específico del fetch del modal
+ 
   const idCardOpen = (await searchParams)['id'];
   if (idCardOpen && typeof idCardOpen === 'string') {
     console.log(`Buscando ID ${idCardOpen} para modal inicial.`);
@@ -32,13 +32,13 @@ export default async function Home({ searchParams }: PageProps) {
  
       if (modalProductError) {
         console.error("Error buscando el producto específico para el modal:", modalProductError.message);
-        productFetchError = `Error al buscar detalles del producto con ID ${idCardOpen}.`;
+
       } else if (modalProductData) {
         console.log("Producto específico encontrado en la BD:", modalProductData);
         initialProductForModal = modalProductData as Product;
       } else {
         console.log(`Producto con ID ${idCardOpen} no encontrado en la BD.`);
-        productFetchError = `Producto con ID ${idCardOpen} no encontrado.`;
+    
       }
  }
 
