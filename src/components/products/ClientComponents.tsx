@@ -240,13 +240,13 @@ export function FullscreenModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4"
+      className="fixed inset-0 z-50 top-0 left-0 flex items-center justify-center bg-black/70 min-h-screen h-full backdrop-blur-sm p-0 sm:p-4 "
     >
       <div
         className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-white sm:rounded-lg shadow-xl overflow-hidden"
       >
         <button
-          className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
+          className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
           onClick={onClose}
           aria-label="Cerrar"
         >

@@ -5,14 +5,48 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 //import Testimonials from "@/components/home/Testimonials";
 //import PopularCategories from "@/components/home/PopularCategories";
 import CallToAction from "@/components/home/CallToAction";
-import NewHome from "./new/page";
+import NewHome from "@/components/home/New";
+import { GalleryModal } from "@/components/products/ClientComponents";
+import { supabase } from "@/lib/supabaseClient";
+import { Database } from "@/types-db";
+type Product = Database['products'];
+type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-export default function Home() {
+interface PageProps {
+  searchParams: searchParams;
+}
+export default async function Home({ searchParams }: PageProps) {
+  let initialProductForModal: Product | null = null; // Variable para el producto inicial
+  let productFetchError: string | null = null; // Para error específico del fetch del modal
+  const idCardOpen = (await searchParams)['id'];
+  if (idCardOpen && typeof idCardOpen === 'string') {
+    console.log(`Buscando ID ${idCardOpen} para modal inicial.`);
+   
+      // 2. Si no está en la página actual, BUSCAR en la BD
+      console.log(`Producto ${idCardOpen} no encontrado en página actual. Realizando fetch específico.`);
+      const { data: modalProductData, error: modalProductError } = await supabase
+        .from("products")
+        .select('*') // O los campos necesarios para el modal
+        .eq('id', idCardOpen)
+        .maybeSingle();
+ 
+      if (modalProductError) {
+        console.error("Error buscando el producto específico para el modal:", modalProductError.message);
+        productFetchError = `Error al buscar detalles del producto con ID ${idCardOpen}.`;
+      } else if (modalProductData) {
+        console.log("Producto específico encontrado en la BD:", modalProductData);
+        initialProductForModal = modalProductData as Product;
+      } else {
+        console.log(`Producto con ID ${idCardOpen} no encontrado en la BD.`);
+        productFetchError = `Producto con ID ${idCardOpen} no encontrado.`;
+      }
+ }
+
   return (
     <div>
       <main>
 
-        <NewHome />
+        <NewHome  />
         <FeaturedProducts />
         {/* <ValueProposition /> */}
         {/* <Testimonials /> */}
@@ -48,6 +82,7 @@ export default function Home() {
           Go to nextjs.org →
         </a> */}
       </footer>
+      <GalleryModal initialProduct={initialProductForModal as Product} />
     </div>
   );
 }

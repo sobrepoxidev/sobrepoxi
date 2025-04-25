@@ -33,7 +33,7 @@ const navigationLinks = [
 export default async function Navbar({ locale }: { locale: string }) {
   console.log("locale: ", locale);
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-100 backdrop-blur-md transition-all duration-300 max-w-full w-full ">
+    <header className="sticky top-0 z-49 border-b border-gray-100 backdrop-blur-md transition-all duration-300 max-w-full w-full ">
       <div className="flex max-w-full items-center justify-between px-2  md:px-6 py-0.5 bg-white/95">
         {/* Logo - SSR */}
         <Link href="/" className="flex items-center space-x-2  focus-visible:outline-teal-600" aria-label="HandMadeArt Home">

@@ -10,10 +10,10 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ title, content, link }) => (
-  <div className="relative  h-96 bg-white shadow-sm overflow-hidden">
+  <div className="relative  h-[27rem] bg-white shadow-sm overflow-hidden">
     <div className="absolute inset-0 flex flex-col ">
       <div className="pl-4 pt-4 bg-gradient-to-b from-white to-transparent">
-        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
       </div>
       <div className="flex-grow pt-1">
         {content}

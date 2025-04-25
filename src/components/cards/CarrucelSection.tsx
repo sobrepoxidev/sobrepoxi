@@ -27,6 +27,7 @@ const CarouselCard: React.FC<{
         <Link href={link} className="text-2xl font-extrabold  pl-1 text-gray-900">{title}</Link>
         <div className="flex-grow flex items-center justify-center mb-0">{content}</div>
       </div>
+      
     </div>
   );
 };

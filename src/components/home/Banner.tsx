@@ -212,8 +212,8 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
 
       {React.Children.map(children, (child, index) => (
         <div 
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
-            index === currentBanner ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          className={`absolute top-0 left-0 w-full h-full transition-transform duration-500 ${
+            index === currentBanner ? 'translate-x-0 z-10' : 'translate-x-full z-0'
           }`}
         >
           {child}
