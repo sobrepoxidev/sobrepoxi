@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function CallToAction() {
   return (
-    <section className="max-w-[1500px] mx-auto  bg-[#d7eee8] py-8">
+    <section className="max-w-[1500px] mx-auto  py-4">
       <div className="container mx-auto px-4">
         <div className="backdrop-blur-sm rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
           {/* Decorative patterns */}

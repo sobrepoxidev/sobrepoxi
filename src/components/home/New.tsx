@@ -184,7 +184,7 @@ export default function NewHome() {
               <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
                 {/* Product 1 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=1" className="block">
+                  <Link href="/?id=42" className="block">
                     <Image
                       src="/home/1.webp?v=2"
                       alt="Chorreador artesanal 1"
@@ -202,7 +202,7 @@ export default function NewHome() {
 
                 {/* Product 2 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=2" className="block">
+                  <Link href="/?id=41" className="block">
                     <Image
                       src="/home/2.webp?v=2"
                       alt="Chorreador artesanal 2"
@@ -220,7 +220,7 @@ export default function NewHome() {
 
                 {/* Product 3 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=3" className="block">
+                  <Link href="/?id=43" className="block">
                     <Image
                       src="/home/3.webp?v=2"
                       alt="Chorreador artesanal 3"
@@ -238,7 +238,7 @@ export default function NewHome() {
 
                 {/* Product 4 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=15" className="block">
+                  <Link href="/?id=15" className="block">
                     <Image
                       src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
@@ -249,7 +249,7 @@ export default function NewHome() {
                   </Link>
                   <div className="flex flex-col items-end justify-end">
                     <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
+                    Par de tucanes
                     </span>
                   </div>
                 </div>
@@ -259,93 +259,36 @@ export default function NewHome() {
 
           },
           {
-            title: 'Chorreadores que valen la pena',
+            title: 'Envíos a toda Costa Rica',
             className: 'bg-teal-400',
             content: (
-              <div className="grid  grid-cols-2 w-full p-1 gap-1 h-full">
-                {/* Product 1 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=1" className="block">
-                    <Image
-                      src="/home/chorreadores-1-2-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 1"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 2 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=2" className="block">
-                    <Image
-                      src="/home/chorreadores-13-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 2"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 3 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=3" className="block">
-                    <Image
-                      src="/home/chorreadores-19-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 3"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 4 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=15" className="block">
-                    <Image
-                      src="/home/chorreadores-bgt-15-1.webp?v=2"
-                      alt="Chorreador artesanal 4"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
-                    </span>
-                  </div>
-                </div>
+              <div className="grid  grid-cols-1 w-full p-1 gap-1 h-full">
+                <div className="rounded-sm flex flex-col items-center justify-center  bg-[#d7eee8] ">
+            <Link href="/shipping" className="block">
+              <Image
+                src="/home/avion-correos.webp?v=2"
+                alt="Chorreador artesanal 4"
+                width={200}
+                height={200}
+                className="object-contain"
+              />
+            </Link>
+            <p className="text-gray-600 text-[0.65rem] mt-1 lg:mt-4">
+              *Pulsa aquí para más información.
+            </p>
+          </div>
               </div>
             ),
             link: '/link1'
           },
           {
-            title: 'Más de nuestros chorreadores',
+            title: 'Chorreadores con estilo',
             className: 'bg-indigo-400',
             content: (
               <div className="grid  grid-cols-2 w-full p-1 gap-1 h-full">
                 {/* Product 1 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=1" className="block">
+                  <Link href="/?id=5" className="block">
                     <Image
                       src="/home/chorreadores-1-2-bg-1.webp?v=2"
                       alt="Chorreador artesanal 1"
@@ -356,14 +299,14 @@ export default function NewHome() {
                   </Link>
                   <div className="flex flex-col items-end justify-end">
                     <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
+                    Rana de árbol
                     </span>
                   </div>
                 </div>
 
                 {/* Product 2 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=2" className="block">
+                  <Link href="/?id=7" className="block">
                     <Image
                       src="/home/chorreadores-13-bg-1.webp?v=2"
                       alt="Chorreador artesanal 2"
@@ -374,14 +317,14 @@ export default function NewHome() {
                   </Link>
                   <div className="flex flex-col items-end justify-end">
                     <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
+                      Aqua tiburón
                     </span>
                   </div>
                 </div>
 
                 {/* Product 3 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=3" className="block">
+                  <Link href="/?id=13" className="block">
                     <Image
                       src="/home/chorreadores-19-bg-1.webp?v=2"
                       alt="Chorreador artesanal 3"
@@ -392,14 +335,14 @@ export default function NewHome() {
                   </Link>
                   <div className="flex flex-col items-end justify-end">
                     <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
+                      Colibrí morada
                     </span>
                   </div>
                 </div>
 
                 {/* Product 4 */}
                 <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/new?id=15" className="block">
+                  <Link href="/?id=15" className="block">
                     <Image
                       src="/home/chorreadores-bgt-15-1.webp?v=2"
                       alt="Chorreador artesanal 4"
@@ -410,7 +353,7 @@ export default function NewHome() {
                   </Link>
                   <div className="flex flex-col items-end justify-end">
                     <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Hecho a mano
+                    Par de tucanes
                     </span>
                   </div>
                 </div>
