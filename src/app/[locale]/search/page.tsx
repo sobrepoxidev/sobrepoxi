@@ -185,7 +185,7 @@ export default function SearchResultsPage() {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <span className="absolute top-3 left-3 bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">
-                        {product.category || 'Artesanía'}
+                        {product.category_name || 'Artesanía'}
                       </span>
                     </div>
                   </Link>

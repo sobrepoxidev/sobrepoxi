@@ -163,7 +163,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       
       if (!session?.user) {
         // Redirect to login if not authenticated
-        router.push('/login?redirect=' + encodeURIComponent(`/product/${unwrappedParams.id}`));
+        router.push('/login?redirect=' + encodeURIComponent(`/product/${productId}`));
         return;
       }
       
