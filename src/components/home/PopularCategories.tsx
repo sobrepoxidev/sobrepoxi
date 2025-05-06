@@ -6,7 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function PopularCategories() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
   
   // Get unique categories and count their products
   const { data: categoriesData } = await supabase

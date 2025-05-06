@@ -1,42 +1,75 @@
 import { Database } from "@/types-db";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type ProductType = Database['products'];
 
 type CartItem = {
     product: ProductType;
     quantity: number;
-  };
-  
+    id?: number;
+};
+
+interface ShippingAddress {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    postal_code: string;
+    phone: string;
+}
+
 export default function StepOne({
     cart,
     onContinue,
+    initialData,
   }: {
     cart: CartItem[];
-    onContinue: () => void;
+    onContinue: (address: ShippingAddress) => void;
+    initialData?: ShippingAddress | null;
   }) {
     const [formData, setFormData] = useState({
-      nombre: '',
-      apellidos: '',
+      nombre: initialData?.name.split(' ')[0] || '',
+      apellidos: initialData?.name.split(' ').slice(1).join(' ') || '',
       email: '',
-      telefono: '',
-      direccion1: '',
+      telefono: initialData?.phone || '',
+      direccion1: initialData?.address || '',
       direccion2: '',
-      provincia: '',
-      canton: '',
+      provincia: initialData?.state || '',
+      canton: initialData?.city || '',
       distrito: '',
-      codigoPostal: '',
+      codigoPostal: initialData?.postal_code || '',
     });
-  
+
+    // Initialize form data if initialData is provided
+    useEffect(() => {
+      if (initialData) {
+        const nameParts = initialData.name.split(' ');
+        setFormData({
+          nombre: nameParts[0] || '',
+          apellidos: nameParts.slice(1).join(' ') || '',
+          email: '',
+          telefono: initialData.phone || '',
+          direccion1: initialData.address || '',
+          direccion2: '',
+          provincia: initialData.state || '',
+          canton: initialData.city || '',
+          distrito: '',
+          codigoPostal: initialData.postal_code || '',
+        });
+      }
+    }, [initialData]);
+
     const [errors, setErrors] = useState<Record<string, string>>({});
-  
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
+
       setFormData({
         ...formData,
         [name]: value,
       });
-      
+
       // Clear error when user types
       if (errors[name]) {
         setErrors({
@@ -45,10 +78,10 @@ export default function StepOne({
         });
       }
     };
-  
+
     const validateForm = () => {
       const newErrors: Record<string, string> = {};
-      
+
       // Required fields validation
       if (!formData.nombre.trim()) newErrors.nombre = 'El nombre es requerido';
       if (!formData.apellidos.trim()) newErrors.apellidos = 'Los apellidos son requeridos';
@@ -59,15 +92,26 @@ export default function StepOne({
       if (!formData.provincia.trim()) newErrors.provincia = 'La provincia es requerida';
       if (!formData.canton.trim()) newErrors.canton = 'El cantón es requerido';
       if (!formData.distrito.trim()) newErrors.distrito = 'El distrito es requerido';
-      
+
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
     };
-  
+
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       if (validateForm()) {
-        onContinue();
+        // Create shipping address object from form data
+        const shippingAddress: ShippingAddress = {
+          name: `${formData.nombre} ${formData.apellidos}`.trim(),
+          address: formData.direccion1 + (formData.direccion2 ? `, ${formData.direccion2}` : ''),
+          city: formData.canton,
+          state: formData.provincia,
+          country: 'Costa Rica',
+          postal_code: formData.codigoPostal,
+          phone: formData.telefono
+        };
+
+        onContinue(shippingAddress);
       } else {
         // Scroll to first error
         const firstError = document.querySelector('[data-error="true"]');
@@ -76,7 +120,7 @@ export default function StepOne({
         }
       }
     };
-  
+
     // Costa Rica provinces
     const provincias = [
       'San José',

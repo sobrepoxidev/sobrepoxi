@@ -38,50 +38,21 @@ const GridSection = () => {
         if (categoriesError) {
           throw new Error(`Error fetching categories: ${categoriesError.message}`);
         }
-
-        // Obtener productos para cada categoría
-        const productsByCategory: Record<number, Product[]> = {};
         
-        // Inicializar el objeto de productos por categoría
-        categoriesData.forEach(category => {
-          productsByCategory[category.id] = [];
-        });
-
-        // Obtener productos para cada categoría
-        const productsPromises = categoriesData.map(category => 
-          supabase
-            .from('products')
-            .select('*, category_id')
-            .eq('category_id', category.id)
-            .order('created_at', { ascending: false })
-            .limit(4)
-        );
-
-        const productsResults = await Promise.all(productsPromises);
-        
-        // Organizar productos por categoría
-        productsResults.forEach((result, index) => {
-          const categoryId = categoriesData[index].id;
-          if (result.error) {
-            console.error(`Error fetching products for category ${categoriesData[index].name}:`, result.error);
-          } else if (result.data) {
-            productsByCategory[categoryId] = result.data.filter(product => 
-              product.media && 
-              product.media.length > 0 && 
-              product.media[0]["url"]
-            ).slice(0, 4);
-          }
-        });
-
-        // Crear array plano de todos los productos
-        const allProducts = Object.values(productsByCategory).flat();
-
-        console.log('Categories:', categoriesData.map(c => ({ id: c.id, name: c.name })));
-        console.log('Products by category:', allProducts);
+        // Fetch popular products
+        const { data: productsData, error: productsError } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(16);
+          
+        if (productsError) {
+          throw new Error(`Error fetching products: ${productsError.message}`);
+        }
         
         // Set state
         setCategories(categoriesData);
-        setTopProducts(allProducts);
+        setTopProducts(productsData);
       } catch (err) {
         console.error('Error in fetchData:', err);
         setError(err instanceof Error ? err.message : 'Error desconocido');
@@ -93,30 +64,19 @@ const GridSection = () => {
     fetchData();
   }, []);
 
-  // Agrupar productos por categoría
+  // Agrupar productos por categoría para mostrar múltiples productos por categoría
   const productsByCategory: Record<number, Product[]> = {};
-  categories.forEach((category) => {
-    productsByCategory[category.id] = [];
-  });
-
-  // Agregar productos a sus respectivas categorías
   topProducts.forEach((product: Product) => {
-    if (product.category_id && productsByCategory[product.category_id]) {
-      // Solo agregar productos que tengan media y si la categoría no tiene 4 productos aún
-      if (product.media && 
-          product.media.length > 0 && 
-          product.media[0]["url"] && 
-          productsByCategory[product.category_id].length < 4) {
-        productsByCategory[product.category_id].push(product);
+    if (product.category_id) {
+      if (!productsByCategory[product.category_id]) {
+        productsByCategory[product.category_id] = [];
       }
+      productsByCategory[product.category_id].push(product);
     }
   });
 
-  console.log('Categories:', categories.map(c => ({ id: c.id, name: c.name })));
-  console.log('Products by category:', productsByCategory);
-
   // Para pantallas grandes (desktop/tablet) - Mostrar múltiples productos por categoría como Amazon
-  const desktopCards = categories.slice(0, 32).map(category => {
+  const desktopCards = categories.slice(0, 8).map(category => {
     const categoryProducts = productsByCategory[category.id] || [];
     const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
     
@@ -203,7 +163,7 @@ const GridSection = () => {
                 <div className="h-24 flex items-center justify-center mb-2">
                   <Image
                     src={product.media && product.media.length > 0 ? 
-                      (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') : 
+                      (typeof product.media[0] === 'string' ? product.media[0] : '/placeholder.jpg') : 
                       '/placeholder.jpg'}
                     alt={product.name || "Producto"}
                     width={90}
@@ -345,7 +305,7 @@ const GridSection = () => {
                 <div className="h-24 flex items-center justify-center mb-2">
                   <Image
                     src={product.media && product.media.length > 0 ? 
-                      (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') : 
+                      (typeof product.media[0] === 'string' ? product.media[0] : '/placeholder.jpg') : 
                       '/placeholder.jpg'}
                     alt={product.name || "Producto"}
                     width={90}
@@ -376,7 +336,6 @@ const GridSection = () => {
   if (loading) {
     return (
       <>
-
         {/* Skeleton para desktop */}
         <div className="max-lg:hidden grid grid-cols-4 gap-5 mt-4 mb-4 mx-4 pb-6">
           {[...Array(8)].map((_, i) => (
@@ -404,7 +363,7 @@ const GridSection = () => {
   }
 
   return (
-    <div className="w-full  px-4 py-6">
+    <div className="max-w-screen-xl mx-auto px-4 py-6">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Categorías populares</h2>
       
       {/* Versión de escritorio - Muestra categorías en grid */}

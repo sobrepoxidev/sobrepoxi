@@ -10,18 +10,15 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ title, content, link }) => (
-  <div className="relative  h-[27rem] bg-white shadow-sm overflow-hidden">
-    <div className="absolute inset-0 flex flex-col ">
-      <div className="pl-4 pt-4 bg-gradient-to-b from-white to-transparent">
-        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
-      </div>
-      <div className="flex-grow pt-1">
-        {content}
-      </div>
-      <div className="pl-4 pt-0.5 bg-gradient-to-t from-white to-transparent flex items-center justify-center">
-        <Link href={link} className="inline-block p-0.5 text-xs bg-teal-600 text-white hover:bg-teal-700 transition-colors">
-          Ver más
+  <div className="relative bg-white shadow-sm rounded-lg overflow-hidden h-full max-w-full w-full border border-gray-100 hover:shadow-md transition-shadow">
+    <div className="flex flex-col h-full">
+      <div className="p-3 pb-2 bg-gradient-to-b from-white to-transparent">
+        <Link href={link} className="block">
+          <h3 className="text-lg font-semibold text-gray-800 hover:text-teal-600 transition-colors">{title}</h3>
         </Link>
+      </div>
+      <div className="flex-grow p-2">
+        {content}
       </div>
     </div>
   </div>

@@ -7,8 +7,9 @@ type ProductType = Database['products'];
 type CartItem = {
     product: ProductType;
     quantity: number;
+    id?: number;
   };
-  type Banco = {
+type Banco = {
     nombre: string;
     sms?: string;
     permiteSMS: boolean;

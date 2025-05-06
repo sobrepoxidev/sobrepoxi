@@ -3,13 +3,19 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
+import { AlertTriangle, Check, Info, ShoppingBag, Tag } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
+
 type Product = Database['products'];
+type Category = Database['categories'];
+type CartItemDB = Database['cart_items'];
+type InventoryItem = Database['inventory'];
 
 /**
  * CartPage – replica sencilla inspirada en la captura aportada.
@@ -20,19 +26,111 @@ type Product = Database['products'];
  */
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const router = useRouter();
+  const { cart, updateQuantity, removeFromCart, syncCartWithDB, totalItems, subtotal: cartSubtotal, isLoading: isCartLoading } = useCart();
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<{[key: number]: Category}>({});
+  const [inventory, setInventory] = useState<{[key: number]: number}>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [stockWarnings, setStockWarnings] = useState<{[key: number]: string}>({});
 
+  // Calculate the total price with discounts applied
   const subtotal = cart.reduce((acc, item) => {
-    const price = item.product.price ?? 0;
-    return acc + price * item.quantity;
+    if (!item.product.price) return acc;
+    
+    const price = item.product.price;
+    const discount = item.product.discount_percentage || 0;
+    const finalPrice = price * (1 - (discount / 100));
+    
+    return acc + finalPrice * item.quantity;
   }, 0);
 
   // En un caso real se calcularía dinámicamente
   const shipping = cart.length ? 3200 : 0;
   const total = subtotal + shipping;
 
+  // Check if user is logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsLoggedIn(!!session);
+      
+      if (session?.user) {
+        // Sync cart with database if user is logged in
+        syncCartWithDB(session.user.id);
+      }
+    };
+    
+    checkAuth();
+  }, [syncCartWithDB]);
+  
+  // Fetch categories and inventory data for cart items
+  useEffect(() => {
+    const fetchCategoriesAndInventory = async () => {
+      if (!cart.length) return;
+      
+      // Get all product IDs from cart
+      const productIds = cart.map(item => item.product.id);
+      
+      // Fetch all category_ids from cart products
+      const categoryIds = [...new Set(
+        cart
+          .map(item => item.product.category_id)
+          .filter(id => id !== null && id !== undefined)
+      )] as number[];
+      
+      // Fetch categories
+      if (categoryIds.length > 0) {
+        const { data: categoriesData } = await supabase
+          .from('categories')
+          .select('*')
+          .in('id', categoryIds);
+          
+        if (categoriesData) {
+          const categoriesMap: {[key: number]: Category} = {};
+          categoriesData.forEach(category => {
+            categoriesMap[category.id] = category;
+          });
+          setCategories(categoriesMap);
+        }
+      }
+      
+      // Fetch inventory data
+      if (productIds.length > 0) {
+        const { data: inventoryData } = await supabase
+          .from('inventory')
+          .select('*')
+          .in('product_id', productIds);
+          
+        if (inventoryData) {
+          const inventoryMap: {[key: number]: number} = {};
+          const warningsMap: {[key: number]: string} = {};
+          
+          inventoryData.forEach(item => {
+            inventoryMap[item.product_id] = item.quantity;
+            
+            // Check for stock warnings
+            const cartItem = cart.find(c => c.product.id === item.product_id);
+            if (cartItem && cartItem.quantity > item.quantity) {
+              if (item.quantity === 0) {
+                warningsMap[item.product_id] = 'Producto agotado';
+              } else {
+                warningsMap[item.product_id] = `Solo ${item.quantity} disponible(s)`;
+              }
+            }
+          });
+          
+          setInventory(inventoryMap);
+          setStockWarnings(warningsMap);
+        }
+      }
+    };
+    
+    fetchCategoriesAndInventory();
+  }, [cart]);
+
+  // Fetch related products based on categories in cart
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       if (!cart.length) return;
@@ -40,34 +138,34 @@ export default function CartPage() {
       setIsLoading(true);
 
       try {
-        // Extract categories from cart items (avoiding duplicates)
-        const categoriesInCart = [...new Set(
+        // Extract category IDs from cart items (avoiding duplicates)
+        const categoryIdsInCart = [...new Set(
           cart
-            .map(({ product }) => product.category)
-            .filter(category => category !== undefined && category !== null)
+            .map(item => item.product.category_id)
+            .filter(id => id !== undefined && id !== null)
         )];
 
         // Extract product IDs from cart items to exclude them from results
-        const productIdsInCart = cart
-          .map(({ product }) => product.id)
-          .filter(id => id !== undefined && id !== null);
+        const productIdsInCart = cart.map(item => item.product.id);
 
-        if (categoriesInCart.length === 0) {
+        if (categoryIdsInCart.length === 0) {
           console.log('No categories found in cart');
           setIsLoading(false);
           return;
         }
 
         // Optimized query: 
-        // 1. Only get products from the same categories as in cart
+        // 1. Only get products from the same category_ids as in cart
         // 2. Exclude products already in cart
         // 3. Limit to just 4 products for display
-        // 4. Select only the fields we need
+        // 4. Only show active products
         const { data, error } = await supabase
           .from('products')
-          .select('id, name, category, description, price, media')
-          .in('category', categoriesInCart)
-          .not('id', 'in', `(${productIdsInCart.join(',')})`)
+          .select('*')
+          .in('category_id', categoryIdsInCart)
+          .not('id', 'in', productIdsInCart)
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
           .limit(4);
 
         if (error) {
@@ -134,9 +232,24 @@ export default function CartPage() {
                       {product.description}
                     </p>
                   )}
-                  {product.category && (
-                    <span className="text-xs mt-1 text-slate-500">{product.category}</span>
-                  )}
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {product.category_id && categories[product.category_id] && (
+                      <span className="inline-flex items-center text-xs px-2 py-0.5 bg-teal-50 text-teal-700 rounded-full border border-teal-100">
+                        {categories[product.category_id].name}
+                      </span>
+                    )}
+                    {product.brand && (
+                      <span className="inline-flex items-center text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full border border-blue-100">
+                        {product.brand}
+                      </span>
+                    )}
+                    {stockWarnings[product.id] && (
+                      <span className="inline-flex items-center text-xs px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full border border-amber-100">
+                        <AlertTriangle className="h-3 w-3 mr-1" />
+                        {stockWarnings[product.id]}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Cantidad */}
@@ -155,8 +268,24 @@ export default function CartPage() {
                 </div>
 
                 {/* Precio */}
-                <div className="col-span-6 sm:col-span-2 flex items-center justify-center font-medium text-slate-800">
-                  ₡ {(product.price ?? 0).toFixed(0)}
+                <div className="col-span-6 sm:col-span-2 flex flex-col items-center justify-center">
+                  {product.discount_percentage && product.discount_percentage > 0 ? (
+                    <>
+                      <span className="font-medium text-slate-800">
+                        ₡{((product.price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
+                      </span>
+                      <span className="text-xs text-gray-500 line-through">
+                        ₡{(product.price || 0).toFixed(0)}
+                      </span>
+                      <span className="text-xs bg-red-100 text-red-700 px-1 py-0.5 rounded">
+                        {product.discount_percentage}% OFF
+                      </span>
+                    </>
+                  ) : (
+                    <span className="font-medium text-slate-800">
+                      ₡{(product.price ?? 0).toFixed(0)}
+                    </span>
+                  )}
                 </div>
 
                 {/* Eliminar */}
@@ -208,15 +337,30 @@ export default function CartPage() {
                 <span>₡ {total.toFixed(2)}</span>
               </div>
               <p className="text-xs text-slate-500">Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}</p>
-              <Link
-                href="/checkout"
+              <button
+                onClick={async () => {
+                  if (!isLoggedIn) {
+                    // If not logged in, redirect to login page with return URL
+                    router.push(`/login?redirect=${encodeURIComponent('/checkout')}`);
+                    return;
+                  }
+                  
+                  // Check for inventory issues before proceeding to checkout
+                  if (Object.keys(stockWarnings).length > 0) {
+                    alert('Por favor, revise las advertencias de stock antes de continuar.');
+                    return;
+                  }
+                  
+                  // Proceed to checkout
+                  router.push('/checkout');
+                }}
                 className="w-full py-3 rounded bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
               >
-                <span>COMPRAR</span>
+                <span>{isLoggedIn ? 'COMPRAR' : 'INICIAR SESIÓN PARA COMPRAR'}</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </Link>
+              </button>
               <div className="flex justify-center gap-2 mt-2">
                 {/* {[
                   "visa.svg",

@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Database } from "@/types-db";
 import { ProductCardModal } from "./ProductModal";
+import { ProductCardModalWithTracking } from "./ProductModalWithTracking";
 
 
 
@@ -253,8 +254,8 @@ export function FullscreenModal({
           <CloseIcon className="w-5 h-5" />
         </button>
 
-        {/* Pass the improved ProductModal with fullscreenMode enabled */}
-        <ProductCardModal
+        {/* Usar la versión con rastreo de historial */}
+        <ProductCardModalWithTracking
           product={product}
           activeExpandButton={false}
           fullscreenMode={true}

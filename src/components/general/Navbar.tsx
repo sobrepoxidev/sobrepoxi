@@ -33,29 +33,31 @@ const navigationLinks = [
 export default async function Navbar({ locale }: { locale: string }) {
   console.log("locale: ", locale);
   return (
-    <header className="sticky top-0 z-49 border-b border-gray-100 backdrop-blur-md transition-all duration-300 max-w-full w-full ">
-      <div className="flex max-w-full items-center justify-between px-2  md:px-6 py-0.5 bg-white/95">
-        {/* Logo - SSR */}
-        <Link href="/" className="flex items-center space-x-2  focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
-          <div className="relative overflow-hidden rounded-md">
-          <Image 
-              src={locale === 'es' ? '/logo3es.webp' : '/logo3en.webp'}
-              alt="Hand Made Art Logo" 
-
-              width={250} 
-              height={0} 
-              className="w-[75px] md:w-[100px] object-cover"
-              priority
-            />
-          </div>
-          
-        </Link>
+    <header className="relative z-40 border-b border-gray-100 w-full bg-white">
+      <div className="container mx-auto flex items-center px-2 md:px-4 py-2">
+        {/* Logo - SSR (Left) */}
+        <div className="flex-shrink-0 mr-2 md:mr-4">
+          <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
+            <div className="relative overflow-hidden">
+              <Image 
+                src={locale === 'es' ? '/new_logo_h_w.png' : '/new_logo_h_w.png'}
+                alt="Hand Made Art Logo" 
+                width={225} 
+                height={0} 
+                className="w-[120px] md:w-[225px] object-cover"
+                priority
+              />
+            </div>
+          </Link>
+        </div>
         
-        {/* Client-side interactivity */}
-        <NavbarClient 
-          navigationLinks={navigationLinks} 
-          categories={categories} 
-        />
+        {/* Client-side interactivity (Center and Right) */}
+        <div className="flex-grow flex items-center justify-between">
+          <NavbarClient 
+            navigationLinks={navigationLinks} 
+            categories={categories} 
+          />
+        </div>
       </div>
     </header>
   );

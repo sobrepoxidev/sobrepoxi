@@ -1,14 +1,17 @@
-import React from 'react'
+'use client';
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import GridSection from "@/components/cards/GridSection";
 import { Carousel } from "@/components/home/Banner";
 import { BannerTemplate } from "@/components/home/Banner";
 import CarrucelSection from '@/components/cards/CarrucelSection';
 import Link from 'next/link';
-import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
-//import { supabase } from "@/lib/supabaseClient";
-//import { Database } from "@/types-db";
-//type Product = Database['products'];
+import { BadgeCheck, Handshake, Sprout, X } from 'lucide-react';
+import { supabase } from "@/lib/supabaseClient";
+import { Session } from '@supabase/supabase-js';
+import { Database } from "@/types-db";
+
+type Category = Database['categories'];
 
 export const metadata = {
   // Meta por defecto del Home (Banner 1)
@@ -52,11 +55,133 @@ export const metadata = {
 };
 
 export default function NewHome() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [chorreadorCategoryId, setChorreadorCategoryId] = useState<number | null>(null);
+  const [userSession, setUserSession] = useState<Session | null>(null);
+  const [showLoginBanner, setShowLoginBanner] = useState<boolean>(true);
+  const [newsletterEmail, setNewsletterEmail] = useState<string>("");
+  const [newsletterStatus, setNewsletterStatus] = useState<"idle"|"loading"|"success"|"error">("idle");
+  const [newsletterError, setNewsletterError] = useState<string>("");
+  
+  // Verificar si el usuario ha iniciado sesión
+  useEffect(() => {
+    async function checkUserSession() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUserSession(session);
+        
+        // Guardar preferencia del banner en localStorage si el usuario inició sesión
+        if (session) {
+          localStorage.setItem('hideLoginBanner', 'true');
+        }
+      } catch (error) {
+        console.error('Error checking session:', error);
+        setUserSession(null);
+      }
+    }
+    
+    // Comprobar si el usuario ha ocultado el banner anteriormente
+    const hideLoginBanner = localStorage.getItem('hideLoginBanner');
+    if (hideLoginBanner === 'true') {
+      setShowLoginBanner(false);
+    }
+    
+    checkUserSession();
+    
+    // Suscribirse a cambios en la sesión
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUserSession(session);
+        if (session) {
+          localStorage.setItem('hideLoginBanner', 'true');
+          setShowLoginBanner(false);
+        }
+      }
+    );
+    
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+  
+  // Función para cerrar el banner de inicio de sesión
+  const closeLoginBanner = () => {
+    setShowLoginBanner(false);
+    localStorage.setItem('hideLoginBanner', 'true');
+  };
+  
+  // Fetch categories to get correct IDs
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
+
+      if (data) {
+        setCategories(data);
+        // Find the category ID for "Chorreadores" or similar
+        const chorreadorCategory = data.find(c =>
+          c.name?.toLowerCase().includes('chorreador') ||
+          c.name?.toLowerCase().includes('café'));
+
+        if (chorreadorCategory) {
+          setChorreadorCategoryId(chorreadorCategory.id);
+        }
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className=" max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#d7eee8] via-white to-white">
+     
+      
       <Carousel>
-        {/* Banner 1: Artesanías (tu banner original) */}
+        {/* Banner 1: Envío a Costa Rica (ahora primero) */}
+        <BannerTemplate linkHref="/shipping">
+          <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
+            <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
+              <h1 className="text-gray-800 text-2xl lg:text-4xl font-bold max-lg:mt-2 lg:mb-2">
+                Envíos a todo Costa Rica
+              </h1>
+              <p className="text-gray-700 text-sm lg:text-xl">
+                con tarifas desde ₡1.950
+              </p>
+              <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-4">
+                *Costo variable dependiendo del peso. Pulsa aquí para más información.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 md:gap-8 max-lg: -mt-5">
+              <Image
+                src="/home/mapa-cr.webp"
+                alt="Mapa de Costa Rica"
+                width={200}
+                height={0}
+                className="max-lg:w-[60px]"
+              />
+              <Image
+                src="/home/avion-correos.webp"
+                alt="Avión de correos"
+                width={200}
+                height={0}
+                className="max-lg:w-[80px]"
+              />
+
+              <Image
+                src="/home/paquet-correos.webp"
+                alt="Paquete de correos"
+                width={200}
+                height={0}
+                className="max-lg:w-[80px]"
+              />
+            </div>
+          </div>
+        </BannerTemplate>
+
+        {/* Banner 2: Artesanías (segundo lugar) */}
         <BannerTemplate linkHref="/impact">
           <Image
             src="/home/hombre-haciendo-dispensador-en-forma-de-molinillo.webp"
@@ -116,50 +241,10 @@ export default function NewHome() {
           </div>
         </BannerTemplate>
 
-        {/* Banner 2: Envío internacional (estilo Amazon) */}
-        <BannerTemplate linkHref="/shipping">
-          <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
-            <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
-              <h1 className="text-gray-800 text-2xl lg:text-4xl font-bold max-lg:mt-2 lg:mb-2">
-                Envíos a todo Costa Rica
-              </h1>
-              <p className="text-gray-700 text-sm lg:text-xl">
-                con tarifas desde ₡1.950
-              </p>
-              <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-4">
-                *Costo variable dependiendo del peso. Pulsa aquí para más información.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 md:gap-8 max-lg: -mt-5">
-              <Image
-                src="/home/mapa-cr.webp"
-                alt="Mapa de Costa Rica"
-                width={200}
-                height={0}
-                className="max-lg:w-[60px]"
-              />
-              <Image
-                src="/home/avion-correos.webp"
-                alt="Avión de correos"
-                width={200}
-                height={0}
-                className="max-lg:w-[80px]"
-              />
-
-              <Image
-                src="/home/paquet-correos.webp"
-                alt="Paquete de correos"
-                width={200}
-                height={0}
-                className="max-lg:w-[80px]"
-              />
-            </div>
-          </div>
-        </BannerTemplate>
-
         {/* Banner 3: Personalizado completamente diferente */}
-        <BannerTemplate linkHref="/hom?category=drippers" bgColor="bg-gradient-to-r from-blue-500 to-purple-600">
+        <BannerTemplate
+          linkHref={chorreadorCategoryId ? `/products?category=${chorreadorCategoryId}` : '/products'}
+          bgColor="bg-gradient-to-r from-blue-500 to-purple-600">
           <div className="h-full flex flex-col items-center justify-center text-white text-center px-4">
             <h2 className="text-md lg:text-2xl font-light">Descubre nuestra</h2>
             <h1 className="text-3xl lg:text-4xl font-bold my-0.5 lg:my-4">NUEVA COLECCIÓN</h1>
@@ -172,215 +257,20 @@ export default function NewHome() {
         </BannerTemplate>
       </Carousel>
 
-      {/* Resto del contenido de la página */}
+      {/* Categorías destacadas */}
       <GridSection />
-      <CarrucelSection
-        items={[
-          {
-            title: 'Regalos con significado',
-            className: 'bg-indigo-400',
-            start: true,
-            content: (
-              <div className="grid grid-cols-2 w-full p-1 gap-1 h-full">
-                {/* Product 1 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=42" className="block">
-                    <Image
-                      src="/home/1.webp?v=2"
-                      alt="Chorreador artesanal 1"
-                      width={150}
-                      height={0}
-                      className="object-cover pt-4"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Piñas decorativas
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 2 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=41" className="block">
-                    <Image
-                      src="/home/2.webp?v=2"
-                      alt="Chorreador artesanal 2"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Jarra y vasos en madera
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 3 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=43" className="block">
-                    <Image
-                      src="/home/3.webp?v=2"
-                      alt="Chorreador artesanal 3"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Dispensador
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 4 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=15" className="block">
-                    <Image
-                      src="/home/chorreadores-bgt-15-1.webp?v=2"
-                      alt="Chorreador artesanal 4"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                    Par de tucanes
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ),
-            link: '/link1',
-
-          },
-          {
-            title: 'Envíos a toda Costa Rica',
-            className: 'bg-teal-400',
-            content: (
-              <div className="grid  grid-cols-1 w-full p-1 gap-1 h-full">
-                <div className="rounded-sm flex flex-col items-center justify-center  bg-[#d7eee8] ">
-            <Link href="/shipping" className="block">
-              <Image
-                src="/home/avion-correos.webp?v=2"
-                alt="Chorreador artesanal 4"
-                width={200}
-                height={200}
-                className="object-contain"
-              />
-            </Link>
-            <p className="text-gray-600 text-[0.65rem] mt-1 lg:mt-4">
-              *Pulsa aquí para más información.
-            </p>
-          </div>
-              </div>
-            ),
-            link: '/link1'
-          },
-          {
-            title: 'Chorreadores con estilo',
-            className: 'bg-indigo-400',
-            content: (
-              <div className="grid  grid-cols-2 w-full p-1 gap-1 h-full">
-                {/* Product 1 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=5" className="block">
-                    <Image
-                      src="/home/chorreadores-1-2-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 1"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                    Rana de árbol
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 2 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=7" className="block">
-                    <Image
-                      src="/home/chorreadores-13-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 2"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className="  text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Aqua tiburón
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 3 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=13" className="block">
-                    <Image
-                      src="/home/chorreadores-19-bg-1.webp?v=2"
-                      alt="Chorreador artesanal 3"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                      Colibrí morada
-                    </span>
-                  </div>
-                </div>
-
-                {/* Product 4 */}
-                <div className="bg-gray-50 rounded-sm flex flex-col items-center justify-between pt-4 h-full">
-                  <Link href="/?id=15" className="block">
-                    <Image
-                      src="/home/chorreadores-bgt-15-1.webp?v=2"
-                      alt="Chorreador artesanal 4"
-                      width={85}
-                      height={0}
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-end justify-end">
-                    <span className=" text-black text-[8px] font-medium p-0.5 inline-block rounded-t mt-1">
-                    Par de tucanes
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ),
-            link: '/link1',
-            end: true,
-          },
-          // ... more items
-        ]}
-      />
-      <div className="flex flex-col mt-1 h-full   rounded-md p-4  max-w-full">
-        <h3 className="text-sm font-semibold text-black mb-3">
-          Inicie sesión y acelere su compra
-        </h3>
-        <Link
-          href="/login"
-          className="bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium py-2 px-4 rounded-full text-center"
-        >
-          Iniciar sesión
-        </Link>
-        <Link href="/register" className="mt-3 text-blue-600 text-sm hover:underline text-left">
-          Crear cuenta
-        </Link>
-      </div>
       
-
+      {/* Carrusel de productos dinámico */}
+      <CarrucelSection />
+      
+      
+      
+      {/* Saludo personalizado si hay sesión */}
+      {userSession && userSession.user && (
+        <div className="fixed top-4 right-4 z-50 bg-teal-600 text-white py-2 px-6 rounded-full shadow-lg animate-fade-in">
+          ¡Bienvenido, {userSession.user.email}!
+        </div>
+      )}
     </div>
   )
 }

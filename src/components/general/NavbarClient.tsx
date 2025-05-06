@@ -10,11 +10,15 @@ import {
   Menu, 
   X, 
   ChevronDown,
-  Globe 
+  Globe,
+  User
 } from 'lucide-react';
+import UserDropdown from '@/components/user/UserDropdown';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
+import SearchBar from '@/components/search/SearchBar';
+import { getProductCategories } from '@/lib/search';
 
 type Category = {
   name: string;
@@ -36,6 +40,8 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Todas');
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const { supabase } = useSupabase()
   const [session, setSession] = useState<Session | null>(null);
 
@@ -48,19 +54,19 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
   const { cart } = useCart();
   const cardQuantity = cart.length;
   
-  // Efecto para manejar el scroll y cambiar la apariencia del navbar
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       if (window.scrollY > 10) {
-//         setIsScrolled(true);
-//       } else {
-//         setIsScrolled(false);
-//       }
-//     };
+  // Fetch available categories for the search dropdown
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const categoryList = await getProductCategories();
+        setAvailableCategories(categoryList);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
     
-//     window.addEventListener('scroll', handleScroll);
-//     return () => window.removeEventListener('scroll', handleScroll);
-//   }, []);
+    fetchCategories();
+  }, []);
   
   // Efecto para cerrar menús al hacer clic fuera
   useEffect(() => {
@@ -136,88 +142,90 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <nav className="hidden items-center lg:flex">
-        <ul className="flex items-center gap-x-1 lg:gap-x-2">
-          {navigationLinks.map((link) => (
-            <li key={link.path}>
-              <Link 
-                href={link.path} 
-                className="block rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
-          <li>
-          <div ref={categoryMenuRef} className="relative">
-  <button 
-    onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-    className="category-trigger flex items-center rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-    aria-expanded={isCategoryMenuOpen}
-    aria-haspopup="true"
-  >
-    Tienda 
-    <ChevronDown 
-      className="ml-1 h-4 w-4 transition-transform duration-200" 
-      style={{ transform: isCategoryMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} 
-    />
-  </button>
-  
-  {isCategoryMenuOpen && (
-    <div 
-      className="absolute left-0 right-0 top-full z-50 md:left-auto md:right-auto md:w-[28rem] border-t border-gray-900 bg-white shadow-lg md:rounded-lg md:border md:border-gray-100"
-      role="menu"
-    >
-      <div className="p-1 md:p-3 max-h-[36rem] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-300 scrollbar-track-gray-100">
+      {/* Desktop Navigation - Amazon Style */}
+      <div className="hidden w-full flex-col lg:flex" style={{ position: 'static' }}>
+        {/* Top Row: Search bar with filter dropdown */}
+        <div className="flex w-full items-center justify-center py-1">
+          <div className="flex w-full max-w-4xl items-center">
+            <div 
+              className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible" 
+              style={{ 
+                zIndex: 9000,
+                position: 'relative',
+              }}
+            >
+              {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
+              <SearchBar 
+                variant="navbar" 
+                initialCategory={selectedCategory} 
+              />
+            </div>
+          </div>
+        </div>
         
-        {/* Enlace a todos los productos */}
-        <Link
-          href="/products"
-          className="block rounded-md px-3 py-2 font-medium text-gray-800 transition hover:bg-teal-50 hover:text-teal-700"
-          onClick={() => setIsCategoryMenuOpen(false)}
-          role="menuitem"
-        >
-          Todos los productos
-        </Link>
-
-        <div className="my-2 h-px bg-gray-100" />
-
-        {/* Lista de categorías en 2 columnas */}
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-4">
-          {categories.map((category) => (
-            <li key={category.slug}>
+        {/* Bottom Row: Navigation links */}
+        <div className="flex w-full items-center justify-center border-t border-gray-100">
+          <ul className="flex items-center gap-x-6">
+            {navigationLinks.map((link) => (
+              <li key={link.path}>
+                <Link 
+                  href={link.path} 
+                  className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+            <li>
               <Link 
-                href={`/products/${category.slug}`} 
-                className="block rounded-md px-3 py-2 text-gray-700 transition hover:bg-teal-50 hover:text-teal-700 leading-tight"
-                onClick={() => setIsCategoryMenuOpen(false)}
-                role="menuitem"
+                href="/products" 
+                className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
-                {category.name}
+                Tienda
               </Link>
             </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  )}
-</div>
-
-          </li>
-          <li >
+            <li>
               <Link 
                 href="/contact" 
-                className="block rounded-md px-3 py-0 text-gray-700 transition hover:bg-gray-50 hover:text-teal-700 focus-visible:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
                 Contacto
               </Link>
             </li>
-        </ul>
-      </nav>
+          </ul>
+        </div>
+      </div>
 
-      {/* Actions */}
-      <div className="flex items-center space-x-1 sm:space-x-2">
-        {/* Search */}
+      {/* Actions - Right Side */}
+      <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+        {/* User Dropdown - Desktop */}
+        <div className="hidden md:flex items-center">
+          <UserDropdown session={session} onLogout={handleLogout} />
+        </div>
+        
+        {/* Language selector */}
+        <button 
+          className="hidden md:flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
+          aria-label="Cambiar idioma"
+        >
+          <Globe className="h-4 w-4" />
+          <span>ES</span>
+        </button>
+        
+        {/* Cart */}
+        <Link 
+          href="/cart" 
+          className="relative flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
+          aria-label="Carrito de compras"
+        >
+          <ShoppingBag className="h-5 w-5" />
+          <span className="hidden md:inline">Carrito</span>
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
+            {cardQuantity}
+          </span>
+        </Link>
+        
+        {/* Search - Now using the search icon to open a modal with the SearchBar */}
         <div ref={searchRef}>
           <button 
             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -228,37 +236,39 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
             <Search className="h-5 w-5" />
           </button>
           
-          {/* Search overlay/dropdown */}
+          {/* Search overlay/dropdown with the new SearchBar component */}
           {isSearchOpen && (
             <div className="absolute left-0 right-0 top-full z-50 border-t border-gray-100 bg-white px-4 py-4 shadow-lg md:left-auto md:right-4 md:top-16 md:w-96 md:rounded-lg md:border md:border-gray-100">
-              <div className="flex items-center rounded-lg border border-gray-300 bg-white px-3 py-2 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
-                <Search className="h-5 w-5 shrink-0 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Buscar productos o artesanos..."
-                  className="ml-2 w-full border-0 bg-transparent focus:outline-none focus:ring-0"
-                  autoFocus
-                />
+              <div className="mb-2 flex justify-between items-center">
+                <h3 className="text-sm font-medium">Buscar productos</h3>
                 <button 
                   onClick={() => setIsSearchOpen(false)}
-                  className="ml-2 shrink-0 text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-600"
                   aria-label="Cerrar búsqueda"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
               
+              <SearchBar 
+                variant="standalone" 
+                initialCategory={selectedCategory}
+                onClose={() => setIsSearchOpen(false)} 
+              />
+              
               {/* Quick links - mejora UX */}
               <div className="mt-3">
                 <p className="mb-1 text-xs font-medium text-gray-500">Búsquedas populares:</p>
                 <div className="flex flex-wrap gap-1">
-                  {['Decoración', 'Joyería', 'Madera'].map((term) => (
-                    <button 
+                  {availableCategories.slice(0, 5).map((term) => (
+                    <Link 
                       key={term}
+                      href={`/search?category=${encodeURIComponent(term)}`}
                       className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 transition hover:bg-gray-200"
+                      onClick={() => setIsSearchOpen(false)}
                     >
                       {term}
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -266,66 +276,10 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
           )}
         </div>
         
-        {/* Cart */}
-        <Link 
-          href="/cart" 
-          className="relative flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          aria-label="Carrito de compras"
-        >
-          <ShoppingBag className="h-5 w-5" />
-          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
-            {cardQuantity}
-          </span>
-        </Link>
-
-        {/* Language selector */}
-        <button 
-          className="flex h-10 items-center space-x-1 rounded-full px-3 text-sm text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          aria-label="Cambiar idioma"
-        >
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">ES</span>
-        </button>
-
-        {/* Auth buttons - Desktop */}
-        <div className="hidden md:flex items-center space-x-2">
-          {session ? (
-            <>
-              <Link
-                href="/account"
-                className="px-3 py-2 text-sm text-gray-700 hover:text-teal-700 transition rounded-md hover:bg-gray-50"
-              >
-                Mi cuenta
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="px-3 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 transition rounded-md"
-              >
-                Cerrar sesión
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="px-3 py-2 text-sm text-gray-700 hover:text-teal-700 transition rounded-md hover:bg-gray-50"
-              >
-                Iniciar sesión
-              </Link>
-              <Link
-                href="/register"
-                className="px-3 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 transition rounded-md"
-              >
-                Registrarse
-              </Link>
-            </>
-          )}
-        </div>
-        
         {/* Mobile menu toggle */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 lg:hidden ml-1"
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={isMenuOpen}
         >
@@ -334,136 +288,115 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
       </div>
 
       {/* Mobile menu */}
-{isMenuOpen && (
-  <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto  bg-white shadow-lg md:hidden">
-    <nav className="px-4 py-1">
-      <div className="flex items-center justify-between">
-        <button className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm text-gray-700 transition hover:bg-gray-50">
-          <Globe className="h-5 w-5" />
-          <span>Español</span>
-          <ChevronDown className="h-4 w-4" />
-        </button>
-        
-        <Link
-          href="/cart"
-          className="flex items-center space-x-2 rounded-md px-3 py-1 text-sm font-medium text-teal-700 transition hover:bg-teal-50"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <ShoppingBag className="h-5 w-5" />
-          <span>Ver carrito ({cardQuantity})</span>
-        </Link>
-      </div>
-      
-      <div className="my-4 h-px bg-gray-100"></div>
-      
-      {/* Mobile Auth Links */}
-{/* Mobile Auth Links */}
-<div className="pt-2 pb-3">
-  <div className="space-y-3">
-    {session ? (
-      <>
-        <Link 
-          href="/account"
-          className="block text-base font-medium text-teal-600 px-1"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          Mi cuenta
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="inline-block rounded-md border border-red-200 px-4 py-2 text-base font-medium text-red-600 transition hover:bg-red-50"
-        >
-          Cerrar sesión
-        </button>
-      </>
-    ) : (
-      <>
-        <Link 
-          href="/login"
-          className="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          Iniciar sesión
-        </Link>
-        <Link 
-          href="/register"
-          className="block rounded-md px-3 py-2.5 text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          Registrarse
-        </Link>
-      </>
-    )}
-  </div>
-</div>
-      
-      {/* <div className="my-4 h-px bg-gray-100"></div> */}
-      
-      <div className="my-2 rounded-lg bg-gray-50 p-1">
-        <div className="flex items-center rounded-md border border-gray-300 bg-white px-3 py-2">
-          <Search className="h-5 w-5 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Buscar productos o categorías..."
-            className="ml-2 w-full border-0 bg-transparent text-gray-700 focus:outline-none focus:ring-0"
-          />
+      {isMenuOpen && (
+        <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto bg-white shadow-lg lg:hidden">
+          <nav className="px-4 py-3">
+            {/* Mobile Search - Amazon Style */}
+            <div className="mb-4">
+              <div className="flex w-full items-center rounded-md border border-gray-300 bg-white overflow-hidden shadow-sm">
+                {/* Integrated SearchBar component for mobile */}
+                <SearchBar 
+                  variant="navbar" 
+                  onClose={() => setIsMenuOpen(false)} 
+                  initialCategory={selectedCategory}
+                />
+              </div>
+            </div>
+            
+            {/* Mobile Auth Links */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between">
+                {session ? (
+                  <>
+                    <Link 
+                      href="/account"
+                      className="flex items-center space-x-1 text-sm font-medium text-gray-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <User className="h-5 w-5" />
+                      <span>Mi cuenta</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="text-sm text-gray-700"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link 
+                      href="/login"
+                      className="text-sm text-gray-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Iniciar sesión
+                    </Link>
+                    <Link 
+                      href="/register"
+                      className="text-sm text-gray-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Registrarse
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            <div className="my-3 h-px bg-gray-100"></div>
+            
+            {/* Mobile Navigation Links - Amazon Style */}
+            <div>
+              <p className="mb-2 font-medium text-sm">Navegar por:</p>
+              <ul className="space-y-2">
+                {navigationLinks.map((link) => (
+                  <li key={link.path}>
+                    <Link 
+                      href={link.path} 
+                      className="block text-sm text-gray-700 hover:text-teal-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                
+                <li>
+                  <Link 
+                    href="/products" 
+                    className="block text-sm text-gray-700 hover:text-teal-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Tienda
+                  </Link>
+                </li>
+                
+                <li>
+                  <Link 
+                    href="/contact" 
+                    className="block text-sm text-gray-700 hover:text-teal-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Contacto
+                  </Link>
+                </li>
+                
+                <li>
+                  <Link 
+                    href="/cart" 
+                    className="flex items-center space-x-2 text-sm text-gray-700 hover:text-teal-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <ShoppingBag className="h-4 w-4" />
+                    <span>Ver carrito ({cardQuantity})</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
         </div>
-      </div>
-      
-      <ul className="space-y-0">
-        {navigationLinks.map((link) => (
-          <li key={link.path}>
-            <Link 
-              href={link.path} 
-              className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {link.name}
-            </Link>
-          </li>
-        ))}
-        
-        <li>
-          <Link 
-            href="/contact" 
-            className="block rounded-md px-3 py-1 text-base font-medium text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contacto
-          </Link>
-        </li>
-        
-        <li className="pt-1">
-          <p className="px-3 py-1 text-base font-medium text-gray-700">
-            Tienda
-          </p>
-          <ul className="ml-2 space-y-0 border-l border-gray-100 pl-2">
-            <li>
-              <Link 
-                href="/products" 
-                className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Todos los productos
-              </Link>
-            </li>
-            {categories.map((category) => (
-              <li key={category.slug}>
-                <Link 
-                  href={`/products/${category.slug}`} 
-                  className="block rounded-md px-3 py-2 text-base text-gray-700 transition hover:bg-gray-50 hover:text-teal-700"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </div>
-)}
+      )}
     </>
   );
 }

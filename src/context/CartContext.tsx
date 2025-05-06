@@ -6,10 +6,12 @@ import { Database } from '@/types-db';
  
 
 type Product = Database['products'];
+type CartItemDB = Database['cart_items'];
 
 type CartItem = {
   product: Product;
   quantity: number;
+  id?: number; // Optional ID from the database cart_items table
 };
 
 interface CartContextProps {
@@ -18,6 +20,10 @@ interface CartContextProps {
   updateQuantity: (productId: number, quantity: number) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
+  totalItems: number;
+  subtotal: number;
+  isLoading: boolean;
+  syncCartWithDB: (userId?: string) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextProps>({
@@ -26,6 +32,10 @@ const CartContext = createContext<CartContextProps>({
   updateQuantity: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
+  totalItems: 0,
+  subtotal: 0,
+  isLoading: false,
+  syncCartWithDB: async () => {},
 });
 
 // Helpers
@@ -44,6 +54,7 @@ function decodeCartFromBase64(encoded: string): { id: number; qty: number }[] {
 }
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -110,8 +121,37 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     // setCart(...) ← con productos reales después del fetch
   }, []);
 
+  // Calculate total items and subtotal
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.quantity * (item.product.price || 0)), 0);
+
+  // Sync cart with database
+  const syncCartWithDB = async (userId?: string) => {
+    if (!userId) return;
+    setIsLoading(true);
+    try {
+      // Here would go the actual implementation to sync with Supabase
+      // For now just a placeholder
+      console.log('Syncing cart with DB for user:', userId);
+    } catch (error) {
+      console.error('Error syncing cart with DB:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ 
+      cart, 
+      addToCart, 
+      updateQuantity, 
+      removeFromCart, 
+      clearCart, 
+      totalItems, 
+      subtotal, 
+      isLoading, 
+      syncCartWithDB
+    }}>
       {children}
     </CartContext.Provider>
   );

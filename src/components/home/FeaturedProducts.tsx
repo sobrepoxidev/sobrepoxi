@@ -8,7 +8,8 @@ import Image from 'next/image';
 //import AddToCartButton from './AddToCartButton'; // This will be a client component
 
 export default async function FeaturedProducts() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
 
   const { data: products } = await supabase
     .from('products')
