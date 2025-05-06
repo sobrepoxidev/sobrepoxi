@@ -6,7 +6,6 @@ import { Database } from '@/types-db';
  
 
 type Product = Database['products'];
-type CartItemDB = Database['cart_items'];
 
 type CartItem = {
   product: Product;
@@ -119,7 +118,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     // Por ahora solo logueamos lo detectado
     console.log("Reconstrucción del carrito requerida:", parsed);
     // setCart(...) ← con productos reales después del fetch
-  }, []);
+  }, [searchParams]);
 
   // Calculate total items and subtotal
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Session } from '@supabase/supabase-js';
-import { ChevronDown, User, History, LogIn, UserPlus, LogOut, Heart } from 'lucide-react';
+import { ChevronDown, User, History, Heart } from 'lucide-react';
 
 interface UserDropdownProps {
   session: Session | null;

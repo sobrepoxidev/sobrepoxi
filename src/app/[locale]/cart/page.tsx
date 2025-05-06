@@ -6,16 +6,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
-import { AlertTriangle, Check, Info, ShoppingBag, Tag } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
 
+
 type Product = Database['products'];
 type Category = Database['categories'];
-type CartItemDB = Database['cart_items'];
-type InventoryItem = Database['inventory'];
+
 
 /**
  * CartPage – replica sencilla inspirada en la captura aportada.
@@ -27,10 +27,10 @@ type InventoryItem = Database['inventory'];
 
 export default function CartPage() {
   const router = useRouter();
-  const { cart, updateQuantity, removeFromCart, syncCartWithDB, totalItems, subtotal: cartSubtotal, isLoading: isCartLoading } = useCart();
+  const { cart, updateQuantity, removeFromCart, syncCartWithDB } = useCart();
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{[key: number]: Category}>({});
-  const [inventory, setInventory] = useState<{[key: number]: number}>({});
+  
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [stockWarnings, setStockWarnings] = useState<{[key: number]: string}>({});
@@ -65,13 +65,10 @@ export default function CartPage() {
     checkAuth();
   }, [syncCartWithDB]);
   
-  // Fetch categories and inventory data for cart items
+  // Fetch categories for cart items
   useEffect(() => {
-    const fetchCategoriesAndInventory = async () => {
+    const fetchCategories = async () => {
       if (!cart.length) return;
-      
-      // Get all product IDs from cart
-      const productIds = cart.map(item => item.product.id);
       
       // Fetch all category_ids from cart products
       const categoryIds = [...new Set(
@@ -95,39 +92,9 @@ export default function CartPage() {
           setCategories(categoriesMap);
         }
       }
-      
-      // Fetch inventory data
-      if (productIds.length > 0) {
-        const { data: inventoryData } = await supabase
-          .from('inventory')
-          .select('*')
-          .in('product_id', productIds);
-          
-        if (inventoryData) {
-          const inventoryMap: {[key: number]: number} = {};
-          const warningsMap: {[key: number]: string} = {};
-          
-          inventoryData.forEach(item => {
-            inventoryMap[item.product_id] = item.quantity;
-            
-            // Check for stock warnings
-            const cartItem = cart.find(c => c.product.id === item.product_id);
-            if (cartItem && cartItem.quantity > item.quantity) {
-              if (item.quantity === 0) {
-                warningsMap[item.product_id] = 'Producto agotado';
-              } else {
-                warningsMap[item.product_id] = `Solo ${item.quantity} disponible(s)`;
-              }
-            }
-          });
-          
-          setInventory(inventoryMap);
-          setStockWarnings(warningsMap);
-        }
-      }
     };
     
-    fetchCategoriesAndInventory();
+    fetchCategories();
   }, [cart]);
 
   // Fetch related products based on categories in cart

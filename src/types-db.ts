@@ -75,7 +75,7 @@ export type Database = {
         brand: string | null;
         is_featured: boolean | null;
         is_active: boolean | null;
-        specifications: Record<string, any> | null;
+        specifications: Record<string, string | number | boolean | null> | null;
         discount_percentage: number | null;
         tags: string[] | null;
     },

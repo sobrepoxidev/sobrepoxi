@@ -42,8 +42,7 @@ export default function CheckoutWizardPage() {
       subtotal: cartSubtotal
     } = useCart();
     
-    const [inventory, setInventory] = useState<{[key: number]: number}>({});
-    const [stockWarnings, setStockWarnings] = useState<{[key: number]: string}>({}); 
+
     const [shippingAddress, setShippingAddress] = useState<ShippingAddress | null>(null);
   
     const [currentStep, setCurrentStep] = useState(1);
@@ -55,8 +54,8 @@ export default function CheckoutWizardPage() {
   
     const { session } = useSupabase();
     const userId = session?.user?.id || null;
-    const correo = session?.user?.email;
-    const nombreUsuario = session?.user?.user_metadata?.name;
+
+
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [orderComplete, setOrderComplete] = useState(false);
@@ -70,47 +69,7 @@ export default function CheckoutWizardPage() {
       goNext();
     };
   
-    // Load inventory data for cart items to check stock availability
-    useEffect(() => {
-      const fetchInventory = async () => {
-        if (!cart.length) return;
-        
-        // Get all product IDs from cart
-        const productIds = cart.map(item => item.product.id);
-        
-        // Fetch inventory data
-        if (productIds.length > 0) {
-          const { data: inventoryData } = await supabase
-            .from('inventory')
-            .select('*')
-            .in('product_id', productIds);
-            
-          if (inventoryData) {
-            const inventoryMap: {[key: number]: number} = {};
-            const warningsMap: {[key: number]: string} = {};
-            
-            inventoryData.forEach(item => {
-              inventoryMap[item.product_id] = item.quantity;
-              
-              // Check for stock warnings
-              const cartItem = cart.find(c => c.product.id === item.product_id);
-              if (cartItem && cartItem.quantity > item.quantity) {
-                if (item.quantity === 0) {
-                  warningsMap[item.product_id] = 'Producto agotado';
-                } else {
-                  warningsMap[item.product_id] = `Solo ${item.quantity} disponible(s)`;
-                }
-              }
-            });
-            
-            setInventory(inventoryMap);
-            setStockWarnings(warningsMap);
-          }
-        }
-      };
-      
-      fetchInventory();
-    }, [cart]);
+
 
     // -------------- createOrder() y resto --------------
     const createOrder = async (paymentMethodAux?: string) => {
@@ -122,11 +81,6 @@ export default function CheckoutWizardPage() {
           return;
         }
         
-        // Check for inventory issues
-        if (Object.keys(stockWarnings).length > 0) {
-          alert('Hay productos en tu carrito sin suficiente inventario. Por favor revisa tu carrito.');
-          return;
-        }
         
         // Calculate total with discounts
         const subtotal = cart.reduce((acc, item) => {
@@ -179,16 +133,6 @@ export default function CheckoutWizardPage() {
             
           if (itemError) {
             console.error("Error al crear elementos de orden:", itemError);
-          }
-          
-          // Update inventory
-          if (inventory[item.product.id] !== undefined) {
-            const newQuantity = Math.max(0, inventory[item.product.id] - item.quantity);
-            
-            await supabase
-              .from("inventory")
-              .update({ quantity: newQuantity })
-              .eq("product_id", item.product.id);
           }
         }
         
