@@ -5,6 +5,14 @@ import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
 import { Star } from 'lucide-react';
 
+// Define a type for profile data
+interface ProfileType {
+  id: string;
+  full_name?: string;
+  avatar_url?: string;
+  email?: string;
+}
+
 type Review = Database['reviews'];
 
 // We don't need a User type since we're fetching from profiles directly
@@ -49,7 +57,7 @@ interface ReviewsListProps {
 
 export default function ReviewsList({ productId }: ReviewsListProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [users, setUsers] = useState<{[key: string]: any}>({});
+  const [users, setUsers] = useState<{[key: string]: ProfileType}>({});
   const [loading, setLoading] = useState(true);
   const [averageRating, setAverageRating] = useState<number | null>(null);
 
@@ -79,7 +87,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
         
         // Fetch user information for each review
         const userIds = [...new Set(data.map(review => review.user_id))];
-        const usersData: {[key: string]: any} = {};
+        const usersData: {[key: string]: ProfileType} = {};
         
         for (const userId of userIds) {
           const { data: userData } = await supabase

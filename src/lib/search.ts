@@ -1,6 +1,6 @@
 // src/lib/search.ts
 import { supabase } from './supabaseClient';
-import type { Database } from '@/types-db';
+// Database type is used indirectly through MediaItem interface
 
 // Define MediaItem interface to match the one in types-db.ts
 interface MediaItem {

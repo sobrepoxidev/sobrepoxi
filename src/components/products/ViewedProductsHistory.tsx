@@ -14,7 +14,8 @@ export default function ViewedProductsHistory() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Keep the state setter but remove the unused variable
+  const [, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     async function fetchViewedProducts() {

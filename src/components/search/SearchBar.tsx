@@ -67,11 +67,8 @@ export default function SearchBar({
       
       setIsLoading(true);
       try {
-        // Simular resultados para pruebas si estamos en desarrollo
-        let results;
-        
         // Búsqueda real
-        results = await searchProducts(
+        const results = await searchProducts(
           debouncedQuery,
           category !== 'Todas' ? category : undefined,
           10
@@ -174,10 +171,8 @@ export default function SearchBar({
   }, [isCategoryMenuOpen]);
   
 
-  
-  // Esto es crucial para hacer que funcione en desktop
-  const dropdownZIndex = isNavbar ? 100 : 50;
-  const suggestionsZIndex = isNavbar ? 90 : 50;
+      // For desktop layout, handle different styling
+      // Z-index is handled directly in the component styles
   
   return (
     <div 
