@@ -33,7 +33,8 @@ export default function CartPage() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [stockWarnings, setStockWarnings] = useState<{[key: number]: string}>({});
+  const [stockWarnings, ] = useState<{[key: number]: string}>({});
+  // We keep the state object but remove the setter as it's not being used in this component
 
   // Calculate the total price with discounts applied
   const subtotal = cart.reduce((acc, item) => {

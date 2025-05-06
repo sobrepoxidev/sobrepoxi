@@ -30,7 +30,7 @@ export default function SearchResultsPage() {
       const data = await searchProducts(query, category !== 'Todas' ? category : undefined, 50);
       
       // Apply sorting
-      let sortedData = [...data];
+      const sortedData = [...data];
       if (sortBy === 'price-asc') {
         sortedData.sort((a, b) => (a.price || 0) - (b.price || 0));
       } else if (sortBy === 'price-desc') {

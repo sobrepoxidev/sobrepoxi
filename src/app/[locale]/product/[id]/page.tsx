@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,12 +14,12 @@ import {
   Search, 
   ArrowLeft,
   Check,
-  Star,
   Tag,
   MessageSquare
 } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
-import { addProductToHistory } from '@/lib/viewedHistory';
+// Import removed as it's not being used
+// import { addProductToHistory } from '@/lib/viewedHistory';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import ReviewsList from '@/components/products/ReviewsList';
@@ -33,9 +32,8 @@ type Category = Database['categories'];
 import React from 'react';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  // Use React.use() to unwrap params before accessing properties
-  const unwrappedParams = React.use(params as any) as { id: string };
-  const productId = unwrappedParams.id;
+  // Access params directly since we don't need React.use() in this case
+  const productId = params.id;
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [inventory, setInventory] = useState<number>(0);
@@ -127,10 +125,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       }
     }
 
-    if (unwrappedParams.id) {
+    if (productId) {
       fetchProductAndRelatedData();
     }
-  }, [productId]);
+  }, [productId]); // Use productId as dependency
 
   // Manejar la cantidad
   const handleIncrement = () => {

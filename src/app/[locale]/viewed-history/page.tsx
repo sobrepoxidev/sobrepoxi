@@ -6,12 +6,13 @@ import Image from 'next/image';
 import { ChevronRight, Trash2, Clock, AlertCircle } from 'lucide-react';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { getLocalViewedHistory, removeFromHistory, clearViewedHistory, ViewedProduct, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
+import { Session } from '@supabase/supabase-js';
 
 export default function ViewedHistoryPage() {
   const [history, setHistory] = useState<ViewedProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { supabase } = useSupabase();
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   // Cargar el historial y la sesión al montar el componente
   useEffect(() => {

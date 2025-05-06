@@ -18,16 +18,18 @@ type CarrucelSectionProps = {
 
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
   title = "Productos destacados", 
-  subtitle = "Navega con las flechas",
+  // subtitle is defined in props but not used
   shippingOnly = false
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  // Categories state is initialized but not used in rendering
+  const [, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Error state is initialized but not used in rendering
+  const [, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   // Detectar si es mobile
@@ -85,16 +87,17 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
         }
         
         // Cargar productos destacados o recientes
-        let query = supabase
+        const query = supabase
           .from('products')
           .select('*')
           .eq('is_active', true);
           
         try {
           // Primero intentamos con is_featured
-          const { data: featuredData, error: featuredError } = await query
+          const { data: featuredData } = await query
             .eq('is_featured', true)
             .limit(16);
+          // Removed unused featuredError variable
           
           if (featuredData && featuredData.length > 0) {
             // Si hay productos destacados, los usamos

@@ -1,6 +1,5 @@
 //1import Image from "next/image";
 //import Hero from "@/components/home/Hero";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
 //import ValueProposition from "@/components/home/ValueProposition";
 //import Testimonials from "@/components/home/Testimonials";
 //import PopularCategories from "@/components/home/PopularCategories";
@@ -11,6 +10,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { Database } from "@/types-db";
 import React from "react"; // Import React
+import Link from "next/link";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 type Product = Database['products'];
 type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
@@ -26,7 +26,7 @@ export default async function Home({ searchParams }: PageProps) {
   // Obtención robusta de parámetros de búsqueda
   const params = typeof searchParams === 'object' && 'then' in searchParams
     ? await searchParams
-    : (searchParams as any);
+    : (searchParams as Record<string, string | string[] | undefined>);
   const idCardOpen = params?.['id'];
 
   if (idCardOpen && typeof idCardOpen === 'string') {
@@ -67,14 +67,14 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
         {/* Botones flotantes agrupados */}
         <div className="fixed bottom-12 right-8 z-50 flex flex-col items-end gap-2">
-          <a 
+          <Link 
             href="/contact"
             className="bg-teal-600 text-white px-2 py-1 rounded-full shadow-lg hover:bg-teal-700 transition hidden md:block animate-fade-in"
             aria-label="Contacto Handmade Art"
             tabIndex={0}
           >
             ¿Necesitas ayuda?
-          </a>
+          </Link>
           {/* Botón scroll-to-top flotante (Client Component) */}
           <ScrollToTopButton />
         </div>
@@ -86,9 +86,9 @@ export default async function Home({ searchParams }: PageProps) {
             <p className="text-sm text-gray-600">&copy; {new Date().getFullYear()} Handmade Art. Todos los derechos reservados.</p>
           </div>
           <div className="flex gap-6">
-            <a href="/about" className="text-sm text-teal-600 hover:underline">Acerca de</a>
-            <a href="/impact" className="text-sm text-teal-600 hover:underline">Impacto social</a>
-            <a href="/contact" className="text-sm text-teal-600 hover:underline">Contacto</a>
+            <Link href="/about" className="text-sm text-teal-600 hover:underline">Acerca de</Link>
+            <Link href="/impact" className="text-sm text-teal-600 hover:underline">Impacto social</Link>
+            <Link href="/contact" className="text-sm text-teal-600 hover:underline">Contacto</Link>
             <a href="https://instagram.com/handmadeart.cr" target="_blank" rel="noopener" aria-label="Instagram Handmade Art" className="text-teal-600 hover:underline">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline-block align-text-bottom"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h-9A2.25 2.25 0 003.25 6v12a2.25 2.25 0 002.25 2.25h9A2.25 2.25 0 0018.75 18V6A2.25 2.25 0 0016.5 3.75z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75h.008v.008h-.008V6.75z" /></svg>
             </a>

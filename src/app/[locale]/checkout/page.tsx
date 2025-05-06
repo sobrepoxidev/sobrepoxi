@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import StepOne from "@/components/checkout/StepOne";
 import StepTwo from "@/components/checkout/StepTwo";  
@@ -27,19 +27,15 @@ interface ShippingAddress {
 }
 
 type Product = Database['products'];
-type CartItem = {
-    product: Product;
-    quantity: number;
-    id?: number;
-};
+// Removed unused CartItem type
 
 export default function CheckoutWizardPage() {
     const router = useRouter();
     const {
       cart,
       removeFromCart,
-      clearCart,
-      subtotal: cartSubtotal
+      clearCart
+      // Removed unused cartSubtotal
     } = useCart();
     
 
@@ -57,8 +53,9 @@ export default function CheckoutWizardPage() {
 
 
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [orderComplete, setOrderComplete] = useState(false);
+    // Using _ prefix to indicate these state setters are needed but the values aren't directly used
+    const [, setIsProcessing] = useState(false);
+    const [, setOrderComplete] = useState(false);
   
     // -------------- Steps --------------
     const goNext = () => setCurrentStep((s) => s + 1);
