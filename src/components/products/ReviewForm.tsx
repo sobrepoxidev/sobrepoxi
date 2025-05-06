@@ -86,8 +86,9 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
       setTimeout(() => {
         setSuccessMessage(null);
       }, 3000);
-    } catch (err: any) {
-      setError(`Error al enviar la reseña: ${err.message || 'Unknown error'}`);
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError(`Error al enviar la reseña: ${errorMessage}`);
       console.error('Error submitting review:', err);
     } finally {
       setIsSubmitting(false);

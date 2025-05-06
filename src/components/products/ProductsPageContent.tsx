@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronDown, ChevronRight, GridIcon, ListIcon, SlidersHorizontal } from 'lucide-react';
+import { ChevronDown, ChevronRight, GridIcon, ListIcon } from 'lucide-react';
 import ProductCard from './ProductCard';
 import ProductFilters from './ProductFilters';
 import PaginationControls from './PaginationControls';
@@ -195,10 +195,6 @@ export default function ProductsPageContent() {
   // Determinar si hay productos
   const hasProducts = !loading && products.length > 0;
   
-  // Manejar cambio de vista (grid/list)
-  const toggleViewMode = () => {
-    setViewMode(current => current === 'grid' ? 'list' : 'grid');
-  };
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -267,7 +263,7 @@ export default function ProductsPageContent() {
               {/* Selector de ordenamiento */}
               <div className="relative">
                 <select
-                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:border-transparent"
                   value={sortBy}
                   onChange={(e) => {
                     const params = new URLSearchParams(searchParams.toString());
@@ -364,10 +360,12 @@ export default function ProductsPageContent() {
                     className="sm:w-48 h-40 sm:h-auto relative bg-gray-50 flex-shrink-0"
                   >
                     <div className="absolute inset-0 flex items-center justify-center p-4">
-                      <img
-                        src={product.media?.[0]?.url || '/product-placeholder.png'}
+                      <Image 
+                        src={product.thumbnail || '/product-placeholder.png'} 
                         alt={product.name || ''}
-                        className="max-h-full max-w-full object-contain"
+                        width={150}
+                        height={150}
+                        className="object-cover w-full h-full rounded"
                       />
                     </div>
                   </Link>

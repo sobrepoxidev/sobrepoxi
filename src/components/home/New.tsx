@@ -200,10 +200,10 @@ export default function NewHome() {
 
           <div className="absolute bg-gradient-to-b from-teal-100 to-emerald-100 top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
             <div className="text-center z-20 mt-2 lg:mt-4 px-4">
-              <h1 className=" text-2xl lg:text-4xl font-bold lg:mb-2 hidden sm:block">
+              <h1 className=" text-2xl lg:text-4xl text-gray-800 font-bold lg:mb-2 hidden sm:block">
                 Artesanías únicas hechas a mano
               </h1>
-              <h1 className=" text-2xl lg:text-4xl font-bold lg:mb-2 sm:hidden">
+              <h1 className=" text-2xl lg:text-4xl text-gray-800 font-bold lg:mb-2 sm:hidden">
                 Artesanías hechas a mano
               </h1>
 

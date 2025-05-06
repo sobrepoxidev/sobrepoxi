@@ -26,8 +26,7 @@ interface ShippingAddress {
     phone: string;
 }
 
-type Product = Database['products'];
-// Removed unused CartItem type
+// Removed unused Product and CartItem types
 
 export default function CheckoutWizardPage() {
     const router = useRouter();

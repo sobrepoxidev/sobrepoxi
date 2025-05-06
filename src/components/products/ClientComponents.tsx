@@ -14,7 +14,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Database } from "@/types-db";
-import { ProductCardModal } from "./ProductModal";
+// ProductCardModal import removed as it's not used in this file
 import { ProductCardModalWithTracking } from "./ProductModalWithTracking";
 
 
@@ -295,7 +295,7 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
   };
 
   // --- Efecto 1: Abrir modal SI initialProduct se proporciona Y coincide con la URL inicial ---
-  // Este efecto ahora SOLO depende de initialProduct. Se ejecutará si esa prop cambia.
+  // Este efecto ahora depende de initialProduct, modalContent.isOpen, from y searchParams
   useEffect(() => {
     // Obtiene el ID de la URL *en el momento en que este efecto se ejecuta*
 
@@ -312,9 +312,8 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
              console.log("Efecto 1: initialProduct coincide con URL, pero modal ya está abierto.");
         }
     }
-    // IMPORTANTE: Depender solo de initialProduct. No queremos que este efecto
-    // se vuelva a ejecutar solo porque la URL cambió al cerrar el modal.
-  }, [initialProduct]); // <--- Solo depende de initialProduct
+    // Incluimos todas las dependencias necesarias para este efecto
+  }, [initialProduct, modalContent.isOpen, from, searchParams]);
 
   // --- Efecto 2: Listener para el evento custom (para el botón Expand) ---
   // Este efecto maneja la apertura por evento y necesita reaccionar a cambios en searchParams/isOpen
@@ -364,8 +363,7 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
     };
     // Dependencias: Necesita saber si está abierto para evitar reapertura,
     // y necesita las funciones de routing/params para actualizar URL si es necesario.
-  }, [modalContent.isOpen, pathname, replace, searchParams]);
-
+  }, [modalContent.isOpen, pathname, replace, searchParams, from]);
 
   // Renderizado condicional
   if (!modalContent.isOpen || !modalContent.product) {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Check, ChevronDown, ChevronUp, Sliders, Tag } from 'lucide-react';
-import { supabase } from '@/lib/supabaseClient';
+
 import { Database } from '@/types-db';
 
 type Category = Database['categories'];
@@ -23,7 +23,7 @@ export default function ProductFilters({
   onFilterChange,
   isMobile = false
 }: FilterProps) {
-  const router = useRouter();
+
   const searchParams = useSearchParams();
   
   const [categoryOpen, setCategoryOpen] = useState(true);
@@ -53,7 +53,7 @@ export default function ProductFilters({
     searchParams.get('featured') === 'true'
   );
   
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+
   const [priceFilterMin, setPriceFilterMin] = useState('');
   const [priceFilterMax, setPriceFilterMax] = useState('');
   

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, ShoppingCart, Heart, Check, Tag } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import { supabase } from '@/lib/supabaseClient';

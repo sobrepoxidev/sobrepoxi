@@ -2,16 +2,14 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react';
-
 import Link from 'next/link';
 import { 
   ShoppingBag, 
   Search, 
   Menu, 
-  X, 
-  ChevronDown,
   Globe,
-  User
+  User,
+  X
 } from 'lucide-react';
 import UserDropdown from '@/components/user/UserDropdown';
 import { Session } from '@supabase/supabase-js';
@@ -32,22 +30,21 @@ type NavLink = {
 
 interface NavbarClientProps {
   navigationLinks: NavLink[];
+  // Still defining categories as a prop even though we don't use it,
+  // to maintain compatibility with parent components
   categories: Category[];
 }
 
-export default function NavbarClient({ navigationLinks, categories }: NavbarClientProps) {
+export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
   // Estado para los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
 
-
-  //const [isScrolled, setIsScrolled] = useState(false);
-  
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
   const categoryMenuRef = useRef<HTMLDivElement>(null);
@@ -121,7 +118,7 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
     }
     fetchSession()
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event: string, newSession: Session | null) => {
       setSession(newSession)
     })
     return () => {
