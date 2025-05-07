@@ -30,37 +30,25 @@ type NavLink = {
 
 interface NavbarClientProps {
   navigationLinks: NavLink[];
-  categories: Category[];
 }
 
-export default function NavbarClient({ navigationLinks, categories }: NavbarClientProps) {
+export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
   // Estado para los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
+  const [selectedCategory] = useState('Todas');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
 
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
-  const categoryMenuRef = useRef<HTMLDivElement>(null);
   const { cart } = useCart();
   const cardQuantity = cart.length;
   
-  // Fetch available categories for the search dropdown
+  // We don't need to fetch categories anymore as we're not using them
   useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const categoryList = await getProductCategories();
-        setAvailableCategories(categoryList);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    }
-    
-    fetchCategories();
+    // Empty effect for future implementation if needed
   }, []);
   
   // Efecto para cerrar menús al hacer clic fuera
@@ -68,13 +56,6 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsSearchOpen(false);
-      }
-      
-      if (categoryMenuRef.current && 
-          event.target instanceof Node && 
-          !categoryMenuRef.current.contains(event.target) && 
-          !(event.target instanceof Element && event.target.classList.contains('category-trigger'))) {
-        setIsCategoryMenuOpen(false);
       }
     };
     
@@ -99,7 +80,6 @@ export default function NavbarClient({ navigationLinks, categories }: NavbarClie
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsSearchOpen(false);
-        setIsCategoryMenuOpen(false);
         setIsMenuOpen(false);
       }
     };

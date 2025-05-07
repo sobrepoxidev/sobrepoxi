@@ -54,8 +54,7 @@ export default async function Navbar({ locale }: { locale: string }) {
         {/* Client-side interactivity (Center and Right) */}
         <div className="flex-grow flex items-center justify-between">
           <NavbarClient 
-            navigationLinks={navigationLinks} 
-            categories={categories} 
+            navigationLinks={navigationLinks}
           />
         </div>
       </div>
