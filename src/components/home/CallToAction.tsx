@@ -1,7 +1,58 @@
-// CallToAction.tsx (Server Component)
+// CallToAction.tsx (Client Component)
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabaseClient';
+import { useSupabase } from '@/app/supabase-provider/provider';
 
 export default function CallToAction() {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [newsletterError, setNewsletterError] = useState<string | null>(null);
+  const { session } = useSupabase();
+  
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail || newsletterStatus === 'loading') return;
+    
+    setNewsletterStatus('loading');
+    setNewsletterError(null);
+    
+    try {
+      // Check if email already exists
+      const { data: existingSubscriber } = await supabase
+        .from('newsletter_subscribers')
+        .select('id')
+        .eq('email', newsletterEmail)
+        .single();
+      
+      if (existingSubscriber) {
+        setNewsletterStatus('success');
+        return; // Already subscribed, consider this a success
+      }
+      
+      // Insert new subscriber
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({
+          email: newsletterEmail,
+          user_id: session?.user?.id || null,
+          status: 'active'
+        });
+      
+      if (error) throw error;
+      
+      setNewsletterStatus('success');
+      setNewsletterEmail('');
+    } catch (error) {
+      console.error('Error al suscribirse al newsletter:', error);
+      setNewsletterStatus('error');
+      setNewsletterError('Hubo un error al procesar tu solicitud. Inténtalo de nuevo más tarde.');
+    }
+  };
+
   return (
     <section className="max-w-[1500px] mx-auto  py-4">
       <div className="container mx-auto px-4">
@@ -39,20 +90,38 @@ export default function CallToAction() {
           <p className="text-gray-800 mb-2">
             Suscríbete para recibir noticias sobre nuevos productos, historias de nuestros artesanos y promociones especiales
           </p>
-          <form className="flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              placeholder="Tu correo electrónico" 
-              className="flex-grow px-4 py-3 border border-black/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
-              required
-            />
-            <button 
-              type="submit"
-              className="bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-3 rounded-lg transition shadow-sm"
-            >
-              Suscribirse
-            </button>
-          </form>
+          
+          {newsletterStatus === 'success' ? (
+            <div className="bg-green-50 text-green-800 px-4 py-3 rounded-lg border border-green-200">
+              ¡Gracias por suscribirte! Pronto recibirás nuestras novedades.
+            </div>
+          ) : (
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                placeholder="Tu correo electrónico" 
+                className="flex-grow px-4 py-3 border border-black/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
+              />
+              <button 
+                type="submit"
+                disabled={newsletterStatus === 'loading'}
+                className={`px-6 py-3 rounded-lg transition shadow-sm font-medium ${newsletterStatus === 'loading' 
+                  ? 'bg-amber-300 text-amber-800 cursor-not-allowed' 
+                  : 'bg-amber-500 hover:bg-amber-600 text-white'}`}
+              >
+                {newsletterStatus === 'loading' ? 'Procesando...' : 'Suscribirse'}
+              </button>
+            </form>
+          )}
+          
+          {newsletterStatus === 'error' && newsletterError && (
+            <div className="mt-3 text-red-600 text-sm">
+              {newsletterError}
+            </div>
+          )}
         </div>
       </div>
     </section>

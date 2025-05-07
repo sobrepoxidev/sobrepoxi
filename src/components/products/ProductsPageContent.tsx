@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronDown, ChevronRight, GridIcon, ListIcon } from 'lucide-react';
 import ProductCard from './ProductCard';
 import ProductFilters from './ProductFilters';
@@ -361,7 +362,7 @@ export default function ProductsPageContent() {
                   >
                     <div className="absolute inset-0 flex items-center justify-center p-4">
                       <Image 
-                        src={product.thumbnail || '/product-placeholder.png'} 
+                        src={product.media?.[0].url || '/product-placeholder.png'} 
                         alt={product.name || ''}
                         width={150}
                         height={150}

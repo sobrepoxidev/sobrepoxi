@@ -41,6 +41,14 @@ export type Database = {
         quantity: number;
         updated_at: string;
     },
+    newsletter_subscribers: {
+        id: number;
+        email: string;
+        user_id: string | null; // Optional user association
+        status: 'active' | 'unsubscribed';
+        created_at: string;
+        updated_at: string;
+    },
     order_items: {
         id: number;
         order_id: number;

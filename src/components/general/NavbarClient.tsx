@@ -30,12 +30,10 @@ type NavLink = {
 
 interface NavbarClientProps {
   navigationLinks: NavLink[];
-  // Still defining categories as a prop even though we don't use it,
-  // to maintain compatibility with parent components
   categories: Category[];
 }
 
-export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
+export default function NavbarClient({ navigationLinks, categories }: NavbarClientProps) {
   // Estado para los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);

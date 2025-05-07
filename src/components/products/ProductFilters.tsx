@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Check, ChevronDown, ChevronUp, Sliders, Tag } from 'lucide-react';
 
 import { Database } from '@/types-db';

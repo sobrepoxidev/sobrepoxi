@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import StepOne from "@/components/checkout/StepOne";
 import StepTwo from "@/components/checkout/StepTwo";  
-import { Database } from '@/types-db';
 import { supabase } from "@/lib/supabaseClient";
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
