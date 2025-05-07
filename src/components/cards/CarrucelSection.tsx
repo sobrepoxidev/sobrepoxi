@@ -189,19 +189,19 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   
   // Función para generar el primer grupo de productos (Regalos con significado)
   const generateDesktopFirstGroup = () => {
-    return generateProductGroup(products, 0, 4);
+    return generateProductGroup(products, 0, 8);
   };
   
   // Función para generar el segundo grupo de productos (Chorreadores)
   const generateDesktopSecondGroup = () => {
-    return generateProductGroup(products, 4, 8);
+    return generateProductGroup(products, 8, 16);
   };
 
   // Función para generar las tarjetas para mobile
   const generateMobileProductCards = () => {
     // Dividir productos en grupos de 4 para mostrar 2x2 en cada tarjeta
-    const productGroup1 = products.slice(0, 4);
-    const productGroup2 = products.slice(4, 8);
+    const productGroup1 = products.slice(0, 8);
+    const productGroup2 = products.slice(8, 16);
     
     return [
       // Primera tarjeta - Regalos con significado

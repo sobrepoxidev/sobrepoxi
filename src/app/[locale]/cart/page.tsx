@@ -11,7 +11,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
-
+import { Session } from "@supabase/supabase-js";
 
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -32,7 +32,7 @@ export default function CartPage() {
   const [categories, setCategories] = useState<{[key: number]: Category}>({});
   
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [session, setSession] = useState<Session | null>(null);
   const [stockWarnings, ] = useState<{[key: number]: string}>({});
   // We keep the state object but remove the setter as it's not being used in this component
 
@@ -51,20 +51,32 @@ export default function CartPage() {
   const shipping = cart.length ? 3200 : 0;
   const total = subtotal + shipping;
 
-  // Check if user is logged in
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsLoggedIn(!!session);
-      
-      if (session?.user) {
-        // Sync cart with database if user is logged in
-        syncCartWithDB(session.user.id);
-      }
-    };
+    const fetchSession = async () => {
+      const { data } = await supabase.auth.getSession()
+      setSession(data.session)
+    }
+    fetchSession()
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event: string, newSession: Session | null) => {
+      setSession(newSession)
+    })
+    return () => {
+      authListener.subscription.unsubscribe()
+    }
     
-    checkAuth();
-  }, [syncCartWithDB]);
+  }, [supabase])
+
+  useEffect(() => {
+    if (session) {
+      // Sync cart with database if user is logged in
+      syncCartWithDB(session.user.id);
+    }
+    console.log("INFO DE LA SESSION: ", session)
+    
+  }, [session])
+    
+
   
   // Fetch categories for cart items
   useEffect(() => {
@@ -322,7 +334,7 @@ export default function CartPage() {
               <p className="text-xs text-slate-500">Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}</p>
               <button
                 onClick={async () => {
-                  if (!isLoggedIn) {
+                  if (!session) {
                     // If not logged in, redirect to login page with return URL
                     router.push(`/login?redirect=${encodeURIComponent('/checkout')}`);
                     return;
@@ -339,7 +351,7 @@ export default function CartPage() {
                 }}
                 className="w-full py-3 rounded bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
               >
-                <span>{isLoggedIn ? 'COMPRAR' : 'INICIAR SESIÓN PARA COMPRAR'}</span>
+                <span>{session ? 'COMPRAR' : 'INICIAR SESIÓN PARA COMPRAR'}</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
