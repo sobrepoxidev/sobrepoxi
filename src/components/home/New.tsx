@@ -141,7 +141,7 @@ export default function NewHome() {
                
               </h2>
              
-              <p className="text-2xl sm:text-xl font-light tracking-wider text-gray-800">
+              <p className="text-lg sm:text-xl font-light tracking-wider text-gray-800">
            
                 <span className="font-bold text-[#B55327]">Con tarifas desde ₡1.950</span>
               </p>
