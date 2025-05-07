@@ -38,11 +38,14 @@ export default function Hero() {
       // Si tienes campo "featured", añade: .eq('featured', true)
       const { data, error } = await supabase
         .from('products')
-        .select('id,category,name, media, description, price, created_at')
+        .select('*') // Select all fields to match the Product type
         .order('created_at', { ascending: false })
         .limit(5);
 
-      if (!error && data) setProducts(data as Product[]);
+      if (!error && data) {
+        // Ensure the data matches the Product type structure
+        setProducts(data as unknown as Product[]);
+      }
 
       setLoading(false);
     }
@@ -215,7 +218,8 @@ export default function Hero() {
                         <div className="flex-1 flex flex-col items-center md:items-start justify-between w-full">
                           <div className="text-center md:text-left w-full">
                             <div className="bg-teal-50 text-teal-700 text-xs px-2 py-0.5 rounded-full inline-block mb-1">
-                              {product.category || 'Artesanía'}
+                              {/* Using category_id instead of category which doesn't exist in the Product type */}
+                              {'Artesanía'}
                             </div>
                             <h3 className="text-lg font-semibold text-gray-800 mb-1">{product.name}</h3>
                             <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
