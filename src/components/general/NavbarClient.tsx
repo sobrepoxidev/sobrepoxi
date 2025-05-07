@@ -31,7 +31,6 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCategory] = useState('Todas');
-  const [availableCategories] = useState<string[]>([]);
   const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
 

@@ -103,12 +103,6 @@ export default function NewHome() {
     };
   }, []);
   
-  // Función para cerrar el banner de inicio de sesión - implementation kept for future use
-  const handleCloseLoginBanner = () => {
-    setShowLoginBanner(false);
-    localStorage.setItem('hideLoginBanner', 'true');
-  };
-  
   // Fetch categories to get correct IDs
   useEffect(() => {
     async function fetchCategories() {
