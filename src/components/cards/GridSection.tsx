@@ -12,13 +12,6 @@ import  CarrucelSectionA  from "./CarrucelSectionA";
 type Category = Database['categories'] & { image_url?: string }; // Add image_url property
 type Product = Database['products'];
 
-interface CardData {
-  title: string;
-  content: React.ReactNode;
-  link: string;
-  mobileActive?: boolean;
-}
-
 const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: number, indexEnd: number, mobileActive?: boolean}) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);

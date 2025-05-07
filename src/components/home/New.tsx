@@ -8,7 +8,6 @@ import CarrucelSection from '@/components/cards/CarrucelSection';
 // Removed unused Link import
 import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
 import { supabase } from "@/lib/supabaseClient";
-import { Session } from '@supabase/supabase-js';
 import { Database } from "@/types-db";
 
 type Category = Database['categories'];
