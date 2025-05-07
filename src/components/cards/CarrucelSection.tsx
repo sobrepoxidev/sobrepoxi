@@ -166,18 +166,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
     fetchData();
   }, []);
 
-  // Función para calcular el precio final
-  const calculateFinalPrice = (product: Product) => {
-    const regularPrice = Number(product.price || 0);
-    const discountPercentage = product.discount_percentage || 0;
-    
-    if (discountPercentage > 0) {
-      // Calcular precio con descuento
-      return regularPrice * (1 - discountPercentage / 100);
-    }
-    
-    return regularPrice;
-  };
+
 
   // Función para generar un grupo de tarjetas de productos para desktop al estilo Amazon
   const generateProductGroup = (products: Product[], startIndex: number, endIndex: number) => {

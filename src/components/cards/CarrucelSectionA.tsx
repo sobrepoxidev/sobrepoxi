@@ -15,11 +15,9 @@ interface CarrucelSectionProps {
 const CarouselCard: React.FC<{
   title: string;
   content: React.ReactNode;
-  link: string;
+
   className?: string;
-  start?: boolean;
-  end?: boolean;
-}> = ({ title, content, link, className = "", start = false, end = false }) => {
+}> = ({ title, content, className = "" }) => {
   return (
     <div className={`rounded-2xl flex h-[27rem] shadow-md flex-col ${className}`}>
       <div className="flex flex-col h-full">

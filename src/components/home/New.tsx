@@ -58,39 +58,24 @@ export default function NewHome() {
   // Keeping categories for its setter which is used in fetchCategories
   const [, setCategories] = useState<Category[]>([]);
   const [chorreadorCategoryId, setChorreadorCategoryId] = useState<number | null>(null);
-  const [userSession, setUserSession] = useState<Session | null>(null);
   const [, setShowLoginBanner] = useState<boolean>(true);
   // Removed unused newsletter state variables
   
   // Verificar si el usuario ha iniciado sesión
   useEffect(() => {
-    async function checkUserSession() {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setUserSession(session);
-        
-        // Guardar preferencia del banner en localStorage si el usuario inició sesión
-        if (session) {
-          localStorage.setItem('hideLoginBanner', 'true');
-        }
-      } catch (error) {
-        console.error('Error checking session:', error);
-        setUserSession(null);
-      }
-    }
+
     
     // Comprobar si el usuario ha ocultado el banner anteriormente
     const hideLoginBanner = localStorage.getItem('hideLoginBanner');
     if (hideLoginBanner === 'true') {
       setShowLoginBanner(false);
     }
-    
-    checkUserSession();
+
     
     // Suscribirse a cambios en la sesión
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUserSession(session);
+      (session) => {
+   
         if (session) {
           localStorage.setItem('hideLoginBanner', 'true');
           setShowLoginBanner(false);
