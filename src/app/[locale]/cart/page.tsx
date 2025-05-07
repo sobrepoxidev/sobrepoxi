@@ -119,20 +119,32 @@ export default function CartPage() {
         if (categoryIdsInCart.length === 0) {
           console.log('No categories found in cart');
           setIsLoading(false);
+          setRelatedProducts([]);
           return;
         }
 
-        // Optimized query: 
-        // 1. Only get products from the same category_ids as in cart
-        // 2. Exclude products already in cart
-        // 3. Limit to just 4 products for display
-        // 4. Only show active products
-        const { data, error } = await supabase
+        // Ensure we have valid product IDs for the not-in filter
+        // If cart is empty, provide a dummy ID to avoid query issues
+        const validProductIds = productIdsInCart.length > 0 ? productIdsInCart : [-1];
+
+        // Build query in steps to avoid potential issues
+        let query = supabase
           .from('products')
           .select('*')
           .in('category_id', categoryIdsInCart)
-          .not('id', 'in', productIdsInCart)
-          .eq('is_active', true)
+          .eq('is_active', true);
+        
+        // Only apply the not-in filter if we have products in cart
+        if (validProductIds.length > 0) {
+          // Use individual not-equals filters to avoid parser issues
+          query = query.not('id', 'eq', validProductIds[0]);
+          for (let i = 1; i < validProductIds.length; i++) {
+            query = query.not('id', 'eq', validProductIds[i]);
+          }
+        }
+        
+        // Complete the query
+        const { data, error } = await query
           .order('created_at', { ascending: false })
           .limit(4);
 
@@ -141,9 +153,12 @@ export default function CartPage() {
           throw error;
         }
 
-        setRelatedProducts(data as Product[] || []);
+        // Ensure we always set a valid array
+        setRelatedProducts(data || []);
       } catch (err) {
-        console.error('Error in fetchRelatedProducts:', err);
+        console.error('Error in fetchRelatedProducts:', err instanceof Error ? err.message : JSON.stringify(err));
+        // Set empty array on error to prevent UI issues
+        setRelatedProducts([]);
       } finally {
         setIsLoading(false);
       }

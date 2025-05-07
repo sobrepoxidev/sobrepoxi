@@ -226,8 +226,6 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
     // Also update local cart
     addToCart(product, quantity);
     
-    // Mostrar retroalimentación visual o notificación
-    alert('Producto añadido al carrito');
   };
 
   // Si está cargando, muestra un spinner
@@ -362,10 +360,10 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
                 {product.discount_percentage && product.discount_percentage > 0 ? (
                   <>
                     <p className="text-3xl font-bold text-teal-700">
-                      ₡{(product.price * (1 - product.discount_percentage / 100)).toFixed(2)}
+                      ₡{(product.price * (1 - product.discount_percentage / 100)).toFixed(0)}
                     </p>
                     <p className="text-lg text-gray-500 line-through">
-                      ₡{product.price.toFixed(2)}
+                      ₡{product.price.toFixed(0)}
                     </p>
                     <span className="text-sm font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded">
                       {product.discount_percentage}% OFF
@@ -373,7 +371,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
                   </>
                 ) : (
                   <p className="text-3xl font-bold text-teal-700">
-                    ₡{product.price.toFixed(2)}
+                    ₡{product.price.toFixed(0)}
                   </p>
                 )}
               </div>
