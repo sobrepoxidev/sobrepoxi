@@ -21,7 +21,7 @@ export default async function Navbar({ locale }: { locale: string }) {
         {/* Logo - SSR (Left) */}
         <div className="flex-shrink-0 mr-2 md:mr-4">
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
-            <div className="relative overflow-hidden flex items-center">
+            <div className="relative overflow-hidden flex items-center gap-3">
               <Image
                 src={locale === 'es' ? '/logo_es.webp' : '/logo_en.webp'}
                 alt="Hand Made Art Logo"

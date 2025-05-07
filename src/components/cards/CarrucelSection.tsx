@@ -15,12 +15,18 @@ type CarrucelSectionProps = {
   title?: string;
   subtitle?: string;
   shippingOnly?: boolean;
+  startIndex?: number;
+  endIndex?: number;
+  mobileInvertList?: boolean;
 };
 
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
-  title = "Productos destacados", 
+  title = "Regalos con significado", 
   // subtitle is defined in props but not used
-  shippingOnly = false
+  shippingOnly = false,
+  startIndex = 0,
+  endIndex = 8,
+  mobileInvertList = false
 }) => {
   // Referencias para cada sección de carrusel
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -146,7 +152,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
           // Primero intentamos con is_featured
           const { data: featuredData } = await query
             .eq('is_featured', true)
-            .limit(16);
+            .limit(20);
           // Removed unused featuredError variable
           
           if (featuredData && featuredData.length > 0) {
@@ -155,7 +161,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
           } else {
             // Si no hay productos destacados, cargamos los más recientes
             const { data: recentData, error: recentError } = await query
-              .limit(16);
+              .limit(20);
               
             if (recentError) {
               throw recentError;
@@ -169,7 +175,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
           console.log('Error al cargar productos destacados, usando recientes', e);
           // Si hay algún error, intentamos cargar productos recientes
           const { data: fallbackData, error: fallbackError } = await query
-            .limit(16);
+            .limit(20);
             
           if (fallbackError) {
             throw fallbackError;
@@ -234,40 +240,80 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   };
   
   // Función para generar el primer grupo de productos (Regalos con significado)
-  const generateDesktopFirstGroup = () => {
-    return generateProductGroup(products, 0, 8);
+  const generateDesktopGroup = (startIndex: number, endIndex: number) => {
+    return generateProductGroup(products, startIndex, endIndex);
   };
   
-  // Función para generar el segundo grupo de productos (Chorreadores)
-  const generateDesktopSecondGroup = () => {
-    return generateProductGroup(products, 8, 16);
-  };
-
-  // Función para generar las tarjetas para mobile estilo Amazon (solo imágenes sin títulos)
-  const generateMobileProductCards = () => {
-    // Usamos todos los productos en un solo carrusel horizontal
-    return products.map((product) => {
-      const imageUrl = product.media && product.media.length > 0 
-        ? product.media[0].url 
-        : '/placeholder-image.png';
-      
-      return (
-        <div key={product.id} className="min-w-[160px] flex-none mx-1.5 scroll-ml-6 snap-start">
-          <Link href={`/product/${product.id}`}>
-            <div className="h-[140px] flex items-center justify-center">
-              <Image
-                src={imageUrl}
-                alt={product.name || 'Producto'}
-                width={130}
-                height={130}
-                className="object-contain max-h-full"
-                unoptimized
-              />
-            </div>
-          </Link>
+  // Función para generar las tarjetas para mobile en formato grid 2x2
+  const generateMobileGridCards = () => {
+    // Dividimos los productos en dos grupos
+    const firstGroup = products.slice(0, 4); // Primeros 4 productos para "Para tu Hogar"
+    const secondGroup = products.slice(4, 8); // Siguientes 4 productos para "Lugares Exóticos"
+    
+    // Si mobileInvertList es true, invertimos el orden de los elementos
+    const orderedItems = mobileInvertList ? 
+      [secondGroup, firstGroup] : 
+      [firstGroup, secondGroup];
+    
+    return [
+      // Primera banda
+      <div key="first-section" className="max-w-[90vw] flex-none mx-1 snap-start">
+        <div className="grid grid-cols-2 gap-1">
+          {orderedItems[0].map((product) => {
+            const imageUrl = product.media && product.media.length > 0 
+              ? product.media[0].url 
+              : '/placeholder-image.png';
+            
+            return (
+              <Link key={product.id} href={`/product/${product.id}`} className="block">
+                <div className="bg-gray-200 rounded-lg shadow-sm">
+                  <div className="h-[120px] flex items-center justify-center p-2">
+                    <Image
+                      src={imageUrl}
+                      alt={product.name || 'Producto'}
+                      width={100}
+                      height={100}
+                      className="object-contain max-h-full"
+                      unoptimized
+                    />
+                  </div>
+                  <p className="text-xs truncate px-2 pb-1">{product.name}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      );
-    });
+      </div>,
+      
+      // Segunda banda
+      <div key="second-section" className="max-w-[90vw] flex-none mx-1 snap-start">
+        <div className="grid grid-cols-2 gap-2">
+          {orderedItems[1].map((product) => {
+            const imageUrl = product.media && product.media.length > 0 
+              ? product.media[0].url 
+              : '/placeholder-image.png';
+            
+            return (
+              <Link key={product.id} href={`/product/${product.id}`} className="block">
+                <div className="bg-white rounded-lg shadow-sm">
+                  <div className="h-[120px] flex items-center justify-center p-2">
+                    <Image
+                      src={imageUrl}
+                      alt={product.name || 'Producto'}
+                      width={100}
+                      height={100}
+                      className="object-contain max-h-full"
+                      unoptimized
+                    />
+                  </div>
+                  <p className="text-xs truncate px-2 pb-1">{product.name}</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    ];
   };
 
   // Si solo queremos mostrar la sección de envíos
@@ -353,9 +399,9 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
               className="flex overflow-x-auto snap-x snap-mandatory carousel-scroll pb-1"
               onScroll={handleMobileScroll}
             >
-              {/* Vista Mobile - Estilo Amazon */}
+              {/* Vista Mobile - Grid 2x2 con dos bandas */}
               <div className="flex">
-                {generateMobileProductCards()}
+                {generateMobileGridCards()}
               </div>
             </div>
 
@@ -376,7 +422,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       <section className="py-4 bg-white hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold">Regalos con significado</h2>
+            <h2 className="text-xl font-bold">{title}</h2>
             <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
           </div>
 
@@ -397,7 +443,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
               className="flex overflow-x-auto carousel-scroll py-4 px-8"
               onScroll={handleFirstGroupScroll}
             >
-              {generateDesktopFirstGroup()}
+              {generateDesktopGroup(startIndex, endIndex)}
             </div>
 
             {firstGroupCanScrollRight && (
@@ -414,45 +460,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       </section>
 
       {/* Vista desktop - Segunda banda: Chorreadores con estilo */}
-      <section className="py-4 bg-white hidden md:block">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold">Productos con estilo</h2>
-            <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
-          </div>
-
-          <div className="relative carousel-wrapper">
-            {/* Botones de navegación dentro del carrusel */}
-            {secondGroupCanScrollLeft && (
-              <button
-                onClick={scrollSecondGroupLeft}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-r-full shadow-md p-3"
-                aria-label="Anterior"
-              >
-                <ChevronLeftIcon size={24} />
-              </button>
-            )}
-
-            <div 
-              ref={secondGroupScrollRef}
-              className="flex overflow-x-auto carousel-scroll py-4 px-8"
-              onScroll={handleSecondGroupScroll}
-            >
-              {generateDesktopSecondGroup()}
-            </div>
-
-            {secondGroupCanScrollRight && (
-              <button
-                onClick={scrollSecondGroupRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-l-full shadow-md p-3"
-                aria-label="Siguiente"
-              >
-                <ChevronRightIcon size={24} />
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
+      
     </>
   );
 };

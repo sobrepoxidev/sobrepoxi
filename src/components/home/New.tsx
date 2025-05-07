@@ -254,19 +254,15 @@ export default function NewHome() {
       </Carousel>
 
       {/* Categorías destacadas */}
-      <GridSection />
+      <GridSection indexStart={0} indexEnd={6} />
       
       {/* Carrusel de productos dinámico */}
-      <CarrucelSection />
+      <CarrucelSection startIndex={0} endIndex={10} />
+      <GridSection indexStart={6} indexEnd={12} mobileActive={false} />
+      <CarrucelSection title="Detalles artesanales" startIndex={10} endIndex={20} mobileInvertList={true} />
       
       
-      
-      {/* Saludo personalizado si hay sesión */}
-      {userSession && userSession.user && (
-        <div className="fixed top-4 right-4 z-50 bg-teal-600 text-white py-2 px-6 rounded-full shadow-lg animate-fade-in">
-          ¡Bienvenido, {userSession.user.email}!
-        </div>
-      )}
+    
     </div>
   )
 }

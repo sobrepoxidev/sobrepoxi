@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
+import  CarrucelSectionA  from "./CarrucelSectionA";
 
 // Type definitions with fixes for TypeScript errors
 type Category = Database['categories'] & { image_url?: string }; // Add image_url property
@@ -15,9 +16,10 @@ interface CardData {
   title: string;
   content: React.ReactNode;
   link: string;
+  mobileActive?: boolean;
 }
 
-const GridSection = () => {
+const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: number, indexEnd: number, mobileActive?: boolean}) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -116,7 +118,7 @@ const GridSection = () => {
   console.log('Products by category:', productsByCategory);
 
   // Para pantallas grandes (desktop/tablet) - Mostrar múltiples productos por categoría como Amazon
-  const desktopCards = categories.slice(0, 32).map(category => {
+  const desktopCards = categories.slice(indexStart, indexEnd).map(category => {
     const categoryProducts = productsByCategory[category.id] || [];
     const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
     
@@ -137,8 +139,8 @@ const GridSection = () => {
                             (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') : 
                             '/placeholder.jpg'}
                           alt={product.name || "Producto"}
-                          width={60}
-                          height={60}
+                          width={80}
+                          height={80}
                           className="object-contain max-h-full group-hover:scale-105 transition-transform"
                           unoptimized
                         />
@@ -378,8 +380,8 @@ const GridSection = () => {
       <>
 
         {/* Skeleton para desktop */}
-        <div className="max-lg:hidden grid grid-cols-4 gap-5 mt-4 mb-4 mx-4 pb-6">
-          {[...Array(8)].map((_, i) => (
+        <div className="max-lg:hidden grid grid-cols-3 gap-5 mt-4 mb-4 mx-4 pb-6">
+          {[...Array(6)].map((_, i) => (
             <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
           ))}
         </div>
@@ -404,22 +406,105 @@ const GridSection = () => {
   }
 
   return (
-    <div className="w-full  px-4 py-6">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Categorías populares</h2>
+    <div className="w-full  px-4 py-0">
+
       
       {/* Versión de escritorio - Muestra categorías en grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8 max-lg:hidden">
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mb-8 max-lg:hidden">
         {desktopCards.map((card, index) => (
           <Card key={index} {...card} />
         ))}
       </div>
       
-      {/* Versión móvil - Muestra diseño específico para móviles */}
-      <div className="grid grid-cols-1 gap-4 mb-8 lg:hidden">
-        {mobileCards.map((card, index) => (
-          <Card key={index} {...card} />
-        ))}
+      {/* Versión móvil - Usa CarrucelSectionA para mostrar tarjetas en carrusel horizontal */}
+      {mobileActive && <div className="lg:hidden">
+        <CarrucelSectionA 
+          items={
+            // Ordenamos las categorías dando prioridad a Paintings y Napkin Holders
+            [...categories.slice(indexStart, indexEnd)]
+              .sort((a, b) => {
+                // Obtener nombres de categorías para comparación (case insensitive)
+                const aName = (a.name || '').toLowerCase();
+                const bName = (b.name || '').toLowerCase();
+                
+                // Priorizar Paintings y Napkin Holders
+                const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
+                const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
+                
+                // Si a es prioritario y b no, a va primero
+                if (isPrioritizedA && !isPrioritizedB) return -1;
+                // Si b es prioritario y a no, b va primero
+                if (!isPrioritizedA && isPrioritizedB) return 1;
+                
+                // Si ambos son prioritarios o ninguno lo es, priorizamos por cantidad de productos
+                const aProducts = (productsByCategory[a.id] || []).length;
+                const bProducts = (productsByCategory[b.id] || []).length;
+                
+                // Priorizar categorías con 4 o más productos
+                if (aProducts >= 4 && bProducts < 4) return -1;
+                if (aProducts < 4 && bProducts >= 4) return 1;
+                
+                // Si ambas tienen 4+ o ambas tienen menos de 4, ordenar por cantidad
+                return bProducts - aProducts; // Ordenar de mayor a menor
+              })
+              .map(category => {
+                // Convertir la categoría a formato esperado por CarrucelSectionA
+                const categoryProducts = productsByCategory[category.id] || [];
+                const productCount = categoryProducts.length;
+                
+                // Colores brillantes para las tarjetas
+                const cardColors = [
+                  'bg-indigo-500', // Morado
+                  'bg-blue-500',   // Azul
+                  'bg-purple-500', // Morado oscuro
+                  'bg-teal-500',   // Verde azulado
+                  'bg-pink-500',   // Rosa
+                  'bg-red-500'     // Rojo
+                ];
+                
+                // Obtener color basado en el nombre de la categoría para consistencia
+                const colorIndex = category.name ? 
+                  (category.name.length + category.id) % cardColors.length : 
+                  category.id % cardColors.length;
+                
+                // Priorizar ciertos colores para categorías específicas
+                let cardColor = cardColors[colorIndex];
+                const lowerCaseName = (category.name || '').toLowerCase();
+                if (lowerCaseName.includes('painting')) {
+                  cardColor = 'bg-indigo-500'; // Morado para pinturas
+                } else if (lowerCaseName.includes('napkin')) {
+                  cardColor = 'bg-blue-500'; // Azul para napkin holders
+                }
+                
+                return {
+                  title: `${category.name || ''} `,
+                  content: (
+                    <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-8">
+                      {categoryProducts.slice(0, 4).map((product, idx) => (
+                        <Link key={idx} href={`/product/${product.id}`} className="block text-center">
+                          <div className="h-24 flex items-center justify-center bg-white rounded-lg shadow-sm">
+                            <Image
+                              src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
+                              alt={product.name || ''}
+                              width={80}
+                              height={80}
+                              className="object-contain max-h-full p-1"
+                              unoptimized
+                            />
+                          </div>
+                          <p className="text-xs truncate mt-1 text-white font-medium">{product.name}</p>
+                        </Link>
+                      ))}
+                    </div>
+                  ),
+                  link: `/category/${category.id}`,
+                  className: `${cardColor} rounded-3xl px-3 pt-2 pb-3 shadow-md` // Color llamativo y bordes redondeados
+                };
+              })
+          }
+        />
       </div>
+      }
     </div>
   );
 };
