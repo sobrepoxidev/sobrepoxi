@@ -27,7 +27,7 @@ type Product = Database['products'];
 type Category = Database['categories'];
 
 // The client component that handles UI and state
-export default function ProductDetail({ id, locale }: { id: string, locale?: string }) {
+export default function ProductDetail({ id }: { id: string, locale?: string }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [inventory, setInventory] = useState<number>(0);

@@ -5,8 +5,8 @@ import GridSection from "@/components/cards/GridSection";
 import { Carousel } from "@/components/home/Banner";
 import { BannerTemplate } from "@/components/home/Banner";
 import CarrucelSection from '@/components/cards/CarrucelSection';
-import Link from 'next/link';
-import { BadgeCheck, Handshake, Sprout, X } from 'lucide-react';
+// Removed unused Link import
+import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
 import { supabase } from "@/lib/supabaseClient";
 import { Session } from '@supabase/supabase-js';
 import { Database } from "@/types-db";
@@ -55,13 +55,12 @@ export const metadata = {
 };
 
 export default function NewHome() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  // Keeping categories for its setter which is used in fetchCategories
+  const [, setCategories] = useState<Category[]>([]);
   const [chorreadorCategoryId, setChorreadorCategoryId] = useState<number | null>(null);
   const [userSession, setUserSession] = useState<Session | null>(null);
-  const [showLoginBanner, setShowLoginBanner] = useState<boolean>(true);
-  const [newsletterEmail, setNewsletterEmail] = useState<string>("");
-  const [newsletterStatus, setNewsletterStatus] = useState<"idle"|"loading"|"success"|"error">("idle");
-  const [newsletterError, setNewsletterError] = useState<string>("");
+  const [, setShowLoginBanner] = useState<boolean>(true);
+  // Removed unused newsletter state variables
   
   // Verificar si el usuario ha iniciado sesión
   useEffect(() => {
@@ -104,8 +103,8 @@ export default function NewHome() {
     };
   }, []);
   
-  // Función para cerrar el banner de inicio de sesión
-  const closeLoginBanner = () => {
+  // Función para cerrar el banner de inicio de sesión - implementation kept for future use
+  const handleCloseLoginBanner = () => {
     setShowLoginBanner(false);
     localStorage.setItem('hideLoginBanner', 'true');
   };
