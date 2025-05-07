@@ -31,7 +31,6 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   // Referencias para cada sección de carrusel
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const firstGroupScrollRef = useRef<HTMLDivElement>(null);
-  const secondGroupScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
@@ -40,23 +39,12 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   const [loading, setLoading] = useState(true);
   // Error state is initialized but not used in rendering
   const [, setError] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   
   // Estado para controlar cada carrusel por separado
   const [firstGroupCanScrollLeft, setFirstGroupCanScrollLeft] = useState(false);
   const [firstGroupCanScrollRight, setFirstGroupCanScrollRight] = useState(true);
-  const [secondGroupCanScrollLeft, setSecondGroupCanScrollLeft] = useState(false);
-  const [secondGroupCanScrollRight, setSecondGroupCanScrollRight] = useState(true);
 
-  // Detectar si es mobile
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+
 
   // Funciones para manejar el scroll y actualizar los estados para cada carrusel
   const handleMobileScroll = () => {
@@ -72,14 +60,6 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       const { scrollLeft, scrollWidth, clientWidth } = firstGroupScrollRef.current;
       setFirstGroupCanScrollLeft(scrollLeft > 5);
       setFirstGroupCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
-    }
-  };
-  
-  const handleSecondGroupScroll = () => {
-    if (secondGroupScrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = secondGroupScrollRef.current;
-      setSecondGroupCanScrollLeft(scrollLeft > 5);
-      setSecondGroupCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
     }
   };
 
@@ -109,18 +89,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       firstGroupScrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
     }
   };
-  
-  const scrollSecondGroupLeft = () => {
-    if (secondGroupScrollRef.current) {
-      secondGroupScrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-    }
-  };
 
-  const scrollSecondGroupRight = () => {
-    if (secondGroupScrollRef.current) {
-      secondGroupScrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-    }
-  };
 
   // Cargar datos de Supabase
   useEffect(() => {
