@@ -4,7 +4,7 @@ import { ProductCardModal } from './ProductModal';
 import ViewedHistoryTracker from './ViewedHistoryTracker';
 import { Database } from '@/types-db';
 
-type Product = Database['products'];
+type Product = Database['products'] & { category: string | null };
 
 /**
  * Envuelve ProductCardModal añadiendo la funcionalidad de rastreo 

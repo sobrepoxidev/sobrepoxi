@@ -1,12 +1,12 @@
 "use client";
 
 import { MediaCarousel } from "./ClientComponents";
-import { ShoppingCartIcon, Share2, Info } from 'lucide-react';
+import { ShoppingCartIcon, Share2 } from 'lucide-react';
 import { useState } from 'react';
 import { Database } from "@/types-db";
 import { useCart } from "@/context/CartContext";
 
-type Product = Database['products'];
+type Product = Database['products'] & { category?: string | null };
 
 export function ProductCardModal({
     product,
@@ -19,7 +19,6 @@ export function ProductCardModal({
 }) {
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
-    const [showDescription, setShowDescription] = useState(false);
 
     const handleIncrement = () => {
         if (quantity < 10) {
@@ -131,16 +130,15 @@ export function ProductCardModal({
               <>
                 <button
                   className="absolute bottom-3 right-3 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10 transition-colors"
-                  onClick={() => setShowDescription(!showDescription)}
                   aria-label="Toggle description"
                   title="Toggle description"
                 >
-                  <Info className="w-5 h-5 text-gray-700" />
+                  {/* <Info className="w-5 h-5 text-gray-700" /> */}
                 </button>
               </>
             )}
       
-            {showDescription && (
+            {/* {showDescription && (
               <div className="absolute inset-0 bg-white/90 backdrop-blur-sm p-4 overflow-auto z-20 transition-opacity">
                 <button
                   className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -151,7 +149,7 @@ export function ProductCardModal({
                 <h3 className="mb-2 text-xl font-bold text-gray-800">Description</h3>
                 <p className="text-sm text-gray-700">{description}</p>
               </div>
-            )}
+            )} */}
           </div>
       
           {/* Línea divisoria */}

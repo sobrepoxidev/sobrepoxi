@@ -19,7 +19,7 @@ import { ProductCardModalWithTracking } from "./ProductModalWithTracking";
 
 
 
-type Product = Database['products'];
+type Product = Database['products'] & { category?: string | null };
 
 // ---------------------------------------------------------
 // 1) Tipos e iconos
@@ -256,7 +256,10 @@ export function FullscreenModal({
 
         {/* Usar la versión con rastreo de historial */}
         <ProductCardModalWithTracking
-          product={product}
+          product={{
+            ...product,
+            category: product.category || null // Ensure category is never undefined
+          }}
           activeExpandButton={false}
           fullscreenMode={true}
         />
