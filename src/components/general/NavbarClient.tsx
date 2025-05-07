@@ -16,12 +16,6 @@ import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
 import SearchBar from '@/components/search/SearchBar';
-import { getProductCategories } from '@/lib/search';
-
-type Category = {
-  name: string;
-  slug: string;
-};
 
 type NavLink = {
   name: string;
@@ -37,7 +31,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCategory] = useState('Todas');
-  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [availableCategories] = useState<string[]>([]);
   const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
 
@@ -231,22 +225,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                 onClose={() => setIsSearchOpen(false)} 
               />
               
-              {/* Quick links - mejora UX */}
-              <div className="mt-3">
-                <p className="mb-1 text-xs font-medium text-gray-500">Búsquedas populares:</p>
-                <div className="flex flex-wrap gap-1">
-                  {availableCategories.slice(0, 5).map((term) => (
-                    <Link 
-                      key={term}
-                      href={`/search?category=${encodeURIComponent(term)}`}
-                      className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 transition hover:bg-gray-200"
-                      onClick={() => setIsSearchOpen(false)}
-                    >
-                      {term}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+             
             </div>
           )}
         </div>

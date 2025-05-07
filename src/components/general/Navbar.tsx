@@ -4,24 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 
-// Datos que podrían venir de una API o CMS (esto iría en el SSR)
-const categories = [
-  { name: 'Chorreadores', slug: '?category=drippers' },
-  { name: 'Cajas decorativas', slug: '?category=decorative-boxes' },
-  { name: 'Esculturas de animales', slug: '?category=animal-sculptures' },
-  { name: 'Espejos tallados', slug: '?category=carved-mirrors' },
-  { name: 'Cuadros pintados', slug: '?category=paintings' },
-  { name: 'Rosas artesanales', slug: '?category=handmade-roses' },
-  { name: 'Flores y árboles decorativos', slug: '?category=decorative-flowers-trees' },
-  { name: 'Soportes para tazas', slug: '?category=mug-holders' },
-  { name: 'Motivos religiosos', slug: '?category=religious-art' },
-  { name: 'Parejas y corazones', slug: '?category=love-themed' },
-  { name: 'Porta huevos decorativos', slug: '?category=egg-boxes' },
-  { name: 'Guacamayas y aves', slug: '?category=macaws-and-birds' },
-  { name: 'Caballos y figuras ecuestres', slug: '?category=horse-figures' },
-  { name: 'Marcos decorativos', slug: '?category=decorative-frames' },
-  { name: 'Utensilios y sets de cocina', slug: '?category=kitchen-sets' }
-];
+
 
 
 const navigationLinks = [
