@@ -2,6 +2,8 @@
 import ProductDetail from '@/components/products/ProductDetail';
 
 // The server component handles params extraction
-export default function ProductPage({ params }: { params: { id: string, locale: string } }) {
-  return <ProductDetail id={params.id} locale={params.locale} />;
+type tParams = Promise<{ id: string, locale: string }>;
+export default async function ProductPage({ params }: { params: tParams }) {
+  const { id, locale } = await params;
+  return <ProductDetail id={id} locale={locale} />;
 }
