@@ -136,13 +136,16 @@ export default function NewHome() {
         <BannerTemplate linkHref="/shipping">
           <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
             <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
-              <h1 className="text-gray-800 text-2xl lg:text-4xl font-bold max-lg:mt-2 lg:mb-2">
-                Envíos a todo Costa Rica
-              </h1>
-              <p className="text-gray-700 text-sm lg:text-xl">
-                con tarifas desde ₡1.950
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-wider text-gray-800">
+                <span className="mr-1">Envíos a todo Costa Rica</span>
+               
+              </h2>
+             
+              <p className="text-2xl sm:text-xl font-light tracking-wider text-gray-800">
+           
+                <span className="font-bold text-[#B55327]">Con tarifas desde ₡1.950</span>
               </p>
-              <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-4">
+              <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
                 *Costo variable dependiendo del peso. Pulsa aquí para más información.
               </p>
             </div>
@@ -151,7 +154,7 @@ export default function NewHome() {
               <Image
                 src="/home/mapa-cr.webp"
                 alt="Mapa de Costa Rica"
-                width={200}
+                width={150}
                 height={0}
                 className="max-lg:w-[60px]"
               />

@@ -132,7 +132,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         </div>
         
         {/* Bottom Row: Navigation links */}
-        <div className="flex w-full items-center justify-center border-t border-gray-100">
+        <div className="flex w-full items-center justify-center ">
           <ul className="flex items-center gap-x-6">
             {navigationLinks.map((link) => (
               <li key={link.path}>
@@ -165,7 +165,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
       </div>
 
       {/* Actions - Right Side */}
-      <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto ">
         {/* User Dropdown - Desktop */}
         <div className="hidden md:flex items-center">
           <UserDropdown session={session} onLogout={handleLogout} />
@@ -183,7 +183,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         {/* Cart */}
         <Link 
           href="/cart" 
-          className="relative flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
+          className="relative flex h-10 items-center space-x-0.5 rounded-md px-0.5 text-sm text-gray-700 transition hover:bg-gray-100"
           aria-label="Carrito de compras"
         >
           <ShoppingBag className="h-5 w-5" />
@@ -197,7 +197,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         <div ref={searchRef}>
           <button 
             onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-gray-700 transition  hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
             aria-label="Buscar"
             aria-expanded={isSearchOpen}
           >
@@ -232,7 +232,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         {/* Mobile menu toggle */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 lg:hidden ml-1"
+          className="flex h-10 w-10 items-center justify-center rounded-full  text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 lg:hidden -ml-2"
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={isMenuOpen}
         >
