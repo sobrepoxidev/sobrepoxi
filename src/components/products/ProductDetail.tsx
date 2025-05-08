@@ -403,7 +403,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
           
           {/* Descripción */}
           <div className="mb-8 border-b border-gray-200 pb-6">
-            <h2 className="text-lg font-semibold mb-2">Descripción</h2>
+            <h2 className="text-lg font-semibold mb-2 text-gray-800">Descripción</h2>
             <p className="text-gray-700 whitespace-pre-line">
               {product.description || 'No hay descripción disponible para este producto.'}
             </p>
@@ -413,7 +413,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
           <div className="space-y-6 border-b border-gray-200 pb-6 mb-6">
             {/* Selector de cantidad */}
             <div>
-              <h2 className="text-sm font-medium mb-2">Cantidad</h2>
+              <h2 className="text-sm font-medium mb-2 text-gray-800">Cantidad</h2>
               <div className="flex items-center space-x-2">
                 <button 
                   onClick={handleDecrement}
@@ -423,7 +423,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
                 >
                   <MinusCircle className="h-6 w-6" />
                 </button>
-                <span className="w-8 text-center font-medium">{quantity}</span>
+                <span className="w-8 text-center font-medium text-gray-800">{quantity}</span>
                 <button 
                   onClick={handleIncrement}
                   disabled={quantity >= 10}
@@ -483,7 +483,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
             {/* Especificaciones */}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold mb-3">Especificaciones</h2>
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Especificaciones</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                   {Object.entries(product.specifications).map(([key, value]) => (
                     <div key={key} className="py-1 border-b border-gray-100">
@@ -498,7 +498,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
             {/* Etiquetas */}
             {product.tags && product.tags.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold mb-3">Etiquetas</h2>
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Etiquetas</h2>
                 <div className="flex flex-wrap gap-2">
                   {product.tags.map((tag, index) => (
                     <Link 
@@ -516,19 +516,19 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
             
             {/* Características generales */}
             <div>
-              <h2 className="text-lg font-semibold mb-3">Características</h2>
+              <h2 className="text-lg font-semibold mb-3 text-gray-800">Características</h2>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span>Producto hecho a mano con materiales de calidad</span>
+                  <span className="text-gray-800">Producto hecho a mano con materiales de calidad</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span>Diseño único y exclusivo</span>
+                  <span className="text-gray-800">Diseño único y exclusivo</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span>Artesanía local de Costa Rica</span>
+                  <span className="text-gray-800">Artesanía local de Costa Rica</span>
                 </li>
               </ul>
             </div>
@@ -539,7 +539,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
       {/* Reviews Section */}
       {!loading && !error && product && (
         <div className="mt-16 border-t border-gray-200 pt-10">
-          <h2 className="text-2xl font-bold flex items-center mb-6">
+          <h2 className="text-2xl font-bold flex items-center mb-6 text-gray-800">
             <MessageSquare className="h-6 w-6 mr-2" />
             Reseñas y opiniones
           </h2>

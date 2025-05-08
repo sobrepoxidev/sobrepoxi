@@ -97,7 +97,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
   
   return (
     <div className="bg-gray-50 p-4 rounded-lg mt-6">
-      <h3 className="text-lg font-medium mb-4">Deja tu opinión</h3>
+      <h3 className="text-lg font-medium mb-4 text-gray-800">Deja tu opinión</h3>
       
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
@@ -143,7 +143,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
           </label>
           <textarea
             id="review-comment"
-            className="w-full p-2 border border-gray-300 rounded-md h-24"
+            className="w-full p-2 border border-gray-300 rounded-md h-24 text-gray-800"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Comparte tu experiencia con este producto..."
