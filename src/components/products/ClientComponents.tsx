@@ -144,7 +144,7 @@ interface MediaItemCardProps {
   locale?: string;
 }
 
-function MediaItemCard({ product, activeExpandButton, index, locale = 'es' }: MediaItemCardProps) {
+function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps) {
   return (
     <div className="relative w-full h-full ">
 
