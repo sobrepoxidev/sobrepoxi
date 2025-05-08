@@ -142,7 +142,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
               setProducts(recentData);
             }
           }
-        } catch (e) {
+        } catch {
           // Si hay algún error, intentamos cargar productos recientes
           const { data: fallbackData, error: fallbackError } = await query
             .limit(20);

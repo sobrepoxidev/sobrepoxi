@@ -224,7 +224,6 @@ export function MediaCarousel({ product, activeExpandButton, locale }: MediaCaro
 export function FullscreenModal({
   product,
   onClose,
-  locale = 'es'
 }: {
   product: Product;
   onClose: () => void;

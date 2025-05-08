@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default async function ShippingPage() {
   const t = await getTranslations('shipping');
@@ -189,7 +188,7 @@ export default async function ShippingPage() {
           <div className="p-6">
             <ul className="space-y-4">
               <li>
-                <a 
+                <Link 
                   href="https://correos.go.cr/servicio-ems/" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -199,10 +198,10 @@ export default async function ShippingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>{t('officialSite')} - {t('emsService')}</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="https://correos.go.cr/plazos-entrega/#1575566701405-a7035c6b-0f9c" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -212,10 +211,10 @@ export default async function ShippingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>{t('deliverySchedules')}</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="https://correos.go.cr/plazos-entrega/#1577826251883-9f312b4d-a559" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -225,7 +224,7 @@ export default async function ShippingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>{t('restrictedAreas')}</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

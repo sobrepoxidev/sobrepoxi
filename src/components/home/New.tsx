@@ -54,7 +54,7 @@ export const metadata = {
   }
 };
 
-export default function NewHome({ locale = 'es' }: { locale?: string }) {
+export default function NewHome() {
   const t = useTranslations('home');
   // Keeping categories for its setter which is used in fetchCategories
   const [, setCategories] = useState<Category[]>([]);

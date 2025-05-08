@@ -55,7 +55,7 @@ export default async function Home({ searchParams, locale }: PageProps) {
       <main className="max-w-screen-2xl mx-auto">
         {/* Banner principal */}
         <div className="mb-4">
-          <NewHome locale={locale} />
+          <NewHome />
         </div>
         {/* Contenido principal con diseño similar a Amazon */}
         <div className="px-4 pb-8">

@@ -33,7 +33,7 @@ export default function ProductsPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState(0);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [categoryName, setCategoryName] = useState<string>('');
+  const [categoryName] = useState<string>('');
   
   // Valores de filtros y paginación
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
