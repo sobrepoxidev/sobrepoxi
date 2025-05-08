@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
+import { useLocale } from 'next-intl';
 import './carousel.css'; // Importamos los estilos para el scrollbar fino
 
 type Product = Database['products'];
@@ -18,7 +19,6 @@ type CarrucelSectionProps = {
   startIndex?: number;
   endIndex?: number;
   mobileInvertList?: boolean;
-  locale?: string;
 };
 
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
@@ -28,8 +28,8 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   startIndex = 0,
   endIndex = 8,
   mobileInvertList = false,
-  locale = 'es'
 }) => {
+  const locale = useLocale();
   // Referencias para cada sección de carrusel
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const firstGroupScrollRef = useRef<HTMLDivElement>(null);
