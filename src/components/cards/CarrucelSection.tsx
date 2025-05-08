@@ -340,7 +340,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       <section className="py-4 bg-white md:hidden">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xl font-bold">{title}</h2>
+            <h2 className="text-xl font-bold text-gray-800">{title}</h2>
             <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
           </div>
 
@@ -383,7 +383,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       <section className="py-4 bg-white hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold">{title}</h2>
+            <h2 className="text-xl font-bold text-gray-800">{title}</h2>
             <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
           </div>
 
