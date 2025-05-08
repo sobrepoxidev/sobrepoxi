@@ -348,11 +348,11 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             {/* Botones de navegación dentro del carrusel */}
             <button
               onClick={scrollMobileLeft}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-r-full shadow-md p-2"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-black/30  bg-transparent rounded-full p-2"
               aria-label="Anterior"
               style={{ display: canScrollLeft ? 'block' : 'none' }}
             >
-              <ChevronLeftIcon size={20} />
+              <ChevronLeftIcon size={20}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </button>
 
             <div 
@@ -369,10 +369,10 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             {canScrollRight && (
               <button
                 onClick={scrollMobileRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-l-full shadow-md p-2"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-black/30 bg-transparent rounded-full p-2"
                 aria-label="Siguiente"
               >
-                <ChevronRightIcon size={20} />
+                <ChevronRightIcon size={20}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </button>
             )}
           </div>
