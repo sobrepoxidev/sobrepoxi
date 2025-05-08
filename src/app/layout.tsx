@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Handmade Art | Unique & Authentic Handmade Creations",
     description: "Explore the beauty of handcrafted decor and artisan pieces made with passion in Costa Rica. Every creation tells a story.",
-    url: "https://handmadeart.store",
+    url: "https://handmadeart.vercel.app",
     siteName: "Handmade Art",
     images: [
       {
