@@ -6,16 +6,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
-import  CarrucelSectionA  from "./CarrucelSectionA";
+import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
 
 // Type definitions with fixes for TypeScript errors
 type Category = Database['categories'] & { image_url?: string }; // Add image_url property
 type Product = Database['products'];
 
-const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: number, indexEnd: number, mobileActive?: boolean}) => {
+const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart: number, indexEnd: number, mobileActive?: boolean }) => {
   const locale = useLocale();
-  console.log('Locale GRID:->', locale,'<-');
+  console.log('Locale GRID:->', locale, '<-');
   const [categories, setCategories] = useState<Category[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,26 +26,26 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
       try {
         setLoading(true);
         setError(null);
-        
+
         // Fetch categories
         const { data: categoriesData, error: categoriesError } = await supabase
           .from('categories')
           .select('*');
-        
+
         if (categoriesError) {
           throw new Error(`Error fetching categories: ${categoriesError.message}`);
         }
 
         // Obtener productos para cada categoría
         const productsByCategory: Record<number, Product[]> = {};
-        
+
         // Inicializar el objeto de productos por categoría
         categoriesData.forEach(category => {
           productsByCategory[category.id] = [];
         });
 
         // Obtener productos para cada categoría
-        const productsPromises = categoriesData.map(category => 
+        const productsPromises = categoriesData.map(category =>
           supabase
             .from('products')
             .select('*, category_id')
@@ -55,16 +55,16 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
         );
 
         const productsResults = await Promise.all(productsPromises);
-        
+
         // Organizar productos por categoría
         productsResults.forEach((result, index) => {
           const categoryId = categoriesData[index].id;
           if (result.error) {
             console.error(`Error fetching products for category ${categoriesData[index].name}:`, result.error);
           } else if (result.data) {
-            productsByCategory[categoryId] = result.data.filter(product => 
-              product.media && 
-              product.media.length > 0 && 
+            productsByCategory[categoryId] = result.data.filter(product =>
+              product.media &&
+              product.media.length > 0 &&
               product.media[0]["url"]
             ).slice(0, 4);
           }
@@ -73,8 +73,8 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
         // Crear array plano de todos los productos
         const allProducts = Object.values(productsByCategory).flat();
 
-        
-        
+
+
         // Set state
         setCategories(categoriesData);
         setTopProducts(allProducts);
@@ -85,7 +85,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
         setLoading(false);
       }
     }
-    
+
     fetchData();
   }, []);
 
@@ -99,10 +99,10 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
   topProducts.forEach((product: Product) => {
     if (product.category_id && productsByCategory[product.category_id]) {
       // Solo agregar productos que tengan media y si la categoría no tiene 4 productos aún
-      if (product.media && 
-          product.media.length > 0 && 
-          product.media[0]["url"] && 
-          productsByCategory[product.category_id].length < 4) {
+      if (product.media &&
+        product.media.length > 0 &&
+        product.media[0]["url"] &&
+        productsByCategory[product.category_id].length < 4) {
         productsByCategory[product.category_id].push(product);
       }
     }
@@ -112,7 +112,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
   const desktopCards = categories.slice(indexStart, indexEnd).map(category => {
     const categoryProducts = productsByCategory[category.id] || [];
     const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
-    
+
     return {
       title: locale === 'es' ? category.name_es : category.name_en || category.name,
       link: `/products?category=${category.id}`,
@@ -126,8 +126,8 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                     <div className="flex flex-col items-center bg-gray-50 rounded p-2 hover:shadow-sm transition-shadow">
                       <div className="h-[70px] flex items-center justify-center mb-1">
                         <Image
-                          src={product.media && product.media.length > 0 ? 
-                            (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') : 
+                          src={product.media && product.media.length > 0 ?
+                            (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') :
                             '/placeholder.jpg'}
                           alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
                           width={80}
@@ -137,7 +137,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                         />
                       </div>
                       <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-800">
-                        { locale === 'es' ? product.name_es : product.name_en }
+                        {locale === 'es' ? product.name_es : product.name_en}
                       </span>
                       {product.price && (
                         <span className="text-[10px] font-bold text-teal-700 mt-0.5">
@@ -160,9 +160,9 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
           ) : (
             <>
               <div className="flex items-center justify-center h-48">
-                <Image 
-                  src={typeof category.image_url === 'string' ? category.image_url : '/placeholder.jpg'} 
-                  alt={category.name || 'Categoría'} 
+                <Image
+                  src={typeof category.image_url === 'string' ? category.image_url : '/placeholder.jpg'}
+                  alt={category.name || 'Categoría'}
                   width={180}
                   height={180}
                   className="max-h-full object-contain transition-transform hover:scale-105"
@@ -195,7 +195,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
             <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
           ))}
         </div>
-        
+
         {/* Skeleton para móvil */}
         <div className="lg:hidden grid grid-rows-3 gap-4 mt-4 mb-4 mx-4 pb-6">
           {[...Array(3)].map((_, i) => (
@@ -216,19 +216,19 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
   }
 
   return (
-    <div className="w-full  px-4 py-0">
+    <div className="w-full  px-4">
 
-      
+
       {/* Versión de escritorio - Muestra categorías en grid */}
       <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mb-4 mt-4 max-lg:hidden">
         {desktopCards.map((card, index) => (
           <Card key={index} {...card} />
         ))}
       </div>
-      
+
       {/* Versión móvil - Usa CarrucelSectionA para mostrar tarjetas en carrusel horizontal */}
       {mobileActive && <div className="lg:hidden">
-        <CarrucelSectionA 
+        <CarrucelSectionA
           items={
             // Ordenamos las categorías dando prioridad a Paintings y Napkin Holders
             [...categories.slice(indexStart, indexEnd)]
@@ -236,31 +236,31 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                 // Obtener nombres de categorías para comparación (case insensitive)
                 const aName = (a.name || '').toLowerCase();
                 const bName = (b.name || '').toLowerCase();
-                
+
                 // Priorizar Paintings y Napkin Holders
                 const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
                 const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
-                
+
                 // Si a es prioritario y b no, a va primero
                 if (isPrioritizedA && !isPrioritizedB) return -1;
                 // Si b es prioritario y a no, b va primero
                 if (!isPrioritizedA && isPrioritizedB) return 1;
-                
+
                 // Si ambos son prioritarios o ninguno lo es, priorizamos por cantidad de productos
                 const aProducts = (productsByCategory[a.id] || []).length;
                 const bProducts = (productsByCategory[b.id] || []).length;
-                
+
                 // Priorizar categorías con 4 o más productos
                 if (aProducts >= 4 && bProducts < 4) return -1;
                 if (aProducts < 4 && bProducts >= 4) return 1;
-                
+
                 // Si ambas tienen 4+ o ambas tienen menos de 4, ordenar por cantidad
                 return bProducts - aProducts; // Ordenar de mayor a menor
               })
               .map(category => {
                 // Convertir la categoría a formato esperado por CarrucelSectionA
                 const categoryProducts = productsByCategory[category.id] || [];
-                
+
                 // Colores brillantes para las tarjetas
                 const cardColors = [
                   'bg-indigo-500', // Morado
@@ -270,12 +270,12 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                   'bg-pink-500',   // Rosa
                   'bg-red-500'     // Rojo
                 ];
-                
+
                 // Obtener color basado en el nombre de la categoría para consistencia
-                const colorIndex = category.name ? 
-                  (category.name.length + category.id) % cardColors.length : 
+                const colorIndex = category.name ?
+                  (category.name.length + category.id) % cardColors.length :
                   category.id % cardColors.length;
-                
+
                 // Priorizar ciertos colores para categorías específicas
                 let cardColor = cardColors[colorIndex];
                 const lowerCaseName = (category.name || '').toLowerCase();
@@ -284,7 +284,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                 } else if (lowerCaseName.includes('napkin')) {
                   cardColor = 'bg-blue-500'; // Azul para napkin holders
                 }
-                
+
                 return {
                   title: `${category.name || ''} `,
                   content: (

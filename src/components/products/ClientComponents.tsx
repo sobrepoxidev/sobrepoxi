@@ -141,7 +141,6 @@ interface MediaItemCardProps {
   product: Product;
   activeExpandButton: boolean;
   index: number;
-  locale?: string;
 }
 
 function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps) {
@@ -190,9 +189,8 @@ function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps
 interface MediaCarouselProps {
   product: Product;
   activeExpandButton: boolean;
-  locale: string;
 }
-export function MediaCarousel({ product, activeExpandButton, locale }: MediaCarouselProps) {
+export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProps) {
   return (
     <div className="relative w-full" style={activeExpandButton ? { aspectRatio: "4/3" } : { height: "100%" }}>
   <Swiper
@@ -209,7 +207,6 @@ export function MediaCarousel({ product, activeExpandButton, locale }: MediaCaro
           product={product}
           activeExpandButton={activeExpandButton}
           index={index}
-          locale={locale}
         />
       </SwiperSlide>
     ))}

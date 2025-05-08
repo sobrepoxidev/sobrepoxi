@@ -75,7 +75,7 @@ const CarrucelSectionA: React.FC<CarrucelSectionProps> = ({ items }) => {
       )}
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-x-2 max-lg:mt-2 pb-5"
+        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-x-2 max-lg:mt-2 "
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         onScroll={handleScroll}
       >
