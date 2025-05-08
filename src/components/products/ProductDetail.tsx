@@ -274,7 +274,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
       </div>
 
       {/* Contenido principal */}
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row md:gap-8">
         {/* Columna izquierda: Imágenes */}
         <div className="w-full md:w-7/12">
           <div className="sticky top-24">

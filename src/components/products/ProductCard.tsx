@@ -141,7 +141,7 @@ export default function ProductCard({ product }: { product: Product }) {
       
       {/* Imagen del producto */}
       <Link href={`/product/${product.id}`} className="block h-48 sm:h-56 relative">
-        <div className="h-full w-full flex items-center justify-center bg-gray-50 p-4">
+        <div className="h-full w-full flex items-center justify-center bg-gray-50  p-4">
           <Image
             src={mainImageUrl}
             alt={product.name || ''}
