@@ -238,7 +238,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                       unoptimized
                     />
                   </div>
-                  <p className="text-xs truncate px-2 pb-1">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
+                  <p className="text-xs truncate px-2 pb-1 text-gray-600">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                 </div>
               </Link>
             );
