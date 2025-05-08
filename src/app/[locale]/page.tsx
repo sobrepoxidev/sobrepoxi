@@ -62,7 +62,7 @@ export default async function Home({ searchParams }: PageProps) {
          
           {/* Llamada a la acción */}
           <div className="mb-8">
-            <CallToAction />
+            {/* <CallToAction /> */}
           </div>
         </div>
         {/* Botones flotantes agrupados */}
@@ -75,7 +75,7 @@ export default async function Home({ searchParams }: PageProps) {
           >
             ¿Necesitas ayuda?
           </Link>
-          {/* Botón scroll-to-top flotante (Client Component) */}
+          
           <ScrollToTopButton />
         </div>
       </main>

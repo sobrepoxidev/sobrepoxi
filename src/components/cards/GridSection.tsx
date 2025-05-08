@@ -222,7 +222,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
 
       
       {/* Versión de escritorio - Muestra categorías en grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mb-8 max-lg:hidden">
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mb-4 mt-4 max-lg:hidden">
         {desktopCards.map((card, index) => (
           <Card key={index} {...card} />
         ))}

@@ -30,7 +30,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 className="w-[50px] md:w-[75px] object-cover"
                 priority
               />
-              <h1 className="text-lg sm:text-3xl font-light tracking-wider text-gray-800">
+              <h1 className="text-lg sm:text-3xl tracking-wider text-gray-800">
                 <span className="mr-1">HANDMADE</span>
                 <span className="font-bold text-[#B55327]">ART</span>
               </h1>

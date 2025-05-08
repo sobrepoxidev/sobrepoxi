@@ -59,34 +59,34 @@ export default function NewHome() {
   const [chorreadorCategoryId, setChorreadorCategoryId] = useState<number | null>(null);
   const [, setShowLoginBanner] = useState<boolean>(true);
   // Removed unused newsletter state variables
-  
+
   // Verificar si el usuario ha iniciado sesión
   useEffect(() => {
 
-    
+
     // Comprobar si el usuario ha ocultado el banner anteriormente
     const hideLoginBanner = localStorage.getItem('hideLoginBanner');
     if (hideLoginBanner === 'true') {
       setShowLoginBanner(false);
     }
 
-    
+
     // Suscribirse a cambios en la sesión
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (session) => {
-   
+
         if (session) {
           localStorage.setItem('hideLoginBanner', 'true');
           setShowLoginBanner(false);
         }
       }
     );
-    
+
     return () => {
       subscription.unsubscribe();
     };
   }, []);
-  
+
   // Fetch categories to get correct IDs
   useEffect(() => {
     async function fetchCategories() {
@@ -112,26 +112,30 @@ export default function NewHome() {
   }, []);
 
   return (
-    <div className=" max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#d7eee8] via-white to-white">
-     
-      
+    <div className=" max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#b3d5c3] via-white to-white">
+
+
       <Carousel>
         {/* Banner 1: Envío a Costa Rica (ahora primero) */}
         <BannerTemplate linkHref="/shipping">
           <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
             <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-wider text-gray-800">
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-wider text-gray-800">
                 <span className="mr-1">Envíos a todo Costa Rica</span>
-               
+
               </h2>
-             
-              <p className="text-lg sm:text-xl font-light tracking-wider text-gray-800">
-           
-                <span className="font-bold text-[#B55327]">Con tarifas desde ₡1.950</span>
-              </p>
-              <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
-                *Costo variable dependiendo del peso. Pulsa aquí para más información.
-              </p>
+
+              <div className="flex flex-col">
+                <div>
+                  <p className="text-lg sm:text-lg font-light tracking-wider text-gray-800">
+
+                    <span className="font-bold text-[#B55327]">Con tarifas desde ₡2.100</span>
+                  </p>
+                  <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
+                    *Costo variable dependiendo del peso. <span className="font-bold underline">Pulsa para más información</span>
+                  </p>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center gap-2 md:gap-8 max-lg: -mt-5">
@@ -178,7 +182,7 @@ export default function NewHome() {
             className="absolute top-12 right-2 lg:right-16 2xl:right-70 hidden sm:block rounded-lg max-lg:w-[125px]"
           />
 
-          <div className="absolute bg-gradient-to-b from-teal-100 to-emerald-100 top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
+          <div className="absolute bg-gradient-to-r from-[#f7c28c] via-[#f4a261] to-[#f7c28c] top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
             <div className="text-center z-20 mt-2 lg:mt-4 px-4">
               <h1 className=" text-2xl lg:text-4xl text-gray-800 font-bold lg:mb-2 hidden sm:block">
                 Artesanías únicas hechas a mano
@@ -193,8 +197,8 @@ export default function NewHome() {
 
               <div className="flex justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
                 <div className="flex flex-col items-center">
-                  <div className="bg-[#b2f0dd] p-2 rounded-full mb-1">
-                    <Handshake className="text-[#14866e]" />
+                  <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
+                    <Handshake className="text-[#b55327]" />
                   </div>
                   <span className="text-gray-800 font-medium text-xs hidden sm:block">Impacto Social</span>
                   <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">Impacto</span>
@@ -202,16 +206,16 @@ export default function NewHome() {
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <div className="bg-[#b2f0dd] p-2 rounded-full mb-1">
-                    <Sprout className="text-[#14866e]" />
+                  <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
+                    <Sprout className="text-[#b55327]" />
                   </div>
                   <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">Sostenibilidad</span>
                   <span className="text-[0.65rem]  text-gray-800 hidden sm:block">Materiales ecológicos</span>
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <div className="bg-[#A7E8D4] p-2 rounded-full mb-1">
-                    <BadgeCheck className="text-[#14866e]" />
+                  <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
+                    <BadgeCheck className="text-[#b55327]" />
                   </div>
                   <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">Calidad</span>
                   <span className="text-[0.65rem] text-gray-800 hidden sm:block">Detalles artesanales</span>
@@ -237,16 +241,16 @@ export default function NewHome() {
         </BannerTemplate>
       </Carousel>
 
-      {/* Categorías destacadas */}
-      <GridSection indexStart={0} indexEnd={6} />
+
+      {/* <GridSection indexStart={0} indexEnd={6} />
+
       
-      {/* Carrusel de productos dinámico */}
       <CarrucelSection startIndex={0} endIndex={10} />
       <GridSection indexStart={6} indexEnd={12} mobileActive={false} />
-      <CarrucelSection title="Detalles artesanales" startIndex={10} endIndex={20} mobileInvertList={true} />
-      
-      
-    
+      <CarrucelSection title="Detalles artesanales" startIndex={10} endIndex={20} mobileInvertList={true} /> */}
+
+
+
     </div>
   )
 }

@@ -87,7 +87,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
           ) : (
             <div className="p-3 border-b border-gray-100">
               <div className="flex justify-between items-center mb-2">
-                <span className="font-medium">Mi cuenta</span>
+                <span className="font-medium text-gray-800">Mi cuenta</span>
                 <button
                   onClick={async () => {
                     await onLogout();

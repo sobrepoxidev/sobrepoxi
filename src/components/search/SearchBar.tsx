@@ -271,7 +271,7 @@ export default function SearchBar({
           ref={inputRef}
           type="text"
           placeholder="Buscar productos..."
-          className="h-10 w-full border-0 px-3 py-2 focus:outline-none focus:ring-0"
+          className="h-10 w-full border-0 px-3 py-2 focus:outline-none focus:ring-0 text-gray-800"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

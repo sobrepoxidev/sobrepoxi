@@ -113,7 +113,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
       {/* Desktop Navigation - Amazon Style */}
       <div className="hidden w-full flex-col lg:flex" style={{ position: 'static' }}>
         {/* Top Row: Search bar with filter dropdown */}
-        <div className="flex w-full items-center justify-center py-1">
+        <div className="flex w-full items-center justify-center pt-3">
           <div className="flex w-full max-w-4xl items-center">
             <div 
               className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible" 
