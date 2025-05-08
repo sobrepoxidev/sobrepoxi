@@ -227,7 +227,6 @@ export function FullscreenModal({
 }: {
   product: Product;
   onClose: () => void;
-  locale?: string;
 }) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -274,13 +273,12 @@ export function FullscreenModal({
 interface GalleryModalProps {
   initialProduct?: Product; // Nueva prop opcional
   from?: string;
-  locale?: string;
 }
 // ---------------------------------------------------------
 // 6) Modal global que escucha el evento 'openGalleryModal'
 
 // ---------------------------------------------------------
-export function GalleryModal({ initialProduct, from, locale = 'es' }: GalleryModalProps) {
+export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
   const [modalContent, setModalContent] = useState<{
     isOpen: boolean;
     product: Product | null;
@@ -378,7 +376,6 @@ export function GalleryModal({ initialProduct, from, locale = 'es' }: GalleryMod
     <FullscreenModal
       product={modalContent.product}
       onClose={closeModal}
-      locale={locale}
     />
   );
 }
