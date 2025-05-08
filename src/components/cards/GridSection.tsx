@@ -216,7 +216,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
   }
 
   return (
-    <div className="w-full  px-4">
+    <div className="w-full  pl-3">
 
 
       {/* Versión de escritorio - Muestra categorías en grid */}

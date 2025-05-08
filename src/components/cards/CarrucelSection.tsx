@@ -337,7 +337,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   return (
     <>
       {/* Vista mobile */}
-      <section className="py-4 bg-white md:hidden">
+      <section className="py-4 md:hidden">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xl font-bold text-gray-800">{title}</h2>
@@ -380,7 +380,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       </section>
 
       {/* Vista desktop - Primera banda: Regalos con significado */}
-      <section className="py-4 bg-white hidden md:block">
+      <section className="py-4 hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xl font-bold text-gray-800">{title}</h2>

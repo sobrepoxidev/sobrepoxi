@@ -10,7 +10,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ title, content, link }) => (
-  <div className="relative bg-white shadow-sm rounded-lg overflow-hidden h-full max-w-full w-full border border-gray-100 hover:shadow-md transition-shadow">
+  <div className="relative bg-white shadow-sm rounded-lg overflow-hidden starting: h-full max-w-full w-full border border-gray-100 hover:shadow-md transition-shadow">
     <div className="flex flex-col h-full">
       <div className="px-3 bg-gradient-to-b from-white to-transparent">
         <Link href={link} className="block">
