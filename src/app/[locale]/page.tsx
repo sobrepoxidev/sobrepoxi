@@ -15,10 +15,8 @@ type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 interface PageProps {
   searchParams: searchParams;
-  locale: string;
 }
-export default async function Home({ searchParams, locale }: PageProps) {
-  console.log('Locale PAGE:->', locale,'<-');
+export default async function Home({ searchParams}: PageProps) {
   // Usa el cliente server-side de Supabase
   const supabase = createServerComponentClient<Database>({ cookies });
   let initialProductForModal: Product | null = null; // Variable para el producto inicial
@@ -96,7 +94,7 @@ export default async function Home({ searchParams, locale }: PageProps) {
         </div>
       </footer>
       
-      <GalleryModal initialProduct={initialProductForModal as Product} locale={locale} />
+      <GalleryModal initialProduct={initialProductForModal as Product} />
     </div>
   );
 }

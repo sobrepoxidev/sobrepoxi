@@ -278,6 +278,7 @@ interface GalleryModalProps {
 }
 // ---------------------------------------------------------
 // 6) Modal global que escucha el evento 'openGalleryModal'
+
 // ---------------------------------------------------------
 export function GalleryModal({ initialProduct, from, locale = 'es' }: GalleryModalProps) {
   const [modalContent, setModalContent] = useState<{
