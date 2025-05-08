@@ -91,7 +91,7 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
         
         {/* Discount badge */}
-        {product.discount_percentage && product.discount_percentage > 0 && (
+        {Number(product.discount_percentage) > 0 && (
           <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full border border-red-200 font-medium">
             {product.discount_percentage}% OFF
           </span>
