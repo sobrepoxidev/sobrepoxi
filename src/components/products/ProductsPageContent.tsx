@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDown, ChevronRight, GridIcon, ListIcon } from 'lucide-react';
@@ -21,6 +22,7 @@ export default function ProductsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const locale = useLocale();
   
   // Estados
   const [products, setProducts] = useState<Product[]>([]);
@@ -31,6 +33,7 @@ export default function ProductsPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState(0);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [categoryName, setCategoryName] = useState<string>('');
   
   // Valores de filtros y paginación
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
@@ -51,10 +54,11 @@ export default function ProductsPageContent() {
         const { data: categoriesData, error: categoriesError } = await supabase
           .from('categories')
           .select('*')
-          .order('name');
+          .order(locale === 'es' ? 'name_es' : 'name_en', { ascending: true });
         
         if (categoriesError) throw categoriesError;
         setCategories(categoriesData as Category[]);
+        
         
         // Fetch unique brands
         const { data: brandsData, error: brandsError } = await supabase
@@ -110,6 +114,7 @@ export default function ProductsPageContent() {
         // Cálculo para paginación
         const from = (currentPage - 1) * PRODUCTS_PER_PAGE;
         const to = from + PRODUCTS_PER_PAGE - 1;
+
         
         // Construir la consulta base
         let query = supabase
@@ -161,7 +166,7 @@ export default function ProductsPageContent() {
           query = query.order('created_at', { ascending: false });
         } else {
           // Por defecto, ordenar por nombre ascendente
-          query = query.order('name', { ascending: true });
+          query = query.order(locale === 'es' ? 'name_es' : 'name_en', { ascending: true });
         }
         
         // Aplicar paginación
@@ -201,9 +206,9 @@ export default function ProductsPageContent() {
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center text-sm text-gray-500">
-        <Link href="/" className="hover:text-teal-600">Inicio</Link>
+        <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">Productos</span>
+        <span className="font-medium text-gray-900">{locale === 'es' ? 'Productos' : 'Products'}</span>
         {categoryFilter && (
           <>
             <ChevronRight className="h-4 w-4 mx-1" />
@@ -215,11 +220,11 @@ export default function ProductsPageContent() {
       {/* Encabezado */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {categoryFilter ? `${categoryFilter}` : 'Todos los Productos'}
+          {categoryFilter ? `${categoryName}` : locale === 'es' ? 'Todos los Productos' : 'All Products'}
         </h1>
         <p className="text-gray-600">
-          Descubre nuestra colección de productos hechos a mano.
-          {totalCount > 0 && ` Mostrando ${products.length} de ${totalCount} productos.`}
+          {locale === 'es' ? 'Descubre nuestra colección de productos hechos a mano.' : 'Discover our collection of handmade products.'}
+          {totalCount > 0 && ` ${locale === 'es' ? 'Mostrando' : 'Showing'} ${products.length} de ${totalCount} ${locale === 'es' ? 'productos' : 'products'}.`}
         </p>
       </div>
       

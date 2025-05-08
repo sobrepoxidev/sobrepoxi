@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import GridSection from "@/components/cards/GridSection";
 import { Carousel } from "@/components/home/Banner";
 import { BannerTemplate } from "@/components/home/Banner";
@@ -53,10 +54,11 @@ export const metadata = {
   }
 };
 
-export default function NewHome() {
+export default function NewHome({ locale = 'es' }: { locale?: string }) {
+  const t = useTranslations('home');
   // Keeping categories for its setter which is used in fetchCategories
   const [, setCategories] = useState<Category[]>([]);
-  const [chorreadorCategoryId, setChorreadorCategoryId] = useState<number | null>(null);
+  const chorreadorCategoryId = 1;
   const [, setShowLoginBanner] = useState<boolean>(true);
   // Removed unused newsletter state variables
 
@@ -97,14 +99,7 @@ export default function NewHome() {
 
       if (data) {
         setCategories(data);
-        // Find the category ID for "Chorreadores" or similar
-        const chorreadorCategory = data.find(c =>
-          c.name?.toLowerCase().includes('chorreador') ||
-          c.name?.toLowerCase().includes('café'));
-
-        if (chorreadorCategory) {
-          setChorreadorCategoryId(chorreadorCategory.id);
-        }
+        
       }
     }
 
@@ -121,18 +116,15 @@ export default function NewHome() {
           <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
             <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
               <h2 className="text-2xl sm:text-4xl font-bold tracking-wider text-gray-800">
-                <span className="mr-1">Envíos a todo Costa Rica</span>
-
+                <span className="mr-1">{t('banner1.title')}</span>
               </h2>
-
               <div className="flex flex-col">
                 <div>
                   <p className="text-lg sm:text-lg font-light tracking-wider text-gray-800">
-
-                    <span className="font-bold text-[#B55327]">Con tarifas desde ₡2.100</span>
+                    <span className="font-bold text-[#B55327]">{t('banner1.subtitle')}</span>
                   </p>
                   <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
-                    *Costo variable dependiendo del peso. <span className="font-bold underline">Pulsa para más información</span>
+                    {t('banner1.note')}
                   </p>
                 </div>
               </div>
@@ -141,14 +133,14 @@ export default function NewHome() {
             <div className="flex items-center gap-2 md:gap-8 max-lg: -mt-5">
               <Image
                 src="/home/mapa-cr.webp"
-                alt="Mapa de Costa Rica"
+                alt={t('banner1.mapAlt')}
                 width={150}
                 height={0}
                 className="max-lg:w-[60px]"
               />
               <Image
                 src="/home/avion-correos.webp"
-                alt="Avión de correos"
+                alt={t('banner1.planeAlt')}
                 width={200}
                 height={0}
                 className="max-lg:w-[80px]"
@@ -156,7 +148,7 @@ export default function NewHome() {
 
               <Image
                 src="/home/paquet-correos.webp"
-                alt="Paquete de correos"
+                alt={t('banner1.packageAlt')}
                 width={200}
                 height={0}
                 className="max-lg:w-[80px]"
@@ -169,14 +161,14 @@ export default function NewHome() {
         <BannerTemplate linkHref="/impact">
           <Image
             src="/home/hombre-haciendo-dispensador-en-forma-de-molinillo.webp"
-            alt="Hombre haciendo dispensador en forma de molinillo"
+            alt={t('banner2.craftsman1Alt')}
             width={190}
             height={0}
             className="absolute top-14 left-0 lg:left-6 2xl:left-60 hidden sm:block rounded-lg max-lg:w-[125px]"
           />
           <Image
             src="/home/hombre-exhibiendo-espejo-tallado-en-madera.webp"
-            alt="Hombre exhibiendo espejo tallado en madera"
+            alt={t('banner2.craftsman2Alt')}
             width={184}
             height={0}
             className="absolute top-12 right-2 lg:right-16 2xl:right-70 hidden sm:block rounded-lg max-lg:w-[125px]"
@@ -185,14 +177,14 @@ export default function NewHome() {
           <div className="absolute bg-gradient-to-r from-[#f7c28c] via-[#f4a261] to-[#f7c28c] top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
             <div className="text-center z-20 mt-2 lg:mt-4 px-4">
               <h1 className=" text-2xl lg:text-4xl text-gray-800 font-bold lg:mb-2 hidden sm:block">
-                Artesanías únicas hechas a mano
+                {t('banner2.title')}
               </h1>
               <h1 className=" text-2xl lg:text-4xl text-gray-800 font-bold lg:mb-2 sm:hidden">
-                Artesanías hechas a mano
+                {t('banner2.titleMobile')}
               </h1>
 
               <p className="text-gray-800 text-sm mx-auto max-w-xl">
-                Por privados de libertad que impactan positivamente
+                {t('banner2.subtitle')}
               </p>
 
               <div className="flex justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
@@ -200,25 +192,25 @@ export default function NewHome() {
                   <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
                     <Handshake className="text-[#b55327]" />
                   </div>
-                  <span className="text-gray-800 font-medium text-xs hidden sm:block">Impacto Social</span>
-                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">Impacto</span>
-                  <span className="text-[0.65rem] text-gray-800 hidden sm:block">Apoyando la reinserción</span>
+                  <span className="text-gray-800 font-medium text-xs hidden sm:block">{t('banner2.impact')}</span>
+                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">{t('banner2.impactMobile')}</span>
+                  <span className="text-[0.65rem] text-gray-800 hidden sm:block">{t('banner2.impactDesc')}</span>
                 </div>
 
                 <div className="flex flex-col items-center">
                   <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
                     <Sprout className="text-[#b55327]" />
                   </div>
-                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">Sostenibilidad</span>
-                  <span className="text-[0.65rem]  text-gray-800 hidden sm:block">Materiales ecológicos</span>
+                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{t('banner2.sustainability')}</span>
+                  <span className="text-[0.65rem]  text-gray-800 hidden sm:block">{t('banner2.sustainabilityDesc')}</span>
                 </div>
 
                 <div className="flex flex-col items-center">
                   <div className="bg-[#f7c28c] p-2 rounded-full mb-1">
                     <BadgeCheck className="text-[#b55327]" />
                   </div>
-                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">Calidad</span>
-                  <span className="text-[0.65rem] text-gray-800 hidden sm:block">Detalles artesanales</span>
+                  <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{t('banner2.quality')}</span>
+                  <span className="text-[0.65rem] text-gray-800 hidden sm:block">{t('banner2.qualityDesc')}</span>
                 </div>
               </div>
             </div>
@@ -230,24 +222,24 @@ export default function NewHome() {
           linkHref={chorreadorCategoryId ? `/products?category=${chorreadorCategoryId}` : '/products'}
           bgColor="bg-gradient-to-r from-blue-500 to-purple-600">
           <div className="h-full flex flex-col items-center justify-center text-white text-center px-4">
-            <h2 className="text-md lg:text-2xl font-light">Descubre nuestra</h2>
-            <h1 className="text-3xl lg:text-4xl font-bold my-0.5 lg:my-4">NUEVA COLECCIÓN</h1>
-            <p className="text-sm lg:text-xl">Chorreadores únicos hechos a mano</p>
+            <h2 className="text-md lg:text-2xl font-light">{t('banner3.preTitle')}</h2>
+            <h1 className="text-3xl lg:text-4xl font-bold my-0.5 lg:my-4">{t('banner3.title')}</h1>
+            <p className="text-sm lg:text-xl">{t('banner3.subtitle')}</p>
 
             <button className="mt-2 lg:mt-6 bg-white text-purple-600 px-6 lg:px-8 py-2 rounded-full font-bold hover:bg-opacity-90 transition-all">
-              Ver ahora
+              {t('banner3.button')}
             </button>
           </div>
         </BannerTemplate>
       </Carousel>
 
 
-      {/* <GridSection indexStart={0} indexEnd={6} />
+      <GridSection indexStart={0} indexEnd={6} />
 
       
       <CarrucelSection startIndex={0} endIndex={10} />
       <GridSection indexStart={6} indexEnd={12} mobileActive={false} />
-      <CarrucelSection title="Detalles artesanales" startIndex={10} endIndex={20} mobileInvertList={true} /> */}
+      <CarrucelSection title="Detalles artesanales" startIndex={10} endIndex={20} mobileInvertList={true} />
 
 
 

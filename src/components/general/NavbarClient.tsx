@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { 
   ShoppingBag, 
@@ -24,9 +25,11 @@ type NavLink = {
 
 interface NavbarClientProps {
   navigationLinks: NavLink[];
+  locale: string;
 }
 
-export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
+export default function NavbarClient({ navigationLinks, locale }: NavbarClientProps) {
+  const t = useTranslations('navbar');
   // Estado para los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -149,7 +152,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                 href="/products" 
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
-                Tienda
+                {t('store')}
               </Link>
             </li>
             <li>
@@ -157,7 +160,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                 href="/contact" 
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
-                Contacto
+                {t('contact')}
               </Link>
             </li>
           </ul>
@@ -172,22 +175,23 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         </div>
         
         {/* Language selector */}
-        <button 
+        <Link 
+          href={locale === 'es' ? '/en' : '/es'}
           className="hidden md:flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
-          aria-label="Cambiar idioma"
+          aria-label={t('changeLanguage')}
         >
           <Globe className="h-4 w-4" />
-          <span>ES</span>
-        </button>
+          <span>{locale === 'es' ? 'ES' : 'EN'}</span>
+        </Link>
         
         {/* Cart */}
         <Link 
           href="/cart" 
           className="relative flex h-10 items-center space-x-0.5 rounded-md px-0.5 text-sm text-gray-700 transition hover:bg-gray-100"
-          aria-label="Carrito de compras"
+          aria-label={t('cart')}
         >
           <ShoppingBag className="h-5 w-5" />
-          <span className="hidden md:inline">Carrito</span>
+          <span className="hidden md:inline">{t('cart')}</span>
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
             {cardQuantity}
           </span>
@@ -198,7 +202,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
           <button 
             onClick={() => setIsSearchOpen(!isSearchOpen)}
             className="flex h-8 w-8 items-center justify-center rounded-full text-gray-700 transition  hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-            aria-label="Buscar"
+            aria-label={t('search')}
             aria-expanded={isSearchOpen}
           >
             <Search className="h-5 w-5" />
@@ -208,11 +212,11 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
           {isSearchOpen && (
             <div className="absolute left-0 right-0 top-full z-50 border-t border-gray-100 bg-white px-4 py-4 shadow-lg md:left-auto md:right-4 md:top-16 md:w-96 md:rounded-lg md:border md:border-gray-100">
               <div className="mb-2 flex justify-between items-center">
-                <h3 className="text-sm font-medium">Buscar productos</h3>
+                <h3 className="text-sm font-medium">{t('searchProducts')}</h3>
                 <button 
                   onClick={() => setIsSearchOpen(false)}
                   className="text-gray-400 hover:text-gray-600"
-                  aria-label="Cerrar búsqueda"
+                  aria-label={t('closeSearch')}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -233,7 +237,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex h-10 w-10 items-center justify-center rounded-full  text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 lg:hidden -ml-2"
-          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
           aria-expanded={isMenuOpen}
         >
           {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -267,13 +271,13 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <User className="h-5 w-5" />
-                      <span>Mi cuenta</span>
+                      <span>{t('myAccount')}</span>
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="text-sm text-gray-700"
                     >
-                      Cerrar sesión
+                      {t('logout')}
                     </button>
                   </>
                 ) : (
@@ -283,14 +287,14 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Iniciar sesión
+                      {t('login')}
                     </Link>
                     <Link 
                       href="/register"
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Registrarse
+                      {t('register')}
                     </Link>
                   </>
                 )}
@@ -301,7 +305,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
             
             {/* Mobile Navigation Links - Amazon Style */}
             <div>
-              <p className="mb-2 font-medium text-sm">Navegar por:</p>
+              <p className="mb-2 font-semibold text-sm text-gray-800">{t('browseBy')}</p>
               <ul className="space-y-2">
                 {navigationLinks.map((link) => (
                   <li key={link.path}>
@@ -321,7 +325,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                     className="block text-sm text-gray-700 hover:text-teal-700"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Tienda
+                    {t('store')}
                   </Link>
                 </li>
                 
@@ -331,7 +335,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                     className="block text-sm text-gray-700 hover:text-teal-700"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Contacto
+                    {t('contact')}
                   </Link>
                 </li>
                 
@@ -342,7 +346,7 @@ export default function NavbarClient({ navigationLinks }: NavbarClientProps) {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <ShoppingBag className="h-4 w-4" />
-                    <span>Ver carrito ({cardQuantity})</span>
+                    <span>{t('viewCart')} ({cardQuantity})</span>
                   </Link>
                 </li>
               </ul>

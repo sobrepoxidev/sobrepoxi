@@ -27,5 +27,56 @@
     "deliverySchedules": "Delivery Schedules",
     "restrictedAreas": "Restricted Areas",
     "weUse": "We use the EMS service of Costa Rica Post Office to deliver your handcrafted products. The delivery times may vary depending on the location and the conditions of the postal service."
+  },
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "impact": "Impact",
+    "store": "Store",
+    "contact": "Contact",
+    "cart": "Cart",
+    "search": "Search",
+    "searchProducts": "Search products",
+    "closeSearch": "Close search",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "myAccount": "My account",
+    "logout": "Log out",
+    "login": "Log in",
+    "register": "Register",
+    "browseBy": "Browse by:",
+    "viewCart": "View cart",
+    "changeLanguage": "Change language",
+    "shipping": "Shipping"
+  },
+  "home": {
+    "banner1": {
+      "title": "Shipping to all Costa Rica",
+      "subtitle": "With rates from ₡2100",
+      "note": "*Variable cost depending on weight. Click for more information",
+      "mapAlt": "Map of Costa Rica",
+      "planeAlt": "Mail plane",
+      "packageAlt": "Mail package"
+    },
+    "banner2": {
+      "title": "Unique handmade crafts",
+      "titleMobile": "Handmade crafts",
+      "subtitle": "By inmates making a positive impact",
+      "impact": "Social Impact",
+      "impactMobile": "Impact",
+      "impactDesc": "Supporting reintegration",
+      "sustainability": "Sustainability",
+      "sustainabilityDesc": "Eco-friendly materials",
+      "quality": "Quality",
+      "qualityDesc": "Artisanal details",
+      "craftsman1Alt": "Man making dispenser in the shape of a mill",
+      "craftsman2Alt": "Man displaying mirror carved in wood"
+    },
+    "banner3": {
+      "preTitle": "Discover our",
+      "title": "NEW COLLECTION",
+      "subtitle": "Unique handmade coffee makers",
+      "button": "View now"
+    }
   }
 }

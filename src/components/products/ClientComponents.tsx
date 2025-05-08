@@ -141,9 +141,10 @@ interface MediaItemCardProps {
   product: Product;
   activeExpandButton: boolean;
   index: number;
+  locale?: string;
 }
 
-function MediaItemCard({ product, activeExpandButton, index }: MediaItemCardProps) {
+function MediaItemCard({ product, activeExpandButton, index, locale = 'es' }: MediaItemCardProps) {
   return (
     <div className="relative w-full h-full ">
 
@@ -189,8 +190,9 @@ function MediaItemCard({ product, activeExpandButton, index }: MediaItemCardProp
 interface MediaCarouselProps {
   product: Product;
   activeExpandButton: boolean;
+  locale: string;
 }
-export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProps) {
+export function MediaCarousel({ product, activeExpandButton, locale }: MediaCarouselProps) {
   return (
     <div className="relative w-full" style={activeExpandButton ? { aspectRatio: "4/3" } : { height: "100%" }}>
   <Swiper
@@ -207,6 +209,7 @@ export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProp
           product={product}
           activeExpandButton={activeExpandButton}
           index={index}
+          locale={locale}
         />
       </SwiperSlide>
     ))}
@@ -221,9 +224,11 @@ export function MediaCarousel({ product, activeExpandButton }: MediaCarouselProp
 export function FullscreenModal({
   product,
   onClose,
+  locale = 'es'
 }: {
   product: Product;
   onClose: () => void;
+  locale?: string;
 }) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -270,11 +275,12 @@ export function FullscreenModal({
 interface GalleryModalProps {
   initialProduct?: Product; // Nueva prop opcional
   from?: string;
+  locale?: string;
 }
 // ---------------------------------------------------------
 // 6) Modal global que escucha el evento 'openGalleryModal'
 // ---------------------------------------------------------
-export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
+export function GalleryModal({ initialProduct, from, locale = 'es' }: GalleryModalProps) {
   const [modalContent, setModalContent] = useState<{
     isOpen: boolean;
     product: Product | null;
@@ -285,7 +291,7 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
   const { replace } = useRouter();
 
   const closeModal = () => {
-    console.log("Cerrando modal..."); // Log para depuración
+   
     const params = new URLSearchParams(searchParams.toString());
     if(from && from === "hero") {
       params.delete("idh");
@@ -303,16 +309,13 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
     // Obtiene el ID de la URL *en el momento en que este efecto se ejecuta*
 
     const urlId =  from ? from === "hero" ? searchParams.get('idh') : searchParams.get('id') : searchParams.get('id') ;
-    console.log(`Efecto 1 (initialProduct): initialProduct=`, initialProduct ? initialProduct.id : 'null', `urlId=${urlId}`);
 
     // Si tenemos la prop initialProduct, y coincide con el ID en la URL actual...
     if (initialProduct && urlId === initialProduct.id.toString()) {
         // ... y el modal NO está ya abierto (para evitar bucles si algo más lo abre)...
         if (!modalContent.isOpen) {
-            console.log("Efecto 1: Abriendo modal basado en initialProduct coincidente.");
             setModalContent({ isOpen: true, product: initialProduct });
         } else {
-             console.log("Efecto 1: initialProduct coincide con URL, pero modal ya está abierto.");
         }
     }
     // Incluimos todas las dependencias necesarias para este efecto
@@ -324,13 +327,11 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
     const handleOpenModal = (event: Event) => {
       // Prevenir si ya está abierto
       if (modalContent.isOpen) {
-          console.log("Evento openGalleryModal ignorado: modal ya abierto.");
           return;
       }
 
       const customEvent = event as CustomEvent<OpenGalleryModalEventDetail>;
       const productToOpen = customEvent.detail.product;
-      console.log(`Evento openGalleryModal recibido para producto ID: ${productToOpen.id}`);
 
       setModalContent({
         isOpen: true,
@@ -357,11 +358,9 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
      
     };
 
-    console.log("Efecto 2: Añadiendo listener para openGalleryModal");
     window.addEventListener("openGalleryModal", handleOpenModal as EventListener);
 
     return () => {
-      console.log("Efecto 2: Eliminando listener para openGalleryModal");
       window.removeEventListener("openGalleryModal", handleOpenModal as EventListener);
     };
     // Dependencias: Necesita saber si está abierto para evitar reapertura,
@@ -379,6 +378,7 @@ export function GalleryModal({ initialProduct, from }: GalleryModalProps) {
     <FullscreenModal
       product={modalContent.product}
       onClose={closeModal}
+      locale={locale}
     />
   );
 }

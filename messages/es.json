@@ -27,6 +27,56 @@
     "deliverySchedules": "Plazos de Entrega",
     "restrictedAreas": "Zonas Restringidas",
     "weUse": "Utilizamos el servicio EMS de Correos de Costa Rica para entregar tus productos artesanales. Los tiempos de entrega pueden variar según la ubicación y las condiciones del servicio postal."
-    
+  },
+  "navbar": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "impact": "Impacto",
+    "store": "Tienda",
+    "contact": "Contacto",
+    "cart": "Carrito",
+    "search": "Buscar",
+    "searchProducts": "Buscar productos",
+    "closeSearch": "Cerrar búsqueda",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "myAccount": "Mi cuenta",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "browseBy": "Navegar por:",
+    "viewCart": "Ver carrito",
+    "changeLanguage": "Cambiar idioma",
+    "shipping": "Envíos"
+  },
+  "home": {
+    "banner1": {
+      "title": "Envíos a todo Costa Rica",
+      "subtitle": "Con tarifas desde ₡2100",
+      "note": "*Costo variable dependiendo del peso. Pulsa para más información",
+      "mapAlt": "Mapa de Costa Rica",
+      "planeAlt": "Avión de correos",
+      "packageAlt": "Paquete de correos"
+    },
+    "banner2": {
+      "title": "Artesanías únicas hechas a mano",
+      "titleMobile": "Artesanías hechas a mano",
+      "subtitle": "Por privados de libertad que impactan positivamente",
+      "impact": "Impacto Social",
+      "impactMobile": "Impacto",
+      "impactDesc": "Apoyando la reinserción",
+      "sustainability": "Sostenibilidad",
+      "sustainabilityDesc": "Materiales ecológicos",
+      "quality": "Calidad",
+      "qualityDesc": "Detalles artesanales",
+      "craftsman1Alt": "Hombre haciendo dispensador en forma de molinillo",
+      "craftsman2Alt": "Hombre exhibiendo espejo tallado en madera"
+    },
+    "banner3": {
+      "preTitle": "Descubre nuestra",
+      "title": "NUEVA COLECCIÓN",
+      "subtitle": "Chorreadores únicos hechos a mano",
+      "button": "Ver ahora"
+    }
   }
 }

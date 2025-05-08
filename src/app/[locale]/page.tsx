@@ -2,8 +2,6 @@
 //import Hero from "@/components/home/Hero";
 //import ValueProposition from "@/components/home/ValueProposition";
 //import Testimonials from "@/components/home/Testimonials";
-//import PopularCategories from "@/components/home/PopularCategories";
-import CallToAction from "@/components/home/CallToAction";
 import NewHome from "@/components/home/New";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -17,8 +15,10 @@ type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 interface PageProps {
   searchParams: searchParams;
+  locale: string;
 }
-export default async function Home({ searchParams }: PageProps) {
+export default async function Home({ searchParams, locale }: PageProps) {
+  console.log('Locale PAGE:->', locale,'<-');
   // Usa el cliente server-side de Supabase
   const supabase = createServerComponentClient<Database>({ cookies });
   let initialProductForModal: Product | null = null; // Variable para el producto inicial
@@ -55,7 +55,7 @@ export default async function Home({ searchParams }: PageProps) {
       <main className="max-w-screen-2xl mx-auto">
         {/* Banner principal */}
         <div className="mb-4">
-          <NewHome />
+          <NewHome locale={locale} />
         </div>
         {/* Contenido principal con diseño similar a Amazon */}
         <div className="px-4 pb-8">
@@ -96,7 +96,7 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
       </footer>
       
-      <GalleryModal initialProduct={initialProductForModal as Product} />
+      <GalleryModal initialProduct={initialProductForModal as Product} locale={locale} />
     </div>
   );
 }

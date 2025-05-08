@@ -26,6 +26,8 @@ export type Database = {
     categories: {
         id: number;
         name: string;
+        name_es: string;
+        name_en: string;
         parent_id: number | null;
         created_at: string;
     },
@@ -75,6 +77,8 @@ export type Database = {
         id: number;
         created_at: string;
         name: string | null;
+        name_es: string | null;
+        name_en: string | null;
         description: string | null;
         media: MediaItem[] | null;
         price: number | null;

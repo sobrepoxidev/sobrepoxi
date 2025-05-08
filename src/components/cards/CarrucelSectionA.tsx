@@ -19,7 +19,7 @@ const CarouselCard: React.FC<{
   className?: string;
 }> = ({ title, content, className = "" }) => {
   return (
-    <div className={`rounded-2xl flex h-[27rem] shadow-md flex-col ${className}`}>
+    <div className={`rounded flex h-[27rem] shadow-md flex-col ${className}`}>
       <div className="flex flex-col h-full">
         <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-black" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>{title}</h2>
         <div className="flex-grow flex items-center justify-center">{content}</div>

@@ -18,6 +18,7 @@ type CarrucelSectionProps = {
   startIndex?: number;
   endIndex?: number;
   mobileInvertList?: boolean;
+  locale?: string;
 };
 
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
@@ -26,7 +27,8 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   shippingOnly = false,
   startIndex = 0,
   endIndex = 8,
-  mobileInvertList = false
+  mobileInvertList = false,
+  locale = 'es'
 }) => {
   // Referencias para cada sección de carrusel
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -141,7 +143,6 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             }
           }
         } catch (e) {
-          console.log('Error al cargar productos destacados, usando recientes', e);
           // Si hay algún error, intentamos cargar productos recientes
           const { data: fallbackData, error: fallbackError } = await query
             .limit(20);
@@ -157,7 +158,6 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
 
         setLoading(false);
       } catch (err) {
-        console.error('Error en fetchData:', err);
         setError(err instanceof Error ? err.message : 'Error desconocido');
         setLoading(false);
       }
@@ -175,6 +175,9 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
         ? product.media[0].url 
         : '/placeholder-image.png';
       
+      // Get the appropriate name based on locale
+      const productName = locale === 'es' ? product.name_es : product.name_en;
+      
       return (
         <div key={product.id} className="min-w-[180px] mx-2 flex-shrink-0">
           <Link href={`/product/${product.id}`} className="block">
@@ -182,7 +185,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
               <div className="h-40 flex items-center justify-center">
                 <Image
                   src={imageUrl}
-                  alt={product.name || 'Producto'}
+                  alt={productName || product.name || 'Producto'}
                   width={150}
                   height={150}
                   className="object-contain max-h-full"
@@ -228,14 +231,14 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                   <div className="h-[120px] flex items-center justify-center p-2">
                     <Image
                       src={imageUrl}
-                      alt={product.name || 'Producto'}
+                      alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || 'Producto'}
                       width={100}
                       height={100}
                       className="object-contain max-h-full"
                       unoptimized
                     />
                   </div>
-                  <p className="text-xs truncate px-2 pb-1">{product.name}</p>
+                  <p className="text-xs truncate px-2 pb-1">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                 </div>
               </Link>
             );
@@ -257,14 +260,14 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                   <div className="h-[120px] flex items-center justify-center p-2">
                     <Image
                       src={imageUrl}
-                      alt={product.name || 'Producto'}
+                      alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || 'Producto'}
                       width={100}
                       height={100}
                       className="object-contain max-h-full"
                       unoptimized
                     />
                   </div>
-                  <p className="text-xs truncate px-2 pb-1">{product.name}</p>
+                  <p className="text-xs truncate px-2 pb-1">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                 </div>
               </Link>
             );

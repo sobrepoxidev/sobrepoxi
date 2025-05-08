@@ -7,12 +7,15 @@ import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import  CarrucelSectionA  from "./CarrucelSectionA";
+import { useLocale } from "next-intl";
 
 // Type definitions with fixes for TypeScript errors
 type Category = Database['categories'] & { image_url?: string }; // Add image_url property
 type Product = Database['products'];
 
 const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: number, indexEnd: number, mobileActive?: boolean}) => {
+  const locale = useLocale();
+  console.log('Locale GRID:->', locale,'<-');
   const [categories, setCategories] = useState<Category[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,8 +30,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
         // Fetch categories
         const { data: categoriesData, error: categoriesError } = await supabase
           .from('categories')
-          .select('*')
-          .order('name');
+          .select('*');
         
         if (categoriesError) {
           throw new Error(`Error fetching categories: ${categoriesError.message}`);
@@ -71,8 +73,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
         // Crear array plano de todos los productos
         const allProducts = Object.values(productsByCategory).flat();
 
-        console.log('Categories:', categoriesData.map(c => ({ id: c.id, name: c.name })));
-        console.log('Products by category:', allProducts);
+        
         
         // Set state
         setCategories(categoriesData);
@@ -107,16 +108,13 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
     }
   });
 
-  console.log('Categories:', categories.map(c => ({ id: c.id, name: c.name })));
-  console.log('Products by category:', productsByCategory);
-
   // Para pantallas grandes (desktop/tablet) - Mostrar múltiples productos por categoría como Amazon
   const desktopCards = categories.slice(indexStart, indexEnd).map(category => {
     const categoryProducts = productsByCategory[category.id] || [];
     const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
     
     return {
-      title: category.name || 'Categoría',
+      title: locale === 'es' ? category.name_es : category.name_en || category.name,
       link: `/products?category=${category.id}`,
       content: (
         <div className="p-3">
@@ -131,7 +129,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                           src={product.media && product.media.length > 0 ? 
                             (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') : 
                             '/placeholder.jpg'}
-                          alt={product.name || "Producto"}
+                          alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
                           width={80}
                           height={80}
                           className="object-contain max-h-full group-hover:scale-105 transition-transform"
@@ -139,7 +137,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                         />
                       </div>
                       <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-800">
-                        {product.name}
+                        { locale === 'es' ? product.name_es : product.name_en }
                       </span>
                       {product.price && (
                         <span className="text-[10px] font-bold text-teal-700 mt-0.5">
@@ -303,7 +301,7 @@ const GridSection = ({indexStart, indexEnd, mobileActive=true}: {indexStart: num
                               unoptimized
                             />
                           </div>
-                          <p className="text-xs truncate mt-1 text-white font-medium">{product.name}</p>
+                          <p className="text-xs truncate mt-1 text-white font-medium">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                         </Link>
                       ))}
                     </div>
