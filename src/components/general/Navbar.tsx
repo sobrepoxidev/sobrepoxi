@@ -23,12 +23,13 @@ export default async function Navbar({ locale }: { locale: string }) {
         <div className="flex-shrink-0 mr-2 md:mr-4 ">
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
+              <div className="md:hidden">
               <Image
                 src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover block dark:hidden md:hidden"
+                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
                 priority
               />
               <Image
@@ -36,15 +37,17 @@ export default async function Navbar({ locale }: { locale: string }) {
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover hidden dark:block md:hidden"
+                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
                 priority
               />
+              </div>
+              <div className="hidden md:block">
               <Image
                 src="/logo-handmade-art.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover block dark:hidden max-md:hidden"
+                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
                 priority
               />
               <Image
@@ -52,9 +55,11 @@ export default async function Navbar({ locale }: { locale: string }) {
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover hidden dark:block max-md:hidden"
+                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
                 priority
               />
+              </div>
+              
               <h1 className="text-lg sm:text-3xl tracking-wider text-gray-800">
                 <span className="mr-1">HANDMADE</span>
                 <span className="font-bold text-[#B55327]">ART</span>
