@@ -28,7 +28,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
+                className="w-[40px] md:w-[65px] object-cover block dark:hidden md:hidden"
                 priority
               />
               <Image
@@ -36,7 +36,23 @@ export default async function Navbar({ locale }: { locale: string }) {
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
+                className="w-[40px] md:w-[65px] object-cover hidden dark:block md:hidden"
+                priority
+              />
+              <Image
+                src="/logo-handmade-art.webp"
+                alt="Hand Made Art Logo"
+                width={65}
+                height={0}
+                className="w-[40px] md:w-[65px] object-cover block dark:hidden max-md:hidden"
+                priority
+              />
+              <Image
+                src="/logo-handmade-art-black.webp"
+                alt="Hand Made Art Logo"
+                width={65}
+                height={0}
+                className="w-[40px] md:w-[65px] object-cover hidden dark:block max-md:hidden"
                 priority
               />
               <h1 className="text-lg sm:text-3xl tracking-wider text-gray-800">
