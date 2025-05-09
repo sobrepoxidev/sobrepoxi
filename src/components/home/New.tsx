@@ -114,9 +114,9 @@ export default function NewHome() {
       <Carousel>
         {/* Banner 1: Envío a Costa Rica (ahora primero) */}
         <BannerTemplate linkHref="/shipping">
-          <div className="relative h-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 px-4 md:px-24">
-            <div className="max-w-full text-center md:text-left -mt-4 md:mt-0">
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-wider text-gray-800">
+          <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-4 md:py-6">
+            <div className="max-w-full text-center md:text-left mt-0.5 md:mt-0 ">
+              <h2 className="text-xl xs:text-2xl sm:text-4xl font-bold tracking-wider text-gray-800">
                 <span className="mr-1">{t('banner1.title')}</span>
               </h2>
               <div className="flex flex-col">
@@ -131,29 +131,37 @@ export default function NewHome() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 md:gap-8 max-lg: -mt-5">
-              <Image
-                src="/home/mapa-cr.webp"
-                alt={t('banner1.mapAlt')}
-                width={150}
-                height={0}
-                className="max-lg:w-[60px]"
-              />
-              <Image
-                src="/home/avion-correos.webp"
-                alt={t('banner1.planeAlt')}
-                width={200}
-                height={0}
-                className="max-lg:w-[80px]"
-              />
-
-              <Image
-                src="/home/paquet-correos.webp"
-                alt={t('banner1.packageAlt')}
-                width={200}
-                height={0}
-                className="max-lg:w-[80px]"
-              />
+            <div className="flex items-center justify-center md:gap-8  px-2 md:px-4 h-auto ">
+              <div className="relative h-[60px] w-[60px] md:h-[130px] md:w-[130px]">
+                <Image
+                  src="/home/mapa-cr.webp"
+                  alt={t('banner1.mapAlt')}
+                  fill
+                  sizes="(max-width: 768px) 60px, 130px"
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </div>
+              <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
+                <Image
+                  src="/home/avion-correos.webp"
+                  alt={t('banner1.planeAlt')}
+                  fill
+                  sizes="(max-width: 768px) 80px, 180px"
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </div>
+              <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
+                <Image
+                  src="/home/paquet-correos.webp"
+                  alt={t('banner1.packageAlt')}
+                  fill
+                  sizes="(max-width: 768px) 80px, 180px"
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </div>
             </div>
           </div>
         </BannerTemplate>
@@ -236,12 +244,12 @@ export default function NewHome() {
 
 
       <GridSection indexStart={0} indexEnd={6} />
-
+ {/*
       
       <CarrucelSection title={locale === 'es' ? 'Regalos con significado' : 'Gifts with meaning'} startIndex={0} endIndex={10} />
       <GridSection indexStart={6} indexEnd={12} mobileActive={false} />
       <CarrucelSection title={locale === 'es' ? 'Detalles artesanales' : 'Artistic details'} startIndex={10} endIndex={20} mobileInvertList={true} />
-
+ */}
 
 
     </div>
