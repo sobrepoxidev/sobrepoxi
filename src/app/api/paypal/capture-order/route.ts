@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       }
 
       // 2) Actualizar la orden en la BD a 'paid'
-      const { data: orderData, error: updateOrderError } = await supabase
+      const { error: updateOrderError } = await supabase
         .from("orders")
         .update({
           payment_status: "paid",

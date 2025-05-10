@@ -39,27 +39,6 @@ type DiscountInfo = {
   discount_value: number;
 };
 
-// Tipo para los datos de la orden
-type OrderData = {
-  id?: number;
-  user_id: string;
-  shipping_address?: ShippingAddress | null;
-  shipping_city?: string;
-  shipping_state?: string;
-  shipping_postal_code?: string;
-  shipping_country?: string;
-  shipping_method?: string;
-  payment_method?: PaymentMethod | null;
-  subtotal: number;
-  shipping: number;
-  tax: number;
-  total: number;
-  items: any[];
-  status: string;
-  discount_code?: string;
-  discount_amount?: number;
-};
-
 export default function CheckoutWizardPage() {
     const router = useRouter();
     const {
@@ -86,18 +65,6 @@ export default function CheckoutWizardPage() {
     // Obtener el locale de la URL
     const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'es' : 'es';
 
-    // Estado para almacenar los datos del pedido
-    const [orderData, setOrderData] = useState<OrderData>({
-      user_id: userId,
-      subtotal: 0,
-      shipping: 0,
-      tax: 0,
-      total: 0,
-      items: [],
-      status: "pending",
-      discount_code: "",
-      discount_amount: 0,
-    });
 
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
     // Using _ prefix to indicate these state setters are needed but the values aren't directly used
@@ -114,11 +81,6 @@ export default function CheckoutWizardPage() {
             setDiscountInfo(discountData);
             
             // Actualizar el orderData con la información del descuento
-            setOrderData(prev => ({
-              ...prev,
-              discount_code: discountData.code,
-              discount_amount: discountData.discountAmount,
-            }));
           } catch (e) {
             console.error('Error parsing discount info:', e);
           }
@@ -282,25 +244,25 @@ export default function CheckoutWizardPage() {
   
     // Función para finalizar el pedido
     // Función para finalizar el pedido - se usará en una futura implementación
-  const _finalizeOrder = async () => {
-      try {
-        // Limpiar el carrito
-        await clearCart();
+  // const _finalizeOrder = async () => {
+  //     try {
+  //       // Limpiar el carrito
+  //       await clearCart();
         
-        // Limpiar datos de localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('cartItems');
-          localStorage.removeItem('checkoutData');
-          localStorage.removeItem('discountInfo'); // Limpiar información de descuento
-        }
+  //       // Limpiar datos de localStorage
+  //       if (typeof window !== 'undefined') {
+  //         localStorage.removeItem('cartItems');
+  //         localStorage.removeItem('checkoutData');
+  //         localStorage.removeItem('discountInfo'); // Limpiar información de descuento
+  //       }
 
-        // Redirigir a la página de confirmación
-        router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
-      } catch (error) {
-        console.error('Error in finalizeOrder:', error);
-        alert('Error al finalizar el pedido');
-      }
-    };
+  //       // Redirigir a la página de confirmación
+  //       router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
+  //     } catch (error) {
+  //       console.error('Error in finalizeOrder:', error);
+  //       alert('Error al finalizar el pedido');
+  //     }
+  //   };
 
     // -------------- Render principal --------------
     if (cart.length === 0) {
