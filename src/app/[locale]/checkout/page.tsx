@@ -243,25 +243,25 @@ export default function CheckoutWizardPage() {
   
     // Función para finalizar el pedido
     // Función para finalizar el pedido - se usará en una futura implementación
-  // const _finalizeOrder = async () => {
-  //     try {
-  //       // Limpiar el carrito
-  //       await clearCart();
+  const _finalizeOrder = async () => {
+      try {
+        // Limpiar el carrito
+        await clearCart();
         
-  //       // Limpiar datos de localStorage
-  //       if (typeof window !== 'undefined') {
-  //         localStorage.removeItem('cartItems');
-  //         localStorage.removeItem('checkoutData');
-  //         localStorage.removeItem('discountInfo'); // Limpiar información de descuento
-  //       }
+        // Limpiar datos de localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('cartItems');
+          localStorage.removeItem('checkoutData');
+          localStorage.removeItem('discountInfo'); // Limpiar información de descuento
+        }
 
-  //       // Redirigir a la página de confirmación
-  //       router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
-  //     } catch (error) {
-  //       console.error('Error in finalizeOrder:', error);
-  //       alert('Error al finalizar el pedido');
-  //     }
-  //   };
+        // Redirigir a la página de confirmación
+        router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
+      } catch (error) {
+        console.error('Error in finalizeOrder:', error);
+        alert('Error al finalizar el pedido');
+      }
+    };
 
     // -------------- Render principal --------------
     if (cart.length === 0) {
