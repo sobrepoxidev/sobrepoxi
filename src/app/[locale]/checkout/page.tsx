@@ -53,12 +53,13 @@ export default function CheckoutWizardPage() {
     const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
-      const fetchSession = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
+      const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
+      });
+      // Limpieza
+      return () => {
+        listener?.subscription.unsubscribe();
       };
-      fetchSession();
-      
     }, [supabase]);
     
     
