@@ -63,7 +63,6 @@ export default function CheckoutWizardPage() {
     const { session } = useSupabase();
     const userId = session?.user?.id || 'guest-user';
     // Obtener el locale de la URL
-    const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'es' : 'es';
 
 
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
