@@ -1,6 +1,17 @@
 import { Database } from "@/types-db";
 import { useState, useEffect } from "react";
 
+// Tipo para la información de descuento basado en la tabla discount_codes
+type DiscountInfo = {
+  valid: boolean;
+  discountAmount: number;
+  finalTotal: number;
+  code: string;
+  description?: string;
+  discount_type: Database['discount_codes']['discount_type'];
+  discount_value: number;
+};
+
 type ProductType = Database['products'];
 
 type CartItem = {
@@ -28,6 +39,23 @@ export default function StepOne({
     onContinue: (address: ShippingAddress) => void;
     initialData?: ShippingAddress | null;
   }) {
+    // Estado para la información de descuento
+    const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
+    
+    // Cargar información de descuento desde localStorage
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const discountInfoStr = localStorage.getItem('discountInfo');
+        if (discountInfoStr) {
+          try {
+            const discountData = JSON.parse(discountInfoStr);
+            setDiscountInfo(discountData);
+          } catch (e) {
+            console.error('Error parsing discount info:', e);
+          }
+        }
+      }
+    }, []);
     const [formData, setFormData] = useState({
       nombre: initialData?.name.split(' ')[0] || '',
       apellidos: initialData?.name.split(' ').slice(1).join(' ') || '',
@@ -355,12 +383,21 @@ export default function StepOne({
                 </div>
                 <div className="flex justify-between">
                   <span>Envío</span>
-                  <span>₡3,200.00</span>
+                  <span>₡{'3,200.00'}</span>
                 </div>
+                {discountInfo && (
+                  <div className="flex justify-between text-green-600 font-medium">
+                    <span>Descuento ({discountInfo.code})</span>
+                    <span>- ₡{discountInfo.discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between font-bold border-t pt-2">
                   <span>Total del pedido:</span>
                   <span>
-                    ₡{(cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0) + 3200).toFixed(2)}
+                    ₡{(discountInfo 
+                      ? discountInfo.finalTotal 
+                      : cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0) + 3200
+                    ).toFixed(2)}
                   </span>
                 </div>
               </div>

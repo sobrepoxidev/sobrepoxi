@@ -24,21 +24,27 @@ export type SearchResult = {
 };
 
 /**
- * Search products by query string with optional category filter
+ * Search products by query string with optional category filter and pagination
  * @param query Search query string
  * @param category Optional category filter
- * @param limit Number of results to return
- * @returns Promise with search results
+ * @param pageOrLimit Number that can be either page number (when isPaginated=true) or limit (when isPaginated=false)
+ * @param limit Number of results per page (only used when isPaginated=true)
+ * @param sortBy Optional sorting method ('relevance', 'price-asc', 'price-desc', 'newest')
+ * @param isPaginated If true, pageOrLimit is treated as page number, otherwise as limit
+ * @returns Promise with search results and total count
  */
 export async function searchProducts(
   query: string,
   category?: string,
-  limit: number = 10
-): Promise<SearchResult[]> {
+  pageOrLimit: number = 1,
+  limit: number = 12,
+  sortBy: string = 'relevance',
+  isPaginated: boolean = true
+): Promise<{ results: SearchResult[], totalCount: number }> {
   try {
     // Basic input validation
     if (!query || query.trim().length < 2) {
-      return [];
+      return { results: [], totalCount: 0 };
     }
     
     // Sanitize input to prevent SQL injection
@@ -58,11 +64,39 @@ export async function searchProducts(
       }
     }
     
-    // Build query
+    // Calculate pagination offsets based on whether we're using pagination or just a limit
+    let from: number;
+    let to: number;
+    
+    if (isPaginated) {
+      // pageOrLimit is treated as page number
+      from = (pageOrLimit - 1) * limit;
+      to = from + limit - 1;
+    } else {
+      // pageOrLimit is treated as limit (for autocomplete)
+      from = 0;
+      to = pageOrLimit - 1;
+    }
+    
+    // Build query for counting total results
+    const countQuery = supabase
+      .from('products')
+      .select('id', { count: 'exact' });
+      
+    // Add text search condition to count query
+    const countQueryWithSearch = countQuery.or(
+      `name.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
+    );
+    
+    // Add category filter to count query if we have a category ID
+    if (categoryId !== null) {
+      countQueryWithSearch.eq('category_id', categoryId);
+    }
+    
+    // Build main query with pagination
     let queryBuilder = supabase
       .from('products')
-      .select('id, name, description, price, media, category_id, discount_percentage')
-      .limit(limit);
+      .select('id, name, description, price, media, category_id, discount_percentage, created_at');
     
     // Add text search condition
     queryBuilder = queryBuilder.or(
@@ -74,11 +108,33 @@ export async function searchProducts(
       queryBuilder = queryBuilder.eq('category_id', categoryId);
     }
     
+    // Apply sorting based on sortBy parameter
+    if (sortBy === 'price-asc') {
+      queryBuilder = queryBuilder.order('price', { ascending: true });
+    } else if (sortBy === 'price-desc') {
+      queryBuilder = queryBuilder.order('price', { ascending: false });
+    } else if (sortBy === 'newest') {
+      queryBuilder = queryBuilder.order('created_at', { ascending: false });
+    }
+    // For 'relevance', we don't apply any specific ordering as results are already ranked by match quality
+    
+    // Apply pagination after all filters and sorting
+    queryBuilder = queryBuilder.range(from, to);
+    
     const { data, error } = await queryBuilder;
     
     if (error) {
       console.error('Search error:', error);
-      return [];
+      return { results: [], totalCount: 0 };
+    }
+    
+    // Get total count of matching products
+    const { count: totalCount, error: countError } = await countQueryWithSearch;
+    
+    if (countError) {
+      console.error('Count error:', countError);
+      // Continue with results but set count to length of results
+      // This ensures we still show something even if count fails
     }
     
     // Process results to add highlights
@@ -120,10 +176,13 @@ export async function searchProducts(
       return searchResult;
     }));
     
-    return results;
+    return { 
+      results, 
+      totalCount: totalCount || results.length 
+    };
   } catch (error) {
     console.error('Search error:', error);
-    return [];
+    return { results: [], totalCount: 0 };
   }
 }
 

@@ -2,11 +2,12 @@
 
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import StepOne from "@/components/checkout/StepOne";
 import StepTwo from "@/components/checkout/StepTwo";  
 import { supabase } from "@/lib/supabaseClient";
+import { Database } from "@/types-db";
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
 type Banco = {
@@ -27,6 +28,38 @@ interface ShippingAddress {
 
 // Removed unused Product and CartItem types
 
+// Tipo para la información de descuento basado en la tabla discount_codes
+type DiscountInfo = {
+  valid: boolean;
+  discountAmount: number;
+  finalTotal: number;
+  code: string;
+  description?: string;
+  discount_type: Database['discount_codes']['discount_type'];
+  discount_value: number;
+};
+
+// Tipo para los datos de la orden
+type OrderData = {
+  id?: number;
+  user_id: string;
+  shipping_address?: ShippingAddress | null;
+  shipping_city?: string;
+  shipping_state?: string;
+  shipping_postal_code?: string;
+  shipping_country?: string;
+  shipping_method?: string;
+  payment_method?: PaymentMethod | null;
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+  items: any[];
+  status: string;
+  discount_code?: string;
+  discount_amount?: number;
+};
+
 export default function CheckoutWizardPage() {
     const router = useRouter();
     const {
@@ -36,6 +69,8 @@ export default function CheckoutWizardPage() {
       // Removed unused cartSubtotal
     } = useCart();
     
+    // Estado para la información de descuento
+    const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
 
     const [shippingAddress, setShippingAddress] = useState<ShippingAddress | null>(null);
   
@@ -47,13 +82,49 @@ export default function CheckoutWizardPage() {
     const [ultimos4, setUltimos4] = useState("");
   
     const { session } = useSupabase();
-    const userId = session?.user?.id || null;
+    const userId = session?.user?.id || 'guest-user';
+    // Obtener el locale de la URL
+    const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'es' : 'es';
 
+    // Estado para almacenar los datos del pedido
+    const [orderData, setOrderData] = useState<OrderData>({
+      user_id: userId,
+      subtotal: 0,
+      shipping: 0,
+      tax: 0,
+      total: 0,
+      items: [],
+      status: "pending",
+      discount_code: "",
+      discount_amount: 0,
+    });
 
     const [createdOrderId, setCreatedOrderId] = useState<number | null>(null);
     // Using _ prefix to indicate these state setters are needed but the values aren't directly used
     const [, setIsProcessing] = useState(false);
     const [, setOrderComplete] = useState(false);
+    
+    // Cargar información de descuento desde localStorage
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const discountInfoStr = localStorage.getItem('discountInfo');
+        if (discountInfoStr) {
+          try {
+            const discountData = JSON.parse(discountInfoStr) as DiscountInfo;
+            setDiscountInfo(discountData);
+            
+            // Actualizar el orderData con la información del descuento
+            setOrderData(prev => ({
+              ...prev,
+              discount_code: discountData.code,
+              discount_amount: discountData.discountAmount,
+            }));
+          } catch (e) {
+            console.error('Error parsing discount info:', e);
+          }
+        }
+      }
+    }, []);
   
     // -------------- Steps --------------
     const goNext = () => setCurrentStep((s) => s + 1);
@@ -76,6 +147,12 @@ export default function CheckoutWizardPage() {
           return;
         }
         
+        // Verify user is logged in or use guest approach
+        if (!userId) {
+          alert('Error: No se pudo identificar al usuario. Por favor inicia sesión antes de continuar.');
+          router.push('/login?redirect=checkout');
+          return;
+        }
         
         // Calculate total with discounts
         const subtotal = cart.reduce((acc, item) => {
@@ -88,20 +165,26 @@ export default function CheckoutWizardPage() {
           return acc + finalPrice * item.quantity;
         }, 0);
         
-        // Shipping cost
+        // Shipping cost fijo en 3200
         const shipping = cart.length ? 3200 : 0;
         const totalAmount = subtotal + shipping;
-  
+
+        // Si hay un descuento, usar el total con descuento, de lo contrario calcular normalmente
+        const total = discountInfo ? discountInfo.finalTotal : totalAmount;
+
         // Create order with shipping address and pending status
+        // Verificar si la tabla orders tiene las columnas de descuento
         const { data: orderInsert, error: orderError } = await supabase
           .from("orders")
           .insert({
-            user_id: userId,
+            user_id: userId, // Now this will never be null
             payment_method: paymentMethodAux ? paymentMethodAux : paymentMethod,
             payment_status: "pendiente",
             shipping_status: "pendiente",
-            total_amount: totalAmount,
+            total_amount: total,
             shipping_address: shippingAddress,
+            // Incluir información de descuento en el campo de notas para no causar errores
+            notes: discountInfo ? `Descuento aplicado: ${discountInfo.code} - Monto: ${discountInfo.discountAmount}` : "",
           })
           .select()
           .single();
@@ -131,19 +214,8 @@ export default function CheckoutWizardPage() {
           }
         }
         
-        // Clear cart items from cart_items table if logged in
-        if (userId) {
-          await supabase
-            .from("cart_items")
-            .delete()
-            .eq("user_id", userId);
-        }
-        
-        // Set order as complete
-        setOrderComplete(true);
-        
-        // Clear local cart
-        clearCart();
+        // IMPORTANT: We don't clear the cart here anymore
+        // This will be done after successful payment completion
         
         return orderInsert.id;
       } catch (error) {
@@ -184,13 +256,51 @@ export default function CheckoutWizardPage() {
             .from("orders")
             .update({ payment_reference: paymentReference })
             .eq("id", orderId);
+            
+          // For SINPE, we can clear the cart and redirect immediately
+          // Clear cart items from cart_items table if logged in
+          if (userId) {
+            await supabase
+              .from("cart_items")
+              .delete()
+              .eq("user_id", userId);
+          }
+          
+          // Set order as complete
+          setOrderComplete(true);
+          
+          // Clear local cart
+          clearCart();
+          
+          // Redirect to confirmation page
+          router.push(`/order-confirmation/${orderId}`);
         }
-        
-        // Redirect to confirmation page
-        router.push(`/order-confirmation/${orderId}`);
+        // For PayPal, we'll let the PayPalCardMethod component handle the redirect
+        // after successful payment
       }
     };
   
+    // Función para finalizar el pedido
+    const finalizeOrder = async () => {
+      try {
+        // Limpiar el carrito
+        await clearCart();
+        
+        // Limpiar datos de localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('cartItems');
+          localStorage.removeItem('checkoutData');
+          localStorage.removeItem('discountInfo'); // Limpiar información de descuento
+        }
+
+        // Redirigir a la página de confirmación
+        router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
+      } catch (error) {
+        console.error('Error in finalizeOrder:', error);
+        alert('Error al finalizar el pedido');
+      }
+    };
+
     // -------------- Render principal --------------
     if (cart.length === 0) {
       return (
@@ -249,7 +359,7 @@ export default function CheckoutWizardPage() {
               setBancoSeleccionado={setBancoSeleccionado}
               ultimos4={ultimos4}
               setUltimos4={setUltimos4}
-              total={(cart.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0) + 3200)}
+              total={discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0) + 3200)}
               onFinalize={validateStep2}
               createdOrderId={createdOrderId}
               createOrder={createOrder}
@@ -257,6 +367,7 @@ export default function CheckoutWizardPage() {
           ) 
         }
         
+        {/* El resumen del pedido ya se muestra en los componentes StepOne y StepTwo */}
       </main>
     );
   }

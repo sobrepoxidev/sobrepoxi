@@ -1,18 +1,36 @@
 "use client";
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-const NEXT_PUBLIC_PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!;
+import { useRouter } from "next/navigation";
+import { useCart } from "@/context/CartContext";
+import { useSupabase } from "@/app/supabase-provider/provider";
+import { supabase } from "@/lib/supabaseClient";
+
+// Use a hardcoded sandbox client ID for development
+// In production, this should be replaced with your actual client ID from environment variables
+const PAYPAL_CLIENT_ID = process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID
+    : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'sb';
 
 export default function PayPalCardMethod({
     createdOrderId, // ID de la orden en tu BD
+    total, // Total amount for display purposes
     onPaymentSuccess,
     onPaymentError
 }: {
     createdOrderId: number;
+    total?: number;
     onPaymentSuccess: () => void;
     onPaymentError: (msg: string) => void;
 }) {
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { clearCart } = useCart();
+    const { session } = useSupabase();
+    const userId = session?.user?.id || 'guest-user';
+    
+    // Log the client ID for debugging (remove in production)
+    console.log('PayPal Client ID:', PAYPAL_CLIENT_ID ? 'Available' : 'Missing');
 
     return (
         <div className="w-full max-w-2xl mx-auto p-4">
@@ -20,10 +38,10 @@ export default function PayPalCardMethod({
             {loading && <p className="text-gray-600">Procesando...</p>}
             <PayPalScriptProvider
                 options={{
-                    "clientId": NEXT_PUBLIC_PAYPAL_CLIENT_ID,   // <---- usa "client-id" con guion
+                    clientId: PAYPAL_CLIENT_ID || 'sb',
                     currency: "USD",
                     intent: "capture"
-                  }}
+                }}
             >
                 <PayPalButtons
                     style={{ layout: "vertical" }}
@@ -62,7 +80,26 @@ export default function PayPalCardMethod({
                         setLoading(false);
 
                         if (result.status === "COMPLETED") {
+                            // Clear cart items from cart_items table if logged in
+                            if (userId && userId !== 'guest-user') {
+                                try {
+                                    await supabase
+                                        .from("cart_items")
+                                        .delete()
+                                        .eq("user_id", userId);
+                                } catch (error) {
+                                    console.error("Error clearing cart items from database:", error);
+                                }
+                            }
+                            
+                            // Clear local cart
+                            clearCart();
+                            
+                            // Call the success callback
                             onPaymentSuccess();
+                            
+                            // Redirect to confirmation page
+                            router.push(`/order-confirmation/${createdOrderId}`);
                         } else {
                             onPaymentError("La transacción no pudo completarse.");
                         }

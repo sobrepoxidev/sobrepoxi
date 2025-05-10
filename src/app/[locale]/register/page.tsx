@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle } from 'react-icons/fa'
 //import { Tooltip } from 'react-tooltip' // Ejemplo: npm install react-tooltip (o quítalo si no lo quieres)
@@ -20,6 +21,7 @@ export default function RegisterPage() {
   const [confirmationMsg, setConfirmationMsg] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [receivePromotions, setReceivePromotions] = useState(true)
+  const [returnUrl, setReturnUrl] = useState('/')
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,7 +64,8 @@ export default function RegisterPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}`,
+          // Usamos origin de forma segura
+          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}${returnUrl !== '/' ? returnUrl : ''}`,
         },
       })
       if (error) throw error
@@ -72,9 +75,18 @@ export default function RegisterPage() {
     }
   }
 
+  // Usar los hooks de Next.js
+  const searchParams = useSearchParams();
+  
   useEffect(() => {
     setMounted(true)
-  }, [])
+    
+    // Extraer returnUrl del query string usando Next.js searchParams
+    const returnUrlParam = searchParams.get('returnUrl');
+    if (returnUrlParam) {
+      setReturnUrl(returnUrlParam);
+    }
+  }, [searchParams])
 
   if (!mounted) return null
 
@@ -248,7 +260,7 @@ export default function RegisterPage() {
           <div className="mt-2">
                 <p className="text-sm text-gray-600 text-center">
                   ¿Ya tienes una cuenta?
-                  <Link href="/login" className="font-medium text-teal-600 hover:text-teal-500 ml-2">
+                  <Link href={`/login${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`} className="font-medium text-teal-600 hover:text-teal-500 ml-2">
                     Inicia sesión
                   </Link>
                 </p>

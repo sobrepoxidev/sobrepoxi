@@ -18,6 +18,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
+import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import ReviewsList from '@/components/products/ReviewsList';
@@ -42,6 +43,9 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
   
   const { addToCart } = useCart();
   const router = useRouter();
+  
+  // Get Supabase session at the component level
+  const { session } = useSupabase();
   
   // Cargar producto por ID y sus datos relacionados
   useEffect(() => {
@@ -68,7 +72,6 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
         setProduct(productData as Product);
 
         // Registrar la visualización en el historial (si hay un usuario autenticado)
-        const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
           // Record view in view_history table
           await supabase.from('view_history').insert({
@@ -152,36 +155,39 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
   const handleToggleFavorite = async () => {
     if (!product) return;
     
+    // Verificar si hay un usuario autenticado
+    // Usamos el session del nivel de componente
+    if (!session?.user) {
+      // Redireccionar a login si no hay usuario
+      router.push('/login?redirect=' + encodeURIComponent(window.location.pathname));
+      return;
+    }
+    
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.user) {
-        // Redirect to login if not authenticated
-        router.push('/login?redirect=' + encodeURIComponent(`/product/${id}`));
-        return;
-      }
-      
       if (isFavorite) {
-        // Remove from favorites
-        await supabase
+        // Eliminar de favoritos
+        const { error } = await supabase
           .from('favorites')
           .delete()
           .eq('user_id', session.user.id)
           .eq('product_id', product.id);
+          
+        if (error) throw error;
+        setIsFavorite(false);
       } else {
-        // Add to favorites
-        await supabase
+        // Añadir a favoritos
+        const { error } = await supabase
           .from('favorites')
           .insert({
             user_id: session.user.id,
             product_id: product.id
           });
+          
+        if (error) throw error;
+        setIsFavorite(true);
       }
-      
-      // Toggle state
-      setIsFavorite(!isFavorite);
     } catch (err) {
-      console.error('Error al gestionar favoritos:', err);
+      console.error('Error al actualizar favoritos:', err);
     }
   };
 
@@ -189,12 +195,14 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
   const handleAddToCart = async () => {
     if (!product) return;
     
-    const { data: { session } } = await supabase.auth.getSession();
+    // Añadir al carrito
+    addToCart(product, quantity);
     
+    // Sincronizar con la base de datos si hay un usuario
+    // Usamos el session del nivel de componente
     if (session?.user) {
-      // If logged in, add to cart in database
       try {
-        // Check if product is already in cart
+        // Verificar si ya existe en el carrito
         const { data: existingItem } = await supabase
           .from('cart_items')
           .select('id, quantity')
@@ -203,13 +211,13 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
           .single();
         
         if (existingItem) {
-          // Update quantity
+          // Actualizar cantidad
           await supabase
             .from('cart_items')
             .update({ quantity: existingItem.quantity + quantity })
             .eq('id', existingItem.id);
         } else {
-          // Insert new item
+          // Insertar nuevo item
           await supabase
             .from('cart_items')
             .insert({
@@ -218,13 +226,10 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
               quantity: quantity
             });
         }
-      } catch (err) {
-        console.error('Error al añadir al carrito:', err);
+      } catch (error) {
+        console.error('Error al sincronizar con la base de datos:', error);
       }
     }
-    
-    // Also update local cart
-    addToCart(product, quantity);
     
   };
 

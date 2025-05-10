@@ -3,15 +3,26 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
-import { AlertTriangle } from "lucide-react";
+import { useSupabase } from "@/app/supabase-provider/provider";
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
+import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
+import { AlertTriangle } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
-import { Session } from "@supabase/supabase-js";
+
+// Tipo para la información de descuento basado en la tabla discount_codes
+type DiscountInfo = {
+  valid: boolean;
+  discountAmount: number;
+  finalTotal: number;
+  code: string;
+  description?: string;
+  discount_type: Database['discount_codes']['discount_type'];
+  discount_value: number;
+};
 
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -27,14 +38,45 @@ type Category = Database['categories'];
 
 export default function CartPage() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { session, supabase } = useSupabase();
+  
+  // Estado local para el estado de la sesión
+  const [currentSession, setCurrentSession] = useState(session);
+  
+  // Actualizar el estado local cuando cambia la sesión
+  useEffect(() => {
+    setCurrentSession(session);
+    
+    // Configurar un listener para cambios en la sesión
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, newSession) => {
+        setCurrentSession(newSession);
+      }
+    );
+    
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [session, supabase.auth]);
+  
+  console.log("currentSession:", currentSession);
+  const userId = currentSession?.user?.id || null;
+  const correo = currentSession?.user?.email;
+  console.log("userId:", userId);
+  console.log("correo:", correo);
   const { cart, updateQuantity, removeFromCart, syncCartWithDB } = useCart();
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{[key: number]: Category}>({});
   
   const [isLoading, setIsLoading] = useState(false);
-  const [session, setSession] = useState<Session | null>(null);
   const [stockWarnings, ] = useState<{[key: number]: string}>({});
-  // We keep the state object but remove the setter as it's not being used in this component
+  // Estado para el código de descuento
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountError, setDiscountError] = useState('');
+  const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   // Calculate the total price with discounts applied
   const subtotal = cart.reduce((acc, item) => {
@@ -47,36 +89,17 @@ export default function CartPage() {
     return acc + finalPrice * item.quantity;
   }, 0);
 
+  useEffect(() => {
+    if (userId) {
+      syncCartWithDB();
+    }
+  }, [cart]);
+
   // En un caso real se calcularía dinámicamente
   const shipping = cart.length ? 3200 : 0;
-  const total = subtotal + shipping;
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      const { data } = await supabase.auth.getSession()
-      setSession(data.session)
-    }
-    fetchSession()
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event: string, newSession: Session | null) => {
-      setSession(newSession)
-    })
-    return () => {
-      authListener.subscription.unsubscribe()
-    }
-    
-  }, [supabase])
-
-  useEffect(() => {
-    if (session) {
-      // Sync cart with database if user is logged in
-      syncCartWithDB(session.user.id);
-    }
-    console.log("INFO DE LA SESSION: ", session)
-    
-  }, [session])
-    
-
+  
+  // Calcular el total final teniendo en cuenta posibles descuentos
+  const total = discountInfo ? discountInfo.finalTotal : subtotal + shipping;
   
   // Fetch categories for cart items
   useEffect(() => {
@@ -307,36 +330,171 @@ export default function CartPage() {
                 <input
                   type="text"
                   placeholder="CÓDIGO DE CUPÓN"
-                  className="flex-1 border border-gray-600 rounded px-4 py-2 text-sm placeholder-gray-500 text-gray-950"
+                  className={`flex-1 border ${discountError ? 'border-red-500' : 'border-gray-600'} rounded px-4 py-2 text-sm placeholder-gray-500 text-gray-950`}
+                  value={discountCode}
+                  onChange={(e) => {
+                    setDiscountCode(e.target.value);
+                    if (discountError) setDiscountError('');
+                  }}
                 />
-                <button className="px-6 py-2 rounded bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium shadow">
-                  ACTUALIZACIÓN
+                <button 
+                  className={`px-6 py-2 rounded ${discountInfo ? 'bg-red-600 hover:bg-red-700' : 'bg-teal-600 hover:bg-teal-700'} text-white text-sm font-medium shadow flex items-center justify-center`}
+                  onClick={async () => {
+                    if (discountInfo) {
+                      // Si ya hay un descuento aplicado, lo eliminamos
+                      setDiscountInfo(null);
+                      setDiscountCode('');
+                      // Eliminar de localStorage
+                      localStorage.removeItem('discountInfo');
+                      return;
+                    }
+                    
+                    if (!discountCode.trim()) {
+                      setDiscountError('Ingresa un código de descuento');
+                      return;
+                    }
+                    
+                    setIsApplyingDiscount(true);
+                    try {
+                      // Validar el código de descuento directamente con Supabase
+                      const { data, error } = await supabase
+                        .from("discount_codes")
+                        .select("*")
+                        .eq("code", discountCode.toLowerCase())
+                        .eq("is_active", true)
+                        .single();
+                      
+                      if (error || !data) {
+                        setDiscountError('Código de descuento inválido o expirado');
+                        setIsApplyingDiscount(false);
+                        return;
+                      }
+                      
+                      // Verificar si el código ha alcanzado el máximo de usos
+                      if (data.max_uses !== null && data.current_uses >= data.max_uses) {
+                        setDiscountError('Este código ha alcanzado el máximo de usos permitidos');
+                        setIsApplyingDiscount(false);
+                        return;
+                      }
+                      
+                      // Verificar si el código está dentro del período de validez
+                      const now = new Date();
+                      if (data.valid_until && new Date(data.valid_until) < now) {
+                        setDiscountError('Este código ha expirado');
+                        setIsApplyingDiscount(false);
+                        return;
+                      }
+                      
+                      // Verificar monto mínimo de compra
+                      const cartTotal = subtotal + shipping;
+                      if (cartTotal < data.min_purchase_amount) {
+                        setDiscountError(`El monto mínimo de compra para este código es ₡${data.min_purchase_amount.toFixed(2)}`);
+                        setIsApplyingDiscount(false);
+                        return;
+                      }
+                      
+                      // Calcular el descuento según el tipo
+                      let discountAmount = 0;
+                      let finalTotal = cartTotal;
+                      
+                      switch (data.discount_type) {
+                        case 'percentage':
+                          discountAmount = (cartTotal * data.discount_value) / 100;
+                          finalTotal = cartTotal - discountAmount;
+                          break;
+                        case 'fixed':
+                          discountAmount = data.discount_value;
+                          finalTotal = cartTotal - discountAmount;
+                          if (finalTotal < 0) finalTotal = 0;
+                          break;
+                        case 'total_override':
+                          finalTotal = data.discount_value;
+                          discountAmount = cartTotal - finalTotal;
+                          break;
+                      }
+                      
+                      // Aplicar el descuento
+                      const discountData: DiscountInfo = {
+                        valid: true,
+                        discountAmount,
+                        finalTotal,
+                        code: data.code,
+                        description: data.description,
+                        discount_type: data.discount_type,
+                        discount_value: data.discount_value
+                      };
+                      
+                      // Guardar en el estado
+                      setDiscountInfo(discountData);
+                      
+                      // Guardar en localStorage para que esté disponible en checkout
+                      localStorage.setItem('discountInfo', JSON.stringify(discountData));
+                      
+                    } catch (err) {
+                      console.error('Error al validar el código de descuento:', err);
+                      setDiscountError('Error al validar el código. Inténtalo de nuevo.');
+                    } finally {
+                      setIsApplyingDiscount(false);
+                    }
+                  }}
+                  disabled={isApplyingDiscount}
+                >
+                  {isApplyingDiscount ? (
+                    <span className="animate-pulse">Validando...</span>
+                  ) : discountInfo ? (
+                    'ELIMINAR CÓDIGO'
+                  ) : (
+                    'APLICAR CÓDIGO'
+                  )}
                 </button>
               </div>
+              {discountError && (
+                <p className="text-red-500 text-sm mt-2">{discountError}</p>
+              )}
+              {discountInfo && (
+                <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-md">
+                  <p className="text-green-700 text-sm font-medium">¡Código aplicado correctamente!</p>
+                  {discountInfo.description && (
+                    <p className="text-sm text-green-600">{discountInfo.description}</p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Resumen */}
             <div className="p-6 rounded shadow-md space-y-4">
               <h2 className="text-lg font-medium text-slate-800 mb-2">Resumen del pedido</h2>
-              <div className="flex justify-between text-sm text-slate-700">
-                <span>Total del artículo ({cart.length} artículo{cart.length !== 1 && "s"})</span>
-                <span>₡ {subtotal.toFixed(2)}</span>
+              <div className="space-y-2 mb-6">
+                <div className="flex justify-between text-sm text-slate-700">
+                  <span>Total del artículo ({cart.length} artículo{cart.length !== 1 && "s"})</span>
+                  <span>₡ {subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm text-slate-700">
+                  <span>Envío</span>
+                  <span>₡ {shipping.toFixed(2)}</span>
+                </div>
+                {discountInfo && (
+                  <div className="flex justify-between text-sm text-green-600 font-medium">
+                    <span>Descuento ({discountInfo.code})</span>
+                    <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
+                <hr className="border-slate-300" />
+                <div className="flex justify-between font-semibold text-base text-slate-800">
+                  <span>Total del pedido:</span>
+                  <span>₡ {total.toFixed(2)}</span>
+                </div>
+                <p className="text-xs text-slate-500">Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}</p>
               </div>
-              <div className="flex justify-between text-sm text-slate-700">
-                <span>Envío</span>
-                <span>₡ {shipping.toFixed(2)}</span>
-              </div>
-              <hr className="border-slate-300" />
-              <div className="flex justify-between font-semibold text-base text-slate-800">
-                <span>Total del pedido:</span>
-                <span>₡ {total.toFixed(2)}</span>
-              </div>
-              <p className="text-xs text-slate-500">Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}</p>
               <button
                 onClick={async () => {
-                  if (!session) {
+                  if (currentSession === null) {
                     // If not logged in, redirect to login page with return URL
-                    router.push(`/login?redirect=${encodeURIComponent('/checkout')}`);
+                    // Construimos la URL completa usando los hooks de Next.js
+                    const currentPath = pathname;
+                    const queryString = searchParams.toString();
+                    const fullPath = queryString ? `${currentPath}?${queryString}` : currentPath;
+                    router.push(`/login?returnUrl=${encodeURIComponent(fullPath)}`);
                     return;
                   }
                   
@@ -351,7 +509,9 @@ export default function CartPage() {
                 }}
                 className="w-full py-3 rounded bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
               >
-                <span>{session ? 'COMPRAR' : 'INICIAR SESIÓN PARA COMPRAR'}</span>
+                <span>
+                  { currentSession === null ? 'INICIAR SESIÓN PARA COMPRAR' : 'COMPRAR'}
+                </span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

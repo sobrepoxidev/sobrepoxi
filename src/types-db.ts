@@ -15,6 +15,21 @@ interface ShippingAddress {
 }
 
 export type Database = {
+    discount_codes: {
+        id: number;
+        code: string;
+        description: string | null;
+        discount_type: 'percentage' | 'fixed' | 'total_override';
+        discount_value: number;
+        min_purchase_amount: number;
+        max_uses: number | null;
+        current_uses: number;
+        is_active: boolean;
+        valid_from: string;
+        valid_until: string | null;
+        created_at: string;
+        updated_at: string;
+    },
     cart_items: {
         id: number;
         user_id: string; // UUID

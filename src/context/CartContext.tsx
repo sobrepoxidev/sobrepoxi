@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Database } from '@/types-db';
+import { supabase } from '@/lib/supabaseClient';
  
 
 type Product = Database['products'];
@@ -114,10 +115,57 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const parsed = decodeCartFromBase64(encoded);
     if (parsed.length === 0) return;
 
-    // Aquí deberías hacer un fetch a Supabase para obtener los productos por ID
-    // Por ahora solo logueamos lo detectado
+    // Evitar reconstruir si ya hay items en el carrito
+    if (cart.length > 0) return;
+
     console.log("Reconstrucción del carrito requerida:", parsed);
-    // setCart(...) ← con productos reales después del fetch
+    
+    // Función asíncrona para obtener los productos por ID
+    const fetchProductsAndRebuildCart = async () => {
+      setIsLoading(true);
+      try {
+        // Obtener todos los IDs de productos del carrito
+        const productIds = parsed.map(item => item.id);
+        
+        // Fetch de productos desde Supabase
+        const { data: products, error } = await supabase
+          .from('products')
+          .select('*')
+          .in('id', productIds);
+        
+        if (error) {
+          console.error('Error fetching products:', error);
+          return;
+        }
+        
+        if (!products || products.length === 0) {
+          console.warn('No products found for the IDs in cart');
+          return;
+        }
+        
+        // Reconstruir el carrito con los productos completos
+        const newCartItems: CartItem[] = [];
+        
+        parsed.forEach(parsedItem => {
+          const product = products.find(p => p.id === parsedItem.id);
+          if (product) {
+            newCartItems.push({
+              product: product as Product,
+              quantity: parsedItem.qty
+            });
+          }
+        });
+        
+        // Actualizar el carrito
+        setCart(newCartItems);
+      } catch (err) {
+        console.error('Error rebuilding cart from URL:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchProductsAndRebuildCart();
   }, [searchParams]);
 
   // Calculate total items and subtotal

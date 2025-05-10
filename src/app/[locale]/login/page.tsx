@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
@@ -15,10 +15,20 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [confirmationMsg, setConfirmationMsg] = useState('')
+  const [returnUrl, setReturnUrl] = useState('/')
 
+  // Usar los hooks de Next.js
+  const searchParams = useSearchParams();
+  
   useEffect(() => {
     setMounted(true)
-  }, [])
+    
+    // Extraer returnUrl del query string usando Next.js searchParams
+    const returnUrlParam = searchParams.get('returnUrl');
+    if (returnUrlParam) {
+      setReturnUrl(returnUrlParam);
+    }
+  }, [searchParams])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,7 +43,7 @@ export default function LoginPage() {
         setErrorMsg(error.message)
       } else {
         setConfirmationMsg('Iniciando sesión...')
-        router.push('/')
+        router.push(returnUrl)
       }
     } catch {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
@@ -41,12 +51,14 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
+
   const handleGoogleSignIn = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}`,
+          // Usamos origin de forma segura (igual se necesita para la URL completa)
+          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}${returnUrl !== '/' ? returnUrl : ''}`,
         },
       })
       if (error) throw error
@@ -141,7 +153,7 @@ export default function LoginPage() {
             <div className="text-center text-sm text-gray-600">
               ¿No tienes una cuenta?{' '}
               <Link
-                href="/register"
+                href={`/register${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`}
                 className="font-medium text-teal-600 hover:text-teal-500"
               >
                 Regístrate aquí

@@ -129,6 +129,7 @@ export default function PaymentForm({
                         {createdOrderId && (
                             <PayPalCardMethod
                                 createdOrderId={createdOrderId}
+                                total={total}
                                 onPaymentSuccess={() => {
                                     onFinalize();
                                 }}

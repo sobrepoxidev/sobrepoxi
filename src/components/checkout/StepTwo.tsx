@@ -1,6 +1,18 @@
 import { Database } from "@/types-db";
 import Image from "next/image";
 import PaymentForm from "./PaymentForm";
+import { useState, useEffect } from "react";
+
+// Tipo para la información de descuento basado en la tabla discount_codes
+type DiscountInfo = {
+  valid: boolean;
+  discountAmount: number;
+  finalTotal: number;
+  code: string;
+  description?: string;
+  discount_type: Database['discount_codes']['discount_type'];
+  discount_value: number;
+};
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
 type ProductType = Database['products'];
@@ -26,6 +38,7 @@ export default function StepTwo({
     onFinalize,
     createdOrderId,
     createOrder,
+    cart,
   }: {
     paymentMethod: PaymentMethod | null;
     setPaymentMethod: (m: PaymentMethod) => void;
@@ -39,7 +52,24 @@ export default function StepTwo({
     onFinalize: () => void;
     createdOrderId: number | null;
     createOrder: (paymentMethod?: string) => Promise<void>;
-  }) {    
+  }) {
+    // Estado para la información de descuento
+    const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
+    
+    // Cargar información de descuento desde localStorage
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const discountInfoStr = localStorage.getItem('discountInfo');
+        if (discountInfoStr) {
+          try {
+            const discountData = JSON.parse(discountInfoStr);
+            setDiscountInfo(discountData);
+          } catch (e) {
+            console.error('Error parsing discount info:', e);
+          }
+        }
+      }
+    }, []);    
     return (
       <section className="text-gray-900 w-full">
         <h2 className="text-xl font-semibold mb-4 ">Seleccione un método de pago</h2>
@@ -77,8 +107,33 @@ export default function StepTwo({
           total={total}
           onFinalize={onFinalize}
           createdOrderId={createdOrderId}
-        
         />
+        
+        {/* Resumen del pedido */}
+        <div className="mt-6 p-4 bg-gray-50 rounded-md">
+          <h3 className="text-lg font-medium mb-3">Resumen del pedido</h3>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm text-slate-700">
+              <span>Subtotal</span>
+              <span>₡ {cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0).toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-sm text-slate-700">
+              <span>Envío</span>
+              <span>₡ 3,200.00</span>
+            </div>
+            {discountInfo && (
+              <div className="flex justify-between text-sm text-green-600 font-medium">
+                <span>Descuento ({discountInfo.code})</span>
+                <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
+              </div>
+            )}
+            <hr className="border-slate-300 my-2" />
+            <div className="flex justify-between font-semibold text-base text-slate-800">
+              <span>Total del pedido:</span>
+              <span>₡ {total.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
   
         {/* <button
           onClick={onContinue}
