@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useSupabase } from "@/app/supabase-provider/provider";
-import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
 import { AlertTriangle } from "lucide-react";
@@ -90,10 +89,11 @@ export default function CartPage() {
   }, 0);
 
   useEffect(() => {
-    if (userId) {
+    if (cart.length > 0) {
+      localStorage.setItem('cart', JSON.stringify(cart));
       syncCartWithDB();
     }
-  }, [cart]);
+  }, [cart, syncCartWithDB, userId]);
 
   // En un caso real se calcularía dinámicamente
   const shipping = cart.length ? 3200 : 0;

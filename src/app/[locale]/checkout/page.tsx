@@ -110,7 +110,7 @@ export default function CheckoutWizardPage() {
         const discountInfoStr = localStorage.getItem('discountInfo');
         if (discountInfoStr) {
           try {
-            const discountData = JSON.parse(discountInfoStr) as DiscountInfo;
+            const discountData: DiscountInfo = JSON.parse(discountInfoStr);
             setDiscountInfo(discountData);
             
             // Actualizar el orderData con la información del descuento
@@ -281,7 +281,8 @@ export default function CheckoutWizardPage() {
     };
   
     // Función para finalizar el pedido
-    const finalizeOrder = async () => {
+    // Función para finalizar el pedido - se usará en una futura implementación
+  const _finalizeOrder = async () => {
       try {
         // Limpiar el carrito
         await clearCart();

@@ -64,7 +64,7 @@ export default async function Home({ searchParams}: PageProps) {
           </div>
         </div>
         {/* Botones flotantes agrupados */}
-        <div className="fixed bottom-6 right-8 z-50 flex flex-col items-end gap-2">
+        <div className="fixed bottom-10 right-8 z-50 flex flex-col items-end gap-2">
           <Link 
             href="/contact"
             className="bg-teal-600 text-white px-2 py-1 rounded-full shadow-lg hover:bg-teal-700 transition hidden md:block animate-fade-in"

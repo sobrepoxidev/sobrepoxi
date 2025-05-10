@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { SearchResult, searchProducts, getProductCategories } from '@/lib/search';
+import { SearchResult, searchProducts } from '@/lib/search';
 import { ChevronRight, SlidersHorizontal } from 'lucide-react';
 import AddToCartButton from '@/components/home/AddToCartButton';
 import PaginationControls from '@/components/products/PaginationControls';
