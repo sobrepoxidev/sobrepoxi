@@ -58,10 +58,11 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json({ paypalOrderId: paypalOrder.id }, { status: 200 });
-    } catch (paypalError: any) {
+    } catch (paypalError: unknown) {
       console.error('PayPal API error:', paypalError);
+      const errorMessage = paypalError instanceof Error ? paypalError.message : 'Unknown PayPal error';
       return NextResponse.json({ 
-        error: `PayPal API error: ${paypalError.message}`,
+        error: `PayPal API error: ${errorMessage}`,
         details: DEBUG ? paypalError : undefined
       }, { status: 500 });
     }
