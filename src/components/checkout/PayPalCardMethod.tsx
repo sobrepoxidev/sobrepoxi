@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from 'next/navigation';
 import { useSupabase } from '@/app/supabase-provider/provider';
@@ -16,14 +16,12 @@ interface PayPalCardMethodProps {
     createdOrderId: number;
     onPaymentSuccess: () => void;
     onPaymentError: (msg: string) => void;
-    total: number;
 }
 
 export default function PayPalCardMethod({
     createdOrderId,
     onPaymentSuccess,
     onPaymentError,
-    total
 }: PayPalCardMethodProps) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
