@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation'
 import { useCart, CartItem } from '@/context/CartContext'
 import { useState, useEffect } from 'react'
-import { useSupabase } from '@/app/supabase-provider/provider'
 import StepOne from "@/components/checkout/StepOne";
 import StepTwo from "@/components/checkout/StepTwo";  
-import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 
+import { Session } from '@supabase/supabase-js';
+import { useSupabase } from '@/app/supabase-provider/provider';
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
 type Banco = {
@@ -49,6 +49,19 @@ export default function CheckoutWizardPage() {
       // Removed unused cartSubtotal
     } = useCart();
     
+    const { supabase } = useSupabase();
+    const [session, setSession] = useState<Session | null>(null);
+
+    useEffect(() => {
+      const fetchSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+      };
+      fetchSession();
+      
+    }, [supabase]);
+    
+    
     // Estado para la información de descuento
     const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
 
@@ -61,7 +74,6 @@ export default function CheckoutWizardPage() {
     const [bancoSeleccionado, setBancoSeleccionado] = useState<Banco | null>(null);
     const [ultimos4, setUltimos4] = useState("");
   
-    const { session } = useSupabase();
     const userId = session?.user?.id || 'guest-user';
     // Obtener el locale de la URL
 
