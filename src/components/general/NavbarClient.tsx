@@ -198,7 +198,7 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
         </Link>
         
         {/* Search - Now using the search icon to open a modal with the SearchBar */}
-        <div ref={searchRef}>
+        <div ref={searchRef} className="lg:hidden">
           <button 
             onClick={() => setIsSearchOpen(!isSearchOpen)}
             className="flex h-8 w-8 items-center justify-center rounded-full text-gray-700 transition  hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
@@ -212,7 +212,7 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
           {isSearchOpen && (
             <div className="absolute left-0 right-0 top-full z-50 border-t border-gray-100 bg-white px-4 py-4 shadow-lg md:left-auto md:right-4 md:top-16 md:w-96 md:rounded-lg md:border md:border-gray-100">
               <div className="mb-2 flex justify-between items-center">
-                <h3 className="text-sm font-medium">{t('searchProducts')}</h3>
+                <h3 className="text-sm font-medium text-gray-800">{t('searchProducts')}</h3>
                 <button 
                   onClick={() => setIsSearchOpen(false)}
                   className="text-gray-400 hover:text-gray-600"
