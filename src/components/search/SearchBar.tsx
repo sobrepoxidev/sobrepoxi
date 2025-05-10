@@ -296,7 +296,6 @@ export default function SearchBar({
             }
           }}
           aria-label="Buscar productos"
-        
         />
         
         {/* Search button */}

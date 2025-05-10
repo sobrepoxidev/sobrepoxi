@@ -12,17 +12,16 @@ const PAYPAL_CLIENT_ID = process.env.NODE_ENV === 'production'
     ? process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID
     : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'sb';
 
-interface PayPalCardMethodProps {
-  createdOrderId: number;
-  onPaymentSuccess: () => void;
-  onPaymentError: (msg: string) => void;
-}
-
 export default function PayPalCardMethod({
-    createdOrderId, 
+    createdOrderId, // ID de la orden en tu BD
+
     onPaymentSuccess,
     onPaymentError
-}: PayPalCardMethodProps) {
+}: {
+    createdOrderId: number;
+    onPaymentSuccess: () => void;
+    onPaymentError: (msg: string) => void;
+}) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { clearCart } = useCart();
