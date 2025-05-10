@@ -41,12 +41,21 @@ export async function POST(request: NextRequest) {
     try {
       const accessToken = await getPaypalAccessToken();
       
-      // 3) Crear orden en PayPal, usando la data de la orden
+      // Tasa de conversión de CRC a USD según PayPal
+      const CRC_TO_USD = 0.0019128;
+      
+      // Convertir el monto a dólares
+      const amountUSD = Number((orderData.total_amount * CRC_TO_USD).toFixed(2));
+      
+      if (DEBUG) {
+        console.log(`Converting CRC ${orderData.total_amount} to USD ${amountUSD}`);
+      }
+      
+      // 3) Crear orden en PayPal
       const paypalOrder = await createPaypalOrder({
         accessToken,
-        // Convertir el monto a dólares y redondear a 2 decimales
-        amount: Number((orderData.total_amount / 500).toFixed(2)),
-        currency: "USD" // o la que manejes
+        amount: amountUSD,
+        currency: "USD" // PayPal procesa en USD pero permite pagar en CRC
       });
 
       if (!paypalOrder) {

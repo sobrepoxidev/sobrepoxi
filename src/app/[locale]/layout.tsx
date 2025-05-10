@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react"
 import SupabaseProvider from '@/app/supabase-provider/provider';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Toaster } from 'react-hot-toast';
 
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -54,6 +55,7 @@ const supabase = createServerComponentClient({ cookies: () => cookieStore });
           <Navbar locale={locale} />
           {children}
           <Footer />
+          <Toaster position="top-center" />
           <Analytics />
           </SupabaseProvider>
         </NextIntlClientProvider>

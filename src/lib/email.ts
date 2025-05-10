@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export async function sendMail(subject: string, html: string) {
+export async function sendMail(subject: string, html: string, to: string) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -10,8 +10,8 @@ export async function sendMail(subject: string, html: string) {
   });
 
   const mailOptions = {
-    from: `"Hand Made Art Web" <${process.env.EMAIL_USER}>`,
-    to: 'bryamlopez4@gmail.com',
+    from: `"HANDMADE ART" <${process.env.EMAIL_USER}>`,
+    to,
     subject,
     html,
   };

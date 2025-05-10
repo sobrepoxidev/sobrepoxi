@@ -37,11 +37,11 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
         body {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
           line-height: 1.6;
-          color: #333;
+          color: #B55327;
           max-width: 600px;
           margin: 0 auto;
           padding: 20px;
-          background-color: #EFE9DB;
+          background-color: #b3d5c3;
         }
         .container {
           background-color: white;
@@ -50,8 +50,8 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
           box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .header {
-          background-color: #E0D5BF;
-          color: #333;
+          background-color: #b3d5c3;
+          color: #B55327;
           text-align: center;
           padding: 16px;
           border-radius: 8px;
@@ -66,10 +66,10 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
           margin-bottom: 24px;
           padding: 16px;
           border-radius: 8px;
-          background-color: #EFE9DB;
+          background-color: #b3d5c3;
         }
         .section h2 {
-          color: #E0D5BF;
+          color: #B55327;
           margin-top: 0;
           font-size: 1.25rem;
           font-weight: 600;
@@ -90,7 +90,7 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
           color: #1f2937;
         }
         .message-box {
-          background-color: #EFE9DB;
+          background-color: #b3d5c3;
           padding: 16px;
           border-radius: 8px;
           margin: 12px 0;
@@ -106,7 +106,7 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
     <body>
       <div class="container">
         <div class="header">
-          <h1>Nuevo mensaje de contacto</h1>
+          <h1>HANDMADE ART | Contacto MEDIANTE EL SITIO WEB</h1>
         </div>
 
         <div class="section">
@@ -148,7 +148,7 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
     `;
 
     // Send email
-    await sendMail('Nuevo mensaje de contacto - Hand Made Art Web', html);
+    await sendMail('Nuevo mensaje de contacto - Hand Made Art Web', html, "bryamlopez4@gmail.com");
 
     return {
       success: true,

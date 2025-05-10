@@ -1,13 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useCart } from '@/context/CartContext'
+import { useCart, CartItem } from '@/context/CartContext'
 import { useState, useEffect } from 'react'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import StepOne from "@/components/checkout/StepOne";
 import StepTwo from "@/components/checkout/StepTwo";  
 import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
+
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
 type Banco = {
@@ -230,11 +231,35 @@ export default function CheckoutWizardPage() {
           // Set order as complete
           setOrderComplete(true);
           
+          // Enviar correo de confirmación
+          if (session?.user?.email && shippingAddress) {
+            await fetch('/api/send-order-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                orderId,
+                customerName: shippingAddress.name,
+                shippingAddress: shippingAddress,
+                items: cart,
+                subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.price || 0) * item.quantity, 0),
+                shipping: 3200,
+                total: discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.price || 0) * item.quantity, 0) + 3200),
+                paymentMethod: 'sinpe',
+                discountInfo: discountInfo ? {
+                  code: discountInfo.code,
+                  discountAmount: discountInfo.discountAmount,
+                  description: discountInfo.description
+                } : null,
+                userEmail: session.user.email
+              })
+            });
+          }
+
           // Clear local cart
           clearCart();
           
           // Redirect to confirmation page
-          router.push(`/order-confirmation/${orderId}`);
+          router.push(`/order-confirmation?order_id=${orderId}`);
         }
         // For PayPal, we'll let the PayPalCardMethod component handle the redirect
         // after successful payment
@@ -243,25 +268,25 @@ export default function CheckoutWizardPage() {
   
     // Función para finalizar el pedido
     // Función para finalizar el pedido - se usará en una futura implementación
-  const _finalizeOrder = async () => {
-      try {
-        // Limpiar el carrito
-        await clearCart();
+  // const _finalizeOrder = async () => {
+  //     try {
+  //       // Limpiar el carrito
+  //       await clearCart();
         
-        // Limpiar datos de localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('cartItems');
-          localStorage.removeItem('checkoutData');
-          localStorage.removeItem('discountInfo'); // Limpiar información de descuento
-        }
+  //       // Limpiar datos de localStorage
+  //       if (typeof window !== 'undefined') {
+  //         localStorage.removeItem('cartItems');
+  //         localStorage.removeItem('checkoutData');
+  //         localStorage.removeItem('discountInfo'); // Limpiar información de descuento
+  //       }
 
-        // Redirigir a la página de confirmación
-        router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
-      } catch (error) {
-        console.error('Error in finalizeOrder:', error);
-        alert('Error al finalizar el pedido');
-      }
-    };
+  //       // Redirigir a la página de confirmación
+  //       router.push(`/${locale}/order-confirmation?order_id=${createdOrderId}`);
+  //     } catch (error) {
+  //       console.error('Error in finalizeOrder:', error);
+  //       alert('Error al finalizar el pedido');
+  //     }
+  //   };
 
     // -------------- Render principal --------------
     if (cart.length === 0) {

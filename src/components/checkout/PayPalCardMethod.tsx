@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useRouter } from "next/navigation";
-import { useCart } from "@/context/CartContext";
-import { useSupabase } from "@/app/supabase-provider/provider";
+import { useRouter } from 'next/navigation';
+import { useSupabase } from '@/app/supabase-provider/provider';
+import { useCart, CartItem } from "@/context/CartContext";
 import { supabase } from "@/lib/supabaseClient";
 
 // Use a hardcoded sandbox client ID for development
@@ -12,34 +12,44 @@ const PAYPAL_CLIENT_ID = process.env.NODE_ENV === 'production'
     ? process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID
     : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'sb';
 
-export default function PayPalCardMethod({
-    createdOrderId, // ID de la orden en tu BD
-
-    onPaymentSuccess,
-    onPaymentError
-}: {
+interface PayPalCardMethodProps {
     createdOrderId: number;
     onPaymentSuccess: () => void;
     onPaymentError: (msg: string) => void;
-}) {
+    total: number;
+}
+
+export default function PayPalCardMethod({
+    createdOrderId,
+    onPaymentSuccess,
+    onPaymentError,
+    total
+}: PayPalCardMethodProps) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { clearCart } = useCart();
+    const { cart, clearCart } = useCart();
     const { session } = useSupabase();
     const userId = session?.user?.id || 'guest-user';
     
-    // Log the client ID for debugging (remove in production)
-    console.log('PayPal Client ID:', PAYPAL_CLIENT_ID ? 'Available' : 'Missing');
+    // Tasa de conversión fija de PayPal
+
 
     return (
         <div className="w-full max-w-2xl mx-auto p-4">
+            <div className="mb-3 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">
+                <p>Nota: Paypal aplica una tasa de conversión de 1 CRC = 0.0019128 USD</p>
+                <p className="text-center mt-1 text-xs">Podrás elegir pagar en CRC o USD</p>
+            </div>
             
             {loading && <p className="text-gray-600">Procesando...</p>}
             <PayPalScriptProvider
                 options={{
                     clientId: PAYPAL_CLIENT_ID || 'sb',
                     currency: "USD",
-                    intent: "capture"
+                    intent: "capture",
+                    buyerCountry: "CR",
+                    locale: "es_CR",
+                    commit: true,
                 }}
             >
                 <PayPalButtons
@@ -95,10 +105,43 @@ export default function PayPalCardMethod({
                             clearCart();
                             
                             // Call the success callback
+                            // Obtener detalles de la orden para el correo
+                            const { data: orderDetails } = await supabase
+                              .from('orders')
+                              .select('*, order_items(*)')
+                              .eq('id', createdOrderId)
+                              .single();
+
+                            if (orderDetails && session?.user?.email) {
+                              // Enviar correo de confirmación a través de la API
+                              await fetch('/api/send-order-email', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  orderId: createdOrderId,
+                                  customerName: orderDetails.shipping_address.name,
+                                  shippingAddress: orderDetails.shipping_address,
+                                  items: cart,
+                                  subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.price || 0) * item.quantity, 0),
+                                  shipping: 3200,
+                                  total: orderDetails.total_amount,
+                                  paymentMethod: 'paypal',
+                                  discountInfo: null,
+                                  userEmail: session.user.email
+                                })
+                              });
+                            }
+
+                            // Limpiar localStorage
+                            localStorage.removeItem('cartItems');
+                            localStorage.removeItem('checkoutData');
+                            localStorage.removeItem('discountInfo');
+                    
+                            // Notificar éxito y redirigir
                             onPaymentSuccess();
-                            
-                            // Redirect to confirmation page
-                            router.push(`/order-confirmation/${createdOrderId}`);
+                    
+                            // Redirigir a la página de confirmación
+                            router.push(`/order-confirmation?order_id=${createdOrderId}`);
                         } else {
                             onPaymentError("La transacción no pudo completarse.");
                         }

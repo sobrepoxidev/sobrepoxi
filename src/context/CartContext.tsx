@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 type Product = Database['products'];
 
-type CartItem = {
+export type CartItem = {
   product: Product;
   quantity: number;
   id?: number; // Optional ID from the database cart_items table
