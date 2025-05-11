@@ -116,7 +116,7 @@ export async function createPaypalOrder({
 
   const API_URL = getPayPalApiUrl();
   const data = JSON.stringify({
-    'intent': 'capture',
+    'intent': 'CAPTURE',
     'purchase_units': [{
       'amount': {
         'currency_code': currency,
