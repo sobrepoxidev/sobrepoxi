@@ -20,9 +20,7 @@ if(PAYPAL_CLIENT_ID === 'sb') {
     
 }
 
-useEffect(() => {
-    console.log("PayPal client ID: ", PAYPAL_CLIENT_ID);
-}, []);
+
 
 interface PayPalCardMethodProps {
     createdOrderId: number;
@@ -42,6 +40,9 @@ export default function PayPalCardMethod({
     const userId = session?.user?.id || 'guest-user';
 
     // Tasa de conversión fija de PayPal
+    useEffect(() => {
+        console.log("PayPal client ID: ", PAYPAL_CLIENT_ID);
+    }, []);
 
 
     return (
