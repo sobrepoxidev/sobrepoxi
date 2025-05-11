@@ -12,8 +12,8 @@ const isProduction = (): boolean => {
  * Gets the appropriate PayPal API URL based on environment
  */
 const getPayPalApiUrl = (): string => {
-  return isProduction() 
-    ? 'https://api-m.paypal.com' 
+  return isProduction()
+    ? 'https://api-m.paypal.com'
     : 'https://api-m.sandbox.paypal.com';
 };
 
@@ -48,12 +48,12 @@ const createMockPayPalOrder = (amount: number) => {
  */
 export async function getPaypalAccessToken(): Promise<string> {
   // Use different credentials based on environment
-  const CLIENT_ID = isProduction() 
-    ? process.env.PAYPAL_LIVE_CLIENT_ID 
-    : process.env.PAYPAL_CLIENT_ID;
-    
-  const CLIENT_SECRET = isProduction() 
-    ? process.env.PAYPAL_LIVE_SECRET 
+  const CLIENT_ID = isProduction()
+    ? process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID
+    : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+
+  const CLIENT_SECRET = isProduction()
+    ? process.env.PAYPAL_LIVE_SECRET
     : process.env.PAYPAL_SECRET;
 
   // For development, if credentials are missing, use a mock token
@@ -66,16 +66,16 @@ export async function getPaypalAccessToken(): Promise<string> {
   }
 
   const API_URL = getPayPalApiUrl();
-  const authString = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+  const auth = `${CLIENT_ID}:${CLIENT_SECRET}`;
 
   try {
     const res = await fetch(`${API_URL}/v1/oauth2/token`, {
       method: "POST",
       headers: {
-        Authorization: `Basic ${authString}`,
-        "Content-Type": "application/x-www-form-urlencoded"
+        'Authorization': `Basic ${Buffer.from(auth).toString('base64')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: "grant_type=client_credentials"
+      body: 'grant_type=client_credentials'
     });
 
     if (!res.ok) {
@@ -115,31 +115,32 @@ export async function createPaypalOrder({
   }
 
   const API_URL = getPayPalApiUrl();
-  
+  let order_data_json = {
+    'intent': 'capture',
+    'purchase_units': [{
+      'amount': {
+        'currency_code': currency,
+        'value': amount.toString()
+      }
+    }]
+  };
+  const data = JSON.stringify(order_data_json);
+
   try {
+
     const res = await fetch(`${API_URL}/v2/checkout/orders`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({
-        intent: "CAPTURE",
-        purchase_units: [
-          {
-            amount: {
-              currency_code: currency,
-              value: amount.toString()
-            }
-          }
-        ]
-      })
+      body: data
     });
 
     if (!res.ok) {
       const errorText = await res.text();
       console.error(`PayPal create order error in ${isProduction() ? 'production' : 'sandbox'} mode:`, errorText);
-      
+
       // In development, fall back to mock order on error
       if (!isProduction()) {
         console.warn('Falling back to mock order due to API error');
@@ -147,11 +148,11 @@ export async function createPaypalOrder({
       }
       return null;
     }
-    
+
     return res.json(); // { id: "PAYPAL_ORDER_ID", etc. }
   } catch (error) {
     console.error('Error creating PayPal order:', error);
-    
+
     // In development, fall back to mock order on error
     if (!isProduction()) {
       console.warn('Falling back to mock order due to exception');
@@ -194,7 +195,7 @@ export async function capturePaypalOrder({
 
   const API_URL = getPayPalApiUrl();
   const url = `${API_URL}/v2/checkout/orders/${paypalOrderId}/capture`;
-  
+
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -202,11 +203,11 @@ export async function capturePaypalOrder({
         Authorization: `Bearer ${accessToken}`
       }
     });
-    
+
     if (!res.ok) {
       const errorText = await res.text();
       console.error(`PayPal capture order error in ${isProduction() ? 'production' : 'sandbox'} mode:`, errorText);
-      
+
       // In development, return mock capture on error
       if (!isProduction()) {
         console.warn('Falling back to mock capture due to API error');
@@ -229,11 +230,11 @@ export async function capturePaypalOrder({
       }
       throw new Error("Capture request failed");
     }
-    
+
     return res.json(); // { status: "COMPLETED", etc. }
   } catch (error) {
     console.error('Error capturing PayPal order:', error);
-    
+
     // In development, return mock capture on error
     if (!isProduction()) {
       console.warn('Falling back to mock capture due to exception');

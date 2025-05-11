@@ -1,0 +1,5 @@
+// testEnv.tsx
+'use client'
+export default function TestEnv() {
+  return <p>PayPal ID: {process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID}</p>;
+}
