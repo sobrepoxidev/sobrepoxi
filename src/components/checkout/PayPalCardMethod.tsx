@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from 'next/navigation';
 import { useSupabase } from '@/app/supabase-provider/provider';
@@ -20,7 +20,9 @@ if(PAYPAL_CLIENT_ID === 'sb') {
     
 }
 
-
+useEffect(() => {
+    console.log("PayPal client ID: ", PAYPAL_CLIENT_ID);
+}, []);
 
 interface PayPalCardMethodProps {
     createdOrderId: number;
@@ -52,15 +54,15 @@ export default function PayPalCardMethod({
             {loading && <p className="text-gray-600">Procesando...</p>}
             <div className="App">
                 <PayPalScriptProvider
+                options={{
+                    clientId: PAYPAL_CLIENT_ID,
+                    enableFunding: "paylater,venmo",
+                    dataSdkIntegrationSource: "integrationbuilder_sc",
+                    environment: process.env.NODE_ENV.toString() === 'production'.toString() ? 'production' : 'sandbox',
+                    
+                }}
 
-                    options={{
-                        clientId: PAYPAL_CLIENT_ID,
-                        currency: "USD",
-                        intent: "capture",
-                        buyerCountry: "CR",
-                        locale: "es_CR",
-                        commit: true,
-                    }}
+                   
                 >
                     <PayPalButtons
                         style={{ layout: "vertical" }}
