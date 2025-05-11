@@ -115,7 +115,7 @@ export async function createPaypalOrder({
   }
 
   const API_URL = getPayPalApiUrl();
-  let order_data_json = {
+  const data = JSON.stringify({
     'intent': 'capture',
     'purchase_units': [{
       'amount': {
@@ -123,8 +123,7 @@ export async function createPaypalOrder({
         'value': amount.toString()
       }
     }]
-  };
-  const data = JSON.stringify(order_data_json);
+  });
 
   try {
 
