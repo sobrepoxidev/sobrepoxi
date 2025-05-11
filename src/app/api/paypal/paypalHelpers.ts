@@ -199,6 +199,7 @@ export async function capturePaypalOrder({
     const res = await fetch(url, {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`
       }
     });
