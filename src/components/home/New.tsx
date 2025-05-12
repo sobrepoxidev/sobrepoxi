@@ -108,7 +108,7 @@ export default function NewHome() {
   }, []);
 
   return (
-    <div className=" max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#b3d5c3] via-white to-white">
+    <div className="w-full relative z-0 h-full bg-gradient-to-b from-[#b3d5c3] via-white to-white">
 
 
       <Carousel>

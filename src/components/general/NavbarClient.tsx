@@ -1,48 +1,51 @@
 // components/layout/Navbar/NavbarClient.tsx
 "use client"
 
-import { useState, useRef, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { 
-  ShoppingBag, 
-  Search, 
-  Menu, 
-  Globe,
-  User,
-  X
-} from 'lucide-react';
-import UserDropdown from '@/components/user/UserDropdown';
+import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { Menu, X, User, ShoppingBag, Search, ChevronDown, Globe, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
+import UserDropdown from '@/components/user/UserDropdown';
 import SearchBar from '@/components/search/SearchBar';
+import { getCategories } from '@/lib/categories';
 
 type NavLink = {
   name: string;
   path: string;
 };
 
-interface NavbarClientProps {
-  navigationLinks: NavLink[];
-  locale: string;
-}
 
-export default function NavbarClient({ navigationLinks, locale }: NavbarClientProps) {
+export default function NavbarClient({ locale, session }: { locale: string; session: Session | null }) {
   const t = useTranslations('navbar');
-  // Estado para los menús
+  const pathname = usePathname();
+  const router = useRouter();
+  const { supabase } = useSupabase();
+  const { totalItems } = useCart();
+  
+  // States for UI controls
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedCategory] = useState('Todas');
-  const { supabase } = useSupabase();
-  const [session, setSession] = useState<Session | null>(null);
+  const [categoryList, setCategoryList] = useState<{id: number, name: string}[]>([]);
+  const [showStoreCategories, setShowStoreCategories] = useState(false);
+  
 
+  
+  // Cargar categorías de la base de datos
+  useEffect(() => {
+    const loadCategories = async () => {
+      const categories = await getCategories();
+      setCategoryList(categories);
+    };
+    
+    loadCategories();
+  }, []);
+  
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
-  const { cart } = useCart();
-  const cardQuantity = cart.length;
-  
-  // We don't need to fetch categories anymore as we're not using them
   useEffect(() => {
     // Empty effect for future implementation if needed
   }, []);
@@ -84,21 +87,14 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
     return () => document.removeEventListener('keydown', handleEscKey);
   }, []);
 
-  // Cargar la sesión inicial y escuchar cambios
-  useEffect(() => {
-    const fetchSession = async () => {
-      const { data } = await supabase.auth.getSession()
-      setSession(data.session)
-    }
-    fetchSession()
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event: string, newSession: Session | null) => {
-      setSession(newSession)
-    })
-    return () => {
-      authListener.subscription.unsubscribe()
-    }
-  }, [supabase])
+  // Definir los enlaces de navegación
+  const navigationLinks: NavLink[] = [
+    { name: t('home'), path: '/' },
+    { name: t('about'), path: '/about' },
+    { name: t('impact'), path: '/impact' },
+    { name: t('shipping'), path: '/shipping' },
+    // Store se trata de manera especial ahora, con categorías desplegables
+  ]
 
   // Logout function
   const handleLogout = async () => {
@@ -128,7 +124,7 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
               {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
               <SearchBar 
                 variant="navbar" 
-                initialCategory={selectedCategory} 
+                initialCategory="Todas"
               />
             </div>
           </div>
@@ -168,21 +164,25 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
       </div>
 
       {/* Actions - Right Side */}
-      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto ">
+      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto" style={{ minWidth: '100px', flexShrink: 0 }}>
         {/* User Dropdown - Desktop */}
         <div className="hidden md:flex items-center">
           <UserDropdown session={session} onLogout={handleLogout} />
         </div>
         
-        {/* Language selector */}
-        <Link 
-          href={locale === 'es' ? '/en' : '/es'}
-          className="hidden md:flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
+        {/* Language selector - Implementado con next-intl */}
+        <button 
+          onClick={() => {
+            // Cambiar al idioma opuesto manteniendo la ruta actual
+            const targetLocale = locale === 'es' ? 'en' : 'es';
+            router.replace(pathname, { locale: targetLocale });
+          }}
+          className="flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
           aria-label={t('changeLanguage')}
         >
           <Globe className="h-4 w-4" />
           <span>{locale === 'es' ? 'ES' : 'EN'}</span>
-        </Link>
+        </button>
         
         {/* Cart */}
         <Link 
@@ -193,7 +193,7 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
           <ShoppingBag className="h-5 w-5" />
           <span className="hidden md:inline">{t('cart')}</span>
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
-            {cardQuantity}
+            {totalItems}
           </span>
         </Link>
         
@@ -224,7 +224,7 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
               
               <SearchBar 
                 variant="standalone" 
-                initialCategory={selectedCategory}
+                initialCategory="Todas"
                 onClose={() => setIsSearchOpen(false)} 
               />
               
@@ -232,34 +232,41 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
             </div>
           )}
         </div>
-        
         {/* Mobile menu toggle */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-full  text-gray-700 transition hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 lg:hidden -ml-2"
+          className="flex h-10 w-10 items-center justify-center text-gray-700 transition hover:bg-gray-100 focus-visible:outline-none lg:hidden"
+          style={{ width: '40px', height: '40px', flexShrink: 0 }}
           aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
           aria-expanded={isMenuOpen}
         >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '20px', height: '20px' }}>
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </div>
         </button>
+        
       </div>
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="absolute left-0 right-0 top-full z-40 max-h-[calc(100vh-4rem)] overflow-y-auto bg-white shadow-lg lg:hidden">
+        <div className="absolute left-0 right-0 top-full z-50 max-h-[calc(100vh-57px)] overflow-y-auto bg-white shadow-lg lg:hidden w-full">
+
           <nav className="px-4 py-3">
             {/* Mobile Search - Amazon Style */}
-            <div className="mb-4">
-              <div className="flex w-full items-center rounded-md border border-gray-300 bg-white overflow-hidden shadow-sm">
-                {/* Integrated SearchBar component for mobile */}
-                <SearchBar 
-                  variant="navbar" 
-                  onClose={() => setIsMenuOpen(false)} 
-                  initialCategory={selectedCategory}
-                />
-              </div>
-            </div>
             
+            
+            {/* Cart Link - Movido arriba */}
+            <div className="mb-3">
+              <Link 
+                href="/cart" 
+                className="flex items-center space-x-2 text-sm font-medium bg-gray-50 p-3 rounded-md text-gray-900 w-full"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <ShoppingBag className="h-5 w-5" />
+                <span>{t('viewCart')} ({totalItems})</span>
+              </Link>
+            </div>
+
             {/* Mobile Auth Links */}
             <div className="mb-3">
               <div className="flex items-center justify-between">
@@ -318,17 +325,6 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
                     </Link>
                   </li>
                 ))}
-                
-                <li>
-                  <Link 
-                    href="/products" 
-                    className="block text-sm text-gray-700 hover:text-teal-700"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {t('store')}
-                  </Link>
-                </li>
-                
                 <li>
                   <Link 
                     href="/contact" 
@@ -338,17 +334,55 @@ export default function NavbarClient({ navigationLinks, locale }: NavbarClientPr
                     {t('contact')}
                   </Link>
                 </li>
-                
-                <li>
-                  <Link 
-                    href="/cart" 
-                    className="flex items-center space-x-2 text-sm text-gray-700 hover:text-teal-700"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <ShoppingBag className="h-4 w-4" />
-                    <span>{t('viewCart')} ({cardQuantity})</span>
-                  </Link>
+                {/* Store con categorías desplegables */}
+                <li className="mb-2">
+                  <div className="mb-1">
+                    <button
+                      className="flex items-center justify-between w-full py-2 px-3 bg-teal-50 text-teal-700 rounded-md font-medium text-sm hover:bg-teal-100 transition-colors"
+                      onClick={() => setShowStoreCategories(!showStoreCategories)}
+                      aria-expanded={showStoreCategories}
+                    >
+                      <div className="flex items-center">
+                        <Package className="h-4 w-4 mr-2" />
+                        <span>{t('store')}</span>
+                      </div>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${showStoreCategories ? 'transform rotate-180' : ''}`}
+                      />
+                    </button>
+                  </div>
+
+                  
+                  {/* Lista de categorías */}
+                  {showStoreCategories && (
+                    <ul className="ml-4 space-y-1 border-l-2 border-gray-100 pl-3">
+                      <li>
+                        <Link 
+                          href="/products" 
+                          className="block text-sm text-gray-700 hover:text-teal-700 py-1"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Todos los productos
+                        </Link>
+                      </li>
+                      {categoryList.map((category) => (
+                        <li key={category.id}>
+                          <Link
+                            href={`/products?category=${category.id}`}
+                            className="block text-sm text-gray-700 hover:text-teal-700 py-1"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {category.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
+                
+                
+                
+                {/* Enlace a carrito eliminado - ya movido arriba */}
               </ul>
             </div>
           </nav>

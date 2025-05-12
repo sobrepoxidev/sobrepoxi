@@ -31,99 +31,169 @@ export function generateOrderConfirmationEmail(data: OrderEmailData): string {
     <!DOCTYPE html>
     <html>
     <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <style>
         body {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
           line-height: 1.6;
-          color: #B55327;
-          max-width: 600px;
+          color: #333333;
+          margin: 0;
+          padding: 0;
+          background-color: #f5f5f5;
+        }
+        .wrapper {
+          max-width: 800px;
           margin: 0 auto;
           padding: 20px;
-          background-color: #b3d5c3;
         }
         .container {
           background-color: white;
-          border-radius: 12px;
-          padding: 24px;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+          border-radius: 16px;
+          padding: 40px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
         .header {
-          background-color: #b3d5c3;
-          color: #B55327;
           text-align: center;
-          padding: 24px;
-          border-radius: 8px;
-          margin-bottom: 24px;
+          padding: 32px;
+          border-bottom: 2px solid #b3d5c3;
+          margin-bottom: 32px;
         }
         .header img {
-          max-width: 200px;
-          margin-bottom: 16px;
+          max-width: 250px;
+          height: auto;
+          margin-bottom: 24px;
+        }
+        .header h1 {
+          color: #B55327;
+          font-size: 2.2em;
+          margin: 0 0 8px 0;
+        }
+        .header p {
+          color: #666;
+          font-size: 1.1em;
+          margin: 0;
         }
         .section {
-          margin-bottom: 24px;
-          padding: 16px;
-          border-radius: 8px;
-          background-color: #b3d5c3;
+          margin-bottom: 32px;
+          padding: 24px;
+          border-radius: 12px;
+          background-color: #fafafa;
+          border: 1px solid #eaeaea;
         }
         .section h2 {
           color: #B55327;
-          margin-top: 0;
-          font-size: 1.25rem;
+          margin: 0 0 16px 0;
+          font-size: 1.5rem;
           font-weight: 600;
+          border-bottom: 2px solid #b3d5c3;
+          padding-bottom: 8px;
         }
         .items-table {
           width: 100%;
-          border-collapse: collapse;
+          border-collapse: separate;
+          border-spacing: 0;
           margin: 16px 0;
+          border: 1px solid #eaeaea;
+          border-radius: 8px;
+          overflow: hidden;
         }
         .items-table th,
         .items-table td {
-          padding: 12px;
+          padding: 16px;
           text-align: left;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid #eaeaea;
         }
         .items-table th {
           background-color: #b3d5c3;
           color: #B55327;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 0.9em;
+          letter-spacing: 0.5px;
         }
-        .total-row {
-          font-weight: bold;
-          background-color: #f9fafb;
+        .items-table tr:last-child td {
+          border-bottom: none;
+        }
+        .items-table tbody tr:hover {
+          background-color: #f8f9fa;
         }
         .discount-box {
-          background-color: #b3d5c3;
-          padding: 16px;
-          border-radius: 8px;
-          margin: 16px 0;
+          background-color: #fff3e6;
+          padding: 20px;
+          border-radius: 12px;
+          margin: 24px 0;
           border: 2px dashed #B55327;
+        }
+        .discount-box h3 {
+          color: #B55327;
+          margin: 0 0 12px 0;
+          font-size: 1.2em;
         }
         .thank-you {
           text-align: center;
-          margin-top: 32px;
+          margin-top: 40px;
+          padding: 32px;
+          background-color: #b3d5c3;
+          border-radius: 12px;
           color: #B55327;
-          font-size: 1.2em;
+        }
+        .thank-you p {
+          font-size: 1.3em;
+          margin: 8px 0;
+          font-weight: 500;
+        }
+        .detail-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 16px;
+          margin-top: 16px;
+        }
+        .detail-item {
+          margin-bottom: 8px;
+        }
+        .detail-item strong {
+          color: #B55327;
+          display: inline-block;
+          min-width: 120px;
+        }
+        @media (max-width: 600px) {
+          .container {
+            padding: 20px;
+          }
+          .header {
+            padding: 20px;
+          }
+          .section {
+            padding: 16px;
+          }
+          .items-table th,
+          .items-table td {
+            padding: 12px 8px;
+            font-size: 0.9em;
+          }
         }
       </style>
     </head>
     <body>
+      <div class="wrapper">
       <div class="container">
         <div class="header">
-          <img src="https://handmade-art.vercel.app/logo.png" alt="HANDMADE ART Logo" />
+          <img src="https://handmadeart.vercel.app/logo-handmade-art-black.webp" alt="HANDMADE ART Logo" />
           <h1>¡Gracias por tu compra!</h1>
           <p>Pedido #${data.orderId}</p>
         </div>
 
         <div class="section">
           <h2>Detalles del envío</h2>
-          <p>
-            <strong>Nombre:</strong> ${data.shippingAddress.name}<br>
-            <strong>Dirección:</strong> ${data.shippingAddress.address}<br>
-            <strong>Ciudad:</strong> ${data.shippingAddress.city}<br>
-            <strong>Estado/Provincia:</strong> ${data.shippingAddress.state}<br>
-            <strong>País:</strong> ${data.shippingAddress.country}<br>
-            <strong>Código Postal:</strong> ${data.shippingAddress.postal_code}<br>
-            <strong>Teléfono:</strong> ${data.shippingAddress.phone}
-          </p>
+          <div class="detail-grid">
+            <div class="detail-item"><strong>Nombre:</strong> ${data.shippingAddress.name}</div>
+            <div class="detail-item"><strong>Dirección:</strong> ${data.shippingAddress.address}</div>
+            <div class="detail-item"><strong>Ciudad:</strong> ${data.shippingAddress.city}</div>
+            <div class="detail-item"><strong>Estado/Provincia:</strong> ${data.shippingAddress.state}</div>
+            <div class="detail-item"><strong>País:</strong> ${data.shippingAddress.country}</div>
+            <div class="detail-item"><strong>Código Postal:</strong> ${data.shippingAddress.postal_code}</div>
+            <div class="detail-item"><strong>Teléfono:</strong> ${data.shippingAddress.phone}</div>
+          </div>
         </div>
 
         <div class="section">

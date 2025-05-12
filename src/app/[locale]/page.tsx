@@ -49,20 +49,11 @@ export default async function Home({ searchParams}: PageProps) {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen" role="main">
-      <main className="max-w-screen-2xl mx-auto">
-        {/* Banner principal */}
-        <div className="mb-4">
-          <NewHome />
-        </div>
-        {/* Contenido principal con diseño similar a Amazon */}
-        <div className="px-4 pb-8">
-         
-          {/* Llamada a la acción */}
-          <div className="mb-8">
-            {/* <CallToAction /> */}
-          </div>
-        </div>
+    <>
+      {/* Contenido principal */}
+      <div className="min-h-screen w-full overflow-x-hidden bg-amber-400" role="main">
+        <NewHome />
+        
         {/* Botones flotantes agrupados */}
         <div className="fixed bottom-10 right-8 z-50 flex flex-col items-end gap-2">
           <Link 
@@ -76,25 +67,10 @@ export default async function Home({ searchParams}: PageProps) {
           
           <ScrollToTopButton />
         </div>
-      </main>
+      </div>
       
-      <footer className="bg-white py-6 border-t border-gray-200">
-        <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <p className="text-sm text-gray-600">&copy; {new Date().getFullYear()} Handmade Art. Todos los derechos reservados.</p>
-          </div>
-          <div className="flex gap-6">
-            <Link href="/about" className="text-sm text-teal-600 hover:underline">Acerca de</Link>
-            <Link href="/impact" className="text-sm text-teal-600 hover:underline">Impacto social</Link>
-            <Link href="/contact" className="text-sm text-teal-600 hover:underline">Contacto</Link>
-            <a href="https://instagram.com/handmadeart.cr" target="_blank" rel="noopener" aria-label="Instagram Handmade Art" className="text-teal-600 hover:underline">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline-block align-text-bottom"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75h-9A2.25 2.25 0 003.25 6v12a2.25 2.25 0 002.25 2.25h9A2.25 2.25 0 0018.75 18V6A2.25 2.25 0 0016.5 3.75z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75h.008v.008h-.008V6.75z" /></svg>
-            </a>
-          </div>
-        </div>
-      </footer>
-      
+      {/* Modal del producto */}
       <GalleryModal initialProduct={initialProductForModal as Product} />
-    </div>
+    </>
   );
 }

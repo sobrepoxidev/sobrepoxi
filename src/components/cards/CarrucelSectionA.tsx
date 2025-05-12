@@ -19,7 +19,7 @@ const CarouselCard: React.FC<{
   className?: string;
 }> = ({ title, content, className = "" }) => {
   return (
-    <div className={`rounded flex h-[27rem] shadow-md flex-col ${className}`}>
+    <div className={`flex h-[27rem] shadow-md flex-col ${className}`}>
       <div className="flex flex-col h-full">
         <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-gray-800" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>{title}</h2>
         <div className="flex-grow flex items-center justify-center">{content}</div>
@@ -75,14 +75,14 @@ const CarrucelSectionA: React.FC<CarrucelSectionProps> = ({ items }) => {
       )}
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-x-2 max-lg:mt-2 "
+        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-x-0 max-lg:mt-2 "
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         onScroll={handleScroll}
       >
         {items.map((item, index) => (
           <div
             key={index}
-            className="flex-none w-[80%] snap-start pl-0.5 first:pl-0.5 last:pr-0"
+            className="flex-none w-[80%] snap-start pl-3 first:pl-4 last:pr-4 py-1"
           >
             <CarouselCard {...item} />
           </div>

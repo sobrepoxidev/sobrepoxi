@@ -196,11 +196,12 @@ export default function SearchBar({
               e.stopPropagation(); // Stop event propagation
               setIsCategoryMenuOpen(!isCategoryMenuOpen);
               
-              // Force focus to stay in the component
-              if (inputRef.current) {
+              // En móvil no enfocar automáticamente el input
+              // Esto previene que el dropdown se cierre inmediatamente
+              if (variant !== 'navbar' && inputRef.current) {
                 setTimeout(() => {
                   inputRef.current?.focus();
-                }, 10);
+                }, 100);
               }
             }}
             className={`category-trigger flex h-10 items-center space-x-1 bg-gray-100 px-3 text-sm text-gray-700 border-r border-gray-300 hover:bg-gray-200 ${isNavbar ? 'navbar-trigger' : 'standalone-trigger'}`}
@@ -234,9 +235,12 @@ export default function SearchBar({
                       setCategory('Todas');
                       setIsCategoryMenuOpen(false);
                       
-                      // Focus the input after selection
-                      if (inputRef.current) {
-                        inputRef.current.focus();
+                      // Solo enfocamos el input en la versión standalone, no en la de navbar móvil
+                      if (variant !== 'navbar' && inputRef.current) {
+                        // Agregamos un pequeño retraso para evitar conflictos de eventos
+                        setTimeout(() => {
+                          inputRef.current?.focus();
+                        }, 50);
                       }
                     }}
                   >
@@ -254,9 +258,12 @@ export default function SearchBar({
                         setCategory(cat);
                         setIsCategoryMenuOpen(false);
                         
-                        // Focus the input after selection
-                        if (inputRef.current) {
-                          inputRef.current.focus();
+                        // Solo enfocamos el input en la versión standalone, no en la de navbar móvil
+                        if (variant !== 'navbar' && inputRef.current) {
+                          // Agregamos un pequeño retraso para evitar conflictos de eventos
+                          setTimeout(() => {
+                            inputRef.current?.focus();
+                          }, 50);
                         }
                       }}
                     >

@@ -216,7 +216,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
   }
 
   return (
-    <div className="w-full  pl-3">
+    <div className="w-full ">
 
 
       {/* Versión de escritorio - Muestra categorías en grid */}
@@ -288,26 +288,25 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 return {
                   title: `${category.name || ''} `,
                   content: (
-                    <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-8">
+                    <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
                       {categoryProducts.slice(0, 4).map((product, idx) => (
                         <Link key={idx} href={`/product/${product.id}`} className="block text-center">
-                          <div className="h-24 flex items-center justify-center bg-white rounded-lg shadow-sm">
+                          <div className="h-44 flex items-center justify-center bg-white rounded-lg shadow-sm">
                             <Image
                               src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
                               alt={product.name || ''}
-                              width={80}
-                              height={80}
-                              className="object-contain max-h-full p-1"
+                              width={100}
+                              height={0}
+                              className="object-contain max-h-full p-0.5"
                               unoptimized
                             />
                           </div>
-                          <p className="text-xs truncate mt-1 text-white font-medium">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                         </Link>
                       ))}
                     </div>
                   ),
                   link: `/category/${category.id}`,
-                  className: `${cardColor} rounded-3xl px-3 pt-2 pb-3 shadow-md` // Color llamativo y bordes redondeados
+                  className: `${cardColor} rounded-xl px-3 pt-2 pb-3 shadow-sm` // Color llamativo y bordes redondeados
                 };
               })
           }

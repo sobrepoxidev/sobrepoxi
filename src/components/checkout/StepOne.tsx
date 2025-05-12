@@ -1,5 +1,9 @@
 import { Database } from "@/types-db";
 import { useState, useEffect } from "react";
+import { useSupabase } from '@/app/supabase-provider/provider';
+import { Session } from '@supabase/supabase-js';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-hot-toast';
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 type DiscountInfo = {
@@ -39,6 +43,18 @@ export default function StepOne({
     onContinue: (address: ShippingAddress) => void;
     initialData?: ShippingAddress | null;
   }) {
+    const t = useTranslations('Account');
+    const { supabase } = useSupabase();
+    
+    // Estados para la sesión y el perfil de usuario
+    const [session, setSession] = useState<Session | null>(null);
+    const [userProfile, setUserProfile] = useState<any>(null);
+    const [isProfileLoading, setIsProfileLoading] = useState(false);
+    
+    // Estado para mostrar diálogo de selección de dirección
+    const [showAddressOptions, setShowAddressOptions] = useState(false);
+    const [justLoggedIn, setJustLoggedIn] = useState(false);
+    
     // Estado para la información de descuento
     const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
     
@@ -54,8 +70,74 @@ export default function StepOne({
             console.error('Error parsing discount info:', e);
           }
         }
+        
+        // Verificar si el usuario acaba de iniciar sesión
+        const justLoggedInFlag = sessionStorage.getItem('justLoggedIn');
+        if (justLoggedInFlag === 'true') {
+          setJustLoggedIn(true);
+          // Limpiar la bandera después de usarla
+          sessionStorage.removeItem('justLoggedIn');
+        }
       }
     }, []);
+    
+    // Cargar la sesión inicial y escuchar cambios
+    useEffect(() => {
+      const fetchSession = async () => {
+        const { data } = await supabase.auth.getSession();
+        setSession(data.session);
+      };
+      fetchSession();
+
+      const { data: authListener } = supabase.auth.onAuthStateChange((event: string, newSession: Session | null) => {
+        setSession(newSession);
+        
+        // Si el usuario acaba de iniciar sesión
+        if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+          setJustLoggedIn(true);
+          // Marcar en sessionStorage que el usuario acaba de iniciar sesión
+          sessionStorage.setItem('justLoggedIn', 'true');
+        }
+      });
+      
+      return () => {
+        authListener.subscription.unsubscribe();
+      };
+    }, [supabase]);
+    
+    // Cargar el perfil del usuario cuando cambia la sesión
+    useEffect(() => {
+      const fetchUserProfile = async () => {
+        if (session?.user?.id) {
+          setIsProfileLoading(true);
+          try {
+            const { data, error } = await supabase
+              .from('user_profiles')
+              .select('*')
+              .eq('id', session.user.id)
+              .single();
+              
+            if (error) {
+              console.error('Error fetching user profile:', error);
+            } else if (data) {
+              setUserProfile(data);
+              
+              // Si el usuario acaba de iniciar sesión y tiene una dirección guardada
+              if (justLoggedIn && data.shipping_address) {
+                setShowAddressOptions(true);
+              }
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          } finally {
+            setIsProfileLoading(false);
+          }
+        }
+      };
+      
+      fetchUserProfile();
+    }, [session, supabase, justLoggedIn]);
+    
     const [formData, setFormData] = useState({
       nombre: initialData?.name.split(' ')[0] || '',
       apellidos: initialData?.name.split(' ').slice(1).join(' ') || '',
@@ -69,8 +151,9 @@ export default function StepOne({
       codigoPostal: initialData?.postal_code || '',
     });
 
-    // Initialize form data if initialData is provided
+    // Inicializar datos del formulario según la fuente (initialData o perfil de usuario)
     useEffect(() => {
+      // Si hay datos iniciales, usarlos
       if (initialData) {
         const nameParts = initialData.name.split(' ');
         setFormData({
@@ -86,7 +169,24 @@ export default function StepOne({
           codigoPostal: initialData.postal_code || '',
         });
       }
-    }, [initialData]);
+      // Si no hay datos iniciales pero sí hay perfil con dirección guardada
+      else if (userProfile?.shipping_address && !initialData && !showAddressOptions) {
+        const address = userProfile.shipping_address;
+        const nameParts = address.name.split(' ');
+        setFormData({
+          nombre: nameParts[0] || '',
+          apellidos: nameParts.slice(1).join(' ') || '',
+          email: '',
+          telefono: address.phone || '',
+          direccion1: address.address || '',
+          direccion2: '',
+          provincia: address.state || '',
+          canton: address.city || '',
+          distrito: '',
+          codigoPostal: address.postal_code || '',
+        });
+      }
+    }, [initialData, userProfile, showAddressOptions]);
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -125,28 +225,95 @@ export default function StepOne({
       return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (validateForm()) {
-        // Create shipping address object from form data
+    // Función para guardar la dirección en el perfil del usuario
+    const saveAddressToProfile = async (address: ShippingAddress) => {
+      if (!session?.user?.id) return;
+      
+      try {
+        const { error } = await supabase
+          .from('user_profiles')
+          .update({ shipping_address: address })
+          .eq('id', session.user.id);
+          
+        if (error) throw error;
+        
+        toast.success(t('addressUpdated'));
+      } catch (error) {
+        console.error('Error saving address to profile:', error);
+        toast.error(t('updateError'));
+      }
+    };
+    
+    // Manejar selección de dirección (usar la del perfil o la que se estaba completando)
+    const handleAddressSelection = (useProfileAddress: boolean, updateProfile: boolean = false) => {
+      if (useProfileAddress && userProfile?.shipping_address) {
+        // Usar la dirección del perfil
+        const address = userProfile.shipping_address;
+        const nameParts = address.name.split(' ');
+        setFormData({
+          nombre: nameParts[0] || '',
+          apellidos: nameParts.slice(1).join(' ') || '',
+          email: '',
+          telefono: address.phone || '',
+          direccion1: address.address || '',
+          direccion2: '',
+          provincia: address.state || '',
+          canton: address.city || '',
+          distrito: '',
+          codigoPostal: address.postal_code || '',
+        });
+      } else if (updateProfile) {
+        // Crear dirección a partir de los datos del formulario
         const shippingAddress: ShippingAddress = {
           name: `${formData.nombre} ${formData.apellidos}`.trim(),
-          address: formData.direccion1 + (formData.direccion2 ? `, ${formData.direccion2}` : ''),
+          address: formData.direccion1,
           city: formData.canton,
           state: formData.provincia,
           country: 'Costa Rica',
           postal_code: formData.codigoPostal,
-          phone: formData.telefono
+          phone: formData.telefono,
         };
-
-        onContinue(shippingAddress);
-      } else {
+        
+        // Guardar en el perfil
+        saveAddressToProfile(shippingAddress);
+      }
+      
+      // Cerrar el diálogo
+      setShowAddressOptions(false);
+    };
+    
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      
+      if (!validateForm()) {
         // Scroll to first error
         const firstError = document.querySelector('[data-error="true"]');
         if (firstError) {
           firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+        return;
       }
+      
+      // Construir objeto de dirección para el pedido
+      const shippingAddress: ShippingAddress = {
+        name: `${formData.nombre} ${formData.apellidos}`.trim(),
+        address: formData.direccion1 + (formData.direccion2 ? `, ${formData.direccion2}` : ''),
+        city: formData.canton,
+        state: formData.provincia,
+        country: 'Costa Rica',
+        postal_code: formData.codigoPostal,
+        phone: formData.telefono,
+      };
+      
+      // Si el usuario está autenticado pero no tiene dirección guardada, preguntar si desea guardarla
+      if (session && !userProfile?.shipping_address && !showAddressOptions) {
+        const confirmed = window.confirm('¿Deseas guardar esta dirección en tu perfil para futuros pedidos?');
+        if (confirmed) {
+          saveAddressToProfile(shippingAddress);
+        }
+      }
+      
+      onContinue(shippingAddress);
     };
 
     // Costa Rica provinces
@@ -162,6 +329,42 @@ export default function StepOne({
   
     return (
       <section className="w-full text-gray-950">
+        {/* Modal de selección de dirección cuando el usuario acaba de iniciar sesión */}
+        {showAddressOptions && userProfile?.shipping_address && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Selección de dirección de envío
+              </h3>
+              <p className="mb-4 text-gray-600">
+                Detectamos que ya tienes una dirección de envío guardada en tu perfil. ¿Cómo deseas proceder?
+              </p>
+              
+              <div className="space-y-3">
+                <button
+                  onClick={() => handleAddressSelection(true)}
+                  className="w-full bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition"
+                >
+                  Usar mi dirección guardada
+                </button>
+                
+                <button
+                  onClick={() => handleAddressSelection(false)}
+                  className="w-full bg-white text-gray-800 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-50 transition"
+                >
+                  Continuar con la dirección actual
+                </button>
+                
+                <button
+                  onClick={() => handleAddressSelection(false, true)}
+                  className="w-full bg-white text-teal-600 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-50 transition"
+                >
+                  Usar la dirección actual y actualizarla en mi perfil
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left column - Form */}
           <div className="w-full lg:w-2/3">

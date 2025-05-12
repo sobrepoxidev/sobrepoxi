@@ -4,23 +4,33 @@ import Link from 'next/link';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 import { getTranslations } from 'next-intl/server';
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/types-db';
 
 export default async function Navbar({ locale }: { locale: string }) {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
+  
+  // Get the user session
+  const { data: { session } } = await supabase.auth.getSession();
+  
   const t = await getTranslations('navbar');
 
   // Definir los enlaces de navegación con traducciones
-  const navigationLinks = [
-    { name: t('home'), path: '/' },
-    { name: t('about'), path: '/about' },
-    { name: t('impact'), path: '/impact' },
-    { name: t('shipping'), path: '/shipping' },
-  ];
+  // const navigationLinks = [
+  //   { name: t('home'), path: '/' },
+  //   { name: t('about'), path: '/about' },
+  //   { name: t('impact'), path: '/impact' },
+  //   { name: t('shipping'), path: '/shipping' },
+  // ];
 
   return (
-    <header className="relative z-40 border-b border-gray-100 w-full bg-white">
-      <div className="container mx-auto flex items-center px-2 md:px-2 py-2">
+    <header className="relative z-40 border-b ">
+      <div className="container mx-auto flex items-center justify-between px-2 md:px-4 py-2">
         {/* Logo - SSR (Left) */}
-        <div className="flex-shrink-0 mr-2 md:mr-4 ">
+      
+          <div>
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
               <div className="md:hidden">
@@ -60,19 +70,20 @@ export default async function Navbar({ locale }: { locale: string }) {
               />
               </div>
               
-              <h1 className="text-lg sm:text-3xl tracking-wider text-gray-800">
+              <h1 className="text-lg sm:text-3xl mr-1 tracking-wider text-gray-800">
                 <span className="mr-1">HANDMADE</span>
                 <span className="font-bold text-[#B55327]">ART</span>
               </h1>
             </div>
           </Link>
-        </div>
+          </div>
+       
 
         {/* Client-side interactivity (Center and Right) */}
         <div className="flex-grow flex items-center justify-between">
           <NavbarClient
-            navigationLinks={navigationLinks}
             locale={locale}
+            session={session}
           />
         </div>
       </div>
