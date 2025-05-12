@@ -8,6 +8,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types-db';
 
 export default async function Navbar({ locale }: { locale: string }) {
+  // Usar la versión correcta y más reciente de la API de cookies
+  // Pasar el método cookies directamente sin llamarlo
   const cookieStore = cookies();
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
   
@@ -25,7 +27,7 @@ export default async function Navbar({ locale }: { locale: string }) {
             <div className="relative overflow-hidden flex items-center gap-3">
               <div className="md:hidden">
               <Image
-                src="/logo-handmade-art-black.webp"
+                src="/logo-handmade-art.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -33,7 +35,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 priority
               />
               <Image
-                src="/logo-handmade-art.webp"
+                src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}

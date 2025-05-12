@@ -151,13 +151,22 @@ export default function AccountClient({ user, initialProfile }: AccountClientPro
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid grid-cols-3 mb-8">
-          <TabsTrigger value="profile" className="text-sm md:text-base">
+          <TabsTrigger 
+            value="profile" 
+            className="text-[0.7rem] sm:text-sm md:text-base py-2 px-1 sm:px-2 md:px-4 truncate"
+          >
             {t('personalInfo')}
           </TabsTrigger>
-          <TabsTrigger value="address" className="text-sm md:text-base">
+          <TabsTrigger 
+            value="address" 
+            className="text-[0.7rem] sm:text-sm md:text-base py-2 px-1 sm:px-2 md:px-4 truncate"
+          >
             {t('shippingAddress')}
           </TabsTrigger>
-          <TabsTrigger value="orders" className="text-sm md:text-base">
+          <TabsTrigger 
+            value="orders" 
+            className="text-[0.7rem] sm:text-sm md:text-base py-2 px-1 sm:px-2 md:px-4 truncate"
+          >
             {t('orderHistory')}
           </TabsTrigger>
         </TabsList>

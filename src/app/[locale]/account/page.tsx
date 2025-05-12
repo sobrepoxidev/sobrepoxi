@@ -1,13 +1,15 @@
 import { redirect } from 'next/navigation';
 import AccountClient from '@/components/account/AccountClient';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { Database } from '@/types-db';
+import { cookies } from 'next/headers';
 
 export default async function AccountPage() {
   try {
     // Usar createServerComponentClient para acceder a Supabase desde un componente de servidor
-    const supabase = createServerComponentClient<Database>({ cookies });
+    // Usamos cookies() de forma directa sin await ya que la API ha cambiado
+    const cookieStore = cookies();
+    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
     
     // Verificar si el usuario está autenticado
     const { data: { user }, error: userError } = await supabase.auth.getUser();

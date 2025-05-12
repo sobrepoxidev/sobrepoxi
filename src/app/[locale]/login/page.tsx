@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
+import { redirect } from 'next/navigation';
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
 
 export default function LoginPage() {
@@ -46,9 +47,11 @@ export default function LoginPage() {
         setConfirmationMsg('Iniciando sesión...')
         // Use replace instead of push to avoid navigation issues
         // Delayed redirect to ensure state updates properly
-        setTimeout(() => {
-          router.replace(returnUrl)
-        }, 500)
+        //llevar hacia la url que viene en el query string
+        // En lugar de redirect, que causa problemas con componentes cliente,
+        // usamos router.replace que es más adecuado para componentes cliente
+        router.replace(returnUrl)
+
       }
     } catch {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
