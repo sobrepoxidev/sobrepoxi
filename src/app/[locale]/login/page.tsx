@@ -63,7 +63,7 @@ export default function LoginPage() {
         provider: 'google',
         options: {
           // Use proper redirection URL formatting
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
+          redirectTo: `${window.location.origin}`,
         },
       })
       if (error) throw error
