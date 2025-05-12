@@ -192,17 +192,12 @@ export default function SearchBar({
           <button
             type="button"
             onClick={(e) => {
+             
+              setIsCategoryMenuOpen(!isCategoryMenuOpen);
               e.preventDefault(); // Prevent form submission
               e.stopPropagation(); // Stop event propagation
-              setIsCategoryMenuOpen(!isCategoryMenuOpen);
-              
               // En móvil no enfocar automáticamente el input
               // Esto previene que el dropdown se cierre inmediatamente
-              if (variant !== 'navbar' && inputRef.current) {
-                setTimeout(() => {
-                  inputRef.current?.focus();
-                }, 100);
-              }
             }}
             className={`category-trigger flex h-10 items-center space-x-1 bg-gray-100 px-3 text-sm text-gray-700 border-r border-gray-300 hover:bg-gray-200 ${isNavbar ? 'navbar-trigger' : 'standalone-trigger'}`}
             aria-expanded={isCategoryMenuOpen}
