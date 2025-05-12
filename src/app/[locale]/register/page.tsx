@@ -36,7 +36,7 @@ export default function RegisterPage() {
     }
     setLoading(true)
     try {
-      const { error, data } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: { 
@@ -55,7 +55,7 @@ export default function RegisterPage() {
         setConfirmationMsg('Registro exitoso. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.')
         setLoading(false)
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
       setLoading(false)
     }

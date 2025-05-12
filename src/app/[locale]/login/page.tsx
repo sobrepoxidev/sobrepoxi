@@ -50,7 +50,7 @@ export default function LoginPage() {
           router.replace(returnUrl)
         }, 500)
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
       setLoading(false)
     }
