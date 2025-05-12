@@ -41,45 +41,51 @@ export default function LoginPage() {
       })
       if (error) {
         setErrorMsg(error.message)
+        setLoading(false)
       } else {
         setConfirmationMsg('Iniciando sesión...')
-        router.push(returnUrl)
+        // Use replace instead of push to avoid navigation issues
+        // Delayed redirect to ensure state updates properly
+        setTimeout(() => {
+          router.replace(returnUrl)
+        }, 500)
       }
-    } catch {
+    } catch (err) {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
-    } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleSignIn = async () => {
+    setLoading(true)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // Usamos origin de forma segura (igual se necesita para la URL completa)
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}${returnUrl !== '/' ? returnUrl : ''}`,
+          // Use proper redirection URL formatting
+          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
         },
       })
       if (error) throw error
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
       setErrorMsg(errorMessage)
+      setLoading(false)
     }
   }
 
   if (!mounted) return null
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-amber-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 border border-gray-100">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Inicia sesión
             </h1>
             <p className="text-gray-600">
-              Bienvenido de nuevo
+              Bienvenido de nuevo a Handmade Art
             </p>
           </div>
 
@@ -101,7 +107,7 @@ export default function LoginPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:ring-teal-500 focus:border-teal-500"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md text-gray-700 focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
                   required
                 />
               </div>
@@ -118,7 +124,7 @@ export default function LoginPage() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 text-gray-700 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 text-gray-700 rounded-md focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
                   required
                 />
               </div>
@@ -133,7 +139,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-70 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
             >
               {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </button>
@@ -143,18 +149,18 @@ export default function LoginPage() {
           <div className="mt-6">
               <button
                 onClick={handleGoogleSignIn}
-                className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
               >
                 <FaGoogle className="mr-2 h-5 w-5" />
                 Iniciar sesión con Google
               </button>
             </div>
 
-            <div className="text-center text-sm text-gray-600">
+            <div className="text-center text-sm text-gray-600 mt-4">
               ¿No tienes una cuenta?{' '}
               <Link
                 href={`/register${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`}
-                className="font-medium text-teal-600 hover:text-teal-500"
+                className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200"
               >
                 Regístrate aquí
               </Link>

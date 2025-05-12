@@ -3,19 +3,11 @@
 //import ValueProposition from "@/components/home/ValueProposition";
 //import Testimonials from "@/components/home/Testimonials";
 import NewHome from "@/components/home/New";
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { Database } from "@/types-db";
 import React from "react"; // Import React
 import Link from "next/link";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
-type Product = Database['products'];
-type searchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-interface PageProps {
-  searchParams: searchParams;
-}
-export default async function Home({ searchParams}: PageProps) {
+export default async function Home() {
   
   return (
     <div className="bg-gray-50 min-h-screen" role="main">

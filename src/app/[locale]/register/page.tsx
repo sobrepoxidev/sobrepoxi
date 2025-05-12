@@ -36,7 +36,7 @@ export default function RegisterPage() {
     }
     setLoading(true)
     try {
-      const { error } = await supabase.auth.signUp({
+      const { error, data } = await supabase.auth.signUp({
         email,
         password,
         options: { 
@@ -44,34 +44,38 @@ export default function RegisterPage() {
             name, 
             phone,
             receive_promotions: receivePromotions
-          } 
+          },
+          emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`
         },
       })
       if (error) {
         setErrorMsg(error.message)
+        setLoading(false)
       } else {
         setConfirmationMsg('Registro exitoso. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.')
+        setLoading(false)
       }
-    } catch {
+    } catch (err) {
       setErrorMsg('Error inesperado. Intenta de nuevo.')
-    } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleSignIn = async () => {
+    setLoading(true)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // Usamos origin de forma segura
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}${returnUrl !== '/' ? returnUrl : ''}`,
+          // Use proper redirection URL formatting
+          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
         },
       })
       if (error) throw error
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
       setErrorMsg(errorMessage)
+      setLoading(false)
     }
   }
 
@@ -91,20 +95,20 @@ export default function RegisterPage() {
   if (!mounted) return null
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-amber-50 to-white py-1 px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 py-6 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg px-4 py-1 md:p-8">
-          <div className="text-center mb-1 md:mb-3">
-            <h1 className="text-3xl font-bold text-gray-900 mb-1 ">
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg px-4 py-6 md:p-8 border border-gray-100">
+          <div className="text-center mb-4 md:mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Regístrate
             </h1>
             <p className="text-gray-600">
-              Crea tu cuenta para comenzar a explorar
+              Crea tu cuenta para comenzar a explorar Handmade Art
             </p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-1 md:space-y-6">
-            <div className="space-y-1 md:space-y-6">
+          <form onSubmit={handleRegister} className="space-y-3 md:space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {confirmationMsg && (
                 <div className="mb-1 p-4 rounded-lg bg-teal-50 text-teal-700">
                   {confirmationMsg}
@@ -237,7 +241,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-70 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
               >
                 {loading ? 'Registrando...' : 'Registrarme'}
               </button>
@@ -251,7 +255,7 @@ export default function RegisterPage() {
           <div className="mt-3">
                 <button
                   onClick={handleGoogleSignIn}
-                  className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
                 >
                   <FaGoogle className="mr-2 h-5 w-5" />
                   Iniciar sesión con Google
@@ -260,7 +264,7 @@ export default function RegisterPage() {
           <div className="mt-2">
                 <p className="text-sm text-gray-600 text-center">
                   ¿Ya tienes una cuenta?
-                  <Link href={`/login${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`} className="font-medium text-teal-600 hover:text-teal-500 ml-2">
+                  <Link href={`/login${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`} className="font-medium text-teal-600 hover:text-teal-500 ml-2 transition-colors duration-200">
                     Inicia sesión
                   </Link>
                 </p>
