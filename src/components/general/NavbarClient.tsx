@@ -19,18 +19,20 @@ type NavLink = {
 };
 
 
-export default function NavbarClient({ locale, session }: { locale: string; session: Session | null }) {
+export default function NavbarClient({ locale, session: initialSession }: { locale: string; session: Session | null }) {
   const t = useTranslations('navbar');
   const pathname = usePathname();
   const router = useRouter();
   const { supabase } = useSupabase();
   const { totalItems } = useCart();
   
-  // States for UI controls
+  // Estados para la UI
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [categoryList, setCategoryList] = useState<{id: number, name: string}[]>([]);
   const [showStoreCategories, setShowStoreCategories] = useState(false);
+  // Estado local para la sesión que escuchará cambios
+  const [session, setSession] = useState<Session | null>(initialSession);
   
 
   
@@ -61,6 +63,29 @@ export default function NavbarClient({ locale, session }: { locale: string; sess
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+  
+  // Suscripción a cambios en la sesión
+  useEffect(() => {
+    // Configurar suscripción a cambios de autenticación
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+    
+    // Actualizar la sesión inicial
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+    };
+    
+    getInitialSession();
+    
+    // Limpiar la suscripción cuando el componente se desmonte
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
   
   // Cerrar menú móvil al cambiar el tamaño de la ventana
   useEffect(() => {
