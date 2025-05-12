@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
-import { redirect } from 'next/navigation';
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
 
 export default function LoginPage() {
