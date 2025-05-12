@@ -124,14 +124,14 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 {displayProducts.map((product: Product, idx: number) => (
                   <Link key={idx} href={`/product/${product.id}`} className="block group">
                     <div className="flex flex-col items-center bg-gray-50 rounded p-2 hover:shadow-sm transition-shadow">
-                      <div className="h-[70px] flex items-center justify-center mb-1">
+                      <div className="h-44 flex items-center justify-center mb-1">
                         <Image
                           src={product.media && product.media.length > 0 ?
                             (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') :
                             '/placeholder.jpg'}
                           alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
-                          width={80}
-                          height={80}
+                          width={100}
+                          height={0}
                           className="object-contain max-h-full group-hover:scale-105 transition-transform"
                           unoptimized
                         />
@@ -220,7 +220,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
 
 
       {/* Versión de escritorio - Muestra categorías en grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 mb-4 mt-4 max-lg:hidden">
+      <div className="grid grid-cols-2 md:grid-cols-3  px-4 gap-4 mb-4 mt-4 max-lg:hidden">
         {desktopCards.map((card, index) => (
           <Card key={index} {...card} />
         ))}

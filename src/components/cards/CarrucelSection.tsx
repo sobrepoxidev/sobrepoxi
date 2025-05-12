@@ -218,7 +218,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
     
     return [
       // Primera banda
-      <div key="first-section" className="max-w-[90vw] flex-none mx-1 snap-start">
+      <div key="first-section" className="  max-w-[90vw] flex-none mx-1 snap-start">
         <div className="grid grid-cols-2 gap-1">
           {orderedItems[0].map((product) => {
             const imageUrl = product.media && product.media.length > 0 
@@ -227,7 +227,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             
             return (
               <Link key={product.id} href={`/product/${product.id}`} className="block">
-                <div className="bg-gray-200 rounded-lg shadow-sm">
+                <div className="bg-gray-200 rounded-sm ">
                   <div className="h-[120px] flex items-center justify-center p-2">
                     <Image
                       src={imageUrl}
@@ -387,7 +387,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
           </div>
 
-          <div className="relative carousel-wrapper">
+          <div className="relative carousel-wrapper bg-white">
             {/* Botones de navegación dentro del carrusel */}
             {firstGroupCanScrollLeft && (
               <button

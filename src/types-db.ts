@@ -125,7 +125,7 @@ export type Database = {
         id: string; // UUID references auth.users(id)
         full_name: string | null;
         shipping_address: ShippingAddress | null;
-        preferences: Record<string, any>;
+        preferences: Record<string, unknown>;
         created_at: string;
         updated_at: string;
     }
