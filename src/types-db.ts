@@ -120,5 +120,13 @@ export type Database = {
         user_id: string; // UUID
         product_id: number;
         viewed_at: string;
+    },
+    user_profiles: {
+        id: string; // UUID references auth.users(id)
+        full_name: string | null;
+        shipping_address: ShippingAddress | null;
+        preferences: Record<string, any>;
+        created_at: string;
+        updated_at: string;
     }
 }

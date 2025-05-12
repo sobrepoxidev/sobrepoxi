@@ -18,7 +18,7 @@ type UserProfile = {
   id: string;
   full_name?: string | null;
   shipping_address?: ShippingAddress | null;
-  preferences?: Record<string, any> | null;
+  preferences?: Record<string, unknown> | null;
   created_at?: string;
   updated_at?: string;
 };

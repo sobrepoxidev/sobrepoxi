@@ -7,8 +7,8 @@ import { useTranslations } from 'next-intl';
 type UserProfile = {
   id: string;
   full_name?: string | null;
-  shipping_address?: any | null;
-  preferences?: Record<string, any> | null;
+  shipping_address?: unknown | null;
+  preferences?: Record<string, unknown> | null;
   created_at?: string;
   updated_at?: string;
 };

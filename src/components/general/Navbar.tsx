@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
-import { getTranslations } from 'next-intl/server';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types-db';
@@ -14,16 +13,7 @@ export default async function Navbar({ locale }: { locale: string }) {
   
   // Get the user session
   const { data: { session } } = await supabase.auth.getSession();
-  
-  const t = await getTranslations('navbar');
 
-  // Definir los enlaces de navegación con traducciones
-  // const navigationLinks = [
-  //   { name: t('home'), path: '/' },
-  //   { name: t('about'), path: '/about' },
-  //   { name: t('impact'), path: '/impact' },
-  //   { name: t('shipping'), path: '/shipping' },
-  // ];
 
   return (
     <header className="relative z-40 border-b ">

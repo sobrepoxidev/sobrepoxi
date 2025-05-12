@@ -24,7 +24,8 @@ type CartItem = {
     id?: number;
 };
 
-interface ShippingAddress {
+// Using the ShippingAddress from types-db.ts but making all fields required for checkout
+type ShippingAddress = {
     name: string;
     address: string;
     city: string;
@@ -32,7 +33,7 @@ interface ShippingAddress {
     country: string;
     postal_code: string;
     phone: string;
-}
+};
 
 export default function StepOne({
     cart,
@@ -48,8 +49,7 @@ export default function StepOne({
     
     // Estados para la sesión y el perfil de usuario
     const [session, setSession] = useState<Session | null>(null);
-    const [userProfile, setUserProfile] = useState<any>(null);
-    const [isProfileLoading, setIsProfileLoading] = useState(false);
+    const [userProfile, setUserProfile] = useState<Database['user_profiles'] | null>(null);
     
     // Estado para mostrar diálogo de selección de dirección
     const [showAddressOptions, setShowAddressOptions] = useState(false);
@@ -109,7 +109,6 @@ export default function StepOne({
     useEffect(() => {
       const fetchUserProfile = async () => {
         if (session?.user?.id) {
-          setIsProfileLoading(true);
           try {
             const { data, error } = await supabase
               .from('user_profiles')
@@ -129,8 +128,6 @@ export default function StepOne({
             }
           } catch (error) {
             console.error('Error:', error);
-          } finally {
-            setIsProfileLoading(false);
           }
         }
       };
@@ -139,8 +136,8 @@ export default function StepOne({
     }, [session, supabase, justLoggedIn]);
     
     const [formData, setFormData] = useState({
-      nombre: initialData?.name.split(' ')[0] || '',
-      apellidos: initialData?.name.split(' ').slice(1).join(' ') || '',
+      nombre: initialData?.name?.split(' ')[0] || '',
+      apellidos: initialData?.name?.split(' ').slice(1).join(' ') || '',
       email: '',
       telefono: initialData?.phone || '',
       direccion1: initialData?.address || '',
@@ -172,19 +169,21 @@ export default function StepOne({
       // Si no hay datos iniciales pero sí hay perfil con dirección guardada
       else if (userProfile?.shipping_address && !initialData && !showAddressOptions) {
         const address = userProfile.shipping_address;
-        const nameParts = address.name.split(' ');
-        setFormData({
-          nombre: nameParts[0] || '',
-          apellidos: nameParts.slice(1).join(' ') || '',
-          email: '',
-          telefono: address.phone || '',
-          direccion1: address.address || '',
-          direccion2: '',
-          provincia: address.state || '',
-          canton: address.city || '',
-          distrito: '',
-          codigoPostal: address.postal_code || '',
-        });
+        if (address && typeof address === 'object') {
+          const nameParts = address.name?.split(' ') || [''];
+          setFormData({
+            nombre: nameParts[0] || '',
+            apellidos: nameParts.slice(1).join(' ') || '',
+            email: '',
+            telefono: address.phone || '',
+            direccion1: address.address || '',
+            direccion2: '',
+            provincia: address.state || '',
+            canton: address.city || '',
+            distrito: '',
+            codigoPostal: address.postal_code || '',
+          });
+        }
       }
     }, [initialData, userProfile, showAddressOptions]);
 
@@ -245,23 +244,25 @@ export default function StepOne({
     };
     
     // Manejar selección de dirección (usar la del perfil o la que se estaba completando)
-    const handleAddressSelection = (useProfileAddress: boolean, updateProfile: boolean = false) => {
+    const handleAddressSelection = (useProfileAddress: boolean, updateProfile = false) => {
       if (useProfileAddress && userProfile?.shipping_address) {
         // Usar la dirección del perfil
         const address = userProfile.shipping_address;
-        const nameParts = address.name.split(' ');
-        setFormData({
-          nombre: nameParts[0] || '',
-          apellidos: nameParts.slice(1).join(' ') || '',
-          email: '',
-          telefono: address.phone || '',
-          direccion1: address.address || '',
-          direccion2: '',
-          provincia: address.state || '',
-          canton: address.city || '',
-          distrito: '',
-          codigoPostal: address.postal_code || '',
-        });
+        if (address && typeof address === 'object') {
+          const nameParts = address.name?.split(' ') || [''];
+          setFormData({
+            nombre: nameParts[0] || '',
+            apellidos: nameParts.slice(1).join(' ') || '',
+            email: '',
+            telefono: address.phone || '',
+            direccion1: address.address || '',
+            direccion2: '',
+            provincia: address.state || '',
+            canton: address.city || '',
+            distrito: '',
+            codigoPostal: address.postal_code || '',
+          });
+        }
       } else if (updateProfile) {
         // Crear dirección a partir de los datos del formulario
         const shippingAddress: ShippingAddress = {
