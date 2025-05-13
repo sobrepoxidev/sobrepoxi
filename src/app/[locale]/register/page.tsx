@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
-import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 //import { Tooltip } from 'react-tooltip' // Ejemplo: npm install react-tooltip (o quítalo si no lo quieres)
 import Link from 'next/link'
 
@@ -22,6 +22,8 @@ export default function RegisterPage() {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [receivePromotions, setReceivePromotions] = useState(true)
   const [returnUrl, setReturnUrl] = useState('/')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -179,13 +181,21 @@ export default function RegisterPage() {
                   <div className="relative">
                     <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-10 pr-10 py-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                       required
                     />
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    >
+                      {showPassword ? <FaEyeSlash className="h-4 w-4" /> : <FaEye className="h-4 w-4" />}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -197,13 +207,21 @@ export default function RegisterPage() {
                 <div className="relative">
                   <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     id="confirmPass"
                     value={confirmPass}
                     onChange={(e) => setConfirmPass(e.target.value)}
-                    className="w-full pl-10 pr-4 py-1 mb-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full pl-10 pr-10 py-1 mb-1 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                     required
                   />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showConfirmPassword ? <FaEyeSlash className="h-4 w-4" /> : <FaEye className="h-4 w-4" />}
+                  </button>
                 </div>
               </div>
 

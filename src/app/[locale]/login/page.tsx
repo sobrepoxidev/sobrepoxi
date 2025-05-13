@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
-import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -11,6 +11,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -147,13 +148,21 @@ export default function LoginPage() {
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 text-gray-700 rounded-md focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 text-gray-700 rounded-md focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
                   required
                 />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                </button>
               </div>
             </div>
 
