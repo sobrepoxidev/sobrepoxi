@@ -23,8 +23,8 @@ export default function LoginPage() {
   useEffect(() => {
     setMounted(true)
     
-    // Extraer returnUrl del query string usando Next.js searchParams
-    const returnUrlParam = searchParams.get('returnUrl');
+    // Extraer returnUrl o redirect del query string usando Next.js searchParams
+    const returnUrlParam = searchParams.get('returnUrl') || searchParams.get('redirect');
     if (returnUrlParam) {
       setReturnUrl(returnUrlParam);
     }
@@ -61,14 +61,36 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true)
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          // Use proper redirection URL formatting
-          redirectTo: `${window.location.origin}`,
-        },
-      })
-      if (error) throw error
+      // Construir la URL de redirección con el parámetro de retorno
+      const redirectUrl = new URL(window.location.origin);
+      
+      // Si hay una URL de retorno, agregarla como parámetro de estado para recuperarla después
+      if (returnUrl && returnUrl !== '/') {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/auth/callback`,
+            queryParams: {
+              next: returnUrl,
+            },
+           
+          },
+        })
+        if (error) throw error
+      } else {
+        // Login normal sin URL de retorno
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/auth/callback`,
+            queryParams: {
+              next: '/login',
+            },
+          },
+
+        })
+        if (error) throw error
+      }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
       setErrorMsg(errorMessage)

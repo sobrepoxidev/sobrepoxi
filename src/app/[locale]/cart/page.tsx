@@ -3,7 +3,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useSupabase } from "@/app/supabase-provider/provider";
 import { Database } from "@/types-db";
@@ -37,8 +37,6 @@ type Category = Database['categories'];
 
 export default function CartPage() {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { session, supabase } = useSupabase();
   
   // Estado local para el estado de la sesión
@@ -491,10 +489,10 @@ export default function CartPage() {
                   if (currentSession === null) {
                     // If not logged in, redirect to login page with return URL
                     // Construimos la URL completa usando los hooks de Next.js
-                    const currentPath = pathname;
-                    const queryString = searchParams.toString();
-                    const fullPath = queryString ? `${currentPath}?${queryString}` : currentPath;
-                    router.push(`/login?returnUrl=${encodeURIComponent(fullPath)}`);
+                    const fullPath = window.location.pathname + window.location.search;
+                    console.log("fullPath:", fullPath);
+                    console.log("FULLPATH ENCODER:", encodeURIComponent(fullPath));
+                    router.push(`/login?returnUrl=${fullPath}`);
                     return;
                   }
                   

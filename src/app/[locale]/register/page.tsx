@@ -87,6 +87,7 @@ export default function RegisterPage() {
     
     // Extraer returnUrl del query string usando Next.js searchParams
     const returnUrlParam = searchParams.get('returnUrl');
+    console.log("Return URL Param:", returnUrlParam);
     if (returnUrlParam) {
       setReturnUrl(returnUrlParam);
     }
@@ -95,7 +96,7 @@ export default function RegisterPage() {
   if (!mounted) return null
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 py-6 px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 py-6 px-4 sm:px-6 lg:px-8 text-gray-800">
       <div className="mx-auto max-w-7xl">
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg px-4 py-6 md:p-8 border border-gray-100">
           <div className="text-center mb-4 md:mb-6">
@@ -258,7 +259,7 @@ export default function RegisterPage() {
                   className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
                 >
                   <FaGoogle className="mr-2 h-5 w-5" />
-                  Iniciar sesión con Google
+                  Registrarme con Google
                 </button>
               </div>
           <div className="mt-2">
