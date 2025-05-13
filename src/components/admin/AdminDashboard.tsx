@@ -423,9 +423,17 @@ export default function AdminDashboard() {
                               const loadingToast = toast.loading('Actualizando precio...');
                               
                               // Actualizar el precio
+                              const result = await updateProduct(product.id, { price: product.price });
                               
                               // Cerrar el toast de carga
                               toast.dismiss(loadingToast);
+                              
+                              // Si no se actualizó, mostrar mensaje
+                              if (!result.success) {
+                                toast.error('No se pudo actualizar el precio');
+                              }
+                            } else {
+                              toast.error('El precio no puede estar vacío');
                             }
                           }}
                           title="Actualizar precio"
