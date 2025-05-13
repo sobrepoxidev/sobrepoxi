@@ -78,6 +78,24 @@ export default function AdminDashboard() {
   const updateProduct = async (productId: number, updates: Partial<Product>) => {
     try {
       setLoading(true);
+      
+      // Validar los datos antes de actualizar
+      if (updates.price !== undefined) {
+        const price = Number(updates.price);
+        if (isNaN(price) || price < 0) {
+          throw new Error('El precio debe ser un número válido mayor o igual a 0');
+        }
+        updates.price = price;
+      }
+      
+      if (updates.discount_percentage !== undefined) {
+        const discount = Number(updates.discount_percentage);
+        if (isNaN(discount) || discount < 0 || discount > 100) {
+          throw new Error('El descuento debe ser un número entre 0 y 100');
+        }
+        updates.discount_percentage = discount;
+      }
+
       const { error } = await supabase
         .from('products')
         .update(updates)
@@ -95,12 +113,32 @@ export default function AdminDashboard() {
         setSelectedProduct({ ...selectedProduct, ...updates });
       }
       
-      // Mostrar notificación de éxito
+      // Mostrar notificación de éxito según el tipo de actualización
       if (updates.price !== undefined) {
         toast.success(
           <div className="flex flex-col">
             <span className="font-medium">Precio actualizado</span>
             <span className="text-sm">Nuevo precio: ₡{updates.price}</span>
+          </div>,
+          { duration: 3000 }
+        );
+      } else if (updates.is_active !== undefined) {
+        toast.success(
+          <div className="flex flex-col">
+            <span className="font-medium">Estado actualizado</span>
+            <span className="text-sm">{updates.is_active ? 'Producto activado' : 'Producto desactivado'}</span>
+          </div>,
+          { duration: 3000 }
+        );
+      } else if (updates.discount_percentage !== undefined) {
+        toast.success(
+          <div className="flex flex-col">
+            <span className="font-medium">Descuento actualizado</span>
+            <span className="text-sm">
+              {updates.discount_percentage > 0 
+                ? `Descuento: ${updates.discount_percentage}%`
+                : 'Descuento removido'}
+            </span>
           </div>,
           { duration: 3000 }
         );
@@ -111,8 +149,9 @@ export default function AdminDashboard() {
       return { success: true };
     } catch (err: unknown) {
       console.error('Error al actualizar producto:', err);
-      toast.error(`Error: ${err instanceof Error ? err.message : 'No se pudo actualizar el producto'}`);
-      return { success: false, error: err instanceof Error ? err.message : 'An unknown error occurred' };
+      const errorMessage = err instanceof Error ? err.message : 'No se pudo actualizar el producto';
+      toast.error(`Error: ${errorMessage}`);
+      return { success: false, error: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -289,8 +328,8 @@ export default function AdminDashboard() {
                     <div className="mt-2 flex flex-col">
                       <div className="flex items-center">
                         <div className="flex-grow flex items-center">
-                          <div className="flex items-center">
-                            <div className="flex items-center">
+                          <div className="flex items-center mt-1">
+                            <div className="flex items-center mr-2">
                               <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
                                 <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
                                 <input 
@@ -312,11 +351,13 @@ export default function AdminDashboard() {
                                 className="px-3 py-2 ml-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                                 onClick={async (e) => {
                                   e.stopPropagation();
+                                  e.preventDefault();
                                   if (product.price !== null) {
                                     // Mostrar un toast de carga
                                     const loadingToast = toast.loading('Actualizando precio...');
                                     
                                     // Actualizar el precio
+                                    await updateProduct(product.id, { price: product.price });
                                     
                                     // Cerrar el toast de carga
                                     toast.dismiss(loadingToast);
@@ -330,6 +371,57 @@ export default function AdminDashboard() {
                                 <span>Guardar</span>
                               </button>
                             </div>
+                            
+                            {/* Control de descuento */}
+                            <div className="flex items-center mr-2">
+                              <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                                <input 
+                                  type="number" 
+                                  className="w-16 px-2 py-2 text-sm font-medium text-gray-700 border-none focus:outline-none focus:ring-0" 
+                                  value={product.discount_percentage || ''}
+                                  onChange={(e) => {
+                                    const newDiscount = e.target.value ? parseFloat(e.target.value) : null;
+                                    setProducts(products.map(p => 
+                                      p.id === product.id ? { ...p, discount_percentage: newDiscount } : p
+                                    ));
+                                  }}
+                                  min="0"
+                                  max="100"
+                                  step="1"
+                                  placeholder="0"
+                                  onClick={(e) => e.stopPropagation()}
+                                />
+                                <span className="px-2 py-2 bg-gray-50 text-gray-700 font-medium border-l border-gray-300">%</span>
+                              </div>
+                              <button 
+                                className="px-3 py-2 ml-1 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                                onClick={async (e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                  const loadingToast = toast.loading('Actualizando descuento...');
+                                  await updateProduct(product.id, { discount_percentage: product.discount_percentage });
+                                  toast.dismiss(loadingToast);
+                                }}
+                                title="Actualizar descuento"
+                              >
+                                <span>Aplicar</span>
+                              </button>
+                            </div>
+                            
+                            {/* Botón de activar/desactivar */}
+                            <button 
+                              className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 flex items-center justify-center ${product.is_active ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white`}
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                                await updateProduct(product.id, { is_active: !product.is_active });
+                                toast.dismiss(loadingToast);
+                              }}
+                              title={product.is_active ? 'Desactivar producto' : 'Activar producto'}
+                            >
+                              {product.is_active ? 'Desactivar' : 'Activar'}
+                            </button>
                           </div>
                         </div>
                       </div>
