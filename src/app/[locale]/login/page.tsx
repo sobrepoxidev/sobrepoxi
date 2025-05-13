@@ -61,8 +61,6 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true)
     try {
-      // Construir la URL de redirección con el parámetro de retorno
-      const redirectUrl = new URL(window.location.origin);
       
       // Si hay una URL de retorno, agregarla como parámetro de estado para recuperarla después
       if (returnUrl && returnUrl !== '/') {
