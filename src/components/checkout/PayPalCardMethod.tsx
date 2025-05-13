@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from 'next/navigation';
-import { useSupabase } from '@/app/supabase-provider/provider';
+import { Session } from '@supabase/supabase-js';
 import { useCart, CartItem } from "@/context/CartContext";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
@@ -35,8 +35,19 @@ export default function PayPalCardMethod({
     const [redirecting, setRedirecting] = useState(false);
     const router = useRouter();
     const { cart, clearCart } = useCart();
-    const { session } = useSupabase();
+
+     const [session, setSession] = useState<Session | null>(null);
     const userId = session?.user?.id || 'guest-user';
+
+    useEffect(() => {
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+          setSession(session);
+        });
+        // Limpieza
+        return () => {
+          listener?.subscription.unsubscribe();
+        };
+      }, [supabase]);
 
     // Tasa de conversión fija de PayPal
     useEffect(() => {
