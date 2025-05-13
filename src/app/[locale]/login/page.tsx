@@ -40,7 +40,12 @@ export default function LoginPage() {
         password,
       })
       if (error) {
-        setErrorMsg(error.message)
+        // Manejar específicamente el error de límite de tasa
+        if (error.message.includes('rate limit')) {
+          setErrorMsg('Has excedido el número de intentos permitidos. Por favor, espera unos minutos antes de intentarlo nuevamente o usa el inicio de sesión con Google.')
+        } else {
+          setErrorMsg(error.message)
+        }
         setLoading(false)
       } else {
         setConfirmationMsg('Iniciando sesión...')
@@ -50,10 +55,10 @@ export default function LoginPage() {
         // En lugar de redirect, que causa problemas con componentes cliente,
         // usamos router.replace que es más adecuado para componentes cliente
         router.replace(returnUrl)
-
       }
-    } catch {
-      setErrorMsg('Error inesperado. Intenta de nuevo.')
+    } catch (err) {
+      console.error('Error al iniciar sesión:', err)
+      setErrorMsg('Error inesperado. Intenta de nuevo o usa el inicio de sesión con Google.')
       setLoading(false)
     }
   }
