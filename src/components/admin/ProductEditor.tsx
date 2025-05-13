@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Database } from '@/types-db';
 import { X, Save, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import Image from 'next/image';
 
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -16,6 +17,13 @@ interface ProductEditorProps {
 }
 
 export default function ProductEditor({ product, categories, onSave, onCancel }: ProductEditorProps) {
+  // Campos que ya se pueden editar directamente en las tarjetas
+  // - price: se puede editar en la tarjeta con guardado inmediato
+  // - is_active: se puede activar/desactivar en la tarjeta con guardado inmediato
+  // - discount_percentage: se puede editar en la tarjeta con guardado inmediato
+  
+  // En el editor modal, nos enfocamos en campos que no se pueden editar fácilmente en las tarjetas
+  // y opciones más avanzadas
   const [price, setPrice] = useState<number | null>(product.price);
   const [name, setName] = useState<string | null>(product.name_es || product.name);
   const [isActive, setIsActive] = useState<boolean | null>(product.is_active);
@@ -51,6 +59,23 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
           }
         });
         return;
+      }
+      
+      // Validar datos antes de guardar
+      if (updates.price !== undefined && updates.price !== null) {
+        const priceNum = Number(updates.price);
+        if (isNaN(priceNum) || priceNum < 0) {
+          throw new Error('El precio debe ser un número válido mayor o igual a 0');
+        }
+        updates.price = priceNum;
+      }
+      
+      if (updates.discount_percentage !== undefined && updates.discount_percentage !== null) {
+        const discountNum = Number(updates.discount_percentage);
+        if (isNaN(discountNum) || discountNum < 0 || discountNum > 100) {
+          throw new Error('El descuento debe ser un número entre 0 y 100');
+        }
+        updates.discount_percentage = discountNum;
       }
       
       const result = await onSave(updates);
@@ -99,10 +124,13 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
         <div className="flex justify-center mb-6">
           <div className="w-full max-w-xs h-64 bg-gray-200 rounded-lg overflow-hidden">
             {product.media && product.media.length > 0 && product.media[0].url ? (
-              <img 
+              <Image 
                 src={product.media[0].url} 
                 alt={product.name || 'Producto'} 
                 className="w-full h-full object-contain"
+                width={300}
+                height={300}
+                priority
               />
             ) : (
               <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
@@ -118,82 +146,81 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
             ID: {product.id} {product.sku && `• SKU: ${product.sku}`}
           </div>
           
-          {/* Nombre del producto */}
+          {/* Nombre del producto - No editable en tarjetas */}
           <div className="mb-4">
-            <label htmlFor="productName" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Nombre del producto
             </label>
             <input
               type="text"
-              id="productName"
+              id="name"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               value={name || ''}
               onChange={(e) => setName(e.target.value || null)}
+              placeholder="Nombre del producto"
             />
+            <p className="mt-1 text-xs text-teal-600">
+              El nombre es un campo importante que solo se puede editar aquí
+            </p>
           </div>
           
-          {/* Precio - Sección destacada */}
-          <div className="mb-6 bg-white p-4 rounded-lg border-2 border-teal-500 shadow-sm">
-            <label htmlFor="productPrice" className="block text-lg font-bold text-teal-700 mb-2">
-              Precio (₡)
-            </label>
-            <input
-              type="number"
-              id="productPrice"
-              className="w-full px-4 py-3 text-xl border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={price === null ? '' : price}
-              onChange={(e) => setPrice(e.target.value ? parseFloat(e.target.value) : null)}
-              step="0.01"
-              min="0"
-              placeholder="Ingrese el precio en colones"
-            />
-          </div>
-          
-          {/* Estado del producto */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Estado del producto
-            </label>
-            <div className="flex items-center space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio text-teal-600"
-                  name="status"
-                  checked={isActive === true}
-                  onChange={() => setIsActive(true)}
-                />
-                <span className="ml-2">Activo</span>
+          {/* Sección de campos que también se pueden editar en las tarjetas */}
+          <div className="mb-4 p-3 border border-gray-200 rounded-md bg-white">
+            <h3 className="text-sm font-medium text-gray-500 mb-3">Campos de edición rápida</h3>
+            <p className="text-xs text-gray-500 mb-3">
+              Estos campos también se pueden editar directamente desde las tarjetas de productos
+            </p>
+            
+            {/* Precio */}
+            <div className="mb-4">
+              <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+                Precio (₡)
               </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio text-red-600"
-                  name="status"
-                  checked={isActive === false}
-                  onChange={() => setIsActive(false)}
-                />
-                <span className="ml-2">Inactivo</span>
-              </label>
+              <input
+                type="number"
+                id="price"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                value={price === null ? '' : price}
+                onChange={(e) => setPrice(e.target.value ? parseFloat(e.target.value) : null)}
+                min="0"
+                step="100"
+                placeholder="0"
+              />
             </div>
-          </div>
-          
-          {/* Descuento */}
-          <div className="mb-4">
-            <label htmlFor="discountPercentage" className="block text-sm font-medium text-gray-700 mb-1">
-              Porcentaje de descuento (%)
-            </label>
-            <input
-              type="number"
-              id="discountPercentage"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              value={discountPercentage === null ? '' : discountPercentage}
-              onChange={(e) => setDiscountPercentage(e.target.value ? parseFloat(e.target.value) : null)}
-              min="0"
-              max="100"
-              step="0.1"
-              placeholder="Sin descuento"
-            />
+            
+            {/* Estado activo */}
+            <div className="mb-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="isActive"
+                  className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                  checked={isActive === true}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                />
+                <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700">
+                  Producto activo (visible en la tienda)
+                </label>
+              </div>
+            </div>
+            
+            {/* Descuento */}
+            <div className="mb-4">
+              <label htmlFor="discountPercentage" className="block text-sm font-medium text-gray-700 mb-1">
+                Porcentaje de descuento (%)
+              </label>
+              <input
+                type="number"
+                id="discountPercentage"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                value={discountPercentage === null ? '' : discountPercentage}
+                onChange={(e) => setDiscountPercentage(e.target.value ? parseFloat(e.target.value) : null)}
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder="Sin descuento"
+              />
+            </div>
           </div>
         </div>
         

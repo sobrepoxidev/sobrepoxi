@@ -298,9 +298,11 @@ export default function AdminDashboard() {
                       <Image 
                         src={product.media[0].url} 
                         alt={product.name || 'Producto'} 
-                        className={`object-contain max-h-full max-w-full transition-transform duration-300 `}
-                        width={150}
-                        height={0}
+                        className="object-contain max-h-full max-w-full transition-transform duration-300"
+                        width={300}
+                        height={300}
+                        priority={false}
+                        sizes="(max-width: 768px) 100vw, 300px"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
@@ -328,52 +330,65 @@ export default function AdminDashboard() {
                     <div className="mt-2 flex flex-col">
                       <div className="flex items-center">
                         <div className="flex-grow flex items-center">
-                          <div className="flex items-center mt-1">
-                            <div className="flex items-center mr-2">
-                              <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
-                                <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
-                                <input 
-                                  type="number" 
-                                  className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
-                                  value={product.price || ''}
-                                  onChange={(e) => {
-                                    const newPrice = e.target.value ? parseFloat(e.target.value) : null;
-                                    setProducts(products.map(p => 
-                                      p.id === product.id ? { ...p, price: newPrice } : p
-                                    ));
+                          <div className="flex flex-col space-y-2">
+                            {/* Primera fila: Precio y estado */}
+                            <div className="flex flex-wrap items-center gap-2">
+                              <div className="flex items-center">
+                                <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                                  <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
+                                  <input 
+                                    type="number" 
+                                    className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
+                                    value={product.price || ''}
+                                    onChange={(e) => {
+                                      const newPrice = e.target.value ? parseFloat(e.target.value) : null;
+                                      setProducts(products.map(p => 
+                                        p.id === product.id ? { ...p, price: newPrice } : p
+                                      ));
+                                    }}
+                                    min="0"
+                                    step="100"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </div>
+                                <button 
+                                  className="px-3 py-2 ml-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                                  onClick={async (e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    if (product.price !== null) {
+                                      const loadingToast = toast.loading('Actualizando precio...');
+                                      await updateProduct(product.id, { price: product.price });
+                                      toast.dismiss(loadingToast);
+                                    }
                                   }}
-                                  min="0"
-                                  step="100"
-                                  onClick={(e) => e.stopPropagation()}
-                                />
+                                  title="Actualizar precio"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                  <span>Guardar</span>
+                                </button>
                               </div>
+
+                              {/* Botón de activar/desactivar */}
                               <button 
-                                className="px-3 py-2 ml-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                                className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 flex items-center justify-center ${product.is_active ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white`}
                                 onClick={async (e) => {
                                   e.stopPropagation();
                                   e.preventDefault();
-                                  if (product.price !== null) {
-                                    // Mostrar un toast de carga
-                                    const loadingToast = toast.loading('Actualizando precio...');
-                                    
-                                    // Actualizar el precio
-                                    await updateProduct(product.id, { price: product.price });
-                                    
-                                    // Cerrar el toast de carga
-                                    toast.dismiss(loadingToast);
-                                  }
+                                  const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                                  await updateProduct(product.id, { is_active: !product.is_active });
+                                  toast.dismiss(loadingToast);
                                 }}
-                                title="Actualizar precio"
+                                title={product.is_active ? 'Desactivar producto' : 'Activar producto'}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Guardar</span>
+                                {product.is_active ? 'Desactivar' : 'Activar'}
                               </button>
                             </div>
-                            
-                            {/* Control de descuento */}
-                            <div className="flex items-center mr-2">
+
+                            {/* Segunda fila: Control de descuento */}
+                            <div className="flex items-center">
                               <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
                                 <input 
                                   type="number" 
@@ -404,24 +419,9 @@ export default function AdminDashboard() {
                                 }}
                                 title="Actualizar descuento"
                               >
-                                <span>Aplicar</span>
+                                <span>Aplicar descuento</span>
                               </button>
                             </div>
-                            
-                            {/* Botón de activar/desactivar */}
-                            <button 
-                              className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 flex items-center justify-center ${product.is_active ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white`}
-                              onClick={async (e) => {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
-                                await updateProduct(product.id, { is_active: !product.is_active });
-                                toast.dismiss(loadingToast);
-                              }}
-                              title={product.is_active ? 'Desactivar producto' : 'Activar producto'}
-                            >
-                              {product.is_active ? 'Desactivar' : 'Activar'}
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -455,15 +455,16 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 // Vista de lista
-                <div className="flex p-4">
-                  <div className="flex-shrink-0 w-24 h-24 bg-gray-200 mr-4">
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200" onClick={() => setSelectedProduct(product)}>
+                  <div className="relative h-48 bg-gray-100">
                     {product.media && product.media.length > 0 && product.media[0].url ? (
                       <Image 
                         src={product.media[0].url} 
                         alt={product.name || 'Producto'} 
-                        className="w-full h-full object-cover"
-                        width={100}
-                        height={100}
+                        className="w-full h-full object-contain"
+                        width={300}
+                        height={300}
+                        priority={false}
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
