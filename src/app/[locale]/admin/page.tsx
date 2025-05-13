@@ -9,9 +9,9 @@ const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com']; /
 export default async function AdminPage({
   params
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>;
 }) {
-  const locale = params.locale || 'es';
+  const { locale } = await params;
   const supabase = createServerComponentClient({ cookies });
   
   // Verificar si el usuario está autenticado
