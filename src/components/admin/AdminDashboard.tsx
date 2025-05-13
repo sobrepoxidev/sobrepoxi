@@ -38,8 +38,8 @@ export default function AdminDashboard() {
 
       if (error) throw error;
       setProducts(data || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
       console.error('Error al cargar productos:', err);
     } finally {
       setLoading(false);
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
 
       if (error) throw error;
       setCategories(data || []);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error al cargar categorías:', err);
     }
   };
@@ -109,10 +109,10 @@ export default function AdminDashboard() {
       }
       
       return { success: true };
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error al actualizar producto:', err);
-      toast.error(`Error: ${err.message || 'No se pudo actualizar el producto'}`);
-      return { success: false, error: err.message };
+      toast.error(`Error: ${err instanceof Error ? err.message : 'No se pudo actualizar el producto'}`);
+      return { success: false, error: err instanceof Error ? err.message : 'An unknown error occurred' };
     } finally {
       setLoading(false);
     }
@@ -317,7 +317,6 @@ export default function AdminDashboard() {
                                     const loadingToast = toast.loading('Actualizando precio...');
                                     
                                     // Actualizar el precio
-                                    const result = await updateProduct(product.id, { price: product.price });
                                     
                                     // Cerrar el toast de carga
                                     toast.dismiss(loadingToast);
@@ -424,7 +423,6 @@ export default function AdminDashboard() {
                               const loadingToast = toast.loading('Actualizando precio...');
                               
                               // Actualizar el precio
-                              const result = await updateProduct(product.id, { price: product.price });
                               
                               // Cerrar el toast de carga
                               toast.dismiss(loadingToast);

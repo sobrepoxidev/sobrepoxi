@@ -23,7 +23,6 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Manejar el guardado de cambios
   const handleSave = async () => {
@@ -66,8 +65,8 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
         toast.error(result.error || 'Error al guardar los cambios');
         setError(result.error || 'Error al guardar los cambios');
       }
-    } catch (err: any) {
-      const errorMsg = err.message || 'Error al guardar los cambios';
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al guardar los cambios';
       toast.error(errorMsg);
       setError(errorMsg);
     } finally {
@@ -92,12 +91,6 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
       {error && (
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
           <p>{error}</p>
-        </div>
-      )}
-      
-      {successMessage && (
-        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-          <p>{successMessage}</p>
         </div>
       )}
       
