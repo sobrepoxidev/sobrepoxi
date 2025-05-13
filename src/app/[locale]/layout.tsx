@@ -1,8 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react"
-import SupabaseProvider from '@/app/supabase-provider/provider';
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from 'react-hot-toast';
 
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
@@ -11,6 +8,7 @@ import { routing } from '@/i18n/routing';
 
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
+import SessionLayout from "@/components/SessionLayout"; // 👈 nuevo import
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,8 +20,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-
 export default async function RootLayout({
   children,
   params,
@@ -33,34 +29,23 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
 
-
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-  const cookieStore = cookies();
-const supabase = createServerComponentClient({ cookies: () => cookieStore });
-
-  // 4) Obtener la sesión (por si necesitas user, etc.)
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
 
   return (
     <html lang={locale}>
-      <body
-        className={` ${geistSans.variable} ${geistMono.variable} antialiased `} //min-h-screen flex flex-col
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider locale={locale}>
-        <SupabaseProvider session={session}>
-          <Navbar locale={locale} />
-          {children}
-          <Footer />
-          <Toaster position="top-center" />
-          <Analytics />
-          </SupabaseProvider>
+          <SessionLayout>
+            <Navbar locale={locale} />
+            {children}
+            <Footer />
+            <Toaster position="top-center" />
+            <Analytics />
+          </SessionLayout>
         </NextIntlClientProvider>
       </body>
     </html>
-
   );
 }

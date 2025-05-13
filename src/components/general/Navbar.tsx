@@ -5,16 +5,13 @@ import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types-db';
 
 export default async function Navbar({ locale }: { locale: string }) {
   // Usar la versión correcta y más reciente de la API de cookies
   // Pasar el método cookies directamente sin llamarlo
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
   
   // Get the user session
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await createServerComponentClient({ cookies }).auth.getSession();
 
 
   return (
