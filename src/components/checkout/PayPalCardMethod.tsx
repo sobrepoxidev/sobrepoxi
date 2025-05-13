@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart, CartItem } from "@/context/CartContext";
 import { supabase } from "@/lib/supabaseClient";
-//importar process las variables de entorno explicitamente con dotenv
-
+import { Loader2 } from "lucide-react";
 
 // Use a hardcoded sandbox client ID for development
 // In production, this should be replaced with your actual client ID from environment variables
@@ -20,8 +19,6 @@ if(PAYPAL_CLIENT_ID === 'sb') {
     
 }
 
-
-
 interface PayPalCardMethodProps {
     createdOrderId: number;
     onPaymentSuccess: () => void;
@@ -34,6 +31,8 @@ export default function PayPalCardMethod({
     onPaymentError,
 }: PayPalCardMethodProps) {
     const [loading, setLoading] = useState(false);
+    // Estado para controlar la pantalla de carga durante la redirección
+    const [redirecting, setRedirecting] = useState(false);
     const router = useRouter();
     const { cart, clearCart } = useCart();
     const { session } = useSupabase();
@@ -44,6 +43,48 @@ export default function PayPalCardMethod({
         console.log("PayPal client ID: ", PAYPAL_CLIENT_ID);
     }, []);
 
+    // Efecto para prevenir la navegación mientras se está redirigiendo
+    useEffect(() => {
+        if (redirecting) {
+            // Crear un elemento de pantalla completa para bloquear la interfaz
+            const blockingDiv = document.createElement('div');
+            blockingDiv.id = 'payment-processing-overlay';
+            blockingDiv.style.position = 'fixed';
+            blockingDiv.style.top = '0';
+            blockingDiv.style.left = '0';
+            blockingDiv.style.width = '100%';
+            blockingDiv.style.height = '100%';
+            blockingDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            blockingDiv.style.zIndex = '9999';
+            blockingDiv.style.display = 'flex';
+            blockingDiv.style.flexDirection = 'column';
+            blockingDiv.style.alignItems = 'center';
+            blockingDiv.style.justifyContent = 'center';
+            
+            // Contenido del overlay
+            blockingDiv.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="margin-bottom: 20px;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="animate-spin">
+                            <path opacity="0.2" fill-rule="evenodd" clip-rule="evenodd" d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"/>
+                            <path d="M2 12C2 6.47715 6.47715 2 12 2V5C8.13401 5 5 8.13401 5 12H2Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: bold; color: #4B5563; margin-bottom: 0.5rem;">Procesando su pago</h3>
+                    <p style="color: #6B7280;">Por favor espere mientras completamos su compra...</p>
+                </div>
+            `;
+            
+            document.body.appendChild(blockingDiv);
+            
+            return () => {
+                // Limpiar el overlay cuando el componente se desmonte
+                if (document.body.contains(blockingDiv)) {
+                    document.body.removeChild(blockingDiv);
+                }
+            };
+        }
+    }, [redirecting]);
 
     return (
         <div className="w-full max-w-2xl mx-auto p-4">
@@ -52,7 +93,12 @@ export default function PayPalCardMethod({
                 <p className="text-center mt-1 text-xs">Podrás elegir pagar en CRC o USD</p>
             </div>
 
-            {loading && <p className="text-gray-600">Procesando...</p>}
+            {loading && !redirecting && (
+                <div className="flex items-center justify-center py-2 text-gray-600">
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <p>Procesando...</p>
+                </div>
+            )}
             <div className="App">
                 <PayPalScriptProvider
                 options={{
@@ -114,6 +160,9 @@ export default function PayPalCardMethod({
                                     }
                                 }
 
+                                // Activar pantalla de carga para la redirección
+                                setRedirecting(true);
+                                
                                 // Clear local cart
                                 clearCart();
 
@@ -153,8 +202,11 @@ export default function PayPalCardMethod({
                                 // Notificar éxito y redirigir
                                 onPaymentSuccess();
 
-                                // Redirigir a la página de confirmación
-                                router.push(`/order-confirmation?order_id=${createdOrderId}`);
+                                // Pequeño retraso para asegurar que el overlay esté visible
+                                setTimeout(() => {
+                                    // Redirigir a la página de confirmación
+                                    router.push(`/order-confirmation?order_id=${createdOrderId}`);
+                                }, 500);
                             } else {
                                 onPaymentError("La transacción no pudo completarse.");
                             }
