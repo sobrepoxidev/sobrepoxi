@@ -62,7 +62,7 @@ export default async function Navbar({ locale }: { locale: string }) {
       </div>
         
         {/* Mobile Search Bar - Visible by default on mobile */}
-        <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-2">
+        <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-0.5">
           <SearchBar 
             variant="mobile" 
             initialCategory={locale === 'es' ? 'Todo' : 'All'}
