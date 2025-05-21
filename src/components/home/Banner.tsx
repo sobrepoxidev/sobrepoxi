@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
 interface CarouselArrowProps {
@@ -84,6 +85,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
       }
     }, 4500);
   };
+  const locale = useLocale();
 
   useEffect(() => {
     startAutoPlay();
@@ -221,7 +223,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
       ))}
 
       <div className="absolute bottom-0.5 right-3 text-[0.5rem] text-white/70 bg-black/10 px-0.5 py-0.5 rounded md:hidden">
-        Desliza para navegar
+        {locale === 'es' ? 'Desliza para navegar' : 'Swipe to navigate'}
       </div>
     </div>
   );
