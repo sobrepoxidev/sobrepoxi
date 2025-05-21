@@ -13,6 +13,7 @@ interface SearchSuggestionsProps {
   loading: boolean;
   onClose: () => void;
   variant: 'navbar' | 'standalone' | 'mobile';
+  locale: string;
 }
 
 export default function SearchSuggestions({
@@ -21,7 +22,8 @@ export default function SearchSuggestions({
   results,
   loading,
   onClose,
-  variant
+  variant,
+  locale
 }: SearchSuggestionsProps) {
   // Apply different styles based on variant
   const isNavbar = variant === 'navbar';
@@ -54,11 +56,11 @@ export default function SearchSuggestions({
       <div className="flex items-center justify-between border-b border-gray-100 px-4 py-2">
         <p className="text-sm font-medium text-gray-700">
           {loading ? (
-            'Buscando...'
+            locale === 'es' ? 'Buscando...' : 'Searching...'
           ) : results.length > 0 ? (
-            `${results.length} resultados para "${query}"`
+            locale === 'es' ? `${results.length} resultados para "${query}"` : `${results.length} results for "${query}"`
           ) : (
-            `No se encontraron resultados para "${query}"`
+            locale === 'es' ? `No se encontraron resultados para "${query}"` : `No results found for "${query}"`
           )}
         </p>
         <button 
@@ -95,7 +97,7 @@ export default function SearchSuggestions({
                       />
                     </div>
                     <div className="flex-grow min-w-0">
-                      <h4 className="font-medium text-gray-900 truncate">{product.name}</h4>
+                      <h4 className="font-medium text-gray-900 truncate">{locale === 'es' ? product.name_es : product.name_en}</h4>
                       <div className="flex items-center">
                         {product.category_name && (
                           <span className="text-xs bg-teal-50 text-teal-700 px-1.5 py-0.5 rounded-full mr-2">

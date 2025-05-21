@@ -28,7 +28,7 @@ type Product = Database['products'];
 type Category = Database['categories'];
 
 // The client component that handles UI and state
-export default function ProductDetail({ id }: { id: string, locale?: string }) {
+export default function ProductDetail({ id, locale }: { id: string, locale: string }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [inventory, setInventory] = useState<number>(0);
@@ -275,7 +275,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
         <ChevronRight className="h-4 w-4 mx-1" />
         <Link href="/products" className="hover:text-teal-600">Productos</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900 truncate max-w-[200px]">{product.name}</span>
+        <span className="font-medium text-gray-900 truncate max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
       </div>
 
       {/* Contenido principal */}
@@ -324,7 +324,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
                   >
                     <Image
                       src={item.url}
-                      alt={`Imagen ${index + 1} de ${product.name}`}
+                      alt={`Imagen ${index + 1} de ${locale === 'es' ? product.name_es : product.name_en}`}
                       fill
                       className="object-contain p-1"
                     />
@@ -338,7 +338,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
         {/* Columna derecha: Información del producto */}
         <div className="w-full md:w-5/12">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            {product.name}
+            {locale === 'es' ? product.name_es : product.name_en}
           </h1>
           
           {/* Categoría */}
@@ -348,7 +348,7 @@ export default function ProductDetail({ id }: { id: string, locale?: string }) {
                 href={`/products?category=${category.id}`}
                 className="inline-block px-3 py-1 bg-teal-50 text-teal-700 text-sm rounded-full border border-teal-100 hover:bg-teal-100 transition"
               >
-                {category.name}
+                {locale === 'es' ? category.name_es : category.name_en}
               </Link>
             )}
             {product.brand && (

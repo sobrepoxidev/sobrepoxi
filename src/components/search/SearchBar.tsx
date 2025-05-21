@@ -12,24 +12,27 @@ interface SearchBarProps {
   initialCategory?: string;
   onClose?: () => void;
   className?: string;
+  locale: string;
 }
 
 export default function SearchBar({
   variant,
   initialQuery = '',
-  initialCategory = 'Todas',
+  initialCategory = 'Todo',
   onClose,
-  className = ''
+  className = '',
+  locale
 }: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
-  const [category, setCategory] = useState(initialCategory);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Array<{id: number, name: string, name_es: string, name_en: string}>>([]);
   
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,13 +41,13 @@ export default function SearchBar({
   // Fetch categories on mount
   useEffect(() => {
     async function fetchCategories() {
-      const categoryList = await getProductCategories();
+      const categoryList = await getProductCategories(locale);
       console.log("Categories:", categoryList);
       setCategories(categoryList);
     }
     
     fetchCategories();
-  }, []);
+  }, [locale]);
   
   // Debounce search query con tiempo más corto para mejor respuesta
   useEffect(() => {
@@ -59,7 +62,7 @@ export default function SearchBar({
   // Perform search when debounced query changes - implementación mejorada para desktop
   useEffect(() => {
     async function performSearch() {
-      console.log('Realizando búsqueda:', debouncedQuery, category); // Debug
+      console.log('Realizando búsqueda:', debouncedQuery, selectedCategory); // Debug
       
       if (debouncedQuery.length < 2) {
         setSearchResults([]);
@@ -72,11 +75,12 @@ export default function SearchBar({
         // Búsqueda real para autocompletado (usando isPaginated=false)
         const { results } = await searchProducts(
           debouncedQuery,
-          category !== 'Todas' ? category : undefined,
+          selectedCategory !== 'Todo' ? selectedCategory : undefined,
           10,  // Límite de resultados
           12,  // Valor por defecto para limit
           'relevance', // Ordenar por relevancia
-          false // isPaginated=false para autocompletado
+          false, // isPaginated=false para autocompletado
+          locale
         );
         
         console.log('Resultados encontrados:', results.length);
@@ -95,7 +99,7 @@ export default function SearchBar({
     
     // Siempre realizar búsqueda cuando cambia la consulta
     performSearch();
-  }, [debouncedQuery, category]);
+  }, [debouncedQuery, selectedCategory]);
   
   // Handle click outside to close suggestions
   useEffect(() => {
@@ -141,12 +145,14 @@ export default function SearchBar({
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     
+    // No hacer nada si la consulta está vacía
     if (query.trim().length < 2) return;
     
     const searchParams = new URLSearchParams();
     searchParams.set('q', query);
-    if (category !== 'Todas') {
-      searchParams.set('category', category);
+    if (selectedCategory !== 'Todo' && selectedCategoryId) {
+      searchParams.set('category', selectedCategory);
+      searchParams.set('categoryId', selectedCategoryId.toString());
     }
     
     router.push(`/search?${searchParams.toString()}`);
@@ -156,6 +162,21 @@ export default function SearchBar({
       onClose();
     }
   }
+  
+  // Handle category selection
+  const handleCategorySelect = (category: {id: number, name: string, name_es: string, name_en: string}) => {
+    const displayName = locale === 'es' ? category.name_es : category.name_en || category.name;
+    setSelectedCategory(displayName);
+    setSelectedCategoryId(category.id);
+    setIsCategoryMenuOpen(false);
+    
+    // Focus input after selection
+    if (variant !== 'navbar' && inputRef.current) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    }
+  };
   
   // Apply different styles and behaviors based on variant
   const isNavbar = variant === 'navbar';
@@ -208,7 +229,7 @@ export default function SearchBar({
             aria-expanded={isCategoryMenuOpen}
             aria-haspopup="true"
           >
-            <span className="max-w-[100px] truncate category-trigger">{category}</span>
+            <span className="max-w-[100px] truncate category-trigger">{selectedCategory}</span>
             <ChevronDown className="h-4 w-4 category-trigger" />
           </button>
           
@@ -232,7 +253,7 @@ export default function SearchBar({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setCategory('Todas');
+                      setSelectedCategory('Todas');
                       setIsCategoryMenuOpen(false);
                       
                       // Solo enfocamos el input en la versión standalone, no en la de navbar móvil
@@ -247,30 +268,24 @@ export default function SearchBar({
                     Todas las categorías
                   </button>
                 </li>
-                {categories.map((cat) => (
-                  <li key={cat}>
-                    <button
-                      type="button"
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setCategory(cat);
-                        setIsCategoryMenuOpen(false);
-                        
-                        // Solo enfocamos el input en la versión standalone, no en la de navbar móvil
-                        if (variant !== 'navbar' && inputRef.current) {
-                          // Agregamos un pequeño retraso para evitar conflictos de eventos
-                          setTimeout(() => {
-                            inputRef.current?.focus();
-                          }, 50);
-                        }
-                      }}
-                    >
-                      {cat}
-                    </button>
-                  </li>
-                ))}
+                {categories.map((cat) => {
+                  const displayName = locale === 'es' ? cat.name_es : cat.name_en || cat.name;
+                  return (
+                    <li key={cat.id}>
+                      <button
+                        type="button"
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleCategorySelect(cat);
+                        }}
+                      >
+                        {displayName}
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
@@ -279,7 +294,7 @@ export default function SearchBar({
         {/* Search input */}
         <input
           type="text"
-          placeholder="Buscar productos..."
+          placeholder={locale === 'es' ? 'Buscar productos...' : 'Search products...'}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
@@ -311,11 +326,12 @@ export default function SearchBar({
         }}>
           <SearchSuggestions
             query={query}
-            category={category}
+            category={selectedCategory}
             results={searchResults}
             loading={isLoading}
             onClose={() => setShowSuggestions(false)}
             variant={variant}
+            locale={locale}
           />
         </div>
       )}

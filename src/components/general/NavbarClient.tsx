@@ -120,7 +120,8 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
               <SearchBar
                 variant="navbar"
-                initialCategory="Todas"
+                initialCategory={locale === 'es' ? 'Todo' : 'All'}
+                locale={locale}
               />
             </div>
           </div>

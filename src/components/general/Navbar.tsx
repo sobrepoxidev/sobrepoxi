@@ -18,7 +18,7 @@ export default async function Navbar({ locale }: { locale: string }) {
   return (
     <header className="relative z-40 border-b">
       {/* Top Bar */}
-      <div className="container mx-auto flex items-center justify-between px-1 md:px-4 py-2">
+      <div className="container mx-auto flex items-center justify-between px-2 md:px-4 py-2">
         {/* Logo - SSR (Left) */}
       
           <div>
@@ -26,7 +26,7 @@ export default async function Navbar({ locale }: { locale: string }) {
             <div className="relative overflow-hidden flex items-center gap-3">
               
               <Image
-                src="/logo-handmade-art-black.webp"
+                src="/logo-handmade-art.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -34,7 +34,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 priority
               />
               <Image
-                src="/logo-handmade-art.webp"
+                src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -65,7 +65,8 @@ export default async function Navbar({ locale }: { locale: string }) {
         <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-2">
           <SearchBar 
             variant="mobile" 
-            initialCategory="Todas"
+            initialCategory={locale === 'es' ? 'Todo' : 'All'}
+            locale={locale}
             className="w-full"
           />
         </div>

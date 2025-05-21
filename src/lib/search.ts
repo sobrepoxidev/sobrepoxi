@@ -14,6 +14,8 @@ export type SearchResult = {
   id: number;
   created_at?: string; // Make created_at optional to avoid type errors
   name: string | null;
+  name_es: string | null;
+  name_en: string | null;
   description: string | null;
   category_id: number | null;
   category_name?: string | null; // Added for convenience
@@ -26,6 +28,7 @@ export type SearchResult = {
 /**
  * Search products by query string with optional category filter and pagination
  * @param query Search query string
+ * @param locale The current locale ('es' or 'en')
  * @param category Optional category filter
  * @param pageOrLimit Number that can be either page number (when isPaginated=true) or limit (when isPaginated=false)
  * @param limit Number of results per page (only used when isPaginated=true)
@@ -39,7 +42,8 @@ export async function searchProducts(
   pageOrLimit: number = 1,
   limit: number = 12,
   sortBy: string = 'relevance',
-  isPaginated: boolean = true
+  isPaginated: boolean = true,
+  locale: string,
 ): Promise<{ results: SearchResult[], totalCount: number }> {
   try {
     // Basic input validation
@@ -52,7 +56,7 @@ export async function searchProducts(
     
     // First, get category ID if a category name is provided
     let categoryId: number | null = null;
-    if (category && category !== 'Todas') {
+    if (category && category !== 'Todo') {
       const { data: categoryData } = await supabase
         .from('categories')
         .select('id')
@@ -85,7 +89,7 @@ export async function searchProducts(
       
     // Add text search condition to count query
     const countQueryWithSearch = countQuery.or(
-      `name.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
+      `${locale === 'es' ? 'name_es' : 'name_en'}.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
     );
     
     // Add category filter to count query if we have a category ID
@@ -96,11 +100,11 @@ export async function searchProducts(
     // Build main query with pagination
     let queryBuilder = supabase
       .from('products')
-      .select('id, name, description, price, media, category_id, discount_percentage, created_at');
+      .select('id, name, name_es, name_en, description, price, media, category_id, discount_percentage, created_at');
     
     // Add text search condition
     queryBuilder = queryBuilder.or(
-      `name.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
+      `${locale === 'es' ? 'name_es' : 'name_en'}.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
     );
     
     // Add category filter if we found a matching category ID
@@ -146,12 +150,12 @@ export async function searchProducts(
       if (product.category_id) {
         const { data: categoryData } = await supabase
           .from('categories')
-          .select('name')
+          .select('name,name_es,name_en')
           .eq('id', product.category_id)
           .single();
           
         if (categoryData) {
-          categoryName = categoryData.name;
+          categoryName = locale === 'es' ? categoryData.name_es : categoryData.name_en || categoryData.name;
         }
       }
       
@@ -159,6 +163,8 @@ export async function searchProducts(
       const searchResult: SearchResult = { 
         id: product.id,
         name: product.name,
+        name_es: product.name_es,
+        name_en: product.name_en,
         description: product.description,
         price: product.price,
         media: product.media,
@@ -224,24 +230,23 @@ function getHighlight(product: SearchResult, query: string): string {
 }
 
 /**
- * Get all available product categories
+ * Get all available product categories with localization support
+ * @param locale The current locale ('es' or 'en')
  */
-export async function getProductCategories(): Promise<string[]> {
+export async function getProductCategories(locale: string): Promise<{id: number, name: string, name_es: string, name_en: string}[]> {
   try {
-    // Fetch categories from the categories table
+    // Fetch categories from the categories table with all name fields
     const { data, error } = await supabase
       .from('categories')
-      .select('name')
-      .order('name');
+      .select('id, name, name_es, name_en')
+      .order(locale === 'es' ? 'name_es' : 'name_en');
     
     if (error) {
       console.error('Error fetching categories:', error);
       return [];
     }
     
-    // Extract category names
-    const categories = data.map(item => item.name);
-    return categories.filter(Boolean) as string[];
+    return data || [];
   } catch (error) {
     console.error('Error fetching categories:', error);
     return [];
