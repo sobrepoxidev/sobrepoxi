@@ -45,7 +45,7 @@ export default async function Navbar({ locale }: { locale: string }) {
               </div>
               <div className="hidden lg:block">
               <Image
-                src="/logo-handmade-art.webp"
+                src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
