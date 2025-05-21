@@ -25,6 +25,7 @@ export default async function Navbar({ locale }: { locale: string }) {
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
               
+              <div className="lg:hidden">
               <Image
                 src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
@@ -41,6 +42,25 @@ export default async function Navbar({ locale }: { locale: string }) {
                 className="w-[40px] md:w-[65px] object-cover hidden dark:block"
                 priority
               />
+              </div>
+              <div className="hidden lg:block">
+              <Image
+                src="/logo-handmade-art.webp"
+                alt="Hand Made Art Logo"
+                width={65}
+                height={0}
+                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
+                priority
+              />
+              <Image
+                src="/logo-handmade-art-black.webp"
+                alt="Hand Made Art Logo"
+                width={65}
+                height={0}
+                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
+                priority
+              />
+              </div>
         
               
               <h1 className="text-lg sm:text-3xl mr-1 tracking-wider text-gray-800">
