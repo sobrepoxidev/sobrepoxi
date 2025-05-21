@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Check, ChevronDown, ChevronUp, Sliders, Tag } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, Sliders } from 'lucide-react';
 import { Database } from '@/types-db';
 
 type Category = Database['categories'];
@@ -17,8 +17,6 @@ interface FilterProps {
 
 export default function ProductFilters({ 
   categories, 
-  brands,
-  tags,
   isMobile = false,
   locale
 }: FilterProps) {
@@ -28,20 +26,10 @@ export default function ProductFilters({
   
   // State for UI toggles
   const [categoryOpen, setCategoryOpen] = useState(true);
-  const [priceOpen, setPriceOpen] = useState(true);
-  const [brandOpen, setBrandOpen] = useState(false);
-  const [tagOpen, setTagOpen] = useState(false);
-  const [stockOpen, setStockOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   
   // Get current filter values from URL
   const selectedCategory = searchParams.get('category');
-  const selectedBrand = searchParams.get('brand');
-  const selectedTag = searchParams.get('tag');
-  const inStock = searchParams.get('in_stock') === 'true';
-  const featuredOnly = searchParams.get('featured') === 'true';
-  const priceFilterMin = searchParams.get('min_price') || '';
-  const priceFilterMax = searchParams.get('max_price') || '';
 
   // Memoize the filter content to prevent unnecessary re-renders
   const updateFilters = useCallback((updates: Record<string, string | null>) => {
@@ -62,11 +50,6 @@ export default function ProductFilters({
     // Update URL without page reload
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }, [searchParams, router, pathname]);
-
-  // Reset all filters
-  const resetFilters = useCallback(() => {
-    router.push(`${pathname}?page=1`, { scroll: false });
-  }, [router, pathname]);
 
   // Filter content component
   const filterContent = useMemo(() => (
@@ -108,14 +91,8 @@ export default function ProductFilters({
           </div>
         )}
       </div>
-
-      {/* Rest of the filter sections remain similar but use updateFilters callback */}
-      {/* ... */}
-
     </div>
-  ), [categories, brands, tags, categoryOpen, priceOpen, brandOpen, tagOpen, stockOpen, 
-      selectedCategory, selectedBrand, selectedTag, inStock, featuredOnly, 
-      priceFilterMin, priceFilterMax, updateFilters]);
+  ), [categories, categoryOpen, selectedCategory, updateFilters, locale]);
 
   // Mobile view
   if (isMobile) {
@@ -133,7 +110,7 @@ export default function ProductFilters({
           <div className="fixed inset-0 z-40 overflow-y-auto bg-black bg-opacity-25">
             <div className="relative bg-white p-4 w-full max-w-lg mx-auto mt-10 rounded-t-lg">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Filtros</h2>
+                <h2 className="text-lg font-medium text-gray-900">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
                 <button
                   onClick={() => setMobileFiltersOpen(false)}
                   className="text-gray-400 hover:text-gray-500"
