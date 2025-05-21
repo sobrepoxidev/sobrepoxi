@@ -1,7 +1,7 @@
 // components/layout/Navbar/NavbarClient.tsx
 "use client"
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
