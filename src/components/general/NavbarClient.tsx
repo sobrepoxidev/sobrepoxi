@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { Menu, X, User, ShoppingBag, Search, ChevronDown, Globe, Package } from 'lucide-react';
+import { Menu, X, User, ShoppingBag, ChevronDown, Globe, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
@@ -28,7 +28,6 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
   // Estados para la UI
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [categoryList, setCategoryList] = useState<{ id: number, name: string }[]>([]);
   const [showStoreCategories, setShowStoreCategories] = useState(false);
   // Estado local para la sesión que escuchará cambios
@@ -50,18 +49,6 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
   const searchRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // Empty effect for future implementation if needed
-  }, []);
-
-  // Efecto para cerrar menús al hacer clic fuera
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Suscripción a cambios en la sesión
@@ -99,18 +86,6 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     return () => window.removeEventListener('resize', handleResize);
   }, [isMenuOpen]);
 
-  // Manejar tecla Escape para cerrar menús
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsSearchOpen(false);
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', handleEscKey);
-    return () => document.removeEventListener('keydown', handleEscKey);
-  }, []);
 
   // Definir los enlaces de navegación
   const navigationLinks: NavLink[] = [
