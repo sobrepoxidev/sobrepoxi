@@ -23,6 +23,7 @@ export type SearchResult = {
   price: number | null;
   discount_percentage?: number | null;
   highlight?: string; // For search results highlighting
+  
 };
 
 /**
@@ -38,12 +39,12 @@ export type SearchResult = {
  */
 export async function searchProducts(
   query: string,
+  locale: string,
   category?: string,
   pageOrLimit: number = 1,
   limit: number = 12,
   sortBy: string = 'relevance',
   isPaginated: boolean = true,
-  locale: string,
 ): Promise<{ results: SearchResult[], totalCount: number }> {
   try {
     // Basic input validation

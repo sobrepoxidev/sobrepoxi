@@ -75,12 +75,13 @@ export default function SearchBar({
         // Búsqueda real para autocompletado (usando isPaginated=false)
         const { results } = await searchProducts(
           debouncedQuery,
+          locale,
           selectedCategory !== 'Todo' ? selectedCategory : undefined,
           10,  // Límite de resultados
           12,  // Valor por defecto para limit
           'relevance', // Ordenar por relevancia
           false, // isPaginated=false para autocompletado
-          locale
+          
         );
         
         console.log('Resultados encontrados:', results.length);

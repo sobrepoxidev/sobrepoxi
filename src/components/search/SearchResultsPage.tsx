@@ -80,12 +80,13 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
       setLoading(true);
       const { results: data, totalCount } = await searchProducts(
         query, 
+        locale,
         category !== 'Todas' ? category : undefined, 
         currentPage,
         PRODUCTS_PER_PAGE,
         sortBy,
         true, // isPaginated=true para la página de búsqueda
-        locale
+  
       );
       
       // La ordenación ahora se realiza en el servidor
