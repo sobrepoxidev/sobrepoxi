@@ -13,12 +13,12 @@ import { Database } from '@/types-db';
 
 // Número de productos por página
 const PRODUCTS_PER_PAGE = 12;
-
-export default function SearchResultsPage() {
+type tParams = Promise<{ locale: string }>;
+export default async function SearchResultsPage({ params }: { params: tParams }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
-  const category = searchParams.get('category') || 'Todas';
+  const category = searchParams.get('category') || 'Todo';
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const currentSortBy = searchParams.get('sort') || 'relevance';
   
@@ -28,7 +28,7 @@ export default function SearchResultsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState(currentSortBy);
   const [categories, setCategories] = useState<Database['categories'][]>([]);
-  
+  const { locale } = await params;
   // Cargar categorías
   useEffect(() => {
     async function fetchCategories() {
@@ -86,7 +86,8 @@ export default function SearchResultsPage() {
         currentPage,
         PRODUCTS_PER_PAGE,
         sortBy,
-        true // isPaginated=true para la página de búsqueda
+        true, // isPaginated=true para la página de búsqueda
+        locale
       );
       
       // La ordenación ahora se realiza en el servidor
