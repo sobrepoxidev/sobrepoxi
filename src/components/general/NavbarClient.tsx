@@ -45,11 +45,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     loadCategories();
   }, []);
 
-  // Refs para cerrar menús al hacer clic fuera
-  const searchRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    // Empty effect for future implementation if needed
-  }, []);
+
 
   // Suscripción a cambios en la sesión
   useEffect(() => {
