@@ -25,33 +25,33 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
   const router = useRouter();
   const { supabase } = useSupabase();
   const { totalItems } = useCart();
-  
+
   // Estados para la UI
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [categoryList, setCategoryList] = useState<{id: number, name: string}[]>([]);
+  const [categoryList, setCategoryList] = useState<{ id: number, name: string }[]>([]);
   const [showStoreCategories, setShowStoreCategories] = useState(false);
   // Estado local para la sesión que escuchará cambios
   const [session, setSession] = useState<Session | null>(initialSession);
-  
 
-  
+
+
   // Cargar categorías de la base de datos
   useEffect(() => {
     const loadCategories = async () => {
       const categories = await getCategories();
       setCategoryList(categories);
     };
-    
+
     loadCategories();
   }, []);
-  
+
   // Refs para cerrar menús al hacer clic fuera
   const searchRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // Empty effect for future implementation if needed
   }, []);
-  
+
   // Efecto para cerrar menús al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -59,11 +59,11 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         setIsSearchOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  
+
   // Suscripción a cambios en la sesión
   useEffect(() => {
     // Configurar suscripción a cambios de autenticación
@@ -72,21 +72,21 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         setSession(session);
       }
     );
-    
+
     // Actualizar la sesión inicial
     const getInitialSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
     };
-    
+
     getInitialSession();
-    
+
     // Limpiar la suscripción cuando el componente se desmonte
     return () => {
       subscription.unsubscribe();
     };
   }, [supabase]);
-  
+
   // Cerrar menú móvil al cambiar el tamaño de la ventana
   useEffect(() => {
     const handleResize = () => {
@@ -94,11 +94,11 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         setIsMenuOpen(false);
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [isMenuOpen]);
-  
+
   // Manejar tecla Escape para cerrar menús
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -107,7 +107,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         setIsMenuOpen(false);
       }
     };
-    
+
     document.addEventListener('keydown', handleEscKey);
     return () => document.removeEventListener('keydown', handleEscKey);
   }, []);
@@ -139,29 +139,29 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         {/* Top Row: Search bar with filter dropdown */}
         <div className="flex w-full items-center justify-center pt-3">
           <div className="flex w-full max-w-4xl items-center">
-            <div 
-              className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible" 
-              style={{ 
+            <div
+              className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible"
+              style={{
                 zIndex: 9000,
                 position: 'relative',
               }}
             >
               {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
-              <SearchBar 
-                variant="navbar" 
+              <SearchBar
+                variant="navbar"
                 initialCategory="Todas"
               />
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Row: Navigation links */}
         <div className="flex w-full items-center justify-center ">
           <ul className="flex items-center gap-x-6">
             {navigationLinks.map((link) => (
               <li key={link.path}>
-                <Link 
-                  href={link.path} 
+                <Link
+                  href={link.path}
                   className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
                 >
                   {link.name}
@@ -169,16 +169,16 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               </li>
             ))}
             <li>
-              <Link 
-                href="/products" 
+              <Link
+                href="/products"
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
                 {t('store')}
               </Link>
             </li>
             <li>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
                 {t('contact')}
@@ -194,9 +194,9 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         <div className="hidden md:flex items-center">
           <UserDropdown session={session} onLogout={handleLogout} />
         </div>
-        
+
         {/* Language selector - Implementado con next-intl */}
-        <button 
+        <button
           onClick={() => {
             // Cambiar al idioma opuesto manteniendo la ruta actual
             const targetLocale = locale === 'es' ? 'en' : 'es';
@@ -208,10 +208,10 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
           <Globe className="h-4 w-4" />
           <span>{locale === 'es' ? 'ES' : 'EN'}</span>
         </button>
-        
+
         {/* Cart */}
-        <Link 
-          href="/cart" 
+        <Link
+          href="/cart"
           className="relative flex h-10 items-center space-x-0.5 rounded-md px-0.5 text-sm text-gray-700 transition hover:bg-gray-100"
           aria-label={t('cart')}
         >
@@ -221,44 +221,8 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             {totalItems}
           </span>
         </Link>
-        
-        {/* Search - Now using the search icon to open a modal with the SearchBar */}
-        <div ref={searchRef} className="lg:hidden">
-          <button 
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-gray-700 transition  hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-            aria-label={t('search')}
-            aria-expanded={isSearchOpen}
-          >
-            <Search className="h-5 w-5" />
-          </button>
-          
-          {/* Search overlay/dropdown with the new SearchBar component */}
-          {isSearchOpen && (
-            <div className="absolute left-0 right-0 top-full z-50 border-t border-gray-100 bg-white px-4 py-4 shadow-lg md:left-auto md:right-4 md:top-16 md:w-96 md:rounded-lg md:border md:border-gray-100">
-              <div className="mb-2 flex justify-between items-center">
-                <h3 className="text-sm font-medium text-gray-800">{t('searchProducts')}</h3>
-                <button 
-                  onClick={() => setIsSearchOpen(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                  aria-label={t('closeSearch')}
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-              
-              <SearchBar 
-                variant="standalone" 
-                initialCategory="Todas"
-                onClose={() => setIsSearchOpen(false)} 
-              />
-              
-             
-            </div>
-          )}
-        </div>
         {/* Mobile menu toggle */}
-        <button 
+        <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex h-10 w-10 items-center justify-center text-gray-700 transition hover:bg-gray-100 focus-visible:outline-none lg:hidden"
           style={{ width: '40px', height: '40px', flexShrink: 0 }}
@@ -269,7 +233,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </div>
         </button>
-        
+
       </div>
 
       {/* Mobile menu */}
@@ -278,12 +242,12 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
           <nav className="px-4 py-3">
             {/* Mobile Search - Amazon Style */}
-            
-            
+
+
             {/* Cart Link - Movido arriba */}
             <div className="mb-3">
-              <Link 
-                href="/cart" 
+              <Link
+                href="/cart"
                 className="flex items-center space-x-2 text-sm font-medium bg-gray-50 p-3 rounded-md text-gray-900 w-full"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -297,7 +261,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               <div className="flex items-center justify-between">
                 {session ? (
                   <>
-                    <Link 
+                    <Link
                       href="/account"
                       className="flex items-center space-x-1 text-sm font-medium text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
@@ -314,14 +278,14 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                   </>
                 ) : (
                   <>
-                    <Link 
+                    <Link
                       href="/login"
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {t('login')}
                     </Link>
-                    <Link 
+                    <Link
                       href="/register"
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
@@ -332,17 +296,17 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                 )}
               </div>
             </div>
-            
+
             <div className="my-3 h-px bg-gray-100"></div>
-            
+
             {/* Mobile Navigation Links - Amazon Style */}
             <div>
               <p className="mb-2 font-semibold text-sm text-gray-800">{t('browseBy')}</p>
               <ul className="space-y-2">
                 {navigationLinks.map((link) => (
                   <li key={link.path}>
-                    <Link 
-                      href={link.path} 
+                    <Link
+                      href={link.path}
                       className="block text-sm text-gray-700 hover:text-teal-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -351,8 +315,8 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                   </li>
                 ))}
                 <li>
-                  <Link 
-                    href="/contact" 
+                  <Link
+                    href="/contact"
                     className="block text-sm text-gray-700 hover:text-teal-700"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -377,13 +341,13 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                     </button>
                   </div>
 
-                  
+
                   {/* Lista de categorías */}
                   {showStoreCategories && (
                     <ul className="ml-4 space-y-1 border-l-2 border-gray-100 pl-3">
                       <li>
-                        <Link 
-                          href="/products" 
+                        <Link
+                          href="/products"
                           className="block text-sm text-gray-700 hover:text-teal-700 py-1"
                           onClick={() => setIsMenuOpen(false)}
                         >
@@ -404,9 +368,9 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                     </ul>
                   )}
                 </li>
-                
-                
-                
+
+
+
                 {/* Enlace a carrito eliminado - ya movido arriba */}
               </ul>
             </div>

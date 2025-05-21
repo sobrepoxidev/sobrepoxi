@@ -7,17 +7,19 @@ import { SearchResult, searchProducts, getProductCategories } from '@/lib/search
 import SearchSuggestions from './SearchSuggestions';
 
 interface SearchBarProps {
-  variant: 'navbar' | 'standalone';
+  variant: 'navbar' | 'standalone' | 'mobile';
   initialQuery?: string;
   initialCategory?: string;
   onClose?: () => void;
+  className?: string;
 }
 
 export default function SearchBar({
   variant,
   initialQuery = '',
   initialCategory = 'Todas',
-  onClose
+  onClose,
+  className = ''
 }: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
@@ -158,6 +160,7 @@ export default function SearchBar({
   // Apply different styles and behaviors based on variant
   const isNavbar = variant === 'navbar';
   const isStandalone = variant === 'standalone';
+  const isMobile = variant === 'mobile';
   
   // Adjust behavior based on variant
   useEffect(() => {
@@ -180,7 +183,7 @@ export default function SearchBar({
   return (
     <div 
       ref={searchRef} 
-      className={`relative w-full ${isStandalone ? 'standalone-search' : 'navbar-search'}`} 
+      className={`relative w-full ${isStandalone ? 'standalone-search' : 'navbar-search'} ${className}`} 
       style={{ 
         zIndex: isNavbar ? 9000 : 50, // Z-index extremadamente alto para desktop
         position: 'relative'
@@ -199,7 +202,9 @@ export default function SearchBar({
               // En móvil no enfocar automáticamente el input
               // Esto previene que el dropdown se cierre inmediatamente
             }}
-            className={`category-trigger flex h-10 items-center space-x-1 bg-gray-100 px-3 text-sm text-gray-700 border-r border-gray-300 hover:bg-gray-200 ${isNavbar ? 'navbar-trigger' : 'standalone-trigger'}`}
+            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-gray-700 bg-white border border-r-0 border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 ${
+              isMobile ? 'w-24' : isNavbar ? 'w-32' : 'w-40'
+            }`}
             aria-expanded={isCategoryMenuOpen}
             aria-haspopup="true"
           >
@@ -273,31 +278,15 @@ export default function SearchBar({
         
         {/* Search input */}
         <input
-          ref={inputRef}
           type="text"
           placeholder="Buscar productos..."
-          className="h-10 w-full border-0 px-3 py-2 focus:outline-none focus:ring-0 text-gray-800"
           value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            // Clear results if input is empty
-            if (e.target.value.length === 0) {
-              setSearchResults([]);
-              setShowSuggestions(false);
-            }
-            // Show suggestions if we have enough characters
-            else if (e.target.value.length >= 2) {
-              // Will trigger the debounced search
-              setShowSuggestions(true);
-            }
-          }}
-          onFocus={() => {
-            // Show suggestions on focus if we have results and query is valid
-            if (query.length >= 2 && searchResults.length > 0) {
-              setShowSuggestions(true);
-            }
-          }}
-          aria-label="Buscar productos"
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          className={`flex-1 h-10 px-3 py-2 text-sm text-gray-900 border border-gray-300 focus:ring-teal-500 focus:border-teal-500 ${
+            isMobile ? 'w-full' : isNavbar ? 'w-full' : 'w-96'
+          }`}
+          ref={inputRef}
         />
         
         {/* Search button */}

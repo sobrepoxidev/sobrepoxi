@@ -12,7 +12,7 @@ interface SearchSuggestionsProps {
   results: SearchResult[];
   loading: boolean;
   onClose: () => void;
-  variant: 'navbar' | 'standalone';
+  variant: 'navbar' | 'standalone' | 'mobile';
 }
 
 export default function SearchSuggestions({
@@ -26,6 +26,7 @@ export default function SearchSuggestions({
   // Apply different styles based on variant
   const isNavbar = variant === 'navbar';
   const isStandalone = variant === 'standalone';
+  const isMobile = variant === 'mobile';
   
   // Define estilos diferentes según el variante
   const suggestionStyles: React.CSSProperties = {
@@ -33,7 +34,7 @@ export default function SearchSuggestions({
     left: 0,
     right: 0,
     top: '100%',
-    zIndex: isNavbar ? 200 : 100,
+    zIndex: isNavbar || isMobile ? 200 : 100,
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: '#e5e7eb',

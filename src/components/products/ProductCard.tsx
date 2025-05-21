@@ -186,7 +186,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
               ) : (
                 <p className="text-lg font-bold text-teal-700 mb-2">
-                  ₡{product.price.toFixed(2)}
+                  ₡%{product.price.toFixed(2)}
                 </p>
               )}
             </div>

@@ -243,6 +243,7 @@ export function FullscreenModal({
     <div
       className="fixed inset-0 z-50 top-0 left-0 flex items-center justify-center bg-black/70 min-h-screen h-full backdrop-blur-sm p-0 sm:p-4 "
     >
+    
       <div
         className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-white sm:rounded-lg shadow-xl overflow-hidden"
       >
