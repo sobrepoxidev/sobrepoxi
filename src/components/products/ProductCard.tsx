@@ -7,6 +7,7 @@ import { Star, ShoppingCart, Heart, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import { supabase } from '@/lib/supabaseClient';
+import { useLocale } from 'next-intl';
 
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -17,6 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const [inventory, setInventory] = useState<number>(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const { addToCart } = useCart();
+  const locale = useLocale();
   
   const mainImageUrl = product?.media?.[0]?.url || '/product-placeholder.png';
   
@@ -78,7 +80,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Category badge */}
         {category && (
           <span className="bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">
-            {category.name}
+            {locale === 'es' ? category.name_es : category.name_en}
           </span>
         )}
         
@@ -86,7 +88,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.is_featured && (
           <span className="bg-amber-50 text-amber-700 text-xs px-2 py-1 rounded-full border border-amber-100 flex items-center">
             <Star className="h-3 w-3 mr-1 fill-amber-500" />
-            Destacado
+            {locale === 'es' ? 'Destacado' : 'Featured'}
           </span>
         )}
         
@@ -186,13 +188,13 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
               ) : (
                 <p className="text-lg font-bold text-teal-700 mb-2">
-                  ₡%{product.price.toFixed(2)}
+                  ₡{product.price.toFixed(2)}
                 </p>
               )}
             </div>
           ) : (
             <p className="text-sm font-medium text-gray-700 mb-2">
-              Precio a consultar
+              {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
             </p>
           )}
           
@@ -201,10 +203,10 @@ export default function ProductCard({ product }: { product: Product }) {
             {inventory > 0 ? (
               <span className="text-green-600 flex items-center">
                 <Check className="h-3 w-3 mr-1" />
-                {inventory > 10 ? 'En stock' : `${inventory} disponibles`}
+                {inventory > 10 ? locale === 'es' ? 'En stock' : 'In stock' : `${inventory} ${locale === 'es' ? 'disponibles' : 'available'}`}
               </span>
             ) : (
-              <span className="text-red-600">Agotado</span>
+              <span className="text-red-600">{locale === 'es' ? 'Agotado' : 'Out of stock'}</span>
             )}
           </p>
           
@@ -214,13 +216,13 @@ export default function ProductCard({ product }: { product: Product }) {
               href={`/product/${product.id}`}
               className="flex-1 py-2 text-sm text-center text-teal-700 border border-teal-600 rounded hover:bg-teal-50 transition"
             >
-              Ver detalles
+              {locale === 'es' ? 'Ver detalles' : 'View details'}
             </Link>
             <button 
               onClick={() => addToCart(product, 1)}
               className={`flex items-center justify-center p-2 rounded transition
                 ${inventory > 0 ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-              aria-label="Añadir al carrito"
+              aria-label={locale === 'es' ? 'Añadir al carrito' : 'Add to cart'}
               disabled={inventory <= 0}
             >
               <ShoppingCart className="h-4 w-4" />

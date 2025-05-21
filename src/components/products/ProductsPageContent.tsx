@@ -236,8 +236,8 @@ export default function ProductsPageContent() {
             categories={categories}
             brands={brands}
             tags={tags}
-            onFilterChange={handleFilterChange}
             isMobile={true}
+            locale={locale}
           />
           
           <div className="hidden md:block">
@@ -245,7 +245,8 @@ export default function ProductsPageContent() {
               categories={categories}
               brands={brands}
               tags={tags}
-              onFilterChange={handleFilterChange}
+              isMobile={false}
+              locale={locale}
             />
           </div>
         </aside>
