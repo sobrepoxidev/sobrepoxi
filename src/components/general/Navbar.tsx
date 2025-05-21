@@ -26,7 +26,7 @@ export default async function Navbar({ locale }: { locale: string }) {
             <div className="relative overflow-hidden flex items-center gap-3">
               
               <Image
-                src="/logo-handmade-art.webp"
+                src="/logo-handmade-art-black.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -34,7 +34,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 priority
               />
               <Image
-                src="/logo-handmade-art-black.webp"
+                src="/logo-handmade-art.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
