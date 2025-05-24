@@ -40,7 +40,7 @@ export default async function RootLayout({
           <SessionLayout>
             <Navbar locale={locale} />
             {children}
-            <Footer />
+            <Footer locale={locale}/>
             <Toaster position="top-center" />
             <Analytics />
           </SessionLayout>
