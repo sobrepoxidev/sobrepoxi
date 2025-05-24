@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
 import { Star } from 'lucide-react';
+import { useSupabase } from '@/app/supabase-provider/provider';
 
 interface ReviewFormProps {
   productId: number;
@@ -16,6 +16,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
   const [hoveredStar, setHoveredStar] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const { supabase } = useSupabase();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
