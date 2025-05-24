@@ -19,6 +19,7 @@ type CarrucelSectionProps = {
   startIndex?: number;
   endIndex?: number;
   mobileInvertList?: boolean;
+  colors?: string[];
 };
 
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
@@ -28,6 +29,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   startIndex = 0,
   endIndex = 8,
   mobileInvertList = false,
+  colors = ['bg-green-500', 'bg-blue-500']
 }) => {
   const locale = useLocale();
   // Referencias para cada sección de carrusel
@@ -218,7 +220,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
     
     return [
       // Primera banda
-      <div key="first-section" className="  max-w-[90vw] flex-none mx-1 snap-start">
+      <div key="first-section" className="  max-w-[90vw] pl-4 flex-none mx-1 snap-start">
         <div className="grid grid-cols-2 gap-1">
           {orderedItems[0].map((product) => {
             const imageUrl = product.media && product.media.length > 0 
@@ -227,7 +229,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             
             return (
               <Link key={product.id} href={`/product/${product.id}`} className="block">
-                <div className="bg-gray-200 rounded-sm ">
+                <div className={`rounded-lg ${colors[0]}`}>
                   <div className="h-[120px] flex items-center justify-center p-2">
                     <Image
                       src={imageUrl}
@@ -238,7 +240,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                       unoptimized
                     />
                   </div>
-                  <p className="text-xs truncate px-2 pb-1 text-gray-600">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
+                  <p className="text-xs truncate px-2 pb-1 text-gray-700">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
                 </div>
               </Link>
             );
@@ -247,7 +249,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       </div>,
       
       // Segunda banda
-      <div key="second-section" className="max-w-[90vw] flex-none mx-1 snap-start">
+      <div key="second-section" className="max-w-[90vw] pr-4 flex-none mx-1 snap-start">
         <div className="grid grid-cols-2 gap-2">
           {orderedItems[1].map((product) => {
             const imageUrl = product.media && product.media.length > 0 
@@ -256,7 +258,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
             
             return (
               <Link key={product.id} href={`/product/${product.id}`} className="block">
-                <div className="bg-white rounded-lg shadow-sm">
+                <div className={`rounded-lg ${colors[1]}`}>
                   <div className="h-[120px] flex items-center justify-center p-2">
                     <Image
                       src={imageUrl}
@@ -337,11 +339,11 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
   return (
     <>
       {/* Vista mobile */}
-      <section className="py-4 md:hidden">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-3">
+      <section className="md:hidden">
+        <div className="container mx-auto px-0 ">
+          <div className="flex items-center justify-between mb-3 px-4">
             <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-            <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
+            <Link href="/products" className="text-sm text-teal-700 hover:underline hover:text-teal-800">{locale === 'es' ? 'Ver más' : 'See more'}</Link>
           </div>
 
           <div className="relative carousel-wrapper">
@@ -384,7 +386,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-            <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-700">Ver más</Link>
+            <Link href="/products" className="text-sm text-teal-600 hover:underline hover:text-teal-800">{locale === 'es' ? 'Ver más' : 'See more'}</Link>
           </div>
 
           <div className="relative carousel-wrapper bg-white">

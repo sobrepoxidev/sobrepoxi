@@ -231,7 +231,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
         <CarrucelSectionA
           items={
             // Ordenamos las categorías dando prioridad a Paintings y Napkin Holders
-            [...categories.slice(indexStart, indexEnd)]
+            [...categories.slice(indexStart, indexEnd-2)]
               .sort((a, b) => {
                 // Obtener nombres de categorías para comparación (case insensitive)
                 const aName = (a.name || '').toLowerCase();
@@ -257,36 +257,28 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 // Si ambas tienen 4+ o ambas tienen menos de 4, ordenar por cantidad
                 return bProducts - aProducts; // Ordenar de mayor a menor
               })
-              .map(category => {
+              .map((category, index) => {
                 // Convertir la categoría a formato esperado por CarrucelSectionA
                 const categoryProducts = productsByCategory[category.id] || [];
 
                 // Colores brillantes para las tarjetas
                 const cardColors = [
-                  'bg-indigo-500', // Morado
+        
+                  
                   'bg-blue-500',   // Azul
-                  'bg-purple-500', // Morado oscuro
-                  'bg-teal-500',   // Verde azulado
-                  'bg-pink-500',   // Rosa
+                  'bg-green-500', // Morado oscuro
+                  'bg-pink-500', // Rosa
+                    
                   'bg-red-500'     // Rojo
                 ];
 
-                // Obtener color basado en el nombre de la categoría para consistencia
-                const colorIndex = category.name ?
-                  (category.name.length + category.id) % cardColors.length :
-                  category.id % cardColors.length;
+        
 
                 // Priorizar ciertos colores para categorías específicas
-                let cardColor = cardColors[colorIndex];
-                const lowerCaseName = (category.name || '').toLowerCase();
-                if (lowerCaseName.includes('painting')) {
-                  cardColor = 'bg-indigo-500'; // Morado para pinturas
-                } else if (lowerCaseName.includes('napkin')) {
-                  cardColor = 'bg-blue-500'; // Azul para napkin holders
-                }
-
+                const cardColor = cardColors[index];
+                
                 return {
-                  title: `${category.name || ''} `,
+                  title: `${locale === 'es' ? category.name_es : category.name_en || category.name} `,
                   content: (
                     <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
                       {categoryProducts.slice(0, 4).map((product, idx) => (

@@ -245,10 +245,10 @@ export default function NewHome() {
 
       <GridSection indexStart={0} indexEnd={6} />
  
-      
+
       <CarrucelSection title={locale === 'es' ? 'Regalos con significado' : 'Gifts with meaning'} startIndex={0} endIndex={10} />
       <GridSection indexStart={6} indexEnd={12} mobileActive={false} />
-      <CarrucelSection title={locale === 'es' ? 'Detalles artesanales' : 'Artistic details'} startIndex={10} endIndex={20} mobileInvertList={true} />
+      <CarrucelSection title={locale === 'es' ? 'Detalles artesanales' : 'Artistic details'} startIndex={10} endIndex={20} mobileInvertList={true}  colors={['bg-teal-500', 'bg-pink-600']}/>
 
 
 
