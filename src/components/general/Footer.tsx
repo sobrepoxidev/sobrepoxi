@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Phone, Mail, MessageCircle } from 'lucide-react';
 
-type props = {
-  locale: Promise<string>;
-}
-export default async function Footer(props: props) {
-  const locale = await props.locale;
+
+type tParams = Promise<{ locale: string }>;
+export default async function Footer({params}: {params: tParams}) {
+  const {locale} = await params;
   return (
     <footer className="bg-gray-900 text-white py-8 px-4 border-t border-neutral-800">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
