@@ -92,8 +92,16 @@ export default function AdminDashboard() {
   
   // Cerrar el menú al hacer clic fuera
   useEffect(() => {
-    const handleClickOutside = () => {
-      if (showProductMenu !== null) {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Verificar si el clic fue fuera del menú
+      const menuButton = document.querySelector(`button[aria-controls="product-menu-${showProductMenu}"]`);
+      const menuElement = document.getElementById(`product-menu-${showProductMenu}`);
+      
+      if (showProductMenu !== null && 
+          menuButton && 
+          menuElement && 
+          !menuButton.contains(event.target as Node) && 
+          !menuElement.contains(event.target as Node)) {
         setShowProductMenu(null);
       }
     };
@@ -237,12 +245,12 @@ export default function AdminDashboard() {
   }, [supabase, products, selectedProduct, setLoading, setProducts, setSelectedProduct]);
 
   return (
-    <div className="container mx-auto px-4 py-8 text-gray-800">
-      <h1 className="text-2xl font-bold mb-6">Panel de Administración</h1>
+    <div className="container mx-auto px-4 py-2 text-gray-800">
+      <h1 className="text-2xl font-bold mb-0.5">Panel de Administración</h1>
       
       {/* Barra de herramientas */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="bg-white rounded-lg shadow-md p-3 mb-4">
+        <div className="flex flex-col md:flex-row gap-2">
           {/* Búsqueda */}
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -281,10 +289,10 @@ export default function AdminDashboard() {
           {/* Botón de actualizar */}
           <button
             onClick={() => fetchProducts()}
-            className="flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            className="flex items-center justify-center px-3 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             disabled={loading}
           >
-            <RefreshCw className={`h-5 w-5 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-5 w-5 mr-1 ${loading ? 'animate-spin' : ''}`} />
             Actualizar
           </button>
           
@@ -349,15 +357,15 @@ export default function AdminDashboard() {
       
       {/* Lista de productos */}
       {!loading && filteredProducts.length === 0 && (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
+        <div className="text-center py-6 bg-gray-50 rounded-lg">
           <p className="text-gray-600">No se encontraron productos</p>
         </div>
       )}
       
       {filteredProducts.length > 0 && (
         <div className={viewMode === 'grid' 
-          ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
-          : "flex flex-col space-y-4"
+          ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" 
+          : "flex flex-col space-y-3"
         }>
           {filteredProducts.map((product) => (
             <div 
@@ -370,7 +378,7 @@ export default function AdminDashboard() {
                 // Vista de cuadrícula
                 <div className="cursor-pointer" onClick={() => setSelectedProduct(product)}>
                   <div className="h-48 sm:h-56 relative">
-                    <div className="h-full w-full flex items-center justify-center bg-gray-50 p-4"
+                    <div className="h-full w-full flex items-center justify-center bg-teal-50 p-4"
             
                    > 
                     {product.media && product.media.length > 0 && product.media[0].url ? (
@@ -443,10 +451,8 @@ export default function AdminDashboard() {
                                   }}
                                   title="Actualizar precio"
                                 >
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                  </svg>
-                                  <span>Guardar</span>
+                                  
+                                  <span>Aplicar precio</span>
                                 </button>
                               </div>
 
@@ -577,10 +583,10 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 // Vista de lista mejorada
-                <div className="flex flex-col md:flex-row p-4 gap-4 w-full">
+                <div className="flex flex-col md:flex-row p-3 gap-3 w-full">
                   {/* Columna de imagen - más pequeña en modo lista */}
                   <div 
-                    className="relative w-full md:w-32 h-32 flex-shrink-0 cursor-pointer" 
+                    className="relative w-full md:w-28 h-28 flex-shrink-0 cursor-pointer" 
                     onClick={() => setSelectedProduct(product)}
                   >
                     {product.media && product.media.length > 0 && product.media[0].url ? (
@@ -605,15 +611,7 @@ export default function AdminDashboard() {
                       <h3 className="text-lg font-medium text-gray-900 mr-2">
                         {product.name_es || product.name || `Producto #${product.id}`}
                       </h3>
-                      {product.is_active ? (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                          Activo
-                        </span>
-                      ) : (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                          Inactivo
-                        </span>
-                      )}
+                     
                     </div>
                     
                     <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-gray-500">
@@ -636,7 +634,16 @@ export default function AdminDashboard() {
                   </div>
                   
                   {/* Columna de controles - derecha */}
-                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:ml-auto">
+                  <div className="flex flex-wrap md:flex-row md:items-center gap-2 md:ml-auto">
+                  {product.is_active ? (
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                          Activo
+                        </span>
+                      ) : (
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                          Inactivo
+                        </span>
+                      )}
                     {/* Control de precio */}
                     <div className="flex items-center">
                       <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
@@ -734,9 +741,10 @@ export default function AdminDashboard() {
                       {showProductMenu === product.id && (
                         <div 
                           id={`product-menu-${product.id}`}
-                          className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200"
+                          className="absolute right-0 sm:right-auto sm:left-0 md:right-0 md:left-auto mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
                           role="menu"
                           aria-orientation="vertical"
+                          style={{ maxWidth: 'calc(100vw - 20px)' }}
                         >
                           {/* Botón para activar/desactivar producto */}
                           <button
