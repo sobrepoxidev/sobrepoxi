@@ -1,14 +1,76 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { Database } from '@/types-db';
 import ProductEditor from './ProductEditor';
-import { Search, Filter, RefreshCw } from 'lucide-react';
+import { Search, Filter, RefreshCw, MoreVertical, Check, X, Edit } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 
 type Product = Database['products'];
+
+// Función para formatear la fecha de modificación en formato costarricense
+const formatModifiedDate = (dateString: string): string => {
+  // Ajustar la zona horaria a Costa Rica (UTC-6)
+  const now = new Date();
+  const modifiedDate = new Date(dateString);
+  
+  // Ajustar a la zona horaria de Costa Rica (UTC-6)
+  const options: Intl.DateTimeFormatOptions = { 
+    timeZone: 'America/Costa_Rica',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true 
+  };
+  
+  const timeFormatter = new Intl.DateTimeFormat('es-CR', options);
+  const timeString = timeFormatter.format(modifiedDate).toLowerCase();
+  
+  // Calcular diferencia en días
+  const diffInMs = now.getTime() - modifiedDate.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  
+  // Para fechas de hoy
+  if (diffInDays === 0) {
+    return `Hoy a las ${timeString}`;
+  } 
+  // Para ayer
+  else if (diffInDays === 1) {
+    return `Ayer a las ${timeString}`;
+  } 
+  // Últimos 7 días (mostrar día de la semana)
+  else if (diffInDays < 7) {
+    const dayFormatter = new Intl.DateTimeFormat('es-CR', { 
+      weekday: 'long',
+      timeZone: 'America/Costa_Rica'
+    });
+    const dayName = dayFormatter.format(modifiedDate);
+    return `El ${dayName.charAt(0).toUpperCase() + dayName.slice(1)} a las ${timeString}`;
+  } 
+  // Hace 1 semana
+  else if (diffInWeeks === 1) {
+    return 'La semana pasada';
+  } 
+  // Hace 2-3 semanas
+  else if (diffInWeeks < 4) {
+    return `Hace ${diffInWeeks} semana${diffInWeeks > 1 ? 's' : ''}`;
+  } 
+  // Hace 1 mes o más
+  else {
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths === 1) {
+      return 'Hace 1 mes';
+    } else if (diffInMonths < 12) {
+      return `Hace ${diffInMonths} meses`;
+    } else {
+      // Para más de un año
+      const diffInYears = Math.floor(diffInMonths / 12);
+      return `Hace ${diffInYears} año${diffInYears > 1 ? 's' : ''}`;
+    }
+  }
+};
 
 export default function AdminDashboard() {
   const { supabase } = useSupabase();
@@ -20,15 +82,30 @@ export default function AdminDashboard() {
   const [categories, setCategories] = useState<Database['categories'][]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showProductMenu, setShowProductMenu] = useState<number | null>(null); // Para controlar el menú de opciones
 
   // Cargar productos y categorías
   useEffect(() => {
     fetchProducts();
     fetchCategories();
   }, []);
+  
+  // Cerrar el menú al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (showProductMenu !== null) {
+        setShowProductMenu(null);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showProductMenu]);
 
   // Función para cargar productos
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -44,10 +121,10 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [supabase, setLoading, setProducts, setError]);
 
   // Función para cargar categorías
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('categories')
@@ -59,23 +136,25 @@ export default function AdminDashboard() {
     } catch (err: unknown) {
       console.error('Error al cargar categorías:', err);
     }
-  };
+  }, [supabase, setCategories]);
 
   // Filtrar productos según búsqueda y categoría
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = 
-      !searchTerm || 
-      (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (product.name_es && product.name_es.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (product.sku && product.sku.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesCategory = !categoryFilter || product.category_id === categoryFilter;
-    
-    return matchesSearch && matchesCategory;
-  });
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const matchesSearch = 
+        !searchTerm || 
+        (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (product.name_es && product.name_es.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (product.sku && product.sku.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesCategory = !categoryFilter || product.category_id === categoryFilter;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [products, searchTerm, categoryFilter]);
 
   // Actualizar un producto
-  const updateProduct = async (productId: number, updates: Partial<Product>) => {
+  const updateProduct = useCallback(async (productId: number, updates: Partial<Product>) => {
     try {
       setLoading(true);
       
@@ -155,7 +234,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [supabase, products, selectedProduct, setLoading, setProducts, setSelectedProduct]);
 
   return (
     <div className="container mx-auto px-4 py-8 text-gray-800">
@@ -175,6 +254,7 @@ export default function AdminDashboard() {
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Buscar productos"
             />
           </div>
           
@@ -187,6 +267,7 @@ export default function AdminDashboard() {
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               value={categoryFilter || ''}
               onChange={(e) => setCategoryFilter(e.target.value ? parseInt(e.target.value) : null)}
+              aria-label="Filtrar por categoría"
             >
               <option value="">Todas las categorías</option>
               {categories.map((category) => (
@@ -281,17 +362,15 @@ export default function AdminDashboard() {
           {filteredProducts.map((product) => (
             <div 
               key={product.id}
-              className={`bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:shadow-lg ${
-                viewMode === 'grid' ? 'transform hover:-translate-y-1' : ''
+              className={`bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg ${
+                viewMode === 'grid' ? 'transform hover:-translate-y-1' : 'flex flex-col md:flex-row'
               }`}
-             
-              onClick={() => setSelectedProduct(product)}
             >
               {viewMode === 'grid' ? (
                 // Vista de cuadrícula
-                <div >
+                <div className="cursor-pointer" onClick={() => setSelectedProduct(product)}>
                   <div className="h-48 sm:h-56 relative">
-                  <div className="h-full w-full flex items-center justify-center bg-gray-50  p-4 "
+                    <div className="h-full w-full flex items-center justify-center bg-gray-50 p-4"
             
                    > 
                     {product.media && product.media.length > 0 && product.media[0].url ? (
@@ -371,20 +450,60 @@ export default function AdminDashboard() {
                                 </button>
                               </div>
 
-                              {/* Botón de activar/desactivar */}
-                              <button 
-                                className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 flex items-center justify-center ${product.is_active ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white`}
-                                onClick={async (e) => {
-                                  e.stopPropagation();
-                                  e.preventDefault();
-                                  const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
-                                  await updateProduct(product.id, { is_active: !product.is_active });
-                                  toast.dismiss(loadingToast);
-                                }}
-                                title={product.is_active ? 'Desactivar producto' : 'Activar producto'}
-                              >
-                                {product.is_active ? 'Desactivar' : 'Activar'}
-                              </button>
+                              {/* Menú de opciones */}
+                              <div className="relative">
+                                <button 
+                                  className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowProductMenu(showProductMenu === product.id ? null : product.id);
+                                  }}
+                                  title="Más opciones"
+                                >
+                                  <MoreVertical className="h-5 w-5" />
+                                </button>
+                                
+                                {showProductMenu === product.id && (
+                                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
+                                    {/* Botón para activar/desactivar producto */}
+                                    <button
+                                      className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-600 hover:bg-red-50' : 'text-green-600 hover:bg-green-50'}`}
+                                      onClick={async (e) => {
+                                        e.stopPropagation();
+                                        const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                                        await updateProduct(product.id, { is_active: !product.is_active });
+                                        toast.dismiss(loadingToast);
+                                        setShowProductMenu(null);
+                                      }}
+                                    >
+                                      {product.is_active ? (
+                                        <>
+                                          <X className="h-4 w-4 mr-2" />
+                                          Desactivar producto
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Check className="h-4 w-4 mr-2" />
+                                          Activar producto
+                                        </>
+                                      )}
+                                    </button>
+                                    
+                                    {/* Botón para editar producto completo */}
+                                    <button
+                                      className="w-full text-left px-4 py-2 text-sm flex items-center text-blue-600 hover:bg-blue-50"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedProduct(product);
+                                        setShowProductMenu(null);
+                                      }}
+                                    >
+                                      <Edit className="h-4 w-4 mr-2" />
+                                      Editar producto
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
                             </div>
 
                             {/* Segunda fila: Control de descuento */}
@@ -448,22 +567,29 @@ export default function AdminDashboard() {
                       </div>
                     )}
                     
-                    <div className="mt-3 text-center text-xs text-gray-500 italic">
+                    <div className="mt-2 text-center text-xs text-gray-500">
+                      Última modificación: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                    </div>
+                    <div className="mt-1 text-center text-xs text-gray-400 italic">
                       Click para más opciones de edición
                     </div>
                   </div>
                 </div>
               ) : (
-                // Vista de lista
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200" onClick={() => setSelectedProduct(product)}>
-                  <div className="relative h-48 bg-gray-100">
+                // Vista de lista mejorada
+                <div className="flex flex-col md:flex-row p-4 gap-4 w-full">
+                  {/* Columna de imagen - más pequeña en modo lista */}
+                  <div 
+                    className="relative w-full md:w-32 h-32 flex-shrink-0 cursor-pointer" 
+                    onClick={() => setSelectedProduct(product)}
+                  >
                     {product.media && product.media.length > 0 && product.media[0].url ? (
                       <Image 
                         src={product.media[0].url} 
                         alt={product.name || 'Producto'} 
-                        className="w-full h-full object-contain"
-                        width={300}
-                        height={300}
+                        className="w-full h-full object-contain bg-gray-50"
+                        width={120}
+                        height={120}
                         priority={false}
                       />
                     ) : (
@@ -472,9 +598,11 @@ export default function AdminDashboard() {
                       </div>
                     )}
                   </div>
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-lg font-medium text-gray-900">
+                  
+                  {/* Columna de información - central */}
+                  <div className="flex-grow cursor-pointer" onClick={() => setSelectedProduct(product)}>
+                    <div className="flex flex-wrap justify-between items-center gap-2">
+                      <h3 className="text-lg font-medium text-gray-900 mr-2">
                         {product.name_es || product.name || `Producto #${product.id}`}
                       </h3>
                       {product.is_active ? (
@@ -488,66 +616,10 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     
-                    <div className="flex items-center mt-1">
-                      <div className="flex items-center mr-2">
-                        <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
-                          <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
-                          <input 
-                            type="number" 
-                            className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
-                            value={product.price || ''}
-                            onChange={(e) => {
-                              const newPrice = e.target.value ? parseFloat(e.target.value) : null;
-                              setProducts(products.map(p => 
-                                p.id === product.id ? { ...p, price: newPrice } : p
-                              ));
-                            }}
-                            min="0"
-                            step="100"
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                        </div>
-                        <button 
-                          className="px-3 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            if (product.price !== null) {
-                              // Mostrar un toast de carga
-                              const loadingToast = toast.loading('Actualizando precio...');
-                              
-                              // Actualizar el precio
-                              const result = await updateProduct(product.id, { price: product.price });
-                              
-                              // Cerrar el toast de carga
-                              toast.dismiss(loadingToast);
-                              
-                              // Si no se actualizó, mostrar mensaje
-                              if (!result.success) {
-                                toast.error('No se pudo actualizar el precio');
-                              }
-                            } else {
-                              toast.error('El precio no puede estar vacío');
-                            }
-                          }}
-                          title="Actualizar precio"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span>Guardar</span>
-                        </button>
-                      </div>
-                      {product.discount_percentage !== null && (
-                        <span className="text-xs font-medium bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
-                          {product.discount_percentage}% OFF
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center mt-2 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-gray-500">
                       {product.sku && (
                         <div className="mr-3">
-                          SKU: {product.sku}
+                          <span className="font-medium">SKU:</span> {product.sku}
                         </div>
                       )}
                       
@@ -558,8 +630,156 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     
-                    <div className="mt-2 text-center text-xs text-gray-500 italic">
-                      Click para más opciones de edición
+                    <div className="text-xs text-gray-500 mt-2">
+                      Última modificación: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                    </div>
+                  </div>
+                  
+                  {/* Columna de controles - derecha */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:ml-auto">
+                    {/* Control de precio */}
+                    <div className="flex items-center">
+                      <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                        <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
+                        <input 
+                          type="number" 
+                          className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
+                          value={product.price || ''}
+                          onChange={(e) => {
+                            const newPrice = e.target.value ? parseFloat(e.target.value) : null;
+                            setProducts(products.map(p => 
+                              p.id === product.id ? { ...p, price: newPrice } : p
+                            ));
+                          }}
+                          min="0"
+                          step="100"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </div>
+                      <button 
+                        className="px-3 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (product.price !== null) {
+                            const loadingToast = toast.loading('Actualizando precio...');
+                            const result = await updateProduct(product.id, { price: product.price });
+                            toast.dismiss(loadingToast);
+                            if (!result.success) {
+                              toast.error('No se pudo actualizar el precio');
+                            }
+                          } else {
+                            toast.error('El precio no puede estar vacío');
+                          }
+                        }}
+                        title="Actualizar precio"
+                        aria-label="Guardar precio"
+                      >
+                        <Check className="h-5 w-5" />
+                      </button>
+                    </div>
+                    
+                    {/* Control de descuento */}
+                    <div className="flex items-center">
+                      <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                        <input 
+                          type="number" 
+                          className="w-16 px-2 py-2 text-sm font-medium text-gray-700 border-none focus:outline-none focus:ring-0" 
+                          value={product.discount_percentage || ''}
+                          onChange={(e) => {
+                            const newDiscount = e.target.value ? parseFloat(e.target.value) : null;
+                            setProducts(products.map(p => 
+                              p.id === product.id ? { ...p, discount_percentage: newDiscount } : p
+                            ));
+                          }}
+                          min="0"
+                          max="100"
+                          step="1"
+                          placeholder="0"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <span className="px-2 py-2 bg-gray-50 text-gray-700 font-medium border-l border-gray-300">%</span>
+                      </div>
+                      <button 
+                        className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          const loadingToast = toast.loading('Actualizando descuento...');
+                          await updateProduct(product.id, { discount_percentage: product.discount_percentage });
+                          toast.dismiss(loadingToast);
+                        }}
+                        title="Actualizar descuento"
+                        aria-label="Aplicar descuento"
+                      >
+                        <Check className="h-5 w-5" />
+                      </button>
+                    </div>
+                    
+                    {/* Menú de opciones */}
+                    <div className="relative">
+                      <button 
+                        className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setShowProductMenu(showProductMenu === product.id ? null : product.id);
+                        }}
+                        title="Más opciones"
+                        aria-label="Más opciones"
+                        aria-expanded={showProductMenu === product.id}
+                        aria-controls={`product-menu-${product.id}`}
+                      >
+                        <MoreVertical className="h-5 w-5" />
+                      </button>
+                      
+                      {showProductMenu === product.id && (
+                        <div 
+                          id={`product-menu-${product.id}`}
+                          className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200"
+                          role="menu"
+                          aria-orientation="vertical"
+                        >
+                          {/* Botón para activar/desactivar producto */}
+                          <button
+                            className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-600 hover:bg-red-50' : 'text-green-600 hover:bg-green-50'}`}
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                              await updateProduct(product.id, { is_active: !product.is_active });
+                              toast.dismiss(loadingToast);
+                              setShowProductMenu(null);
+                            }}
+                            role="menuitem"
+                          >
+                            {product.is_active ? (
+                              <>
+                                <X className="h-4 w-4 mr-2" />
+                                Desactivar producto
+                              </>
+                            ) : (
+                              <>
+                                <Check className="h-4 w-4 mr-2" />
+                                Activar producto
+                              </>
+                            )}
+                          </button>
+                          
+                          {/* Botón para editar producto completo */}
+                          <button
+                            className="w-full text-left px-4 py-2 text-sm flex items-center text-blue-600 hover:bg-blue-50"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              setSelectedProduct(product);
+                              setShowProductMenu(null);
+                            }}
+                            role="menuitem"
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Editar producto
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
