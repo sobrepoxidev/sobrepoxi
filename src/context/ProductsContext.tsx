@@ -9,6 +9,7 @@ const ProductsContext = createContext<ProductsData | undefined>(undefined);
 // Props para el proveedor
 interface ProductsProviderProps {
   children: React.ReactNode;
+  
   initialCategories?: Category[];
   initialProducts?: Product[];
 }
