@@ -17,7 +17,6 @@ interface GridSectionProps {
 
 const OptimizedGridSection: React.FC<GridSectionProps> = ({
   mobileActive = true,
-  sectionId = 'main-grid'
 }) => {
   const locale = useLocale();
   const { categories, productsByCategory, loading, error } = useProductsContext();

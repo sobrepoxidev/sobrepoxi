@@ -16,6 +16,7 @@ interface GiftsCarouselSectionProps {
  * - En móvil: Muestra tarjetas con grid 2x2 (4 productos por tarjeta)
  * - En desktop: Muestra una fila horizontal de productos individuales
  */
+
 const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({ 
 }) => {
   const locale = useLocale();

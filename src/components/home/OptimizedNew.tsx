@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import React from 'react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Carousel, BannerTemplate } from "@/components/home/Banner";
 import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
-import { supabase } from "@/lib/supabaseClient";
 import { ProductsProvider } from '@/components/providers/ProductsProvider';
 import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
-import SecondaryGridSection from '@/components/cards/SecondaryGridSection';
 import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
-import DetailsCarouselSection from '@/components/cards/DetailsCarouselSection';
 import type { Database } from '@/types-db';
 
 // Tipos para los datos pre-cargados desde el servidor
@@ -33,33 +30,8 @@ export default function OptimizedNewHome({
   initialCategories = [],
   initialProducts = []
 }: OptimizedNewHomeProps) {
-  const locale = useLocale();
   const t = useTranslations('home');
-  const [showLoginBanner, setShowLoginBanner] = useState<boolean>(true);
   const chorreadorCategoryId = 1;
-
-  // Verificar si el usuario ha iniciado sesión
-  useEffect(() => {
-    // Comprobar si el usuario ha ocultado el banner anteriormente
-    const hideLoginBanner = localStorage.getItem('hideLoginBanner');
-    if (hideLoginBanner === 'true') {
-      setShowLoginBanner(false);
-    }
-
-    // Suscribirse a cambios en la sesión
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event) => {
-        if (event === 'SIGNED_IN') {
-          localStorage.setItem('hideLoginBanner', 'true');
-          setShowLoginBanner(false);
-        }
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
 
   return (
     <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
@@ -196,7 +168,7 @@ export default function OptimizedNewHome({
         </Carousel>
 
         {/* Secciones de productos optimizadas */}
-        <OptimizedGridSection sectionId="main-grid" />
+        <OptimizedGridSection  />
         
         <GiftsCarouselSection />
         
