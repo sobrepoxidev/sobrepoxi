@@ -20,7 +20,7 @@ interface GiftsCarouselSectionProps {
 const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({ 
 }) => {
   const locale = useLocale();
-  const { categories, products } = useProductsContext();
+  const { categories, products, productsByCategory } = useProductsContext();
   
   // Referencia al contenedor del carrusel para controlar el scroll
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -36,42 +36,55 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
   
   /**
    * Sistema inteligente para seleccionar productos sin duplicación
-   * Estrategia:
-   * 1. Filtramos por categorías diferentes a las que muestra el grid principal (0-5)
-   * 2. Limitamos a 12 productos como máximo
-   * 3. Priorizamos productos con imágenes y destacados
+   * Estrategia mejorada:
+   * 1. Evitamos productos que ya se muestran en OptimizedGridSection y FeaturedProductsSection
+   * 2. Filtramos por categorías diferentes a las que muestra el grid principal
+   * 3. Limitamos a 12 productos como máximo
+   * 4. Priorizamos productos con imágenes y destacados
    */
   const displayProducts = useMemo(() => {
     if (!categories || !products || products.length === 0) return [];
     
-    // Obtenemos los IDs de las categorías que ya están siendo mostradas en el grid principal (0-5)
+    // Obtenemos los IDs de las categorías que ya están siendo mostradas en el grid principal
     const mainGridCategoryIds = categories.slice(0, 6).map(cat => cat.id);
     
-    // Obtenemos productos de categorías diferentes a las principales
+    // Obtenemos los productos que ya se muestran en el OptimizedGridSection
+    const productsInMainGrid: Record<string, boolean> = {};
+    
+    // Recorremos las categorías para obtener los productos ya mostrados
+    Object.entries(productsByCategory || {}).forEach(([categoryId, categoryProducts]) => {
+      // Aseguramos que categoryProducts sea un array antes de usar slice
+      if (Array.isArray(categoryProducts)) {
+        categoryProducts.slice(0, 4).forEach((product) => {
+          if (product && product.id) productsInMainGrid[product.id] = true;
+        });
+      }
+    });
+    
+    // Evitar específicamente productos de "Kitchen Sets" que aparecen duplicados
+    const kitchenCategoryIds = categories
+      .filter(cat => cat.name?.toLowerCase().includes('kitchen'))
+      .map(cat => cat.id);
+    
+    // Obtenemos productos que no estén ya mostrados en otros componentes
     let selectedProducts = products.filter(product => 
-      product.category_id && 
-      !mainGridCategoryIds.includes(product.category_id) &&
       product.media && 
-      product.media.length > 0
+      product.media.length > 0 &&
+      !productsInMainGrid[product.id] && // No mostrar productos que ya están en el grid principal
+      !(product.category_id && kitchenCategoryIds.includes(product.category_id)) // Evitar productos de Kitchen Sets
     );
     
-    // Si no hay suficientes productos de otras categorías, tomamos productos destacados
-    if (selectedProducts.length < 8) {
-      const featuredProducts = products.filter(product => 
-        product.is_featured && 
-        product.media && 
-        product.media.length > 0
-      );
-      
-      // Combinamos los productos evitando duplicados
-      const combinedProducts = [...selectedProducts];
-      featuredProducts.forEach(product => {
-        if (!combinedProducts.some(p => p.id === product.id)) {
-          combinedProducts.push(product);
-        }
-      });
-      
-      selectedProducts = combinedProducts;
+    // Priorizamos productos destacados que no estén ya seleccionados
+    const featuredProducts = selectedProducts.filter(product => product.is_featured);
+    
+    // Si tenemos suficientes productos destacados, los usamos primero
+    if (featuredProducts.length >= 8) {
+      selectedProducts = featuredProducts;
+    } else {
+      // Si no hay suficientes productos destacados, combinamos con otros productos
+      // pero asegurándonos de que los destacados aparezcan primero
+      const nonFeaturedProducts = selectedProducts.filter(product => !product.is_featured);
+      selectedProducts = [...featuredProducts, ...nonFeaturedProducts];
     }
     
     // Limitamos a 12 productos como solicitado
@@ -158,13 +171,13 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
       <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-teal-100 opacity-20 z-0"></div>
       
       {/* Encabezado con título y enlace Ver más */}
-      <div className="flex justify-between items-center mb-2 z-10 relative">
+      <div className="flex justify-between items-center mb-1 z-10 relative">
         <div className="flex items-center">
           <div className="w-1 h-6 bg-teal-500 mr-2"></div>
           <h2 className="text-xl font-bold text-gray-800">{title}</h2>
         </div>
         
-        <Link href="/products" className="px-3 py-1 text-sm text-teal-600 font-medium hover:text-teal-700 transition-colors flex items-center">
+        <Link href="/products" className="px-1 py-0 text-sm text-teal-600 font-medium hover:text-teal-700 transition-colors flex items-center">
           {locale === 'es' ? 'Ver más' : 'View more'}
           <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 ml-1" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -173,12 +186,12 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
       </div>
       
       {/* Controles de navegación en una fila separada */}
-      <div className="flex justify-end mb-4 z-10 relative">
+      <div className="flex justify-end mb-1 z-10 relative">
         <div className="flex items-center space-x-2">
           <button 
             onClick={scrollToPrev}
             disabled={scrollPosition <= 0}
-            className={`p-1.5 rounded-full border border-teal-500 transition-colors ${scrollPosition <= 0 ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
+            className={`p-0.5 rounded-full border border-teal-500 transition-colors ${scrollPosition <= 0 ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
             aria-label="Anterior"
           >
             <svg 
@@ -196,7 +209,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
           <button 
             onClick={scrollToNext}
             disabled={scrollPosition >= maxScrollPosition}
-            className={`p-1.5 rounded-full border border-teal-500 transition-colors ${scrollPosition >= maxScrollPosition ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
+            className={`p-0.5 rounded-full border border-teal-500 transition-colors ${scrollPosition >= maxScrollPosition ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
             aria-label="Siguiente"
           >
             <svg 

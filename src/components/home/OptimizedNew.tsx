@@ -7,6 +7,7 @@ import { Carousel, BannerTemplate } from "@/components/home/Banner";
 import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
 import { ProductsProvider } from '@/components/providers/ProductsProvider';
 import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
+import FeaturedProductsSection from '../cards/FeaturedProductsSection';
 import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
 import type { Database } from '@/types-db';
 
@@ -169,6 +170,9 @@ export default function OptimizedNewHome({
 
         {/* Secciones de productos optimizadas */}
         <OptimizedGridSection  />
+        
+        {/* Nueva sección de productos destacados con mayor visibilidad */}
+        <FeaturedProductsSection maxProducts={9} />
         
         <GiftsCarouselSection />
         
