@@ -35,15 +35,13 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
     console.log(`FeaturedProductsSection: Buscando ${maxProducts} productos para mostrar`);
     console.log(`FeaturedProductsSection: Total de productos disponibles: ${products.length}`);
     
-    // Obtenemos los IDs de las categorías que ya están siendo mostradas en el grid principal
-    const mainGridCategoryIds = categories.slice(0, 6).map(cat => cat.id);
     
     // Obtenemos los productos que ya se muestran en el OptimizedGridSection
     // para evitar duplicarlos
     const productsInMainGrid: Record<string, boolean> = {};
     
     // Recorremos las categorías para obtener los productos ya mostrados
-    Object.entries(productsByCategory || {}).forEach(([categoryId, categoryProducts]) => {
+    Object.entries(productsByCategory || {}).forEach(([, categoryProducts]) => {
       // Aseguramos que categoryProducts sea un array antes de usar slice
       if (Array.isArray(categoryProducts)) {
         categoryProducts.slice(0, 4).forEach((product) => {
