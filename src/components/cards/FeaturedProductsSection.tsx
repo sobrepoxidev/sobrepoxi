@@ -192,8 +192,8 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
                     {/* Categoría */}
                     {product.category_id && (
                       <div className="mt-auto">
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                          {categories.find(c => c.id === product.category_id)?.name || ''}
+                        <span className="text-[0.67rem] text-gray-500 bg-gray-100 px-1 py-1 rounded-full">
+                          {locale === 'es' ? categories.find(c => c.id === product.category_id)?.name_es : categories.find(c => c.id === product.category_id)?.name_en || ''}
                         </span>
                       </div>
                     )}
