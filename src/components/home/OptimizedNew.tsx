@@ -170,11 +170,11 @@ export default function OptimizedNewHome({
 
         {/* Secciones de productos optimizadas */}
         <OptimizedGridSection  />
-        
+        <GiftsCarouselSection />
         {/* Nueva sección de productos destacados con mayor visibilidad */}
         <FeaturedProductsSection maxProducts={9} />
         
-        <GiftsCarouselSection />
+
         
         {/* <SecondaryGridSection />
         

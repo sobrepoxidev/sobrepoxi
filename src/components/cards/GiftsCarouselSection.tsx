@@ -164,9 +164,9 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
 
   return (
     <section className="py-6 px-4 relative overflow-hidden">
-      {/* Fondo decorativo */}
-      <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-teal-100 opacity-30 z-0"></div>
-      <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-teal-100 opacity-20 z-0"></div>
+      {/* Fondo con degradado suave */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-50/50 via-white to-amber-50/50 z-0" />
+      
       
       {/* Encabezado con título y enlace Ver más */}
       <div className="flex justify-between items-center mb-1 z-10 relative">
