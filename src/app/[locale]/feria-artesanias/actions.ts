@@ -54,7 +54,6 @@ export async function addFollow(
   if (error) throw error;
 }
 
-type FollowSummary = Record<Social, boolean>;
 
 export async function sendSummaryMail(
   to: string,
