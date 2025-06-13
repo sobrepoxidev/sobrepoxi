@@ -25,11 +25,11 @@ export default function Terminos() {
         (ARCO) escribiendo a&nbsp;
         <a
           className="underline text-teal-600"
-          href="mailto:privacy@handmadeart.store"
+          href="mailto:info@handmadeart.store"
           target="_blank"
           rel="noopener noreferrer"
         >
-          privacy@handmadeart.store
+          info@handmadeart.store
         </a>
         .
       </p>
