@@ -30,6 +30,18 @@ export type Database = {
         created_at: string;
         updated_at: string;
     },
+    leads: {
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+        entries: number;
+        facebook_followed: boolean;
+        instagram_followed: boolean;
+        tiktok_followed: boolean;
+        youtube_followed: boolean;
+        created_at: string;
+      },
     cart_items: {
         id: number;
         user_id: string; // UUID
