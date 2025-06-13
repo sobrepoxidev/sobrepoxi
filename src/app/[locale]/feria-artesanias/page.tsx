@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { insertLead, addFollow, sendThankYouMail } from './actions';
+import { insertLead, addFollow, sendSummaryMail, Social } from './actions';
+
 
 
 
@@ -16,29 +17,27 @@ const socials = {
 export default function FeriaArtesaniasPage() {
   /* paso: 0=form | 1=social | 2=thanks */
   const [step, setStep] = useState<0 | 1 | 2>(0);
-  const [leadId, setLeadId]   = useState<string>();
+  const [leadId, setLeadId] = useState<string>();
   const [entries, setEntries] = useState(1);
   const [followed, setFollowed] = useState<Record<string, boolean>>({});
+  const [userInfo, setUserInfo] = useState<{ name: string; email: string }>({
+    name: '',
+    email: ''
+  });
 
   /* ------- paso 1 ------- */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-    const name  = form.get('name')  as string;
+    const name = form.get('name') as string;
     const email = form.get('email') as string;
     const phone = form.get('phone') as string;
 
     const lead = await insertLead(name, email, phone);
     setLeadId(lead.id);
     setEntries(lead.entries);
+    setUserInfo({ name, email });
     setStep(1);
-
-    /* correo de cortesía (no bloquea UI) */
-    sendThankYouMail(
-      '¡Gracias por registrarte!',
-      `<p>Pronto recibirás tu video 360°.</p>`,
-      email
-    ).catch(console.error);
   }
 
   /* ------- paso 2 ------- */
@@ -59,7 +58,7 @@ export default function FeriaArtesaniasPage() {
             ¡Toma tu video 360° <span className="text-teal-600">GRATIS</span>!
           </h1>
 
-          <input name="name"  placeholder="Nombre" className="input text-gray-800" required />
+          <input name="name" placeholder="Nombre" className="input text-gray-800" required />
           <input name="email" type="email" placeholder="Correo" className="input text-gray-800" required />
           <input name="phone" placeholder="Celular" className="input text-gray-800" required />
 
@@ -84,9 +83,25 @@ export default function FeriaArtesaniasPage() {
             </button>
           ))}
 
-          <button onClick={() => setStep(2)} className="btn-primary w-full mt-4">
+          <button
+            onClick={async () => {
+              // 1) Enviar el mail (no bloquea la UI si falla)
+              if (leadId) {
+                await sendSummaryMail(
+                  userInfo.email,
+                  userInfo.name,
+                  entries,
+                  followed as Record<Social, boolean>   // pasamos el objeto de redes
+                ).catch(console.error);
+              }
+              // 2) Cambiar al paso final
+              setStep(2);
+            }}
+            className="btn-primary w-full mt-4"
+          >
             Listo
           </button>
+
         </div>
       )}
 
@@ -103,12 +118,3 @@ export default function FeriaArtesaniasPage() {
     </main>
   );
 }
-
-/* Tailwind helpers */
-const input =
-  'w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500';
-const btnBase =
-  'rounded-lg px-4 py-2 font-semibold transition active:scale-95';
-const btnPrimary = `${btnBase} bg-teal-600 text-white`;
-const btnOutline = `${btnBase} border border-teal-600 text-teal-600`;
-/* Use tailwind plugin @apply or keep as is */
