@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { insertLead, addFollow, sendSummaryMail, Social } from './actions';
-
-
+import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 
 const socials = {
@@ -28,17 +28,24 @@ export default function FeriaArtesaniasPage() {
   /* ------- paso 1 ------- */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const name = form.get('name') as string;
+    const form  = new FormData(e.currentTarget);
+    const name  = form.get('name')  as string;
     const email = form.get('email') as string;
     const phone = form.get('phone') as string;
-
-    const lead = await insertLead(name, email, phone);
-    setLeadId(lead.id);
-    setEntries(lead.entries);
+  
+    const res = await insertLead(name, email, phone);
+  
+    if (!res.ok) {
+      toast.error('Correo ya está registrado. Usa otro o pregunta a nuestro staff 😊');
+      return;                    // no avanza al paso siguiente
+    }
+  
+    // éxito → continuar
+    setLeadId(res.id);
+    setEntries(res.entries);
     setUserInfo({ name, email });
     setStep(1);
-  }
+  }  
 
   /* ------- paso 2 ------- */
   async function handleFollow(key: keyof typeof socials) {
@@ -61,6 +68,30 @@ export default function FeriaArtesaniasPage() {
           <input name="name" placeholder="Nombre" className="input text-gray-800" required />
           <input name="email" type="email" placeholder="Correo" className="input text-gray-800" required />
           <input name="phone" placeholder="Celular" className="input text-gray-800" required />
+
+          {/* ---------- checkbox de términos ---------- */}
+          <label className="flex items-start gap-2 text-sm text-gray-700">
+            <input
+              type="checkbox"
+              name="terms"
+              required          /* bloquea submit si no marca */
+              className="mt-1 h-4 w-4 rounded border-gray-300
+                   text-teal-600 focus:ring-teal-500"
+            />
+            <span>
+              He leído y acepto los&nbsp;
+              <Link
+                href="/feria-artesanias-terminos"
+                target="_blank"
+                className="text-teal-600 underline"
+              >
+                Términos y Condiciones
+              </Link>
+              . Autorizo a HandMade Art a enviarme mi video 360°, participar en el
+              sorteo del Marco de Espejo (15 de junio de 2025) y recibir novedades
+              o promociones relacionadas con la marca.
+            </span>
+          </label>
 
           <button className="btn-primary w-full">Continuar</button>
         </form>

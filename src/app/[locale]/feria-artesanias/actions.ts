@@ -8,15 +8,27 @@ export async function insertLead(
   name: string,
   email: string,
   phone: string
-): Promise<{ id: string; entries: number }> {
+): Promise<
+  | { ok: true; id: string; entries: number }
+  | { ok: false; reason: 'duplicate' }
+> {
   const { data, error } = await supabase
     .from('leads')
     .insert({ name, email, phone })
     .select('id, entries')
     .single();
 
-  if (error) throw error;
-  return data as { id: string; entries: number };
+  if (!error) {
+    return { ok: true, id: data!.id, entries: data!.entries };
+  }
+
+  // Detectar violación de clave única (código 23505)
+  if (error.code === '23505') {
+    return { ok: false, reason: 'duplicate' };
+  }
+
+  // para otros errores - propagar
+  throw error;
 }
 
 export type Social =
