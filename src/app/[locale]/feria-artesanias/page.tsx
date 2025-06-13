@@ -100,7 +100,7 @@ export default function FeriaArtesaniasPage() {
       {step === 1 && (
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-center text-gray-800">
-            ¡Ya tienes <span className="text-teal-600">{entries}</span> participación!
+            ¡Ya tienes <span className="text-teal-600">{entries}</span> {entries === 1 ? 'participación' : 'participaciones'}!
           </h2>
           <p className="text-center text-gray-800">Sigue nuestras redes y gana más:</p>
 
@@ -144,6 +144,8 @@ export default function FeriaArtesaniasPage() {
           </p>
           <p className="text-gray-800">Te enviaremos tu video a tu correo o WhatsApp.</p>
           <p className="text-sm text-teal-600">Participaciones acumuladas: {entries}</p>
+          {/* boton para ir a exploar la tienda / */}
+          <Link href="/" className="btn-primary w-full mt-4">Explorar la tienda</Link>
         </div>
       )}
     </main>
