@@ -13,9 +13,9 @@ export default async function Footer({ locale }: { locale: string }) {
         {/* Contacto y redes */}
         <div className="flex flex-col md:flex-row items-center gap-4 text-sm">
           <div className="flex flex-col items-start md:items-center gap-3">
-            <a href="mailto:info@handmadeart.com" aria-label="Correo" className="hover:text-primary transition-colors flex items-center gap-1">
+            <a href="mailto:info@handmadeart.store" aria-label="Correo" className="hover:text-primary transition-colors flex items-center gap-1">
               <Mail className="w-5 h-5" />
-              <span>info@handmadeart.com</span>
+              <span>info@handmadeart.store</span>
             </a>
             {/* Contact Number 1: (+506) 8775-7576 */}
             <div className="flex items-center gap-2">
