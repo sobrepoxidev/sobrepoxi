@@ -144,6 +144,7 @@ export default function FeriaArtesaniasPage() {
           </p>
           <p className="text-gray-800">Te enviaremos tu video a tu correo o WhatsApp.</p>
           <p className="text-sm text-teal-600">Participaciones acumuladas: {entries}</p>
+          <p className="text-sm text-teal-600">El sorteo se realizará el domingo 15 de junio de 2025.</p>
           {/* boton para ir a exploar la tienda / */}
           <Link href="/" className="btn-primary w-full mt-4">Explorar la tienda</Link>
         </div>
