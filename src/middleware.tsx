@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
   /* --- 2. Resto del sitio → intl + Supabase --- */
   const intlRes = intlMiddleware(req);
   // Create response with the correct status code from the start
-  let res = NextResponse.next({
+  const res = NextResponse.next({
     request: { headers: intlRes.headers },
     status: intlRes.status
   });
