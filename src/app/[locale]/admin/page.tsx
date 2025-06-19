@@ -2,17 +2,36 @@ import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { Package, Calendar, ArrowRight, Box } from 'lucide-react';
 
 // Lista de correos electrónicos de administradores autorizados
 const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com'];
 
-const AdminCard = ({ title, href, description }: { title: string; href: string; description: string }) => (
-  <Link href={href} className="block group">
-    <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 hover:border-blue-500">
-      <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600">{title}</h3>
-      <p className="mt-2 text-gray-600">{description}</p>
-      <div className="mt-4 text-blue-600 font-medium">
-        Ir a {title} →
+const AdminCard = ({ 
+  title, 
+  href, 
+  description, 
+  icon: Icon 
+}: { 
+  title: string; 
+  href: string; 
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) => (
+  <Link href={href} className="block group transition-transform hover:scale-[1.02]">
+    <div className="h-full p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-500 flex flex-col">
+      <div className="flex items-center mb-4">
+        <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+          <Icon className="w-6 h-6" />
+        </div>
+        <h3 className="ml-3 text-xl font-semibold text-gray-800 group-hover:text-blue-600">
+          {title}
+        </h3>
+      </div>
+      <p className="flex-grow text-gray-600">{description}</p>
+      <div className="mt-4 text-blue-600 font-medium flex items-center group-hover:translate-x-1 transition-transform">
+        Go to {title}
+        <ArrowRight className="ml-1 w-4 h-4" />
       </div>
     </div>
   </Link>
@@ -47,11 +66,13 @@ export default async function AdminPage({
           href={`/${locale}/admin/products`}
           title="Productos"
           description="Administra los productos de la tienda, incluyendo su información, precios y disponibilidad."
+          icon={Package}
         />
         <AdminCard 
-          href={`/${locale}/admin/eventos`}
+          href={`/${locale}/admin/events`}
           title="Eventos"
           description="Gestiona los eventos y actividades programadas."
+          icon={Calendar}
         />
       </div>
     </div>
