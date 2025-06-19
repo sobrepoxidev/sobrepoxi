@@ -20,7 +20,7 @@ interface GiftsCarouselSectionProps {
 const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({ 
 }) => {
   const locale = useLocale();
-  const { categories, products, productsByCategory } = useProductsContext();
+  const { sectionProducts } = useProductsContext();
   
   // Referencia al contenedor del carrusel para controlar el scroll
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -42,52 +42,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
    * 3. Limitamos a 12 productos como máximo
    * 4. Priorizamos productos con imágenes y destacados
    */
-  const displayProducts = useMemo(() => {
-    if (!categories || !products || products.length === 0) return [];
-
-    
-    // Obtenemos los productos que ya se muestran en el OptimizedGridSection
-    const productsInMainGrid: Record<string, boolean> = {};
-    
-    // Recorremos las categorías para obtener los productos ya mostrados
-    Object.entries(productsByCategory || {}).forEach(([, categoryProducts]) => {
-      // Aseguramos que categoryProducts sea un array antes de usar slice
-      if (Array.isArray(categoryProducts)) {
-        categoryProducts.slice(0, 4).forEach((product) => {
-          if (product && product.id) productsInMainGrid[product.id] = true;
-        });
-      }
-    });
-    
-    // Evitar específicamente productos de "Kitchen Sets" que aparecen duplicados
-    const kitchenCategoryIds = categories
-      .filter(cat => cat.name?.toLowerCase().includes('kitchen'))
-      .map(cat => cat.id);
-    
-    // Obtenemos productos que no estén ya mostrados en otros componentes
-    let selectedProducts = products.filter(product => 
-      product.media && 
-      product.media.length > 0 &&
-      !productsInMainGrid[product.id] && // No mostrar productos que ya están en el grid principal
-      !(product.category_id && kitchenCategoryIds.includes(product.category_id)) // Evitar productos de Kitchen Sets
-    );
-    
-    // Priorizamos productos destacados que no estén ya seleccionados
-    const featuredProducts = selectedProducts.filter(product => product.is_featured);
-    
-    // Si tenemos suficientes productos destacados, los usamos primero
-    if (featuredProducts.length >= 8) {
-      selectedProducts = featuredProducts;
-    } else {
-      // Si no hay suficientes productos destacados, combinamos con otros productos
-      // pero asegurándonos de que los destacados aparezcan primero
-      const nonFeaturedProducts = selectedProducts.filter(product => !product.is_featured);
-      selectedProducts = [...featuredProducts, ...nonFeaturedProducts];
-    }
-    
-    // Limitamos a 12 productos como solicitado
-    return selectedProducts.slice(0, 12);
-  }, [categories, products]);
+  const displayProducts = sectionProducts.gifts;
   
   // Usamos exclusivamente el color teal como solicitado
   const cardColor = 'bg-teal-500';

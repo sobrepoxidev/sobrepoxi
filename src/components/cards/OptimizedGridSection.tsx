@@ -8,6 +8,7 @@ import { useProductsContext } from "@/context/ProductsContext";
 import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
 
+
 interface GridSectionProps {
   // Props simplificados
   mobileActive?: boolean;
@@ -19,7 +20,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
   mobileActive = true,
 }) => {
   const locale = useLocale();
-  const { categories, productsByCategory, loading, error } = useProductsContext();
+  const { categories, sectionProducts, loading, error } = useProductsContext();
   
   // Definimos internamente qué categorías mostrar (0-6 por defecto)
   const indexStart = 0;
@@ -28,7 +29,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
   // Usamos useMemo para evitar cálculos repetidos en cada renderizado
   const desktopCards = useMemo(() => {
     return categories.slice(indexStart, indexEnd).map(category => {
-      const categoryProducts = productsByCategory[category.id] || [];
+      const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
       const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
 
       return {
@@ -102,7 +103,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
         ),
       };
     });
-  }, [categories, productsByCategory, indexStart, indexEnd, locale]);
+  }, [categories, sectionProducts, indexStart, indexEnd, locale]);
 
 
 
@@ -166,8 +167,8 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                   if (!isPrioritizedA && isPrioritizedB) return 1;
 
                   // Si ambos son prioritarios o ninguno lo es, priorizamos por cantidad de productos
-                  const aProducts = (productsByCategory[a.id] || []).length;
-                  const bProducts = (productsByCategory[b.id] || []).length;
+                  const aProducts = (sectionProducts.gridByCategory[a.id] || []).length;
+                  const bProducts = (sectionProducts.gridByCategory[b.id] || []).length;
 
                   // Priorizar categorías con 4 o más productos
                   if (aProducts >= 4 && bProducts < 4) return -1;
@@ -178,7 +179,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                 })
                 .map((category, index) => {
                   // Convertir la categoría a formato esperado por CarrucelSectionA
-                  const categoryProducts = productsByCategory[category.id] || [];
+                  const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
 
                   // Colores para las tarjetas
                   const cardColors = [

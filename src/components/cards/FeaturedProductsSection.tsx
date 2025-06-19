@@ -21,7 +21,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
   maxProducts = 6
 }) => {
   const locale = useLocale();
-  const { products, categories, productsByCategory = {} } = useProductsContext();
+  const { products, sectionProducts, categories, productsByCategory = {} } = useProductsContext();
   
   // Título según el idioma
   const title = useMemo(() => {
@@ -29,114 +29,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
   }, [locale]);
 
   // Selección inteligente de productos para evitar duplicados con otros componentes
-  const featuredProducts = useMemo(() => {
-    if (!products || products.length === 0) return [];
-    
-    console.log(`FeaturedProductsSection: Buscando ${maxProducts} productos para mostrar`);
-    console.log(`FeaturedProductsSection: Total de productos disponibles: ${products.length}`);
-    
-    
-    // Obtenemos los productos que ya se muestran en el OptimizedGridSection
-    // para evitar duplicarlos
-    const productsInMainGrid: Record<string, boolean> = {};
-    
-    // Recorremos las categorías para obtener los productos ya mostrados
-    Object.entries(productsByCategory || {}).forEach(([, categoryProducts]) => {
-      // Aseguramos que categoryProducts sea un array antes de usar slice
-      if (Array.isArray(categoryProducts)) {
-        categoryProducts.slice(0, 4).forEach((product) => {
-          if (product && product.id) productsInMainGrid[product.id] = true;
-        });
-      }
-    });
-    
-    // Evitar específicamente productos de "Kitchen Sets" que aparecen duplicados
-    const kitchenCategoryIds = categories
-      .filter(cat => cat.name?.toLowerCase().includes('kitchen'))
-      .map(cat => cat.id);
-    
-    console.log(`FeaturedProductsSection: Categorías de cocina a evitar: ${kitchenCategoryIds.join(', ')}`);
-    
-    // ESTRATEGIA 1: Intentar obtener productos destacados que no estén ya mostrados en otros componentes
-    let selectedProducts = products.filter(product => 
-      product.is_featured && 
-      product.media && 
-      product.media.length > 0 &&
-      !productsInMainGrid[product.id] && // No mostrar productos que ya están en el grid principal
-      // Evitar específicamente productos de "Kitchen Sets"
-      !(product.category_id && kitchenCategoryIds.includes(product.category_id))
-    );
-    
-    console.log(`FeaturedProductsSection: Productos destacados encontrados: ${selectedProducts.length}`);
-
-    // ESTRATEGIA 2: Si no hay suficientes productos destacados, buscamos productos adicionales
-    if (selectedProducts.length < maxProducts) {
-      // Filtrar por productos que no estén ya seleccionados y que no estén en el grid principal
-      const additionalProducts = products
-        .filter(p => 
-          p.media && 
-          p.media.length > 0 && 
-          !selectedProducts.some(sp => sp.id === p.id) &&
-          !productsInMainGrid[p.id] &&
-          // Evitar específicamente productos de "Kitchen Sets"
-          !(p.category_id && kitchenCategoryIds.includes(p.category_id))
-        )
-        // Priorizar productos con precios más altos
-        .sort((a, b) => {
-          const priceA = a.price || 0;
-          const priceB = b.price || 0;
-          return priceB - priceA;
-        })
-        .slice(0, maxProducts - selectedProducts.length);
-
-      console.log(`FeaturedProductsSection: Productos adicionales encontrados: ${additionalProducts.length}`);
-      selectedProducts = [...selectedProducts, ...additionalProducts];
-    }
-    
-    // ESTRATEGIA 3: Si aún no tenemos suficientes productos, incluir algunos de Kitchen Sets
-    if (selectedProducts.length < maxProducts) {
-      console.log(`FeaturedProductsSection: Aún faltan productos, intentando incluir algunos de Kitchen Sets`);
-      
-      const kitchenProducts = products.filter(p => 
-        p.media && 
-        p.media.length > 0 && 
-        !selectedProducts.some(sp => sp.id === p.id) &&
-        !productsInMainGrid[p.id] &&
-        p.category_id && kitchenCategoryIds.includes(p.category_id)
-      )
-      .sort((a, b) => {
-        const priceA = a.price || 0;
-        const priceB = b.price || 0;
-        return priceB - priceA;
-      })
-      .slice(0, maxProducts - selectedProducts.length);
-      
-      console.log(`FeaturedProductsSection: Productos de cocina añadidos: ${kitchenProducts.length}`);
-      selectedProducts = [...selectedProducts, ...kitchenProducts];
-    }
-    
-    // ESTRATEGIA 4: Si todavía no tenemos suficientes, incluir cualquier producto con imagen
-    if (selectedProducts.length < maxProducts) {
-      console.log(`FeaturedProductsSection: Último intento, buscando cualquier producto con imagen`);
-      
-      const anyProducts = products.filter(p => 
-        p.media && 
-        p.media.length > 0 && 
-        !selectedProducts.some(sp => sp.id === p.id)
-      )
-      .slice(0, maxProducts - selectedProducts.length);
-      
-      console.log(`FeaturedProductsSection: Productos adicionales finales: ${anyProducts.length}`);
-      selectedProducts = [...selectedProducts, ...anyProducts];
-    }
-    
-    // Limitamos al número máximo especificado
-    const finalProducts = selectedProducts.slice(0, maxProducts);
-    console.log(`FeaturedProductsSection: Total de productos seleccionados: ${finalProducts.length}`);
-    
-    return finalProducts;
-  }, [categories, products, maxProducts]);
-
+  const featuredProducts = sectionProducts.featured;
   return (
     <section className="my-2">
       <div className="w-full px-4  mx-auto">

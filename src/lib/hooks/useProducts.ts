@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from "@/lib/supabaseClient";
 import type { Database } from "@/types-db";
+import { distribuirProductos } from "@/lib/productsDistributor";
 
 export type Product = Database['products'];
 export type Category = Database['categories'];
@@ -14,6 +15,11 @@ export interface ProductsData {
   loading: boolean;
   error: string | null;
   productsByCategory: Record<number, Product[]>;
+  sectionProducts: {
+    gridByCategory: Record<number, Product[]>;
+    gifts: Product[];
+    featured: Product[];
+  };
 }
 
 // Hook personalizado para obtener y compartir datos de productos
@@ -51,6 +57,11 @@ export function useProducts(
     loading: initialCategories.length > 0 && initialProducts.length > 0 ? false : true,
     error: null,
     productsByCategory: initialProductsByCategory,
+    sectionProducts: {
+      gridByCategory: {},
+      gifts: [],
+      featured: [],
+    },
   });
 
   useEffect(() => {
@@ -118,11 +129,13 @@ export function useProducts(
           .from('products')
           .select('*')
           .eq('is_active', true)
-          .limit(30);
+          .limit(49);
 
         if (productsError) {
           throw new Error(`Error fetching products: ${productsError.message}`);
         }
+
+        const sectionProducts = distribuirProductos(productsData, categoriesData);
 
         // Filtrar productos por categoría y que tengan media
         productsData.forEach(product => {
@@ -147,6 +160,7 @@ export function useProducts(
             loading: false,
             error: null,
             productsByCategory,
+            sectionProducts,    
           });
         }
       } catch (err) {
