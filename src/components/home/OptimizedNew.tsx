@@ -36,7 +36,7 @@ export default function OptimizedNewHome({
 
   return (
     <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
-      <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200">
+      <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 pb-0.5">
         <Carousel>
           {/* Banner 1: Envío a Costa Rica (ahora primero) */}
           <BannerTemplate linkHref="/shipping">
@@ -60,7 +60,7 @@ export default function OptimizedNewHome({
               <div className="flex items-center justify-center md:gap-8 px-2 md:px-4 h-auto">
                 <div className="relative h-[60px] w-[60px] md:h-[130px] md:w-[130px]">
                   <Image
-                    src="/home/mapa-cr.webp"
+                    src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/mapa-cr-DZ7GK5iuwsfpfwJ2Udbhz8Rxd1bUBF.webp"
                     alt={t('banner1.mapAlt')}
                     fill
                     sizes="(max-width: 768px) 60px, 130px"
@@ -70,7 +70,7 @@ export default function OptimizedNewHome({
                 </div>
                 <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
                   <Image
-                    src="/home/avion-correos.webp"
+                    src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/avion-correos-tePadHoKKfnwSsZPNFg0asLyJyTxzy.webp"
                     alt={t('banner1.planeAlt')}
                     fill
                     sizes="(max-width: 768px) 80px, 180px"
@@ -80,7 +80,7 @@ export default function OptimizedNewHome({
                 </div>
                 <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
                   <Image
-                    src="/home/paquet-correos.webp"
+                    src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/paquet-correos-F4l2o6srReQON5HaGqnifBJBzqAhaO.webp"
                     alt={t('banner1.packageAlt')}
                     fill
                     sizes="(max-width: 768px) 80px, 180px"

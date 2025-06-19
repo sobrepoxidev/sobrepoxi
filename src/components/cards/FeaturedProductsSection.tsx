@@ -138,7 +138,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
   }, [categories, products, maxProducts]);
 
   return (
-    <section className="my-8 ">
+    <section className="my-2">
       <div className="w-full px-4  mx-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-800 border-l-4 border-teal-500 pl-3">
@@ -153,10 +153,10 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
         </div>
 
         {featuredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
             {featuredProducts.map((product, index) => (
               <Link key={product.id} href={`/product/${product.id}`} className="group">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col">
+                <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full hover:shadow-md transform transition-all duration-300 hover:-translate-y-1 ">
                   {/* Sección superior con imagen - más grande que en otros componentes */}
                   <div className="relative bg-gray-50 aspect-square">
                     <Image 

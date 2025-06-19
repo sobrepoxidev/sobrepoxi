@@ -27,37 +27,21 @@ export default async function Navbar({ locale }: { locale: string }) {
               
               <div className="lg:hidden">
               <Image
-                src="/logo-handmade-art-black.webp"
+                src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/logo-LjcayV8P6SUxpAv0Hv61zn3t1XNhLw.svg"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
-                priority
-              />
-              <Image
-                src="/logo-handmade-art.webp"
-                alt="Hand Made Art Logo"
-                width={65}
-                height={0}
-                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
+                className="w-[40px] md:w-[65px] object-cover"
                 priority
               />
               </div>
               <div className="hidden lg:block">
               <Image
-                src="/logo-handmade-art-black.webp"
+                src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/logo-LjcayV8P6SUxpAv0Hv61zn3t1XNhLw.svg"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
-                className="w-[40px] md:w-[65px] object-cover block dark:hidden"
-                priority
-              />
-              <Image
-                src="/logo-handmade-art-black.webp"
-                alt="Hand Made Art Logo"
-                width={65}
-                height={0}
-                className="w-[40px] md:w-[65px] object-cover hidden dark:block"
+                className="w-[40px] md:w-[65px] object-cover"
                 priority
               />
               </div>
