@@ -6,12 +6,16 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 // Lista de correos electrónicos de administradores autorizados
 const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com'];
 
+type Props = {
+  params: {
+    locale: Promise<string>;
+  };
+};
+
 export default async function AdminProductsPage({
   params
-}: {
-  params: { locale: string };
-}) {
-  const { locale } = params;
+}: Props) {
+  const { locale } = await params;
   const supabase = createServerComponentClient({ cookies });
   
   const { data: { session } } = await supabase.auth.getSession();
