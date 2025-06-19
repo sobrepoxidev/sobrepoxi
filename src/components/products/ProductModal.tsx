@@ -5,6 +5,7 @@ import { ShoppingCartIcon, Share2 } from 'lucide-react';
 import { useState } from 'react';
 import { Database } from "@/types-db";
 import { useCart } from "@/context/CartContext";
+import { useLocale } from 'next-intl';
 
 type Product = Database['products'] & { category?: string | null };
 
@@ -19,6 +20,7 @@ export function ProductCardModal({
 }) {
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
+    const locale = useLocale();
 
     const handleIncrement = () => {
         if (quantity < 10) {
@@ -105,12 +107,12 @@ export function ProductCardModal({
                             onClick={handleAddToCart}
                         >
                             <ShoppingCartIcon className="w-5 h-5" />
-                            Add to Cart • ₡{price ? (price * quantity).toFixed(0) : 'N/A'}
+                            {locale === 'es' ? 'Añadir al carrito' : 'Add to cart'} • ₡{price ? (price * quantity).toFixed(0) : 'N/A'}
                         </button>
 
                         <div className="mt-4 text-center">
                             <p className="text-sm text-gray-700">
-                                Free shipping on orders over ₡50,000
+                                {locale === 'es' ? 'Envío gratuito' : 'Free shipping'} on orders over ₡50,000
                             </p>
                         </div>
                     </div>

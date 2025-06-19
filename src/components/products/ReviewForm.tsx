@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Star } from 'lucide-react';
 import { useSupabase } from '@/app/supabase-provider/provider';
+import { useLocale } from 'next-intl';
 
 interface ReviewFormProps {
   productId: number;
@@ -17,6 +18,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const { supabase } = useSupabase();
+    const locale = useLocale();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,14 +30,14 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session?.user) {
-        setError('Debes iniciar sesión para dejar una reseña.');
+        setError(locale === 'es' ? 'Debes iniciar sesión para dejar una reseña.' : 'You must be logged in to leave a review.');
         setIsSubmitting(false);
         return;
       }
       
       // Validate comment
       if (!comment.trim()) {
-        setError('El contenido de la reseña es obligatorio.');
+        setError(locale === 'es' ? 'El contenido de la reseña es obligatorio.' : 'The review content is required.');
         setIsSubmitting(false);
         return;
       }
@@ -60,7 +62,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
           .eq('id', existingReview.id);
           
         if (updateError) throw updateError;
-        setSuccessMessage('Tu reseña ha sido actualizada.');
+        setSuccessMessage(locale === 'es' ? 'Tu reseña ha sido actualizada.' : 'Your review has been updated.');
       } else {
         // Insert new review
         const { error: insertError } = await supabase
@@ -73,7 +75,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
           });
           
         if (insertError) throw insertError;
-        setSuccessMessage('Tu reseña ha sido publicada.');
+        setSuccessMessage(locale === 'es' ? 'Tu reseña ha sido publicada.' : 'Your review has been published.');
       }
       
       // Clear form
@@ -89,7 +91,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
       }, 3000);
     } catch (err: Error | unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      setError(`Error al enviar la reseña: ${errorMessage}`);
+      setError(locale === 'es' ? `Error al enviar la reseña: ${errorMessage}` : `Error submitting review: ${errorMessage}`);
       console.error('Error submitting review:', err);
     } finally {
       setIsSubmitting(false);
@@ -98,7 +100,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
   
   return (
     <div className="bg-gray-50 p-4 rounded-lg mt-6">
-      <h3 className="text-lg font-medium mb-4 text-gray-800">Deja tu opinión</h3>
+      <h3 className="text-lg font-medium mb-4 text-gray-800">{locale === 'es' ? 'Deja tu opinión' : 'Leave your review'}</h3>
       
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
@@ -116,7 +118,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
         {/* Rating */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Calificación
+            {locale === 'es' ? 'Calificación' : 'Rating'}
           </label>
           <div className="flex">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -140,14 +142,14 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
         {/* Comment */}
         <div className="mb-4">
           <label htmlFor="review-comment" className="block text-sm font-medium text-gray-700 mb-1">
-            Opinión <span className="text-red-500">*</span>
+            {locale === 'es' ? 'Opinión' : 'Opinion'} <span className="text-red-500">*</span>
           </label>
           <textarea
             id="review-comment"
             className="w-full p-2 border border-gray-300 rounded-md h-24 text-gray-800"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Comparte tu experiencia con este producto..."
+            placeholder={locale === 'es' ? 'Comparte tu experiencia con este producto...' : 'Share your experience with this product...'}
             required
           />
         </div>
@@ -158,7 +160,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
           className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Enviando...' : 'Enviar reseña'}
+          {isSubmitting ? (locale === 'es' ? 'Enviando...' : 'Sending...') : (locale === 'es' ? 'Enviar reseña' : 'Submit review')}
         </button>
       </form>
     </div>

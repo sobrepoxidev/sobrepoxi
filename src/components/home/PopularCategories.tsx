@@ -5,8 +5,9 @@ import { Database } from '@/types-db';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function PopularCategories() {
+export default async function PopularCategories(props: Promise<{locale: string}>) {
   const cookieStore = cookies();
+  const { locale } = await props;
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
   
   // Get unique categories and count their products
@@ -47,11 +48,11 @@ export default async function PopularCategories() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Explora por categorías
+            {locale === 'es' ? 'Explora por categorías' : 'Explore by categories'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">Categorías populares</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Categorías populares' : 'Popular categories'}</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Encuentra la artesanía perfecta entre nuestra variedad de categorías, cada una con diseños únicos
+            {locale === 'es' ? 'Encuentra la artesanía perfecta entre nuestra variedad de categorías, cada una con diseños únicos' : 'Discover the perfect craft among our variety of categories, each with unique designs'}
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-auto">

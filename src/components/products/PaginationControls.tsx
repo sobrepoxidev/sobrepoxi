@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { useSearchParams } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -14,6 +15,7 @@ export default function PaginationControls({
   totalPages,
 }: PaginationControlsProps) {
     const searchParams = useSearchParams();
+    const locale = useLocale();
 
     console.log("searchParams PaginationControls:", searchParams);
   // Función para crear la URL de una página específica,
@@ -54,13 +56,13 @@ export default function PaginationControls({
           aria-disabled={!showPrev} // Accesibilidad
           // onClick={(e) => !showPrev && e.preventDefault()} // Alternativa a pointer-events-none
         >
-          Anterior
+          {locale === 'es' ? 'Anterior' : 'Previous'}
         </a>
       </Link>
 
       {/* Indicador de Página */}
       <span className="text-gray-700 font-medium">
-        Página {currentPage} de {totalPages}
+        {locale === 'es' ? 'Página' : 'Page'} {currentPage} {locale === 'es' ? 'de' : 'of'} {totalPages}
       </span>
 
       {/* Botón Siguiente */}
@@ -78,7 +80,7 @@ export default function PaginationControls({
           aria-disabled={!showNext}
           // onClick={(e) => !showNext && e.preventDefault()}
         >
-          Siguiente
+          {locale === 'es' ? 'Siguiente' : 'Next'}
         </a>
       </Link>
     </div>

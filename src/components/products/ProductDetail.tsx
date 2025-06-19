@@ -251,14 +251,14 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
             {error || 'Producto no encontrado'}
           </h1>
           <p className="text-red-600 mb-4">
-            Lo sentimos, no pudimos encontrar el producto que estás buscando.
+            {locale === 'es' ? 'Lo sentimos, no pudimos encontrar el producto que estás buscando.' : 'We apologize, we were unable to find the product you were looking for.'}
           </p>
           <Link 
             href="/products" 
             className="inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver a productos
+            {locale === 'es' ? 'Volver a productos' : 'Back to products'}
           </Link>
         </div>
       </div>
@@ -273,7 +273,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
       <div className="mb-6 flex items-center text-sm text-gray-500">
         <Link href="/" className="hover:text-teal-600">Inicio</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <Link href="/products" className="hover:text-teal-600">Productos</Link>
+        <Link href="/products" className="hover:text-teal-600"> {locale === 'es' ? 'Productos' : 'Products'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
         <span className="font-medium text-gray-900 truncate max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
       </div>
@@ -382,7 +382,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
               </div>
             ) : (
               <p className="text-xl font-medium text-teal-700">
-                Precio a consultar
+                {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
               </p>
             )}
             
@@ -394,7 +394,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                   {inventory > 10 ? 'En stock' : `Solo quedan ${inventory} unidades`}
                 </span>
               ) : (
-                <span className="text-red-600">Agotado</span>
+                <span className="text-red-600">{locale === 'es' ? 'Agotado' : 'Out of stock'}</span>
               )}
             </p>
             
@@ -447,7 +447,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                 className="flex items-center justify-center w-full py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-sm"
               >
                 <ShoppingCart className="h-5 w-5 mr-2" />
-                Añadir al carrito
+                {locale === 'es' ? 'Añadir al carrito' : 'Add to cart'}
               </button>
               
               <div className="flex space-x-3">
@@ -456,7 +456,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                   className={`flex items-center justify-center flex-1 py-2 px-4 border rounded-lg transition ${isFavorite ? 'bg-red-50 text-red-600 border-red-300' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                 >
                   <Heart className={`h-5 w-5 mr-2 ${isFavorite ? 'fill-red-600' : ''}`} />
-                  {isFavorite ? 'Guardado' : 'Favorito'}
+                  {isFavorite ? (locale === 'es' ? 'Guardado' : 'Saved') : (locale === 'es' ? 'Favorito' : 'Favorite')}
                 </button>
                 <button 
                   className="flex items-center justify-center flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
@@ -477,7 +477,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                   }}
                 >
                   <Share2 className="h-5 w-5 mr-2" />
-                  Compartir
+                  {locale === 'es' ? 'Compartir' : 'Share'}
                 </button>
               </div>
             </div>
@@ -512,7 +512,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                       className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm transition"
                     >
                       <Tag className="h-3 w-3 mr-1" />
-                      {tag}
+                      {locale === 'es' ? tag : tag}
                     </Link>
                   ))}
                 </div>
@@ -546,7 +546,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
         <div className="mt-16 border-t border-gray-200 pt-10">
           <h2 className="text-2xl font-bold flex items-center mb-6 text-gray-800">
             <MessageSquare className="h-6 w-6 mr-2" />
-            Reseñas y opiniones
+            {locale === 'es' ? 'Reseñas y opiniones' : 'Reviews and opinions'}
           </h2>
           
           <div className="space-y-8">

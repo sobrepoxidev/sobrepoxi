@@ -127,7 +127,7 @@ export default function SearchSuggestions({
                         )
                       ) : (
                         <p className="font-medium text-gray-600">
-                          Consultar
+                          {locale === 'es' ? 'Consultar' : 'Consult'}
                         </p>
                       )}
                     </div>
@@ -143,19 +143,19 @@ export default function SearchSuggestions({
                 onClick={onClose}
               >
                 <Search className="h-4 w-4 mr-1" />
-                Ver todos los resultados
+                {locale === 'es' ? 'Ver todos los resultados' : 'View all results'}
               </Link>
             </div>
           </>
         ) : (
           <div className="py-6 px-4 text-center">
-            <p className="text-gray-500 mb-3">No se encontraron productos que coincidan con tu búsqueda.</p>
+            <p className="text-gray-500 mb-3">{locale === 'es' ? 'No se encontraron productos que coincidan con tu búsqueda.' : 'No products found that match your search.'}</p>
             <Link 
               href="/products"
               className="text-sm text-teal-700 hover:text-teal-800 font-medium"
               onClick={onClose}
             >
-              Ver todos los productos
+              {locale === 'es' ? 'Ver todos los productos' : 'View all products'}
             </Link>
           </div>
         )}

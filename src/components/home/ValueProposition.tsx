@@ -1,7 +1,7 @@
 // ValueProposition.tsx (Server Component)
 import Link from 'next/link';
 import Image from 'next/image';
-export default function ValueProposition() {
+export default function ValueProposition({ locale }: { locale: string }) {
     const values = [
       {
         icon: (
@@ -48,11 +48,11 @@ export default function ValueProposition() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-              Nuestros valores
+             {locale === 'es' ? 'Nuestros valores' : 'Our values'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">Por qué elegir nuestras artesanías</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Por qué elegir nuestras artesanías' : 'Why choose our crafts?'}</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Al comprar nuestros productos, no solo adquieres una pieza única, sino que también contribuyes a un cambio social positivo
+              {locale === 'es' ? 'Al comprar nuestros productos, no solo adquieres una pieza única, sino que también contribuyes a un cambio social positivo' : 'When you buy our products, you not only acquire a unique piece, but you also contribute to a positive social change'}
             </p>
           </div>
   
@@ -81,18 +81,16 @@ export default function ValueProposition() {
                 />
               </div>
               <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
-                <span className="text-teal-700 font-medium mb-2">Nuestra historia</span>
-                <h3 className="text-2xl font-bold text-teal-800 mb-4">Transformando vidas a través del arte</h3>
+                <span className="text-teal-700 font-medium mb-2">{locale === 'es' ? 'Nuestra historia' : 'Our history'}</span>
+                <h3 className="text-2xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Transformando vidas a través del arte' : 'Transforming lives through art'}</h3>
                 <p className="text-gray-600 mb-6">
-                  Este proyecto nació con la visión de dar una segunda oportunidad a personas privadas de libertad, 
-                  permitiéndoles desarrollar habilidades artesanales y generar ingresos mientras cumplen su sentencia. 
-                  Cada pieza cuenta una historia de transformación y esperanza.
+                  {locale === 'es' ? 'Este proyecto nació con la visión de dar una segunda oportunidad a personas privadas de libertad, permitiéndoles desarrollar habilidades artesanales y generar ingresos mientras cumplen su sentencia. Cada pieza cuenta una historia de transformación y esperanza.' : 'This project was born with the vision of giving a second chance to people in prison, allowing them to develop artisanal skills and generate income while serving their sentence. Each piece tells a story of transformation and hope.'}
                 </p>
                 <Link 
                   href="/about" 
                   className="inline-flex items-center font-medium text-teal-700 hover:text-teal-800"
                 >
-                  Conoce más sobre nuestra misión
+                  {locale === 'es' ? 'Conoce más sobre nuestra misión' : 'Learn more about our mission'}
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>

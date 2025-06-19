@@ -5,26 +5,28 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 
 export default function TestimonialsSection() {
+  const locale = useLocale();
   const testimonials = [
     {
       id: 1,
-      quote: "Las artesanías que compré son hermosas y tienen un impacto social real. Saber que estoy apoyando a personas que buscan una segunda oportunidad me hace sentir parte de algo importante.",
+      quote: locale === 'es' ? "Las artesanías que compré son hermosas y tienen un impacto social real. Saber que estoy apoyando a personas que buscan una segunda oportunidad me hace sentir parte de algo importante." : "The crafts I bought are beautiful and have a real social impact. Knowing that I am supporting people who are seeking a second chance makes me feel part of something important.",
       author: "María Fernández",
       location: "San José",
       avatar: "/home/face-f.webp"
     },
     {
       id: 2,
-      quote: "El chorreador de café que compré no solo es funcional sino una verdadera obra de arte. La calidad es excepcional y cada vez que lo uso recuerdo la historia detrás de quién lo hizo.",
+      quote: locale === 'es' ? "El chorreador de café que compré no solo es funcional sino una verdadera obra de arte. La calidad es excepcional y cada vez que lo uso recuerdo la historia detrás de quién lo hizo." : "The coffee mug I bought is not only functional but also a true work of art. The quality is exceptional and every time I use it, I remember the story behind who made it.",
       author: "Carlos Jiménez",
       location: "Heredia",
       avatar: "/home/face-m.webp"
     },
     {
       id: 3,
-      quote: "Regalé un espejo artesanal a mi madre y quedó encantada. Los detalles tallados a mano son increíbles y se nota la dedicación. Definitivamente volveré a comprar más productos.",
+      quote:   locale === 'es' ? "Regalé un espejo artesanal a mi madre y quedó encantada. Los detalles tallados a mano son increíbles y se nota la dedicación. Definitivamente volveré a comprar más productos." : "I gave my mother a handcrafted mirror and she was delighted. The handcrafted details are incredible and it's clear the dedication. Definitely I will buy more products.",
       author: "Laura Mora",
       location: "Cartago",
       avatar: "/home/face-f.webp"
@@ -36,11 +38,11 @@ export default function TestimonialsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Testimonios
+            {locale === 'es' ? 'Testimonios' : 'Testimonials'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">Lo que dicen nuestros clientes</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Lo que dicen nuestros clientes' : 'What our customers say'}</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Descubre las experiencias de quienes ya han adquirido nuestras artesanías y se han unido a nuestra causa
+            {locale === 'es' ? 'Descubre las experiencias de quienes ya han adquirido nuestras artesanías y se han unido a nuestra causa' : 'Discover the experiences of those who have already purchased our crafts and joined our cause'}
           </p>
         </div>
 

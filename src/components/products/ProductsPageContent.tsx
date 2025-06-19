@@ -259,8 +259,8 @@ export default function ProductsPageContent() {
             <div className="text-sm text-gray-500">
               {totalCount > 0 && (
                 <p>
-                  Mostrando <span className="font-medium text-gray-900">{products.length}</span> de <span className="font-medium text-gray-900">{totalCount}</span> productos
-                  {currentPage > 1 && ` (página ${currentPage} de ${totalPages})`}
+                  {locale === 'es' ? 'Mostrando' : 'Showing'} <span className="font-medium text-gray-900">{products.length}</span> de <span className="font-medium text-gray-900">{totalCount}</span> {locale === 'es' ? 'productos' : 'products'}
+                  {currentPage > 1 && ` (${locale === 'es' ? 'página' : 'page'} ${currentPage} de ${totalPages})`}
                 </p>
               )}
             </div>
@@ -279,13 +279,13 @@ export default function ProductsPageContent() {
                     handleFilterChange(params);
                   }}
                 >
-                  <option value="name_asc">Nombre: A-Z</option>
-                  <option value="name_desc">Nombre: Z-A</option>
-                  <option value="price_asc">Precio: Menor a mayor</option>
-                  <option value="price_desc">Precio: Mayor a menor</option>
-                  <option value="newest">Más recientes</option>
-                  <option value="discount">Mayor descuento</option>
-                  <option value="popular">Más populares</option>
+                  <option value="name_asc">{locale === 'es' ? 'Nombre: A-Z' : 'Name: A-Z'}</option>
+                  <option value="name_desc">{locale === 'es' ? 'Nombre: Z-A' : 'Name: Z-A'}</option>
+                  <option value="price_asc">{locale === 'es' ? 'Precio: Menor a mayor' : 'Price: Lowest to highest'}</option>
+                  <option value="price_desc">{locale === 'es' ? 'Precio: Mayor a menor' : 'Price: Highest to lowest'}</option>
+                  <option value="newest">{locale === 'es' ? 'Más recientes' : 'Newest'}</option>
+                  <option value="discount">{locale === 'es' ? 'Mayor descuento' : 'Highest discount'}</option>
+                  <option value="popular">{locale === 'es' ? 'Más populares' : 'Most popular'}</option>
                 </select>
                 <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none h-4 w-4 text-gray-500" />
               </div>
@@ -339,7 +339,7 @@ export default function ProductsPageContent() {
                 }}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
               >
-                Borrar filtros
+                {locale === 'es' ? 'Borrar filtros' : 'Clear filters'}
               </button>
             </div>
           )}
@@ -384,12 +384,12 @@ export default function ProductsPageContent() {
                         href={`/product/${product.id}`}
                         className="text-lg font-medium text-gray-900 hover:text-teal-700 transition"
                       >
-                        {product.name}
+                        {locale === 'es' ? product.name : product.name}
                       </Link>
                       {product.category_id && (
                         <div className="mt-1">
                           <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 text-xs rounded-full border border-teal-100">
-                            {categories.find(cat => cat.id === product.category_id)?.name || 'Categoría'}
+                            {locale === 'es' ? categories.find(cat => cat.id === product.category_id)?.name : categories.find(cat => cat.id === product.category_id)?.name || 'Categoría'}
                           </span>
                         </div>
                       )}
@@ -439,7 +439,7 @@ export default function ProductsPageContent() {
                         href={`/product/${product.id}`}
                         className="inline-flex items-center px-3 py-1.5 border border-teal-600 text-sm font-medium rounded text-teal-700 bg-white hover:bg-teal-50 transition"
                       >
-                        Ver detalles
+                        {locale === 'es' ? 'Ver detalles' : 'View details'}
                       </Link>
                     </div>
                   </div>

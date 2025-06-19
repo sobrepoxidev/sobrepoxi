@@ -266,7 +266,7 @@ export default function SearchBar({
                       }
                     }}
                   >
-                    Todas las categorías
+                    {locale ===  'es' ? 'Todas las categorías' : 'All categories'}
                   </button>
                 </li>
                 {categories.map((cat) => {

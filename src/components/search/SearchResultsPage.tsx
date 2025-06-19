@@ -107,19 +107,19 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center text-sm text-gray-500">
-        <Link href="/" className="hover:text-teal-600">Inicio</Link>
+        <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">Resultados de búsqueda</span>
+        <span className="font-medium text-gray-900">{locale === 'es' ? 'Resultados de búsqueda' : 'Search results'}</span>
       </div>
       
       {/* Search header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           {totalCount > 0 
-            ? `Resultados para "${query}"`
+            ? `${locale === 'es' ? 'Resultados para' : 'Results for'} "${query}"`
             : query.length >= 2 
-              ? `No se encontraron resultados para "${query}"`
-              : 'Buscar productos'
+              ? `${locale === 'es' ? 'No se encontraron resultados para' : 'No results found for'} "${query}"`
+              : `${locale === 'es' ? 'Buscar productos' : 'Search products'}`
           }
         </h1>
         {totalCount > 0 && (
@@ -131,10 +131,10 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
         {/* Filters - Desktop */}
         <div className="hidden lg:block w-64 flex-shrink-0">
           <div className="bg-white rounded-lg border border-gray-200 p-4 sticky top-24">
-            <h2 className="font-medium text-lg mb-4 text-gray-800">Filtros</h2>
+            <h2 className="font-medium text-lg mb-4 text-gray-800">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
             
             <div className="mb-6">
-              <h3 className="font-medium mb-2 text-gray-800">Categoría</h3>
+              <h3 className="font-medium mb-2 text-gray-800">{locale === 'es' ? 'Categoría' : 'Category'}</h3>
               <div className="space-y-2 text-gray-800">
                 <label className="flex items-center">
                   <input 
@@ -145,7 +145,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                     className="text-teal-600"
                     onChange={() => updateSearchParams({ category: 'Todas' })}
                   />
-                  <span className="ml-2">Todas las categorías</span>
+                  <span className="ml-2">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</span>
                 </label>
                 
                 {/* Categorías dinámicas */}
@@ -159,14 +159,14 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                       className="text-teal-600"
                       onChange={() => updateSearchParams({ category: cat.name })}
                     />
-                    <span className="ml-2">{cat.name}</span>
+                    <span className="ml-2">{locale === 'es' ? cat.name_es : cat.name_en}</span>
                   </label>
                 ))}
               </div>
             </div>
             
             <div>
-              <h3 className="font-medium mb-2 text-gray-800">Ordenar por</h3>
+              <h3 className="font-medium mb-2 text-gray-800">{locale === 'es' ? 'Ordenar por' : 'Sort by'}</h3>
               <select 
                 className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-800"
                 value={sortBy}
@@ -175,10 +175,10 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                   updateSearchParams({ sort: e.target.value });
                 }}
               >
-                <option value="relevance">Relevancia</option>
-                <option value="price-asc">Precio: menor a mayor</option>
-                <option value="price-desc">Precio: mayor a menor</option>
-                <option value="newest">Más recientes</option>
+                <option value="relevance">{locale === 'es' ? 'Relevancia' : 'Relevance'}</option>
+                <option value="price-asc">{locale === 'es' ? 'Precio: menor a mayor' : 'Price: lowest to highest'}</option>
+                <option value="price-desc">{locale === 'es' ? 'Precio: mayor a menor' : 'Price: highest to lowest'}</option>
+                <option value="newest">{locale === 'es' ? 'Más recientes' : 'Newest'}</option>
               </select>
             </div>
           </div>
@@ -191,13 +191,13 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
             onClick={() => setShowFilters(!showFilters)}
           >
             <SlidersHorizontal className="h-4 w-4 mr-2" />
-            Filtros y ordenación
+            {locale === 'es' ? 'Filtros y ordenación' : 'Filters and sorting'}
           </button>
           
           {showFilters && (
             <div className="mt-2 p-4 border border-gray-200 rounded-md bg-white">
               <div className="mb-4">
-                <h3 className="font-medium mb-2">Categoría</h3>
+                <h3 className="font-medium mb-2">{locale === 'es' ? 'Categoría' : 'Category'}</h3>
                 <select 
                   className="w-full border border-gray-300 rounded-md p-2 text-sm"
                   value={category}
@@ -207,22 +207,22 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                     window.history.pushState(null, '', `?${params.toString()}`);
                   }}
                 >
-                  <option value="Todas">Todas las categorías</option>
+                  <option value="Todas">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</option>
                   {/* Category options would be dynamically generated here */}
                 </select>
               </div>
               
               <div>
-                <h3 className="font-medium mb-2">Ordenar por</h3>
+                <h3 className="font-medium mb-2">{locale === 'es' ? 'Ordenar por' : 'Sort by'}</h3>
                 <select 
                   className="w-full border border-gray-300 rounded-md p-2 text-sm"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                 >
-                  <option value="relevance">Relevancia</option>
-                  <option value="price-asc">Precio: menor a mayor</option>
-                  <option value="price-desc">Precio: mayor a menor</option>
-                  <option value="newest">Más recientes</option>
+                  <option value="relevance">{locale === 'es' ? 'Relevancia' : 'Relevance'}</option>
+                  <option value="price-asc">{locale === 'es' ? 'Precio: menor a mayor' : 'Price: lowest to highest'}</option>
+                  <option value="price-desc">{locale === 'es' ? 'Precio: mayor a menor' : 'Price: highest to lowest'}</option>
+                  <option value="newest">{locale === 'es' ? 'Más recientes' : 'Newest'}</option>
                 </select>
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <span className="absolute top-3 left-3 bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">
-                          {product.category_name || 'Artesanía'}
+                          {product.category_name || locale === 'es' ? 'Artesanía' : 'Craft'}
                         </span>
                       </div>
                     </Link>
@@ -298,18 +298,18 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                   className="mx-auto opacity-80" 
                 />
               </div>
-              <h2 className="text-xl font-medium text-gray-700 mb-2">No encontramos resultados para tu búsqueda</h2>
-              <p className="text-gray-500 mb-6">Intenta con otros términos o navega por nuestras categorías</p>
+              <h2 className="text-xl font-medium text-gray-700 mb-2">{locale === 'es' ? 'No encontramos resultados para tu búsqueda' : 'No results found for your search'}</h2>
+              <p className="text-gray-500 mb-6">{locale === 'es' ? 'Intenta con otros términos o navega por nuestras categorías' : 'Try with different terms or browse our categories'}</p>
               <Link 
                 href="/products" 
                 className="inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
               >
-                Ver todos los productos
+                {locale === 'es' ? 'Ver todos los productos' : 'See all products'}
               </Link>
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500">Ingresa al menos 2 caracteres para buscar</p>
+              <p className="text-gray-500">{locale === 'es' ? 'Ingresa al menos 2 caracteres para buscar' : 'Enter at least 2 characters to search'}</p>
             </div>
           )}
         </div>

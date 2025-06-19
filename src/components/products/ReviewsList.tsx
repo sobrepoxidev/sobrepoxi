@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
 import { Star } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
 // Define a type for profile data
 interface ProfileType {
@@ -56,6 +57,7 @@ interface ReviewsListProps {
 }
 
 export default function ReviewsList({ productId }: ReviewsListProps) {
+    const locale = useLocale();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [users, setUsers] = useState<{[key: string]: ProfileType}>({});
   const [loading, setLoading] = useState(true);
@@ -125,7 +127,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
   if (reviews.length === 0) {
     return (
       <div className="py-4">
-        <p className="text-gray-500">Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu opinión!</p>
+        <p className="text-gray-500">{locale === 'es' ? 'Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu opinión!' : 'This product has no reviews yet. Be the first to share your opinion!'}</p>
       </div>
     );
   }

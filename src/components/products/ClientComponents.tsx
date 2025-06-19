@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import { Database } from "@/types-db";
 // ProductCardModal import removed as it's not used in this file
 import { ProductCardModalWithTracking } from "./ProductModalWithTracking";
+import { useLocale } from "next-intl";
 
 
 
@@ -144,6 +145,7 @@ interface MediaItemCardProps {
 }
 
 function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps) {
+  const locale = useLocale();
   return (
     <div className="relative w-full h-full ">
 
@@ -170,7 +172,7 @@ function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps
           poster="/video-thumbnail.jpg"
         >
           <source src={(product.media?.[0]?.url ?? '/default-video.mp4')} type="video/mp4" />
-          Tu navegador no soporta video HTML5.
+          {locale === 'es' ? 'Tu navegador no soporta video HTML5.' : 'Your browser does not support HTML5 video.'}
         </video>
       )}
 

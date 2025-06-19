@@ -7,10 +7,12 @@ import { getLocalViewedHistory, syncViewedHistoryWithServer } from '@/lib/viewed
 import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, AlertCircle } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
 type Product = Database['products'];
 
 export default function ViewedProductsHistory() {
+    const locale = useLocale();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -110,7 +112,7 @@ export default function ViewedProductsHistory() {
       <div className="px-4 py-6">
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <Clock className="mr-2 h-5 w-5" />
-          Vistos recientemente
+          {locale === 'es' ? 'Vistos recientemente' : 'Recently viewed'}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
@@ -144,7 +146,7 @@ export default function ViewedProductsHistory() {
     <div className="px-4 py-6 bg-gray-50 rounded-lg">
       <h2 className="text-xl font-bold mb-4 flex items-center">
         <Clock className="mr-2 h-5 w-5" />
-        Vistos recientemente
+        {locale === 'es' ? 'Vistos recientemente' : 'Recently viewed'}
       </h2>
       
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
