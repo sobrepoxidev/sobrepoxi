@@ -18,10 +18,10 @@ interface FeaturedProductsSectionProps {
  * - Prioriza productos que no se muestran en otros componentes
  */
 const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
-  maxProducts = 6
+
 }) => {
   const locale = useLocale();
-  const { products, sectionProducts, categories, productsByCategory = {} } = useProductsContext();
+  const { sectionProducts, categories = [] } = useProductsContext();
   
   // Título según el idioma
   const title = useMemo(() => {
