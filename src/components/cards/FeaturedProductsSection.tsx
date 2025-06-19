@@ -48,7 +48,11 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
         {featuredProducts.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
             {featuredProducts.map((product, index) => (
-              <Link key={product.id} href={`/product/${product.id}`} className="group">
+              <Link 
+                key={product.id} 
+                href={`/product/${product.id}`} 
+                className={`group ${index === featuredProducts.length - 1 ? 'hidden md:block' : ''}`}
+              >
                 <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full hover:shadow-md transform transition-all duration-300 hover:-translate-y-1 ">
                   {/* Sección superior con imagen - más grande que en otros componentes */}
                   <div className="relative bg-gray-50 aspect-square">
