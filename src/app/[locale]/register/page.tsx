@@ -63,23 +63,33 @@ export default function RegisterPage() {
     }
   }
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true)
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          // Use proper redirection URL formatting
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
-        },
-      })
-      if (error) throw error
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
-      setErrorMsg(errorMessage)
-      setLoading(false)
+  const signInWithGoogle = async (returnUrl: string) => {
+    setLoading(true);
+    setErrorMsg("");
+  
+    // 1. Armamos la ruta de callback UNA sola vez
+    const redirectTo =
+      `${window.location.origin}/auth/callback` +
+      (returnUrl && returnUrl !== "/"
+        ? `?next=${encodeURIComponent(returnUrl)}`
+        : "");
+  
+    // 2. Llamamos a Supabase
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+  
+    // 3. Manejamos posibles errores
+    if (error) {
+      setErrorMsg(error.message);
+      setLoading(false);
+      return;
     }
-  }
+  
+    // 4. Forzamos la redirección (por si el SDK no lo hace)
+    if (data?.url) window.location.href = data.url;
+  };
 
   // Usar los hooks de Next.js
   const searchParams = useSearchParams();
@@ -273,7 +283,7 @@ export default function RegisterPage() {
           {/* Google Sign In Button */}
           <div className="mt-3">
                 <button
-                  onClick={handleGoogleSignIn}
+                  onClick={() => signInWithGoogle(returnUrl)}
                   className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
                 >
                   <FaGoogle className="mr-2 h-5 w-5" />
