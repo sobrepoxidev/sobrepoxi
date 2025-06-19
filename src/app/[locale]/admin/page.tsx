@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { Package, Calendar, ArrowRight, Box } from 'lucide-react';
+import { Package, Calendar, ArrowRight } from 'lucide-react';
 
 // Lista de correos electrónicos de administradores autorizados
 const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com'];
