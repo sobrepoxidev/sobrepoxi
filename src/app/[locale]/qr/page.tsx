@@ -94,49 +94,27 @@ const QRGenerator: React.FC = React.memo(() => {
   const handleDownload = useCallback(() => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) return;
-
-    // Add animation class
-    qrRef.current?.classList.add('scale-105');
-
-    // Create a new canvas to ensure we're working with the latest data
-    const newCanvas = document.createElement('canvas');
-    newCanvas.width = canvas.width;
-    newCanvas.height = canvas.height;
-    const ctx = newCanvas.getContext('2d');
-    if (!ctx) return;
-
-    // Draw white background first
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
-    
-    // Draw the QR code
-    ctx.drawImage(canvas, 0, 0);
-
-    // Create download link
-    const pngUrl = newCanvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = `codigo-qr-${Date.now()}.png`;
-    link.href = pngUrl;
-    
-    // For mobile Safari, we need to append the link to the body
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    
-    // Trigger download
-    const clickEvent = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-    });
-    
-    link.dispatchEvent(clickEvent);
-    
-    // Clean up
-    setTimeout(() => {
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-      qrRef.current?.classList.remove('scale-105');
-    }, 100);
+  
+    // 1️⃣ Generamos un Blob (más eficiente que toDataURL)
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+  
+      const url = URL.createObjectURL(blob);          // 2️⃣ URL temporal segura
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `codigo-qr-${Date.now()}.png`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+  
+      link.click();                                   // 3️⃣ Click confiable
+      // link.dispatchEvent(new MouseEvent('click')); <-- ❌ No usar
+  
+      // 4️⃣ Limpieza: espera holgada (500 ms ≈ FileSaver.js)
+      setTimeout(() => {
+        URL.revokeObjectURL(url);                     // evita fuga de memoria
+        link.remove();
+      }, 500);
+    }, 'image/png');
   }, [bgColor]);
 
   const handleShare = useCallback(async () => {
