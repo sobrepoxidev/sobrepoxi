@@ -9,7 +9,7 @@ import React, {
   ChangeEvent,
 } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {
   CheckCircle,
   Copy,
