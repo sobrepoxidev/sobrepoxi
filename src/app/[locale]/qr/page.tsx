@@ -95,20 +95,49 @@ const QRGenerator: React.FC = React.memo(() => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) return;
 
-    /* optional subtle zoom animation */
+    // Add animation class
     qrRef.current?.classList.add('scale-105');
 
+    // Create a new canvas to ensure we're working with the latest data
+    const newCanvas = document.createElement('canvas');
+    newCanvas.width = canvas.width;
+    newCanvas.height = canvas.height;
+    const ctx = newCanvas.getContext('2d');
+    if (!ctx) return;
+
+    // Draw white background first
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+    
+    // Draw the QR code
+    ctx.drawImage(canvas, 0, 0);
+
+    // Create download link
+    const pngUrl = newCanvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `codigo-qr-${Date.now()}.png`;
+    link.href = pngUrl;
+    
+    // For mobile Safari, we need to append the link to the body
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    
+    // Trigger download
+    const clickEvent = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    
+    link.dispatchEvent(clickEvent);
+    
+    // Clean up
     setTimeout(() => {
-      const pngUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = `codigo-qr-${Date.now()}.png`;
-      link.href = pngUrl;
-      document.body.appendChild(link);
-      link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
       qrRef.current?.classList.remove('scale-105');
-    }, 120);
-  }, []);
+    }, 100);
+  }, [bgColor]);
 
   const handleShare = useCallback(async () => {
     if (!url || !qrRef.current) return;
@@ -316,10 +345,15 @@ const QRGenerator: React.FC = React.memo(() => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <button
                   onClick={handleDownload}
-                  className="group flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 font-medium text-gray-700 transition-all hover:border-blue-300 hover:bg-gray-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2"
+                  onTouchEnd={(e) => {
+                    // Prevent ghost clicks on mobile
+                    e.preventDefault();
+                    handleDownload();
+                  }}
+                  className="group flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 font-medium text-gray-700 transition-all hover:border-blue-300 hover:bg-gray-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 active:scale-95 active:bg-gray-100"
                 >
                   <Download className="h-5 w-5" />
-                  Descargar PNG
+                  <span>Descargar PNG</span>
                 </button>
                 <button
                   onClick={handleShare}
