@@ -347,4 +347,5 @@ const QRGenerator: React.FC = React.memo(() => {
   );
 });
 
+QRGenerator.displayName = 'QRGenerator';
 export default QRGenerator;
