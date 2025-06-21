@@ -9,6 +9,7 @@ import React, {
   ChangeEvent,
 } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   CheckCircle,
   Copy,
@@ -93,25 +94,45 @@ const QRGenerator: React.FC = React.memo(() => {
 
   const handleDownload = useCallback(() => {
     const canvas = qrRef.current?.querySelector('canvas');
-    if (!canvas) return;
+    if (!canvas) {
+      toast.error('No se pudo generar el código QR');
+      return;
+    }
+
+    // Mostrar notificación de carga
+    const toastId = toast.loading('Preparando descarga...');
   
     // 1️⃣ Generamos un Blob (más eficiente que toDataURL)
     canvas.toBlob((blob) => {
-      if (!blob) return;
+      if (!blob) {
+        toast.error('Error al generar el archivo', { id: toastId });
+        return;
+      }
   
-      const url = URL.createObjectURL(blob);          // 2️⃣ URL temporal segura
+      const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = `codigo-qr-${Date.now()}.png`;
       link.style.display = 'none';
       document.body.appendChild(link);
   
-      link.click();                                   // 3️⃣ Click confiable
-      // link.dispatchEvent(new MouseEvent('click')); <-- ❌ No usar
+      // Disparar el evento de descarga
+      link.click();
+
+      // Actualizar notificación a éxito
+      toast.success('¡Código QR descargado!', { 
+        id: toastId,
+        duration: 3000,
+        style: {
+          background: '#10B981',
+          color: '#fff',
+        },
+        icon: '✅',
+      });
   
-      // 4️⃣ Limpieza: espera holgada (500 ms ≈ FileSaver.js)
+      // Limpieza
       setTimeout(() => {
-        URL.revokeObjectURL(url);                     // evita fuga de memoria
+        URL.revokeObjectURL(url);
         link.remove();
       }, 500);
     }, 'image/png');
@@ -157,6 +178,8 @@ const QRGenerator: React.FC = React.memo(() => {
   // ──────────────────────── render ────────────────────────
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:p-6 lg:p-8">
+      {/* Toaster para notificaciones */}
+      
       <div className="mx-auto max-w-md rounded-2xl bg-white/90 p-4 shadow-xl backdrop-blur-sm md:max-w-2xl">
         {/* heading */}
         <div className="mb-8 text-center">
