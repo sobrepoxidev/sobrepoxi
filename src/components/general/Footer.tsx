@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Phone, Mail, MessageCircle, Youtube, Heart, MessageSquare } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MessageCircle, Youtube, Heart } from 'lucide-react';
 
 export default function Footer({ locale }: { locale: string }) {
   return (
