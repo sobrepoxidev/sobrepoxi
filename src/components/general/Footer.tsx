@@ -1,60 +1,157 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Phone, Mail, MessageCircle } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MessageCircle, Youtube, Heart, MessageSquare } from 'lucide-react';
 
-export default async function Footer({ locale }: { locale: string }) {
-
+export default function Footer({ locale }: { locale: string }) {
   return (
-    <footer className="bg-gray-900 text-white py-8 px-4 border-t border-neutral-800">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Logo tipográfico */}
-        <div className="text-2xl font-extrabold tracking-tight font-serif select-none">
-          Hand Made Art
+    <footer className="bg-[#303030] text-white py-12 px-4 border-t-4 border-teal-500">
+      <div className="container mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Logo y descripción */}
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <Heart className="h-8 w-8 text-teal-500 mr-2" />
+              <span className="text-2xl font-bold">Handmade</span>
+              <span className="text-2xl font-bold text-teal-500">Art</span>
+            </div>
+            <p className="text-gray-300 text-sm">
+              {locale === 'es' 
+                ? 'Artesanía hecha a mano con amor y dedicación en Costa Rica'
+                : 'Handcrafted with love and dedication in Costa Rica'}
+            </p>
+          </div>
+
+          {/* Contacto */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-teal-400">
+              {locale === 'es' ? 'Contacto' : 'Contact'}
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <a 
+                  href="mailto:info@handmadeart.store" 
+                  className="flex items-center text-gray-300 hover:text-teal-400 transition-colors"
+                >
+                  <Mail className="w-5 h-5 mr-2 text-teal-500" />
+                  info@handmadeart.store
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="tel:+50687757576" 
+                  className="flex items-center text-gray-300 hover:text-teal-400 transition-colors"
+                >
+                  <Phone className="w-5 h-5 mr-2 text-teal-500" />
+                  (+506) 8775-7576
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="tel:+50642051111" 
+                  className="flex items-center text-gray-300 hover:text-teal-400 transition-colors"
+                >
+                  <Phone className="w-5 h-5 mr-2 text-teal-500" />
+                  (+506) 4205-1111
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Enlaces rápidos */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-teal-400">
+              {locale === 'es' ? 'Enlaces' : 'Links'}
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/products" className="text-gray-300 hover:text-teal-400 transition-colors">
+                  {locale === 'es' ? 'Productos' : 'Products'}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-300 hover:text-teal-400 transition-colors">
+                  {locale === 'es' ? 'Nosotros' : 'About Us'}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-300 hover:text-teal-400 transition-colors">
+                  {locale === 'es' ? 'Contacto' : 'Contact'}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Redes sociales */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-teal-400">
+              {locale === 'es' ? 'Síguenos' : 'Follow Us'}
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              <a 
+                href="https://www.facebook.com/share/1Au8nNA2ho/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#3b5998] hover:bg-[#4c70ba] p-2 rounded-full transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.instagram.com/handmadeart.store" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 p-2 rounded-full transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.tiktok.com/@handmadeart.store" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-black hover:bg-gray-800 p-2 rounded-full transition-colors"
+                aria-label="TikTok"
+              >
+                <MessageSquare className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.youtube.com/@handmadeartcr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#ff0000] hover:bg-[#cc0000] p-2 rounded-full transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://wa.me/50687757576" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#25D366] hover:bg-[#128C7E] p-2 rounded-full transition-colors"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
         </div>
-        {/* Contacto y redes */}
-        <div className="flex flex-col md:flex-row items-center gap-4 text-sm">
-          <div className="flex flex-col items-start md:items-center gap-3">
-            <a href="mailto:info@handmadeart.store" aria-label="Correo" className="hover:text-primary transition-colors flex items-center gap-1">
-              <Mail className="w-5 h-5" />
-              <span>info@handmadeart.store</span>
+
+        {/* Copyright and Developer Credits */}
+        <div className="border-t border-gray-700 mt-12 pt-6 text-center">
+          <p className="text-gray-400 text-sm mb-2">
+            © {new Date().getFullYear()} Handmade Art. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
+          </p>
+          <p className="text-xs text-gray-500">
+            {locale === 'es' ? 'Desarrollado por ' : 'Developed by '}
+            <a 
+              href="https://sobrepoxi.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-teal-400 hover:underline"
+            >
+              Sobrepoxi IT
             </a>
-            {/* Contact Number 1: (+506) 8775-7576 */}
-            <div className="flex items-center gap-2">
-              <a href="tel:+50687757576" aria-label="Llamar al (+506) 8775-7576" className="hover:text-primary transition-colors flex items-center gap-1">
-                <Phone className="w-5 h-5" />
-                <span>(+506) 8775-7576</span>
-              </a>
-              <a href="https://wa.me/50687757576" aria-label="WhatsApp a (+506) 8775-7576" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors flex items-center gap-1">
-                <MessageCircle className="w-5 h-5" />
-                <span className="hidden sm:inline">WhatsApp</span>
-              </a>
-            </div>
-            {/* Contact Number 2: (+506) 4205-1111 */}
-            <div className="flex items-center gap-2">
-              <a href="tel:+50642051111" aria-label="Llamar al (+506) 4205-1111" className="hover:text-primary transition-colors flex items-center gap-1">
-                <Phone className="w-5 h-5" />
-                <span>(+506) 4205-1111</span>
-              </a>
-              <a href="https://wa.me/50642051111" aria-label="WhatsApp a (+506) 4205-1111" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors flex items-center gap-1">
-                <MessageCircle className="w-5 h-5" />
-                <span className="hidden sm:inline">WhatsApp</span>
-              </a>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 ml-0 md:ml-6">
-            <Link href="https://www.facebook.com/justcostaricatravel" aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-              <Facebook className="w-6 h-6" />
-            </Link>
-            <Link href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">
-              <Instagram className="w-6 h-6" />
-            </Link>
-          </div>
+          </p>
         </div>
-      </div>
-      <div className="text-xs text-neutral-400 text-center mt-4">
-        {locale === 'es' ? '2025 Hand Made Art. Desarrollado por' : '2025 Hand Made Art. Developed by'}
-        <Link href="https://sobrepoxi.com" target="_blank" rel="noopener noreferrer" className="hover:underline text-primary font-semibold">
-          Sobrepoxi IT
-        </Link>
       </div>
     </footer>
   );
