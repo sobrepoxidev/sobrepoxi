@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface CarrucelSectionProps {
   items: {
@@ -15,11 +16,23 @@ interface CarrucelSectionProps {
 const CarouselCard: React.FC<{
   title: string;
   content: React.ReactNode;
-
+  link: string;
   className?: string;
-}> = ({ title, content, className = "" }) => {
+}> = ({ title, content, link, className = "" }) => {
+  const router = useRouter();
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // If the click originated inside an <a>, allow that navigation instead.
+    const target = e.target as HTMLElement;
+    if (target.closest('a')) return;
+    router.push(link);
+  };
+
   return (
-    <div className={`flex h-[27rem] shadow-md flex-col ${className}`}>
+    <div
+      onClick={handleClick}
+      className={`flex h-[27rem] shadow-md flex-col cursor-pointer ${className}`}
+    >
       <div className="flex flex-col h-full">
         <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-white" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>{title}</h2>
         <div className="flex-grow flex items-center justify-center">{content}</div>

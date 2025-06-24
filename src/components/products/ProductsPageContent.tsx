@@ -270,7 +270,7 @@ export default function ProductsPageContent() {
               {/* Selector de ordenamiento */}
               <div className="relative">
                 <select
-                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:border-transparent"
+                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 text-gray-900 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:border-transparent"
                   value={sortBy}
                   onChange={(e) => {
                     const params = new URLSearchParams(searchParams.toString());

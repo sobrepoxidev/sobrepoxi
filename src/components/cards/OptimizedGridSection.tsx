@@ -212,7 +212,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         ))}
                       </div>
                     ),
-                    link: `/category/${category.id}`,
+                    link: `/products?category=${category.id}`,
                     className: `${cardColor} rounded-xl px-3 pt-2 pb-3 shadow-sm`
                   };
                 })
