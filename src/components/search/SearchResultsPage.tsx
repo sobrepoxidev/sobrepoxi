@@ -16,8 +16,11 @@ const PRODUCTS_PER_PAGE = 12;
 export default function SearchResultsPage({ locale }: { locale: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
-  const category = searchParams.get('category') || 'Todo';
+  const query = (searchParams.get('q') || '').trim();
+  const categoryParam = searchParams.get('category') || 'Todo';
+  // Category filter can be either id or name
+  const isCategoryFilter = categoryParam && categoryParam !== 'Todo' && categoryParam !== 'Todas';
+  const category = categoryParam;
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const currentSortBy = searchParams.get('sort') || 'relevance';
   
@@ -27,6 +30,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState(currentSortBy);
   const [categories, setCategories] = useState<Database['categories'][]>([]);
+  const [categoryName, setCategoryName] = useState('');
   // Cargar categorías
   useEffect(() => {
     async function fetchCategories() {
@@ -38,6 +42,10 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           
         if (error) throw error;
         setCategories(data || []);
+        if (isCategoryFilter) {
+          const categoryData = data.find(cat => cat.id === parseInt(categoryParam, 10));
+          setCategoryName(locale === 'es' ? categoryData?.name_es : categoryData?.name_en || '');
+        }
       } catch (err) {
         console.error('Error al cargar categorías:', err);
       }
@@ -70,31 +78,90 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
 
   useEffect(() => {
     async function fetchResults() {
-      if (query.length < 2) {
+      // Determine if we should perform a text search, a category filter search, or both
+      if (!isCategoryFilter && query.length < 2) {
+        // Nothing to search
         setResults([]);
         setTotalCount(0);
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
-      const { results: data, totalCount } = await searchProducts(
-        query, 
-        locale,
-        category !== 'Todas' ? category : undefined, 
-        currentPage,
-        PRODUCTS_PER_PAGE,
-        sortBy,
-        true, // isPaginated=true para la página de búsqueda
-  
-      );
-      
-      // La ordenación ahora se realiza en el servidor
-      setResults(data);
-      setTotalCount(totalCount);
-      setLoading(false);
+
+      try {
+        // Helper to format raw product rows into SearchResult
+        const toSearchResult = (product: any): SearchResult => ({
+          id: product.id,
+          name: product.name,
+          name_es: product.name_es,
+          name_en: product.name_en,
+          description: product.description,
+          price: product.price,
+          media: product.media,
+          category_id: product.category_id,
+          discount_percentage: product.discount_percentage,
+          created_at: product.created_at,
+        });
+
+        // If we have at least 2 chars in query, use full-text helper, otherwise fallback to category-only query.
+        if (query.length >= 2) {
+          const { results: data, totalCount } = await searchProducts(
+            query,
+            locale,
+            isCategoryFilter ? category : undefined,
+            currentPage,
+            PRODUCTS_PER_PAGE,
+            sortBy,
+            true,
+          );
+          setResults(data);
+          setTotalCount(totalCount);
+        } else if (isCategoryFilter) {
+          // Only category filter – categoryParam may be ID or name
+          let categoryId: number | null = null;
+
+          if (/^\d+$/.test(category)) {
+            categoryId = parseInt(category, 10);
+          } else {
+            const { data: catData } = await supabase
+              .from('categories')
+              .select('id')
+              .eq('name', category)
+              .single();
+            categoryId = catData?.id ?? null;
+          }
+
+          if (categoryId === null) {
+            setResults([]);
+            setTotalCount(0);
+            setLoading(false);
+            return;
+          }
+
+          const from = (currentPage - 1) * PRODUCTS_PER_PAGE;
+          const to = from + PRODUCTS_PER_PAGE - 1;
+
+          const { data, count, error } = await supabase
+            .from('products')
+            .select('id, name, name_es, name_en, description, price, media, category_id, discount_percentage, created_at', { count: 'exact' })
+            .eq('category_id', categoryId)
+            .range(from, to);
+
+          if (error) throw error;
+
+          setResults((data || []).map(toSearchResult));
+          setTotalCount(count || 0);
+        }
+      } catch (error) {
+        console.error('Search error:', error);
+        setResults([]);
+        setTotalCount(0);
+      } finally {
+        setLoading(false);
+      }
     }
-    
+
     fetchResults();
   }, [query, category, sortBy, currentPage]);
   
@@ -116,9 +183,9 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           {totalCount > 0 
-            ? `${locale === 'es' ? 'Resultados para' : 'Results for'} "${query}"`
+            ? `${locale === 'es' ? 'Resultados para' : 'Results for'} "${ query === '' ? categoryName : query}"`
             : query.length >= 2 
-              ? `${locale === 'es' ? 'No se encontraron resultados para' : 'No results found for'} "${query}"`
+              ? `${locale === 'es' ? 'No se encontraron resultados para' : 'No results found for'} "${query === '' ? categoryName : query}"`
               : `${locale === 'es' ? 'Buscar productos' : 'Search products'}`
           }
         </h1>

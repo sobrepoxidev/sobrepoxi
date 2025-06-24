@@ -39,16 +39,16 @@ export default function CategoryCarousel({ locale, categories, className = "" }:
   if (cats.length === 0) return null;
 
   return (
-    <div className={`overflow-x-auto whitespace-nowrap scrollbar-hide w-full ${className}`}>
-      <div className="flex space-x-4 px-1 py-1">
-        {cats.map((cat) => {
+    <div className={`overflow-x-auto whitespace-nowrap scrollbar-hide max-w-[1500px] mx-auto w-full  ${className}`}>
+      <div className="flex space-x-2 py-1 sm:items-center sm:justify-center">
+        {cats.map((cat, index) => {
           const name = displayName(cat);
-          const href = `/search?category=${encodeURIComponent(name)}&categoryId=${cat.id}`;
+          const href = `/search?category=${cat.id}`;
           return (
             <Link
               key={cat.id}
               href={href}
-              className="flex-shrink-0 text-sm font-medium text-gray-200 bg-[#303030]  hover:text-white px-2 rounded-md mb-0.5"
+              className={`flex-shrink-0 text-sm font-medium text-gray-200 bg-[#303030]  hover:text-white px-2 rounded-md mb-0.5 ${index === 0 ? "max-sm:ml-2" : ""} ${index === cats.length - 1 ? "max-sm:mr-2" : ""}`}
             >
               {name}
             </Link>

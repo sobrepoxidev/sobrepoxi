@@ -137,8 +137,8 @@ export default function SearchSuggestions({
             </ul>
             
             <div className="bg-gray-50 p-3 text-center">
-              <Link 
-                href={`/search?q=${encodeURIComponent(query)}${category !== 'Todas' ? `&category=${encodeURIComponent(category)}` : ''}`}
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}${(category && !['Todo','All','Todas'].includes(category)) ? `&category=${encodeURIComponent(category)}` : ''}`}
                 className="inline-flex items-center justify-center text-sm text-teal-700 hover:text-teal-800 font-medium"
                 onClick={onClose}
               >

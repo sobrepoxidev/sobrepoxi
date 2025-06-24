@@ -29,6 +29,13 @@ type Category = Database['categories'];
 
 // The client component that handles UI and state
 export default function ProductDetail({ id, locale }: { id: string, locale: string }) {
+  // Ensure viewport starts at top when navigating to product page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, []);
+
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [inventory, setInventory] = useState<number>(0);
