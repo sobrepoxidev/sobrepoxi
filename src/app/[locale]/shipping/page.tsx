@@ -1,5 +1,15 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Envíos" : "Shipping", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default async function ShippingPage() {
   const t = await getTranslations('shipping');

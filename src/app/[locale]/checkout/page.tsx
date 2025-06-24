@@ -9,6 +9,16 @@ import { Database } from "@/types-db";
 
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Checkout" : "Checkout", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
 type Banco = {

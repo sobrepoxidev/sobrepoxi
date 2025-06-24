@@ -3,6 +3,16 @@ import AccountClient from '@/components/account/AccountClient';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types-db';
 import { cookies } from 'next/headers';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Mi cuenta" : "My account", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default async function AccountPage() {
   try {

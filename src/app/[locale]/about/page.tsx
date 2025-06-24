@@ -1,6 +1,16 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Sobre Hand Made Art" : "About Hand Made Art", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default function About() {
   return (
@@ -15,10 +25,10 @@ export default function About() {
                 Nuestra misión
               </span>
               <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
-                Sobre <span className="text-teal-700">Hand Made Art</span>
+                Sobre <span className="text-teal-700">HandMade Art</span>
               </h1>
               <p className="mb-2 sm:mb-8 text-lg text-gray-600">
-                En Hand Made Art nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas.
+                En HandMade Art nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas.
               </p>
               <div className="flex flex-col items-center justify-center sm:flex-row gap-4">
                 <Link

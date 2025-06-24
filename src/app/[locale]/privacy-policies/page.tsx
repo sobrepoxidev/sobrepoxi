@@ -1,4 +1,14 @@
 import React from 'react';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Política de Privacidad" : "Privacy policy", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default function PoliticaPrivacidadPage() {
   return (

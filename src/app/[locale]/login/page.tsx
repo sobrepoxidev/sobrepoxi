@@ -4,6 +4,16 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
 import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Iniciar sesión" : "Login", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default function LoginPage() {
   const router = useRouter()

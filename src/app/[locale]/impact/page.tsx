@@ -1,11 +1,16 @@
 // impact/page.tsx - Server Component
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: 'Impacto Social | Artesanías con Propósito',
-  description: 'Conoce el impacto social de nuestro programa de artesanías con personas privadas de libertad en Costa Rica. Transformando vidas a través del arte y la rehabilitación.',
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: buildTitle(locale === "es" ? "Impacto Social" : "Impact Social", locale),
+    ...getCommonMetadata(locale),
+  };
+}
 
 export default function ImpactPage() {
   return (
