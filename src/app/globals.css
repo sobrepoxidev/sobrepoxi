@@ -54,6 +54,17 @@ body {
 .animate-bounce-in {
   animation: bounce-in 0.7s;
 }
+@layer utilities {
+  /* Hide scrollbars across browsers */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
 @layer components {
   .input { @apply w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500; }
   .btn-primary { @apply rounded-lg px-4 py-2 font-semibold bg-teal-600 text-white transition active:scale-95; }
