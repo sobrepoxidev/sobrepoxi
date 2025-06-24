@@ -11,6 +11,7 @@ import PaginationControls from '@/components/products/PaginationControls';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
 
+type Product = Database['products'];
 // Número de productos por página
 const PRODUCTS_PER_PAGE = 12;
 export default function SearchResultsPage({ locale }: { locale: string }) {
@@ -91,7 +92,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
 
       try {
         // Helper to format raw product rows into SearchResult
-        const toSearchResult = (product: any): SearchResult => ({
+        const toSearchResult = (product: SearchResult): SearchResult => ({
           id: product.id,
           name: product.name,
           name_es: product.name_es,
