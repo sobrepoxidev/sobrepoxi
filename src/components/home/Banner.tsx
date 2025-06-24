@@ -136,7 +136,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
 
   return (
     <div 
-      className="relative h-[170] lg:h-[200px] xl:h-[255px] overflow-hidden"
+      className="relative h-[130] lg:h-[160px] xl:h-[215px] overflow-hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -144,7 +144,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
       <CarouselArrow direction="left" onClick={goToPrevious} />
       <CarouselArrow direction="right" onClick={goToNext} />
 
-      <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 transform -translate-y-1/2 z-40 text-white/50 pointer-events-none md:hidden">
+      <div className="absolute top-0.5 left-0 right-0 flex justify-between px-4 transform -translate-y-1/2 z-40 text-white/50 pointer-events-none md:hidden">
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           width="20" 
@@ -222,7 +222,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
         </div>
       ))}
 
-      <div className="absolute bottom-0.5 right-3 text-[0.5rem] text-white/70 bg-black/10 px-0.5 py-0.5 rounded md:hidden">
+      <div className="absolute bottom-0.5 right-3 text-[0.5rem] text-[#303030] bg-black/10 px-0.5 py-0.5 rounded md:hidden">
         {locale === 'es' ? 'Desliza para navegar' : 'Swipe to navigate'}
       </div>
     </div>

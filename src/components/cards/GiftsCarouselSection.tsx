@@ -44,8 +44,10 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
    */
   const displayProducts = sectionProducts.gifts;
   
-  // Usamos exclusivamente el color teal como solicitado
-  const cardColor = 'bg-teal-500';
+  // Función para obtener el color de la tarjeta basado en el índice
+  const getCardColor = (index: number) => {
+    return index % 2 === 0 ? 'bg-teal-500' : 'bg-[#303030]';
+  };
   
   // Función para actualizar la información de scroll
   const updateScrollInfo = () => {
@@ -192,7 +194,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                   key={`group-${groupIndex}`} 
                   className="min-w-[260px] flex-shrink-0 snap-start mr-4 last:mr-0 rounded-lg overflow-hidden shadow-sm"
                 >
-                  <div className={`${cardColor} p-3 h-full flex flex-col rounded-t-lg`}>
+                  <div className={`${getCardColor(groupIndex)} p-3 h-full flex flex-col rounded-t-lg`}>
                     <div className="flex items-center mb-2">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white mr-1.5" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clipRule="evenodd" />

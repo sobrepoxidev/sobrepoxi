@@ -39,10 +39,10 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
           <div className="p-3">
             {displayProducts.length > 0 ? (
               <>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 bg-[#303030]">
                   {displayProducts.map((product, idx) => (
                     <Link key={`${product.id}-${idx}`} href={`/product/${product.id}`} className="block group">
-                      <div className="flex flex-col items-center bg-gray-50 rounded p-2 hover:shadow-sm transition-shadow">
+                      <div className="flex flex-col items-center bg-white rounded p-2 hover:shadow-sm transition-shadow">
                         <div className="h-44 flex items-center justify-center mb-1">
                           <Image
                             src={product.media && product.media.length > 0 ?
@@ -183,10 +183,10 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
 
                   // Colores para las tarjetas
                   const cardColors = [
-                    'bg-blue-500',   // Azul
-                    'bg-green-500',  // Verde
-                    'bg-pink-500',   // Rosa
-                    'bg-red-500'     // Rojo
+                    'bg-[#303030]',   // Azul
+                    'bg-teal-500',  // Verde
+                    'bg-[#303030]',   // Rosa
+                    'bg-teal-500'     // Rojo
                   ];
 
                   // Seleccionar color

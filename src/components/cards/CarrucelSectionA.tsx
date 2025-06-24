@@ -21,7 +21,7 @@ const CarouselCard: React.FC<{
   return (
     <div className={`flex h-[27rem] shadow-md flex-col ${className}`}>
       <div className="flex flex-col h-full">
-        <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-gray-800" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>{title}</h2>
+        <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-white" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>{title}</h2>
         <div className="flex-grow flex items-center justify-center">{content}</div>
       </div>
     </div>
@@ -65,7 +65,7 @@ const CarrucelSectionA: React.FC<CarrucelSectionProps> = ({ items }) => {
       {showLeftArrow && (
         <button
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-black/30  bg-transparent rounded-full p-2"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-gray-700  bg-transparent rounded-full p-2"
           aria-label="Previous item"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -92,7 +92,7 @@ const CarrucelSectionA: React.FC<CarrucelSectionProps> = ({ items }) => {
       {showRightArrow && (
         <button
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-black/30 bg-transparent rounded-full p-2"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-gray-700 bg-transparent rounded-full p-2"
           aria-label="Next item"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

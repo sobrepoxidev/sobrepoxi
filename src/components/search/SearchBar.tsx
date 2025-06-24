@@ -166,6 +166,7 @@ export default function SearchBar({
   
   // Handle category selection
   const handleCategorySelect = (category: {id: number, name: string, name_es: string, name_en: string}) => {
+    console.log('Selected category:', category);
     const displayName = locale === 'es' ? category.name_es : category.name_en || category.name;
     setSelectedCategory(displayName);
     setSelectedCategoryId(category.id);
@@ -205,9 +206,9 @@ export default function SearchBar({
   return (
     <div 
       ref={searchRef} 
-      className={`relative w-full ${isStandalone ? 'standalone-search' : 'navbar-search'} ${className}`} 
+      className={`z-40 relative w-full ${isStandalone ? 'standalone-search' : 'navbar-search'} ${className}`} 
       style={{ 
-        zIndex: isNavbar ? 9000 : 50, // Z-index extremadamente alto para desktop
+        zIndex: 40, // Z-index extremadamente alto para desktop
         position: 'relative'
       }}
     >
@@ -224,7 +225,7 @@ export default function SearchBar({
               // En móvil no enfocar automáticamente el input
               // Esto previene que el dropdown se cierre inmediatamente
             }}
-            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-gray-700 bg-white border border-r-0 border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 ${
+            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-white bg-[#303030] border border-r-0 border-gray-500 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 ${
               isMobile ? 'w-24' : isNavbar ? 'w-32' : 'w-40'
             }`}
             aria-expanded={isCategoryMenuOpen}
@@ -241,7 +242,7 @@ export default function SearchBar({
               role="menu"
               onClick={(e) => e.stopPropagation()}
               style={{ 
-                zIndex: 9999, // Z-index extremadamente alto
+                zIndex: 40, // Z-index extremadamente alto
                 position: 'absolute',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}
@@ -250,7 +251,7 @@ export default function SearchBar({
                 <li>
                   <button
                     type="button"
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                    className="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-100 bg-[#303030] "
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -275,7 +276,7 @@ export default function SearchBar({
                     <li key={cat.id}>
                       <button
                         type="button"
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        className="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-100 bg-[#303030]"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -299,7 +300,7 @@ export default function SearchBar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          className={`flex-1 h-10 px-3 py-2 text-sm text-gray-900 border border-gray-300 focus:ring-teal-500 focus:border-teal-500 ${
+          className={`flex-1 h-10 px-3 py-2 text-sm text-white bg-[#303030] border border-gray-500 focus:ring-teal-500 focus:border-teal-500 ${
             isMobile ? 'w-full' : isNavbar ? 'w-full' : 'w-96'
           }`}
           ref={inputRef}
@@ -308,7 +309,7 @@ export default function SearchBar({
         {/* Search button */}
         <button
           type="submit"
-          className="flex h-10 w-10 items-center justify-center bg-teal-600 text-white hover:bg-teal-700"
+          className="flex h-10 w-10 items-center justify-center bg-teal-600 text-white hover:bg-teal-700 border border-gray-500 border-l-0 rounded-r-md"
           aria-label="Buscar"
         >
           <Search className="h-5 w-5" />

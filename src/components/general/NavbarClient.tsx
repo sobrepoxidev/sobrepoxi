@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { Menu, X, User, ShoppingBag, ChevronDown, Globe, Package } from 'lucide-react';
@@ -12,6 +13,7 @@ import { useCart } from '@/context/CartContext';
 import UserDropdown from '@/components/user/UserDropdown';
 import SearchBar from '@/components/search/SearchBar';
 import { getCategories } from '@/lib/categories';
+import CategoryCarousel from '@/components/search/CategoryCarousel';
 
 type NavLink = {
   name: string;
@@ -107,9 +109,54 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     <>
       {/* Desktop Navigation - Amazon Style */}
       <div className="hidden w-full flex-col lg:flex" style={{ position: 'static' }}>
+        {/* Primary Header Row */}
+        <div className="flex w-full items-center justify-between px-4 py-2">
+          {/* Left */}
+          <div className="flex items-center gap-2">
+            {/* Hamburger button visible on desktop too */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex h-8 w-8 items-center justify-center text-gray-700 hover:bg-gray-100 rounded focus-visible:outline-none"
+              aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+            <Link href="/" className="flex items-center gap-2">
+              <Image src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/logo-LjcayV8P6SUxpAv0Hv61zn3t1XNhLw.svg" alt="HandMadeArt Logo" width={40} height={40} className="w-8 md:w-10 object-cover" />
+              <span className="hidden sm:block text-lg md:text-2xl tracking-wider text-gray-800">
+                <span className="mr-1">HANDMADE</span><span className="font-bold text-[#B55327]">ART</span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Right */}
+          <div className="hidden lg:flex items-center gap-4">
+            <UserDropdown session={session} onLogout={handleLogout} />
+            {/* Language selector */}
+            <button
+              onClick={() => {
+                const targetLocale = locale === 'es' ? 'en' : 'es';
+                router.replace(pathname, { locale: targetLocale });
+              }}
+              className="flex items-center space-x-1 text-sm text-gray-700 hover:text-teal-700 focus:outline-none"
+            >
+              <Globe className="h-4 w-4" />
+              <span>{locale === 'es' ? 'ES' : 'EN'}</span>
+            </button>
+            {/* Cart */}
+            <Link href="/cart" className="relative flex items-center text-gray-700 hover:text-teal-700">
+              <ShoppingBag className="h-5 w-5" />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white ml-0.5">
+                {totalItems}
+              </span>
+            </Link>
+          </div>
+        </div>
+
         {/* Top Row: Search bar with filter dropdown */}
-        <div className="flex w-full items-center justify-center pt-3">
-          <div className="flex w-full max-w-4xl items-center">
+        <div className="flex w-full items-center justify-center pt-3 px-4">
+          <div className="flex w-full max-w-6xl items-center">
             <div
               className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible"
               style={{
@@ -127,8 +174,49 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
           </div>
         </div>
 
-        {/* Bottom Row: Navigation links */}
-        <div className="flex w-full items-center justify-center ">
+        {/* Category carousel - horizontally scrollable */}
+        {/* reservar espacio mientras se carga */}
+          <div className="w-full flex justify-center h-8"><CategoryCarousel locale={locale} categories={categoryList} className="mt-1 max-w-6xl" /></div>
+
+          {/* Desktop action icons */}
+          <div className="hidden">
+            {/* Language selector */}
+            <button
+              onClick={() => {
+                const targetLocale = locale === 'es' ? 'en' : 'es';
+                router.replace(pathname, { locale: targetLocale });
+              }}
+              className="flex items-center space-x-1 text-sm text-gray-700 hover:text-teal-700 focus:outline-none"
+            >
+              <Globe className="h-4 w-4" />
+              <span>{locale === 'es' ? 'ES' : 'EN'}</span>
+            </button>
+
+            {/* Cart */}
+            <Link
+              href="/cart"
+              className="relative flex items-center space-x-0.5 text-sm text-gray-700 hover:text-teal-700"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              <span className="sr-only">{t('cart')}</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
+                {totalItems}
+              </span>
+            </Link>
+
+            {/* Hamburger */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex h-8 w-8 items-center justify-center text-gray-700 hover:bg-gray-100 rounded focus-visible:outline-none"
+              aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+
+          {/* Bottom Row: Navigation links */}
+        <div className="hidden">
           <ul className="flex items-center gap-x-6">
             {navigationLinks.map((link) => (
               <li key={link.path}>
@@ -161,7 +249,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
       </div>
 
       {/* Actions - Right Side */}
-      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto" style={{ minWidth: '100px', flexShrink: 0 }}>
+      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto lg:hidden" style={{ minWidth: '100px', flexShrink: 0 }}>
         {/* User Dropdown - Desktop */}
         <div className="hidden md:flex items-center">
           <UserDropdown session={session} onLogout={handleLogout} />
@@ -196,7 +284,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         {/* Mobile menu toggle */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center text-gray-700 transition hover:bg-gray-100 focus-visible:outline-none lg:hidden"
+          className="flex h-10 w-10 items-center justify-center text-gray-700 transition hover:bg-gray-100 focus-visible:outline-none"
           style={{ width: '40px', height: '40px', flexShrink: 0 }}
           aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
           aria-expanded={isMenuOpen}
@@ -210,9 +298,17 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="absolute left-0 right-0 top-full z-50 max-h-[calc(100vh-57px)] overflow-y-auto bg-white shadow-lg lg:hidden w-full">
+        <div className="absolute left-0 right-0 top-full z-50 max-h-[calc(100vh-57px)] overflow-y-auto bg-white shadow-lg w-full lg:fixed lg:top-0 lg:left-0 lg:h-full lg:w-72 lg:max-h-none">
 
-          <nav className="px-4 py-3">
+          <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-2 right-2 p-1 text-gray-700 hover:bg-gray-100 rounded lg:block hidden z-50"
+              aria-label="Cerrar menú"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <nav className="px-4 py-3">
             {/* Mobile Search - Amazon Style */}
 
 

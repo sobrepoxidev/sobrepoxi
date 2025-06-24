@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 import SearchBar from '../search/SearchBar';
+import CategoryCarousel from '../search/CategoryCarousel';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
@@ -21,7 +22,7 @@ export default async function Navbar({ locale }: { locale: string }) {
       <div className="container mx-auto flex items-center justify-between px-2 md:px-4 py-0">
         {/* Logo - SSR (Left) */}
       
-          <div>
+          <div className="lg:hidden">
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
               
@@ -73,6 +74,7 @@ export default async function Navbar({ locale }: { locale: string }) {
             locale={locale}
             className="w-full"
           />
+          <CategoryCarousel locale={locale} className="mt-1" />
         </div>
     </header>
   );
