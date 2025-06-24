@@ -9,7 +9,7 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
  */
 export default function HomeContainer() {
   return (
-    <div className="bg-gray-50 min-h-screen" role="main">
+    <div className="bg-white min-h-screen" role="main">
       <main className="max-w-screen-2xl mx-auto">
         <Suspense fallback={<LoadingState />}>
           <HomePageData />
