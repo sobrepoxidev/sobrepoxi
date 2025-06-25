@@ -1,27 +1,29 @@
-// lib/seo.ts  (o el archivo donde antes estaban tus helpers)
-
+// lib/seo.ts
 import type { Metadata } from "next";
-import { buildMetadata } from "./seoConfig";          // <-- función nueva
+import { buildMetadata } from "./seoConfig";
 
 /**
- * COMPAT: Devuelve sólo la parte "común" (descr., keywords, OG...) 
- * sin canonical ni twitter, para llamadas antiguas.
+ * COMPAT: devuelve solo la parte "común" (descr., keywords, OG...).
  */
 export function getCommonMetadata(locale: string): Partial<Metadata> {
-  // pathname = "/" para no romper estructuras antiguas;
-  // si quieres algo más fino pásalo como arg opcional.
   const meta = buildMetadata({
     locale: locale === "es" ? "es" : "en",
     pathname: "/"
   });
-  // Devuelvo sólo el subconjunto que las versiones viejas esperaban
-  const { title, alternates, twitter, ...common } = meta;
+
+  // Prefijo _ ==> ESLint no protesta
+  const {
+    title: _title,
+    alternates: _alternates,
+    twitter: _twitter,
+    ...common
+  } = meta;
+
   return common;
 }
 
 /**
- * COMPAT: Conserva la vieja firma de buildTitle(pageTitle).
- * Ahora se apoya en SEO_TEXT del nuevo módulo.
+ * COMPAT: versión antigua de buildTitle.
  */
 export function buildTitle(pageTitle?: string): Metadata["title"] {
   const base = "HandMade Art";
