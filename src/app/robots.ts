@@ -1,14 +1,15 @@
-// src/app/robots.ts
+// src/app/robots.ts  (metadata route, sin GET)
+import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 
-export async function GET() {
-  const host = (await headers()).get("x-forwarded-host")?.trim().toString() ?? (await headers()).get("host")?.trim().toString()!;
-  const body = `User-agent: *
-Allow: /
-Sitemap: https://${host}/sitemap.xml
-`;
-  return new NextResponse(body, {
-    headers: { "Content-Type": "text/plain" },
-  });
+export const runtime = "edge"; // opcional
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const host =
+    (await headers()).get("x-forwarded-host") ?? (await headers()).get("host") ?? "";
+
+  return {
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: `https://${host}/sitemap.xml`,
+  };
 }
