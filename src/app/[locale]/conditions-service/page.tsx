@@ -10,8 +10,8 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   };
 }
 
-export default function TerminosCondicionesPage({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function TerminosCondicionesPage({ params }: { params: tParams }) {
+  const { locale } = await params;
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
