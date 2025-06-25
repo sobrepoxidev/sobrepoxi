@@ -1,32 +1,18 @@
-import type { Metadata } from "next";
-import { getCommonMetadata } from "@/lib/seo";
+// src/app/layout.tsx
 import "./globals.css";
+import type { Metadata } from "next";
 import { CartProvider } from "@/context/CartContext";
-import { Suspense } from 'react'
-import { headers } from "next/headers";
+import { Suspense } from "react";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const h = await headers();
-  const host = h.get('x-forwarded-host') ?? h.get('host');
-  return {
-    title: {
-      default: "HandMade Art",
-      template: '%s | HandMade Art'
-    },
-    ...getCommonMetadata(host === 'artehechoamano.com' ? 'es' : 'en'),
-  };
+export const metadata: Metadata = {
+  metadataBase: new URL("https://artehechoamano.com"),
+  icons: { icon: "/favicon.ico" }
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <Suspense>
-      <CartProvider>
-        {children}
-      </CartProvider>
+      <CartProvider>{children}</CartProvider>
     </Suspense>
   );
 }
