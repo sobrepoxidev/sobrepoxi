@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-import { defineRouting } from 'next-intl/routing';
 
 export async function defaultLocale() {
     const h = await headers();
