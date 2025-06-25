@@ -102,8 +102,8 @@ export default async function RootLayout({
   const h = await headers();
 
   // 2. Reconstruye el origin
-  const host  = h.get('x-forwarded-host')  // definido si hay proxy
-            ?? h.get('host');              // fallback
+  const host  = h.get('x-forwarded-host')?.trim().toString()  // definido si hay proxy
+            ?? h.get('host')?.trim().toString();              // fallback
 
   const print = "El host en locale es:->"+host?.trim().toString()+"<-";
   console.log(print);
