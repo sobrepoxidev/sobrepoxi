@@ -2,16 +2,13 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "./seoConfig";
 
-/**
- * COMPAT: devuelve solo la parte "común" (descr., keywords, OG...).
- */
+/** COMPAT: devuelve solo la parte "común" (descr., keywords, OG...). */
 export function getCommonMetadata(locale: string): Partial<Metadata> {
   const meta = buildMetadata({
     locale: locale === "es" ? "es" : "en",
     pathname: "/"
   });
 
-  // Prefijo _ ==> ESLint no protesta
   const {
     title: _title,
     alternates: _alternates,
@@ -19,12 +16,15 @@ export function getCommonMetadata(locale: string): Partial<Metadata> {
     ...common
   } = meta;
 
+  /* marcar variables como “usadas” */
+  void _title;
+  void _alternates;
+  void _twitter;
+
   return common;
 }
 
-/**
- * COMPAT: versión antigua de buildTitle.
- */
+/** COMPAT: versión antigua de buildTitle. */
 export function buildTitle(pageTitle?: string): Metadata["title"] {
   const base = "HandMade Art";
   if (!pageTitle) return { default: base, template: `%s | ${base}` };
