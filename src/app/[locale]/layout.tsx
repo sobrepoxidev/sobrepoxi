@@ -16,11 +16,19 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const host = (await headers()).get("x-forwarded-host")?.trim().toString() ?? (await headers()).get("host")?.trim().toString()!;
-  const pathname = (await headers()).get("x-invoke-pathname")?.trim().toString() || "/"; // Vercel Header o fallback
+  const headersList = await headers();
+  const host = 
+    headersList.get("x-forwarded-host")?.trim() || 
+    headersList.get("host")?.trim() ||
+    'artehechoamano.com';
+  const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
+  
   return {
     metadataBase: new URL(`https://${host}`),
-    ...buildMetadata({ locale: params.locale === "es" ? "es" : "en", pathname }),
+    ...buildMetadata({ 
+      locale: params.locale === "es" ? "es" : "en", 
+      pathname: pathname 
+    }),
   };
 }
 
