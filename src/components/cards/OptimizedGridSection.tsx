@@ -207,6 +207,11 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                                 style={{ objectFit: 'contain', maxHeight: '100%' }}
                                 className="p-0.5"
                               />
+                              {/*precio*/}
+                              <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-800">
+                                {product.price}
+                              </span>
+                             
                             </div>
                           </Link>
                         ))}

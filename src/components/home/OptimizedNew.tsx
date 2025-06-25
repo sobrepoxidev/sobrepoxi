@@ -28,7 +28,7 @@ interface OptimizedNewHomeProps {
 }
 
 
-export default async function OptimizedNewHome({
+export default function OptimizedNewHome({
   initialCategories = [],
   initialProducts = [],
   locale 
