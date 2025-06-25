@@ -30,6 +30,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+ 
 
   // 3️⃣  Any other Next.js options you may add later…
   // reactStrictMode: true,
