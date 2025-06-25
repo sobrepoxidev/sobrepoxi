@@ -70,7 +70,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                 </div>
                 <div className="mt-3 text-xs text-teal-600 hover:underline text-center">
                   <Link href={`/products?category=${category.id}`} className="inline-flex items-center">
-                    <span>Ver todo en {category.name}</span>
+                    <span>{locale === 'es' ? 'Ver todo en '+ category.name_es: 'View all in '+ category.name_en}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -91,7 +91,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                 </div>
                 <div className="mt-3 text-xs text-teal-600 hover:underline text-center">
                   <Link href={`/products?category=${category.id}`} className="inline-flex items-center">
-                    <span>Ver todo en {category.name}</span>
+                    <span>{locale === 'es' ? 'Ver todo en '+ category.name_es: 'View all in '+ category.name_en}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -130,7 +130,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
   if (error) {
     return (
       <div className="text-red-500 text-center p-4">
-        <p>Error al cargar categorías</p>
+        <p>{locale === 'es' ? 'Error al cargar categorías': 'Error loading categories'}</p>
         <p className="text-sm">{error}</p>
       </div>
     );
