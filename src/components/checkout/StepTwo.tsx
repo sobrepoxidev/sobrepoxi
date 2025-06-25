@@ -39,6 +39,7 @@ export default function StepTwo({
     createdOrderId,
     createOrder,
     cart,
+    locale,
   }: {
     paymentMethod: PaymentMethod | null;
     setPaymentMethod: (m: PaymentMethod) => void;
@@ -52,6 +53,7 @@ export default function StepTwo({
     onFinalize: () => void;
     createdOrderId: number | null;
     createOrder: (paymentMethod?: string) => Promise<void>;
+    locale: string;
   }) {
     // Estado para la información de descuento
     const [discountInfo, setDiscountInfo] = useState<DiscountInfo | null>(null);
@@ -107,6 +109,7 @@ export default function StepTwo({
           total={total}
           onFinalize={onFinalize}
           createdOrderId={createdOrderId}
+          locale={locale}
         />
         
         {/* Resumen del pedido */}

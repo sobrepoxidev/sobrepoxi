@@ -28,6 +28,7 @@ export default function PaymentForm({
     total,
     onFinalize,
     createdOrderId,
+    locale,
 
   }: {
     paymentMethod: PaymentMethod | null;
@@ -39,7 +40,7 @@ export default function PaymentForm({
     total: number;
     onFinalize: () => void;
     createdOrderId: number | null;
- 
+    locale: string;
 
 }) {
     const copiarMensaje = () => {
@@ -69,10 +70,10 @@ export default function PaymentForm({
                 return (
                     <div className="mt-4 bg-teal-50 border border-teal-300 rounded-md p-4 ">
                         <p className="text-sm mb-2">
-                            Monto total: <b>₡{total}</b>.
-                            Envia tu pago vía Sinpe con la siguiente info:
+                            {locale === "es" ? "Monto total" : "Total amount"}: <b>₡{total}</b>.
+                            {locale === "es" ? "Envia tu pago vía SINPE con la siguiente info:" : "Send your payment via SINPE with the following info:"}
                         </p>
-                        <label className="block mb-1 text-sm font-medium">Selecciona Banco:</label>
+                        <label className="block mb-1 text-sm font-medium">{locale === "es" ? "Selecciona Banco:" : "Select Bank:"}</label>
                         <select
                             value={bancoSeleccionado?.nombre || ""}
                             onChange={handleBancoChange}
@@ -92,29 +93,29 @@ export default function PaymentForm({
                                     <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                                         <div>
                                             <p className="text-gray-700 ">
-                                                📲 Enviar SMS a: <b>{bancoSeleccionado.sms}</b>
+                                                {locale === "es" ? "Enviar SMS a:" : "Send SMS to:"} <b>{bancoSeleccionado.sms}</b> 
                                             </p>
                                             <p className="text-gray-700 ">
-                                                💬 Mensaje: <b>PASE {total} 85850000 HM-ART</b>
+                                                {locale === "es" ? "Mensaje:" : "Message:"}: <b>PASE {total} 85850000 HM-ART</b>
                                             </p>
                                         </div>
                                         <button
                                             onClick={copiarMensaje}
                                             className="mt-2 sm:mt-0 sm:w-auto text-sm bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md"
                                         >
-                                            📋 Copiar Mensaje
+                                            {locale === "es" ? "Copiar Mensaje" : "Copy Message"}
                                         </button>
                                     </div>
                                 ) : (
                                     <p className="text-gray-700 ">
-                                        📱 Realiza la transferencia desde la app o banca en línea de <b>{bancoSeleccionado.nombre}</b>.
+                                        📱 {locale === "es" ? "Realiza la transferencia desde la app o banca en línea de" : "Make the transfer from the app or online bank of"} <b>{bancoSeleccionado.nombre}</b>.
                                     </p>
                                 )}
                             </div>
                         )}
 
 
-                        <label className="block mb-1 text-sm font-medium">Últimos 4 dígitos del recibo:</label>
+                        <label className="block mb-1 text-sm font-medium">{locale === "es" ? "Últimos 4 dígitos del recibo:" : "Last 4 digits of the receipt:"}</label>
                         <input
                             type="text"
                             maxLength={4}
@@ -128,7 +129,7 @@ export default function PaymentForm({
                             onClick={onFinalize}
                             className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 rounded-md"
                         >
-                            Confirmar y Finalizar
+                            {locale === "es" ? "Confirmar y Finalizar" : "Confirm and Finalize"}
                         </button>
                     </div>
                 );
@@ -152,19 +153,19 @@ export default function PaymentForm({
             case "transfer":
                 return (
                     <div className="p-4 bg-blue-50 border border-blue-300 text-blue-800 rounded-md text-center mb-2">
-                        <p className="text-sm md:text-base">Instrucciones para transferencia bancaria.</p>
+                        <p className="text-sm md:text-base">{locale === "es" ? "Instrucciones para transferencia bancaria." : "Instructions for bank transfer."}</p>
                     </div>
                 );
             case "card":
                 return (
                     <div className="p-4 bg-blue-50 border border-blue-300 text-blue-800 rounded-md text-center mb-2">
-                        <p className="text-sm md:text-base">Formulario de tarjeta de crédito/débito (Stripe, etc.).</p>
+                        <p className="text-sm md:text-base">{locale === "es" ? "Formulario de tarjeta de crédito/débito (Stripe, etc.)." : "Credit/debit card form (Stripe, etc.)."}</p>
                     </div>
                 );
             default:
                 return (
                     <div className="p-4 bg-teal-50 border border-teal-300 text-teal-800 rounded-md text-center mb-2">
-                        <p className="text-sm md:text-base">Aquí se mostrará el formulario de pago</p>
+                        <p className="text-sm md:text-base">{locale === "es" ? "Aquí se mostrará el formulario de pago" : "Here the payment form will be displayed"}</p>
                     </div>
                 );
         }

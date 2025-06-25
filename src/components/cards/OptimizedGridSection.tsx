@@ -206,6 +206,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                                 height={100}
                                 style={{ objectFit: 'contain', maxHeight: '100%' }}
                                 className="p-0.5"
+                                priority={idx < 7} // Solo priorizar las primeras imágenes
                               />
                             
                         

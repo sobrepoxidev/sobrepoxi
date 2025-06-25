@@ -98,7 +98,7 @@ const OptimizedCarrucelSection: React.FC<OptimizedCarrucelSectionProps> = ({
   if (error) {
     return (
       <div className="text-red-500 text-center p-4">
-        <p>Error al cargar productos</p>
+        <p>{locale === 'es' ? 'Error al cargar productos' : 'Error loading products'}</p>
         <p className="text-sm">{error}</p>
       </div>
     );

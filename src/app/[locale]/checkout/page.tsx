@@ -9,6 +9,7 @@ import { Database } from "@/types-db";
 
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
+import { useLocale } from 'next-intl';
 
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";
@@ -62,6 +63,9 @@ export default function CheckoutWizardPage() {
         listener?.subscription.unsubscribe();
       };
     }, [supabase]);
+
+    const locale = useLocale();
+    
     
     
     // Estado para la información de descuento
@@ -364,6 +368,7 @@ export default function CheckoutWizardPage() {
               onFinalize={validateStep2}
               createdOrderId={createdOrderId}
               createOrder={createOrder}
+              locale={locale}
             />
           ) 
         }
