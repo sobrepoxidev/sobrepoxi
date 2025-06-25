@@ -45,12 +45,13 @@ const seoMetadata = {
   },
 } as const;
 
+type tParams = {
+  params: Promise<{ locale: string }>;
+};
 export async function generateMetadata({
   params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  const { locale } = params;
+}: tParams): Promise<Metadata> {
+  const { locale } = await params;
   const meta = seoMetadata[locale as "es" | "en"] ?? seoMetadata.es;
 
   return {
