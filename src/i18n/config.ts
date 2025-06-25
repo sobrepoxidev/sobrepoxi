@@ -1,8 +1,10 @@
-import { headers } from "next/headers";
 
-export async function defaultLocale() {
-    const h = await headers();
-    const host = h.get('x-forwarded-host')?.trim().toString() ?? h.get('host')?.trim().toString();
-    return host === 'artehechoamano.com' ? 'es' : 'en';
-}
-
+// src/i18n/config.ts
+export function defaultLocale() {
+    // Use environment variable to determine default locale
+    const isDomainEs = process.env.NEXT_PUBLIC_DEFAULT_LOCALE === 'es' || 
+                       process.env.NODE_ENV === 'production' && 
+                       process.env.VERCEL_URL?.includes('artehechoamano');
+    
+    return isDomainEs ? 'es' : 'en';
+  }
