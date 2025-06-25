@@ -16,7 +16,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const h = await headers();
   const host = (await headers()).get("x-forwarded-host")?.trim().toString() ?? (await headers()).get("host")?.trim().toString()!;
   const pathname = (await headers()).get("x-invoke-pathname")?.trim().toString() || "/"; // Vercel Header o fallback
   return {
