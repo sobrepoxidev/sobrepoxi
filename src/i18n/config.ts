@@ -1,8 +1,9 @@
-export const defaultLocale = 'es' as const;
-export const locales = ['es', 'en'] as const;
+import { headers } from "next/headers";
+import { defineRouting } from 'next-intl/routing';
 
-export type Locale = (typeof locales)[number];
-
-export function isLocale(value: string): value is Locale {
-  return (locales as readonly string[]).includes(value);
+export async function defaultLocale() {
+    const h = await headers();
+    const host = h.get('x-forwarded-host')?.trim().toString() ?? h.get('host')?.trim().toString();
+    return host === 'artehechoamano.com' ? 'es' : 'en';
 }
+
