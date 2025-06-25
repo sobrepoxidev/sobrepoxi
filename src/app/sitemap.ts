@@ -43,6 +43,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `https://${host}/${locale}/conditions-service`,
       lastModified: new Date(),
     },
+    {
+      url: `https://${host}/${locale}/qr`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${host}/${locale}/account`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${host}/${locale}/feria-artesanias`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${host}/${locale}/feria-artesanias-terminos`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${host}/${locale}/impact`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${host}/${locale}/search`,
+      lastModified: new Date(),
+    },
+    
   ];
 }
 
