@@ -105,7 +105,8 @@ export default async function RootLayout({
   const host  = h.get('x-forwarded-host')  // definido si hay proxy
             ?? h.get('host');              // fallback
 
-  console.log("El host en locale es:", host);
+  const print = "El host en locale es:->"+host?.trim().toString()+"<-";
+  console.log(print);
   return (
     <html lang={host === 'artehechoamano.com' ? 'es' : 'en'} className="bg-white">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>

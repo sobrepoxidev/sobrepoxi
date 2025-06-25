@@ -7,7 +7,8 @@ export default async function RootPage() {
   // 2. Reconstruye el origin
   const host  = h.get('x-forwarded-host')  // definido si hay proxy
             ?? h.get('host');              // fallback
-  console.log("El host en raiz es:", host);
+  const print = "El host en raiz es:->"+host?.trim().toString()+"<-";
+  console.log(print);
   if (host === 'artehechoamano.com'){
     redirect('/es');
   }
