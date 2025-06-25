@@ -18,7 +18,7 @@ import { Toaster } from "react-hot-toast";
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const h = await headers();
   const host = (await headers()).get("x-forwarded-host")?.trim().toString() ?? (await headers()).get("host")?.trim().toString()!;
-  const pathname = h.get("x-invoke-pathname") || "/"; // Vercel Header o fallback
+  const pathname = (await headers()).get("x-invoke-pathname")?.trim().toString() || "/"; // Vercel Header o fallback
   return {
     metadataBase: new URL(`https://${host}`),
     ...buildMetadata({ locale: params.locale === "es" ? "es" : "en", pathname }),
