@@ -6,11 +6,11 @@ import ProductDetail from '@/components/products/ProductDetail';
 // The server component handles params extraction
 type tParams = Promise<{ id: string, locale: string }>;
 export async function generateMetadata({ params }: { params: { id: string; locale: string } }): Promise<Metadata> {
-  const { id, locale } = params as { id: string; locale: string };
+  const { locale } = params as { locale: string };
   // Try to derive product name via query param or fallback
   const genericTitle = locale === "es" ? "Producto" : "Product";
   return {
-    title: buildTitle(genericTitle, locale),
+    title: buildTitle(genericTitle),
     ...getCommonMetadata(locale),
   };
 }

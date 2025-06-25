@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us", locale),
+    title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us"),
     ...getCommonMetadata(locale),
   };
 }

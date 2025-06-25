@@ -7,7 +7,7 @@ type tParams = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: buildTitle(locale === "es" ? "Resultados de búsqueda" : "Search results", locale),
+    title: buildTitle(locale === "es" ? "Resultados de búsqueda" : "Search results"),
     ...getCommonMetadata(locale),
   };
 }

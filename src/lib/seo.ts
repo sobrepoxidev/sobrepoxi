@@ -46,11 +46,11 @@ export function getCommonMetadata(locale: string): Partial<Metadata> {
   };
 }
 
-export function buildTitle(pageTitle: string | undefined, locale: string): Metadata["title"] {
+export function buildTitle(pageTitle: string | unknown): Metadata["title"] {
   const base = "HandMade Art";
   if (!pageTitle) return { default: base, template: `%s | ${base}` };
   return {
-    default: pageTitle,
+    default: pageTitle as string,
     template: `%s | ${base}`,
   };
 }
