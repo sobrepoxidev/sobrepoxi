@@ -8,9 +8,9 @@ const FormMail = dynamic(() => import('@/components/general/FormMail'), { ssr: t
 
 import { getCommonMetadata, buildTitle } from '@/lib/seo';
 import type { Metadata } from "next";
-
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
+type tParams = Promise<{ id: string, locale: string }>;
+export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
+  const { locale } = await params;
   return {
     title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us"),
     ...getCommonMetadata(locale),

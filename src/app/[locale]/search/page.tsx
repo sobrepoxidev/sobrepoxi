@@ -4,8 +4,8 @@ import { getCommonMetadata, buildTitle } from "@/lib/seo";
 
 type tParams = Promise<{ locale: string }>;
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
+export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
+  const { locale } = await params;
   return {
     title: buildTitle(locale === "es" ? "Resultados de búsqueda" : "Search results"),
     ...getCommonMetadata(locale),

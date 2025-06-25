@@ -8,8 +8,9 @@ import ProductsPageContent from "@/components/products/ProductsPageContent";
  * Página de productos que muestra todos los productos disponibles.
  * La implementación principal ha sido movida al componente ProductsPageContent.
  */
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
+type tParams = Promise<{ id: string, locale: string }>;
+export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
+  const { locale } = await params;
   return {
     title: buildTitle(locale === "es" ? "Todos los productos" : "All products"),
     ...getCommonMetadata(locale),
