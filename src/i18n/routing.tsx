@@ -1,10 +1,12 @@
 import {defineRouting} from 'next-intl/routing';
- 
-export const routing = defineRouting({
-  // A list of all locales that are supported
-  locales: ['es', 'en'],
- 
-  // Used when no locale matches
-  defaultLocale: 'en',
-  localeDetection: false,
-});
+import { headers } from "next/headers";
+
+export async function routing() {
+  const h = await headers();
+  const host = h.get('x-forwarded-host')?.trim().toString() ?? h.get('host')?.trim().toString();
+  return defineRouting({
+    locales: ['es', 'en'],
+    defaultLocale: host === 'artehechoamano.com' ? 'es' : 'en',
+    localeDetection: false,
+  });
+}
