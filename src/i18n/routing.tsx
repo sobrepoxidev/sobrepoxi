@@ -1,5 +1,5 @@
 import { defineRouting } from 'next-intl/routing';
-import { defaultLocale } from './config';
+import { defaultLocale } from '../components/general/config18';
 
 export async function routing() {
   const locale = await defaultLocale();
