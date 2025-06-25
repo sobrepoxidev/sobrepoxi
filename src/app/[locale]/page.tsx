@@ -5,6 +5,12 @@
 import HomeContainer from "./HomeContainer";
 import React from "react"; // Import React
 
-export default function Home() {
-  return <HomeContainer />;
+type tParams = {
+  params: {
+    locale: Promise<string>;
+  };
+};
+export default async function Home({ params }: tParams) {
+  const { locale } = await params;
+  return <HomeContainer locale={locale.toString()} />;
 }

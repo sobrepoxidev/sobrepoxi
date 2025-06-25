@@ -24,16 +24,18 @@ type Category = Database['categories'];
  */
 interface OptimizedNewHomeProps {
   initialCategories?: Category[];
-  initialProducts?: Product[];
+  initialProducts?: Product[];  
+  locale?: string;
 }
 
-export default function OptimizedNewHome({
+
+export default async function OptimizedNewHome({
   initialCategories = [],
-  initialProducts = []
+  initialProducts = [],
+  locale 
 }: OptimizedNewHomeProps) {
   const t = useTranslations('home');
   const chorreadorCategoryId = 1;
-
   return (
     <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
       <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-b from-teal-300/10 via-teal-500/10 to-white">
@@ -43,15 +45,15 @@ export default function OptimizedNewHome({
             <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-4 md:py-6">
               <div className="max-w-full text-center md:text-left mt-0.5 md:mt-0 ">
                 <h2 className="text-lg xs:text-xl sm:text-2xl font-bold tracking-wider text-gray-800">
-                  <span className="mr-1">{t('banner1.title')}</span>
+                  <span className="mr-1">{locale === 'es' ? 'Envíos a todo Costa Rica' : 'Shipping to all Costa Rica'}</span>
                 </h2>
                 <div className="flex flex-col">
                   <div>
                     <p className="text-sm lg:text-lg font-light  text-gray-800">
-                      <span className="font-bold">{t('banner1.subtitle')}</span>
+                      <span className="font-bold">{locale === 'es' ? 'Con tarifas desde ₡2100' : 'With rates from ₡2100'}</span>
                     </p>
                     <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
-                      {t('banner1.note')}
+                      {locale === 'es' ? '*Costo variable dependiendo del peso. Pulsa para más información' : '*Variable cost depending on weight. Click for more information'}
                     </p>
                   </div>
                 </div>
@@ -61,7 +63,7 @@ export default function OptimizedNewHome({
                 <div className="relative h-[40px] w-[60px] md:h-[110px] md:w-[110px]">
                   <Image
                     src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/mapa-cr-DZ7GK5iuwsfpfwJ2Udbhz8Rxd1bUBF.webp"
-                    alt={t('banner1.mapAlt')}
+                    alt={locale === 'es' ? 'Mapa de Costa Rica' : 'Map of Costa Rica'}
                     fill
                     sizes="(max-width: 768px) 40px, 110px"
                     style={{ objectFit: 'contain' }}
@@ -71,7 +73,7 @@ export default function OptimizedNewHome({
                 {/* <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
                   <Image
                     src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/avion-correos-tePadHoKKfnwSsZPNFg0asLyJyTxzy.webp"
-                    alt={t('banner1.planeAlt')}
+                    alt={locale === 'es' ? 'Avión de correos' : 'Mail plane'}
                     fill
                     sizes="(max-width: 768px) 80px, 180px"
                     style={{ objectFit: 'contain' }}
@@ -112,14 +114,14 @@ export default function OptimizedNewHome({
             <div className="absolute bg-gradient-to-r  top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
               <div className="text-center z-20 mt-2 lg:mt-4 px-4">
                 <h1 className="text-lg lg:text-xl text-gray-800 font-bold lg:mb-2 hidden sm:block">
-                  {t('banner2.title')}
+                  {locale === 'es' ? 'Artesanía única hecha a mano' : 'Unique handmade crafts'}
                 </h1>
                 <h1 className="text-md lg:text- text-gray-800 font-bold lg:mb-2 sm:hidden">
-                  {t('banner2.titleMobile')}
+                  {locale === 'es' ? 'Artesanía hecha a mano' : 'Handmade crafts'}
                 </h1>
 
                 <p className="text-gray-800 text-sm mx-auto max-w-xl">
-                  {t('banner2.subtitle')}
+                  {locale === 'es' ? 'Por residentes en rehabilitación de centros penales' : 'By residents in rehabilitation centers'}
                 </p>
 
                 <div className="flex justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
@@ -127,25 +129,25 @@ export default function OptimizedNewHome({
                     <div className="rounded-full mb-1">
                       <Handshake className="text-gray-700" />
                     </div>
-                    <span className="text-gray-800 font-medium text-xs hidden sm:block">{t('banner2.impact')}</span>
-                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">{t('banner2.impactMobile')}</span>
-                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{t('banner2.impactDesc')}</span>
+                    <span className="text-gray-800 font-medium text-xs hidden sm:block">{locale === 'es' ? 'Impacto Social' : 'Social Impact'}</span>
+                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">{locale === 'es' ? 'Impacto' : 'Impact'}</span>
+                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{locale === 'es' ? 'Apoyando la reinserción' : 'Supporting reintegration'}</span>
                   </div>
 
                   <div className="flex flex-col items-center">
                     <div className="rounded-full mb-1">
                       <Sprout className="text-gray-700" />
                     </div>
-                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{t('banner2.sustainability')}</span>
-                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{t('banner2.sustainabilityDesc')}</span>
+                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Sostenibilidad' : 'Sustainability'}</span>
+                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{locale === 'es' ? 'Materiales ecológicos' : 'Eco-friendly materials'}</span>
                   </div>
 
                   <div className="flex flex-col items-center">
                     <div className="rounded-full mb-1">
                       <BadgeCheck className="text-gray-700" />
                     </div>
-                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{t('banner2.quality')}</span>
-                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{t('banner2.qualityDesc')}</span>
+                    <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Calidad' : 'Quality'}</span>
+                    <span className="text-[0.65rem] text-gray-800 hidden sm:block">{locale === 'es' ? 'Detalles artesanales' : 'Artisanal details'}</span>
                   </div>
                 </div>
               </div>
@@ -157,12 +159,12 @@ export default function OptimizedNewHome({
             linkHref={chorreadorCategoryId ? `/products?category=${chorreadorCategoryId}` : '/products'}
             bgColor="">
             <div className="h-full flex flex-col items-center justify-center text-gray-800 text-center px-4">
-              <h2 className="text-md lg:text-2xl font-light">{t('banner3.preTitle')}</h2>
-              <h1 className="text-xl lg:text-2xl font-bold ">{t('banner3.title')}</h1>
-              <p className="text-sm lg:text-xl">{t('banner3.subtitle')}</p>
+              <h2 className="text-md lg:text-2xl font-light">{ locale === 'es' ? 'Descubre nuestra' : 'Discover our'}</h2>
+              <h1 className="text-xl lg:text-2xl font-bold ">{locale === 'es' ? 'NUEVA COLECCIÓN' : 'NEW COLLECTION'}</h1>
+              <p className="text-sm lg:text-xl">{locale === 'es' ? 'Únicas artesanías hechas a mano' : 'Unique handmade crafts'}</p>
 
               <button className="mb-1 lg:mt-3 bg-[#3b3b3b] text-gray-200 text-sm px-2 lg:px-4 py-0.5 rounded-full font-bold hover:bg-opacity-90 transition-all">
-                {t('banner3.button')}
+                {locale === 'es' ? 'Ver ahora' : 'View now'}
               </button>
             </div>
           </BannerTemplate>

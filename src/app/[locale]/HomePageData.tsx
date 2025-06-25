@@ -11,7 +11,8 @@ import OptimizedNew from '@/components/home/OptimizedNew';
  * - Reducir la cantidad de JavaScript enviado al cliente
  * - Permitir streaming de contenido para una experiencia más rápida
  */
-export default async function HomePageData() {
+
+export default async function HomePageData({ locale }: {locale: string}) {
   // Crear cliente de Supabase para server component
   const supabase = createServerComponentClient<Database>({ cookies });
   
@@ -69,6 +70,7 @@ export default async function HomePageData() {
     <OptimizedNew 
       initialCategories={categories || []} 
       initialProducts={initialProducts} 
+      locale={locale}
     />
   );
 }

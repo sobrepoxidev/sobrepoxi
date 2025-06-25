@@ -7,12 +7,12 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
  * Componente contenedor para la página de inicio
  * Implementa Suspense para mejorar la carga progresiva
  */
-export default function HomeContainer() {
+export default function HomeContainer({locale}: {locale: string}) {
   return (
     <div className="bg-white min-h-screen" role="main">
       <main className="max-w-screen-2xl mx-auto">
         <Suspense fallback={<LoadingState />}>
-          <HomePageData />
+          <HomePageData locale={locale} />
         </Suspense>
         
         {/* Botones flotantes agrupados */}
