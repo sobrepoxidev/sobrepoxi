@@ -4,16 +4,7 @@ import { useState } from 'react';
 import { insertLead, addFollow, sendSummaryMail, Social } from './actions';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
-import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
-  return {
-    title: buildTitle(locale === "es" ? "Feria Artesanías" : "Feria Artesanías", locale),
-    ...getCommonMetadata(locale),
-  };
-}
 
 const socials = {
   facebook_followed: 'https://www.facebook.com/share/1Au8nNA2ho/',

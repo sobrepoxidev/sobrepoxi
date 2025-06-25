@@ -11,16 +11,7 @@ import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "re
 import { AlertTriangle } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
-import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
-  return {
-    title: buildTitle(locale === "es" ? "Carrito de compra" : "Shopping cart", locale),
-    ...getCommonMetadata(locale),
-  };
-}
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 type DiscountInfo = {
