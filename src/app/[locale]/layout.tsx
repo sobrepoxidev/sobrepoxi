@@ -15,18 +15,14 @@ import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 
-export async function generateMetadata({
-  params
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  const { locale } = params;
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const h = await headers();
-  const path = h.get("x-invoke-pathname") || "/"; // Vercel Header o fallback
-  return buildMetadata({
-    locale: locale === "es" ? "es" : "en",
-    pathname: path
-  });
+  const host = (await headers()).get("x-forwarded-host")?.trim().toString() ?? (await headers()).get("host")?.trim().toString()!;
+  const pathname = h.get("x-invoke-pathname") || "/"; // Vercel Header o fallback
+  return {
+    metadataBase: new URL(`https://${host}`),
+    ...buildMetadata({ locale: params.locale === "es" ? "es" : "en", pathname }),
+  };
 }
 
 export default async function LocaleLayout({
