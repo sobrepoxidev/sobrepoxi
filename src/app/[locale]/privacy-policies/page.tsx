@@ -1,54 +1,54 @@
 import React from 'react';
 import { getCommonMetadata, buildTitle } from '@/lib/seo';
 import type { Metadata } from "next";
-
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
+type tParams = Promise<{ id: string, locale: string }>;
+export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
+  const { locale } = await params;
   return {
     title: buildTitle(locale === "es" ? "Política de Privacidad" : "Privacy policy"),
     ...getCommonMetadata(locale),
   };
 }
 
-export default function PoliticaPrivacidadPage() {
+export default function PoliticaPrivacidadPage({locale}: {locale: string}) {
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="px-6 py-8 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-blue-50">
           <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-2">
-            Política de Privacidad
+            {locale === "es" ? "Política de Privacidad" : "Privacy policy"}
           </h1>
           <p className="text-gray-600 text-center">
-            Última actualización: 9 de abril de 2025
+            {locale === "es" ? "Última actualización: 9 de abril de 2025" : "Last updated: April 9, 2025"}
           </p>
         </div>
 
         <div className="px-6 py-8 prose prose-gray max-w-none text-gray-700 leading-relaxed">
           <div className="mb-12">
             <p className="text-lg font-medium">
-              En nuestra plataforma, respetamos su privacidad y nos comprometemos a proteger los datos personales que nos proporciona. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos su información cuando utiliza nuestro sistema de inicio de sesión y servicios relacionados.
+              {locale === "es" ? "En nuestra plataforma, respetamos su privacidad y nos comprometemos a proteger los datos personales que nos proporciona. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos su información cuando utiliza nuestro sistema de inicio de sesión y servicios relacionados." : "In our platform, we respect your privacy and we commit to protecting the personal data you provide. This Privacy Policy describes how we collect, use and protect your information when you use our login system and related services."}
             </p>
             <p>
-              Por favor, lea detenidamente esta política para entender nuestras prácticas con respecto a sus datos personales y cómo los trataremos. Al utilizar nuestros servicios, usted acepta las prácticas descritas en esta Política de Privacidad.
+              {locale === "es" ? "Por favor, lea detenidamente esta política para entender nuestras prácticas con respecto a sus datos personales y cómo los trataremos. Al utilizar nuestros servicios, usted acepta las prácticas descritas en esta Política de Privacidad." : "Please read this policy carefully to understand our practices regarding your personal data and how we will handle it. By using our services, you accept the practices described in this Privacy Policy."}
             </p>
           </div>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-6">1. Información que recopilamos</h2>
+            <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-6">1. {locale === "es" ? "Información que recopilamos" : "Information we collect"}</h2>
             
-            <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">1.1 Datos proporcionados directamente</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">1.1 {locale === "es" ? "Datos proporcionados directamente" : "Directly provided data"}</h3>
             <p>
-              Recopilamos la siguiente información mínima necesaria para gestionar su cuenta y proporcionar nuestros servicios:
+              {locale === "es" ? "Recopilamos la siguiente información mínima necesaria para gestionar su cuenta y proporcionar nuestros servicios:" : "We collect the following minimum information necessary to manage your account and provide our services:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li><span className="font-medium">Correo electrónico:</span> Utilizado como identificador principal de su cuenta y para comunicaciones esenciales.</li>
+              <li><span className="font-medium">Email:</span> Utilizado como identificador principal de su cuenta y para comunicaciones esenciales.</li>
               <li><span className="font-medium">Contraseña:</span> Almacenada de forma segura mediante técnicas avanzadas de encriptación y hash.</li>
               <li><span className="font-medium">Imagen de perfil (opcional):</span> Si decide cargar una imagen para personalizar su cuenta.</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">1.2 Datos asociados a su actividad</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">1.2 {locale === "es" ? "Datos asociados a su actividad" : "Data associated with your activity"}</h3>
             <p>
-              Para proporcionar funcionalidad y mejorar la seguridad, también recopilamos:
+              {locale === "es" ? "Para proporcionar funcionalidad y mejorar la seguridad, también recopilamos:" : "To provide functionality and improve security, we also collect:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
               <li><span className="font-medium">Registros de inicio de sesión:</span> Fecha, hora y dispositivo utilizado para acceder a su cuenta.</li>
@@ -56,9 +56,9 @@ export default function PoliticaPrivacidadPage() {
               <li><span className="font-medium">Información sobre preferencias:</span> Configuraciones y ajustes que usted establece en su cuenta.</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">1.3 Datos recopilados automáticamente</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">1.3 {locale === "es" ? "Datos recopilados automáticamente" : "Automatically collected data"}</h3>
             <p>
-              Recopilamos cierta información técnica cuando utiliza nuestros servicios:
+              {locale === "es" ? "Recopilamos cierta información técnica cuando utiliza nuestros servicios:" : "We collect certain technical information when you use our services:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
               <li><span className="font-medium">Dirección IP:</span> Para seguridad y prevención de fraudes.</li>
