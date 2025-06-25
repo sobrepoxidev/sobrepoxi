@@ -7,16 +7,7 @@ import { ChevronRight, Trash2, Clock, AlertCircle } from 'lucide-react';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { getLocalViewedHistory, removeFromHistory, clearViewedHistory, ViewedProduct, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
 import { Session } from '@supabase/supabase-js';
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
-import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
-  return {
-    title: buildTitle(locale === "es" ? "Historial de productos vistos" : "Viewed History", locale),
-    ...getCommonMetadata(locale),
-  };
-}
 
 export default function ViewedHistoryPage() {
   const [history, setHistory] = useState<ViewedProduct[]>([]);

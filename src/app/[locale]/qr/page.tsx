@@ -17,16 +17,7 @@ import {
   Share2,
   Loader2,
 } from 'lucide-react';
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
-import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const { locale } = params;
-  return {
-    title: buildTitle(locale === "es" ? "Generador de Código QR" : "QR Generator", locale),
-    ...getCommonMetadata(locale),
-  };
-}
 
 /**
  * ------------------------------------------------------------------

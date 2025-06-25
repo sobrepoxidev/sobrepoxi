@@ -3,8 +3,8 @@ import { FaPhone, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import dynamic from 'next/dynamic';
 
 // Client components with no SSR (contain interactivity)
-const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
-const FormMail = dynamic(() => import('@/components/general/FormMail'), { ssr: false });
+const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: true });
+const FormMail = dynamic(() => import('@/components/general/FormMail'), { ssr: true });
 
 import { getCommonMetadata, buildTitle } from '@/lib/seo';
 import type { Metadata } from "next";
