@@ -9,12 +9,14 @@ import { createClient } from "@/utils/supabase/server";
  * Página de productos que muestra todos los productos disponibles.
  * La implementación principal ha sido movida al componente ProductsPageContent.
  */
+
+type tParams = Promise<{ id: string, locale: string }>;
 export async function generateMetadata({
   params
 }: {
-  params: { id: string; locale: string };
+  params: tParams;
 }): Promise<Metadata> {
-  const { locale, id } = params;
+  const { locale, id } = await params;
 
   // Fetch product data from Supabase
   const supabase = await createClient();
@@ -24,7 +26,7 @@ export async function generateMetadata({
     .eq('id', id)
     .single();
 
-  if (!product) {
+  if (!product) { 
     return buildMetadata({
       locale: locale === "es" ? "es" : "en",
       pathname: `/products`,
