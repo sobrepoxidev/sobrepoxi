@@ -4,8 +4,10 @@ import { headers } from 'next/headers';//obtener el host
 
 export default async function RootPage() {
   const h = await headers();
-  const host  = h.get('host');              // handmadeart.store o artehechoamano.com
-  console.log("El host es:", host);
+  // 2. Reconstruye el origin
+  const host  = h.get('x-forwarded-host')  // definido si hay proxy
+            ?? h.get('host');              // fallback
+  console.log("El host en raiz es:", host);
   if (host === 'artehechoamano.com'){
     redirect('/es');
   }

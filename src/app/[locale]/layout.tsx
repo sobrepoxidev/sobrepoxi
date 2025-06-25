@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from 'react-hot-toast';
+import { headers } from "next/headers";
 
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -9,7 +10,7 @@ import { routing } from '@/i18n/routing';
 
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
-import SessionLayout from "@/components/SessionLayout"; // 👈 nuevo import
+import SessionLayout from "@/components/SessionLayout"; //  nuevo import
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,6 +85,7 @@ export async function generateMetadata({
   } satisfies Metadata;
 }
 
+
 export default async function RootLayout({
   children,
   params,
@@ -97,8 +99,15 @@ export default async function RootLayout({
     notFound();
   }
 
+  const h = await headers();
+
+  // 2. Reconstruye el origin
+  const host  = h.get('x-forwarded-host')  // definido si hay proxy
+            ?? h.get('host');              // fallback
+
+  console.log("El host en locale es:", host);
   return (
-    <html lang={locale} className="bg-white">
+    <html lang={host === 'artehechoamano.com' ? 'es' : 'en'} className="bg-white">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
         <NextIntlClientProvider locale={locale}>
           <SessionLayout>

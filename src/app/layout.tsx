@@ -4,14 +4,6 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { Suspense } from 'react'
 
-export const metadata: Metadata = {
-  title: {
-    default: "HandMade Art",
-    template: '%s | HandMade Art'
-  },
-  ...getCommonMetadata("es"),
-};
-
 export default function RootLayout({
   children,
 }: {
