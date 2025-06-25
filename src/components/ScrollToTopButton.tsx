@@ -2,8 +2,10 @@
 import React from "react";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
 
 export default function ScrollToTopButton() {
+  const locale = useLocale();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function ScrollToTopButton() {
       aria-label="Volver arriba"
       tabIndex={0}
     >
-      ↑ Arriba
+     ↑ {locale === 'es' ? ' Arriba' : ' Top'} 
     </button>
   );
 }

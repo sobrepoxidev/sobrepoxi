@@ -23,7 +23,7 @@ export default function HomeContainer({locale}: {locale: string}) {
             aria-label="Contacto Handmade Art"
             tabIndex={0}
           >
-            ¿Necesitas ayuda?
+            {locale === 'es' ? '¿Necesitas ayuda?' : 'Need help?'}
           </Link>
           
           <ScrollToTopButton />

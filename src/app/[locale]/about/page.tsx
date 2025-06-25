@@ -11,7 +11,8 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   };
 }
 
-export default function About() {
+export default async function About({ params }: { params: tParams }) {
+  const { locale } = await params;
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -21,13 +22,13 @@ export default function About() {
             {/* Text Content */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left">
               <span className="inline-block mb-4 rounded-full bg-teal-100 px-4 py-1 text-sm font-medium text-teal-700">
-                Nuestra misión
+                {locale === "es" ? "Nuestra misión" : "Our mission"}
               </span>
               <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
-                Sobre <span className="text-teal-700">HandMade Art</span>
+                {locale === "es" ? "Sobre HandMade Art" : "About HandMade Art"}
               </h1>
               <p className="mb-2 sm:mb-8 text-lg text-gray-600">
-                En HandMade Art nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas.
+                {locale === "es" ? "En HandMade Art nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas." : "At HandMade Art, we are passionate about promoting and preserving traditional crafts. Our goal is to provide an online platform where artists and artisans incarcerated can showcase and sell their unique creations."}
               </p>
               <div className="flex flex-col items-center justify-center sm:flex-row gap-4">
                 <Link
@@ -60,30 +61,30 @@ export default function About() {
             {/* Feature 1 */}
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Tradición y Arte
+                {locale === "es" ? "Tradición y Arte" : "Tradition and Art"}
               </h3>
               <p className="text-gray-600">
-                Explora nuestra amplia selección de artesanías hechas a mano en madera, barro, cerámica, tela y muchos otros materiales. Cada pieza es única y refleja la creatividad y habilidad de nuestros talentosos artesanos.
+                {locale === "es" ? "Explora nuestra amplia selección de artesanías hechas a mano en madera, barro, cerámica, tela y muchos otros materiales. Cada pieza es única y refleja la creatividad y habilidad de nuestros talentosos artesanos." : "Explore our wide selection of handmade crafts made of wood, clay, ceramics, fabric and many other materials. Each piece is unique and reflects the creativity and skill of our talented artisans."}
               </p>
             </div>
 
             {/* Feature 2 */}
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Impacto Social
+                {locale === "es" ? "Impacto Social" : "Social Impact"}
               </h3>
               <p className="text-gray-600">
-                Cada compra que realices en nuestro sitio web apoya directamente a estos talentosos individuos y contribuye a mantener viva la artesanía tradicional.
+                {locale === "es" ? "Cada compra que realices en nuestro sitio web apoya directamente a estos talentosos individuos y contribuye a mantener viva la artesanía tradicional." : "Every purchase you make on our website directly supports these talented individuals and helps preserve traditional craftsmanship."}
               </p>
             </div>
 
             {/* Feature 3 */}
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Calidad y Autenticidad
+                {locale === "es" ? "Calidad y Autenticidad" : "Quality and Authenticity"}
               </h3>
               <p className="text-gray-600">
-                Todas nuestras piezas son creadas con el más alto nivel de artesanía y cuidado, garantizando productos únicos y de calidad.
+                {locale === "es" ? "Todas nuestras piezas son creadas con el más alto nivel de artesanía y cuidado, garantizando productos únicos y de calidad." : "All our pieces are created with the highest level of craftsmanship and care, ensuring unique and high-quality products."}
               </p>
             </div>
           </div>
@@ -94,7 +95,7 @@ export default function About() {
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Nuestra Historia</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{locale === "es" ? "Nuestra Historia" : "Our History"}</h2>
             <div className="mt-2 h-1 w-24 bg-teal-600 mx-auto"></div>
           </div>
           
@@ -110,13 +111,13 @@ export default function About() {
             </div>
             <div className="w-full lg:w-1/2">
               <p className="text-gray-700 mb-4">
-                Hand Made Art nació en 2018 como una idea entre amigos con una visión compartida: crear oportunidades para personas privadas de libertad a través del arte y la artesanía.
+                {locale === "es" ? "HandMade Art nació en 2018 como una idea entre amigos con una visión compartida: crear oportunidades para personas privadas de libertad a través del arte y la artesanía." : "HandMade Art was born in 2018 as an idea between friends with a shared vision: creating opportunities for incarcerated individuals through art and craftsmanship."}
               </p>
               <p className="text-gray-700 mb-4">
-                Lo que comenzó como un pequeño proyecto con apenas cinco artesanos, ha crecido hasta convertirse en una plataforma que representa a más de cincuenta creadores talentosos, cada uno con su historia única y habilidades extraordinarias.
+                {locale === "es" ? "Lo que comenzó como un pequeño proyecto con apenas cinco artesanos, ha crecido hasta convertirse en una plataforma que representa a más de cincuenta creadores talentosos, cada uno con su historia única y habilidades extraordinarias." : "What started as a small project with just five artisans has grown to become a platform representing more than fifty talented creators, each with their own unique story and extraordinary skills."}
               </p>
               <p className="text-gray-700">
-                A lo largo de los años, hemos establecido alianzas estratégicas con instituciones penitenciarias, organizaciones sin fines de lucro y empresas comprometidas con la responsabilidad social, expandiendo nuestro alcance y fortaleciendo nuestro impacto.
+                {locale === "es" ? "A lo largo de los años, hemos establecido alianzas estratégicas con instituciones penitenciarias, organizaciones sin fines de lucro y empresas comprometidas con la responsabilidad social, expandiendo nuestro alcance y fortaleciendo nuestro impacto." : "Over the years, we have established strategic alliances with prisons, non-profit organizations, and socially responsible companies, expanding our reach and strengthening our impact."}
               </p>
             </div>
           </div>
@@ -127,7 +128,7 @@ export default function About() {
       <section className="py-16 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Misión, Visión y Valores</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{locale === "es" ? "Misión, Visión y Valores" : "Mission, Vision and Values"}</h2>
             <div className="mt-2 h-1 w-24 bg-teal-600 mx-auto"></div>
           </div>
           
@@ -141,7 +142,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold text-center text-gray-900 mb-4">Misión</h3>
               <p className="text-gray-600 text-center">
-                Proporcionar una plataforma que conecte el talento artesanal de personas privadas de libertad con un mercado que valore la autenticidad, calidad y la historia detrás de cada creación, contribuyendo a su reinserción social y económica.
+                {locale === "es" ? "Proporcionar una plataforma que conecte el talento artesanal de personas privadas de libertad con un mercado que valore la autenticidad, calidad y la historia detrás de cada creación, contribuyendo a su reinserción social y económica." : "Provide a platform that connects the artisanal talent of incarcerated individuals with a market that values authenticity, quality, and the history behind each creation, contributing to their social and economic reintegration."}
               </p>
             </div>
             
@@ -155,7 +156,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold text-center text-gray-900 mb-4">Visión</h3>
               <p className="text-gray-600 text-center">
-                Ser reconocidos como el principal referente en la promoción y comercialización de artesanías creadas por personas en proceso de reinserción, cambiando perspectivas y construyendo puentes entre diferentes realidades sociales.
+                {locale === "es" ? "Ser reconocidos como el principal referente en la promoción y comercialización de artesanías creadas por personas en proceso de reinserción, cambiando perspectivas y construyendo puentes entre diferentes realidades sociales." : "To be recognized as the principal reference in the promotion and commercialization of crafts created by individuals in the process of reintegration, changing perspectives and building bridges between different social realities."}
               </p>
             </div>
             
@@ -166,13 +167,13 @@ export default function About() {
                   <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-center text-gray-900 mb-4">Valores</h3>
+              <h3 className="text-xl font-semibold text-center text-gray-900 mb-4">{locale === "es" ? "Valores" : "Values"}</h3>
               <ul className="text-gray-600">
-                <li className="mb-2">• <strong>Dignidad:</strong> Reconocemos el valor inherente de cada persona.</li>
-                <li className="mb-2">• <strong>Transparencia:</strong> Operamos con honestidad en todos los aspectos.</li>
-                <li className="mb-2">• <strong>Calidad:</strong> Exigimos excelencia en cada pieza artesanal.</li>
-                <li className="mb-2">• <strong>Inclusión:</strong> Creemos en segundas oportunidades para todos.</li>
-                <li>• <strong>Sostenibilidad:</strong> Trabajamos por un impacto duradero.</li>
+                <li className="mb-2">• <strong>{locale === "es" ? "Dignidad" : "Dignity"}</strong>: {locale === "es" ? "Reconocemos el valor inherente de cada persona." : "We recognize the inherent value of each person."}</li>
+                <li className="mb-2">• <strong>{locale === "es" ? "Transparencia" : "Transparency"}</strong>: {locale === "es" ? "Operamos con honestidad en todos los aspectos." : "We operate with honesty in all aspects."}</li>
+                <li className="mb-2">• <strong>{locale === "es" ? "Calidad" : "Quality"}</strong>: {locale === "es" ? "Exigimos excelencia en cada pieza artesanal." : "We demand excellence in every artisanal piece."}</li>
+                <li className="mb-2">• <strong>{locale === "es" ? "Inclusión" : "Inclusion"}</strong>: {locale === "es" ? "Creemos en segundas oportunidades para todos." : "We believe in second chances for everyone."}</li>
+                <li>• <strong>{locale === "es" ? "Sostenibilidad" : "Sustainability"}</strong>: {locale === "es" ? "Trabajamos por un impacto duradero." : "We work for a lasting impact."}</li>
               </ul>
             </div>
           </div>
@@ -183,10 +184,10 @@ export default function About() {
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Nuestro Equipo</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{locale === "es" ? "Nuestro Equipo" : "Our Team"}</h2>
             <div className="mt-2 h-1 w-24 bg-teal-600 mx-auto"></div>
             <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-              Conozca a las personas comprometidas que hacen posible Hand Made Art, un equipo multidisciplinario unido por el compromiso social.
+              {locale === "es" ? "Conozca a las personas comprometidas que hacen posible HandMade Art, un equipo multidisciplinario unido por el compromiso social." : "Meet the committed individuals who make HandMade Art possible, a multidisciplinary team united by social commitment."}
             </p>
           </div>
           
@@ -202,10 +203,10 @@ export default function About() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Mauricio Castro</h3>
-              <p className="text-gray-600">Director Ejecutivo</p>
+              <h3 className="text-xl font-semibold text-gray-900">{locale === "es" ? "Mauricio Castro" : "Mauricio Castro"}</h3>
+              <p className="text-gray-600">{locale === "es" ? "Director Ejecutivo" : "Executive Director"}</p>
               <p className="mt-2 text-sm text-gray-500">
-                Fundador con 20 años de experiencia en emprendimientos sociales y desarrollo comunitario.
+                {locale === "es" ? "Fundador con 20 años de experiencia en emprendimientos sociales y desarrollo comunitario." : "Founder with 20 years of experience in social entrepreneurship and community development."}
               </p>
             </div>
             
@@ -220,10 +221,10 @@ export default function About() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Romny Castro</h3>
-              <p className="text-gray-600">Director de Operaciones</p>
+              <h3 className="text-xl font-semibold text-gray-900">{locale === "es" ? "Romny Castro" : "Romny Castro"}</h3>
+              <p className="text-gray-600">{locale === "es" ? "Director de Operaciones" : "Operations Director"}</p>
               <p className="mt-2 text-sm text-gray-500">
-                Director de Operaciones con 15 años de experiencia en gestión de proyectos y operaciones.
+                {locale === "es" ? "Director de Operaciones con 15 años de experiencia en gestión de proyectos y operaciones." : "Operations Director with 15 years of experience in project and operations management."}
               </p>
             </div>
             
@@ -238,10 +239,10 @@ export default function About() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Bryam López</h3>
-              <p className="text-gray-600">Encargado área de IT</p>
+              <h3 className="text-xl font-semibold text-gray-900">{locale === "es" ? "Bryam López" : "Bryam López"}</h3>
+              <p className="text-gray-600">{locale === "es" ? "Encargado área de IT" : "IT Manager"}</p>
               <p className="mt-2 text-sm text-gray-500">
-                Encargado del área de IT con 2 años de experiencia en desarrollo web y software.
+                {locale === "es" ? "Encargado del área de IT con 2 años de experiencia en desarrollo web y software." : "IT Manager with 2 years of experience in web and software development."}
               </p>
             </div>
             
@@ -254,10 +255,10 @@ export default function About() {
       <section className="py-16 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Nuestro Proceso de Trabajo</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{locale === "es" ? "Nuestro Proceso de Trabajo" : "Our Working Process"}</h2>
             <div className="mt-2 h-1 w-24 bg-teal-600 mx-auto"></div>
             <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-              Así es como trabajamos con nuestros artesanos para llevar sus creaciones desde los talleres hasta tu hogar.
+              {locale === "es" ? "Así es como trabajamos con nuestros artesanos para llevar sus creaciones desde los talleres hasta tu hogar." : "This is how we work with our artisans to bring their creations from the workshops to your home."}
             </p>
           </div>
           
@@ -269,9 +270,9 @@ export default function About() {
             <div className="relative mb-16">
               <div className="flex flex-col md:flex-row items-center">
                 <div className="w-full md:w-1/2 mb-6 md:mb-0 md:pr-12 text-center md:text-right">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Capacitación</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{locale === "es" ? "Capacitación" : "Training"}</h3>
                   <p className="text-gray-600">
-                    Proporcionamos talleres de formación en diversas técnicas artesanales, facilitados por maestros artesanos y profesionales.
+                    {locale === "es" ? "Proporcionamos talleres de formación en diversas técnicas artesanales, facilitados por maestros artesanos y profesionales." : "We provide training workshops in various artisanal techniques, facilitated by master artisans and professionals."}
                   </p>
                 </div>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-teal-500 text-white font-bold">1</div>
@@ -291,9 +292,9 @@ export default function About() {
             <div className="relative mb-16">
               <div className="flex flex-col md:flex-row-reverse items-center">
                 <div className="w-full md:w-1/2 mb-6 md:mb-0 md:pl-12 text-center md:text-left">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Producción</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{locale === "es" ? "Producción" : "Production"}</h3>
                   <p className="text-gray-600">
-                    Los artesanos crean sus piezas en talleres dentro de los centros penitenciarios, con materiales y herramientas proporcionados por nuestro programa.
+                    {locale === "es" ? "Los artesanos crean sus piezas en talleres dentro de los centros penitenciarios, con materiales y herramientas proporcionados por nuestro programa." : "Artisans create their pieces in workshops within prisons, with materials and tools provided by our program."}
                   </p>
                 </div>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-teal-500 text-white font-bold">2</div>
@@ -313,9 +314,9 @@ export default function About() {
             <div className="relative mb-16">
               <div className="flex flex-col md:flex-row items-center">
                 <div className="w-full md:w-1/2 mb-6 md:mb-0 md:pr-12 text-center md:text-right">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Control de Calidad</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{locale === "es" ? "Control de Calidad" : "Quality Control"}</h3>
                   <p className="text-gray-600">
-                    Cada pieza es evaluada rigurosamente para garantizar los más altos estándares de calidad y autenticidad.
+                    {locale === "es" ? "Cada pieza es evaluada rigurosamente para garantizar los más altos estándares de calidad y autenticidad." : "Each piece is evaluated rigorously to ensure the highest standards of quality and authenticity."}
                   </p>
                 </div>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-teal-500 text-white font-bold">3</div>
@@ -335,9 +336,9 @@ export default function About() {
             <div className="relative">
               <div className="flex flex-col md:flex-row-reverse items-center">
                 <div className="w-full md:w-1/2 mb-6 md:mb-0 md:pl-12 text-center md:text-left">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Comercialización</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{locale === "es" ? "Comercialización" : "Commercialization"}</h3>
                   <p className="text-gray-600">
-                    Fotografiamos, catalogamos y presentamos cada pieza en nuestra plataforma online, conectando el trabajo de los artesanos con clientes de todo el mundo.
+                    {locale === "es" ? "Fotografiamos, catalogamos y presentamos cada pieza en nuestra plataforma online, conectando el trabajo de los artesanos con clientes de todo el mundo." : "We photograph, catalog, and present each piece on our online platform, connecting artisans' work with customers worldwide."}
                   </p>
                 </div>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-teal-500 text-white font-bold">4</div>
@@ -359,22 +360,22 @@ export default function About() {
       {/* Call to Action */}
       <section className="py-12 bg-teal-700 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Únete a Nuestra Misión</h2>
+          <h2 className="text-3xl font-bold mb-4">{locale === "es" ? "Únete a Nuestra Misión" : "Join Our Mission"}</h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Al comprar nuestras artesanías, no solo adquieres una pieza única y hermosa, sino que contribuyes directamente a la transformación de vidas.
+            {locale === "es" ? "Al comprar nuestras artesanías, no solo adquieres una pieza única y hermosa, sino que contribuyes directamente a la transformación de vidas." : "By purchasing our artisanal pieces, you don't just acquire a unique and beautiful piece, but you directly contribute to the transformation of lives."}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/products"
               className="rounded-md bg-white text-teal-700 px-6 py-3 shadow transition hover:bg-gray-100 font-medium"
             >
-              Explorar Productos
+              {locale === "es" ? "Explorar Productos" : "Explore Products"}
             </Link>
             <Link
               href="/impact"
               className="rounded-md bg-transparent border-2 border-white px-6 py-3 transition hover:bg-teal-600 font-medium"
             >
-              Conocer Nuestro Impacto
+              {locale === "es" ? "Conocer Nuestro Impacto" : "Learn Our Impact"}
             </Link>
           </div>
         </div>

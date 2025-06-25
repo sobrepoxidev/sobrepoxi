@@ -25,7 +25,6 @@ type CarrucelSectionProps = {
 const CarrucelSection: React.FC<CarrucelSectionProps> = ({ 
   title = "Regalos con significado", 
   // subtitle is defined in props but not used
-  shippingOnly = false,
   startIndex = 0,
   endIndex = 8,
   mobileInvertList = false,
@@ -278,34 +277,6 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       </div>
     ];
   };
-
-  // Si solo queremos mostrar la sección de envíos
-  if (shippingOnly) {
-    return (
-      <div className="min-w-[92%] flex-none snap-center mx-1 rounded-lg overflow-hidden shadow-sm bg-teal-400">
-        <h3 className="text-lg font-bold p-2 pl-4 text-white">
-          Envíos a toda Costa Rica
-        </h3>
-        <div className="bg-white p-2">
-          <div className="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-sm">
-            <Link href="/shipping" className="block text-center">
-              <Image
-                src="/home/avion-correos.webp?v=2"
-                alt="Servicio de envío"
-                width={150}
-                height={150}
-                className="object-contain mb-2"
-                unoptimized
-              />
-              <p className="text-gray-600 text-xs mt-2">
-                *Pulsa aquí para más información
-              </p>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Renderizado de carga
   if (loading && !products.length) {
