@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Carousel, BannerTemplate } from "@/components/home/Banner";
 import { BadgeCheck, Handshake, Sprout } from 'lucide-react';
@@ -34,7 +33,6 @@ export default async function OptimizedNewHome({
   initialProducts = [],
   locale 
 }: OptimizedNewHomeProps) {
-  const t = useTranslations('home');
   const chorreadorCategoryId = 1;
   return (
     <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
