@@ -159,7 +159,7 @@ export default async function OptimizedNewHome({
             <div className="h-full flex flex-col items-center justify-center text-gray-800 text-center px-4">
               <h2 className="text-md lg:text-2xl font-light">{ locale === 'es' ? 'Descubre nuestra' : 'Discover our'}</h2>
               <h1 className="text-xl lg:text-2xl font-bold ">{locale === 'es' ? 'NUEVA COLECCIÓN' : 'NEW COLLECTION'}</h1>
-              <p className="text-sm lg:text-xl">{locale === 'es' ? 'Únicas artesanías hechas a mano' : 'Unique handmade crafts'}</p>
+              <p className="text-sm lg:text-xl">{locale === 'es' ? 'Chorreadores únicos hechos a mano' : 'Unique handmade drippers'}</p>
 
               <button className="mb-1 lg:mt-3 bg-[#3b3b3b] text-gray-200 text-sm px-2 lg:px-4 py-0.5 rounded-full font-bold hover:bg-opacity-90 transition-all">
                 {locale === 'es' ? 'Ver ahora' : 'View now'}
