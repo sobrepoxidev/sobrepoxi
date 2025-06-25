@@ -77,6 +77,16 @@ export default function Footer({ locale }: { locale: string }) {
                   {locale === 'es' ? 'Contacto' : 'Contact'}
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy-policies" className="text-gray-300 hover:text-teal-400 transition-colors">
+                  {locale === 'es' ? 'Políticas de Privacidad' : 'Privacy Policies'}
+                </Link>
+              </li>
+              <li>
+                <Link href="/conditions-service" className="text-gray-300 hover:text-teal-400 transition-colors">
+                  {locale === 'es' ? 'Términos de Servicio' : 'Terms of Service'}
+                </Link>
+              </li>
             </ul>
           </div>
 
