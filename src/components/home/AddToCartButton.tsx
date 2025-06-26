@@ -6,17 +6,9 @@ import { useSupabase } from '@/app/supabase-provider/provider';
 import { ShoppingCartIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
+import { Database } from '@/types-db';
 
-// Define a minimal product type with required fields
-type Product = {
-  id: number;
-  name: string | null;
-  name_es?: string | null;
-  name_en?: string | null;
-  price: number | null;
-  media?: any[] | null;
-  [key: string]: any; // For any additional properties
-};
+type Product = Database['products'];
 
 export default function AddToCartButton({ 
   product, 

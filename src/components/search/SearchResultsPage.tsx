@@ -10,6 +10,7 @@ import AddToCartButton from '@/components/home/AddToCartButton';
 import PaginationControls from '@/components/products/PaginationControls';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
+import { Product } from '@/lib/hooks/useProducts';
 
 // Número de productos por página
 const PRODUCTS_PER_PAGE = 12;
@@ -355,7 +356,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                         </div>
                       </div>
 
-                      <AddToCartButton product={product} />
+                      <AddToCartButton product={product as Product} />
                     </div>
                   </div>
                 ))}
