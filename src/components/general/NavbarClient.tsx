@@ -30,7 +30,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
   // Estados para la UI
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categoryList, setCategoryList] = useState<{ id: number, name: string }[]>([]);
+  const [categoryList, setCategoryList] = useState<{ id: number, name_es: string, name_en: string }[]>([]);
   const [showStoreCategories, setShowStoreCategories] = useState(false);
   // Estado local para la sesión que escuchará cambios
   const [session, setSession] = useState<Session | null>(initialSession);
@@ -87,10 +87,10 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
   // Definir los enlaces de navegación
   const navigationLinks: NavLink[] = [
-    { name: t('home'), path: '/' },
-    { name: t('about'), path: '/about' },
-    { name: t('impact'), path: '/impact' },
-    { name: t('shipping'), path: '/shipping' },
+    { name: locale === 'es' ? 'Inicio' : 'Home', path: '/' },
+    { name: locale === 'es' ? 'Acerca de' : 'About', path: '/about' },
+    { name: locale === 'es' ? 'Impacto' : 'Impact', path: '/impact' },
+    { name: locale === 'es' ? 'Envíos' : 'Shipping', path: '/shipping' },
     // Store se trata de manera especial ahora, con categorías desplegables
   ]
 
@@ -117,7 +117,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="flex h-8 w-8 items-center justify-center text-gray-700 hover:bg-gray-100 rounded focus-visible:outline-none"
-              aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+              aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -233,7 +233,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                 href="/products"
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
-                {t('store')}
+                {locale === 'es' ? 'Tienda' : 'Store'}
               </Link>
             </li>
             <li>
@@ -241,7 +241,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                 href="/contact"
                 className="block py-1 text-sm text-gray-700 transition hover:text-teal-700"
               >
-                {t('contact')}
+                {locale === 'es' ? 'Contacto' : 'Contact'}
               </Link>
             </li>
           </ul>
@@ -273,10 +273,10 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         <Link
           href="/cart"
           className="relative flex h-10 items-center space-x-0.5 rounded-md px-0.5 text-sm text-gray-700 transition hover:bg-gray-100"
-          aria-label={t('cart')}
+          aria-label={locale === 'es' ? 'Carrito' : 'Cart'}
         >
           <ShoppingBag className="h-5 w-5" />
-          <span className="hidden md:inline">{t('cart')}</span>
+          <span className="hidden md:inline">{locale === 'es' ? 'Carrito' : 'Cart'}</span>
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
             {totalItems}
           </span>
@@ -286,7 +286,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex h-10 w-10 items-center justify-center text-gray-700 transition hover:bg-gray-100 focus-visible:outline-none"
           style={{ width: '40px', height: '40px', flexShrink: 0 }}
-          aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+          aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
           aria-expanded={isMenuOpen}
         >
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '20px', height: '20px' }}>
@@ -320,7 +320,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                 onClick={() => setIsMenuOpen(false)}
               >
                 <ShoppingBag className="h-5 w-5" />
-                <span>{t('viewCart')} ({totalItems})</span>
+                <span>{locale === 'es' ? 'Ver carrito' : 'View cart'} ({totalItems})</span>
               </Link>
             </div>
 
@@ -335,13 +335,13 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <User className="h-5 w-5" />
-                      <span>{t('myAccount')}</span>
+                      <span>{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="text-sm text-gray-700"
                     >
-                      {t('logout')}
+                      {locale === 'es' ? 'Cerrar sesión' : 'Logout'}
                     </button>
                   </>
                 ) : (
@@ -351,14 +351,14 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      {t('login')}
+                      {locale === 'es' ? 'Iniciar sesión' : 'Login'}
                     </Link>
                     <Link
                       href="/register"
                       className="text-sm text-gray-700"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      {t('register')}
+                      {locale === 'es' ? 'Registrarse' : 'Register'}
                     </Link>
                   </>
                 )}
@@ -369,7 +369,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
             {/* Mobile Navigation Links - Amazon Style */}
             <div>
-              <p className="mb-2 font-semibold text-sm text-gray-800">{t('browseBy')}</p>
+              <p className="mb-2 font-semibold text-sm text-gray-800">{locale === 'es' ? 'Navegar por:' : 'Browse by:' }</p>
               <ul className="space-y-2">
                 {navigationLinks.map((link) => (
                   <li key={link.path}>
@@ -388,7 +388,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                     className="block text-sm text-gray-700 hover:text-teal-700"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    {t('contact')}
+                    {locale === 'es' ? 'Contacto' : 'Contact'}
                   </Link>
                 </li>
                 {/* Store con categorías desplegables */}
@@ -401,7 +401,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                     >
                       <div className="flex items-center">
                         <Package className="h-4 w-4 mr-2" />
-                        <span>{t('store')}</span>
+                        <span>{locale === 'es' ? 'Tienda' : 'Store'}</span>
                       </div>
                       <ChevronDown
                         className={`h-4 w-4 transition-transform ${showStoreCategories ? 'transform rotate-180' : ''}`}
@@ -419,7 +419,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                           className="block text-sm text-gray-700 hover:text-teal-700 py-1"
                           onClick={() => setIsMenuOpen(false)}
                         >
-                          Todos los productos
+                          {locale === 'es' ? 'Todos los productos' : 'All products'}
                         </Link>
                       </li>
                       {categoryList.map((category) => (
@@ -429,7 +429,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                             className="block text-sm text-gray-700 hover:text-teal-700 py-1"
                             onClick={() => setIsMenuOpen(false)}
                           >
-                            {category.name}
+                            {locale === 'es' ? category.name_es : category.name_en  }
                           </Link>
                         </li>
                       ))}
