@@ -160,7 +160,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             <div
               className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible"
               style={{
-                zIndex: 9000,
+                zIndex: 40, // Lower z-index to stay below mobile menu
                 position: 'relative',
               }}
             >
