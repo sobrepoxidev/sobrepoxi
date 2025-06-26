@@ -4,12 +4,13 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import Link from 'next/link'
 import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useLocale } from 'next-intl'
 
 
 export default function LoginPage() {
   const router = useRouter()
   const { supabase } = useSupabase()
-
+  const locale = useLocale()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -100,10 +101,10 @@ export default function LoginPage() {
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 border border-gray-100">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Inicia sesión
+              {locale === 'es' ? 'Inicia sesión' : 'Login'}
             </h1>
             <p className="text-gray-600">
-              Bienvenido de nuevo a Handmade Art
+              {locale === 'es' ? 'Bienvenido de nuevo a Handmade Art' : 'Welcome back to Handmade Art'}
             </p>
           </div>
 
@@ -116,7 +117,7 @@ export default function LoginPage() {
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Correo electrónico
+                {locale === 'es' ? 'Correo electrónico' : 'Email'}
               </label>
               <div className="relative">
                 <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -133,7 +134,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Contraseña
+                {locale === 'es' ? 'Contraseña' : 'Password'}
               </label>
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -151,7 +152,7 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
-                  {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                  {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" /> }
                 </button>
               </div>
             </div>
@@ -167,7 +168,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-70 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
             >
-              {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+              {loading ? (locale === 'es' ? 'Iniciando sesión...' : 'Logging in...') : (locale === 'es' ? 'Iniciar sesión' : 'Login')}
             </button>
             
           </form>
@@ -178,17 +179,17 @@ export default function LoginPage() {
                 className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
               >
                 <FaGoogle className="mr-2 h-5 w-5" />
-                Iniciar sesión con Google
+                {locale === 'es' ? 'Iniciar sesión con Google' : 'Login with Google'}
               </button>
             </div>
 
             <div className="text-center text-sm text-gray-600 mt-4">
-              ¿No tienes una cuenta?{' '}
+              {locale === 'es' ? '¿No tienes una cuenta?' : 'Don\'t have an account?'}{' '}
               <Link
                 href={`/register${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`}
                 className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200"
               >
-                Regístrate aquí
+                {locale === 'es' ? 'Regístrate aquí' : 'Register here'}
               </Link>
             </div>
         </div>

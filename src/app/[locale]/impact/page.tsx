@@ -12,7 +12,8 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   };
 }
 
-export default function ImpactPage() {
+export default async function ImpactPage({ params }: { params: tParams }) {
+  const { locale } = await params;
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -40,17 +41,17 @@ export default function ImpactPage() {
         <div className="relative z-10 container mx-auto px-4 py-24">
           <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-800 rounded-full text-sm font-medium mb-4">
-              Nuestro Impacto
+              {locale === 'es' ? 'Nuestro Impacto' : 'Our Impact'}
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Transformando vidas a través del arte</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{locale === 'es' ? 'Transformando vidas a través del arte' : 'Transforming lives through art'}</h1>
             <p className="text-xl text-teal-50 mb-8">
-              Cada pieza artesanal representa una historia de esperanza, aprendizaje y segunda oportunidad para personas privadas de libertad en Costa Rica.
+              {locale === 'es' ? 'Cada pieza artesanal representa una historia de esperanza, aprendizaje y segunda oportunidad para personas privadas de libertad en Costa Rica.' : 'Each handmade piece represents a story of hope, learning, and second chance for people in Costa Rica who have served time in prison.'}
             </p>
             <Link
               href="/impact#impact-stats"
               className="inline-flex items-center justify-center bg-white text-teal-800 hover:bg-teal-50 font-medium px-6 py-3 rounded-lg transition shadow-sm"
             >
-              Descubre nuestro impacto
+              {locale === 'es' ? 'Descubre nuestro impacto' : 'Discover our impact'}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 14l-7 7-7-7"></path>
                 <path d="M19 10l-7 7-7-7"></path>
@@ -61,10 +62,10 @@ export default function ImpactPage() {
       </section>
 
       {/* Impact Statistics */}
-      <ImpactStatistics />
+      <ImpactStatistics locale={locale} />
 
       {/* Transformation Stories */}
-      <TransformationStories />
+      <TransformationStories locale={locale} />
 
       {/* Rehabilitation Process */}
       <RehabilitationProcess />
@@ -85,22 +86,22 @@ export default function ImpactPage() {
       <section className="bg-teal-700 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Sé parte del cambio</h2>
+            <h2 className="text-3xl font-bold text-white mb-6">{locale === 'es' ? 'Sé parte del cambio' : 'Be part of the change'}</h2>
             <p className="text-xl text-teal-50 mb-8">
-              Al comprar nuestras artesanías, contribuyes directamente a este programa de impacto social y ayudas a transformar vidas.
+              {locale === 'es' ? 'Al comprar nuestras artesanías, contribuyes directamente a este programa de impacto social y ayudas a transformar vidas.' : 'By purchasing our handmade crafts, you directly contribute to this social impact program and help transform lives.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/products"
                 className="bg-white text-teal-700 hover:bg-teal-50 font-medium rounded-lg px-6 py-3 shadow-sm transition"
               >
-                Explorar productos
+                {locale === 'es' ? 'Explorar productos' : 'Explore products'}
               </Link>
               <Link
                 href="/contact"
                 className="border border-white/40 text-white hover:bg-white/10 font-medium rounded-lg px-6 py-3 transition"
               >
-                Contactar para colaborar
+                {locale === 'es' ? 'Contactar para colaborar' : 'Contact us to collaborate'}
               </Link>
             </div>
           </div>
@@ -111,12 +112,13 @@ export default function ImpactPage() {
 }
 
 // impact/components/ImpactStatistics.tsx - Server Component
-function ImpactStatistics() {
+
+function ImpactStatistics({ locale }: { locale: string }) {
   const stats = [
-    { number: "25+", label: "Artesanos apoyados", description: "Personas privadas de libertad que han participado en nuestro programa" },
-    { number: "5", label: "Años de trayectoria", description: "Transformando vidas a través del arte y la formación profesional" },
-    { number: "70%", label: "Tasa de reinserción", description: "De los participantes que han completado el programa" },
-    { number: "3,000+", label: "Artesanías vendidas", description: "Creaciones que han llevado esperanza a hogares costarricenses" }
+    { number: "25+", label: locale === 'es' ? 'Artesanos apoyados' : 'Artisans supported', description: locale === 'es' ? 'Personas privadas de libertad que han participado en nuestro programa' : 'People in prison who have participated in our program' },
+    { number: "5", label: locale === 'es' ? 'Años de trayectoria' : 'Years of trajectory', description: locale === 'es' ? 'Transformando vidas a través del arte y la formación profesional' : 'Transforming lives through art and professional training' },
+    { number: "70%", label: locale === 'es' ? 'Tasa de reinserción' : 'Reintegration rate', description: locale === 'es' ? 'De los participantes que han completado el programa' : 'Of the participants who have completed the program' },
+    { number: "3,000+", label: locale === 'es' ? 'Artesanías vendidas' : 'Handmade crafts sold', description: locale === 'es' ? 'Creaciones que han llevado esperanza a hogares costarricenses' : 'Creations that have brought hope to Costa Rican homes' }
   ];
 
   return (
@@ -124,11 +126,11 @@ function ImpactStatistics() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            En números
+            {locale === 'es' ? 'En números' : 'In numbers'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Nuestro impacto en cifras</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Nuestro impacto en cifras' : 'Our impact in numbers'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Desde 2020, trabajamos para transformar vidas a través de la artesanía, ofreciendo oportunidades de crecimiento y reinserción social a personas privadas de libertad.
+            {locale === 'es' ? 'Desde 2020, trabajamos para transformar vidas a través de la artesanía, ofreciendo oportunidades de crecimiento y reinserción social a personas privadas de libertad.' : 'Since 2020, we have worked to transform lives through handicrafts, offering opportunities for growth and social reintegration to people in prison.'}
           </p>
         </div>
 
@@ -147,15 +149,15 @@ function ImpactStatistics() {
             <div className="md:w-1/4 flex justify-center">
               <div className="h-48 w-48 rounded-full bg-teal-600 flex items-center justify-center text-white">
                 <div className="text-center">
-                  <div className="text-5xl font-bold">12</div>
-                  <div className="text-sm mt-1">centros penales</div>
+                  <div className="text-5xl font-bold">{locale === 'es' ? '12' : '12'}</div>
+                  <div className="text-sm mt-1">{locale === 'es' ? 'centros penales' : 'prison centers'}</div>
                 </div>
               </div>
             </div>
             <div className="md:w-3/4">
-              <h3 className="text-2xl font-bold text-teal-800 mb-4">Presencia en centros penitenciarios</h3>
+              <h3 className="text-2xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Presencia en centros penitenciarios' : 'Presence in prison centers'}</h3>
               <p className="text-gray-700 mb-4">
-                Nuestro programa se ha expandido a 12 centros penitenciarios en Costa Rica, llevando oportunidades de formación y trabajo a diferentes regiones del país.
+                {locale === 'es' ? 'Nuestro programa se ha expandido a 12 centros penitenciarios en Costa Rica, llevando oportunidades de formación y trabajo a diferentes regiones del país.' : 'Our program has expanded to 12 prison centers in Costa Rica, bringing opportunities for training and work to different regions of the country.'}
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                 {['San José', 'Alajuela', 'Heredia', 'Cartago', 'Puntarenas', 'Liberia'].map((location) => (
@@ -173,32 +175,32 @@ function ImpactStatistics() {
 }
 
 // impact/components/TransformationStories.tsx - Server Component
-function TransformationStories() {
+function TransformationStories({ locale }: { locale: string }) {
   const stories = [
     {
       name: "Marvin Alonso Brenes Oviedo",
       image: "/impact/artesano-Eduardo.webp",
-      quote: "Este proyecto me ha llenado de fortaleza y motivación. Ha impulsado mi crecimiento personal y profesional. Como publicista y diseñador gráfico de profesión, he podido aplicar mis conocimientos, compartiendo lo que he aprendido en la comunidad con mis compañeros privados de libertad. Les he enseñado la importancia de sentirse útiles, productivos, y de reconocer que todos podemos desarrollar nuestras habilidades, talentos y destrezas.\n\nAprender el valor del trabajo en equipo sirve como base para realizar labores dignas, sin tener que recurrir al crimen. Nos demuestra que, con esfuerzo y dedicación, podemos convertirnos en mejores personas cada día.\n\nTambién me ha ayudado a entender que esta prueba, este encierro, no es para siempre. La libertad llegará, y debemos estar preparados para valorar las oportunidades que se nos presenten.\n\nLa mayoría de personas privadas de libertad crecieron en barrios marginados, donde las oportunidades son escasas y donde las drogas y los homicidios son parte del día a día. Por eso, es fundamental que comprendan que sí es posible llevar una vida recta, sin importar de dónde vienen ni cómo crecieron. Pueden elegir el camino correcto, dejar atrás todo lo negativo y canalizar sus capacidades para sembrar en tierra fértil y construir un futuro mejor para ellos y sus familias.",
-      story: "Jorge pasó de no tener ninguna habilidad técnica a convertirse en uno de nuestros mejores talladores de madera. Sus diseños son de los más solicitados.",
-      beforeSkill: "Ninguna experiencia en artesanía",
-      afterSkill: "Maestro tallador especializado en flora y fauna costarricense"
+      quote: locale === 'es' ? "Este proyecto me ha llenado de fortaleza y motivación. Ha impulsado mi crecimiento personal y profesional. Como publicista y diseñador gráfico de profesión, he podido aplicar mis conocimientos, compartiendo lo que he aprendido en la comunidad con mis compañeros privados de libertad. Les he enseñado la importancia de sentirse útiles, productivos, y de reconocer que todos podemos desarrollar nuestras habilidades, talentos y destrezas.\n\nAprender el valor del trabajo en equipo sirve como base para realizar labores dignas, sin tener que recurrir al crimen. Nos demuestra que, con esfuerzo y dedicación, podemos convertirnos en mejores personas cada día.\n\nTambién me ha ayudado a entender que esta prueba, este encierro, no es para siempre. La libertad llegará, y debemos estar preparados para valorar las oportunidades que se nos presenten.\n\nLa mayoría de personas privadas de libertad crecieron en barrios marginados, donde las oportunidades son escasas y donde las drogas y los homicidios son parte del día a día. Por eso, es fundamental que comprendan que sí es posible llevar una vida recta, sin importar de dónde vienen ni cómo crecieron. Pueden elegir el camino correcto, dejar atrás todo lo negativo y canalizar sus capacidades para sembrar en tierra fértil y construir un futuro mejor para ellos y sus familias." : "This project has filled me with strength and motivation. It has propelled my personal and professional growth. As a publicist and graphic designer by profession, I have been able to apply my knowledge, sharing what I have learned in the community with my fellow inmates. I have taught them the importance of feeling useful, productive, and recognizing that we can develop our skills, talents, and abilities.\n\nLearning the value of teamwork serves as a foundation for performing dignified work, without having to resort to crime. It demonstrates that with effort and dedication, we can become better people every day.\n\nIt has also helped me understand that this test, this imprisonment, is not forever. Freedom will come, and we must be prepared to value the opportunities that come our way.\n\nThe majority of inmates grew up in marginalized neighborhoods, where opportunities are scarce and where drugs and homicides are part of daily life. That is why it is fundamental that they understand that it is possible to lead a straight life, regardless of where they come from or how they grew up. They can choose the right path, leave behind all the negativity, and channel their capabilities to sow fertile ground and build a better future for them and their families.",
+      story: locale === 'es' ? "Jorge pasó de no tener ninguna habilidad técnica a convertirse en uno de nuestros mejores talladores de madera. Sus diseños son de los más solicitados." : "Jorge passed from having no technical skills to becoming one of our best woodcarvers. His designs are the most requested.",
+      beforeSkill: locale === 'es' ? "Ninguna experiencia en artesanía" : "No technical skills",
+      afterSkill: locale === 'es' ? "Maestro tallador especializado en flora y fauna costarricense" : "Master woodcarver specializing in Costa Rican flora and fauna"
     },
     {
       name: "Eduardo Gutiérrez Salazar",
 
       image: "/impact/artesano-Jorge.webp",
-      quote: "A quién interese, el proyecto de Handmade Art ha sido una gran oportunidad para mí. A través de este proyecto, he podido cubrir mis necesidades básicas, como pasta de dientes, jabón, papel higiénico, etc. En mi situación, como persona privada de libertad, me ha ayudado a desarrollar habilidades que no sabía que tenía. He aprendido a hacer cosas que nunca pensé que podría lograr, lo cual me está preparando para un posible futuro, para crecer como persona y evitar volver a conductas delictivas. Muchísimas gracias.",
-      story: "Durante sus tres años en el programa, Eduardo ha desarrollado técnicas innovadoras para trabajar con materiales reciclados, transformándolos en hermosas piezas decorativas.",
-      beforeSkill: "Conocimientos básicos de costura",
-      afterSkill: "Artesano especializado en upcycling y materiales sostenibles"
+      quote: locale === 'es' ? "A quién interese, el proyecto de Handmade Art ha sido una gran oportunidad para mí. A través de este proyecto, he podido cubrir mis necesidades básicas, como pasta de dientes, jabón, papel higiénico, etc. En mi situación, como persona privada de libertad, me ha ayudado a desarrollar habilidades que no sabía que tenía. He aprendido a hacer cosas que nunca pensé que podría lograr, lo cual me está preparando para un posible futuro, para crecer como persona y evitar volver a conductas delictivas. Muchísimas gracias." : "To those who are interested, the Handmade Art project has been a great opportunity for me. Through this project, I have been able to cover my basic needs, such as toothpaste, soap, toilet paper, etc. In my situation, as a prisoner, it has helped me develop skills that I did not know I had. I have learned to do things that I never thought I could achieve, which is preparing me for a possible future, to grow as a person and avoid criminal behavior. Thank you very much.",
+      story: locale === 'es' ? "Durante sus tres años en el programa, Eduardo ha desarrollado técnicas innovadoras para trabajar con materiales reciclados, transformándolos en hermosas piezas decorativas." : "During his three years in the program, Eduardo has developed innovative techniques to work with recycled materials, transforming them into beautiful decorative pieces.",
+      beforeSkill: locale === 'es' ? "Conocimientos básicos de costura" : "Basic sewing skills",
+      afterSkill: locale === 'es' ? "Artesano especializado en upcycling y materiales sostenibles" : "Master upcycling and sustainable materials"
     },
     {
       name: "Jonathan A. Sandoval Martínez",
        image: "/impact/artesano-Jonathan.webp",
-      quote: "Recibe un cordial saludo de mi parte, Jonathan Sandoval Martínez. Te escribo para agradecerte por adquirir una de mis piezas de arte. Quiero que sepas que, a través de la artesanía, otras personas privadas de libertad y sus familias también se benefician, ya que este trabajo les ayuda a cubrir los gastos de las visitas. Para mí, es un honor formar parte de Handmade Art, ya que mejora mi vida y la de mi familia, al mismo tiempo que contribuyo a la sociedad mediante el arte. Saber que puedo retribuir a la sociedad me motiva, y ser visto como una persona productiva, dedicada y responsable con mis deberes me llena de orgullo. Este es mi mayor agradecimiento, ya que tengo una hija que padece leucemia, y a través del arte, con la ayuda de Handmade Art, estoy cubriendo los gastos médicos. Mi más sincero agradecimiento a Handmade Art.",
-      story: "Jonathan ha destacado en la creación de chorreadores de café tradicionales y marcos de espejo con toques modernos.",
-      beforeSkill: "Ninguna experiencia en artesanía",
-      afterSkill: "Artesano especializado en chorreadores de café y marcos de espejo"
+      quote: locale === 'es' ? "Recibe un cordial saludo de mi parte, Jonathan Sandoval Martínez. Te escribo para agradecerte por adquirir una de mis piezas de arte. Quiero que sepas que, a través de la artesanía, otras personas privadas de libertad y sus familias también se benefician, ya que este trabajo les ayuda a cubrir los gastos de las visitas. Para mí, es un honor formar parte de Handmade Art, ya que mejora mi vida y la de mi familia, al mismo tiempo que contribuyo a la sociedad mediante el arte. Saber que puedo retribuir a la sociedad me motiva, y ser visto como una persona productiva, dedicada y responsable con mis deberes me llena de orgullo. Este es mi mayor agradecimiento, ya que tengo una hija que padece leucemia, y a través del arte, con la ayuda de Handmade Art, estoy cubriendo los gastos médicos. Mi más sincero agradecimiento a Handmade Art." : "I cordial greeting from my part, Jonathan Sandoval Martínez. I write to thank you for acquiring one of my pieces of art. I want you to know that through craftsmanship, other inmates and their families also benefit, as this work helps cover the costs of visits. For me, it is an honor to be part of Handmade Art, as it improves my life and the lives of my family, at the same time contributing to society through art. Knowing that I can repay society motivates me, and being seen as a productive, dedicated, and responsible person with my duties fills me with pride. This is my greatest gratitude, as I have a daughter who suffers from leukemia, and through art, with the help of Handmade Art, I am covering medical expenses. My sincerest gratitude to Handmade Art.",
+      story: locale === 'es' ? "Jonathan ha destacado en la creación de chorreadores de café tradicionales y marcos de espejo con toques modernos." : "Jonathan has excelled in creating traditional coffee drip-makers and modern mirror frames.",
+      beforeSkill: locale === 'es' ? "Ninguna experiencia en artesanía" : "No technical skills",
+      afterSkill: locale === 'es' ? "Artesano especializado en chorreadores de café y marcos de espejo" : "Master coffee drip-makers and mirror frames"
     }
   ];
 
@@ -207,11 +209,11 @@ function TransformationStories() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Historias de éxito
+            {locale === 'es' ? 'Historias de éxito' : 'Success stories'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Transformaciones personales</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Transformaciones personales' : 'Personal transformations'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Conoce las historias de artesanos que han encontrado un nuevo camino a través de nuestro programa, desarrollando habilidades y reconstruyendo sus vidas.
+            {locale === 'es' ? 'Conoce las historias de artesanos que han encontrado un nuevo camino a través de nuestro programa, desarrollando habilidades y reconstruyendo sus vidas.' : 'Get to know the stories of artisans who have found a new path through our program, developing skills and rebuilding their lives.'}
           </p>
         </div>
 
@@ -237,11 +239,11 @@ function TransformationStories() {
                 <div className="border-t border-gray-200 pt-4 mt-4">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-                    <p className="text-sm text-gray-600">Antes: {story.beforeSkill}</p>
+                    <p className="text-sm text-gray-600">{locale === 'es' ? 'Antes' : 'Before'}: {story.beforeSkill}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-teal-500"></div>
-                    <p className="text-sm font-medium text-teal-700">Ahora: {story.afterSkill}</p>
+                    <p className="text-sm font-medium text-teal-700">{locale === 'es' ? 'Ahora' : 'Now'}: {story.afterSkill}</p>
                   </div>
                 </div>
               </div>
@@ -251,13 +253,13 @@ function TransformationStories() {
 
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-6">
-            Estas son solo algunas de las muchas historias de transformación que hemos presenciado a lo largo de estos 5 años.
+            {locale === 'es' ? 'Estas son solo algunas de las muchas historias de transformación que hemos presenciado a lo largo de estos 5 años.' : 'These are just a few of the many transformation stories we have witnessed over the past 5 years.'}
           </p>
           <Link
             href="/about"
             className="inline-flex items-center text-teal-700 hover:text-teal-800 font-medium"
           >
-            Conoce más sobre nuestra misión
+            {locale === 'es' ? 'Conoce más sobre nuestra misión' : 'Learn more about our mission'}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>

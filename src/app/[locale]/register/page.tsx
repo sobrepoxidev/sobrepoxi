@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
 import { useLocale } from 'next-intl'
 import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 //import { Tooltip } from 'react-tooltip' // Ejemplo: npm install react-tooltip (o quítalo si no lo quieres)
-import Link from 'next/link'
 
 export default function RegisterPage() {
   const { supabase } = useSupabase()
@@ -115,10 +115,10 @@ export default function RegisterPage() {
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg px-4 py-6 md:p-8 border border-gray-100">
           <div className="text-center mb-4 md:mb-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Regístrate
+              {locale === 'es' ? 'Regístrate' : 'Register'}
             </h1>
             <p className="text-gray-600">
-              Crea tu cuenta para comenzar a explorar Handmade Art
+              {locale === 'es' ? 'Crea tu cuenta para comenzar a explorar Handmade Art' : 'Create your account to start exploring Handmade Art'}
             </p>
           </div>
 
@@ -134,7 +134,7 @@ export default function RegisterPage() {
                 {/* Left Column */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Nombre completo
+                    {locale === 'es' ? 'Nombre completo' : 'Full name'}
                   </label>
                   <div className="relative">
                     <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -151,7 +151,7 @@ export default function RegisterPage() {
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Teléfono
+                    {locale === 'es' ? 'Teléfono' : 'Phone'}
                   </label>
                   <div className="relative">
                     <FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -171,7 +171,7 @@ export default function RegisterPage() {
                 {/* Right Column */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Correo electrónico
+                    {locale === 'es' ? 'Correo electrónico' : 'Email'}
                   </label>
                   <div className="relative">
                     <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -188,7 +188,7 @@ export default function RegisterPage() {
 
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Contraseña
+                    {locale === 'es' ? 'Contraseña' : 'Password'}
                   </label>
                   <div className="relative">
                     <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -214,7 +214,7 @@ export default function RegisterPage() {
 
               <div>
                 <label htmlFor="confirmPass" className="block text-sm font-medium text-gray-700 mb-1">
-                  Confirmar contraseña
+                  {locale === 'es' ? 'Confirmar contraseña' : 'Confirm password'}
                 </label>
                 <div className="relative">
                   <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -246,7 +246,29 @@ export default function RegisterPage() {
                   className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
                 />
                 <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
-                  Acepto los términos y condiciones
+                  {locale === 'es' ? (
+                    <>
+                      Acepto los{' '}
+                      <Link href="/conditions-service" target="_blank" className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200">
+                        Términos y condiciones
+                      </Link>{' '}
+                      así como la{' '}
+                      <Link href="/privacy-policy" target="_blank" className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200">
+                        política de privacidad
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      I accept the{' '}
+                      <Link href="/conditions-service" target="_blank" className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200">
+                        terms and conditions
+                      </Link>{' '}
+                      and the{' '}
+                      <Link href="/privacy-policy" target="_blank" className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200">
+                        privacy policy
+                      </Link>
+                    </>
+                  )}
                 </label>
               </div>
 
@@ -259,7 +281,7 @@ export default function RegisterPage() {
                   className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
                 />
                 <label htmlFor="promotions" className="ml-2 text-sm text-gray-700">
-                  Deseo recibir correos promocionales y actualizaciones sobre nuevos productos
+                  {locale === 'es' ? 'Deseo recibir correos promocionales y actualizaciones sobre nuevos productos' : 'I want to receive promotional emails and updates about new products'}
                 </label>
               </div>
 
@@ -288,15 +310,15 @@ export default function RegisterPage() {
                   onClick={() => signInWithGoogle(returnUrl)}
                   className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
                 >
-                  <FaGoogle className="mr-2 h-5 w-5" />
-                  Registrarme con Google
+                  {locale === 'es' ? <FaGoogle className="mr-2 h-5 w-5" /> : <FaGoogle className="mr-2 h-5 w-5" />}
+                  {locale === 'es' ? 'Registrarme con Google' : 'Register with Google'}
                 </button>
               </div>
           <div className="mt-2">
                 <p className="text-sm text-gray-600 text-center">
-                  ¿Ya tienes una cuenta?
+                  {locale === 'es' ? '¿Ya tienes una cuenta?' : 'Already have an account?'}
                   <Link href={`/login${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`} className="font-medium text-teal-600 hover:text-teal-500 ml-2 transition-colors duration-200">
-                    Inicia sesión
+                    {locale === 'es' ? 'Inicia sesión' : 'Login'}
                   </Link>
                 </p>
               </div>
