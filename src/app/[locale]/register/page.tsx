@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useSupabase } from '@/app/supabase-provider/provider'
+import { useLocale } from 'next-intl'
 import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 //import { Tooltip } from 'react-tooltip' // Ejemplo: npm install react-tooltip (o quítalo si no lo quieres)
 import Link from 'next/link'
@@ -24,6 +25,7 @@ export default function RegisterPage() {
   const [returnUrl, setReturnUrl] = useState('/')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const locale = useLocale()
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()

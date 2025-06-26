@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { Database } from '@/types-db';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Product } from '@/lib/hooks/useProducts';
 //import AddToCartButton from './AddToCartButton'; // This will be a client component
 
 export default async function FeaturedProducts() {
@@ -98,7 +99,7 @@ export default async function FeaturedProducts() {
                   </div>
                 </div>
 
-                <AddToCartButton productId={product.id} />
+                <AddToCartButton product={product as unknown as Product} />
               </div>
             </div>
           ))}
