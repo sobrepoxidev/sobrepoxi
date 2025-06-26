@@ -39,10 +39,12 @@ export default function StepOne({
     cart,
     onContinue,
     initialData,
+    locale,
   }: {
     cart: CartItem[];
     onContinue: (address: ShippingAddress) => void;
     initialData?: ShippingAddress | null;
+    locale: string;
   }) {
     const t = useTranslations('Account');
     const { supabase } = useSupabase();
@@ -210,15 +212,15 @@ export default function StepOne({
       const newErrors: Record<string, string> = {};
 
       // Required fields validation
-      if (!formData.nombre.trim()) newErrors.nombre = 'El nombre es requerido';
-      if (!formData.apellidos.trim()) newErrors.apellidos = 'Los apellidos son requeridos';
-      if (!formData.email.trim()) newErrors.email = 'El correo electrónico es requerido';
-      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Correo electrónico inválido';
-      if (!formData.telefono.trim()) newErrors.telefono = 'El teléfono es requerido';
-      if (!formData.direccion1.trim()) newErrors.direccion1 = 'La dirección es requerida';
-      if (!formData.provincia.trim()) newErrors.provincia = 'La provincia es requerida';
-      if (!formData.canton.trim()) newErrors.canton = 'El cantón es requerido';
-      if (!formData.distrito.trim()) newErrors.distrito = 'El distrito es requerido';
+      if (!formData.nombre.trim()) newErrors.nombre = locale == "es" ? "El nombre es requerido" : "The name is required";
+      if (!formData.apellidos.trim()) newErrors.apellidos = locale == "es" ? "Los apellidos son requeridos" : "The last name is required";
+      if (!formData.email.trim()) newErrors.email = locale == "es" ? "El correo electrónico es requerido" : "The email is required";
+      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = locale == "es" ? "Correo electrónico inválido" : "Invalid email";
+      if (!formData.telefono.trim()) newErrors.telefono = locale == "es" ? "El teléfono es requerido" : "The phone is required";
+      if (!formData.direccion1.trim()) newErrors.direccion1 = locale == "es" ? "La dirección es requerida" : "The address is required";
+      if (!formData.provincia.trim()) newErrors.provincia = locale == "es" ? "La provincia es requerida" : "The province is required";
+      if (!formData.canton.trim()) newErrors.canton = locale == "es" ? "El cantón es requerido" : "The canton is required";
+      if (!formData.distrito.trim()) newErrors.distrito = locale == "es" ? "El distrito es requerido" : "The district is required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -335,10 +337,10 @@ export default function StepOne({
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Selección de dirección de envío
+                {locale == "es" ? "Selección de dirección de envío" : "Shipping Address Selection"}
               </h3>
               <p className="mb-4 text-gray-600">
-                Detectamos que ya tienes una dirección de envío guardada en tu perfil. ¿Cómo deseas proceder?
+                {locale == "es" ? "Detectamos que ya tienes una dirección de envío guardada en tu perfil. ¿Cómo deseas proceder?" : "We detected that you already have a saved shipping address in your profile. How do you want to proceed?"}
               </p>
               
               <div className="space-y-3">
@@ -346,21 +348,21 @@ export default function StepOne({
                   onClick={() => handleAddressSelection(true)}
                   className="w-full bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition"
                 >
-                  Usar mi dirección guardada
+                  {locale == "es" ? "Usar mi dirección guardada" : "Use my saved address"}
                 </button>
                 
                 <button
                   onClick={() => handleAddressSelection(false)}
                   className="w-full bg-white text-gray-800 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-50 transition"
                 >
-                  Continuar con la dirección actual
+                  {locale == "es" ? "Continuar con la dirección actual" : "Continue with the current address"}
                 </button>
                 
                 <button
                   onClick={() => handleAddressSelection(false, true)}
                   className="w-full bg-white text-teal-600 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-50 transition"
                 >
-                  Usar la dirección actual y actualizarla en mi perfil
+                  {locale == "es" ? "Usar la dirección actual y actualizarla en mi perfil" : "Use the current address and update it in my profile"}
                 </button>
               </div>
             </div>
@@ -373,14 +375,14 @@ export default function StepOne({
               
               {/* Account section */}
               <div className="p-2">
-                <p>¿Tiene una cuenta con nosotros? Inicie sesión para acelerar su compra. 
-                  <a href="#" className="text-[#4A9DAB] font-medium ml-1 hover:underline">Entrar</a>
+                <p>{locale == "es" ? "¿Tiene una cuenta con nosotros? Inicie sesión para acelerar su compra." : "Do you have an account with us? Login to speed up your purchase."} 
+                  <a href="#" className="text-[#4A9DAB] font-medium ml-1 hover:underline">{locale == "es" ? "Entrar" : "Login"}</a>
                 </p>
               </div>
               
               {/* Shipping Address header */}
               <div className="bg-teal-600 p-4 text-white font-medium rounded-md">
-                Información de envío
+                {locale == "es" ? "Información de envío" : "Shipping Information"}
               </div>
               
               {/* Form fields */}
@@ -388,7 +390,7 @@ export default function StepOne({
                 {/* Nombre */}
                 <div>
                   <label htmlFor="nombre" className="block text-sm font-medium mb-1">
-                    Nombre <span className="text-red-500">*</span>
+                    {locale == "es" ? "Nombre" : "Name"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -405,7 +407,7 @@ export default function StepOne({
                 {/* Apellidos */}
                 <div>
                   <label htmlFor="apellidos" className="block text-sm font-medium mb-1">
-                    Apellidos <span className="text-red-500">*</span>
+                    {locale == "es" ? "Apellidos" : "Last name"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -422,7 +424,7 @@ export default function StepOne({
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email <span className="text-red-500">*</span>
+                    {locale == "es" ? "Email" : "Email"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
@@ -439,7 +441,7 @@ export default function StepOne({
                 {/* Teléfono */}
                 <div>
                   <label htmlFor="telefono" className="block text-sm font-medium mb-1">
-                    Teléfono <span className="text-red-500">*</span>
+                    {locale == "es" ? "Teléfono" : "Phone"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -457,7 +459,7 @@ export default function StepOne({
                 {/* Dirección 1 */}
                 <div className="md:col-span-2">
                   <label htmlFor="direccion1" className="block text-sm font-medium mb-1">
-                    Dirección <span className="text-red-500">*</span>
+                    {locale == "es" ? "Dirección" : "Address"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -474,7 +476,7 @@ export default function StepOne({
                 {/* Provincia */}
                 <div>
                   <label htmlFor="provincia" className="block text-sm font-medium mb-1">
-                    Provincia <span className="text-red-500">*</span>
+                    {locale == "es" ? "Provincia" : "Province"} <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="provincia"
@@ -484,7 +486,7 @@ export default function StepOne({
                     className={`w-full p-2 border rounded-md ${errors.provincia ? 'border-red-500' : 'border-gray-300'}`}
                     data-error={errors.provincia ? "true" : "false"}
                   >
-                    <option value="">Seleccionar provincia</option>
+                    <option value="">{locale == "es" ? "Seleccionar provincia" : "Select province"}</option>
                     {provincias.map((provincia) => (
                       <option key={provincia} value={provincia}>
                         {provincia}
@@ -497,7 +499,7 @@ export default function StepOne({
                 {/* Cantón */}
                 <div>
                   <label htmlFor="canton" className="block text-sm font-medium mb-1">
-                    Cantón <span className="text-red-500">*</span>
+                    {locale == "es" ? "Cantón" : "Canton"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -514,7 +516,7 @@ export default function StepOne({
                 {/* Distrito */}
                 <div>
                   <label htmlFor="distrito" className="block text-sm font-medium mb-1">
-                    Distrito <span className="text-red-500">*</span>
+                    {locale == "es" ? "Distrito" : "District"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -531,7 +533,7 @@ export default function StepOne({
                 {/* Código Postal */}
                 <div>
                   <label htmlFor="codigoPostal" className="block text-sm font-medium mb-1">
-                    Código Postal
+                    {locale == "es" ? "Código Postal" : "Postal code"}
                   </label>
                   <input
                     type="text"
@@ -549,7 +551,7 @@ export default function StepOne({
                   type="submit" 
                   className="bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition"
                 >
-                  CONTINUAR
+                  {locale == "es" ? "CONTINUAR" : "CONTINUE"}
                 </button>
               </div>
             </form>
@@ -558,7 +560,7 @@ export default function StepOne({
           {/* Right column - Order summary */}
           <div className="w-full lg:w-1/3">
             <div className="bg-white rounded-md p-4 sticky top-4">
-              <h2 className="text-lg font-medium mb-4">Resumen del pedido</h2>
+              <h2 className="text-lg font-medium mb-4">{locale == "es" ? "Resumen del pedido" : "Order summary"}</h2>
               
               {/* Cart items */}
               <div className="space-y-4 mb-4">
@@ -566,7 +568,7 @@ export default function StepOne({
                   <div key={index} className="flex items-start border-b pb-3">
                     <div className="flex-grow">
                       <p className="font-medium">{item.product.name || 'Producto'}</p>
-                      <p className="text-sm text-gray-600">Cantidad: {item.quantity}</p>
+                      <p className="text-sm text-gray-600">{locale == "es" ? "Cantidad" : "Quantity"}: {item.quantity}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-medium">
@@ -580,23 +582,23 @@ export default function StepOne({
               {/* Totals */}
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between">
-                  <span>Total parcial</span>
+                  <span>{locale == "es" ? "Total parcial" : "Partial total"}</span>
                   <span>
                     ₡{cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Envío</span>
+                  <span>{locale == "es" ? "Envío" : "Shipping"}</span>
                   <span>₡{'3,200.00'}</span>
                 </div>
                 {discountInfo && (
                   <div className="flex justify-between text-green-600 font-medium">
-                    <span>Descuento ({discountInfo.code})</span>
+                    <span>{locale == "es" ? "Descuento" : "Discount"} ({discountInfo.code})</span>
                     <span>- ₡{discountInfo.discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between font-bold border-t pt-2">
-                  <span>Total del pedido:</span>
+                  <span>{locale == "es" ? "Total del pedido:" : "Total of the order:"}</span>
                   <span>
                     ₡{(discountInfo 
                       ? discountInfo.finalTotal 
@@ -610,7 +612,7 @@ export default function StepOne({
         </div>
         
         <div className="text-xs text-gray-600 mt-4">
-          <span className="text-red-500">*</span> Campos requeridos
+          <span className="text-red-500">*</span> {locale == "es" ? "Campos requeridos" : "Required fields"}
         </div>
       </section>
     );

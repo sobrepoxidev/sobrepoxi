@@ -68,19 +68,19 @@ export default async function ImpactPage({ params }: { params: tParams }) {
       <TransformationStories locale={locale} />
 
       {/* Rehabilitation Process */}
-      <RehabilitationProcess />
+      <RehabilitationProcess locale={locale} />
 
       {/* Collaborations */}
-      <Collaborations />
+      <Collaborations locale={locale} />
 
 
-      <WorkshopGallery />
+      <WorkshopGallery locale={locale} />
 
 
-      <ArtisanTestimonials />
+      <ArtisanTestimonials locale={locale} />
 
 
-      <ReintegrationProgram />
+      <ReintegrationProgram locale={locale} />
 
       {/* CTA Section */}
       <section className="bg-teal-700 py-16">
@@ -272,11 +272,11 @@ function TransformationStories({ locale }: { locale: string }) {
 }
 
 // impact/components/RehabilitationProcess.tsx - Server Component
-function RehabilitationProcess() {
+function RehabilitationProcess({ locale }: { locale: string }) {
   const steps = [
     {
-      title: "Capacitación inicial",
-      description: "Los participantes reciben formación básica en técnicas artesanales, seguridad y manejo de herramientas durante un período de 3 meses.",
+      title: locale === 'es' ? 'Capacitación inicial' : 'Initial training',
+      description: locale === 'es' ? "Los participantes reciben formación básica en técnicas artesanales, seguridad y manejo de herramientas durante un período de 3 meses." : "Participants receive basic training in artisanal techniques, safety, and tool handling for a period of 3 months.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
@@ -284,8 +284,8 @@ function RehabilitationProcess() {
       )
     },
     {
-      title: "Especialización",
-      description: "Cada artesano se especializa en un área según sus habilidades e intereses: tallado en madera, elaboración de chorreadores, marcos decorativos u otras artesanías.",
+      title: locale === 'es' ? 'Especialización' : 'Specialization',
+      description: locale === 'es' ? "Cada artesano se especializa en un área según sus habilidades e intereses: tallado en madera, elaboración de chorreadores, marcos decorativos u otras artesanías." : "Each artisan specializes in an area according to their skills and interests: wood carving, coffee drip-makers, decorative frames, or other crafts.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M3 3v18h18"></path>
@@ -296,8 +296,8 @@ function RehabilitationProcess() {
       )
     },
     {
-      title: "Producción",
-      description: "Con el acompañamiento de maestros artesanos, comienzan a producir piezas para su venta, recibiendo un porcentaje de las ganancias que se destina a un fondo de ahorro.",
+      title: locale === 'es' ? 'Producción' : 'Production',
+      description: locale === 'es' ? "Con el acompañamiento de maestros artesanos, comienzan a producir piezas para su venta, recibiendo un porcentaje de las ganancias que se destina a un fondo de ahorro." : "With the guidance of master artisans, they begin to produce pieces for sale, receiving a percentage of the profits that are destined for a savings fund.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -314,8 +314,8 @@ function RehabilitationProcess() {
       )
     },
     {
-      title: "Desarrollo empresarial",
-      description: "Se imparten talleres sobre emprendimiento, costos, marketing y servicio al cliente, preparándolos para establecer sus propios negocios al salir.",
+      title: locale === 'es' ? 'Desarrollo empresarial' : 'Business development',
+      description: locale === 'es' ? "Se imparten talleres sobre emprendimiento, costos, marketing y servicio al cliente, preparándolos para establecer sus propios negocios al salir." : "Workshops on entrepreneurship, costs, marketing, and customer service are held, preparing them to establish their own businesses upon release.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M20 7h-9"></path>
@@ -326,8 +326,8 @@ function RehabilitationProcess() {
       )
     },
     {
-      title: "Acompañamiento post-liberación",
-      description: "Se ofrece apoyo para la reinserción laboral, incluyendo conexión con cooperativas artesanales, ferias y oportunidades de venta.",
+      title: locale === 'es' ? 'Acompañamiento post-liberación' : 'Post-release support',
+      description: locale === 'es' ? "Se ofrece apoyo para la reinserción laboral, incluyendo conexión con cooperativas artesanales, ferias y oportunidades de venta." : "They receive support for reintegration into the labor market, including connecting with artisanal cooperatives, fairs, and sales opportunities.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -344,11 +344,11 @@ function RehabilitationProcess() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Metodología
+            {locale === 'es' ? 'Metodología' : 'Methodology'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Proceso de rehabilitación y aprendizaje</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Proceso de rehabilitación y aprendizaje' : 'Rehabilitation and learning process'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Nuestro programa está diseñado como un camino integral que combina el desarrollo de habilidades artesanales con herramientas para la reinserción social y laboral.
+            {locale === 'es' ? 'Nuestro programa está diseñado como un camino integral que combina el desarrollo de habilidades artesanales con herramientas para la reinserción social y laboral.' : 'Our program is designed as an integrated path that combines the development of artisanal skills with tools for social and labor reintegration.'}
           </p>
         </div>
 
@@ -381,27 +381,27 @@ function RehabilitationProcess() {
           <div className="absolute left-0 top-0 w-32 h-32 bg-teal-600/30 rounded-full -ml-10 -mt-10"></div>
 
           <div className="relative z-10">
-            <h3 className="text-2xl font-bold mb-4">Resultados del programa</h3>
+            <h3 className="text-2xl font-bold mb-4">{locale === 'es' ? 'Resultados del programa' : 'Program results'}</h3>
             <p className="text-teal-50 mb-6">
-              A través de este proceso integral, logramos no solo enseñar un oficio, sino transformar vidas ofreciendo herramientas para:
+              {locale === 'es' ? 'A través de este proceso integral, logramos no solo enseñar un oficio, sino transformar vidas ofreciendo herramientas para:' : 'Through this integrated process, we not only teach a trade, but transform lives by offering tools for:'}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                <h4 className="font-semibold text-lg mb-2">Recuperar la autoestima</h4>
+                <h4 className="font-semibold text-lg mb-2">{locale === 'es' ? 'Recuperar la autoestima' : 'Recover self-esteem'}</h4>
                 <p className="text-sm text-teal-50">
-                  El dominio de un oficio artesanal ayuda a restaurar el sentido de valor y capacidad personal.
+                  {locale === 'es' ? 'El dominio de un oficio artesanal ayuda a restaurar el sentido de valor y capacidad personal.' : 'The mastery of an artisanal trade helps restore a sense of value and personal capacity.'}
                 </p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                <h4 className="font-semibold text-lg mb-2">Desarrollo profesional</h4>
+                <h4 className="font-semibold text-lg mb-2">{locale === 'es' ? 'Desarrollo profesional' : 'Professional development'}</h4>
                 <p className="text-sm text-teal-50">
-                  Adquisición de habilidades técnicas y empresariales para una futura independencia económica.
+                  {locale === 'es' ? 'Adquisición de habilidades técnicas y empresariales para una futura independencia económica.' : 'Acquisition of technical and business skills for future economic independence.'}
                 </p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                <h4 className="font-semibold text-lg mb-2">Reinserción efectiva</h4>
+                <h4 className="font-semibold text-lg mb-2">{locale === 'es' ? 'Reinserción efectiva' : 'Effective reintegration'}</h4>
                 <p className="text-sm text-teal-50">
-                  Preparación completa para reintegrarse a la sociedad con herramientas concretas para subsistir.
+                  {locale === 'es' ? 'Preparación completa para reintegrarse a la sociedad con herramientas concretas para subsistir.' : 'Complete preparation for reintegration into society with concrete tools for subsistence.'}
                 </p>
               </div>
             </div>
@@ -413,33 +413,33 @@ function RehabilitationProcess() {
 }
 
 // impact/components/Collaborations.tsx - Server Component
-function Collaborations() {
+function Collaborations({ locale }: { locale: string }) {
   const partners = [
     {
       name: "Asamblea Legislativa de Costa Rica",
       logo: "/logoasamble.webp",
-      description: "Colabora en la implementación de políticas que apoyan los programas de reinserción social y ofrece espacios para la exposición y venta de artesanías en eventos oficiales.",
+      description: locale === 'es' ? "Colabora en la implementación de políticas que apoyan los programas de reinserción social y ofrece espacios para la exposición y venta de artesanías en eventos oficiales." : "Collaborates in the implementation of policies that support social reintegration programs and offers spaces for the exhibition and sale of handicrafts at official events.",
     },
     {
       name: "Grupo Café Britt",
       logo: "/impact/logo-cafe-britt-.svg",
-      description: "Aliado estratégico que comercializa algunas de nuestras artesanías en sus tiendas, especialmente los chorreadores de café tradicionales, dándoles visibilidad nacional e internacional.",
+      description: locale === 'es' ? "Aliado estratégico que comercializa algunas de nuestras artesanías en sus tiendas, especialmente los chorreadores de café tradicionales, dándoles visibilidad nacional e internacional." : "Strategic partner that commercializes some of our handicrafts in their stores, especially traditional coffee presses, giving them national and international visibility.",
     },
     {
       name: "Ministerio de Justicia y Paz",
       logo: "/impact/Ministerio-de-Justicia y-Paz.webp",
-      description: "Facilita el acceso a los centros penitenciarios y proporciona espacios adecuados para los talleres de formación y producción artesanal.",
+      description: locale === 'es' ? "Facilita el acceso a los centros penitenciarios y proporciona espacios adecuados para los talleres de formación y producción artesanal." : "Facilitates access to prisons and provides appropriate spaces for training and handicraft production workshops.",
     },
     {
       name: "Instituto Nacional de Aprendizaje (INA)",
       logo: "/impact/ina-logo.webp",
-      description: "Proporciona capacitación técnica certificada en diversas disciplinas artesanales, elevando la calidad de los productos y la empleabilidad de los participantes.",
+      description: locale === 'es' ? "Proporciona capacitación técnica certificada en diversas disciplinas artesanales, elevando la calidad de los productos y la empleabilidad de los participantes." : "Provides certified technical training in various artisanal disciplines, improving the quality of products and employment prospects of participants.",
     }
   ];
 
   const diputados = [
-    "María Fernández Quirós", "Carlos Jiménez Mora", "Silvia Hernández Sánchez",
-    "Jonathan Acuña Soto", "Pilar Cisneros Gallo", "Rodrigo Arias Sánchez"
+    "Olga Morera Ortega (Firma principal)", "Rosalía Brown Young", "Fabricio Alvarado Muñoz", "José Pablo Sibaja Jiménez", "David Segura Gamboa", "Yonder Salas Durán",
+    "Kattia Rivera Soto", "María Marta Padilla Bonilla", "Monserrat Ruiz Guevara", "Carlos Felipe García Molina", "Katherine Moreira Brown",
   ];
 
   return (
@@ -447,11 +447,11 @@ function Collaborations() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Alianzas
+            {locale === 'es' ? 'Alianzas' : 'Partnerships'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Colaboraciones institucionales</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Colaboraciones institucionales' : 'Institutional Collaborations'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Trabajamos en alianza con instituciones públicas y privadas que apoyan nuestra misión de transformación social a través de la artesanía.
+            {locale === 'es' ? 'Trabajamos en alianza con instituciones públicas y privadas que apoyan nuestra misión de transformación social a través de la artesanía.' : 'We work in partnership with public and private institutions that support our mission of social transformation through handicrafts.'}
           </p>
         </div>
 
@@ -476,9 +476,9 @@ function Collaborations() {
         </div>
 
         <div className="bg-white rounded-xl p-8 shadow-sm border border-teal-100">
-          <h3 className="text-2xl font-semibold text-teal-800 mb-6 text-center">Apoyo de diputados en la Asamblea Legislativa</h3>
+          <h3 className="text-2xl font-semibold text-teal-800 mb-6 text-center">{locale === 'es' ? 'Apoyo de diputados en la Asamblea Legislativa' : 'Legislative Support in the Legislative Assembly'}</h3>
           <p className="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
-            Contamos con el respaldo de diversos diputados que han impulsado iniciativas legislativas para fortalecer los programas de reinserción social a través del arte y la artesanía.
+            {locale === 'es' ? 'Contamos con el respaldo de diversos diputados que han impulsado iniciativas legislativas para fortalecer los programas de reinserción social a través del arte y la artesanía.' : 'We have the support of various legislators who have promoted legislative initiatives to strengthen social reintegration programs through art and handicrafts.'}
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -509,37 +509,37 @@ function Collaborations() {
   );
 }
 
-function WorkshopGallery() {
+function WorkshopGallery({ locale }: { locale: string }) {
   const workshopImages = [
     {
       src: "/impact/Taller-de-tallado-animales.webp",
-      alt: "Taller de tallado en madera",
-      caption: "Taller de tallado en madera donde se elaboran figuras de animales autóctonos"
+      alt: locale === 'es' ? "Taller de tallado en madera" : "Taller of wood carving",
+      caption: locale === 'es' ? "Taller de tallado en madera donde se elaboran figuras de animales autóctonos" : "Taller of wood carving where animal figures are carved"
     },
     {
       src: "/impact/Taller-de-creacion-de-chorreadores-de-cafe.webp",
-      alt: "Elaboración de chorreadores de café",
-      caption: "Proceso de creación de chorreadores de café tradicionales costarricenses"
+      alt: locale === 'es' ? "Elaboración de chorreadores de café" : "Coffee pot making",
+      caption: locale === 'es' ? "Proceso de creación de chorreadores de café tradicionales costarricenses" : "Process of creating traditional Costa Rican coffee pots"
     },
     {
       src: "/impact/Taller-de-marcos-y-espejos.webp",
-      alt: "Taller de marcos y espejos",
-      caption: "Artesanos trabajando en marcos decorativos con motivos tropicales"
+      alt: locale === 'es' ? "Taller de marcos y espejos" : "Taller of frames and mirrors",
+      caption: locale === 'es' ? "Artesanos trabajando en marcos decorativos con motivos tropicales" : "Artisans working on decorative frames with tropical motifs"
     },
     {
       src: "/impact/Taller-de-detalle-de-madera.webp",
-      alt: "Trabajo en detalle de madera",
-      caption: "Detalles finos en piezas decorativas inspiradas en la flora costarricense"
+      alt: locale === 'es' ? "Trabajo en detalle de madera" : "Wood carving work",
+      caption: locale === 'es' ? "Detalles finos en piezas decorativas inspiradas en la flora costarricense" : "Fine details in decorative pieces inspired by Costa Rican flora"
     },
     {
       src: "/impact/Taller-de-capacitacion-tecnica.webp",
-      alt: "Capacitación técnica",
-      caption: "Sesión de capacitación en técnicas avanzadas de acabado en madera"
+      alt: locale === 'es' ? "Capacitación técnica" : "Technical training",
+      caption: locale === 'es' ? "Sesión de capacitación en técnicas avanzadas de acabado en madera" : "Session of technical training in advanced wood finishing techniques"
     },
     {
       src: "/impact/Taller-de-exhibicion.webp",
-      alt: "Exhibición de artesanías",
-      caption: "Muestra de productos finalizados listos para su comercialización"
+      alt: locale === 'es' ? "Exhibición de artesanías" : "Artisan exhibition",
+      caption: locale === 'es' ? "Muestra de productos finalizados listos para su comercialización" : "Show of finished products ready for commercialization"
     }
   ];
 
@@ -548,11 +548,11 @@ function WorkshopGallery() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Nuestros talleres
+            {locale === 'es' ? 'Nuestros talleres' : 'Our Workshops'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Galería de los talleres</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Galería de los talleres' : 'Workshop Gallery'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Conoce los espacios donde nuestros artesanos desarrollan sus habilidades y crean piezas únicas que combinan tradición costarricense con historias de superación personal.
+            {locale === 'es' ? 'Conoce los espacios donde nuestros artesanos desarrollan sus habilidades y crean piezas únicas que combinan tradición costarricense con historias de superación personal.' : 'Discover the spaces where our artisans develop their skills and create unique pieces that combine Costa Rican tradition with stories of personal overcoming.'}
           </p>
         </div>
 
@@ -579,54 +579,54 @@ function WorkshopGallery() {
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
             <div className="md:w-1/3">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Nuestros espacios de trabajo</h3>
+                <h3 className="text-xl font-bold mb-4">{locale === 'es' ? 'Nuestros espacios de trabajo' : 'Our Workspaces'}</h3>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m5 12 5 5L20 7"></path>
                     </svg>
-                    <span>Áreas seguras y equipadas</span>
+                    <span>{locale === 'es' ? 'Áreas seguras y equipadas' : 'Safe and equipped areas'}</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m5 12 5 5L20 7"></path>
                     </svg>
-                    <span>Herramientas profesionales</span>
+                    <span>{locale === 'es' ? 'Herramientas profesionales' : 'Professional tools'}</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m5 12 5 5L20 7"></path>
                     </svg>
-                    <span>Materias primas de calidad</span>
+                    <span>{locale === 'es' ? 'Materias primas de calidad' : 'High-quality raw materials'}</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m5 12 5 5L20 7"></path>
                     </svg>
-                    <span>Ambiente de aprendizaje</span>
+                    <span>{locale === 'es' ? 'Ambiente de aprendizaje' : 'Learning environment'}</span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="md:w-2/3">
-              <h3 className="text-2xl font-bold mb-4">Formación artesanal de alta calidad</h3>
+              <h3 className="text-2xl font-bold mb-4">{locale === 'es' ? 'Formación artesanal de alta calidad' : 'High-quality artisanal training'}</h3>
               <p className="text-teal-50 mb-6">
-                Nuestros talleres están diseñados para proporcionar un entorno de aprendizaje profesional dentro de los centros penitenciarios. Contamos con maestros artesanos que guían el proceso creativo y transmiten técnicas tradicionales costarricenses.
+                {locale === 'es' ? 'Nuestros talleres están diseñados para proporcionar un entorno de aprendizaje profesional dentro de los centros penitenciarios. Contamos con maestros artesanos que guían el proceso creativo y transmiten técnicas tradicionales costarricenses.' : 'Our workshops are designed to provide a professional learning environment within prisons. We have master artisans who guide the creative process and transmit traditional Costa Rican techniques.'}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <h4 className="font-semibold text-lg mb-2">Especialidades artesanales</h4>
+                  <h4 className="font-semibold text-lg mb-2">{locale === 'es' ? 'Especialidades artesanales' : 'Artisanal specialties'}</h4>
                   <ul className="text-sm text-teal-50 space-y-1">
-                    <li>• Tallado en madera con motivos de fauna</li>
-                    <li>• Elaboración de chorreadores tradicionales</li>
-                    <li>• Marcos decorativos con diseños tropicales</li>
-                    <li>• Adornos inspirados en la biodiversidad</li>
+                    <li>• {locale === 'es' ? 'Tallado en madera con motivos de fauna' : 'Wood carving with animal motifs'}</li>
+                    <li>• {locale === 'es' ? 'Elaboración de chorreadores tradicionales' : 'Traditional coffee pot making'}</li>
+                    <li>• {locale === 'es' ? 'Marcos decorativos con diseños tropicales' : 'Decorative frames with tropical designs'}</li>
+                    <li>• {locale === 'es' ? 'Adornos inspirados en la biodiversidad' : 'Decorations inspired by biodiversity'}</li>
                   </ul>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <h4 className="font-semibold text-lg mb-2">Certificación profesional</h4>
+                  <h4 className="font-semibold text-lg mb-2">{locale === 'es' ? 'Certificación profesional' : 'Professional certification'}</h4>
                   <p className="text-sm text-teal-50">
-                    Al completar su formación, los artesanos reciben una certificación del INA que valida sus competencias técnicas, facilitando su futura inserción laboral.
+                    {locale === 'es' ? 'Al completar su formación, los artesanos reciben una certificación del INA que valida sus competencias técnicas, facilitando su futura inserción laboral.' : 'Upon completing their training, artisans receive a certification from the INA validating their technical skills, facilitating their future employment.'}
                   </p>
                 </div>
               </div>
@@ -639,35 +639,35 @@ function WorkshopGallery() {
 }
 
 
-function ArtisanTestimonials() {
+function ArtisanTestimonials({ locale }: { locale: string }) {
   const testimonials = [
     {
-      quote: "Este proyecto me ha enseñado muchas cosas. He aprendido nuevas habilidades, cómo sobrevivir, y me ha llenado de fuerza para seguir adelante. Me ayuda a aprender mucho más sobre este proyecto.",
+      quote: locale === 'es' ? "Este proyecto me ha enseñado muchas cosas. He aprendido nuevas habilidades, cómo sobrevivir, y me ha llenado de fuerza para seguir adelante. Me ayuda a aprender mucho más sobre este proyecto." : "This project has taught me many things. I have learned new skills, how to survive, and it has filled me with strength to keep going. It helps me learn much more about this project.",
       name: "Mario Gerson Ugalde Aguilar",
-      role: "Especialista en tallado de aves",
+      role: locale === 'es' ? "Especialista en tallado de aves" : "Specialist in bird carving",
       image: "/home/face-m.webp",
-      years: "2 años en el programa"
+      years: locale === 'es' ? "2 años en el programa" : "2 years in the program"
     },
     {
-      quote: "Handmade Art, le agradezco a Dios todos los días al despertar, porque cada día me levanto con un poco de trabajo, creando esas hermosas piezas que realizamos a diario. Nos esforzamos por crear cosas cada vez más bellas para superarnos como personas y como trabajadores. Nuestro objetivo es hacer lo mejor posible para que las personas se sientan satisfechas con nuestro trabajo cada día que pasa.",
+      quote: locale === 'es' ? "Handmade Art, le agradezco a Dios todos los días al despertar, porque cada día me levanto con un poco de trabajo, creando esas hermosas piezas que realizamos a diario. Nos esforzamos por crear cosas cada vez más bellas para superarnos como personas y como trabajadores. Nuestro objetivo es hacer lo mejor posible para que las personas se sientan satisfechas con nuestro trabajo cada día que pasa." : "Handmade Art, I thank God every day when I wake up, because every day I wake up with a little work, creating those beautiful pieces we make every day. We strive to create things every day more beautiful to improve ourselves as people and workers. Our goal is to do the best possible so that people feel satisfied with our work every day that passes.",
       name: "Ángel Muñoz Azofeifa",
-      role: "Artesano de marcos decorativos",
+      role: locale === 'es' ? "Artesano de marcos decorativos" : "Decorative frame artisan",
       image: "/home/face-m.webp",
-      years: "3 años en el programa"
+      years: locale === 'es' ? "3 años en el programa" : "3 years in the program"
     },
     {
-      quote: "Me gusta este proyecto de artesanía porque con él he desarrollado habilidades que tenía ocultas, además me veo en un futuro teniendo mi propio taller de ebanistería en la calle, y con el crecer como persona y empresario poder mantenerme económicamente y ayudar a mi familia y a otras personas, como trabajadores de mi futura empresa.",
+      quote: locale === 'es' ? "Me gusta este proyecto de artesanía porque con él he desarrollado habilidades que tenía ocultas, además me veo en un futuro teniendo mi propio taller de ebanistería en la calle, y con el crecer como persona y empresario poder mantenerme económicamente y ayudar a mi familia y a otras personas, como trabajadores de mi futura empresa." : "I like this artisanal project because with it I have developed skills that I had hidden, besides I see in the future having my own cabinet shop on the street, and with the growth as a person and entrepreneur I can maintain myself economically and help my family and other people, as workers of my future company.",
       name: "Jorge Vinicio Guzmán Guzmán",
-      role: "Creador de chorreadores de café",
+      role: locale === 'es' ? "Creador de chorreadores de café" : "Cafepot maker",
       image: "/home/face-m.webp",
-      years: "18 meses en el programa"
+      years: locale === 'es' ? "18 meses en el programa" : "18 months in the program"
     },
     {
-      quote: "Este proyecto me ha ayudado a desarrollar mis habilidades y el don que Dios me ha dado, permitiéndome explotarlo al máximo. También me ha ayudado a ser una mejor persona y a vivir de los talentos con los que Dios me ha bendecido. Es una forma de cubrir mis necesidades personales.",
+      quote: locale === 'es' ? "Este proyecto me ha ayudado a desarrollar mis habilidades y el don que Dios me ha dado, permitiéndome explotarlo al máximo. También me ha ayudado a ser una mejor persona y a vivir de los talentos con los que Dios me ha bendecido. Es una forma de cubrir mis necesidades personales." : "This project has helped me develop my skills and the gift that God has given me, allowing me to exploit it to the maximum. It has also helped me to be a better person and live off the talents with which God has blessed me. It is a way of covering my personal needs.",
       name: "Didier Hernández Obando",
-      role: "Artesano de adornos en madera",
+      role: locale === 'es' ? "Artesano de adornos en madera" : "Woodcarving artisan",
       image: "/home/face-m.webp",
-      years: "2 años y medio en el programa"
+      years: locale === 'es' ? "2 años y medio en el programa" : "2 years and a half in the program"
     }
   ];
 
@@ -676,11 +676,11 @@ function ArtisanTestimonials() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
-            Testimonios
+            {locale === 'es' ? 'Testimonios' : 'Testimonials'}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">La voz de nuestros artesanos</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'La voz de nuestros artesanos' : 'The voice of our artisans'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Escucha directamente de los participantes cómo el programa ha impactado sus vidas y transformado su visión de futuro.
+            {locale === 'es' ? 'Escucha directamente de los participantes cómo el programa ha impactado sus vidas y transformado su visión de futuro.' : 'Listen directly from the participants how the program has impacted their lives and transformed their vision of the future.'}
           </p>
         </div>
 
@@ -717,16 +717,16 @@ function ArtisanTestimonials() {
 
         <div className="mt-16 p-8 border border-dashed border-teal-300 rounded-xl bg-teal-50/50">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-teal-800">El impacto en sus propias palabras</h3>
+            <h3 className="text-2xl font-bold text-teal-800">{locale === 'es' ? 'El impacto en sus propias palabras' : 'The impact in their own words'}</h3>
             <p className="text-gray-600 mt-2">
-              Más allá de las estadísticas, estos testimonios reflejan el verdadero valor del programa en las vidas humanas.
+              {locale === 'es' ? 'Más allá de las estadísticas, estos testimonios reflejan el verdadero valor del programa en las vidas humanas.' : 'Beyond statistics, these testimonials reflect the true value of the program in human lives.'}
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between gap-8">
             <div className="md:w-1/2">
               <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h4 className="text-lg font-semibold text-teal-700 mb-4">Beneficios personales expresados</h4>
+                <h4 className="text-lg font-semibold text-teal-700 mb-4">{locale === 'es' ? 'Beneficios personales expresados' : 'Expressed personal benefits'}</h4>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <div className="bg-teal-100 rounded-full p-1">
@@ -736,7 +736,7 @@ function ArtisanTestimonials() {
                         <path d="M8 12h8"></path>
                       </svg>
                     </div>
-                    <span className="text-gray-700">Recuperación de la autoestima y dignidad</span>
+                    <span className="text-gray-700">{locale === 'es' ? 'Recuperación de la autoestima y dignidad' : 'Recovery of self-esteem and dignity'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-teal-100 rounded-full p-1">
@@ -746,7 +746,7 @@ function ArtisanTestimonials() {
                         <path d="M8 12h8"></path>
                       </svg>
                     </div>
-                    <span className="text-gray-700">Desarrollo de paciencia y disciplina</span>
+                    <span className="text-gray-700">{locale === 'es' ? 'Desarrollo de paciencia y disciplina' : 'Development of patience and discipline'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-teal-100 rounded-full p-1">
@@ -756,7 +756,7 @@ function ArtisanTestimonials() {
                         <path d="M8 12h8"></path>
                       </svg>
                     </div>
-                    <span className="text-gray-700">Conexión con la identidad cultural costarricense</span>
+                    <span className="text-gray-700">{locale === 'es' ? 'Conexión con la identidad cultural costarricense' : 'Connection with Costa Rican cultural identity'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-teal-100 rounded-full p-1">
@@ -766,14 +766,14 @@ function ArtisanTestimonials() {
                         <path d="M8 12h8"></path>
                       </svg>
                     </div>
-                    <span className="text-gray-700">Visión de futuro y esperanza</span>
+                    <span className="text-gray-700">{locale === 'es' ? 'Visión de futuro y esperanza' : 'Future vision and hope'}</span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="md:w-1/2">
               <div className="bg-teal-700 text-white rounded-lg p-6 shadow-sm">
-                <h4 className="text-lg font-semibold mb-4">Logros profesionales destacados</h4>
+                <h4 className="text-lg font-semibold mb-4">{locale === 'es' ? 'Logros profesionales destacados' : 'Notable professional achievements'}</h4>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <div className="bg-white/20 rounded-full p-1">
@@ -781,7 +781,7 @@ function ArtisanTestimonials() {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                       </svg>
                     </div>
-                    <span className="text-teal-50">5 ex-participantes han establecido talleres propios</span>
+                    <span className="text-teal-50">{locale === 'es' ? '5 ex-participantes han establecido talleres propios' : '5 former participants have established their own workshops'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-white/20 rounded-full p-1">
@@ -789,7 +789,7 @@ function ArtisanTestimonials() {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                       </svg>
                     </div>
-                    <span className="text-teal-50">12 artesanos han participado en ferias nacionales</span>
+                    <span className="text-teal-50">{locale === 'es' ? '12 artesanos han participado en ferias nacionales' : '12 artisans have participated in national fairs'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-white/20 rounded-full p-1">
@@ -797,7 +797,7 @@ function ArtisanTestimonials() {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                       </svg>
                     </div>
-                    <span className="text-teal-50">3 participantes han ganado premios de artesanía</span>
+                    <span className="text-teal-50">{locale === 'es' ? '3 participantes han ganado premios de artesanía' : '3 participants have won artisan awards'}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <div className="bg-white/20 rounded-full p-1">
@@ -805,7 +805,7 @@ function ArtisanTestimonials() {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                       </svg>
                     </div>
-                    <span className="text-teal-50">7 se han integrado a cooperativas artesanales</span>
+                    <span className="text-teal-50">{locale === 'es' ? '7 se han integrado a cooperativas artesanales' : '7 have joined artisan cooperatives'}</span>
                   </li>
                 </ul>
               </div>
@@ -818,11 +818,11 @@ function ArtisanTestimonials() {
 }
 
 // impact/components/ReintegrationProgram.tsx - Server Component
-function ReintegrationProgram() {
+function ReintegrationProgram({ locale }: { locale: string }) {
   const reintegrationSteps = [
     {
-      title: "Preparación pre-liberación",
-      description: "Durante los últimos 6 meses de condena, se intensifica la formación en emprendimiento y habilidades comerciales.",
+      title: locale === 'es' ? 'Preparación pre-liberación' : 'Pre-release preparation',
+      description: locale === 'es' ? 'Durante los últimos 6 meses de condena, se intensifica la formación en emprendimiento y habilidades comerciales.' : 'During the last 6 months of imprisonment, intensive training in entrepreneurship and commercial skills is intensified.',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -831,8 +831,8 @@ function ReintegrationProgram() {
       )
     },
     {
-      title: "Programa de mentorías",
-      description: "Asignación de un mentor artesano externo que brinda acompañamiento durante la transición hacia la libertad.",
+      title: locale === 'es' ? 'Programa de mentorías' : 'Mentorship program',
+      description: locale === 'es' ? 'Asignación de un mentor artesano externo que brinda acompañamiento durante la transición hacia la libertad.' : 'Assignment of an external artisan mentor who provides support during the transition to freedom.',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -843,8 +843,8 @@ function ReintegrationProgram() {
       )
     },
     {
-      title: "Kit de herramientas",
-      description: "Al ser liberados, los participantes reciben un kit básico de herramientas para iniciar su labor artesanal.",
+      title: locale === 'es' ? 'Kit de herramientas' : 'Tool kit',
+      description: locale === 'es' ? 'Al ser liberados, los participantes reciben un kit básico de herramientas para iniciar su labor artesanal.' : 'Upon release, participants receive a basic tool kit to start their artisanal work.',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
@@ -852,8 +852,8 @@ function ReintegrationProgram() {
       )
     },
     {
-      title: "Red de apoyo comercial",
-      description: "Conexión con ferias, mercados y establecimientos aliados para la comercialización de sus productos.",
+      title: locale === 'es' ? 'Red de apoyo comercial' : 'Commercial support network',
+      description: locale === 'es' ? 'Conexión con ferias, mercados y establecimientos aliados para la comercialización de sus productos.' : 'Connection with fairs, markets, and allied establishments for the commercialization of their products.',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -870,9 +870,9 @@ function ReintegrationProgram() {
           <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
             Reinserción Social
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">Programa de reinserción integral</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-teal-800 mb-6">{locale === 'es' ? 'Programa de reinserción integral' : 'Integral reintegration program'}</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Nuestro compromiso va más allá de la capacitación dentro del centro penitenciario. Acompañamos a los artesanos en su proceso de reinserción social y laboral.
+            {locale === 'es' ? 'Nuestro compromiso va más allá de la capacitación dentro del centro penitenciario. Acompañamos a los artesanos en su proceso de reinserción social y laboral.' : 'Our commitment goes beyond training within the prison. We accompany artisans in their social and labor reintegration process.'}
           </p>
         </div>
 
@@ -901,43 +901,43 @@ function ReintegrationProgram() {
               />
             </div>
             <div className="md:w-1/2 p-8">
-              <h3 className="text-2xl font-bold text-teal-800 mb-4">Resultados del programa de reinserción</h3>
+              <h3 className="text-2xl font-bold text-teal-800 mb-4">{locale === 'es' ? 'Resultados del programa de reinserción' : 'Reintegration program results'}</h3>
               <p className="text-gray-600 mb-6">
-                Nuestro programa de reinserción ha mostrado resultados prometedores en la reducción de la reincidencia y la integración efectiva de ex-privados de libertad a la sociedad.
+                {locale === 'es' ? 'Nuestro programa de reinserción ha mostrado resultados prometedores en la reducción de la reincidencia y la integración efectiva de ex-privados de libertad a la sociedad.' : 'Our reintegration program has shown promising results in reducing recidivism and effectively integrating former prisoners into society.'}
               </p>
 
               <div className="space-y-4">
                 <div className="bg-teal-50 p-4 rounded-lg border border-teal-100">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-teal-800">Tasa de reincidencia</span>
+                    <span className="font-medium text-teal-800">{locale === 'es' ? 'Tasa de reincidencia' : 'Recidivism rate'}</span>
                     <span className="text-teal-700 font-bold">12%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div className="bg-teal-600 h-2.5 rounded-full" style={{ width: '12%' }}></div>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Comparado con 35% del promedio nacional</p>
+                  <p className="text-xs text-gray-500 mt-1">{locale === 'es' ? 'Comparado con 35% del promedio nacional' : 'Compared to 35% of the national average'}</p>
                 </div>
 
                 <div className="bg-teal-50 p-4 rounded-lg border border-teal-100">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-teal-800">Inserción laboral exitosa</span>
+                    <span className="font-medium text-teal-800">{locale === 'es' ? 'Inserción laboral exitosa' : 'Successful labor insertion'}</span>
                     <span className="text-teal-700 font-bold">78%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div className="bg-teal-600 h-2.5 rounded-full" style={{ width: '78%' }}></div>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Participantes empleados o con emprendimientos propios</p>
+                  <p className="text-xs text-gray-500 mt-1">{locale === 'es' ? 'Participantes empleados o con emprendimientos propios' : 'Participants employed or with their own businesses'}</p>
                 </div>
 
                 <div className="bg-teal-50 p-4 rounded-lg border border-teal-100">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-teal-800">Mejora en calidad de vida</span>
+                    <span className="font-medium text-teal-800">{locale === 'es' ? 'Mejora en calidad de vida' : 'Quality of life improvement'}</span>
                     <span className="text-teal-700 font-bold">85%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div className="bg-teal-600 h-2.5 rounded-full" style={{ width: '85%' }}></div>
+                    <div className="bg-teal-600 h-2.5 rounded-full" style={{ width: '95%' }}></div>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Basado en encuestas de seguimiento</p>
+                  <p className="text-xs text-gray-500 mt-1">{locale === 'es' ? 'Basado en encuestas de seguimiento' : 'Based on follow-up surveys'}</p>
                 </div>
               </div>
             </div>
@@ -948,12 +948,12 @@ function ReintegrationProgram() {
           <div className="bg-teal-700 text-white rounded-xl p-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="md:w-2/3">
-                <h3 className="text-2xl font-bold mb-4">Alianzas para la reinserción efectiva</h3>
+                <h3 className="text-2xl font-bold mb-4">{locale === 'es' ? 'Alianzas para la reinserción efectiva' : 'Effective reintegration alliances'}</h3>
                 <p className="text-teal-50 mb-6">
-                  Trabajamos con diversas organizaciones e instituciones para asegurar que nuestros artesanos tengan todas las oportunidades para reintegrarse exitosamente a la sociedad y al mercado laboral.
+                  {locale === 'es' ? 'Trabajamos con diversas organizaciones e instituciones para asegurar que nuestros artesanos tengan todas las oportunidades para reintegrarse exitosamente a la sociedad y al mercado laboral.' : 'We work with various organizations and institutions to ensure that our artisans have all the opportunities to successfully reintegrate into society and the labor market.'}
                 </p>
                 <Link href="/alianzas" className="inline-flex items-center bg-white text-teal-700 font-medium px-5 py-2 rounded-lg hover:bg-teal-50 transition">
-                  Conoce nuestros aliados
+                  {locale === 'es' ? 'Conoce nuestros aliados' : 'Learn about our allies'}
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -997,16 +997,16 @@ function ReintegrationProgram() {
         </div>
 
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-teal-800 mb-4">¿Quieres formar parte de esta transformación?</h3>
+          <h3 className="text-2xl font-bold text-teal-800 mb-4">{locale === 'es' ? '¿Quieres formar parte de esta transformación?' : 'Are you part of this transformation?'}</h3>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Buscamos constantemente empresas, instituciones y profesionales que deseen contribuir a nuestro programa de reinserción a través de diversas formas de colaboración.
+            {locale === 'es' ? 'Buscamos constantemente empresas, instituciones y profesionales que deseen contribuir a nuestro programa de reinserción a través de diversas formas de colaboración.' : 'We constantly seek companies, institutions, and professionals who wish to contribute to our reintegration program through various forms of collaboration.'}
           </p>
           <div className="flex justify-center gap-4">
             <Link href="/contacto" className="bg-teal-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-teal-700 transition">
-              Contactar
+              {locale === 'es' ? 'Contactar' : 'Contact'}
             </Link>
             <Link href="/programa-detalle" className="bg-white text-teal-700 font-medium px-6 py-3 rounded-lg border border-teal-200 hover:bg-teal-50 transition">
-              Más información
+              {locale === 'es' ? 'Más información' : 'More information'}
             </Link>
           </div>
         </div>

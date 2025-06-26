@@ -29,5 +29,5 @@ export default async function AdminProductsPage({
     redirect(`/${locale}`);
   }
   
-  return <AdminDashboard />;
+  return <AdminDashboard locale={locale} />;
 }

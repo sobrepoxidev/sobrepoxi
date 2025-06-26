@@ -252,7 +252,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                         </div>
                         {product.is_featured && (
                           <div className="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-medium px-1.5 py-0.5 rounded-sm">
-                            Destacado
+                            {locale === 'es' ? 'Destacado' : 'Featured'}
                           </div>
                         )}
                       </div>
@@ -265,7 +265,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                             ₡{product.price.toLocaleString()}
                           </div>
                           <div className="text-xs text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
-                            Ver detalles
+                            {locale === 'es' ? 'Ver detalles' : 'View details'}
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
                               <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                             </svg>
@@ -280,7 +280,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
           </>
         ) : (
           <div className="w-full text-center py-10 text-gray-500">
-            No hay productos disponibles en este momento.
+            {locale === 'es' ? 'No hay productos disponibles en este momento.' : 'No products available at the moment.'}
           </div>
         )}
       </div>

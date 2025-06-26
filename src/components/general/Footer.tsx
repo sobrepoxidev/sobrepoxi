@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Phone, Mail, MessageCircle, Youtube, Heart } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, Heart } from 'lucide-react';
 
 export default function Footer({ locale }: { locale: string }) {
   return (
@@ -149,24 +149,36 @@ export default function Footer({ locale }: { locale: string }) {
           </div>
         </div>
 
-        {/* Copyright and Developer Credits */}
-        <div className="border-t border-gray-700 mt-12 pt-6 text-center">
-          <p className="text-gray-400 text-sm mb-2">
-            © {new Date().getFullYear()} Handmade Art. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
-          </p>
-          <p className="text-xs text-gray-500">
-            {locale === 'es' ? 'Desarrollado por ' : 'Developed by '}
-            <a 
-              href="https://sobrepoxi.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-teal-400 hover:underline flex items-center gap-1"
-            >
-              Sobrepoxi IT
-              <MessageCircle className="w-3 h-3 text-teal-400" />
-            </a>
-          </p>
-        </div>
+        // Copyright footer – emphasises company while clarifying individual developer credit.
+/* Copyright and Developer Credits */
+<div className="border-t border-gray-700 mt-12 pt-6 text-center">
+  <p className="text-gray-400 text-sm mb-2">
+    © {new Date().getFullYear()} HandMade Art. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
+  </p>
+  <p className="text-xs text-gray-500 flex flex-wrap items-center justify-center gap-1">
+    {locale === 'es' ? 'Desarrollado por ' : 'Developed by '}
+    <Link
+      href="https://sobrepoxi.com"
+      target="_blank"
+      rel="author noopener noreferrer"
+      className="font-semibold text-teal-400 hover:underline inline-flex items-center gap-1"
+    >
+      Sobrepoxi
+      <ExternalLink className="w-3 h-3 text-teal-400" />
+    </Link>
+    {locale === 'es' ? ' — Desarrollador: ' : ' — Developer: '}
+    <Link
+      href="https://portfolio-bryam.vercel.app/"
+      target="_blank"
+      rel="author noopener noreferrer"
+      className="text-teal-300 hover:underline inline-flex items-center gap-1"
+    >
+      Bryam López
+      <ExternalLink className="w-3 h-3 text-teal-300" />
+    </Link>
+  </p>
+</div>
+
       </div>
     </footer>
   );

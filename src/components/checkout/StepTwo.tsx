@@ -74,7 +74,7 @@ export default function StepTwo({
     }, []);    
     return (
       <section className="text-gray-900 w-full">
-        <h2 className="text-xl font-semibold mb-4 ">Seleccione un método de pago</h2>
+        <h2 className="text-xl font-semibold mb-4 ">{locale == "es" ? "Seleccione un método de pago" : "Select a payment method"}</h2>
   
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <PaymentOption
@@ -114,25 +114,25 @@ export default function StepTwo({
         
         {/* Resumen del pedido */}
         <div className="mt-6 p-4 bg-gray-50 rounded-md">
-          <h3 className="text-lg font-medium mb-3">Resumen del pedido</h3>
+          <h3 className="text-lg font-medium mb-3">{locale == "es" ? "Resumen del pedido" : "Order summary"}</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-slate-700">
-              <span>Subtotal</span>
+              <span>{locale == "es" ? "Subtotal" : "Subtotal"}</span>
               <span>₡ {cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0).toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm text-slate-700">
-              <span>Envío</span>
+              <span>{locale == "es" ? "Envío" : "Shipping"}</span>
               <span>₡ 3,200.00</span>
             </div>
             {discountInfo && (
               <div className="flex justify-between text-sm text-green-600 font-medium">
-                <span>Descuento ({discountInfo.code})</span>
+                <span>{locale == "es" ? "Descuento" : "Discount"} ({discountInfo.code})</span>
                 <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
               </div>
             )}
             <hr className="border-slate-300 my-2" />
             <div className="flex justify-between font-semibold text-base text-slate-800">
-              <span>Total del pedido:</span>
+              <span>{locale == "es" ? "Total del pedido" : "Order total"}</span>
               <span>₡ {total.toFixed(2)}</span>
             </div>
           </div>

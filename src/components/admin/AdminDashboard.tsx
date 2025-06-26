@@ -72,7 +72,7 @@ const formatModifiedDate = (dateString: string): string => {
   }
 };
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ locale }: { locale: string }) {
   const { supabase } = useSupabase();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
       if (updates.price !== undefined) {
         const price = Number(updates.price);
         if (isNaN(price) || price < 0) {
-          throw new Error('El precio debe ser un número válido mayor o igual a 0');
+          throw new Error(locale === 'es' ? 'El precio debe ser un número válido mayor o igual a 0' : 'The price must be a valid number greater than or equal to 0');
         }
         updates.price = price;
       }
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
       if (updates.discount_percentage !== undefined) {
         const discount = Number(updates.discount_percentage);
         if (isNaN(discount) || discount < 0 || discount > 100) {
-          throw new Error('El descuento debe ser un número entre 0 y 100');
+          throw new Error(locale === 'es' ? 'El descuento debe ser un número entre 0 y 100' : 'The discount must be a number between 0 and 100');
         }
         updates.discount_percentage = discount;
       }
@@ -204,33 +204,33 @@ export default function AdminDashboard() {
       if (updates.price !== undefined) {
         toast.success(
           <div className="flex flex-col">
-            <span className="font-medium">Precio actualizado</span>
-            <span className="text-sm">Nuevo precio: ₡{updates.price}</span>
+            <span className="font-medium">{locale === 'es' ? 'Precio actualizado' : 'Price updated'}</span>
+            <span className="text-sm">{locale === 'es' ? 'Nuevo precio: ₡' : 'New price: ₡'}{updates.price}</span>
           </div>,
           { duration: 3000 }
         );
       } else if (updates.is_active !== undefined) {
         toast.success(
           <div className="flex flex-col">
-            <span className="font-medium">Estado actualizado</span>
-            <span className="text-sm">{updates.is_active ? 'Producto activado' : 'Producto desactivado'}</span>
+            <span className="font-medium">{locale === 'es' ? 'Estado actualizado' : 'Status updated'}</span>
+            <span className="text-sm">{locale === 'es' ? (updates.is_active ? 'Producto activado' : 'Producto desactivado') : (updates.is_active ? 'Product activated' : 'Product deactivated')}</span>
           </div>,
           { duration: 3000 }
         );
       } else if (updates.discount_percentage !== undefined) {
         toast.success(
           <div className="flex flex-col">
-            <span className="font-medium">Descuento actualizado</span>
+            <span className="font-medium">{locale === 'es' ? 'Descuento actualizado' : 'Discount updated'}</span>
             <span className="text-sm">
               {updates.discount_percentage > 0 
-                ? `Descuento: ${updates.discount_percentage}%`
-                : 'Descuento removido'}
+                ? locale === 'es' ? `Descuento: ${updates.discount_percentage}%` : `Discount: ${updates.discount_percentage}%`
+                : locale === 'es' ? 'Descuento removido' : 'Discount removed'}
             </span>
           </div>,
           { duration: 3000 }
         );
       } else {
-        toast.success('Producto actualizado correctamente');
+        toast.success(locale === 'es' ? 'Producto actualizado correctamente' : 'Product updated successfully');
       }
       
       return { success: true };
@@ -246,11 +246,11 @@ export default function AdminDashboard() {
 
   return (
     <div className="container mx-auto px-4 py-2 text-gray-800">
-      <h1 className="text-2xl font-bold mb-0.5">Panel de Administración</h1>
+      <h1 className="text-2xl font-bold mb-0.5">{locale === 'es' ? 'Panel de Administración' : 'Admin Dashboard'}</h1>
       
       {/* Barra de herramientas */}
       <div className="bg-white rounded-lg shadow-md p-3 mb-4">
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-4">
           {/* Búsqueda */}
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -258,7 +258,7 @@ export default function AdminDashboard() {
             </div>
             <input
               type="text"
-              placeholder="Buscar por nombre o SKU..."
+              placeholder={locale === 'es' ? 'Buscar por nombre o SKU...' : 'Search by name or SKU...'}
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -277,10 +277,10 @@ export default function AdminDashboard() {
               onChange={(e) => setCategoryFilter(e.target.value ? parseInt(e.target.value) : null)}
               aria-label="Filtrar por categoría"
             >
-              <option value="">Todas las categorías</option>
+              <option value="">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
-                  {category.name_es}
+                  {locale === 'es' ? category.name_es : category.name_en}
                 </option>
               ))}
             </select>
@@ -293,7 +293,7 @@ export default function AdminDashboard() {
             disabled={loading}
           >
             <RefreshCw className={`h-5 w-5 mr-1 ${loading ? 'animate-spin' : ''}`} />
-            Actualizar
+            {locale === 'es' ? 'Actualizar' : 'Update'}
           </button>
           
           {/* Selector de vista */}
@@ -324,13 +324,13 @@ export default function AdminDashboard() {
       {loading && !selectedProduct && (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-teal-600 mb-2"></div>
-          <p className="text-gray-600">Cargando productos...</p>
+          <p className="text-gray-600">{locale === 'es' ? 'Cargando productos...' : 'Loading products...'}</p>
         </div>
       )}
       
       {error && !selectedProduct && (
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
-          <p className="font-bold">Error</p>
+          <p className="font-bold">{locale === 'es' ? 'Error' : 'Error'}</p>
           <p>{error}</p>
         </div>
       )}
@@ -340,6 +340,7 @@ export default function AdminDashboard() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             <ProductEditor 
+            locale={locale}
               product={selectedProduct} 
               categories={categories}
               onSave={async (updates) => {
@@ -358,7 +359,7 @@ export default function AdminDashboard() {
       {/* Lista de productos */}
       {!loading && filteredProducts.length === 0 && (
         <div className="text-center py-6 bg-gray-50 rounded-lg">
-          <p className="text-gray-600">No se encontraron productos</p>
+          <p className="text-gray-600">{locale === 'es' ? 'No se encontraron productos' : 'No products found'}</p>
         </div>
       )}
       
@@ -393,7 +394,7 @@ export default function AdminDashboard() {
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
-                        <span>Sin imagen</span>
+                        <span>{locale === 'es' ? 'Sin imagen' : 'No image'}</span>
                       </div>
                     )}
                   </div>
@@ -401,15 +402,15 @@ export default function AdminDashboard() {
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-medium text-gray-900 line-clamp-2">
-                        {product.name_es || product.name || `Producto #${product.id}`}
+                        {product.name_es || product.name || locale === 'es' ? `Producto #${product.id}` : `Product #${product.id}`}
                       </h3>
                       {product.is_active ? (
                         <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                          Activo
+                          {locale === 'es' ? 'Activo' : 'Active'}
                         </span>
                       ) : (
                         <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                          Inactivo
+                          {locale === 'es' ? 'Inactivo' : 'Inactive'}
                         </span>
                       )}
                     </div>
@@ -444,15 +445,15 @@ export default function AdminDashboard() {
                                     e.stopPropagation();
                                     e.preventDefault();
                                     if (product.price !== null) {
-                                      const loadingToast = toast.loading('Actualizando precio...');
+                                      const loadingToast = toast.loading(`${locale === 'es' ? 'Actualizando precio...' : 'Updating price...'}`);
                                       await updateProduct(product.id, { price: product.price });
                                       toast.dismiss(loadingToast);
                                     }
                                   }}
-                                  title="Actualizar precio"
+                                  title={locale === 'es' ? 'Actualizar precio' : 'Update price'}
                                 >
-                                  
-                                  <span>Aplicar precio</span>
+                                  <RefreshCw className="h-4 w-4 mr-2" />
+                                  <span>{locale === 'es' ? 'Aplicar precio' : 'Apply price'}</span>
                                 </button>
                               </div>
 
@@ -464,7 +465,7 @@ export default function AdminDashboard() {
                                     e.stopPropagation();
                                     setShowProductMenu(showProductMenu === product.id ? null : product.id);
                                   }}
-                                  title="Más opciones"
+                                  title={locale === 'es' ? 'Más opciones' : 'More options'}
                                 >
                                   <MoreVertical className="h-5 w-5" />
                                 </button>
@@ -476,7 +477,7 @@ export default function AdminDashboard() {
                                       className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-600 hover:bg-red-50' : 'text-green-600 hover:bg-green-50'}`}
                                       onClick={async (e) => {
                                         e.stopPropagation();
-                                        const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                                        const loadingToast = toast.loading(`${product.is_active ? (locale === 'es' ? 'Desactivando' : 'Deactivating') : (locale === 'es' ? 'Activando' : 'Activating')} producto...`);
                                         await updateProduct(product.id, { is_active: !product.is_active });
                                         toast.dismiss(loadingToast);
                                         setShowProductMenu(null);
@@ -485,12 +486,12 @@ export default function AdminDashboard() {
                                       {product.is_active ? (
                                         <>
                                           <X className="h-4 w-4 mr-2" />
-                                          Desactivar producto
+                                          {locale === 'es' ? 'Desactivar producto' : 'Deactivate product'}
                                         </>
                                       ) : (
                                         <>
                                           <Check className="h-4 w-4 mr-2" />
-                                          Activar producto
+                                          {locale === 'es' ? 'Activar producto' : 'Activate product'}
                                         </>
                                       )}
                                     </button>
@@ -505,7 +506,7 @@ export default function AdminDashboard() {
                                       }}
                                     >
                                       <Edit className="h-4 w-4 mr-2" />
-                                      Editar producto
+                                      {locale === 'es' ? 'Editar producto' : 'Edit product'}
                                     </button>
                                   </div>
                                 )}
@@ -544,7 +545,7 @@ export default function AdminDashboard() {
                                 }}
                                 title="Actualizar descuento"
                               >
-                                <span>Aplicar descuento</span>
+                                <span>{locale === 'es' ? 'Aplicar descuento' : 'Apply discount'}</span>
                               </button>
                             </div>
                           </div>
@@ -574,10 +575,10 @@ export default function AdminDashboard() {
                     )}
                     
                     <div className="mt-2 text-center text-xs text-gray-500">
-                      Última modificación: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
                     </div>
                     <div className="mt-1 text-center text-xs text-gray-400 italic">
-                      Click para más opciones de edición
+                      {locale === 'es' ? 'Click para más opciones de edición' : 'Click for more editing options'}
                     </div>
                   </div>
                 </div>
@@ -600,7 +601,7 @@ export default function AdminDashboard() {
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
-                        <span>Sin imagen</span>
+                        <span>{locale === 'es' ? 'Sin imagen' : 'No image'}</span>
                       </div>
                     )}
                   </div>
@@ -629,7 +630,7 @@ export default function AdminDashboard() {
                     </div>
                     
                     <div className="text-xs text-gray-500 mt-2">
-                      Última modificación: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
                     </div>
                   </div>
                   
@@ -637,11 +638,11 @@ export default function AdminDashboard() {
                   <div className="flex flex-wrap md:flex-row md:items-center gap-2 md:ml-auto">
                   {product.is_active ? (
                         <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                          Activo
+                          {locale === 'es' ? 'Activo' : 'Active'}
                         </span>
                       ) : (
                         <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                          Inactivo
+                          {locale === 'es' ? 'Inactivo' : 'Inactive'}
                         </span>
                       )}
                     {/* Control de precio */}
@@ -672,10 +673,10 @@ export default function AdminDashboard() {
                             const result = await updateProduct(product.id, { price: product.price });
                             toast.dismiss(loadingToast);
                             if (!result.success) {
-                              toast.error('No se pudo actualizar el precio');
+                              toast.error(locale === 'es' ? 'No se pudo actualizar el precio' : 'Could not update the price');
                             }
                           } else {
-                            toast.error('El precio no puede estar vacío');
+                            toast.error(locale === 'es' ? 'El precio no puede estar vacío' : 'The price cannot be empty');
                           }
                         }}
                         title="Actualizar precio"
@@ -714,7 +715,7 @@ export default function AdminDashboard() {
                           await updateProduct(product.id, { discount_percentage: product.discount_percentage });
                           toast.dismiss(loadingToast);
                         }}
-                        title="Actualizar descuento"
+                        title={locale === 'es' ? 'Actualizar descuento' : 'Update discount'}
                         aria-label="Aplicar descuento"
                       >
                         <Check className="h-5 w-5" />
@@ -730,7 +731,7 @@ export default function AdminDashboard() {
                           e.preventDefault();
                           setShowProductMenu(showProductMenu === product.id ? null : product.id);
                         }}
-                        title="Más opciones"
+                        title={locale === 'es' ? 'Más opciones' : 'More options'}
                         aria-label="Más opciones"
                         aria-expanded={showProductMenu === product.id}
                         aria-controls={`product-menu-${product.id}`}
@@ -762,12 +763,12 @@ export default function AdminDashboard() {
                             {product.is_active ? (
                               <>
                                 <X className="h-4 w-4 mr-2" />
-                                Desactivar producto
+                                {locale === 'es' ? 'Desactivar producto' : 'Deactivate product'}
                               </>
                             ) : (
                               <>
                                 <Check className="h-4 w-4 mr-2" />
-                                Activar producto
+                                {locale === 'es' ? 'Activar producto' : 'Activate product'}
                               </>
                             )}
                           </button>
@@ -784,7 +785,7 @@ export default function AdminDashboard() {
                             role="menuitem"
                           >
                             <Edit className="h-4 w-4 mr-2" />
-                            Editar producto
+                            {locale === 'es' ? 'Editar producto' : 'Edit product'}
                           </button>
                         </div>
                       )}

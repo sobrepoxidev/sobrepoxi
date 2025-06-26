@@ -6,6 +6,7 @@ import { Session } from '@supabase/supabase-js';
 import { useCart, CartItem } from "@/context/CartContext";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
+import { useLocale } from 'next-intl';
 
 // Use a hardcoded sandbox client ID for development
 // In production, this should be replaced with your actual client ID from environment variables
@@ -35,6 +36,7 @@ export default function PayPalCardMethod({
     const [redirecting, setRedirecting] = useState(false);
     const router = useRouter();
     const { cart, clearCart } = useCart();
+    const locale = useLocale();
 
      const [session, setSession] = useState<Session | null>(null);
     const userId = session?.user?.id || 'guest-user';
@@ -82,7 +84,7 @@ export default function PayPalCardMethod({
                         </svg>
                     </div>
                     <h3 style="font-size: 1.25rem; font-weight: bold; color: #4B5563; margin-bottom: 0.5rem;">Procesando su pago</h3>
-                    <p style="color: #6B7280;">Por favor espere mientras completamos su compra...</p>
+                    <p style="color: #6B7280;">${locale == "es" ? "Por favor espere mientras completamos su compra..." : "Please wait while we complete your purchase..."}</p>
                 </div>
             `;
             
@@ -100,14 +102,14 @@ export default function PayPalCardMethod({
     return (
         <div className="w-full max-w-2xl mx-auto p-4">
             <div className="mb-3 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">
-                <p>Nota: Paypal aplica una tasa de conversión de 1 CRC = 0.0019128 USD</p>
-                <p className="text-center mt-1 text-xs">Podrás elegir pagar en CRC o USD</p>
+                <p>Nota: {locale == "es" ? "Paypal aplica una tasa de conversión de 1 CRC = 0.0019128 USD" : "Paypal applies a conversion rate of 1 CRC = 0.0019128 USD"}</p>
+                <p className="text-center mt-1 text-xs">{locale == "es" ? "Podrás elegir pagar en CRC o USD" : "You can choose to pay in CRC or USD"}</p>
             </div>
 
             {loading && !redirecting && (
                 <div className="flex items-center justify-center py-2 text-gray-600">
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    <p>Procesando...</p>
+                    <p>{locale == "es" ? "Procesando..." : "Processing..."}</p>
                 </div>
             )}
             <div className="App">
@@ -219,7 +221,7 @@ export default function PayPalCardMethod({
                                     router.push(`/order-confirmation?order_id=${createdOrderId}`);
                                 }, 500);
                             } else {
-                                onPaymentError("La transacción no pudo completarse.");
+                                onPaymentError(locale == "es" ? "La transacción no pudo completarse." : "The transaction could not be completed.");
                             }
                         }}
                         onCancel={async () => {
@@ -229,7 +231,7 @@ export default function PayPalCardMethod({
                         }}
                         onError={(err) => {
                             console.error("PayPal Error:", err);
-                            onPaymentError("Ocurrió un error con PayPal.");
+                            onPaymentError(locale == "es" ? "Ocurrió un error con PayPal." : "An error occurred with PayPal.");
                         }}
                     />
                 </PayPalScriptProvider>

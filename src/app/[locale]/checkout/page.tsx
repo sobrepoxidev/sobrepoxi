@@ -351,6 +351,7 @@ export default function CheckoutWizardPage() {
             cart={cart}
             onContinue={validateStep1}
             initialData={shippingAddress}
+            locale={locale}
           />
         )}
         {

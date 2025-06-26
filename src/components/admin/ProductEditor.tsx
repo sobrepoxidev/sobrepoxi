@@ -10,13 +10,14 @@ type Product = Database['products'];
 type Category = Database['categories'];
 
 interface ProductEditorProps {
+  locale: string;
   product: Product;
   categories: Category[];
   onSave: (updates: Partial<Product>) => Promise<{ success: boolean; error?: string }>;
   onCancel: () => void;
 }
 
-export default function ProductEditor({ product, categories, onSave, onCancel }: ProductEditorProps) {
+export default function ProductEditor({ locale, product, categories, onSave, onCancel }: ProductEditorProps) {
   // Campos que ya se pueden editar directamente en las tarjetas
   // - price: se puede editar en la tarjeta con guardado inmediato
   // - is_active: se puede activar/desactivar en la tarjeta con guardado inmediato
@@ -51,7 +52,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
       
       // Si no hay cambios, mostrar mensaje y salir
       if (Object.keys(updates).length === 0) {
-        toast('No se han realizado cambios', {
+        toast(locale === 'es' ? 'No se han realizado cambios' : 'No changes made', {
           icon: '🔔',
           style: {
             background: '#3498db',
@@ -65,7 +66,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
       if (updates.price !== undefined && updates.price !== null) {
         const priceNum = Number(updates.price);
         if (isNaN(priceNum) || priceNum < 0) {
-          throw new Error('El precio debe ser un número válido mayor o igual a 0');
+          throw new Error(locale === 'es' ? 'El precio debe ser un número válido mayor o igual a 0' : 'The price must be a valid number greater than or equal to 0');
         }
         updates.price = priceNum;
       }
@@ -73,7 +74,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
       if (updates.discount_percentage !== undefined && updates.discount_percentage !== null) {
         const discountNum = Number(updates.discount_percentage);
         if (isNaN(discountNum) || discountNum < 0 || discountNum > 100) {
-          throw new Error('El descuento debe ser un número entre 0 y 100');
+          throw new Error(locale === 'es' ? 'El descuento debe ser un número entre 0 y 100' : 'The discount must be a number between 0 and 100');
         }
         updates.discount_percentage = discountNum;
       }
@@ -87,11 +88,11 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
           onCancel();
         }, 500);
       } else {
-        toast.error(result.error || 'Error al guardar los cambios');
-        setError(result.error || 'Error al guardar los cambios');
+        toast.error(result.error || (locale === 'es' ? 'Error al guardar los cambios' : 'Error saving changes'));
+        setError(result.error || (locale === 'es' ? 'Error al guardar los cambios' : 'Error saving changes'));
       }
     } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : 'Error al guardar los cambios';
+      const errorMsg = err instanceof Error ? err.message : (locale === 'es' ? 'Error al guardar los cambios' : 'Error saving changes');
       toast.error(errorMsg);
       setError(errorMsg);
     } finally {
@@ -102,7 +103,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">Editar Producto</h2>
+        <h2 className="text-xl font-bold">{locale === 'es' ? 'Editar Producto' : 'Edit Product'}</h2>
         <button
           onClick={onCancel}
           className="p-2 rounded-full hover:bg-gray-100"
@@ -134,7 +135,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
               />
             ) : (
               <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
-                <span>Sin imagen</span>
+                <span>{locale === 'es' ? 'Sin imagen' : 'No image'}</span>
               </div>
             )}
           </div>
@@ -149,7 +150,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
           {/* Nombre del producto - No editable en tarjetas */}
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Nombre del producto
+              {locale === 'es' ? 'Nombre del producto' : 'Product name'}
             </label>
             <input
               type="text"
@@ -160,21 +161,21 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
               placeholder="Nombre del producto"
             />
             <p className="mt-1 text-xs text-teal-600">
-              El nombre es un campo importante que solo se puede editar aquí
+              {locale === 'es' ? 'El nombre es un campo importante que solo se puede editar aquí' : 'The name is an important field that can only be edited here'}
             </p>
           </div>
           
           {/* Sección de campos que también se pueden editar en las tarjetas */}
           <div className="mb-4 p-3 border border-gray-200 rounded-md bg-white">
-            <h3 className="text-sm font-medium text-gray-500 mb-3">Campos de edición rápida</h3>
+            <h3 className="text-sm font-medium text-gray-500 mb-3">{locale === 'es' ? 'Campos de edición rápida' : 'Quick edit fields'}</h3>
             <p className="text-xs text-gray-500 mb-3">
-              Estos campos también se pueden editar directamente desde las tarjetas de productos
+              {locale === 'es' ? 'Estos campos también se pueden editar directamente desde las tarjetas de productos' : 'These fields can also be edited directly from the product cards'}
             </p>
             
             {/* Precio */}
             <div className="mb-4">
               <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
-                Precio (₡)
+                {locale === 'es' ? 'Precio (₡)' : 'Price (₡)'}
               </label>
               <input
                 type="number"
@@ -199,7 +200,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
                   onChange={(e) => setIsActive(e.target.checked)}
                 />
                 <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700">
-                  Producto activo (visible en la tienda)
+                  {locale === 'es' ? 'Producto activo (visible en la tienda)' : 'Product active (visible in the store)'}
                 </label>
               </div>
             </div>
@@ -207,7 +208,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
             {/* Descuento */}
             <div className="mb-4">
               <label htmlFor="discountPercentage" className="block text-sm font-medium text-gray-700 mb-1">
-                Porcentaje de descuento (%)
+                {locale === 'es' ? 'Porcentaje de descuento (%)' : 'Discount percentage (%)'}
               </label>
               <input
                 type="number"
@@ -230,7 +231,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
             className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none"
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
-            <span className="font-medium">Opciones avanzadas</span>
+            <span className="font-medium">{locale === 'es' ? 'Opciones avanzadas' : 'Advanced options'}</span>
             {showAdvanced ? (
               <ChevronUp className="h-5 w-5 text-gray-500" />
             ) : (
@@ -241,13 +242,13 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
           {showAdvanced && (
             <div className="p-4 bg-white">
               <p className="text-gray-500 text-sm mb-4">
-                Estas opciones están disponibles pero no son necesarias para la edición rápida de precios.
+                {locale === 'es' ? 'Estas opciones están disponibles pero no son necesarias para la edición rápida de precios.' : 'These options are available but are not necessary for quick price editing.'}
               </p>
               
               {/* Aquí se pueden agregar más campos como categoría, especificaciones, etc. */}
               <div className="mb-4">
                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-                  Categoría
+                  {locale === 'es' ? 'Categoría' : 'Category'}
                 </label>
                 <select
                   id="category"
@@ -255,7 +256,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
                   value={product.category_id || ''}
                   disabled
                 >
-                  <option value="">Sin categoría</option>
+                  <option value="">{locale === 'es' ? 'Sin categoría' : 'No category'}</option>
                   {categories.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name_es}
@@ -263,7 +264,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
                   ))}
                 </select>
                 <p className="mt-1 text-xs text-gray-500">
-                  La categoría no se puede cambiar desde esta pantalla.
+                  {locale === 'es' ? 'La categoría no se puede cambiar desde esta pantalla.' : 'The category cannot be changed from this screen.'}
                 </p>
               </div>
             </div>
@@ -277,7 +278,7 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
             onClick={onCancel}
             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
           >
-            Cancelar
+            {locale === 'es' ? 'Cancelar' : 'Cancel'}
           </button>
           <button
             type="button"
@@ -288,12 +289,12 @@ export default function ProductEditor({ product, categories, onSave, onCancel }:
             {saving ? (
               <>
                 <span className="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
-                Guardando...
+                {locale === 'es' ? 'Guardando...' : 'Saving...'}
               </>
             ) : (
               <>
                 <Save className="h-5 w-5 mr-2" />
-                Guardar cambios
+                {locale === 'es' ? 'Guardar cambios' : 'Save changes'}
               </>
             )}
           </button>

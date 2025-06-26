@@ -5,8 +5,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { useSupabase } from '@/app/supabase-provider/provider';
+import { useLocale } from 'next-intl';
 
 export default function CallToAction() {
+  const locale = useLocale();
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
@@ -62,23 +64,22 @@ export default function CallToAction() {
           <div className="absolute bottom-0 right-0 w-32 h-32 bg-teal-500/20 rounded-full translate-x-1/3 translate-y-1/3"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-4xl font-bold mb-2 text-gray-900">Únete a nuestro movimiento de cambio social</h2>
+            <h2 className="text-2xl md:text-4xl font-bold mb-2 text-gray-900">{locale === 'es' ? 'Únete a nuestro movimiento de cambio social' : 'Join our movement for social change'}</h2>
             <p className="text-gray-800 text-sm sm:text-lg mb-3">
-              Al adquirir nuestras artesanías, no solo embelleces tu hogar con piezas únicas, sino que también contribuyes a 
-              transformar vidas y crear oportunidades para personas privadas de libertad en Costa Rica.
+              {locale === 'es' ? 'Al adquirir nuestras artesanías, no solo embelleces tu hogar con piezas únicas, sino que también contribuyes a transformar vidas y crear oportunidades para personas privadas de libertad en Costa Rica.' : 'By purchasing our handmade crafts, you not only beautify your home with unique pieces, but you also contribute to transforming lives and creating opportunities for people deprived of freedom in Costa Rica.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 href="/products" 
                 className="bg-teal-500 text-black hover:bg-teal-600 font-medium rounded-lg px-6 py-3 shadow-sm transition"
               >
-                Explorar productos
+                {locale === 'es' ? 'Explorar productos' : 'Explore products'}
               </Link>
               <Link 
                 href="/about" 
                 className="border border-black text-black hover:bg-white/10 font-medium rounded-lg px-6 py-3 transition"
               >
-                Conocer más
+                {locale === 'es' ? 'Conocer más' : 'Learn more'}
               </Link>
             </div>
           </div>
@@ -86,14 +87,14 @@ export default function CallToAction() {
         
         {/* Newsletter subscription */}
         <div className="mt-6 max-w-2xl mx-auto text-center">
-          <h3 className="text-2xl font-semibold text-gray-900 mb-3">Mantente informado</h3>
+          <h3 className="text-2xl font-semibold text-gray-900 mb-3">{locale === 'es' ? 'Mantente informado' : 'Stay informed'}</h3>
           <p className="text-gray-800 mb-2">
-            Suscríbete para recibir noticias sobre nuevos productos, historias de nuestros artesanos y promociones especiales
+            {locale === 'es' ? 'Suscríbete para recibir noticias sobre nuevos productos, historias de nuestros artesanos y promociones especiales' : 'Subscribe to receive news about new products, stories of our artisans and special promotions'}
           </p>
           
           {newsletterStatus === 'success' ? (
             <div className="bg-green-50 text-green-800 px-4 py-3 rounded-lg border border-green-200">
-              ¡Gracias por suscribirte! Pronto recibirás nuestras novedades.
+              {locale === 'es' ? '¡Gracias por suscribirte! Pronto recibirás nuestras novedades.' : 'Thank you for subscribing! You will soon receive our news.'}
             </div>
           ) : (
             <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -112,7 +113,7 @@ export default function CallToAction() {
                   ? 'bg-amber-300 text-amber-800 cursor-not-allowed' 
                   : 'bg-amber-500 hover:bg-amber-600 text-white'}`}
               >
-                {newsletterStatus === 'loading' ? 'Procesando...' : 'Suscribirse'}
+                {locale === 'es' ? (newsletterStatus === 'loading' ? 'Procesando...' : 'Suscribirse') : (newsletterStatus === 'loading' ? 'Processing...' : 'Subscribe')}
               </button>
             </form>
           )}
