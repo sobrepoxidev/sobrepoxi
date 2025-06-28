@@ -4,7 +4,8 @@ import { supabase } from './supabaseClient';
 // Definición del tipo para los productos vistos
 export interface ViewedProduct {
   id: number;
-  name: string;
+  name_es: string;
+  name_en: string;
   colon_price: number | null;
   dolar_price: number | null;
   category: string | null;
@@ -37,7 +38,8 @@ export function getLocalViewedHistory(): ViewedProduct[] {
  */
 export async function addProductToHistory(product: {
   id: number;
-  name: string | null;
+  name_es: string;
+  name_en: string;
   colon_price: number | null;
   dolar_price: number | null;
   category: string | null;
@@ -56,7 +58,8 @@ export async function addProductToHistory(product: {
     const currentTime = new Date();
     const newEntry: ViewedProduct = {
       id: product.id,
-      name: product.name || 'Producto sin nombre',
+      name_es: product.name_es,
+      name_en: product.name_en,
       colon_price: product.colon_price,
       dolar_price: product.dolar_price,
       category: product.category,

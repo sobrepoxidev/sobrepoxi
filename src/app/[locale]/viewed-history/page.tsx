@@ -7,13 +7,15 @@ import { ChevronRight, Trash2, Clock, AlertCircle } from 'lucide-react';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { getLocalViewedHistory, removeFromHistory, clearViewedHistory, ViewedProduct, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
 import { Session } from '@supabase/supabase-js';
-
+import { useLocale } from "next-intl";
+import { formatUSD } from '@/lib/formatCurrency';
 
 export default function ViewedHistoryPage() {
   const [history, setHistory] = useState<ViewedProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
+  const locale = useLocale();
 
   // Cargar el historial y la sesión al montar el componente
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function ViewedHistoryPage() {
   // Formatear fecha
   const formatDate = (date: Date): string => {
     const dateObj = new Date(date);
-    return new Intl.DateTimeFormat('es-ES', {
+    return new Intl.DateTimeFormat(locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -69,18 +71,18 @@ export default function ViewedHistoryPage() {
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center text-sm text-gray-500">
-        <Link href="/" className="hover:text-teal-600">Inicio</Link>
+        <Link href="/" className="hover:text-teal-600">{locale == 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">Historial de productos vistos</span>
+        <span className="font-medium text-gray-900">{locale == 'es' ? 'Historial de productos vistos' : 'Viewed history'}</span>
       </div>
 
       {/* Encabezado */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Productos vistos recientemente
+          {locale == 'es' ? 'Productos vistos recientemente' : 'Recently viewed products'}
         </h1>
         <p className="text-gray-600">
-          Aquí puedes ver los últimos productos que has visitado.
+          {locale == 'es' ? 'Aquí puedes ver los últimos productos que has visitado.' : 'Here you can see the last products you have visited.'}
         </p>
       </div>
 
@@ -90,14 +92,14 @@ export default function ViewedHistoryPage() {
           <AlertCircle className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
           <div className="flex-grow">
             <p className="text-blue-700 text-sm">
-              <strong>¿Quieres guardar tu historial?</strong> Inicia sesión para mantener tu historial de productos vistos en todos tus dispositivos.
+              <strong>{locale == 'es' ? '¿Quieres guardar tu historial?' : 'Do you want to save your history?'}</strong> {locale == 'es' ? 'Inicia sesión para mantener tu historial de productos vistos en todos tus dispositivos.' : 'Sign in to keep your viewed product history on all your devices.'}
             </p>
           </div>
           <Link 
-            href="/login" 
+            href="/login?redirect_to=/viewed-history" 
             className="ml-4 px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 whitespace-nowrap flex-shrink-0"
           >
-            Iniciar sesión
+            {locale == 'es' ? 'Iniciar sesión' : 'Sign in'}
           </Link>
         </div>
       )}
@@ -116,7 +118,7 @@ export default function ViewedHistoryPage() {
               className="flex items-center text-sm text-red-600 hover:text-red-800 transition"
             >
               <Trash2 className="h-4 w-4 mr-1" />
-              Limpiar historial
+              {locale == 'es' ? 'Limpiar historial' : 'Clear history'}
             </button>
           </div>
 
@@ -137,7 +139,7 @@ export default function ViewedHistoryPage() {
                   <div className="relative h-48 overflow-hidden bg-gray-50 flex items-center justify-center p-4">
                     <Image
                       src={product.imageUrl}
-                      alt={product.name || ''}
+                      alt={locale == 'es' ? product.name_es : product.name_en || ''}
                       width={110}
                       height={0}
                       className="object-contain max-h-full w-auto group-hover:scale-105 transition-transform duration-300"
@@ -150,10 +152,10 @@ export default function ViewedHistoryPage() {
 
                 <div className="p-4">
                   <div className="mb-3">
-                    <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{product.name}</h3>
+                    <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{locale == 'es' ? product.name_es : product.name_en}</h3>
                     <div className="flex items-center justify-between">
                       <p className="font-bold text-teal-700">
-                        {product.colon_price ? `₡${product.colon_price}` : 'Consultar'}
+                        {product.dolar_price ? `${formatUSD(product.dolar_price)}` : 'Consultar'}
                       </p>
                       
                       <div className="flex items-center text-xs text-gray-500">
@@ -169,7 +171,7 @@ export default function ViewedHistoryPage() {
                     href={`/products?id=${product.id}`}
                     className="block w-full text-center py-2 border border-teal-600 text-teal-700 rounded-md hover:bg-teal-50 transition text-sm"
                   >
-                    Ver producto
+                    {locale == 'es' ? 'Ver producto' : 'View product'}
                   </Link>
                 </div>
               </div>
@@ -187,13 +189,13 @@ export default function ViewedHistoryPage() {
               className="mx-auto opacity-80" 
             />
           </div>
-          <h2 className="text-xl font-medium text-gray-700 mb-2">No hay productos en tu historial</h2>
-          <p className="text-gray-500 mb-6">Explora nuestra tienda y vuelve aquí para ver tu historial de navegación</p>
+          <h2 className="text-xl font-medium text-gray-700 mb-2">{locale == 'es' ? 'No hay productos en tu historial' : 'No products in your history'}</h2>
+          <p className="text-gray-500 mb-6">{locale == 'es' ? 'Explora nuestra tienda y vuelve aquí para ver tu historial de navegación' : 'Explore our store and come back here to see your navigation history'}</p>
           <Link 
             href="/products" 
             className="inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
           >
-            Explorar productos
+            {locale == 'es' ? 'Explorar productos' : 'Explore products'}
           </Link>
         </div>
       )}
