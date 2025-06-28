@@ -6,7 +6,8 @@ import { addProductToHistory } from '@/lib/viewedHistory';
 interface ViewedHistoryTrackerProps {
   product: {
     id: number;
-    name: string | null;
+    name_es: string;
+    name_en: string;
     colon_price: number | null;
     dolar_price: number | null;
     category: string | null;
