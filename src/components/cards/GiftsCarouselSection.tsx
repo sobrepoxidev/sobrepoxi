@@ -5,6 +5,7 @@ import { useProductsContext } from '@/context/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatUSD } from '@/lib/formatCurrency';
 
 interface GiftsCarouselSectionProps {
   /** Identificador único para este componente, usado para la distribución de productos */
@@ -218,7 +219,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                           </div>
                           <div className="mt-1 text-white text-xs font-medium line-clamp-1">
                             {product.dolar_price && (
-                              <>$ {product.dolar_price.toLocaleString()}</>
+                              <>{formatUSD(product.dolar_price)}</>
                             )}
                           </div>
                         </Link>

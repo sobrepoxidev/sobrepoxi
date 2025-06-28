@@ -8,6 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import { supabase } from '@/lib/supabaseClient';
 import { useLocale } from 'next-intl';
+import { formatUSD } from '@/lib/formatCurrency';
 
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -180,15 +181,15 @@ export default function ProductCard({ product }: { product: Product }) {
               {product.discount_percentage && product.discount_percentage > 0 ? (
                 <div className="mb-2">
                   <p className="text-lg font-bold text-teal-700">
-                    ${finalPrice?.toFixed(2)}
+                    {formatUSD(finalPrice || 0)}
                   </p>
                   <p className="text-xs text-gray-500 line-through">
-                    ${product.dolar_price.toFixed(2)}
+                    {formatUSD(product.dolar_price || 0)}
                   </p>
                 </div>
               ) : (
                 <p className="text-lg font-bold text-teal-700 mb-2">
-                  ${product.dolar_price.toFixed(2)}
+                  {formatUSD(product.dolar_price || 0)}
                 </p>
               )}
             </div>

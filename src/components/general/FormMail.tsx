@@ -3,9 +3,11 @@ import { useActionState} from 'react';
 import { handleVacationForm } from "../../actions";
 import { motion } from 'framer-motion';
 import { FaSpinner, FaCheck } from 'react-icons/fa';
+import { useLocale } from 'next-intl';
 
 export default function FormMail() {
   const [state, formAction, isPending] = useActionState(handleVacationForm, null);
+  const locale = useLocale();
 
   return (
     <div>
@@ -19,7 +21,7 @@ export default function FormMail() {
         <div className="space-y-4 text-start">
           <div>
             <label className="block mb-2 font-medium text-gray-700 text-sm">
-              Nombre
+              {locale === "es" ? "Nombre" : "Name"}
             </label>
             <input
               type="text"
@@ -35,7 +37,7 @@ export default function FormMail() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700 text-sm">
-              Correo electrónico
+              {locale === "es" ? "Correo electrónico" : "Email"}
             </label>
             <input
               type="email"
@@ -51,7 +53,7 @@ export default function FormMail() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700 text-sm">
-              Teléfono
+              {locale === "es" ? "Teléfono" : "Phone"}
             </label>
             <input
               type="tel"
@@ -66,7 +68,7 @@ export default function FormMail() {
 
           <div>
             <label className="block mb-2 font-medium text-gray-700 text-sm">
-              Mensaje
+              {locale === "es" ? "Mensaje" : "Message"}
             </label>
             <textarea
               name="message"
@@ -93,15 +95,15 @@ export default function FormMail() {
             {isPending ? (
               <>
                 <FaSpinner className="inline-block animate-spin mr-2" />
-                <span>Enviando...</span>
+                <span>{locale === "es" ? "Enviando..." : "Sending..."}</span>
               </>
             ) : state?.success ? (
               <>
                 <FaCheck className="inline-block mr-2" />
-                <span>¡Enviado con éxito!</span>
+                <span>{locale === "es" ? "Enviado con éxito!" : "Message sent successfully"}</span>
               </>
             ) : (
-              <span>Enviar mensaje</span>
+              <span>{locale === "es" ? "Enviar mensaje" : "Send message"}</span>
             )}
           </button>
           {state && !state?.success && (

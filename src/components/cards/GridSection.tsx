@@ -8,6 +8,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { Database } from "@/types-db";
 import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
+import { formatUSD } from "@/lib/formatCurrency";
 
 // Type definitions with fixes for TypeScript errors
 type Category = Database['categories'] & { image_url?: string }; // Add image_url property
@@ -141,7 +142,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                       </span>
                       {product.dolar_price && (
                         <span className="text-[10px] font-bold text-teal-700 mt-0.5">
-                          $ {product.dolar_price.toLocaleString()}
+                          {formatUSD(product.dolar_price)}
                         </span>
                       )}
                     </div>

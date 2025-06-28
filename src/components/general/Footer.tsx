@@ -154,7 +154,7 @@ export default function Footer({ locale }: { locale: string }) {
           <p className="text-gray-400 text-sm mb-2">
             © {new Date().getFullYear()} HandMade Art. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
           </p>
-          <p className="text-xs text-gray-500 flex flex-wrap items-center justify-center gap-1">
+          <p className="text-[.50rem] text-gray-500 flex flex-wrap items-center justify-center gap-1">
             {locale === 'es' ? 'Desarrollado por ' : 'Developed by '}
             <Link
               href="https://sobrepoxi.com"

@@ -11,6 +11,7 @@ import PaginationControls from '@/components/products/PaginationControls';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
 import { Product } from '@/lib/hooks/useProducts';
+import { formatUSD } from '@/lib/formatCurrency';
 
 // Número de productos por página
 const PRODUCTS_PER_PAGE = 12;
@@ -333,7 +334,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                         )}
                         <div className="flex items-center justify-between">
                           <p className="font-bold text-teal-700">
-                            {product.dolar_price ? `$${product.dolar_price}` : (
+                            {product.dolar_price ? `${formatUSD(product.dolar_price)}` : (
                               <Link 
                                 href={`https://wa.me/50684237555?text=${encodeURIComponent(
                                   locale === 'es' 

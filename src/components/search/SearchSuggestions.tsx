@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SearchResult } from '@/lib/search';
 import { Search, X } from 'lucide-react';
+import { formatUSD } from '@/lib/formatCurrency';
 
 interface SearchSuggestionsProps {
   query: string;
@@ -114,15 +115,15 @@ export default function SearchSuggestions({
                         product.discount_percentage && product.discount_percentage > 0 ? (
                           <div className="text-right">
                             <p className="font-medium text-teal-700">
-                              ${product.dolar_price.toFixed(2)}
+                              {formatUSD(product.dolar_price)}
                             </p>
                             <p className="text-xs text-gray-500 line-through">
-                              ${product.dolar_price.toFixed(2)}
+                              {formatUSD(product.dolar_price)}
                             </p>
                           </div>
                         ) : (
                           <p className="font-medium text-teal-700">
-                            ${product.dolar_price.toFixed(2)}
+                            {formatUSD(product.dolar_price)}
                           </p>
                         )
                       ) : (

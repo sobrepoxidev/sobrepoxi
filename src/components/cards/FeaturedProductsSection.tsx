@@ -5,6 +5,7 @@ import { useProductsContext } from '@/context/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatUSD } from '@/lib/formatCurrency';
 
 interface FeaturedProductsSectionProps {
   /** Número máximo de productos a mostrar */
@@ -75,7 +76,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
                     {/* Precio flotante */}
                     {product.dolar_price && (
                       <div className="absolute bottom-2 right-2 bg-teal-500 text-white text-sm font-bold px-3 py-1 rounded-md">
-                        $ {product.dolar_price.toLocaleString()}
+                        {formatUSD(product.dolar_price)}
                       </div>
                     )}
                   </div>

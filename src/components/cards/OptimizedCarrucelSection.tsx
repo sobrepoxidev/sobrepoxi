@@ -5,6 +5,7 @@ import { useProductsContext } from '@/context/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatUSD } from '@/lib/formatCurrency';
 
 interface OptimizedCarrucelSectionProps {
   title: string;
@@ -173,7 +174,7 @@ const OptimizedCarrucelSection: React.FC<OptimizedCarrucelSectionProps> = ({
                       </div>
                       {product.dolar_price && (
                         <div className="mt-2 text-white font-bold">
-                          $ {product.dolar_price.toLocaleString()}
+                          {formatUSD(product.dolar_price)}
                         </div>
                       )}
                     </div>

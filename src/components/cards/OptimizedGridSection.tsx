@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useProductsContext } from "@/context/ProductsContext";
 import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
+import { formatUSD } from "@/lib/formatCurrency";
 
 
 interface GridSectionProps {
@@ -61,7 +62,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         </span>
                         {product.dolar_price && (
                           <span className="text-[10px] font-bold text-teal-700 mt-0.5">
-                            $ {product.dolar_price.toLocaleString()}
+                            {formatUSD(product.dolar_price)}
                           </span>
                         )}
                       </div>
