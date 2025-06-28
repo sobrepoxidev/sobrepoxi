@@ -7,7 +7,8 @@ interface ViewedHistoryTrackerProps {
   product: {
     id: number;
     name: string | null;
-    price: number | null;
+    colon_price: number | null;
+    dolar_price: number | null;
     category: string | null;
     media?: Array<{ url: string, type: string }> | null;
   };

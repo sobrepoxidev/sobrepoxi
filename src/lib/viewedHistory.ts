@@ -5,7 +5,8 @@ import { supabase } from './supabaseClient';
 export interface ViewedProduct {
   id: number;
   name: string;
-  price: number | null;
+  colon_price: number | null;
+  dolar_price: number | null;
   category: string | null;
   imageUrl: string;
   viewedAt: Date;
@@ -37,7 +38,8 @@ export function getLocalViewedHistory(): ViewedProduct[] {
 export async function addProductToHistory(product: {
   id: number;
   name: string | null;
-  price: number | null;
+  colon_price: number | null;
+  dolar_price: number | null;
   category: string | null;
   media?: Array<{ url: string, type: string }> | null;
 }): Promise<void> {
@@ -55,7 +57,8 @@ export async function addProductToHistory(product: {
     const newEntry: ViewedProduct = {
       id: product.id,
       name: product.name || 'Producto sin nombre',
-      price: product.price,
+      colon_price: product.colon_price,
+      dolar_price: product.dolar_price,
       category: product.category,
       imageUrl: product.media?.[0]?.url || '/product-placeholder.png',
       viewedAt: currentTime
