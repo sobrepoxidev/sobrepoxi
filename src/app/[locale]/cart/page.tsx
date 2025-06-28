@@ -491,14 +491,17 @@ export default function CartPage() {
                 onClick={async () => {
                   if (currentSession === null) {
                     // If not logged in, redirect to login page with return URL
-                    // Include both pathname and search (query) parameters
-                    const currentUrl = new URL(window.location.href);
-                    // Ensure we include the locale in the return URL
-                    const localePath = currentUrl.pathname.split('/')[1];
-                    const pathWithoutLocale = currentUrl.pathname.split('/').slice(2).join('/') || '/';
-                    const returnUrl = `/${localePath}${pathWithoutLocale}${currentUrl.search}`;
+                    // Get the current path including search params
+                    const currentPath = window.location.pathname + window.location.search;
                     
-                    // Use the 'next' parameter which is what Supabase OAuth expects
+                    // Create a URL object to handle the path properly
+                    const url = new URL(currentPath, window.location.origin);
+                    
+                    // Ensure we have a leading slash but not double slashes
+                    const cleanPath = url.pathname.replace(/\/+$/, '');
+                    const returnUrl = `${cleanPath}${url.search}`;
+                    
+                    // Redirect to login with the next parameter
                     router.push(`/login?next=${encodeURIComponent(returnUrl)}`);
                     return;
                   }

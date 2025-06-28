@@ -26,10 +26,14 @@ export default function LoginPage() {
   useEffect(() => {
     setMounted(true)
     
-    // Extraer returnUrl o redirect del query string usando Next.js searchParams
-    const returnUrlParam = searchParams.get('returnUrl') || searchParams.get('redirect');
-    if (returnUrlParam) {
-      setReturnUrl(returnUrlParam);
+    // Extraer next, returnUrl o redirect del query string
+    const nextParam = searchParams.get('next') || 
+                     searchParams.get('returnUrl') || 
+                     searchParams.get('redirect') ||
+                     '/';
+    
+    if (nextParam) {
+      setReturnUrl(nextParam);
     }
   }, [searchParams])
 
@@ -66,35 +70,33 @@ export default function LoginPage() {
     }
   }
 
-  const signInWithGoogle = async (returnUrl: string) => {
+  const signInWithGoogle = async (nextUrl: string) => {
     setLoading(true);
     setErrorMsg("");
     
-    // Use the returnUrl as the 'next' parameter for the callback
-    const nextPath = returnUrl.startsWith('/') ? returnUrl : `/${returnUrl}`;
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
-    
-    // 2. Call Supabase
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { 
-        redirectTo,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
-      },
-    });
-    
-    // 3. Handle errors
-    if (error) {
-      setErrorMsg(error.message);
+      });
+      
+      if (error) throw error;
+      
+      // If we have a URL, redirect to it (this handles the OAuth flow)
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (error: any) {
+      console.error('Error signing in with Google:', error);
+      setErrorMsg(error.message || 'Error al iniciar sesión con Google');
       setLoading(false);
-      return;
     }
-    
-    // 4. Force redirect (in case the SDK doesn't do it)
-    if (data?.url) window.location.href = data.url;
   };
   if (!mounted) return null
 
