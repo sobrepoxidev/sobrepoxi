@@ -171,9 +171,9 @@ const OptimizedCarrucelSection: React.FC<OptimizedCarrucelSectionProps> = ({
                           priority={index < 2} // Solo priorizar las primeras imágenes
                         />
                       </div>
-                      {product.colon_price && (
+                      {product.dolar_price && (
                         <div className="mt-2 text-white font-bold">
-                          ₡{product.colon_price.toLocaleString()}
+                          $ {product.dolar_price.toLocaleString()}
                         </div>
                       )}
                     </div>

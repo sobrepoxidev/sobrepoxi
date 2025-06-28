@@ -118,22 +118,22 @@ export default function StepTwo({
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-slate-700">
               <span>{locale == "es" ? "Subtotal" : "Subtotal"}</span>
-              <span>₡ {cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0).toFixed(2)}</span>
+              <span>${cart.reduce((sum, item) => sum + ((item.product.dolar_price || 0) * item.quantity), 0).toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm text-slate-700">
               <span>{locale == "es" ? "Envío" : "Shipping"}</span>
-              <span>₡ 3,200.00</span>
+              <span>$7(₡3.200)</span>
             </div>
             {discountInfo && (
               <div className="flex justify-between text-sm text-green-600 font-medium">
                 <span>{locale == "es" ? "Descuento" : "Discount"} ({discountInfo.code})</span>
-                <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
+                <span>- $ {discountInfo.discountAmount.toFixed(2)}</span>
               </div>
             )}
             <hr className="border-slate-300 my-2" />
             <div className="flex justify-between font-semibold text-base text-slate-800">
               <span>{locale == "es" ? "Total del pedido" : "Order total"}</span>
-              <span>₡ {total.toFixed(2)}</span>
+              <span>$ {total.toFixed(2)}</span>
             </div>
           </div>
         </div>

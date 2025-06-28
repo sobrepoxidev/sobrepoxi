@@ -76,7 +76,7 @@ export default function SearchBar({
         const { results } = await searchProducts(
           debouncedQuery,
           locale,
-          selectedCategory !== 'Todo' ? selectedCategory : undefined,
+          (selectedCategory == 'Todo' || selectedCategory == 'All') ? undefined : selectedCategory,
           10,  // Límite de resultados
           12,  // Valor por defecto para limit
           'relevance', // Ordenar por relevancia

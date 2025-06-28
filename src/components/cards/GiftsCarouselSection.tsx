@@ -217,8 +217,8 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                             />
                           </div>
                           <div className="mt-1 text-white text-xs font-medium line-clamp-1">
-                            {product.colon_price && (
-                              <>₡{product.colon_price.toLocaleString()}</>
+                            {product.dolar_price && (
+                              <>$ {product.dolar_price.toLocaleString()}</>
                             )}
                           </div>
                         </Link>

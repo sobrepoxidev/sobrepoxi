@@ -170,7 +170,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Calculate total items and subtotal
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + (item.quantity * (item.product.colon_price || 0)), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.quantity * (item.product.dolar_price || 0)), 0);
 
   // Sync cart with database
   const syncCartWithDB = async (userId?: string) => {

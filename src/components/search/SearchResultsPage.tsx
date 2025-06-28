@@ -333,7 +333,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                         )}
                         <div className="flex items-center justify-between">
                           <p className="font-bold text-teal-700">
-                            {product.colon_price ? `₡${product.colon_price}` : (
+                            {product.dolar_price ? `$${product.dolar_price}` : (
                               <Link 
                                 href={`https://wa.me/50684237555?text=${encodeURIComponent(
                                   locale === 'es' 

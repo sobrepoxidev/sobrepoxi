@@ -41,11 +41,9 @@ export async function POST(request: NextRequest) {
     try {
       const accessToken = await getPaypalAccessToken();
       
-      // Tasa de conversión de CRC a USD según PayPal
-      const CRC_TO_USD = 0.0019128;
       
       // Convertir el monto a dólares
-      const amountUSD = Number((orderData.total_amount * CRC_TO_USD).toFixed(2));
+      const amountUSD = orderData.total_amount ;
       
       if (DEBUG) {
         console.log(`Converting CRC ${orderData.total_amount} to USD ${amountUSD}`);

@@ -572,7 +572,7 @@ export default function StepOne({
                     </div>
                     <div className="text-right">
                       <p className="font-medium">
-                        {item.product.colon_price ? `₡${(item.product.colon_price * item.quantity).toFixed(2)}` : 'N/A'}
+                        {item.product.dolar_price ? `$${(item.product.dolar_price * item.quantity).toFixed(2)}` : 'N/A'}
                       </p>
                     </div>
                   </div>
@@ -584,25 +584,25 @@ export default function StepOne({
                 <div className="flex justify-between">
                   <span>{locale == "es" ? "Total parcial" : "Partial total"}</span>
                   <span>
-                    ₡{cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0).toFixed(2)}
+                    $ {cart.reduce((sum, item) => sum + ((item.product.dolar_price || 0) * item.quantity), 0).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span>{locale == "es" ? "Envío" : "Shipping"}</span>
-                  <span>₡{'3,200.00'}</span>
+                  <span>$7(₡3,200.00)</span>
                 </div>
                 {discountInfo && (
                   <div className="flex justify-between text-green-600 font-medium">
                     <span>{locale == "es" ? "Descuento" : "Discount"} ({discountInfo.code})</span>
-                    <span>- ₡{discountInfo.discountAmount.toFixed(2)}</span>
+                    <span>- $ {discountInfo.discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between font-bold border-t pt-2">
                   <span>{locale == "es" ? "Total del pedido:" : "Total of the order:"}</span>
                   <span>
-                    ₡{(discountInfo 
+                    $ {(discountInfo 
                       ? discountInfo.finalTotal 
-                      : cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0) + 3200
+                      : cart.reduce((sum, item) => sum + ((item.product.dolar_price || 0) * item.quantity), 0) + 7
                     ).toFixed(2)}
                   </span>
                 </div>

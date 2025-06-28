@@ -63,10 +63,10 @@ export default function ProductCard({ product }: { product: Product }) {
   }, [product.id, product.category_id]);
   
   // Calculate final price with discount
-  const finalPrice = product.colon_price ? 
+  const finalPrice = product.dolar_price ? 
     product.discount_percentage && product.discount_percentage > 0 ?
-      product.colon_price * (1 - product.discount_percentage / 100) :
-      product.colon_price
+      product.dolar_price * (1 - product.discount_percentage / 100) :
+      product.dolar_price
     : null;
   
   return (
@@ -175,20 +175,20 @@ export default function ProductCard({ product }: { product: Product }) {
         
         {/* Precio e Inventario */}
         <div className="mt-auto">
-          {product.colon_price ? (
+          {product.dolar_price ? (
             <div>
               {product.discount_percentage && product.discount_percentage > 0 ? (
                 <div className="mb-2">
                   <p className="text-lg font-bold text-teal-700">
-                    ₡{finalPrice?.toFixed(2)}
+                    ${finalPrice?.toFixed(2)}
                   </p>
                   <p className="text-xs text-gray-500 line-through">
-                    ₡{product.colon_price.toFixed(2)}
+                    ${product.dolar_price.toFixed(2)}
                   </p>
                 </div>
               ) : (
                 <p className="text-lg font-bold text-teal-700 mb-2">
-                  ₡{product.colon_price.toFixed(2)}
+                  ${product.dolar_price.toFixed(2)}
                 </p>
               )}
             </div>

@@ -110,19 +110,19 @@ export default function SearchSuggestions({
                       </div>
                     </div>
                     <div className="flex-shrink-0 ml-2">
-                      {product.colon_price ? (
+                      {product.dolar_price ? (
                         product.discount_percentage && product.discount_percentage > 0 ? (
                           <div className="text-right">
                             <p className="font-medium text-teal-700">
-                              ₡{(product.colon_price * (1 - (product.discount_percentage / 100))).toFixed(2)}
+                              ${product.dolar_price.toFixed(2)}
                             </p>
                             <p className="text-xs text-gray-500 line-through">
-                              ₡{product.colon_price.toFixed(2)}
+                              ${product.dolar_price.toFixed(2)}
                             </p>
                           </div>
                         ) : (
                           <p className="font-medium text-teal-700">
-                            ₡{product.colon_price.toFixed(2)}
+                            ${product.dolar_price.toFixed(2)}
                           </p>
                         )
                       ) : (

@@ -406,31 +406,31 @@ export default function ProductsPageContent() {
                     
                     <div className="mt-auto flex flex-wrap items-center justify-between gap-2">
                       <div>
-                        {product.colon_price ? (
+                        {product.dolar_price ? (
                           <div>
                             {product.discount_percentage && product.discount_percentage > 0 ? (
                               <div className="flex flex-col">
                                 <div className="flex items-center gap-2">
                                   <p className="text-lg font-bold text-teal-700">
-                                    ₡{(product.colon_price * (1 - (product.discount_percentage || 0) / 100)).toFixed(2)}
+                                    ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                                   </p>
                                   <span className="text-xs font-medium bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
                                     {product.discount_percentage}% OFF
                                   </span>
                                 </div>
                                 <p className="text-xs text-gray-500 line-through">
-                                  ₡{product.colon_price.toFixed(2)}
+                                  ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                                 </p>
                               </div>
                             ) : (
                               <p className="text-lg font-bold text-teal-700">
-                                ₡{product.colon_price.toFixed(2)}
+                                ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                               </p>
                             )}
                           </div>
                         ) : (
                           <p className="text-sm font-medium text-gray-700">
-                            Precio a consultar
+                           {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
                           </p>
                         )}
                       </div>

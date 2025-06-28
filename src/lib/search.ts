@@ -116,9 +116,9 @@ export async function searchProducts(
     
     // Apply sorting based on sortBy parameter
     if (sortBy === 'price-asc') {
-      queryBuilder = queryBuilder.order('colon_price', { ascending: true });
+      queryBuilder = queryBuilder.order('dolar_price', { ascending: true });
     } else if (sortBy === 'price-desc') {
-      queryBuilder = queryBuilder.order('colon_price', { ascending: false });
+      queryBuilder = queryBuilder.order('dolar_price', { ascending: false });
     } else if (sortBy === 'newest') {
       queryBuilder = queryBuilder.order('created_at', { ascending: false });
     }

@@ -80,9 +80,9 @@ export default function CartPage() {
 
   // Calculate the total price with discounts applied
   const subtotal = cart.reduce((acc, item) => {
-    if (!item.product.colon_price) return acc;
+    if (!item.product.dolar_price) return acc;
     
-    const price = item.product.colon_price;
+    const price = item.product.dolar_price;
     const discount = item.product.discount_percentage || 0;
     const finalPrice = price * (1 - (discount / 100));
     
@@ -291,10 +291,10 @@ export default function CartPage() {
                   {product.discount_percentage && product.discount_percentage > 0 ? (
                     <>
                       <span className="font-medium text-slate-800">
-                        ₡{((product.colon_price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
+                        ${((product.dolar_price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
                       </span>
                       <span className="text-xs text-gray-500 line-through">
-                        ₡{(product.colon_price || 0).toFixed(0)}
+                        ${(product.dolar_price || 0).toFixed(0)}
                       </span>
                       <span className="text-xs bg-red-100 text-red-700 px-1 py-0.5 rounded">
                         {product.discount_percentage}% OFF
@@ -302,7 +302,7 @@ export default function CartPage() {
                     </>
                   ) : (
                     <span className="font-medium text-slate-800">
-                      ₡{(product.colon_price ?? 0).toFixed(0)}
+                      ${product.dolar_price ?? 0}
                     </span>
                   )}
                 </div>
@@ -389,7 +389,7 @@ export default function CartPage() {
                       // Verificar monto mínimo de compra
                       const cartTotal = subtotal + shipping;
                       if (cartTotal < data.min_purchase_amount) {
-                        setDiscountError( locale === 'es' ? `El monto mínimo de compra para este código es ₡${data.min_purchase_amount.toFixed(2)}` : `The minimum purchase amount for this code is ₡${data.min_purchase_amount.toFixed(2)}`);
+                        setDiscountError( locale === 'es' ? `El monto mínimo de compra para este código es $${data.min_purchase_amount.toFixed(2)}` : `The minimum purchase amount for this code is $${data.min_purchase_amount.toFixed(2)}`);
                         setIsApplyingDiscount(false);
                         return;
                       }
@@ -468,24 +468,24 @@ export default function CartPage() {
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm text-slate-700">
                   <span>{locale === 'es' ? 'Total del artículo' : 'Total of the article'} ({cart.length} artículo{cart.length !== 1 && "s"})</span>
-                  <span>₡ {subtotal.toFixed(2)}</span>
+                  <span>${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-slate-700">
                   <span>{locale === 'es' ? 'Envío' : 'Shipping'}</span>
-                  <span>₡ {shipping.toFixed(2)}</span>
+                  <span>${shipping.toFixed(2)}</span>
                 </div>
                 {discountInfo && (
                   <div className="flex justify-between text-sm text-green-600 font-medium">
                     <span>{locale === 'es' ? 'Descuento' : 'Discount'} ({discountInfo.code})</span>
-                    <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
+                    <span>- $ {discountInfo.discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <hr className="border-slate-300" />
                 <div className="flex justify-between font-semibold text-base text-slate-800">
                   <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
-                  <span>₡ {total.toFixed(2)}</span>
+                  <span>${total.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-slate-500">{locale === 'es' ? 'Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}' : 'Note: you will be charged in CRC for ₡ {total.toFixed(2)}'}</p>
+                <p className="text-xs text-slate-500">{locale === 'es' ? 'Nota: se te cobrará en CRC para $ {total.toFixed(2)}' : 'Note: you will be charged in CRC for $ {total.toFixed(2)}'}</p>
               </div>
               <button
                 onClick={async () => {

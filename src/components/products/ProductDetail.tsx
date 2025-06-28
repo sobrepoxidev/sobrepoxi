@@ -367,15 +367,15 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
           
           {/* Precio */}
           <div className="mb-6">
-            {product.colon_price ? (
+            {product.dolar_price ? (
               <div className="flex items-end gap-2">
                 {product.discount_percentage && product.discount_percentage > 0 ? (
                   <>
                     <p className="text-3xl font-bold text-teal-700">
-                      ₡{(product.colon_price * (1 - product.discount_percentage / 100)).toFixed(0)}
+                      ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                     </p>
                     <p className="text-lg text-gray-500 line-through">
-                      ₡{product.colon_price.toFixed(0)}
+                      ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                     </p>
                     <span className="text-sm font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded">
                       {product.discount_percentage}% OFF
@@ -383,7 +383,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                   </>
                 ) : (
                   <p className="text-3xl font-bold text-teal-700">
-                    ₡{product.colon_price.toFixed(0)}
+                    ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                   </p>
                 )}
               </div>
@@ -415,7 +415,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
           
           {/* Descripción */}
           <div className="mb-8 border-b border-gray-200 pb-6">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">Descripción</h2>
+            <h2 className="text-lg font-semibold mb-2 text-gray-800">{locale === 'es' ? 'Descripción' : 'Description'}</h2>
             <p className="text-gray-700 whitespace-pre-line">
               {product.description || 'No hay descripción disponible para este producto.'}
             </p>

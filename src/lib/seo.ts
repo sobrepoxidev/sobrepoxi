@@ -29,4 +29,5 @@ export function buildTitle(pageTitle?: string): Metadata["title"] {
   const base = "HandMade Art";
   if (!pageTitle) return { default: base, template: `%s | ${base}` };
   return { default: pageTitle, template: `%s | ${base}` };
+
 }

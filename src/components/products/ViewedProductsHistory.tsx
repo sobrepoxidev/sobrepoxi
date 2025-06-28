@@ -170,7 +170,7 @@ export default function ViewedProductsHistory() {
                   {product.name}
                 </h3>
                 <p className="text-sm font-semibold text-teal-700">
-                  {product.colon_price ? `₡${product.colon_price.toFixed(2)}` : 'Precio a consultar'}
+                  {product.dolar_price ? `$${product.dolar_price.toFixed(2)}` : 'Precio a consultar'}
                 </p>
               </div>
             </div>

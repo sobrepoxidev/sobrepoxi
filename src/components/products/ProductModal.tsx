@@ -39,7 +39,7 @@ export function ProductCardModal({
         addToCart(product, quantity);
     };
 
-    const { name, category, description, colon_price: price } = product;
+    const { name, category, description, dolar_price: price } = product;
 
     // Use different layouts for fullscreen mode vs card mode
     if (fullscreenMode) {
@@ -57,7 +57,7 @@ export function ProductCardModal({
                         <h1 className="text-2xl font-bold text-gray-900 mb-2">{name || 'Product Name'}</h1>
                         <div className="flex items-center gap-3">
                             <p className="text-xl font-bold text-gray-900">
-                                ₡{price ? price.toFixed(0) : 'Price not available'}
+                                ${price ? price.toFixed(0) : 'Price not available'}
                             </p>
                         </div>
                     </div>
@@ -107,12 +107,12 @@ export function ProductCardModal({
                             onClick={handleAddToCart}
                         >
                             <ShoppingCartIcon className="w-5 h-5" />
-                            {locale === 'es' ? 'Añadir al carrito' : 'Add to cart'} • ₡{price ? (price * quantity).toFixed(0) : 'N/A'}
+                            {locale === 'es' ? 'Añadir al carrito' : 'Add to cart'} • ${price ? (price * quantity).toFixed(0) : 'N/A'}
                         </button>
 
                         <div className="mt-4 text-center">
                             <p className="text-sm text-gray-700">
-                                {locale === 'es' ? 'Envío gratuito' : 'Free shipping'} on orders over ₡50,000
+                                {locale === 'es' ? 'Envío gratuito para ordenes superiores a $50,000' : 'Free shipping for orders over $50,000'}
                             </p>
                         </div>
                     </div>

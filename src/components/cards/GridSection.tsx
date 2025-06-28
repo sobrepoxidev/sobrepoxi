@@ -139,9 +139,9 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                       <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-800">
                         {locale === 'es' ? product.name_es : product.name_en}
                       </span>
-                      {product.colon_price && (
+                      {product.dolar_price && (
                         <span className="text-[10px] font-bold text-teal-700 mt-0.5">
-                          ₡{product.colon_price.toLocaleString()}
+                          $ {product.dolar_price.toLocaleString()}
                         </span>
                       )}
                     </div>
