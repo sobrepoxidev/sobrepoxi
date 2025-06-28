@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Session } from '@supabase/supabase-js';
 import { ChevronDown, User, History, Heart } from 'lucide-react';
-
+import { useLocale } from "next-intl";
 interface UserDropdownProps {
   session: Session | null;
   onLogout: () => Promise<void>;
@@ -13,6 +13,7 @@ interface UserDropdownProps {
 export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
 
   // Cierra el dropdown si se hace clic fuera
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
         aria-haspopup="true"
       >
         <span className="hidden md:inline">
-          {session ? `Hola, ${session.user.email?.split('@')[0]}` : 'Cuenta y Listas'}
+          {session ? `${locale === 'es' ? 'Hola' : 'Hello'}, ${session.user.email?.split('@')[0]}` : locale === 'es' ? 'Cuenta y Listas' : 'Account and Lists'}
         </span>
         <span className="md:hidden">
           <User className="h-5 w-5" />
@@ -69,17 +70,17 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                     className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition"
                     onClick={() => setIsOpen(false)}
                   >
-                    Iniciar sesión
+                    {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
                   </Link>
                 </div>
                 <div className="text-center text-sm mt-2">
-                  <span className="text-gray-600">¿Eres nuevo?</span>{' '}
+                  <span className="text-gray-600">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
                   <Link 
                     href="/register" 
                     className="text-teal-600 hover:text-teal-800 transition"
                     onClick={() => setIsOpen(false)}
                   >
-                    Crear una cuenta
+                    {locale === 'es' ? 'Crear una cuenta' : 'Create an account'}
                   </Link>
                 </div>
               </div>
@@ -87,7 +88,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
           ) : (
             <div className="p-3 border-b border-gray-100">
               <div className="flex justify-between items-center mb-2">
-                <span className="font-medium text-gray-800">Mi cuenta</span>
+                <span className="font-medium text-gray-800">{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
                 <button
                   onClick={async () => {
                     await onLogout();
@@ -95,7 +96,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                   }}
                   className="text-xs text-red-600 hover:text-red-800"
                 >
-                  Cerrar sesión
+                  {locale === 'es' ? 'Cerrar sesión' : 'Sign out'}
                 </button>
               </div>
               <div className="text-sm text-gray-600">
@@ -111,7 +112,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               onClick={() => setIsOpen(false)}
             >
               <User className="h-4 w-4 mr-3 text-gray-500" />
-              Mi cuenta
+              {locale === 'es' ? 'Mi cuenta' : 'My account'}
             </Link>
             <Link 
               href="/viewed-history"
@@ -119,7 +120,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               onClick={() => setIsOpen(false)}
             >
               <History className="h-4 w-4 mr-3 text-gray-500" />
-              Artículos vistos recientemente
+              {locale === 'es' ? 'Artículos vistos recientemente' : 'Recently viewed items'}
             </Link>
             <Link 
               href="/favorites"
@@ -127,7 +128,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               onClick={() => setIsOpen(false)}
             >
               <Heart className="h-4 w-4 mr-3 text-gray-500" />
-              Mis favoritos
+              {locale === 'es' ? 'Mis favoritos' : 'My favorites'}
             </Link>
           </div>
         </div>

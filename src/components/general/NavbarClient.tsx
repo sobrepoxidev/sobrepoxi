@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { Menu, X, User, ShoppingBag, ChevronDown, Globe, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
@@ -22,7 +21,7 @@ type NavLink = {
 
 
 export default function NavbarClient({ locale, session: initialSession }: { locale: string; session: Session | null }) {
-  const t = useTranslations('navbar');
+  //const t = useTranslations('navbar');
   const pathname = usePathname();
   const router = useRouter();
   const { supabase } = useSupabase();
@@ -198,7 +197,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               className="relative flex items-center space-x-0.5 text-sm text-gray-700 hover:text-teal-700"
             >
               <ShoppingBag className="h-5 w-5" />
-              <span className="sr-only">{t('cart')}</span>
+              <span className="sr-only">{locale === 'es' ? 'Carrito' : 'Cart'}</span>
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs font-medium text-white">
                 {totalItems}
               </span>
@@ -208,7 +207,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="flex h-8 w-8 items-center justify-center text-gray-700 hover:bg-gray-100 rounded focus-visible:outline-none"
-              aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}
+              aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -258,12 +257,13 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         {/* Language selector - Implementado con next-intl */}
         <button
           onClick={() => {
-            // Cambiar al idioma opuesto manteniendo la ruta actual
-            const targetLocale = locale === 'es' ? 'en' : 'es';
-            router.replace(pathname, { locale: targetLocale });
+            // cargamos desde 0 toda la ruta cambiando el locale
+            router.replace(pathname, { locale: locale === 'es' ? 'en' : 'es' });
+            // forzamos un refresh de la pagina
+            window.location.reload();
           }}
           className="flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-gray-700 transition hover:bg-gray-100"
-          aria-label={t('changeLanguage')}
+          aria-label={locale === 'es' ? 'Cambiar idioma' : 'Change language'}
         >
           <Globe className="h-4 w-4" />
           <span>{locale === 'es' ? 'ES' : 'EN'}</span>
