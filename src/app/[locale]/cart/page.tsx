@@ -26,7 +26,7 @@ type DiscountInfo = {
 };
 
 type Product = Database['products'];
-type Category = Database['categories'];
+
 
 
 /**
@@ -67,10 +67,10 @@ export default function CartPage() {
   console.log("userId:", userId);
   console.log("correo:", correo);
   const { cart, updateQuantity, removeFromCart, syncCartWithDB } = useCart();
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<{[key: number]: Category}>({});
+
+
   
-  const [isLoading, setIsLoading] = useState(false);
+
   const [stockWarnings, ] = useState<{[key: number]: string}>({});
   // Estado para el código de descuento
   const [discountCode, setDiscountCode] = useState('');
@@ -102,106 +102,107 @@ export default function CartPage() {
   // Calcular el total final teniendo en cuenta posibles descuentos
   const total = discountInfo ? discountInfo.finalTotal : subtotal + shipping;
   
-  // Fetch categories for cart items
-  useEffect(() => {
-    const fetchCategories = async () => {
-      if (!cart.length) return;
+  // Related-products logic has been moved to RelatedProductsClient; legacy code kept for reference but disabled
+  // Legacy categories fetch (disabled)
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //       if (!cart.length) return;
       
-      // Fetch all category_ids from cart products
-      const categoryIds = [...new Set(
-        cart
-          .map(item => item.product.category_id)
-          .filter(id => id !== null && id !== undefined)
-      )] as number[];
+  //       // Fetch all category_ids from cart products
+  //       const categoryIds = [...new Set(
+  //         cart
+  //           .map(item => item.product.category_id)
+  //           .filter(id => id !== null && id !== undefined)
+  //       )] as number[];
       
-      // Fetch categories
-      if (categoryIds.length > 0) {
-        const { data: categoriesData } = await supabase
-          .from('categories')
-          .select('*')
-          .in('id', categoryIds);
+  //       // Fetch categories
+  //       if (categoryIds.length > 0) {
+  //         const { data: categoriesData } = await supabase
+  //           .from('categories')
+  //           .select('*')
+  //           .in('id', categoryIds);
           
-        if (categoriesData) {
-          const categoriesMap: {[key: number]: Category} = {};
-          categoriesData.forEach(category => {
-            categoriesMap[category.id] = category;
-          });
-          setCategories(categoriesMap);
-        }
-      }
-    };
+  //         if (categoriesData) {
+  //           const categoriesMap: {[key: number]: Category} = {};
+  //           categoriesData.forEach(category => {
+  //             categoriesMap[category.id] = category;
+  //           });
+  //           setCategories(categoriesMap);
+  //         }
+  //       }
+  //     };
     
-    fetchCategories();
-  }, [cart]);
+  //     fetchCategories();
+  //   }, [cart]);
 
-  // Fetch related products based on categories in cart
-  useEffect(() => {
-    const fetchRelatedProducts = async () => {
-      if (!cart.length) return;
+  // Legacy related products fetch (disabled)
+  // useEffect(() => {
+  //   const fetchRelatedProducts = async () => {
+  //       if (!cart.length) return;
       
-      setIsLoading(true);
+  //       setIsLoading(true);
 
-      try {
-        // Extract category IDs from cart items (avoiding duplicates)
-        const categoryIdsInCart = [...new Set(
-          cart
-            .map(item => item.product.category_id)
-            .filter(id => id !== undefined && id !== null)
-        )];
+  //       try {
+  //         // Extract category IDs from cart items (avoiding duplicates)
+  //         const categoryIdsInCart = [...new Set(
+  //           cart
+  //             .map(item => item.product.category_id)
+  //             .filter(id => id !== undefined && id !== null)
+  //         )];
 
-        // Extract product IDs from cart items to exclude them from results
-        const productIdsInCart = cart.map(item => item.product.id);
+  //         // Extract product IDs from cart items to exclude them from results
+  //         const productIdsInCart = cart.map(item => item.product.id);
 
-        if (categoryIdsInCart.length === 0) {
-          console.log('No categories found in cart');
-          setIsLoading(false);
-          setRelatedProducts([]);
-          return;
-        }
+  //         if (categoryIdsInCart.length === 0) {
+  //           console.log('No categories found in cart');
+  //           setIsLoading(false);
+  //           setRelatedProducts([]);
+  //           return;
+  //         }
 
-        // Ensure we have valid product IDs for the not-in filter
-        // If cart is empty, provide a dummy ID to avoid query issues
-        const validProductIds = productIdsInCart.length > 0 ? productIdsInCart : [-1];
+  //         // Ensure we have valid product IDs for the not-in filter
+  //         // If cart is empty, provide a dummy ID to avoid query issues
+  //         const validProductIds = productIdsInCart.length > 0 ? productIdsInCart : [-1];
 
-        // Build query in steps to avoid potential issues
-        let query = supabase
-          .from('products')
-          .select('*')
-          .in('category_id', categoryIdsInCart)
-          .eq('is_active', true);
+  //         // Build query in steps to avoid potential issues
+  //         let query = supabase
+  //           .from('products')
+  //           .select('*')
+  //           .in('category_id', categoryIdsInCart)
+  //           .eq('is_active', true);
         
-        // Only apply the not-in filter if we have products in cart
-        if (validProductIds.length > 0) {
-          // Use individual not-equals filters to avoid parser issues
-          query = query.not('id', 'eq', validProductIds[0]);
-          for (let i = 1; i < validProductIds.length; i++) {
-            query = query.not('id', 'eq', validProductIds[i]);
-          }
-        }
+  //         // Only apply the not-in filter if we have products in cart
+  //         if (validProductIds.length > 0) {
+  //           // Use individual not-equals filters to avoid parser issues
+  //           query = query.not('id', 'eq', validProductIds[0]);
+  //           for (let i = 1; i < validProductIds.length; i++) {
+  //             query = query.not('id', 'eq', validProductIds[i]);
+  //           }
+  //         }
         
-        // Complete the query
-        const { data, error } = await query
-          .order('created_at', { ascending: false })
-          .limit(4);
+  //         // Complete the query
+  //         const { data, error } = await query
+  //           .order('created_at', { ascending: false })
+  //           .limit(4);
 
-        if (error) {
-          console.error('Error fetching related products:', error.message);
-          throw error;
-        }
+  //         if (error) {
+  //           console.error('Error fetching related products:', error.message);
+  //           throw error;
+  //         }
 
-        // Ensure we always set a valid array
-        setRelatedProducts(data || []);
-      } catch (err) {
-        console.error('Error in fetchRelatedProducts:', err instanceof Error ? err.message : JSON.stringify(err));
-        // Set empty array on error to prevent UI issues
-        setRelatedProducts([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchRelatedProducts();
-  }, [cart]);
+  //         // Ensure we always set a valid array
+  //         setRelatedProducts(data || []);
+  //       } catch (err) {
+  //         console.error('Error in fetchRelatedProducts:', err instanceof Error ? err.message : JSON.stringify(err));
+  //         // Set empty array on error to prevent UI issues
+  //         setRelatedProducts([]);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     };
+    
+  //     fetchRelatedProducts();
+  //   }, [cart]);
 
   return (
     <section className="min-h-screen w-full  py-8 px-4 md:px-12 lg:px-24">
@@ -252,11 +253,7 @@ export default function CartPage() {
                     </p>
                   )}
                   <div className="flex flex-wrap gap-1 mt-1">
-                    {product.category_id && categories[product.category_id] && (
-                      <span className="inline-flex items-center text-xs px-2 py-0.5 bg-teal-50 text-teal-700 rounded-full border border-teal-100">
-                        {categories[product.category_id].name}
-                      </span>
-                    )}
+
                     {product.brand && (
                       <span className="inline-flex items-center text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full border border-blue-100">
                         {product.brand}
@@ -443,9 +440,9 @@ export default function CartPage() {
                   {isApplyingDiscount ? (
                     <span className="animate-pulse">{locale === 'es' ? 'Validando...' : 'Validating...'}</span>
                   ) : discountInfo ? (
-                    <span className="text-red-500">{locale === 'es' ? 'ELIMINAR CÓDIGO' : 'REMOVE CODE'}</span>
+                    <span className="text-red-900">{locale === 'es' ? 'ELIMINAR CÓDIGO' : 'REMOVE CODE'}</span>
                   ) : (
-                    <span className="text-green-500">{locale === 'es' ? 'APLICAR CÓDIGO' : 'APPLY CODE'}</span>
+                    <span className="text-gray-800 hover:text-gray-600 cursor-pointer">{locale === 'es' ? 'APLICAR CÓDIGO' : 'APPLY CODE'}</span>
                   )}
                 </button>
               </div>
