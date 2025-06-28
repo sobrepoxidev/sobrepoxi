@@ -34,7 +34,6 @@ interface RelatedProductsProps {
 
 export default async function RelatedProducts({
   title,
-  locale,
   categoryId,
   excludeIds = [],
   limit = 8,
