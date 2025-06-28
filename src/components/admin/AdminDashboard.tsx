@@ -167,12 +167,12 @@ export default function AdminDashboard({ locale }: { locale: string }) {
       setLoading(true);
       
       // Validar los datos antes de actualizar
-      if (updates.price !== undefined) {
-        const price = Number(updates.price);
+      if (updates.colon_price !== undefined) {
+        const price = Number(updates.colon_price);
         if (isNaN(price) || price < 0) {
           throw new Error(locale === 'es' ? 'El precio debe ser un número válido mayor o igual a 0' : 'The price must be a valid number greater than or equal to 0');
         }
-        updates.price = price;
+        updates.colon_price = price;
       }
       
       if (updates.discount_percentage !== undefined) {
@@ -201,11 +201,11 @@ export default function AdminDashboard({ locale }: { locale: string }) {
       }
       
       // Mostrar notificación de éxito según el tipo de actualización
-      if (updates.price !== undefined) {
+      if (updates.colon_price !== undefined) {
         toast.success(
           <div className="flex flex-col">
             <span className="font-medium">{locale === 'es' ? 'Precio actualizado' : 'Price updated'}</span>
-            <span className="text-sm">{locale === 'es' ? 'Nuevo precio: ₡' : 'New price: ₡'}{updates.price}</span>
+            <span className="text-sm">{locale === 'es' ? 'Nuevo precio: ₡' : 'New price: ₡'}{updates.colon_price}</span>
           </div>,
           { duration: 3000 }
         );
@@ -427,11 +427,11 @@ export default function AdminDashboard({ locale }: { locale: string }) {
                                   <input 
                                     type="number" 
                                     className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
-                                    value={product.price || ''}
+                                    value={product.colon_price || ''}
                                     onChange={(e) => {
                                       const newPrice = e.target.value ? parseFloat(e.target.value) : null;
                                       setProducts(products.map(p => 
-                                        p.id === product.id ? { ...p, price: newPrice } : p
+                                        p.id === product.id ? { ...p, colon_price: newPrice } : p
                                       ));
                                     }}
                                     min="0"
@@ -444,9 +444,9 @@ export default function AdminDashboard({ locale }: { locale: string }) {
                                   onClick={async (e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
-                                    if (product.price !== null) {
+                                    if (product.colon_price !== null) {
                                       const loadingToast = toast.loading(`${locale === 'es' ? 'Actualizando precio...' : 'Updating price...'}`);
-                                      await updateProduct(product.id, { price: product.price });
+                                      await updateProduct(product.id, { colon_price: product.colon_price });
                                       toast.dismiss(loadingToast);
                                     }
                                   }}
@@ -652,11 +652,11 @@ export default function AdminDashboard({ locale }: { locale: string }) {
                         <input 
                           type="number" 
                           className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
-                          value={product.price || ''}
+                          value={product.colon_price || ''}
                           onChange={(e) => {
                             const newPrice = e.target.value ? parseFloat(e.target.value) : null;
                             setProducts(products.map(p => 
-                              p.id === product.id ? { ...p, price: newPrice } : p
+                              p.id === product.id ? { ...p, colon_price: newPrice } : p
                             ));
                           }}
                           min="0"
@@ -668,9 +668,9 @@ export default function AdminDashboard({ locale }: { locale: string }) {
                         className="px-3 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                         onClick={async (e) => {
                           e.stopPropagation();
-                          if (product.price !== null) {
+                          if (product.colon_price !== null) {
                             const loadingToast = toast.loading('Actualizando precio...');
-                            const result = await updateProduct(product.id, { price: product.price });
+                            const result = await updateProduct(product.id, { colon_price: product.colon_price });
                             toast.dismiss(loadingToast);
                             if (!result.success) {
                               toast.error(locale === 'es' ? 'No se pudo actualizar el precio' : 'Could not update the price');

@@ -136,9 +136,9 @@ export default function CheckoutWizardPage() {
         
         // Calculate total with discounts
         const subtotal = cart.reduce((acc, item) => {
-          if (!item.product.price) return acc;
+          if (!item.product.colon_price) return acc;
           
-          const price = item.product.price;
+          const price = item.product.colon_price;
           const discount = item.product.discount_percentage || 0;
           const finalPrice = price * (1 - (discount / 100));
           
@@ -186,7 +186,7 @@ export default function CheckoutWizardPage() {
               order_id: orderInsert.id,
               product_id: item.product.id,
               quantity: item.quantity,
-              price: item.product.price || 0
+              price: item.product.colon_price || 0
             });
             
           if (itemError) {
@@ -259,9 +259,9 @@ export default function CheckoutWizardPage() {
                 customerName: shippingAddress.name,
                 shippingAddress: shippingAddress,
                 items: cart,
-                subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.price || 0) * item.quantity, 0),
+                subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.colon_price || 0) * item.quantity, 0),
                 shipping: 3200,
-                total: discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.price || 0) * item.quantity, 0) + 3200),
+                total: discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.colon_price || 0) * item.quantity, 0) + 3200),
                 paymentMethod: 'sinpe',
                 discountInfo: discountInfo ? {
                   code: discountInfo.code,
@@ -365,7 +365,7 @@ export default function CheckoutWizardPage() {
               setBancoSeleccionado={setBancoSeleccionado}
               ultimos4={ultimos4}
               setUltimos4={setUltimos4}
-              total={discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0) + 3200)}
+              total={discountInfo ? discountInfo.finalTotal : (cart.reduce((acc, item) => acc + (item.product.colon_price ?? 0) * item.quantity, 0) + 3200)}
               onFinalize={validateStep2}
               createdOrderId={createdOrderId}
               createOrder={createOrder}

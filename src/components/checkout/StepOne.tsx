@@ -572,7 +572,7 @@ export default function StepOne({
                     </div>
                     <div className="text-right">
                       <p className="font-medium">
-                        {item.product.price ? `₡${(item.product.price * item.quantity).toFixed(2)}` : 'N/A'}
+                        {item.product.colon_price ? `₡${(item.product.colon_price * item.quantity).toFixed(2)}` : 'N/A'}
                       </p>
                     </div>
                   </div>
@@ -584,7 +584,7 @@ export default function StepOne({
                 <div className="flex justify-between">
                   <span>{locale == "es" ? "Total parcial" : "Partial total"}</span>
                   <span>
-                    ₡{cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0).toFixed(2)}
+                    ₡{cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -602,7 +602,7 @@ export default function StepOne({
                   <span>
                     ₡{(discountInfo 
                       ? discountInfo.finalTotal 
-                      : cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0) + 3200
+                      : cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0) + 3200
                     ).toFixed(2)}
                   </span>
                 </div>

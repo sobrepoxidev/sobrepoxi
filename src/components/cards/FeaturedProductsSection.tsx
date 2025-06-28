@@ -73,9 +73,9 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
                     )}
                     
                     {/* Precio flotante */}
-                    {product.price && (
+                    {product.colon_price && (
                       <div className="absolute bottom-2 right-2 bg-teal-500 text-white text-sm font-bold px-3 py-1 rounded-md">
-                        ₡{product.price.toLocaleString()}
+                        ₡{product.colon_price.toLocaleString()}
                       </div>
                     )}
                   </div>

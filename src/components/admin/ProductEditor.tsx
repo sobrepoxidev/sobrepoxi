@@ -25,7 +25,7 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
   
   // En el editor modal, nos enfocamos en campos que no se pueden editar fácilmente en las tarjetas
   // y opciones más avanzadas
-  const [price, setPrice] = useState<number | null>(product.price);
+  const [price, setPrice] = useState<number | null>(product.colon_price);
   const [name, setName] = useState<string | null>(product.name_es || product.name);
   const [isActive, setIsActive] = useState<boolean | null>(product.is_active);
   const [discountPercentage, setDiscountPercentage] = useState<number | null>(product.discount_percentage);
@@ -42,7 +42,7 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
       const updates: Partial<Product> = {};
       
       // Solo incluir campos que han cambiado
-      if (price !== product.price) updates.price = price;
+      if (price !== product.colon_price) updates.colon_price = price;
       if (name !== (product.name_es || product.name)) {
         updates.name = name;
         updates.name_es = name;
@@ -63,12 +63,12 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
       }
       
       // Validar datos antes de guardar
-      if (updates.price !== undefined && updates.price !== null) {
-        const priceNum = Number(updates.price);
+      if (updates.colon_price !== undefined && updates.colon_price !== null) {
+        const priceNum = Number(updates.colon_price);
         if (isNaN(priceNum) || priceNum < 0) {
           throw new Error(locale === 'es' ? 'El precio debe ser un número válido mayor o igual a 0' : 'The price must be a valid number greater than or equal to 0');
         }
-        updates.price = priceNum;
+        updates.colon_price = priceNum;
       }
       
       if (updates.discount_percentage !== undefined && updates.discount_percentage !== null) {

@@ -59,9 +59,9 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-800">
                           {locale === 'es' ? product.name_es : product.name_en}
                         </span>
-                        {product.price && (
+                        {product.colon_price && (
                           <span className="text-[10px] font-bold text-teal-700 mt-0.5">
-                            ₡{product.price.toLocaleString()}
+                            ₡{product.colon_price.toLocaleString()}
                           </span>
                         )}
                       </div>

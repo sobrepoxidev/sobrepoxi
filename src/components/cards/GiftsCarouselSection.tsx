@@ -217,8 +217,8 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                             />
                           </div>
                           <div className="mt-1 text-white text-xs font-medium line-clamp-1">
-                            {product.price && (
-                              <>₡{product.price.toLocaleString()}</>
+                            {product.colon_price && (
+                              <>₡{product.colon_price.toLocaleString()}</>
                             )}
                           </div>
                         </Link>
@@ -259,10 +259,10 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                       <h3 className="text-gray-800 text-sm font-medium line-clamp-2 flex-grow">
                         {locale === 'es' ? product.name_es : product.name_en || product.name}
                       </h3>
-                      {product.price && (
+                      {product.colon_price && (
                         <div className="mt-2 flex items-center justify-between">
                           <div className="text-teal-600 font-bold text-sm">
-                            ₡{product.price.toLocaleString()}
+                            ₡{product.colon_price.toLocaleString()}
                           </div>
                           <div className="text-xs text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
                             {locale === 'es' ? 'Ver detalles' : 'View details'}

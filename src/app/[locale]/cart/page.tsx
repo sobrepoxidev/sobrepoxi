@@ -78,9 +78,9 @@ export default function CartPage() {
 
   // Calculate the total price with discounts applied
   const subtotal = cart.reduce((acc, item) => {
-    if (!item.product.price) return acc;
+    if (!item.product.colon_price) return acc;
     
-    const price = item.product.price;
+    const price = item.product.colon_price;
     const discount = item.product.discount_percentage || 0;
     const finalPrice = price * (1 - (discount / 100));
     
@@ -289,10 +289,10 @@ export default function CartPage() {
                   {product.discount_percentage && product.discount_percentage > 0 ? (
                     <>
                       <span className="font-medium text-slate-800">
-                        ₡{((product.price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
+                        ₡{((product.colon_price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
                       </span>
                       <span className="text-xs text-gray-500 line-through">
-                        ₡{(product.price || 0).toFixed(0)}
+                        ₡{(product.colon_price || 0).toFixed(0)}
                       </span>
                       <span className="text-xs bg-red-100 text-red-700 px-1 py-0.5 rounded">
                         {product.discount_percentage}% OFF
@@ -300,7 +300,7 @@ export default function CartPage() {
                     </>
                   ) : (
                     <span className="font-medium text-slate-800">
-                      ₡{(product.price ?? 0).toFixed(0)}
+                      ₡{(product.colon_price ?? 0).toFixed(0)}
                     </span>
                   )}
                 </div>

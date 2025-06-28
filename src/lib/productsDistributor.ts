@@ -50,7 +50,7 @@ export function distribuirProductos(
     /* 3️⃣  FEATURED – destacados primero, luego caros, máx. 9 */
     const ordenPreferido = [
       ...products.filter(p => p.is_featured),
-      ...products.sort((a, b) => (b.price ?? 0) - (a.price ?? 0)),
+      ...products.sort((a, b) => (b.colon_price ?? 0) - (a.colon_price ?? 0)),
     ];
   
     const featured = tomar(ordenPreferido, maxFeatured);

@@ -212,8 +212,8 @@ export function generateOrderConfirmationEmail(data: OrderEmailData): string {
                 <tr>
                   <td>${item.product.name}</td>
                   <td>${item.quantity}</td>
-                  <td>${formatPrice(item.product.price || 0)}</td>
-                  <td>${formatPrice((item.product.price || 0) * item.quantity)}</td>
+                  <td>${formatPrice(item.product.colon_price || 0)}</td>
+                  <td>${formatPrice((item.product.colon_price || 0) * item.quantity)}</td>
                 </tr>
               `).join('')}
             </tbody>

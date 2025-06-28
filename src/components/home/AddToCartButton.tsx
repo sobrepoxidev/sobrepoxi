@@ -59,7 +59,7 @@ export default function AddToCartButton({
         name: product.name || null,
         name_es: product.name_es || null,
         name_en: product.name_en || null,
-        price: product.price || 0,
+        price: product.colon_price || 0,
         // Add other required fields with proper defaults
         created_at: product.created_at || new Date().toISOString(),
         modified_at: product.modified_at || new Date().toISOString(),

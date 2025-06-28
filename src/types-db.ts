@@ -109,7 +109,8 @@ export type Database = {
         name_en: string | null;
         description: string | null;
         media: MediaItem[] | null;
-        price: number | null;
+        colon_price: number | null;
+        dolar_price: number | null;
         category_id: number | null;
         sku: string | null;
         brand: string | null;

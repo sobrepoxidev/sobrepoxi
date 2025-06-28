@@ -39,7 +39,7 @@ export function ProductCardModal({
         addToCart(product, quantity);
     };
 
-    const { name, category, description, price } = product;
+    const { name, category, description, colon_price: price } = product;
 
     // Use different layouts for fullscreen mode vs card mode
     if (fullscreenMode) {

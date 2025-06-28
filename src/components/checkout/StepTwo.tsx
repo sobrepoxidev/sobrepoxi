@@ -118,7 +118,7 @@ export default function StepTwo({
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-slate-700">
               <span>{locale == "es" ? "Subtotal" : "Subtotal"}</span>
-              <span>₡ {cart.reduce((sum, item) => sum + ((item.product.price || 0) * item.quantity), 0).toFixed(2)}</span>
+              <span>₡ {cart.reduce((sum, item) => sum + ((item.product.colon_price || 0) * item.quantity), 0).toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm text-slate-700">
               <span>{locale == "es" ? "Envío" : "Shipping"}</span>

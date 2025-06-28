@@ -197,7 +197,7 @@ export default function PayPalCardMethod({
                                             customerName: orderDetails.shipping_address.name,
                                             shippingAddress: orderDetails.shipping_address,
                                             items: cart,
-                                            subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.price || 0) * item.quantity, 0),
+                                            subtotal: cart.reduce((acc: number, item: CartItem) => acc + (item.product.colon_price || 0) * item.quantity, 0),
                                             shipping: 3200,
                                             total: orderDetails.total_amount,
                                             paymentMethod: 'paypal',
