@@ -10,7 +10,7 @@ const SEO_TEXT = {
       template: "%s | HandMade Art Costa Rica"
     },
     description:
-      "Descubre arte 100 % hecho a mano en Costa Rica: pinturas, esculturas y piezas únicas. Envíos a todo el país.",
+      "Descubre arte 100% hecho a mano en Costa Rica: pinturas, esculturas y piezas únicas. Envíos a todo el país.",
     keywords:
       "arte hecho a mano, arte costarricense, arte tico, piezas únicas, esculturas, pinturas originales, handmade art Costa Rica"
   },
