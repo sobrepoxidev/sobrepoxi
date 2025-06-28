@@ -4,7 +4,11 @@ import { ProductCardModal } from './ProductModal';
 import ViewedHistoryTracker from './ViewedHistoryTracker';
 import { Database } from '@/types-db';
 
-type Product = Database['products'] & { category: string | null };
+type Product = Omit<Database['products'], 'name_es' | 'name_en'> & { 
+  name_es: string;
+  name_en: string;
+  category: string | null;
+};
 
 /**
  * Envuelve ProductCardModal añadiendo la funcionalidad de rastreo 

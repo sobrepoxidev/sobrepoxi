@@ -20,7 +20,11 @@ import { useLocale } from "next-intl";
 
 
 
-type Product = Database['products'] & { category?: string | null };
+type Product = Omit<Database['products'], 'name_es' | 'name_en' | 'category'> & { 
+  name_es: string;
+  name_en: string;
+  category?: string | null;
+};
 
 // ---------------------------------------------------------
 // 1) Tipos e iconos

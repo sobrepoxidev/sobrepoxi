@@ -7,7 +7,11 @@ import { Database } from "@/types-db";
 import { useCart } from "@/context/CartContext";
 import { useLocale } from 'next-intl';
 
-type Product = Database['products'] & { category?: string | null };
+type Product = Omit<Database['products'], 'name_es' | 'name_en' | 'category'> & { 
+  name_es: string;
+  name_en: string;
+  category?: string | null;
+};
 
 export function ProductCardModal({
     product,
