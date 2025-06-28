@@ -491,18 +491,11 @@ export default function CartPage() {
                 onClick={async () => {
                   if (currentSession === null) {
                     // If not logged in, redirect to login page with return URL
-                    // Get the current path including search params
-                    const currentPath = window.location.pathname + window.location.search;
-                    
-                    // Create a URL object to handle the path properly
-                    const url = new URL(currentPath, window.location.origin);
-                    
-                    // Ensure we have a leading slash but not double slashes
-                    const cleanPath = url.pathname.replace(/\/+$/, '');
-                    const returnUrl = `${cleanPath}${url.search}`;
-                    
-                    // Redirect to login with the next parameter
-                    router.push(`/login?next=${encodeURIComponent(returnUrl)}`);
+                    // Construimos la URL completa usando los hooks de Next.js
+                    const fullPath = window.location.pathname + window.location.search;
+                    console.log("fullPath:", fullPath);
+                    console.log("FULLPATH ENCODER:", encodeURIComponent(fullPath));
+                    router.push(`/login?returnUrl=${fullPath}`);
                     return;
                   }
                   

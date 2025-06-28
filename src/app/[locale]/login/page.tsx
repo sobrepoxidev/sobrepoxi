@@ -26,14 +26,10 @@ export default function LoginPage() {
   useEffect(() => {
     setMounted(true)
     
-    // Extraer next, returnUrl o redirect del query string
-    const nextParam = searchParams.get('next') || 
-                     searchParams.get('returnUrl') || 
-                     searchParams.get('redirect') ||
-                     '/';
-    
-    if (nextParam) {
-      setReturnUrl(nextParam);
+    // Extraer returnUrl o redirect del query string usando Next.js searchParams
+    const returnUrlParam = searchParams.get('returnUrl') || searchParams.get('redirect');
+    if (returnUrlParam) {
+      setReturnUrl(returnUrlParam);
     }
   }, [searchParams])
 
@@ -70,33 +66,32 @@ export default function LoginPage() {
     }
   }
 
-  const signInWithGoogle = async (nextUrl: string) => {
+  const signInWithGoogle = async (returnUrl: string) => {
     setLoading(true);
     setErrorMsg("");
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
-      });
-      
-      if (error) throw error;
-      
-      // If we have a URL, redirect to it (this handles the OAuth flow)
-      if (data?.url) {
-        window.location.href = data.url;
-      }
-    } catch (error: unknown) {
-      console.error('Error signing in with Google:', error);
-      setErrorMsg(error as string || (locale === 'es' ? 'Error al iniciar sesión con Google' : 'Error signing in with Google'));
+  
+    // 1. Armamos la ruta de callback UNA sola vez
+    const redirectTo =
+      `${window.location.origin}/auth/callback` +
+      (returnUrl && returnUrl !== "/"
+        ? `?next=${encodeURIComponent(returnUrl)}`
+        : "");
+  
+    // 2. Llamamos a Supabase
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+  
+    // 3. Manejamos posibles errores
+    if (error) {
+      setErrorMsg(error.message);
       setLoading(false);
+      return;
     }
+  
+    // 4. Forzamos la redirección (por si el SDK no lo hace)
+    if (data?.url) window.location.href = data.url;
   };
   if (!mounted) return null
 
