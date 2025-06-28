@@ -19,7 +19,6 @@ interface Props {
 
 export default function RelatedProductsClient({
   title,
-  locale,
   categoryId,
   excludeIds = [],
   limit = 8,
