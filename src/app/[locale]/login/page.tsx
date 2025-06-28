@@ -69,28 +69,31 @@ export default function LoginPage() {
   const signInWithGoogle = async (returnUrl: string) => {
     setLoading(true);
     setErrorMsg("");
-  
-    // 1. Armamos la ruta de callback UNA sola vez
-    const redirectTo =
-      `${window.location.origin}/auth/callback` +
-      (returnUrl && returnUrl !== "/"
-        ? `?next=${encodeURIComponent(returnUrl)}`
-        : "");
-  
-    // 2. Llamamos a Supabase
+    
+    // Use the returnUrl as the 'next' parameter for the callback
+    const nextPath = returnUrl.startsWith('/') ? returnUrl : `/${returnUrl}`;
+    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
+    
+    // 2. Call Supabase
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo },
+      options: { 
+        redirectTo,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
     });
-  
-    // 3. Manejamos posibles errores
+    
+    // 3. Handle errors
     if (error) {
       setErrorMsg(error.message);
       setLoading(false);
       return;
     }
-  
-    // 4. Forzamos la redirección (por si el SDK no lo hace)
+    
+    // 4. Force redirect (in case the SDK doesn't do it)
     if (data?.url) window.location.href = data.url;
   };
   if (!mounted) return null
