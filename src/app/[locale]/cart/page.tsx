@@ -25,8 +25,6 @@ type DiscountInfo = {
   discount_value: number;
 };
 
-type Product = Database['products'];
-
 
 
 /**
