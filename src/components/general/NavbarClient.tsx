@@ -94,11 +94,11 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
   ]
 
   // Logout function
-  const handleLogout = async () => {
+  const handleLogout = async (currentUrl: string) => {
     try {
       await supabase.auth.signOut();
       // Redirect to home or login page
-      window.location.href = '/';
+      window.location.href = currentUrl;
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -338,7 +338,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                       <span>{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={async () => await handleLogout(window.location.href)}
                       className="text-sm text-gray-700"
                     >
                       {locale === 'es' ? 'Cerrar sesión' : 'Logout'}

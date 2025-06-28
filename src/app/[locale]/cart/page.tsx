@@ -485,7 +485,7 @@ export default function CartPage() {
                   <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
                   <span>{formatUSD(total)}</span>
                 </div>
-                <p className="text-xs text-slate-500">{locale === 'es' ? 'Nota: se te cobrará en CRC para $ {total.toFixed(2)}' : 'Note: you will be charged in CRC for $ {total.toFixed(2)}'}</p>
+                <p className="text-xs text-slate-500">{locale === 'es' ? `Nota: se te cobrará en USD para ${formatUSD(total)}` : `Note: you will be charged in USD for ${formatUSD(total)}`}</p>
               </div>
               <button
                 onClick={async () => {
@@ -493,8 +493,6 @@ export default function CartPage() {
                     // If not logged in, redirect to login page with return URL
                     // Construimos la URL completa usando los hooks de Next.js
                     const fullPath = window.location.pathname + window.location.search;
-                    console.log("fullPath:", fullPath);
-                    console.log("FULLPATH ENCODER:", encodeURIComponent(fullPath));
                     router.push(`/login?returnUrl=${fullPath}`);
                     return;
                   }

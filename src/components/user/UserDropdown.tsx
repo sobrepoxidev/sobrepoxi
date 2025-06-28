@@ -7,7 +7,7 @@ import { ChevronDown, User, History, Heart } from 'lucide-react';
 import { useLocale } from "next-intl";
 interface UserDropdownProps {
   session: Session | null;
-  onLogout: () => Promise<void>;
+  onLogout: (currentUrl: string) => Promise<void>;
 }
 
 export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
@@ -91,7 +91,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                 <span className="font-medium text-gray-800">{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
                 <button
                   onClick={async () => {
-                    await onLogout();
+                    await onLogout(window.location.href);
                     setIsOpen(false);
                   }}
                   className="text-xs text-red-600 hover:text-red-800"
