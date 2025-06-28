@@ -12,7 +12,7 @@ import { AlertTriangle } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
 import { useLocale } from "next-intl";
-
+import { formatUSD } from "@/lib/formatCurrency";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 type DiscountInfo = {
@@ -97,7 +97,7 @@ export default function CartPage() {
   }, [cart, syncCartWithDB, userId]);
 
   // En un caso real se calcularía dinámicamente
-  const shipping = cart.length ? 3200 : 0;
+  const shipping = cart.length ? 5.99 : 0;
   
   // Calcular el total final teniendo en cuenta posibles descuentos
   const total = discountInfo ? discountInfo.finalTotal : subtotal + shipping;
@@ -244,7 +244,7 @@ export default function CartPage() {
                 {/* Nombre y descripción */}
                 <div className="col-span-12 sm:col-span-5 flex flex-col justify-center">
                   <h3 className="font-medium text-slate-800 leading-tight">
-                    {product.name}
+                    {locale === 'es' ? product.name_es : product.name_en}
                   </h3>
                   {product.description && (
                     <p className="text-sm text-slate-600 line-clamp-2">
@@ -291,10 +291,10 @@ export default function CartPage() {
                   {product.discount_percentage && product.discount_percentage > 0 ? (
                     <>
                       <span className="font-medium text-slate-800">
-                        ${((product.dolar_price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0)}
+                        {formatUSD(((product.dolar_price || 0) * (1 - (product.discount_percentage / 100))).toFixed(0))}
                       </span>
                       <span className="text-xs text-gray-500 line-through">
-                        ${(product.dolar_price || 0).toFixed(0)}
+                        {formatUSD(product.dolar_price || 0)}
                       </span>
                       <span className="text-xs bg-red-100 text-red-700 px-1 py-0.5 rounded">
                         {product.discount_percentage}% OFF
@@ -302,7 +302,7 @@ export default function CartPage() {
                     </>
                   ) : (
                     <span className="font-medium text-slate-800">
-                      ${product.dolar_price ?? 0}
+                      {formatUSD(product.dolar_price ?? 0)}
                     </span>
                   )}
                 </div>
@@ -389,7 +389,7 @@ export default function CartPage() {
                       // Verificar monto mínimo de compra
                       const cartTotal = subtotal + shipping;
                       if (cartTotal < data.min_purchase_amount) {
-                        setDiscountError( locale === 'es' ? `El monto mínimo de compra para este código es $${data.min_purchase_amount.toFixed(2)}` : `The minimum purchase amount for this code is $${data.min_purchase_amount.toFixed(2)}`);
+                        setDiscountError( locale === 'es' ? `El monto mínimo de compra para este código es ${formatUSD(data.min_purchase_amount)}` : `The minimum purchase amount for this code is ${formatUSD(data.min_purchase_amount)}`);
                         setIsApplyingDiscount(false);
                         return;
                       }
@@ -468,22 +468,22 @@ export default function CartPage() {
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm text-slate-700">
                   <span>{locale === 'es' ? 'Total del artículo' : 'Total of the article'} ({cart.length} artículo{cart.length !== 1 && "s"})</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{formatUSD(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-slate-700">
                   <span>{locale === 'es' ? 'Envío' : 'Shipping'}</span>
-                  <span>${shipping.toFixed(2)}</span>
+                  <span>{formatUSD(shipping)}</span>
                 </div>
                 {discountInfo && (
                   <div className="flex justify-between text-sm text-green-600 font-medium">
                     <span>{locale === 'es' ? 'Descuento' : 'Discount'} ({discountInfo.code})</span>
-                    <span>- $ {discountInfo.discountAmount.toFixed(2)}</span>
+                    <span>- {formatUSD(discountInfo.discountAmount)}</span>
                   </div>
                 )}
                 <hr className="border-slate-300" />
                 <div className="flex justify-between font-semibold text-base text-slate-800">
                   <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{formatUSD(total)}</span>
                 </div>
                 <p className="text-xs text-slate-500">{locale === 'es' ? 'Nota: se te cobrará en CRC para $ {total.toFixed(2)}' : 'Note: you will be charged in CRC for $ {total.toFixed(2)}'}</p>
               </div>
@@ -501,7 +501,7 @@ export default function CartPage() {
                   
                   // Check for inventory issues before proceeding to checkout
                   if (Object.keys(stockWarnings).length > 0) {
-                    alert('Por favor, revise las advertencias de stock antes de continuar.');
+                    alert(locale === 'es' ? 'Por favor, revise las advertencias de stock antes de continuar.' : 'Please check the stock warnings before proceeding.');
                     return;
                   }
                   
@@ -511,7 +511,7 @@ export default function CartPage() {
                 className="w-full py-3 rounded bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
               >
                 <span>
-                  { currentSession === null ? 'INICIAR SESIÓN PARA COMPRAR' : 'COMPRAR'}
+                  { currentSession === null ? locale === 'es' ? 'INICIAR SESIÓN PARA COMPRAR' : 'SIGN IN TO BUY' : locale === 'es' ? 'COMPRAR' : 'BUY'}
                 </span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
