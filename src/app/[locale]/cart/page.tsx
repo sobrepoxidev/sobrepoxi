@@ -10,7 +10,7 @@ import { Database } from "@/types-db";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
 import { AlertTriangle } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
-import { ProductCardModal } from "@/components/products/ProductModal";
+import RelatedProductsClient from "@/components/products/RelatedProductsClient";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/lib/formatCurrency";
 
@@ -534,26 +534,11 @@ export default function CartPage() {
             </div>
           </div>
         )}
-        {/* Otros productos */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-6 rounded-md overflow-hidden shadow-md">
-            {/* Encabezado */}
-            <div className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold">
-              {locale === 'es' ? 'Otros productos' : 'Other products'}
-            </div>
-
-            {/* Grid de productos relacionados */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
-              {isLoading ? (
-                <div className=" text-center p-2 flex flex-col items-center justify-center">{locale === 'es' ? 'Cargando productos relacionados...' : 'Loading related products...'}</div>
-              ) : (
-                relatedProducts.map((product) => (
-                  <ProductCardModal key={product.id} product={product} activeExpandButton={true} />
-                ))
-              )}
-            </div>
-          </div>
-        )}
+        <RelatedProductsClient
+          title={locale === 'es' ? 'Otros productos' : 'Other products'}
+          locale={locale}
+          excludeIds={cart.map((item) => item.product.id)}
+        />
         <GalleryModal />
       </div>
     </section>
