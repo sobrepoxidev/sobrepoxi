@@ -99,7 +99,8 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           name_es: product.name_es,
           name_en: product.name_en,
           description: product.description,
-          price: product.price,
+          colon_price: product.colon_price,
+          dolar_price: product.dolar_price,
           media: product.media,
           category_id: product.category_id,
           discount_percentage: product.discount_percentage,
@@ -146,7 +147,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
 
           const { data, count, error } = await supabase
             .from('products')
-            .select('id, name, name_es, name_en, description, price, media, category_id, discount_percentage, created_at', { count: 'exact' })
+            .select('id, name, name_es, name_en, description, colon_price, dolar_price, media, category_id, discount_percentage, created_at', { count: 'exact' })
             .eq('category_id', categoryId)
             .range(from, to);
 
@@ -332,7 +333,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                         )}
                         <div className="flex items-center justify-between">
                           <p className="font-bold text-teal-700">
-                            {product.price ? `₡${product.price}` : (
+                            {product.colon_price ? `₡${product.colon_price}` : (
                               <Link 
                                 href={`https://wa.me/50684237555?text=${encodeURIComponent(
                                   locale === 'es' 

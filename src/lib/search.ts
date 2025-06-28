@@ -20,7 +20,8 @@ export type SearchResult = {
   category_id: number | null;
   category_name?: string | null; // Added for convenience
   media: MediaItem[] | null;
-  price: number | null;
+  colon_price: number | null;
+  dolar_price: number | null;
   discount_percentage?: number | null;
   highlight?: string; // For search results highlighting
   
@@ -101,7 +102,7 @@ export async function searchProducts(
     // Build main query with pagination
     let queryBuilder = supabase
       .from('products')
-      .select('id, name, name_es, name_en, description, price, media, category_id, discount_percentage, created_at');
+      .select('id, name, name_es, name_en, description, colon_price, dolar_price, media, category_id, discount_percentage, created_at');
     
     // Add text search condition
     queryBuilder = queryBuilder.or(
@@ -115,9 +116,9 @@ export async function searchProducts(
     
     // Apply sorting based on sortBy parameter
     if (sortBy === 'price-asc') {
-      queryBuilder = queryBuilder.order('price', { ascending: true });
+      queryBuilder = queryBuilder.order('colon_price', { ascending: true });
     } else if (sortBy === 'price-desc') {
-      queryBuilder = queryBuilder.order('price', { ascending: false });
+      queryBuilder = queryBuilder.order('colon_price', { ascending: false });
     } else if (sortBy === 'newest') {
       queryBuilder = queryBuilder.order('created_at', { ascending: false });
     }
@@ -167,7 +168,8 @@ export async function searchProducts(
         name_es: product.name_es,
         name_en: product.name_en,
         description: product.description,
-        price: product.price,
+        colon_price: product.colon_price,
+        dolar_price: product.dolar_price,
         media: product.media,
         category_id: product.category_id,
         category_name: categoryName,

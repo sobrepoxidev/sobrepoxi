@@ -11,6 +11,7 @@ import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "re
 import { AlertTriangle } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import { ProductCardModal } from "@/components/products/ProductModal";
+import { useLocale } from "next-intl";
 
 
 // Tipo para la información de descuento basado en la tabla discount_codes
@@ -37,6 +38,7 @@ type Category = Database['categories'];
  */
 
 export default function CartPage() {
+  const locale = useLocale();
   const router = useRouter();
   const { session, supabase } = useSupabase();
   
@@ -205,20 +207,20 @@ export default function CartPage() {
     <section className="min-h-screen w-full  py-8 px-4 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <h1 className="text-4xl font-semibold mb-4 text-slate-800">Carrito de compra</h1>
+        <h1 className="text-4xl font-semibold mb-4 text-slate-800">{locale === 'es' ? 'Carrito de compra' : 'Shopping cart'}</h1>
         <Link href="/products" className="text-teal-600 hover:underline text-sm">
-          Click aquí para seguir comprando
+          {locale === 'es' ? 'Click aquí para seguir comprando' : 'Click here to continue shopping'}
         </Link>
 
         {/* Tabla del carrito */}
         <div className="mt-6 rounded-md overflow-hidden shadow-md ">
           {/* Encabezado dinámico */}
           <div className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold">
-            {cart.length === 1 ? "Tienes 1 artículo en el carrito" : `Tienes ${cart.length} artículos en el carrito`}
+            {cart.length === 1 ? locale === 'es' ? "Tienes 1 artículo en el carrito" : "You have 1 item in your cart" : `Tienes ${cart.length} artículos en el carrito`}
           </div>
 
           {cart.length === 0 && (
-            <p className="p-6 text-center text-slate-600">Tu carrito está vacío.</p>
+            <p className="p-6 text-center text-slate-600">{locale === 'es' ? 'Tu carrito está vacío.' : 'Your cart is empty.'}</p>
           )}
 
           {cart.map(({ product, quantity }) => (
@@ -311,7 +313,7 @@ export default function CartPage() {
                     onClick={() => removeFromCart(product.id)}
                     className="text-teal-700 text-sm hover:underline"
                   >
-                    Eliminar
+                    {locale === 'es' ? 'Eliminar' : 'Remove'}
                   </button>
                 </div>
               </div>
@@ -324,11 +326,11 @@ export default function CartPage() {
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Cupón */}
             <div className="lg:col-span-2  p-6 rounded shadow-md">
-              <h2 className="text-lg font-medium mb-4 text-slate-800">¿Descuento o promoción?</h2>
+              <h2 className="text-lg font-medium mb-4 text-slate-800">{locale === 'es' ? '¿Descuento o promoción?' : 'Discount or promotion?'}</h2>
               <div className="flex flex-col sm:flex-row gap-4">
                 <input
                   type="text"
-                  placeholder="CÓDIGO DE CUPÓN"
+                  placeholder={locale === 'es' ? 'CÓDIGO DE CUPÓN' : 'DISCOUNT CODE'}
                   className={`flex-1 border ${discountError ? 'border-red-500' : 'border-gray-600'} rounded px-4 py-2 text-sm placeholder-gray-500 text-gray-950`}
                   value={discountCode}
                   onChange={(e) => {
@@ -349,7 +351,7 @@ export default function CartPage() {
                     }
                     
                     if (!discountCode.trim()) {
-                      setDiscountError('Ingresa un código de descuento');
+                      setDiscountError(locale === 'es' ? 'Ingresa un código de descuento' : 'Enter a discount code');
                       return;
                     }
                     
@@ -364,14 +366,14 @@ export default function CartPage() {
                         .single();
                       
                       if (error || !data) {
-                        setDiscountError('Código de descuento inválido o expirado');
+                        setDiscountError(locale === 'es' ? 'Código de descuento inválido o expirado' : 'Invalid or expired discount code');
                         setIsApplyingDiscount(false);
                         return;
                       }
                       
                       // Verificar si el código ha alcanzado el máximo de usos
                       if (data.max_uses !== null && data.current_uses >= data.max_uses) {
-                        setDiscountError('Este código ha alcanzado el máximo de usos permitidos');
+                        setDiscountError(locale === 'es' ? 'Este código ha alcanzado el máximo de usos permitidos' : 'This code has reached the maximum number of uses allowed');
                         setIsApplyingDiscount(false);
                         return;
                       }
@@ -379,7 +381,7 @@ export default function CartPage() {
                       // Verificar si el código está dentro del período de validez
                       const now = new Date();
                       if (data.valid_until && new Date(data.valid_until) < now) {
-                        setDiscountError('Este código ha expirado');
+                        setDiscountError(locale === 'es' ? 'Este código ha expirado' : 'This code has expired');
                         setIsApplyingDiscount(false);
                         return;
                       }
@@ -387,7 +389,7 @@ export default function CartPage() {
                       // Verificar monto mínimo de compra
                       const cartTotal = subtotal + shipping;
                       if (cartTotal < data.min_purchase_amount) {
-                        setDiscountError(`El monto mínimo de compra para este código es ₡${data.min_purchase_amount.toFixed(2)}`);
+                        setDiscountError( locale === 'es' ? `El monto mínimo de compra para este código es ₡${data.min_purchase_amount.toFixed(2)}` : `The minimum purchase amount for this code is ₡${data.min_purchase_amount.toFixed(2)}`);
                         setIsApplyingDiscount(false);
                         return;
                       }
@@ -430,8 +432,8 @@ export default function CartPage() {
                       localStorage.setItem('discountInfo', JSON.stringify(discountData));
                       
                     } catch (err) {
-                      console.error('Error al validar el código de descuento:', err);
-                      setDiscountError('Error al validar el código. Inténtalo de nuevo.');
+                      console.error(locale === 'es' ? 'Error al validar el código de descuento:' : 'Error validating discount code:', err);
+                      setDiscountError(locale === 'es' ? 'Error al validar el código. Inténtalo de nuevo.' : 'Error validating code. Try again.');
                     } finally {
                       setIsApplyingDiscount(false);
                     }
@@ -439,11 +441,11 @@ export default function CartPage() {
                   disabled={isApplyingDiscount}
                 >
                   {isApplyingDiscount ? (
-                    <span className="animate-pulse">Validando...</span>
+                    <span className="animate-pulse">{locale === 'es' ? 'Validando...' : 'Validating...'}</span>
                   ) : discountInfo ? (
-                    'ELIMINAR CÓDIGO'
+                    <span className="text-red-500">{locale === 'es' ? 'ELIMINAR CÓDIGO' : 'REMOVE CODE'}</span>
                   ) : (
-                    'APLICAR CÓDIGO'
+                    <span className="text-green-500">{locale === 'es' ? 'APLICAR CÓDIGO' : 'APPLY CODE'}</span>
                   )}
                 </button>
               </div>
@@ -452,7 +454,7 @@ export default function CartPage() {
               )}
               {discountInfo && (
                 <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-md">
-                  <p className="text-green-700 text-sm font-medium">¡Código aplicado correctamente!</p>
+                  <p className="text-green-700 text-sm font-medium">{locale === 'es' ? 'Código aplicado correctamente!' : 'Discount applied successfully!'}</p>
                   {discountInfo.description && (
                     <p className="text-sm text-green-600">{discountInfo.description}</p>
                   )}
@@ -462,28 +464,28 @@ export default function CartPage() {
 
             {/* Resumen */}
             <div className="p-6 rounded shadow-md space-y-4">
-              <h2 className="text-lg font-medium text-slate-800 mb-2">Resumen del pedido</h2>
+              <h2 className="text-lg font-medium text-slate-800 mb-2">{locale === 'es' ? 'Resumen del pedido' : 'Order summary'}</h2>
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm text-slate-700">
-                  <span>Total del artículo ({cart.length} artículo{cart.length !== 1 && "s"})</span>
+                  <span>{locale === 'es' ? 'Total del artículo' : 'Total of the article'} ({cart.length} artículo{cart.length !== 1 && "s"})</span>
                   <span>₡ {subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-slate-700">
-                  <span>Envío</span>
+                  <span>{locale === 'es' ? 'Envío' : 'Shipping'}</span>
                   <span>₡ {shipping.toFixed(2)}</span>
                 </div>
                 {discountInfo && (
                   <div className="flex justify-between text-sm text-green-600 font-medium">
-                    <span>Descuento ({discountInfo.code})</span>
+                    <span>{locale === 'es' ? 'Descuento' : 'Discount'} ({discountInfo.code})</span>
                     <span>- ₡ {discountInfo.discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <hr className="border-slate-300" />
                 <div className="flex justify-between font-semibold text-base text-slate-800">
-                  <span>Total del pedido:</span>
+                  <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
                   <span>₡ {total.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-slate-500">Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}</p>
+                <p className="text-xs text-slate-500">{locale === 'es' ? 'Nota: se te cobrará en CRC para ₡ {total.toFixed(2)}' : 'Note: you will be charged in CRC for ₡ {total.toFixed(2)}'}</p>
               </div>
               <button
                 onClick={async () => {
@@ -539,13 +541,13 @@ export default function CartPage() {
           <div className="mt-6 rounded-md overflow-hidden shadow-md">
             {/* Encabezado */}
             <div className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold">
-              Otros productos
+              {locale === 'es' ? 'Otros productos' : 'Other products'}
             </div>
 
             {/* Grid de productos relacionados */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
               {isLoading ? (
-                <div className=" text-center p-2 flex flex-col items-center justify-center">Cargando productos relacionados...</div>
+                <div className=" text-center p-2 flex flex-col items-center justify-center">{locale === 'es' ? 'Cargando productos relacionados...' : 'Loading related products...'}</div>
               ) : (
                 relatedProducts.map((product) => (
                   <ProductCardModal key={product.id} product={product} activeExpandButton={true} />
