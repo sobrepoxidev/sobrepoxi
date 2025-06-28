@@ -22,6 +22,7 @@ import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import ReviewsList from '@/components/products/ReviewsList';
+import RelatedProductsClient from '@/components/products/RelatedProductsClient';
 import ReviewForm from '@/components/products/ReviewForm';
 import { formatUSD } from '@/lib/formatCurrency';
 
@@ -566,6 +567,16 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
         </div>
       </div>
       
+      {/* Related products */}
+      {product && (
+        <RelatedProductsClient
+          title={locale === 'es' ? 'Otros productos' : 'Other products'}
+          locale={locale}
+          categoryId={product.category_id}
+          excludeIds={[product.id]}
+        />
+      )}
+
       {/* Reviews Section */}
       {!loading && !error && product && (
         <div className="mt-16 border-t border-gray-200 pt-10">
