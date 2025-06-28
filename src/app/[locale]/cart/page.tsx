@@ -491,11 +491,10 @@ export default function CartPage() {
                 onClick={async () => {
                   if (currentSession === null) {
                     // If not logged in, redirect to login page with return URL
-                    // Construimos la URL completa usando los hooks de Next.js
-                    const fullPath = window.location.pathname + window.location.search;
-                    console.log("fullPath:", fullPath);
-                    console.log("FULLPATH ENCODER:", encodeURIComponent(fullPath));
-                    router.push(`/login?returnUrl=${fullPath}`);
+                    // Include both pathname and search (query) parameters
+                    const currentUrl = new URL(window.location.href);
+                    const returnUrl = currentUrl.pathname + currentUrl.search;
+                    router.push(`/login?returnUrl=${encodeURIComponent(returnUrl)}`);
                     return;
                   }
                   
