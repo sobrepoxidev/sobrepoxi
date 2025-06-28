@@ -69,7 +69,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, [supabase, session]);
 
   // Cerrar menú móvil al cambiar el tamaño de la ventana
   useEffect(() => {
