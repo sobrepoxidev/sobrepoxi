@@ -92,9 +92,9 @@ export default function LoginPage() {
       if (data?.url) {
         window.location.href = data.url;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error signing in with Google:', error);
-      setErrorMsg(error.message || 'Error al iniciar sesión con Google');
+      setErrorMsg(error as string || (locale === 'es' ? 'Error al iniciar sesión con Google' : 'Error signing in with Google'));
       setLoading(false);
     }
   };
