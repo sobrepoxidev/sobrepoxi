@@ -153,7 +153,7 @@ export default function ViewedHistoryPage() {
                     <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{product.name}</h3>
                     <div className="flex items-center justify-between">
                       <p className="font-bold text-teal-700">
-                        {product.price ? `₡${product.price}` : 'Consultar'}
+                        {product.colon_price ? `₡${product.colon_price}` : 'Consultar'}
                       </p>
                       <div className="flex items-center text-xs text-gray-500">
                         <Clock className="h-3 w-3 mr-1" />
