@@ -42,7 +42,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
               <>
                 <div className="grid grid-cols-2 gap-3 bg-[#303030]">
                   {displayProducts.map((product, idx) => (
-                    <Link key={`${product.id}-${idx}`} href={`/product/${product.id}`} className="block group">
+                    <Link key={`${product.id}-${idx}`} href={`/product/${product.id}`} target="_self" className="block group">
                       <div className="flex flex-col items-center bg-white rounded p-2 hover:shadow-sm transition-shadow">
                         <div className="h-44 flex items-center justify-center mb-1">
                           <Image
