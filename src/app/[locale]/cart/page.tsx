@@ -8,13 +8,40 @@ import { useCart } from "@/context/CartContext";
 import { useSupabase } from "@/app/supabase-provider/provider";
 import { Database } from "@/types-db";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
-import { AlertTriangle } from "lucide-react";
+import toast from "react-hot-toast";
+import { AlertTriangle, Share2 } from "lucide-react";
 import { GalleryModal } from "@/components/products/ClientComponents";
 import RelatedProductsClient from "@/components/products/RelatedProductsClient";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/lib/formatCurrency";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
+// ──────────────────── Share Cart Button ─────────────────────
+const ShareCartButton: React.FC<{ locale: string }> = ({ locale }) => {
+  const handleShare = async () => {
+    const url = window.location.href;
+    const title = locale === 'es' ? 'Mira mi carrito en Handmade Art' : 'Check out my cart on Handmade Art';
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast.success(locale === 'es' ? 'Enlace copiado al portapapeles' : 'Link copied to clipboard');
+      }
+    } catch (err) {
+      console.error('Share error:', err);
+    }
+  };
+  return (
+    <button onClick={handleShare} className="flex items-center gap-1 text-teal-600 hover:text-teal-800 text-sm mt-2">
+      <Share2 className="w-4 h-4" />
+      {locale === 'es' ? 'Compartir carrito' : 'Share cart'}
+    </button>
+  );
+};
+
+// ───────────────────────────────────────────────────────────────
+
 type DiscountInfo = {
   valid: boolean;
   discountAmount: number;
@@ -207,9 +234,12 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <h1 className="text-4xl font-semibold mb-4 text-slate-800">{locale === 'es' ? 'Carrito de compra' : 'Shopping cart'}</h1>
-        <Link href="/products" className="text-teal-600 hover:underline text-sm">
-          {locale === 'es' ? 'Click aquí para seguir comprando' : 'Click here to continue shopping'}
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/products" className="text-teal-600 hover:underline text-sm">
+            {locale === 'es' ? 'Click aquí para seguir comprando' : 'Click here to continue shopping'}
+          </Link>
+          <ShareCartButton locale={locale} />
+        </div>
 
         {/* Tabla del carrito */}
         <div className="mt-6 rounded-md overflow-hidden shadow-md ">
