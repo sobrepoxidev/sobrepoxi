@@ -48,7 +48,7 @@ export default function OptimizedNewHome({
                 <div className="flex flex-col">
                   <div>
                     <p className="text-xs lg:text-lg font-light  text-gray-800">
-                      <span className="font-bold">{locale === 'es' ? 'Con tarifas desde ₡2100' : 'With rates from ₡2100'}</span>
+                      <span className="font-bold">{locale === 'es' ? 'Con tarifas desde $6.99' : 'With rates from $6.99'}</span>
                     </p>
                     <p className="text-gray-600 text-[0.60rem] lg:text-xs mt-1 lg:mt-2">
                       {locale === 'es' ? '*Costo variable dependiendo del peso. Pulsa para más información' : '*Variable cost depending on weight. Click for more information'}
