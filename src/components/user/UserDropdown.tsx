@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Session } from '@supabase/supabase-js';
@@ -15,6 +16,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   // Build the full current path *with* query string so we can return here after auth
@@ -70,23 +72,29 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
             <>
               <div className="p-3 border-b border-gray-100">
                 <div className="flex justify-center py-2">
-                  <Link 
-                    href={`/login?returnUrl=${currentUrl}`}
+                  <button
+                    onClick={() => {
+                      const fullPath = window.location.pathname + window.location.search;
+                      router.push(`/login?returnUrl=${fullPath}`);
+                      setIsOpen(false);
+                    }}
                     className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition"
-                    onClick={() => setIsOpen(false)}
                   >
                     {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
-                  </Link>
+                  </button>
                 </div>
                 <div className="text-center text-sm mt-2">
                   <span className="text-gray-600">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
-                  <Link 
-                    href={`/register?returnUrl=${currentUrl}`} 
+                  <button
+                    onClick={() => {
+                      const fullPath = window.location.pathname + window.location.search;
+                      router.push(`/register?returnUrl=${fullPath}`);
+                      setIsOpen(false);
+                    }}
                     className="text-teal-600 hover:text-teal-800 transition"
-                    onClick={() => setIsOpen(false)}
                   >
                     {locale === 'es' ? 'Crear una cuenta' : 'Create an account'}
-                  </Link>
+                  </button>
                 </div>
               </div>
             </>
