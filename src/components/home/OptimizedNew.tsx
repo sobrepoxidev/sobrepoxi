@@ -122,10 +122,10 @@ export default function OptimizedNewHome({
                   {locale === 'es' ? 'Por residentes en rehabilitación de centros penales' : 'By residents in rehabilitation centers'}
                 </p>
 
-                <div className="flex justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
+                <div className="flex items-center justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1">
-                      <Handshake className="text-gray-700" />
+                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                      <Handshake className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-xs hidden sm:block">{locale === 'es' ? 'Impacto Social' : 'Social Impact'}</span>
                     <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs sm:hidden">{locale === 'es' ? 'Impacto' : 'Impact'}</span>
@@ -133,16 +133,16 @@ export default function OptimizedNewHome({
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1">
-                      <Sprout className="text-gray-700" />
+                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                      <Sprout className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Sostenibilidad' : 'Sustainability'}</span>
                     <span className="text-[0.65rem] text-gray-800 hidden sm:block">{locale === 'es' ? 'Materiales ecológicos' : 'Eco-friendly materials'}</span>
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1">
-                      <BadgeCheck className="text-gray-700" />
+                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                      <BadgeCheck className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Calidad' : 'Quality'}</span>
                     <span className="text-[0.65rem] text-gray-800 hidden sm:block">{locale === 'es' ? 'Detalles artesanales' : 'Artisanal details'}</span>
