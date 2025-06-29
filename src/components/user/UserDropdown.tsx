@@ -20,7 +20,6 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   // Build the full current path *with* query string so we can return here after auth
-  const currentUrl = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
 
   // Cierra el dropdown si se hace clic fuera
   useEffect(() => {
