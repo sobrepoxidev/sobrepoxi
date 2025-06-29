@@ -109,7 +109,7 @@ export default function OptimizedNewHome({
               className="absolute top-12 right-2 lg:right-16 2xl:right-70 hidden sm:block rounded-lg max-lg:w-[125px]"
             /> */}
 
-            <div className="absolute bg-gradient-to-r  top-0 left-0 right-0 h-full flex flex-col items-center lg:justify-center ">
+            <div className="absolute bg-gradient-to-r  top-0 left-0 right-0 flex flex-col items-center lg:justify-center ">
               <div className="text-center z-20 mt-2 lg:mt-4 px-4">
                 <h1 className="text-lg lg:text-xl text-gray-800 font-bold lg:mb-2 hidden sm:block">
                   {locale === 'es' ? 'Artesanía única hecha a mano' : 'Unique handmade crafts'}
@@ -122,9 +122,9 @@ export default function OptimizedNewHome({
                   {locale === 'es' ? 'Por residentes en rehabilitación de centros penales' : 'By residents in rehabilitation centers'}
                 </p>
 
-                <div className="flex items-center justify-center space-x-4 md:space-x-12 mt-2 lg:mt-5">
+                <div className="flex items-center justify-center space-x-4 md:space-x-12 my-0.5  lg:mt-5">
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                    <div className="rounded-full flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
                       <Handshake className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-xs hidden sm:block">{locale === 'es' ? 'Impacto Social' : 'Social Impact'}</span>
@@ -133,7 +133,7 @@ export default function OptimizedNewHome({
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                    <div className="rounded-full flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
                       <Sprout className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Sostenibilidad' : 'Sustainability'}</span>
@@ -141,7 +141,7 @@ export default function OptimizedNewHome({
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <div className="rounded-full mb-1 flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
+                    <div className="rounded-full flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8">
                       <BadgeCheck className="w-6 h-6 text-gray-700" />
                     </div>
                     <span className="text-gray-800 font-medium text-[0.65rem] lg:text-xs">{locale === 'es' ? 'Calidad' : 'Quality'}</span>
