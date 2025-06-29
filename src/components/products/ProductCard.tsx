@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, ShoppingCart, Heart, Check } from 'lucide-react';
+import { Star, ShoppingCart, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';
 import { supabase } from '@/lib/supabaseClient';
@@ -139,7 +139,6 @@ export default function ProductCard({ product }: { product: Product }) {
           }
         }}
       >
-        <Heart className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
       </button>
       
       {/* Imagen del producto */}
