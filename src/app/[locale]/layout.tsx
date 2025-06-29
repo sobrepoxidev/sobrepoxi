@@ -15,18 +15,20 @@ import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+type tParams = Promise<{ locale: string }>;
+export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
   const headersList = await headers();
   const host = 
     headersList.get("x-forwarded-host")?.trim() || 
     headersList.get("host")?.trim() ||
     'artehechoamano.com';
   const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
+  const { locale } = await params;
   
   return {
     metadataBase: new URL(`https://${host}`),
     ...buildMetadata({ 
-      locale: params.locale === "es" ? "es" : "en", 
+      locale: locale === "es" ? "es" : "en", 
       pathname: pathname 
     }),
   };
@@ -37,9 +39,11 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: tParams;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
+  console.log("locale:", locale);
+  console.log("locales: ", routing.locales);
   if (!hasLocale(routing.locales, locale)) {
     // 404 si locale no existe
     throw new Error("Invalid locale");

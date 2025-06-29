@@ -47,8 +47,8 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         <div className="h-44 flex items-center justify-center mb-1">
                           <Image
                             src={product.media && product.media.length > 0 ?
-                              (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') :
-                              '/placeholder.jpg'}
+                              (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp') :
+                              '/https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
                             alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
                             width={100}
                             height={100}
@@ -82,7 +82,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
               <>
                 <div className="flex items-center justify-center h-48">
                   <Image
-                    src={'/placeholder.jpg'}
+                    src={'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
                     alt={category.name || 'Categoría'}
                     width={180}
                     height={180}
@@ -201,7 +201,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                           <Link key={idx} href={`/product/${product.id}`} className="block text-center">
                             <div className="h-44 flex items-center justify-center bg-white rounded-lg shadow-sm">
                               <Image
-                                src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
+                                src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
                                 alt={product.name || ''}
                                 width={100}
                                 height={100}
