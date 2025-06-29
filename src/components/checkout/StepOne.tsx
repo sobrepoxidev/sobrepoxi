@@ -4,6 +4,7 @@ import { useSupabase } from '@/app/supabase-provider/provider';
 import { Session } from '@supabase/supabase-js';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
+import { formatUSD } from "@/lib/formatCurrency";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 type DiscountInfo = {
@@ -608,12 +609,12 @@ export default function StepOne({
               </div>
               <div className="flex justify-between">
                 <span>{locale == "es" ? "Envío" : "Shipping"}</span>
-                <span>$7(₡3,200.00)</span>
+                <span>$6.99</span>
               </div>
               {discountInfo && (
                 <div className="flex justify-between text-green-600 font-medium">
                   <span>{locale == "es" ? "Descuento" : "Discount"} ({discountInfo.code})</span>
-                  <span>- $ {discountInfo.discountAmount.toFixed(2)}</span>
+                  <span>-  {formatUSD(discountInfo.discountAmount)}</span>
                 </div>
               )}
               <div className="flex justify-between font-bold border-t pt-2">
