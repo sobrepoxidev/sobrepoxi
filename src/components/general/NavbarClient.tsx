@@ -346,20 +346,26 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                   </>
                 ) : (
                   <>
-                    <Link
-                      href="/login"
+                    <button
+                      onClick={() => {
+                        const fullPath = window.location.pathname + window.location.search;
+                        router.push(`/login?returnUrl=${fullPath}`);
+                        setIsMenuOpen(false);
+                      }}
                       className="text-sm text-gray-700"
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       {locale === 'es' ? 'Iniciar sesión' : 'Login'}
-                    </Link>
-                    <Link
-                      href="/register"
+                    </button>
+                    <button
+                      onClick={() => {
+                        const fullPath = window.location.pathname + window.location.search;
+                        router.push(`/register?returnUrl=${fullPath}`);
+                        setIsMenuOpen(false);
+                      }}
                       className="text-sm text-gray-700"
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       {locale === 'es' ? 'Registrarse' : 'Register'}
-                    </Link>
+                    </button>
                   </>
                 )}
               </div>
