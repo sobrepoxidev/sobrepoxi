@@ -40,17 +40,17 @@ export default function OptimizedNewHome({
         <Carousel>
           {/* Banner 1: Envío a Costa Rica (ahora primero) */}
           <BannerTemplate linkHref="/shipping">
-            <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-3 md:py-6">
+            <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-2 md:py-6">
               <div className="max-w-full text-center md:text-left mt-0.5 md:mt-0 ">
                 <h2 className="text-lg xs:text-xl sm:text-2xl font-bold tracking-wider text-gray-800">
                   <span className="mr-1">{locale === 'es' ? 'Envíos a todo Costa Rica' : 'Shipping to all Costa Rica'}</span>
                 </h2>
                 <div className="flex flex-col">
                   <div>
-                    <p className="text-sm lg:text-lg font-light  text-gray-800">
+                    <p className="text-xs lg:text-lg font-light  text-gray-800">
                       <span className="font-bold">{locale === 'es' ? 'Con tarifas desde ₡2100' : 'With rates from ₡2100'}</span>
                     </p>
-                    <p className="text-gray-600 text-[0.65rem] lg:text-xs mt-1 lg:mt-2">
+                    <p className="text-gray-600 text-[0.60rem] lg:text-xs mt-1 lg:mt-2">
                       {locale === 'es' ? '*Costo variable dependiendo del peso. Pulsa para más información' : '*Variable cost depending on weight. Click for more information'}
                     </p>
                   </div>
