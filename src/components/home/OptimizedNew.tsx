@@ -40,7 +40,7 @@ export default function OptimizedNewHome({
         <Carousel>
           {/* Banner 1: Envío a Costa Rica (ahora primero) */}
           <BannerTemplate linkHref="/shipping">
-            <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-4 md:py-6">
+            <div className="relative h-full flex flex-col md:flex-row justify-center items-center md:gap-10 px-4 md:px-24 py-3 md:py-6">
               <div className="max-w-full text-center md:text-left mt-0.5 md:mt-0 ">
                 <h2 className="text-lg xs:text-xl sm:text-2xl font-bold tracking-wider text-gray-800">
                   <span className="mr-1">{locale === 'es' ? 'Envíos a todo Costa Rica' : 'Shipping to all Costa Rica'}</span>
@@ -58,7 +58,7 @@ export default function OptimizedNewHome({
               </div>
 
               <div className="flex items-center justify-center md:gap-8 px-2 md:px-4 h-auto">
-                <div className="relative h-[40px] w-[60px] md:h-[110px] md:w-[110px]">
+                <div className="relative h-[35px] w-[55px] md:h-[110px] md:w-[110px]">
                   <Image
                     src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/home/mapa-cr-DZ7GK5iuwsfpfwJ2Udbhz8Rxd1bUBF.webp"
                     alt={locale === 'es' ? 'Mapa de Costa Rica' : 'Map of Costa Rica'}
