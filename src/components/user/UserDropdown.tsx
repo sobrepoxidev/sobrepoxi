@@ -17,8 +17,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+
   // Build the full current path *with* query string so we can return here after auth
 
   // Cierra el dropdown si se hace clic fuera
