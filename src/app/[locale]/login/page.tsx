@@ -57,7 +57,7 @@ export default function LoginPage() {
         //llevar hacia la url que viene en el query string
         // En lugar de redirect, que causa problemas con componentes cliente,
         // usamos router.replace que es más adecuado para componentes cliente
-        router.replace(returnUrl)
+        router.replace(decodeURIComponent(returnUrl))
       }
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
