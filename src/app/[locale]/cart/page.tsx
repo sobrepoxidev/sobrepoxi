@@ -33,7 +33,7 @@ const ShareCartButton: React.FC<{ locale: string }> = ({ locale }) => {
     }
   };
   return (
-    <button onClick={handleShare} className="inline-flex items-center gap-1 text-teal-600 hover:text-teal-800 hover:underline text-sm max-sm:text-xs cursor-pointer">
+    <button onClick={handleShare} className="inline-flex items-center gap-1 text-teal-600 hover:text-teal-800 hover:underline text-sm cursor-pointer">
       <Share2 className="w-4 h-4" />
       {locale === 'es' ? 'Compartir carrito' : 'Share cart'}
     </button>
