@@ -71,7 +71,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               <div className="p-3 border-b border-gray-100">
                 <div className="flex justify-center py-2">
                   <Link 
-                    href={`/${locale}/login?returnUrl=${encodeURIComponent(currentUrl)}`}
+                    href={`/login?returnUrl=${currentUrl}`}
                     className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition"
                     onClick={() => setIsOpen(false)}
                   >
@@ -81,7 +81,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                 <div className="text-center text-sm mt-2">
                   <span className="text-gray-600">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
                   <Link 
-                    href={`/${locale}/register?returnUrl=${encodeURIComponent(currentUrl)}`} 
+                    href={`/register?returnUrl=${currentUrl}`} 
                     className="text-teal-600 hover:text-teal-800 transition"
                     onClick={() => setIsOpen(false)}
                   >
