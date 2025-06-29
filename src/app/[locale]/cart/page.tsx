@@ -33,7 +33,7 @@ const ShareCartButton: React.FC<{ locale: string }> = ({ locale }) => {
     }
   };
   return (
-    <button onClick={handleShare} className="flex items-center gap-1 text-teal-600 hover:text-teal-800 text-sm">
+    <button onClick={handleShare} className="inline-flex items-center gap-1 text-teal-600 hover:text-teal-800 hover:underline text-sm max-sm:text-xs cursor-pointer">
       <Share2 className="w-4 h-4" />
       {locale === 'es' ? 'Compartir carrito' : 'Share cart'}
     </button>
@@ -234,9 +234,9 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <h1 className="text-4xl font-semibold mb-4 text-slate-800">{locale === 'es' ? 'Carrito de compra' : 'Shopping cart'}</h1>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 max-sm:gap-2">
           <Link href="/products" className="text-teal-600 hover:underline text-sm">
-            {locale === 'es' ? 'Click aquí para seguir comprando' : 'Click here to continue shopping'}
+            {locale === 'es' ? 'Seguir comprando' : 'Continue shopping'}
           </Link>
           <ShareCartButton locale={locale} />
         </div>
