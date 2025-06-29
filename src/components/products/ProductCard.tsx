@@ -161,7 +161,7 @@ export default function ProductCard({ product }: { product: Product }) {
           href={`/product/${product.id}`}
           className="text-gray-800 font-medium mb-1 hover:text-teal-700 transition-colors line-clamp-2 min-h-[48px]"
         >
-          {product.name}
+          {locale === 'es' ? product.name_es : product.name_en}
         </Link>
         
         {/* Calificación simulada - En un sistema real se calcularía basado en reseñas */}
