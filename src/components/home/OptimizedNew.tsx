@@ -118,7 +118,7 @@ export default function OptimizedNewHome({
                   {locale === 'es' ? 'Artesanía hecha a mano' : 'Handmade crafts'}
                 </h1>
 
-                <p className="text-gray-800 text-sm mx-auto max-w-xl">
+                <p className="text-gray-800 text-xs mx-auto max-w-xl">
                   {locale === 'es' ? 'Por residentes en rehabilitación de centros penales' : 'By residents in rehabilitation centers'}
                 </p>
 
