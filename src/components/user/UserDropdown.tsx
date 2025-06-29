@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Session } from '@supabase/supabase-js';
 import { ChevronDown, User, History, Heart } from 'lucide-react';
@@ -14,6 +15,10 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  // Build the full current path *with* query string so we can return here after auth
+  const currentUrl = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
 
   // Cierra el dropdown si se hace clic fuera
   useEffect(() => {
@@ -66,7 +71,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               <div className="p-3 border-b border-gray-100">
                 <div className="flex justify-center py-2">
                   <Link 
-                    href="/login"
+                    href={`/${locale}/login?returnUrl=${encodeURIComponent(currentUrl)}`}
                     className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition"
                     onClick={() => setIsOpen(false)}
                   >
@@ -76,7 +81,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                 <div className="text-center text-sm mt-2">
                   <span className="text-gray-600">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
                   <Link 
-                    href="/register" 
+                    href={`/${locale}/register?returnUrl=${encodeURIComponent(currentUrl)}`} 
                     className="text-teal-600 hover:text-teal-800 transition"
                     onClick={() => setIsOpen(false)}
                   >
