@@ -123,7 +123,7 @@ export default function CartPage() {
   }, [cart, syncCartWithDB, userId]);
 
   // En un caso real se calcularía dinámicamente
-  const shipping = cart.length ? 5.99 : 0;
+  const shipping = cart.length ? 6.99 : 0;
   
   // Calcular el total final teniendo en cuenta posibles descuentos
   const total = discountInfo ? discountInfo.finalTotal : subtotal + shipping;
