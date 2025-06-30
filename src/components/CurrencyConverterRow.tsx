@@ -43,7 +43,7 @@ export default function CurrencyConverterRow({
     };
 
   return (
-    <div className="inline-flex flex-nowrap items-center gap-3 text-sm rounded-md border border-amber-300 dark:border-zinc-700 bg-[#B55327]/60 px-2 py-1 shadow-sm">
+    <div className="inline-flex flex-nowrap items-center gap-3 text-sm rounded-md border border-amber-300 dark:border-zinc-700  px-1 py-0.5 shadow-xs">
       {/* Selector de divisas */}
       <select
         className="border-none bg-transparent px-1 py-0.5 focus:outline-none focus:ring-0 text-black font-medium"
@@ -68,9 +68,9 @@ export default function CurrencyConverterRow({
         className="p-1 rounded border border-transparent bg-black hover:border-teal-800 hover:bg-teal-600 hover:text-white transition-colors disabled:opacity-50"
       >
         {pending ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="h-4 w-4 animate-spin font-bold text-white" />
         ) : (
-          <RefreshCcw className="h-4 w-4" />
+          <RefreshCcw className="h-4 w-4 font-bold text-white" />
         )}
       </button>
 

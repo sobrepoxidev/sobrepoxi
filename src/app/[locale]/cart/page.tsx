@@ -14,6 +14,7 @@ import { GalleryModal } from "@/components/products/ClientComponents";
 import RelatedProductsClient from "@/components/products/RelatedProductsClient";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/lib/formatCurrency";
+import CurrencyConverterRow from "@/components/CurrencyConverterRow";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 // ──────────────────── Share Cart Button ─────────────────────
@@ -490,7 +491,7 @@ export default function CartPage() {
             {/* Resumen */}
             <div className="p-6 rounded shadow-md space-y-4">
               <h2 className="text-lg font-medium text-slate-800 mb-2">{locale === 'es' ? 'Resumen del pedido' : 'Order summary'}</h2>
-              <div className="space-y-2 mb-6">
+              <div className="space-y-2 mb-6 text-gray-600">
                 <div className="flex justify-between text-sm text-slate-700">
                   <span>{locale === 'es' ? 'Total del artículo' : 'Total of the article'} ({cart.length} artículo{cart.length !== 1 && "s"})</span>
                   <span>{formatUSD(subtotal)}</span>
@@ -510,6 +511,8 @@ export default function CartPage() {
                   <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
                   <span>{formatUSD(total)}</span>
                 </div>
+                {locale === 'es' ? <p>Conoce el valor en tu moneda:</p> : <p>Know the value in your currency:</p>}
+                <CurrencyConverterRow amount={total} />
                 <p className="text-xs text-slate-500">{locale === 'es' ? `Nota: se te cobrará en USD para ${formatUSD(total)}` : `Note: you will be charged in USD for ${formatUSD(total)}`}</p>
               </div>
               <button
