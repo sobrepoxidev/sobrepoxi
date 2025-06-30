@@ -1,7 +1,7 @@
 const MEM_TTL = 30 * 60 * 1000;      // 30 min
 const KEY     = process.env.EXRATE_KEY;
 
-let cache: { at: number; data: any } | null = null;
+let cache: { at: number; data: unknown } | null = null;
 
 export async function convertUsd(amount: number, to: string) {
   if (!amount || amount <= 0) throw new Error('Invalid amount');
@@ -10,9 +10,9 @@ export async function convertUsd(amount: number, to: string) {
 
   /* 1️⃣  hit en memoria */
   if (cache && now - cache.at < MEM_TTL) {
-    const rate = cache.data.conversion_rates[to];
+    const rate = (cache.data as { conversion_rates: Record<string, number> }).conversion_rates[to];
     if (!rate) throw new Error(`Unsupported currency ${to}`);
-    return build(amount, to, rate, cache.data.time_last_update_utc);
+    return build(amount, to, rate, (cache.data as { time_last_update_utc: string }).time_last_update_utc);
   }
 
   /* 2️⃣  descarga /latest/USD */
@@ -28,10 +28,10 @@ export async function convertUsd(amount: number, to: string) {
 
   cache = { at: now, data: json };
 
-  const rate = json.conversion_rates[to];
+  const rate = (json as { conversion_rates: Record<string, number> }).conversion_rates[to];
   if (!rate) throw new Error(`Unsupported currency ${to}`);
 
-  return build(amount, to, rate, json.time_last_update_utc);
+  return build(amount, to, rate, (json as { time_last_update_utc: string }).time_last_update_utc);
 }
 
 function build(a: number, cur: string, r: number, ts: string) {

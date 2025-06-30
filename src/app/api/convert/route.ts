@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   try {
     const data = await convertUsd(amount, to);
     return NextResponse.json(data, { headers:{ 'Cache-Control':'s-maxage=1800' }});
-  } catch (err:any) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (err:unknown) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : 'Unknown error' }, { status: 400 });
   }
 }
