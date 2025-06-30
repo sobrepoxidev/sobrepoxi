@@ -400,10 +400,10 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
               {inventory > 0 ? (
                 <span className="text-green-600 flex items-center">
                   <Check className="h-4 w-4 mr-1" />
-                  {inventory > 10 ? 'En stock' : `Solo quedan ${inventory} unidades`}
+                  {inventory > 10 ? 'En stock' : inventory==1 ? 'Última unidad' : `Solo quedan ${inventory} unidades`}
                 </span>
               ) : (
-                <span className="text-red-600">{locale === 'es' ? 'Agotado' : 'Out of stock'}</span>
+                <span className="text-red-600">{locale === 'es' ? 'Vendido' : 'Sold out'}</span>
               )}
             </p>
             
