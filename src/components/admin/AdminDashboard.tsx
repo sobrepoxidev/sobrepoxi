@@ -175,6 +175,14 @@ export default function AdminDashboard({ locale }: { locale: string }) {
         updates.colon_price = price;
       }
       
+      if (updates.dolar_price !== undefined) {
+        const usd = Number(updates.dolar_price);
+        if (isNaN(usd) || usd < 0) {
+          throw new Error(locale === 'es' ? 'El precio USD debe ser un número válido mayor o igual a 0' : 'USD price must be a valid number greater than or equal to 0');
+        }
+        updates.dolar_price = usd;
+      }
+      
       if (updates.discount_percentage !== undefined) {
         const discount = Number(updates.discount_percentage);
         if (isNaN(discount) || discount < 0 || discount > 100) {
@@ -206,6 +214,14 @@ export default function AdminDashboard({ locale }: { locale: string }) {
           <div className="flex flex-col">
             <span className="font-medium">{locale === 'es' ? 'Precio actualizado' : 'Price updated'}</span>
             <span className="text-sm">{locale === 'es' ? 'Nuevo precio: ₡' : 'New price: ₡'}{updates.colon_price}</span>
+          </div>,
+          { duration: 3000 }
+        );
+            } else if (updates.dolar_price !== undefined) {
+        toast.success(
+          <div className="flex flex-col">
+            <span className="font-medium">{locale === 'es' ? 'Precio USD actualizado' : 'USD price updated'}</span>
+            <span className="text-sm">{locale === 'es' ? 'Nuevo precio: $' : 'New price: $'}{updates.dolar_price}</span>
           </div>,
           { duration: 3000 }
         );

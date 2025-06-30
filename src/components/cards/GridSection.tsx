@@ -16,7 +16,6 @@ type Product = Database['products'];
 
 const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart: number, indexEnd: number, mobileActive?: boolean }) => {
   const locale = useLocale();
-  console.log('Locale GRID:->', locale, '<-');
   const [categories, setCategories] = useState<Category[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);

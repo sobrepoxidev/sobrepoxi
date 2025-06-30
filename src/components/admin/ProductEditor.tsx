@@ -26,6 +26,7 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
   // En el editor modal, nos enfocamos en campos que no se pueden editar fácilmente en las tarjetas
   // y opciones más avanzadas
   const [price, setPrice] = useState<number | null>(product.colon_price);
+  const [usdPrice, setUsdPrice] = useState<number | null>(product.dolar_price);
   const [name, setName] = useState<string | null>(product.name_es || product.name);
   const [isActive, setIsActive] = useState<boolean | null>(product.is_active);
   const [discountPercentage, setDiscountPercentage] = useState<number | null>(product.discount_percentage);
@@ -43,6 +44,7 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
       
       // Solo incluir campos que han cambiado
       if (price !== product.colon_price) updates.colon_price = price;
+      if (usdPrice !== product.dolar_price) updates.dolar_price = usdPrice;
       if (name !== (product.name_es || product.name)) {
         updates.name = name;
         updates.name_es = name;
@@ -69,6 +71,14 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
           throw new Error(locale === 'es' ? 'El precio debe ser un número válido mayor o igual a 0' : 'The price must be a valid number greater than or equal to 0');
         }
         updates.colon_price = priceNum;
+      }
+      
+      if (updates.dolar_price !== undefined && updates.dolar_price !== null) {
+        const usdNum = Number(updates.dolar_price);
+        if (isNaN(usdNum) || usdNum < 0) {
+          throw new Error(locale === 'es' ? 'El precio en USD debe ser un número válido mayor o igual a 0' : 'USD price must be a valid number greater than or equal to 0');
+        }
+        updates.dolar_price = usdNum;
       }
       
       if (updates.discount_percentage !== undefined && updates.discount_percentage !== null) {
@@ -172,7 +182,7 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
               {locale === 'es' ? 'Estos campos también se pueden editar directamente desde las tarjetas de productos' : 'These fields can also be edited directly from the product cards'}
             </p>
             
-            {/* Precio */}
+            {/* Precio CRC */}
             <div className="mb-4">
               <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
                 {locale === 'es' ? 'Precio (₡)' : 'Price (₡)'}
@@ -185,6 +195,23 @@ export default function ProductEditor({ locale, product, categories, onSave, onC
                 onChange={(e) => setPrice(e.target.value ? parseFloat(e.target.value) : null)}
                 min="0"
                 step="100"
+                placeholder="0"
+              />
+            </div>
+            
+            {/* Precio USD */}
+            <div className="mb-4">
+              <label htmlFor="usdPrice" className="block text-sm font-medium text-gray-700 mb-1">
+                {locale === 'es' ? 'Precio (US$)' : 'Price (US$)'}
+              </label>
+              <input
+                type="number"
+                id="usdPrice"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                value={usdPrice === null ? '' : usdPrice}
+                onChange={(e) => setUsdPrice(e.target.value ? parseFloat(e.target.value) : null)}
+                min="0"
+                step="0.01"
                 placeholder="0"
               />
             </div>
