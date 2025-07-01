@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, AlertCircle } from 'lucide-react';
 import { useLocale } from 'next-intl';
+import { formatUSD } from '@/lib/formatCurrency';
 
 type Product = Database['products'];
 
@@ -163,6 +164,7 @@ export default function ViewedProductsHistory() {
                   alt={product.name || 'Producto'}
                   fill
                   className="object-contain p-2"
+                  unoptimized
                 />
               </div>
               <div className="p-2">
@@ -170,7 +172,7 @@ export default function ViewedProductsHistory() {
                   {product.name}
                 </h3>
                 <p className="text-sm font-semibold text-teal-700">
-                  {product.dolar_price ? `$${product.dolar_price.toFixed(2)}` : 'Precio a consultar'}
+                  {product.dolar_price ? `${formatUSD(product.dolar_price)}` : 'Precio a consultar'}
                 </p>
               </div>
             </div>

@@ -215,6 +215,8 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                               height={90}
                               style={{ objectFit: 'contain', maxHeight: '100%' }}
                               className="object-contain max-h-full"
+                              unoptimized
+                              loading="lazy"
                             />
                           </div>
                           <div className="mt-1 text-white text-xs font-medium line-clamp-1">
@@ -247,7 +249,8 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                             width={140}
                             height={140}
                             style={{ objectFit: 'contain', maxHeight: '100%' }}
-                            priority={index < 4}
+                            loading="lazy"
+                            unoptimized
                             className="transform group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
@@ -263,7 +266,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                       {product.colon_price && (
                         <div className="mt-2 flex items-center justify-between">
                           <div className="text-teal-600 font-bold text-sm">
-                            ₡{product.colon_price.toLocaleString()}
+                            {formatUSD(product.colon_price)}
                           </div>
                           <div className="text-xs text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
                             {locale === 'es' ? 'Ver detalles' : 'View details'}

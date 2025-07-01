@@ -66,6 +66,7 @@ export default function OptimizedNewHome({
                     sizes="(max-width: 768px) 40px, 110px"
                     style={{ objectFit: 'contain' }}
                     priority
+                    unoptimized
                   />
                 </div>
                 {/* <div className="relative h-[80px] w-[80px] md:h-[180px] md:w-[180px]">
