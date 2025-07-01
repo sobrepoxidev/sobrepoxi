@@ -15,8 +15,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     // Declaramos *ambos* sitemaps para reforzar la relación entre dominios
     sitemap: [
       `https://${host}/sitemap.xml`,
-      "https://artehechoamano.com/sitemap.xml",
-      "https://handmadeart.store/sitemap.xml",
     ],
   };
 }
