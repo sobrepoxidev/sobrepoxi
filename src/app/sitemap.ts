@@ -1,4 +1,4 @@
-// src/app/sitemap.ts   (metadata route, NO GET)
+// src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
 
@@ -10,35 +10,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     (await headers()).get("host") ??
     "";
 
-  // Idioma principal según dominio
-  const locale = host.includes("artehechoamano") ? "es" : "en";
-  const altLocale = locale === "es" ? "en" : "es";
+  // → Idioma principal según dominio
+  const locale: "es" | "en" = host.includes("artehechoamano") ? "es" : "en";
+  const altLocale: "es" | "en" = locale === "es" ? "en" : "es";
+
+  // → Códigos hreflang
+  const localeTag    = locale    === "es" ? "es-cr" : "en-us";
+  const altLocaleTag = altLocale === "es" ? "es-cr" : "en-us";
+
+  // → Dominio alterno fijo
+  const altDomain = altLocale === "es" ? "artehechoamano.com" : "handmadeart.store";
+
   const now = new Date();
 
-  
-  type SitemapEntry = MetadataRoute.Sitemap[number];
-
-  // Helper para crear cada entrada con datos comunes
-  const make = (path: string, isProduct = false): SitemapEntry => ({
+  // Helper con tipo correcto
+  const make = (path: string, isProduct = false): MetadataRoute.Sitemap[number] => ({
     url: `https://${host}/${locale}${path}`,
     lastModified: now,
     changeFrequency: isProduct ? "weekly" : "monthly",
     priority: isProduct ? 0.8 : 0.6,
-    // 🡇 Etiqueta alterna para el otro dominio/idioma
     alternates: {
       languages: {
-        [altLocale === "es" ? "es-cr" : "en-us"]: `https://${
-          altLocale === "es" ? "artehechoamano.com" : "handmadeart.store"
-        }/${altLocale}${path}`,
+        [localeTag]:    `https://${host}/${locale}${path}`,
+        [altLocaleTag]: `https://${altDomain}/${altLocale}${path}`,
       },
     },
   });
 
   return [
-    make(""), // home
+    make(""),
     make("/about"),
     make("/products"),
-    make("/product/[id]", true), // se mantiene placeholder
+    make("/product/[id]", true),
     make("/shipping"),
     make("/contact"),
     make("/privacy-policies"),
