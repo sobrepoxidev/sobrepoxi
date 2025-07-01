@@ -55,9 +55,14 @@ export default function CurrencyConverterRow({
       >
         <option value="CRC">CRC</option>
         <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="MXN">MXN</option>
         <option value="JPY">JPY</option>
+        <option value="GBP">GBP</option>
+        <option value="CNY">CNY</option>
+        <option value="AUD">AUD</option>
+        <option value="HKD">HKD</option>
+        <option value="SEK">SEK</option>
+        <option value="MXN">MXN</option>
+        
       </select>
 
       {/* Botón convertir */}
