@@ -234,7 +234,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
             
             {/* Versión para desktop: Fila horizontal de productos individuales */}
             <div className="hidden lg:flex w-full">
-              {displayProducts.map((product, index) => (
+              {displayProducts.map((product) => (
                 <div 
                   key={product.id} 
                   className="min-w-[200px] flex-shrink-0 snap-start mr-4 last:mr-0 group"
