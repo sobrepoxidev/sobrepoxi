@@ -21,26 +21,26 @@ export default function CurrencyConverterRow({
     rate: number;
     timestamp: string;
   }
-  
+
   const [result, setResult] = useState<ConversionResult | null>(null);
-  const [last,     setLast]     = useState<{ amt: number; cur: string } | null>(null);
-  const [pending,  start]       = useTransition();
+  const [last, setLast] = useState<{ amt: number; cur: string } | null>(null);
+  const [pending, start] = useTransition();
 
   /* true cuando está cargando o ya convertimos el mismo par amount/currency */
   const disabled: boolean =
     pending || (!!last && last.amt === amount && last.cur === currency);
 
-  
 
-    const onConvert = async () => {
-      if (disabled) return;
-      start(async () => {
-        const res  = await fetch(`/api/convert?amount=${amount}&to=${currency}`);
-        const data = await res.json();
-        setResult(data);
-        setLast({ amt: amount, cur: currency });
-      });
-    };
+
+  const onConvert = async () => {
+    if (disabled) return;
+    start(async () => {
+      const res = await fetch(`/api/convert?amount=${amount}&to=${currency}`);
+      const data = await res.json();
+      setResult(data);
+      setLast({ amt: amount, cur: currency });
+    });
+  };
 
   return (
     <div className="inline-flex flex-nowrap items-center gap-3 text-sm rounded-md border border-amber-300 dark:border-zinc-700  px-1 py-0.5 shadow-xs">
@@ -53,16 +53,18 @@ export default function CurrencyConverterRow({
           setResult(null);          // obliga nueva conversión
         }}
       >
-        <option value="CRC">CRC</option>
+        <option value="CRC">CRC</option>  {/* moneda local */}
         <option value="EUR">EUR</option>
         <option value="JPY">JPY</option>
         <option value="GBP">GBP</option>
         <option value="CNY">CNY</option>
         <option value="AUD">AUD</option>
+        <option value="CAD">CAD</option>
+        <option value="CHF">CHF</option>
         <option value="HKD">HKD</option>
         <option value="SEK">SEK</option>
         <option value="MXN">MXN</option>
-        
+
       </select>
 
       {/* Botón convertir */}
