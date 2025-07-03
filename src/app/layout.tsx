@@ -5,7 +5,7 @@ import { CartProvider } from "@/context/CartContext";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://artehechoamano.com"),
+  metadataBase: new URL("https://sobrepoxi.com"),
   icons: { icon: "/favicon.ico" }
 };
 

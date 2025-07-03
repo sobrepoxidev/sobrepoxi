@@ -20,7 +20,7 @@ export default function HomeContainer({locale}: {locale: string}) {
           <Link 
             href="/contact"
             className="bg-gold-gradient text-black font-bold px-2 py-1 rounded-full shadow-lg hover:bg-teal-700 transition hidden md:block animate-fade-in"
-            aria-label="Contacto Handmade Art"
+            aria-label="Contacto SobrePoxi"
             tabIndex={0}
           >
             {locale === 'es' ? '¿Necesitas ayuda?' : 'Need help?'}

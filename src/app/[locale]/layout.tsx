@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   const host = 
     headersList.get("x-forwarded-host")?.trim() || 
     headersList.get("host")?.trim() ||
-    'artehechoamano.com';
+    'sobrepoxi.com';
   const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
   const { locale } = await params;
   
@@ -42,8 +42,6 @@ export default async function LocaleLayout({
   params: tParams;
 }) {
   const { locale } = await params;
-  console.log("locale:", locale);
-  console.log("locales: ", routing.locales);
   if (!hasLocale(routing.locales, locale)) {
     // 404 si locale no existe
     throw new Error("Invalid locale");
