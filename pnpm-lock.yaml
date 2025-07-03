@@ -42,8 +42,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(typescript@5.8.2)
       nodemailer:
-        specifier: ^6.10.0
-        version: 6.10.0
+        specifier: ^7.0.4
+        version: 7.0.4
       qrcode.react:
         specifier: ^4.2.0
         version: 4.2.0(react@19.1.0)
@@ -1715,8 +1715,8 @@ packages:
       sass:
         optional: true
 
-  nodemailer@6.10.0:
-    resolution: {integrity: sha512-SQ3wZCExjeSatLE/HBaXS5vqUOQk6GtBdIIKxiFdmm01mOQZX/POJkO3SUX1wDiYcwUOJwT23scFSC9fY2H8IA==}
+  nodemailer@7.0.4:
+    resolution: {integrity: sha512-9O00Vh89/Ld2EcVCqJ/etd7u20UhME0f/NToPfArwPEe1Don1zy4mAIz6ariRr7mJ2RDxtaDzN0WJVdVXPtZaw==}
     engines: {node: '>=6.0.0'}
 
   object-assign@4.1.1:
@@ -3852,7 +3852,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nodemailer@6.10.0: {}
+  nodemailer@7.0.4: {}
 
   object-assign@4.1.1: {}
 
