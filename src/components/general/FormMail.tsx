@@ -3,11 +3,10 @@ import { useActionState} from 'react';
 import { handleVacationForm } from "../../actions";
 import { motion } from 'framer-motion';
 import { FaSpinner, FaCheck } from 'react-icons/fa';
-import { use } from 'react';
 import { useLocale } from 'next-intl';
 
 export default function FormMail() {
-  
+
   const [state, formAction, isPending] = useActionState(handleVacationForm, null);
   const locale = useLocale();
 

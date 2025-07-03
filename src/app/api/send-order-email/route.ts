@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendMail } from "@/lib/email";
 import { generateOrderConfirmationEmail } from "@/lib/orderConfirmationEmail";
 
 // Email de la empresa que siempre debe recibir notificación de pedidos
@@ -43,10 +42,18 @@ export async function POST(request: NextRequest) {
     const emailHtml = generateOrderConfirmationEmail(emailData);
     
     // Enviar correo al cliente
-    await sendMail('¡Gracias por tu compra en HANDMADE ART!', emailHtml, userEmail);
+    await fetch('/api/send-email', {
+      method: 'POST',
+      body: JSON.stringify({ subject: '¡Gracias por tu compra en HANDMADE ART!', html: emailHtml, to: userEmail }),
+      headers: { 'Content-Type': 'application/json' },
+    });
     
     // Enviar también una copia a la empresa
-    await sendMail(`Nuevo pedido #${orderId} - HANDMADE ART`, emailHtml, COMPANY_EMAIL);
+    await fetch('/api/send-email', {
+      method: 'POST',
+      body: JSON.stringify({ subject: `Nuevo pedido #${orderId} - HANDMADE ART`, html: emailHtml, to: COMPANY_EMAIL }),
+      headers: { 'Content-Type': 'application/json' },
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

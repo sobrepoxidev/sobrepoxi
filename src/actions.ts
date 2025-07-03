@@ -1,6 +1,4 @@
 "use client"
-import { sendMail } from '@/lib/email';
-import { use } from 'react';
 
 // Define interfaces for type safety
 interface VacationFormData {
@@ -148,8 +146,12 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
     `;
 
     // Send email
-    use(sendMail('Nuevo mensaje de contacto - SobrePoxi', html, "bryamlopez4@gmail.com"));
-
+    await fetch('/api/send-email', {
+      method: 'POST',
+      body: JSON.stringify({ subject: 'Nuevo mensaje de contacto - SobrePoxi', html, to: "info@sobrepoxi.com" }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    
     return {
       success: true,
       message: "Mensaje enviado exitosamente"
