@@ -2,13 +2,13 @@ import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 
-export const runtime = "edge";
+export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host =
     (await headers()).get("x-forwarded-host") ??
     (await headers()).get("host") ??
-    "";
+    process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
 
   const now = new Date();
 
