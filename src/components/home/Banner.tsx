@@ -24,32 +24,32 @@ interface BannerTemplateProps {
   bgColor?: string;
 }
 
-const CarouselArrow: React.FC<CarouselArrowProps> = ({ direction, onClick }) => (
-  <button 
-    onClick={onClick}
-    className={`absolute top-1/2 transform -translate-y-1/2 z-50 bg-white/30 hover:bg-white/50 rounded-full p-2 
-    ${direction === 'left' ? 'left-2' : 'right-2'} transition-all duration-200 hidden md:block`}
-    aria-label={direction === 'left' ? 'Anterior' : 'Siguiente'}
-  >
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"
-      className="text-gray-800"
-    >
-      {direction === 'left' 
-        ? <polyline points="15 18 9 12 15 6"></polyline>
-        : <polyline points="9 18 15 12 9 6"></polyline>
-      }
-    </svg>
-  </button>
-);
+// const CarouselArrow: React.FC<CarouselArrowProps> = ({ direction, onClick }) => (
+//   <button 
+//     onClick={onClick}
+//     className={`absolute top-1/2 transform -translate-y-1/2 z-50 bg-white/30 hover:bg-white/50 rounded-full p-2 
+//     ${direction === 'left' ? 'left-2' : 'right-2'} transition-all duration-200 hidden md:block`}
+//     aria-label={direction === 'left' ? 'Anterior' : 'Siguiente'}
+//   >
+//     <svg 
+//       xmlns="http://www.w3.org/2000/svg" 
+//       width="24" 
+//       height="24" 
+//       viewBox="0 0 24 24" 
+//       fill="none" 
+//       stroke="currentColor" 
+//       strokeWidth="2" 
+//       strokeLinecap="round" 
+//       strokeLinejoin="round"
+//       className="text-gray-800"
+//     >
+//       {direction === 'left' 
+//         ? <polyline points="15 18 9 12 15 6"></polyline>
+//         : <polyline points="9 18 15 12 9 6"></polyline>
+//       }
+//     </svg>
+//   </button>
+// );
 
 const CarouselIndicators: React.FC<CarouselIndicatorsProps> = ({ total, current, onClick }) => (
   <div className="absolute bottom-1 left-0 right-0 flex justify-center space-x-2 z-50">
@@ -221,7 +221,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
         </div>
       ))}
 
-      <div className="absolute bottom-0.5 right-3 text-[0.5rem] text-[#303030] bg-black/10 px-0.5 py-0.5 rounded md:hidden">
+      <div className="absolute bottom-0.5 right-2 text-[0.4rem] text-gray-500 bg-black/10 px-0.5 py-0.5 rounded md:hidden">
         {locale === 'es' ? 'Desliza para navegar' : 'Swipe to navigate'}
       </div>
     </div>
