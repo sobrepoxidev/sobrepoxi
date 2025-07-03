@@ -1,3 +1,5 @@
+//src/lib/email.ts
+"use server";
 import nodemailer from 'nodemailer';
 
 export async function sendMail(subject: string, html: string, to: string) {
