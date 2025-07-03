@@ -2,7 +2,9 @@
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { routing } from '@/i18n/routing';
-
+export const runtime = "edge";
+export const dynamic = "force-static";          // ⟵ ● cacheable
+export const revalidate = 1800;                 // ⟵ ● 30 minutos
 // Redirige dinámicamente a la mejor coincidencia de idioma
 // 1. Si el dominio está definido en routing.domains, usa su defaultLocale
 // 2. En caso contrario, intenta detectar un idioma soportado a partir de "Accept-Language"

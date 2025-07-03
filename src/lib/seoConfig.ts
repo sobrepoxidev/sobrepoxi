@@ -4,28 +4,32 @@ import type { Metadata } from "next";
 /* -------------------------------------------------------------------------
  * Textos SEO por locale
  * ---------------------------------------------------------------------- */
-const SEO_TEXT = {
+/* src/lib/seoConfig.ts */
+export const SEO_TEXT = {
   es: {
     title: {
-      default: "SobrePoxi | Creaciones en Resina de Lujo",
-      template: "%s | SobrePoxi Costa Rica"
+      // 60-65 caracteres máx. · keyword principal al inicio
+      default:  "Pisos epóxicos y muebles de lujo · SobrePoxi",
+      template: "%s · SobrePoxi Costa Rica"
     },
     description:
-      "SobrePoxi diseña y crea muebles, pisos y proyectos personalizados con resina epóxica y materiales nobles. Piezas únicas, envío internacional y servicio llave en mano.",
+      "Diseñamos e instalamos muebles de madera con resina y pisos epóxicos artísticos para proyectos residenciales y contract en Costa Rica y EE. UU. Servicio llave en mano.",
     keywords:
-      "resina epóxica, muebles de lujo, pisos epóxicos, proyectos personalizados, mesa río, sobrepoxi, madera y resina, arte en resina"
+      "pisos epóxicos Costa Rica, muebles de resina de lujo, empresas de pisos epóxicos, mantenimiento de pisos epóxicos, proyectos en resina, mesa río, madera y resina, arte en resina"
   },
+
   en: {
     title: {
-      default: "SobrePoxi | Luxury Epoxy Creations",
-      template: "%s | SobrePoxi USA"
+      default:  "Luxury Finishing floors & Resin Furniture · SobrePoxi",
+      template: "%s · SobrePoxi USA"
     },
     description:
-      "SobrePoxi crafts luxury furniture, artistic epoxy floors and bespoke projects in resin and fine materials. Unique statement pieces shipped worldwide.",
+      "We craft luxury epoxy river tables and artistic floors for residential and commercial projects in Costa Rica and the USA. Turn-key B2B service, worldwide shipping.",
     keywords:
-      "epoxy resin, luxury furniture, epoxy floors, bespoke resin projects, river table, SobrePoxi, wood and resin, epoxy art"
+      "epoxy flooring Costa Rica, luxury resin furniture, epoxy floor contractors, decorative epoxy floors, epoxy river table, bespoke resin projects, wood and resin, epoxy art"
   }
 } as const;
+
 
 /* Devuelve 'es-CR' / 'en-US' para <html lang> y og:locale */
 export function mapLocale(locale: string) {
@@ -65,7 +69,7 @@ export function buildMetadata(opts: {
     alt:
       locale === "es"
         ? "SobrePoxi – Creaciones en resina epóxica"
-        : "SobrePoxi – Luxury Epoxy Creations"
+        : "SobrePoxi – Luxury Finishing Creations"
   };
 
   /* --------------------------------------------------------------------- */
