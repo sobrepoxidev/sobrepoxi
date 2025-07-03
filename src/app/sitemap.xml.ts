@@ -11,14 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "";
 
   const now = new Date();
-  
 
-  // Obtiene los slugs de productos activos desde la BD para agregarlos al sitemap
+  // Fetch active product slugs
   type ProductRow = { name: string | null };
-  const { data: products, error } = await supabase
+  const { data: products, error } = (await supabase
     .from("products")
     .select("name")
-    .eq("is_active", true) as { data: ProductRow[] | null, error: unknown };
+    .eq("is_active", true)) as { data: ProductRow[] | null; error: unknown };
 
   if (error) {
     console.error("Error fetching products for sitemap:", error);
@@ -29,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { prefix: "en", tag: "en-us" },
   ];
 
-  const paths = [
+  const staticPaths = [
     "", // home
     "/about",
     "/products",
@@ -45,36 +44,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/search",
   ];
 
-  const make = (prefix: string, path: string, isProduct = false): MetadataRoute.Sitemap[number] => ({
+  const makeEntry = (
+    prefix: string,
+    path: string,
+    isProduct = false,
+  ): MetadataRoute.Sitemap[number] => ({
     url: `https://${host}/${prefix}${path}`,
     lastModified: now,
     changeFrequency: isProduct ? "weekly" : "monthly",
     priority: isProduct ? 0.8 : 0.6,
     alternates: {
       languages: Object.fromEntries(
-        locales.map(loc => [
-          loc.tag,
-          `https://${host}/${loc.prefix}${path}`,
-        ])
+        locales.map((loc) => [loc.tag, `https://${host}/${loc.prefix}${path}`]),
       ),
     },
   });
 
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const path of paths) {
+  // Static pages
+  for (const path of staticPaths) {
     for (const { prefix } of locales) {
-      entries.push(make(prefix, path));
+      entries.push(makeEntry(prefix, path));
     }
   }
 
-    // Agregamos cada producto activo al sitemap con mayor prioridad y frecuencia
+  // Dynamic product pages
   if (products) {
-    for (const prod of products) {
-      if (!prod.name) continue;
-      const slug = prod.name; // `name` ya es el slug según el esquema
+    for (const { name } of products) {
+      if (!name) continue;
       for (const { prefix } of locales) {
-        entries.push(make(prefix, `/product/${slug}`, true));
+        entries.push(makeEntry(prefix, `/product/${name}`, true));
       }
     }
   }
