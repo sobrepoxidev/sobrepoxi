@@ -1,4 +1,5 @@
 // app/api/send-email/route.ts
+export const runtime = 'nodejs';
 import { NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
       pass: process.env.EMAIL_PASS,
     },
   });
-  await transporter.sendMail({ from: `"HANDMADE ART" <${process.env.EMAIL_USER}>`, to, subject, html });
+  await transporter.sendMail({ from: `"SobrePoxi" <${process.env.EMAIL_USER}>`, to, subject, html });
 
   return new Response(null, { status: 204 });
 }
