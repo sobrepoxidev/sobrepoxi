@@ -265,11 +265,11 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 const cardColors = [
         
                   
-                  'bg-blue-500',   // Azul
-                  'bg-green-500', // Morado oscuro
-                  'bg-pink-500', // Rosa
+                  'bg-gold-gradient',   // Azul
+                  'bg-[#303030]', // Morado oscuro
+                  'bg-gold-gradient', // Rosa
                     
-                  'bg-red-500'     // Rojo
+                  'bg-[#303030]'     // Rojo
                 ];
 
         
@@ -278,6 +278,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 const cardColor = cardColors[index];
                 
                 return {
+                  textColor: cardColor,
                   title: `${locale === 'es' ? category.name_es : category.name_en || category.name} `,
                   content: (
                     <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
