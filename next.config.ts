@@ -50,11 +50,7 @@ const nextConfig: NextConfig = {
         ]
       }
     ];
-  },
-
-  experimental: {
-    serverComponentsExternalPackages: ['nodemailer']
-  },
+  }
 
   // 3️⃣  Any other Next.js options you may add later…
   // reactStrictMode: true,

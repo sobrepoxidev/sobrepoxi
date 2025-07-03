@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
 import { Suspense } from "react";
 
-export const runtime = "edge";
 
 /* ————— METADATA GLOBAL ————— */
 export const metadata: Metadata = {

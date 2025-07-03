@@ -2,7 +2,6 @@
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { routing } from '@/i18n/routing';
-export const runtime = "edge";
 export const dynamic = "force-static";          // ⟵ ● cacheable
 export const revalidate = 1800;                 // ⟵ ● 30 minutos
 // Redirige dinámicamente a la mejor coincidencia de idioma
