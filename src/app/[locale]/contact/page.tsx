@@ -10,9 +10,6 @@
 
 import { Suspense }                 from "react";
 
-// Ensure this page uses the full Node.js runtime (Edge runtime does not support some server-side imports)
-export const runtime = "nodejs";
-import dynamic                      from "next/dynamic";
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
 
 import type { Metadata }            from "next";
