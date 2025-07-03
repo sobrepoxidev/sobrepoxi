@@ -33,7 +33,6 @@ export async function generateMetadata(
 export default async function AboutPage({ params }: { params: ParamsPromise }) {
 
   const { locale } = await params;
-  const t = (es: string, en: string) => (locale === "es" ? es : en);
 
   /* ------------------------------------------------------------------- */
   return (
@@ -77,7 +76,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           <div className="w-full lg:w-1/2 flex justify-center">
             <Image
               src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp"
-              alt={t("Mesa río SobrePoxi", "SobrePoxi river table")}
+              alt={locale === "es" ? "Mesa río SobrePoxi" : "SobrePoxi river table"}
               width={450}
               height={450}
               className="rounded-xl shadow-lg object-cover"
