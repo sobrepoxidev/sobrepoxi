@@ -44,14 +44,14 @@ export async function POST(request: NextRequest) {
     // Enviar correo al cliente
     await fetch('/api/send-email', {
       method: 'POST',
-      body: JSON.stringify({ subject: '¡Gracias por tu compra en HANDMADE ART!', html: emailHtml, to: userEmail }),
+      body: JSON.stringify({ subject: '¡Gracias por tu compra en SobrePoxi!', html: emailHtml, to: userEmail }),
       headers: { 'Content-Type': 'application/json' },
     });
     
     // Enviar también una copia a la empresa
     await fetch('/api/send-email', {
       method: 'POST',
-      body: JSON.stringify({ subject: `Nuevo pedido #${orderId} - HANDMADE ART`, html: emailHtml, to: COMPANY_EMAIL }),
+      body: JSON.stringify({ subject: `Nuevo pedido #${orderId} - SobrePoxi`, html: emailHtml, to: COMPANY_EMAIL }),
       headers: { 'Content-Type': 'application/json' },
     });
 
