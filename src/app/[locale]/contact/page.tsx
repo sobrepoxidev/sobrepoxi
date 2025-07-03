@@ -51,8 +51,6 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
   const { locale } = await params;
 
   /* Copy helper */
-  const t = (es: string, en: string) => (locale === "es" ? es : en);
-
   /* ------------------------------------------------------------------- */
   return (
     <Suspense>
