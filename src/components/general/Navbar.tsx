@@ -1,7 +1,7 @@
 // components/layout/Navbar/index.tsx
 // Componente principal SSR
 import Link from 'next/link';
-import Image from 'next/image';
+//import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 import SearchBar from '../search/SearchBar';
 import CategoryCarousel from '../search/CategoryCarousel';
@@ -26,31 +26,38 @@ export default async function Navbar({ locale }: { locale: string }) {
           <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
               
-              <div className="lg:hidden">
+              {/* <div className="lg:hidden">
               <Image
-                src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/logo-LjcayV8P6SUxpAv0Hv61zn3t1XNhLw.svg"
+                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
                 className="w-[40px] md:w-[65px] object-cover"
                 priority
+                unoptimized
               />
               </div>
               <div className="hidden lg:block">
               <Image
-                src="https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/logo-LjcayV8P6SUxpAv0Hv61zn3t1XNhLw.svg"
+                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
                 className="w-[40px] md:w-[65px] object-cover"
                 priority
+                unoptimized
               />
-              </div>
+              </div> */}
         
-              
-              <h1 className="text-lg sm:text-3xl mr-1 tracking-wider text-gray-800">
-                <span className="mr-1">HANDMADE</span>
-                <span className="font-bold text-[#B55327]">ART</span>
+        <h1
+                className="
+                  flex items-center gap-0
+                  text-lg md:text-3xl font-extrabold tracking-wider
+                  gold-gradient              
+                  drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
+                  motion-safe:animate-shine"
+              >
+                SobrePoxi
               </h1>
             </div>
           </Link>

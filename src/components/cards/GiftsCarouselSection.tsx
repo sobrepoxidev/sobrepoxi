@@ -206,7 +206,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                     </div>
                     <div className="grid grid-cols-2 gap-2 w-full h-full">
                       {groupProducts.map((product, idx) => (
-                        <Link key={`${product.id}-${idx}`} href={`/product/${product.id}`} className="block text-center">
+                        <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} className="block text-center">
                           <div className="h-32 flex items-center justify-center bg-white rounded-lg shadow-sm p-1">
                             <Image
                               src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
@@ -239,7 +239,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                   key={product.id} 
                   className="min-w-[200px] flex-shrink-0 snap-start mr-4 last:mr-0 group"
                 >
-                  <Link href={`/product/${product.id}`} className="block h-full">
+                  <Link href={`/product/${product.name}`} className="block h-full">
                     <div className="bg-white rounded-lg shadow-sm p-3 hover:shadow-md transition-all duration-300 h-full flex flex-col transform group-hover:-translate-y-1">
                       <div className="relative overflow-hidden rounded-md mb-3">
                         <div className="h-40 flex items-center justify-center p-2 bg-gray-50 rounded-md">

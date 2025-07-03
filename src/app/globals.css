@@ -65,8 +65,57 @@ body {
   }
 }
 
-@layer components {
+/* ============================================================
+   EFECTO DORADO (gradiente + destello brillante opcional)
+   ============================================================ */
+
+/* 1️⃣  Keyframes del destello que recorre el texto */
+@keyframes shine {
+  0%,100% { background-position: -200% 0; }
+  50%     { background-position:  200% 0; }
+}
+
+/* 2️⃣  Utilidades en la capa `utilities` para que
+       tengan la misma prioridad que las clases Tailwind */
+@layer utilities {
+
+  /* --- Gradiente dorado reutilizable ---------------------- */
+  .gold-gradient {
+    background: linear-gradient(
+      90deg,            /* de izquierda a derecha */
+      #997326 0%,       /* dorado oscuro */
+      #d2a857 25%,      /* dorado medio */
+      #857f58 50%,      /* brillo casi blanco */
+      #d2a857 75%,      /* vuelta a dorado medio */
+      #997326 100%      /* dorado oscuro */
+    );
+    /* “Pinta” solo las letras */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Safari/Chrome */
+    color: transparent;                   /* fallback estándar */
+    background-size: 300% 100%;           /* suaviza la animación */
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(
+      90deg,
+      #997326 0%,
+      #d2a857 25%,
+      #fcefa6 50%,
+      #d2a857 75%,
+      #997326 100%
+    );
+  }
+
+  /* --- Animación opcional -------------------------------- */
+  .animate-shine {
+    animation: shine 3s linear infinite;
+  }
+}
+
+/* @layer components {
   .input { @apply w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500; }
   .btn-primary { @apply rounded-lg px-4 py-2 font-semibold bg-teal-600 text-white transition active:scale-95; }
   .btn-outline { @apply rounded-lg px-4 py-2 font-semibold border border-teal-600 text-teal-600 transition active:scale-95; }
-}
+} */

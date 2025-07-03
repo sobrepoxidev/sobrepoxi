@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { CarrucelItem } from './CarrucelSectionA';
 
 const CarouselCard: React.FC<{
+  textColor: string;
   title: string;
   content: React.ReactNode;
   link: string;
   className?: string;
-}> = ({ title, content, link, className = "" }) => {
+}> = ({ textColor, title, content, link, className = "" }) => {
   const router = useRouter();
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -25,7 +26,7 @@ const CarouselCard: React.FC<{
       className={`flex h-[27rem] shadow-md flex-col cursor-pointer ${className}`}
     >
       <div className="flex flex-col h-full">
-        <h2 className="text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap text-white" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <h2 className={`text-2xl font-bold px-0.5 pt-1 truncate whitespace-nowrap ${textColor}`} style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
           {title}
         </h2>
         <div className="flex-grow flex items-center justify-center">{content}</div>
@@ -97,6 +98,7 @@ const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
             className="flex-none w-[80%] snap-start pl-3 first:pl-4 last:pr-4 py-1"
           >
             <CarouselCard 
+              textColor={item.textColor}
               title={item.title}
               content={item.content}
               link={item.link}

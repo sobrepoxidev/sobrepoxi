@@ -17,5 +17,5 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
 
 export default async function ProductPage({ params }: { params: tParams }) {
   const { id, locale } = await params;
-  return <ProductDetail id={id} locale={locale} />;
+  return <ProductDetail name={id} locale={locale} />;
 }

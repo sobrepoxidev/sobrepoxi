@@ -16,7 +16,8 @@ import {
   ArrowLeft,
   Check,
   Tag,
-  MessageSquare
+  MessageSquare,
+  PlayCircle
 } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useSupabase } from '@/app/supabase-provider/provider';
@@ -31,7 +32,7 @@ type Product = Database['products'];
 type Category = Database['categories'];
 
 // The client component that handles UI and state
-export default function ProductDetail({ id, locale }: { id: string, locale: string }) {
+export default function ProductDetail({ name, locale }: { name: string, locale: string }) {
   // Ensure viewport starts at top when navigating to product page
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,7 +67,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
         const { data: productData, error: productError } = await supabase
           .from('products')
           .select('*')
-          .eq('id', id)
+          .eq('name', name)
           .single();
 
         if (productError) {
@@ -116,7 +117,7 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
         if (session?.user) {
           const { data: favoriteData } = await supabase
             .from('favorites')
-            .select('id')
+            .select('name')
             .eq('user_id', session.user.id)
             .eq('product_id', productData.id)
             .single();
@@ -132,10 +133,10 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
       }
     }
 
-    if (id) {
+    if (name) {
       fetchProductAndRelatedData();
     }
-  }, [id]); // Use id as dependency
+  }, [name]); // Use id as dependency
 
   // Manejar la cantidad
   const handleIncrement = () => {
@@ -275,7 +276,10 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
     );
   }
 
-  const mainImageUrl = product.media?.[activeImageIndex]?.url || '/product-placeholder.png';
+  // Detect current media item and type
+  const currentMedia = product.media?.[activeImageIndex];
+  const mainMediaUrl = currentMedia?.url || '/product-placeholder.png';
+  const isVideo = currentMedia?.type === 'video';
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -293,26 +297,37 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
         {/* Columna izquierda: Imágenes */}
         <div className="w-full md:w-7/12">
           <div className="sticky top-24">
-            {/* Imagen principal con zoom */}
-            <div 
-              className="relative bg-white h-[400px] md:h-[500px] flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden cursor-zoom-in mb-4"
-              onMouseEnter={() => setIsZoomed(true)}
-              onMouseLeave={() => setIsZoomed(false)}
-              onMouseMove={handleMouseMove}
-              onClick={() => setIsZoomed(!isZoomed)}
+            {/* Media principal: imagen o video */}
+            <div
+              className={`relative bg-white h-[400px] md:h-[500px] flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden mb-4 ${isVideo ? '' : 'cursor-zoom-in'}`}
+              onMouseEnter={!isVideo ? () => setIsZoomed(true) : undefined}
+              onMouseLeave={!isVideo ? () => setIsZoomed(false) : undefined}
+              onMouseMove={!isVideo ? handleMouseMove : undefined}
+              onClick={!isVideo ? () => setIsZoomed(!isZoomed) : undefined}
             >
               <div className="relative w-full h-full">
-                <Image
-                  src={mainImageUrl}
-                  alt={product.name || ''}
-                  fill
-                  className={`object-contain transition-transform duration-300 ${isZoomed ? 'scale-150' : 'scale-100'}`}
-                  style={isZoomed ? {
-                    transformOrigin: `${zoomPosition.x * 100}% ${zoomPosition.y * 100}%`
-                  } : undefined}
-                  priority
-                />
-                {isZoomed && (
+                {isVideo ? (
+                  <video
+                    className="object-contain w-full h-full"
+                    preload="none"
+                    controls
+                    playsInline
+                    poster="/video-placeholder.png"
+                  >
+                    <source src={mainMediaUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <Image
+                    src={mainMediaUrl}
+                    alt={product.name || ''}
+                    fill
+                    className={`object-contain transition-transform duration-300 ${isZoomed ? 'scale-150' : 'scale-100'}`}
+                    style={isZoomed ? { transformOrigin: `${zoomPosition.x * 100}% ${zoomPosition.y * 100}%` } : undefined}
+                    priority
+                  />
+                )}
+                {!isVideo && isZoomed && (
                   <div className="absolute top-2 right-2 bg-white bg-opacity-80 rounded-full p-2">
                     <Search className="h-4 w-4 text-gray-700" />
                   </div>
@@ -330,14 +345,27 @@ export default function ProductDetail({ id, locale }: { id: string, locale: stri
                       activeImageIndex === index ? 'border-teal-500 ring-2 ring-teal-300' : 'border-gray-200'
                     }`}
                     onClick={() => setActiveImageIndex(index)}
-                    aria-label={`Ver imagen ${index + 1}`}
+                    aria-label={`Ver media ${index + 1}`}
                   >
-                    <Image
-                      src={item.url}
-                      alt={`Imagen ${index + 1} de ${locale === 'es' ? product.name_es : product.name_en}`}
-                      fill
-                      className="object-contain p-1"
-                    />
+                    {item.type === 'video' ? (
+                      <>
+                        <video
+                          src={item.url + '#t=0.1'}
+                          preload="metadata"
+                          className="object-cover absolute inset-0 w-full h-full"
+                        />
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <PlayCircle className="h-6 w-6 text-white" />
+                        </div>
+                      </>
+                    ) : (
+                      <Image
+                        src={item.url}
+                        alt={`Media ${index + 1} de ${locale === 'es' ? product.name_es : product.name_en}`}
+                        fill
+                        className="object-contain p-1"
+                      />
+                    )}
                   </button>
                 ))}
               </div>

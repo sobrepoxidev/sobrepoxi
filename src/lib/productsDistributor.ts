@@ -7,14 +7,19 @@ export function distribuirProductos(
     maxFeatured = 9
   ) {
     const usados = new Set<number>();              // <– memoria global
-    const tomar = (lista: Product[], n: number, filtro?: (p:Product)=>boolean) => {
+    const tomar = (
+      lista: Product[],
+      n: number,
+      filtro?: (p: Product) => boolean,
+      marcarUsado = true
+    ) => {
       const r: Product[] = [];
       for (const p of lista) {
         if (r.length === n) break;
-        if (usados.has(p.id)) continue;
+        if (marcarUsado && usados.has(p.id)) continue;
         if (filtro && !filtro(p)) continue;
         r.push(p);
-        usados.add(p.id);
+        if (marcarUsado) usados.add(p.id);
       }
       return r;
     };
@@ -23,8 +28,30 @@ export function distribuirProductos(
     const gridByCategory: Record<number, Product[]> = {};
     const principales = categories.slice(0, 6);
     principales.forEach(cat => {
-      const propios   = products.filter(p => p.category_id === cat.id);
-      gridByCategory[cat.id] = tomar(propios, 4, p => !!p.media?.length);
+      // Productos directamente asociados a la categoría
+      const propios = products.filter(p => p.category_id === cat.id);
+
+      let candidatos: Product[] = propios;
+
+      // Si la categoría no tiene productos, buscamos en sus sub-categorías
+      if (candidatos.length === 0) {
+        const childIds = categories
+          .filter(c => c.parent_id === cat.id)
+          .map(c => c.id);
+
+        if (childIds.length > 0) {
+          candidatos = products.filter(p => childIds.includes(p.category_id ?? -1));
+        }
+      }
+
+      // Si los candidatos provienen de sub-categorías, no marcamos como usados
+      const vieneDeHijas = candidatos !== propios;
+      gridByCategory[cat.id] = tomar(
+        candidatos,
+        4,
+        p => !!p.media?.length,
+        !vieneDeHijas // marcarUsado = false cuando vienen de hijas
+      );
     });
   
     /* Rellenar huecos si alguna categoría tiene <4 */

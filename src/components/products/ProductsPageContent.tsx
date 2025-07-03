@@ -33,11 +33,12 @@ export default function ProductsPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [totalCount, setTotalCount] = useState(0);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [categoryName] = useState<string>('');
+  const [categoryName, setCategoryName] = useState<string>('');
   
   // Valores de filtros y paginación
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const categoryFilter = searchParams.get('category');
+  //categoryFilter is name in categories table
   const brandFilter = searchParams.get('brand');
   const tagFilter = searchParams.get('tag');
   const minPrice = searchParams.get('min_price');
@@ -56,6 +57,7 @@ export default function ProductsPageContent() {
           .select('*')
           .order(locale === 'es' ? 'name_es' : 'name_en', { ascending: true });
         
+        setCategoryName(locale === 'es' ? categoriesData?.find(c => c.name === categoryFilter)?.name_es : categoriesData?.find(c => c.name === categoryFilter)?.name_en ?? ''); 
         if (categoriesError) throw categoriesError;
         setCategories(categoriesData as Category[]);
         
@@ -126,7 +128,48 @@ export default function ProductsPageContent() {
         
         // Aplicar filtros
         if (categoryFilter) {
-          query = query.eq('category_id', categoryFilter);
+          // Convert category name (any locale) to id(s) and añadir hijas
+          const parentIds = categories
+            .filter(c =>
+              c.name === categoryFilter ||
+              c.name_es === categoryFilter ||
+              c.name_en === categoryFilter
+            )
+            .map(c => c.id);
+
+          let allIds: number[] = [...parentIds];
+
+          if (parentIds.length > 0) {
+            // Añadir categorías hijas locales
+            const childLocal = categories
+              .filter(c => c.parent_id && parentIds.includes(c.parent_id))
+              .map(c => c.id);
+            allIds.push(...childLocal);
+          }
+
+          if (allIds.length === 0) {
+            // Fallback: resolver vía DB si todavía no tenemos categorías cargadas
+            const { data: catRows } = await supabase
+              .from('categories')
+              .select('id, parent_id')
+              .or(`name.eq.${categoryFilter},name_es.eq.${categoryFilter},name_en.eq.${categoryFilter}`);
+            const dbParentIds = (catRows ?? []).map(r => r.id);
+            if (dbParentIds.length > 0) {
+              allIds.push(...dbParentIds);
+              // Conseguir hijas vía DB
+              const { data: childRows } = await supabase
+                .from('categories')
+                .select('id')
+                .in('parent_id', dbParentIds);
+              allIds.push(...(childRows ?? []).map(r => r.id));
+            }
+          }
+
+          if (allIds.length > 0) {
+            // Eliminar duplicados
+            allIds = Array.from(new Set(allIds));
+            query = query.in('category_id', allIds);
+          }
         }
         
         if (brandFilter) {
@@ -212,7 +255,7 @@ export default function ProductsPageContent() {
         {categoryFilter && (
           <>
             <ChevronRight className="h-4 w-4 mx-1" />
-            <span className="font-medium text-gray-900">{categoryFilter}</span>
+            <span className="font-medium text-gray-900">{categoryName}</span>
           </>
         )}
       </div>
@@ -224,7 +267,7 @@ export default function ProductsPageContent() {
         </h1>
         <p className="text-gray-600">
           {locale === 'es' ? 'Descubre nuestra colección de productos hechos a mano.' : 'Discover our collection of handmade products.'}
-          {totalCount > 0 && ` ${locale === 'es' ? 'Mostrando' : 'Showing'} ${products.length} de ${totalCount} ${locale === 'es' ? 'productos' : 'products'}.`}
+          {totalCount > 0 && ` ${locale === 'es' ? 'Mostrando' : 'Showing'} ${products.length} ${locale === 'es' ? 'de' : 'of'} ${totalCount} ${locale === 'es' ? 'productos' : 'products'}.`}
         </p>
       </div>
       
@@ -259,7 +302,7 @@ export default function ProductsPageContent() {
             <div className="text-sm text-gray-500">
               {totalCount > 0 && (
                 <p>
-                  {locale === 'es' ? 'Mostrando' : 'Showing'} <span className="font-medium text-gray-900">{products.length}</span> de <span className="font-medium text-gray-900">{totalCount}</span> {locale === 'es' ? 'productos' : 'products'}
+                  {locale === 'es' ? 'Mostrando' : 'Showing'} <span className="font-medium text-gray-900">{products.length}</span> {locale === 'es' ? 'de' : 'of'} <span className="font-medium text-gray-900">{totalCount}</span> {locale === 'es' ? 'productos' : 'products'}
                   {currentPage > 1 && ` (${locale === 'es' ? 'página' : 'page'} ${currentPage} de ${totalPages})`}
                 </p>
               )}

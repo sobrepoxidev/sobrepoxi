@@ -51,7 +51,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
             {featuredProducts.map((product, index) => (
               <Link 
                 key={product.id} 
-                href={`/product/${product.id}`} 
+                href={`/product/${product.name}`} 
                 className={`group ${index === featuredProducts.length - 1 ? 'hidden md:block' : ''}`}
               >
                 <div className="flex flex-col bg-white rounded-lg shadow-sm overflow-hidden h-full hover:shadow-md transform transition-all duration-300 hover:-translate-y-1 ">

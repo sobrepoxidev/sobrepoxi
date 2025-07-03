@@ -23,7 +23,7 @@ export async function generateMetadata({
   const { data: product } = await supabase
     .from('products')
     .select('id, name, name_es, name_en, media')
-    .eq('id', id)
+    .eq('name', id)
     .single();
 
   if (!product) { 
@@ -46,7 +46,7 @@ export async function generateMetadata({
 
   return buildMetadata({
     locale: locale === "es" ? "es" : "en",
-    pathname: `/product/${id}`,
+    pathname: `/product/${product.name}`,
     title: productName || (locale === "es" ? "Producto" : "Product"),
     image: firstMedia && {
       url: firstMedia.url,

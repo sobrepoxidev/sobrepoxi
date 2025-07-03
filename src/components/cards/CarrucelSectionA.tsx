@@ -8,6 +8,7 @@ const CarouselClient = dynamic(
 );
 
 export interface CarrucelItem {
+  textColor: string;
   title: string;
   content: React.ReactNode;
   link: string;

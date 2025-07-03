@@ -19,7 +19,7 @@ export default function HomeContainer({locale}: {locale: string}) {
         <div className="fixed bottom-10 right-8 z-50 flex flex-col items-end gap-2">
           <Link 
             href="/contact"
-            className="bg-teal-600 text-white px-2 py-1 rounded-full shadow-lg hover:bg-teal-700 transition hidden md:block animate-fade-in"
+            className="bg-gold-gradient text-black font-bold px-2 py-1 rounded-full shadow-lg hover:bg-teal-700 transition hidden md:block animate-fade-in"
             aria-label="Contacto Handmade Art"
             tabIndex={0}
           >
