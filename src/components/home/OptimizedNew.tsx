@@ -39,7 +39,7 @@ export default function OptimizedNewHome({
         <Carousel>
           {/* 1️⃣ BANNER — Contacto inmediato por WhatsApp */}
           <BannerTemplate
-            linkHref="https://wa.me/+5068585000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
+            linkHref="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
           >
             {/* Banner container */}
             <div

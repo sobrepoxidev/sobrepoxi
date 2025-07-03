@@ -6,7 +6,7 @@ type tParams = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: buildTitle(locale === "es" ? "Sobre Hand Made Art" : "About Hand Made Art"),
+    title: buildTitle(locale === "es" ? "Sobre SobrePoxi" : "About SobrePoxi"),
     ...getCommonMetadata(locale),
   };
 }
@@ -25,10 +25,10 @@ export default async function About({ params }: { params: tParams }) {
                 {locale === "es" ? "Nuestra misión" : "Our mission"}
               </span>
               <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
-                {locale === "es" ? "Sobre HandMade Art" : "About HandMade Art"}
+                {locale === "es" ? "Sobre SobrePoxi" : "About SobrePoxi"}
               </h1>
               <p className="mb-2 sm:mb-8 text-lg text-gray-600">
-                {locale === "es" ? "En HandMade Art nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas." : "At HandMade Art, we are passionate about promoting and preserving traditional crafts. Our goal is to provide an online platform where artists and artisans incarcerated can showcase and sell their unique creations."}
+                {locale === "es" ? "En SobrePoxi nos apasiona promover y preservar las tradiciones artesanales. Nuestro objetivo es brindar un espacio en línea donde los artistas y artesanos privados de libertad puedan mostrar y vender sus creaciones únicas." : "At SobrePoxi, we are passionate about promoting and preserving traditional crafts. Our goal is to provide an online platform where artists and artisans incarcerated can showcase and sell their unique creations."}
               </p>
               <div className="flex flex-col items-center justify-center sm:flex-row gap-4">
                 <Link

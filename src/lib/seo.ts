@@ -26,7 +26,7 @@ export function getCommonMetadata(locale: string): Partial<Metadata> {
 
 /** COMPAT: versión antigua de buildTitle. */
 export function buildTitle(pageTitle?: string): Metadata["title"] {
-  const base = "HandMade Art";
+  const base = "SobrePoxi";
   if (!pageTitle) return { default: base, template: `%s | ${base}` };
   return { default: pageTitle, template: `%s | ${base}` };
 
