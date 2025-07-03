@@ -39,20 +39,20 @@ export default function Footer({ locale }: { locale: string }) {
               </li>
               <li>
                 <a
-                  href="tel:+50684237555"
+                  href="tel:+50685850000"
                   className="flex items-center text-gray-300 hover:text-[#d4af37] transition-colors"
                 >
                   <Phone className="w-5 h-5 mr-2 text-[#d4af37]" />
-                  (+506) 8423-7555
+                  (+506) 8585-0000
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+50642051111"
+                  href="tel:+50688757576"
                   className="flex items-center text-gray-300 hover:text-[#d4af37] transition-colors"
                 >
                   <Phone className="w-5 h-5 mr-2 text-[#d4af37]" />
-                  (+506) 4205-1111
+                  (+506) 8875-7576
                 </a>
               </li>
             </ul>
