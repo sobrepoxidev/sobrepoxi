@@ -64,7 +64,7 @@ export default function OptimizedNewHome({
                 </p>
 
                 <Link
-                  href="https://wa.me/+5068585000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
+                  href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
                   target="_blank"
                   className="
           mt-1 sm:mt-3 inline-flex items-center gap-1.5
