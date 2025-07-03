@@ -1,3 +1,4 @@
+"use client"
 import { sendMail } from '@/lib/email';
 import { use } from 'react';
 
