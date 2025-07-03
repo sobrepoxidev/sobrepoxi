@@ -32,7 +32,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
   
   // Obtenemos el título localizado
   const title = useMemo(() => {
-    return locale === 'es' ? 'Regalos con significado' : 'Meaningful Gifts';
+    return locale === 'es' ? 'Estilo de alta gama' : 'Luxury style';
   }, [locale]);
   
   /**
@@ -121,21 +121,21 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
   }, [displayProducts]);
 
   return (
-    <section className="py-6 px-4 relative overflow-hidden bg-gradient-to-br from-teal-50/30 via-white to-amber-50/30">
+    <section className="py-2 px-4 relative overflow-hidden bg-gold-gradient-60">
      
       
       {/* Encabezado con título y enlace Ver más */}
       <div className="flex justify-between items-center mb-1 z-10 relative">
         <div className="flex items-center">
-          <div className="w-1 h-6 bg-teal-500 mr-2"></div>
-          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+          <div className="w-1 h-6 bg-[#121212] mr-2"></div>
+          <h2 className="text-xl font-bold text-black tracking-wide font-mono ">{title}</h2>
         </div>
         
-        <Link href="/products" className="px-1 py-0 text-sm text-teal-600 font-medium hover:text-teal-700 transition-colors flex items-center">
+        <Link href="/products" className="text-black hover:text-gray-950 text-sm px-1 font-medium flex items-center">
           {locale === 'es' ? 'Ver más' : 'View more'}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-0.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
         </Link>
       </div>
       
@@ -145,7 +145,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
           <button 
             onClick={scrollToPrev}
             disabled={scrollPosition <= 0}
-            className={`p-0.5 rounded-full border border-teal-500 transition-colors ${scrollPosition <= 0 ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
+            className={`p-0.5 rounded-full border border-gray-900 transition-colors ${scrollPosition <= 0 ? 'text-gray-900 border-gray-900 cursor-not-allowed' : 'text-gray-900 hover:bg-gray-800'}`}
             aria-label="Anterior"
           >
             <svg 
@@ -163,7 +163,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
           <button 
             onClick={scrollToNext}
             disabled={scrollPosition >= maxScrollPosition}
-            className={`p-0.5 rounded-full border border-teal-500 transition-colors ${scrollPosition >= maxScrollPosition ? 'text-gray-300 border-gray-200 cursor-not-allowed' : 'text-teal-500 hover:bg-teal-50'}`}
+            className={`p-0.5 rounded-full border border-gray-900 transition-colors ${scrollPosition >= maxScrollPosition ? 'text-gray-900 border-gray-900 cursor-not-allowed' : 'text-gray-900 hover:bg-gray-800'}`}
             aria-label="Siguiente"
           >
             <svg 
@@ -183,7 +183,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
       {/* Carrusel de productos */}
       <div 
         ref={carouselRef}
-        className="flex overflow-x-auto pb-4 scrollbar-hide snap-x scroll-smooth"
+        className="flex overflow-x-auto scrollbar-hide snap-x scroll-smooth"
         onScroll={handleScroll}
       >
         {displayProducts.length > 0 ? (
@@ -201,13 +201,13 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                         <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clipRule="evenodd" />
                         <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
                       </svg>
-                      <div className="h-0.5 w-10 bg-white/40 rounded mr-2"></div>
+                      <div className="h-0.5 w-10 bg-[#303030]/40 rounded mr-2"></div>
 
                     </div>
-                    <div className="grid grid-cols-2 gap-2 w-full h-full">
+                    <div className="grid grid-cols-2 gap-2 w-full">
                       {groupProducts.map((product, idx) => (
                         <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} className="block text-center">
-                          <div className="h-32 flex items-center justify-center bg-white rounded-lg shadow-sm p-1">
+                          <div className="h-32 flex items-center justify-center bg-[#303030] rounded-lg shadow-sm p-1">
                             <Image
                               src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
                               alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
@@ -240,9 +240,9 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
                   className="min-w-[200px] flex-shrink-0 snap-start mr-4 last:mr-0 group"
                 >
                   <Link href={`/product/${product.name}`} className="block h-full">
-                    <div className="bg-white rounded-lg shadow-sm p-3 hover:shadow-md transition-all duration-300 h-full flex flex-col transform group-hover:-translate-y-1">
+                    <div className="bg-[#121212] rounded-lg shadow-sm p-3 hover:shadow-md transition-all duration-300 h-full flex flex-col transform group-hover:-translate-y-1">
                       <div className="relative overflow-hidden rounded-md mb-3">
-                        <div className="h-40 flex items-center justify-center p-2 bg-gray-50 rounded-md">
+                        <div className="h-40 flex items-center justify-center p-2 bg-[#303030] rounded-md">
                           <Image
                             src={product.media && product.media.length > 0 ? product.media[0].url : '/placeholder-image.png'}
                             alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
@@ -283,7 +283,7 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
             </div>
           </>
         ) : (
-          <div className="w-full text-center py-10 text-gray-500">
+          <div className="w-full text-center py-2 text-black font-semibold text-lg">
             {locale === 'es' ? 'No hay productos disponibles en este momento.' : 'No products available at the moment.'}
           </div>
         )}

@@ -17,13 +17,13 @@ export default async function Navbar({ locale }: { locale: string }) {
 
 
   return ( 
-    <header className="relative z-40 bg-white">
+    <header className="relative z-40 bg-[#121212]">
       {/* Top Bar */}
-      <div className="container mx-auto flex items-center justify-between px-2 md:px-4 py-0 bg-white">
+      <div className="container mx-auto flex items-center justify-between px-2 md:px-4 py-0 bg-[#121212]">
         {/* Logo - SSR (Left) */}
       
-          <div className="lg:hidden bg-white">
-          <Link href="/" className="flex items-center focus-visible:outline-teal-600" aria-label="HandMadeArt Home">
+          <div className="lg:hidden bg-[#121212]">
+          <Link href="/" className="flex items-center focus-visible:outline-" aria-label="HandMadeArt Home">
             <div className="relative overflow-hidden flex items-center gap-3">
               
               {/* <div className="lg:hidden">
@@ -74,7 +74,7 @@ export default async function Navbar({ locale }: { locale: string }) {
       </div>
         
         {/* Mobile Search Bar - Visible by default on mobile */}
-        <div className="lg:hidden bg-white px-0 py-0.5">
+        <div className="lg:hidden bg-[#121212] px-0 py-0.5">
           <SearchBar 
             variant="mobile" 
             initialCategory={locale === 'es' ? 'Todo' : 'All'}

@@ -225,7 +225,7 @@ export default function SearchBar({
               // En móvil no enfocar automáticamente el input
               // Esto previene que el dropdown se cierre inmediatamente
             }}
-            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-white bg-[#303030] border border-r-0 border-gray-500 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 ${isMobile ? 'w-24' : isNavbar ? 'w-32' : 'w-40'
+            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-black font-medium bg-gold-gradient-50 border border-r-0 border-black rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#b68b44] focus:border-[#b68b44] ${isMobile ? 'w-24' : isNavbar ? 'w-32' : 'w-40'
               }`}
             aria-expanded={isCategoryMenuOpen}
             aria-haspopup="true"
@@ -237,7 +237,7 @@ export default function SearchBar({
           {isCategoryMenuOpen && (
             <div
               ref={categoryMenuRef}
-              className={`absolute left-0 top-full w-56 border border-gray-200 bg-white shadow-lg ${isNavbar ? 'navbar-dropdown' : 'standalone-dropdown'}`}
+              className={`absolute left-0 top-full w-56 border border-black bg-black shadow-lg ${isNavbar ? 'navbar-dropdown' : 'standalone-dropdown'}`}
               role="menu"
               onClick={(e) => e.stopPropagation()}
               style={{
@@ -250,7 +250,7 @@ export default function SearchBar({
                 <li>
                   <button
                     type="button"
-                    className="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-100 bg-[#303030] "
+                    className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-50 "
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -275,7 +275,7 @@ export default function SearchBar({
                     <li key={cat.id}>
                       <button
                         type="button"
-                        className="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-100 bg-[#303030]"
+                        className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-50"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -296,10 +296,14 @@ export default function SearchBar({
         <input
           type="text"
           placeholder={locale === 'es' ? 'Buscar productos...' : 'Search products...'}
+          style={{
+            zIndex: 40, // Z-index extremadamente alto para desktop
+            position: 'relative'
+          }}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          className={`flex-1 h-10 px-3 py-2 text-sm text-white bg-[#303030] border border-gray-500 focus:ring-teal-500 focus:border-teal-500 ${isMobile ? 'w-full' : isNavbar ? 'w-full' : 'w-96'
+          className={`flex-1 h-10 px-3 py-2 text-sm text-black bg-gold-gradient-50 border border-black focus:bg-gold-gradient-30 focus:border-gold-gradient-30 ${isMobile ? 'w-full' : isNavbar ? 'w-full' : 'w-96'
             }`}
           ref={inputRef}
         />
@@ -309,12 +313,11 @@ export default function SearchBar({
           type="submit"
           aria-label={locale === 'es' ? 'Buscar' : 'Search'}
           className="
-    flex h-10 w-10 items-center justify-center
-    rounded-r-md border border-gray-500 border-l-0
-    bg-gold-gradient      
-    text-black 
-    hover:brightness-110  
-  "
+            flex h-10 w-10 items-center justify-center
+            rounded-r-md border border-black border-l-0
+            bg-gold-gradient-80      
+            text-black 
+            hover:brightness-110"
         >
           <Search className="h-5 w-5" />
         </button>

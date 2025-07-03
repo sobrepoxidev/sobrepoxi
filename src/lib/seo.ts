@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "./seoConfig";
 
 /** COMPAT: devuelve solo la parte "común" (descr., keywords, OG...). */
-export function getCommonMetadata(locale: string): Partial<Metadata> {
+export function getCommonMetadata(locale: string, overrides?: Metadata): Partial<Metadata> {
   const meta = buildMetadata({
     locale: locale === "es" ? "es" : "en",
     pathname: "/"
@@ -21,7 +21,10 @@ export function getCommonMetadata(locale: string): Partial<Metadata> {
   void _alternates;
   void _twitter;
 
-  return common;
+  return {
+    ...common,
+    ...overrides
+  };
 }
 
 /** COMPAT: versión antigua de buildTitle. */

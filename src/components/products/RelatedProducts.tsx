@@ -77,7 +77,7 @@ export default async function RelatedProducts({
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
         {products.map((product) => (
           // ProductCard is a client component; casting here is safe because we selected matching fields.
-          <ProductCard key={product.id} product={product as unknown as Database["products"]} />
+          <ProductCard key={product.name} product={product as unknown as Database["products"]} />
         ))}
       </div>
     </div>

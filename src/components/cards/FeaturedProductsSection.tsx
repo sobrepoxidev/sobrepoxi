@@ -32,15 +32,16 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
   // Selección inteligente de productos para evitar duplicados con otros componentes
   const featuredProducts = sectionProducts.featured;
   return (
-    <section className="my-2">
-      <div className="w-full px-4  mx-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800 border-l-4 border-teal-500 pl-3">
-            {title}
-          </h2>
-          <Link href="/products" className="text-teal-600 hover:text-teal-700 text-sm px-1 font-medium flex items-center">
+    <section className="mt-2 pb-2 ">
+      <div className="w-full px-4  mx-auto bg-gold-gradient-60">
+        <div className="flex justify-between items-center pb-2">
+          <div className="flex items-center">
+            <div className="w-1 h-6 bg-[#121212] mr-2"></div>
+            <h2 className="text-xl font-bold text-black tracking-wide font-mono mt-4">{title}</h2>
+          </div>
+          <Link href="/products" className="text-black hover:text-gray-950 text-sm px-1 font-medium flex items-center">
             {locale === 'es' ? 'Ver todos' : 'View all'}
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-0.5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
           </Link>
@@ -110,7 +111,7 @@ const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
             ))}
           </div>
         ) : (
-          <div className="w-full text-center py-10 text-gray-500 bg-gray-50 rounded-lg">
+          <div className="w-full text-center pb-4 text-black font-semibold text-lg">
             {locale === 'es' ? 'No hay productos destacados disponibles.' : 'No featured products available.'}
           </div>
         )}

@@ -58,7 +58,7 @@ const CarouselIndicators: React.FC<CarouselIndicatorsProps> = ({ total, current,
         key={`indicator-${index}`}
         onClick={() => onClick(index)}
         className={`h-2 rounded-full transition-all 
-        ${current === index ? 'w-6 bg-teal-600' : 'w-2 bg-gray-300'}`}
+        ${current === index ? 'w-6 bg-gold-gradient-20' : 'w-2 bg-gray-300'}`}
         aria-label={`Ir al banner ${index + 1}`}
       />
     ))}

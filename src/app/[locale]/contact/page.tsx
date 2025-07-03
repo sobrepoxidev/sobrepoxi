@@ -1,100 +1,174 @@
-import React from 'react';
-import { FaPhone, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
-import dynamic from 'next/dynamic';
+/* --------------------------------------------------------------------------
+ *  ContactPage · SobrePoxi ― server component (Next 15 / app router)
+ *  ------------------------------------------------------------------------
+ *  – Optimised imports
+ *  – Typed params helper
+ *  – Locale–aware copy (es-CR / en-US)
+ *  – Framer-motion + contact form loaded dynamically (keep SSR ✅)
+ *  – SEO helpers: <title>, description & Open Graph via generateMetadata
+ * ----------------------------------------------------------------------- */
 
-// Client components with no SSR (contain interactivity)
-const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: true });
-const FormMail = dynamic(() => import('@/components/general/FormMail'), { ssr: true });
+import { Suspense }                 from "react";
 
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
-import type { Metadata } from "next";
-type tParams = Promise<{ id: string, locale: string }>;
-export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
+// Ensure this page uses the full Node.js runtime (Edge runtime does not support some server-side imports)
+export const runtime = "nodejs";
+import dynamic                      from "next/dynamic";
+import { FaPhone, FaWhatsapp }      from "react-icons/fa";
+
+import type { Metadata }            from "next";
+import { buildTitle, getCommonMetadata } from "@/lib/seo";
+
+/* ---------  Lazy-loaded client modules (SSR enabled)  --------- */
+
+import FormMail from "@/components/general/FormMail";
+
+/* ------------  Params helper  ------------ */
+type ParamsPromise = Promise<{ locale: "es" | "en" }>;
+
+/* ------------  SEO metadata  ------------ */
+export async function generateMetadata(
+  { params }: { params: ParamsPromise }
+  
+): Promise<Metadata> {
+
   const { locale } = await params;
+
   return {
     title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us"),
-    ...getCommonMetadata(locale),
+    ...getCommonMetadata(locale, {
+      // Page-specific overrides ↓
+      description:
+        locale === "es"
+          ? "¿Proyecto en mente? Contáctanos vía WhatsApp o teléfono y obtén tu cotización de pisos o muebles en resina epóxica."
+          : "Have a project in mind? Call or message us on WhatsApp to get a quote for luxury epoxy floors or resin furniture.",
+      alternates: { canonical: `/contact` }
+    }),
   };
 }
 
-export default function ContactPage() {
+/* ====================================================================== */
+/*  MAIN COMPONENT                                                        */
+/* ====================================================================== */
+export default async function ContactPage({ params }: { params: ParamsPromise }) {
+
+  const { locale } = await params;
+
+  /* Copy helper */
+  const t = (es: string, en: string) => (locale === "es" ? es : en);
+
+  /* ------------------------------------------------------------------- */
   return (
-    <div className="w-full transition-colors flex flex-col justify-start items-center">
-      <section className="w-full max-w-7xl flex flex-col items-center text-center py-1 px-1 md:py-3 sm:px-5 md:px-14 lg:px-5 relative">
-        <div className="w-full py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <h1 className="w-full text-xl sm:text-5xl font-extrabold text-start text-teal-800 mt-1">
-            Contáctanos
-          </h1>
-          <p className="w-full text-sm sm:text-lg text-gray-600 mt-2 text-start">
-            Estamos aquí para ayudarte. ¡No dudes en ponerte en contacto!
-          </p>
-        </div>
+    <Suspense>
+      <div className="w-full flex flex-col items-center">
+        <section className="w-full max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 w-full max-w-5xl">
-          {/* Contact Information */}
-          <MotionDiv
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white p-5 md:p-6 rounded-xl shadow-md text-gray-900 h-full"
-          >
-          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-teal-800">Información de Contacto</h2>
-          
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-blue-100 p-3 rounded-full text-blue-600 mt-1">
-                <FaPhone className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">Teléfono</h3>
-                <p className="text-gray-600 text-sm md:text-base">+506 8585-0000</p>
-                <p className="text-gray-500 text-xs md:text-sm mt-1">Disponible de Lunes a Viernes, 7AM - 5:30PM</p>
-              </div>
+          {/* ---------- Heading ---------- */}
+          <header className="mb-8">
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-teal-800">
+              {locale === "es" ? "Contáctanos" : "Contact us"}
+            </h1>
+            <p className="mt-2 text-gray-600 text-base sm:text-lg max-w-2xl">
+              {locale === "es" ? "Estamos aquí para ayudarte. ¡No dudes en escribirnos!" : "We are here to help you. Don’t hesitate to reach out!"}
+            </p>
+          </header>
+
+          {/* ---------- Grid (info + form) ---------- */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* --- Contact information card --- */}
+            <div
+              className="bg-white shadow-md rounded-xl p-6"
+            >
+              <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-teal-800">
+                {locale === "es" ? "Información de contacto" : "Contact information"}
+              </h2>
+
+              <ul className="space-y-6">
+
+                {/* Phone */}
+                <li className="flex gap-4 items-start">
+                  <span className="bg-blue-100 text-blue-600 p-3 rounded-full">
+                    <FaPhone className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">{locale === "es" ? "Teléfono" : "Phone"}</h3>
+                    <p className="text-gray-700">+506 8585 0000</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {locale === "es" ? "Lunes – Viernes · 7 a.m. – 5:30 p.m." : "Mon – Fri · 7 a.m. – 5:30 p.m."}
+                    </p>
+                  </div>
+                </li>
+
+                {/* WhatsApp */}
+                <li className="flex gap-4 items-start">
+                  <span className="bg-green-100 text-green-600 p-3 rounded-full">
+                    <FaWhatsapp className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">WhatsApp</h3>
+                    <p className="text-gray-700">+506 8585 0000</p>
+                    <a
+                      href="https://wa.me/50685850000"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"
+                    >
+                      {locale === "es" ? "Abrir chat" : "Open chat"}
+                    </a>
+                  </div>
+                </li>
+
+              </ul>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="bg-green-100 p-3 rounded-full text-green-600 mt-1">
-                <FaWhatsapp className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">WhatsApp</h3>
-                <p className="text-gray-600 text-sm md:text-base">+506 8585-0000</p>
-                <a 
-                  href="https://wa.me/50685850000" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-block mt-2 text-sm md:text-base text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-lg transition-colors"
-                >
-                  Chatear en WhatsApp
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="bg-purple-100 p-3 rounded-full text-purple-600 mt-1">
-                <FaEnvelope className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">Email</h3>
-                <p className="text-gray-600 text-sm md:text-base">info@handmadeart.com</p>
-                <p className="text-gray-500 text-xs md:text-sm mt-1">Te responderemos en 24-48 horas</p>
-              </div>
+            {/* --- Contact form --- */}
+            <div
+              
+              className="bg-white shadow-md rounded-xl p-6"
+            >
+              <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-teal-800">
+                {locale === "es" ? "Formulario de contacto" : "Contact form"}
+              </h2>
+              {/* Client-side form */}
+              <FormMail />
             </div>
           </div>
-          </MotionDiv>
 
-          {/* Contact Form */}
-          <MotionDiv
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white p-5 md:p-6 rounded-xl shadow-md text-gray-900 h-full"
-          >
-          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-teal-800">Formulario de Contacto</h2>
-          <FormMail />
-          </MotionDiv>
-        </div>
-      </section>
-    </div>
+          {/* ---------- Social links ---------- */}
+          <footer className="mt-12 text-center">
+            <p className="text-sm text-gray-500 mb-3">
+              {locale === "es" ? "Síguenos en redes sociales" : "Follow us on social media"}
+            </p>
+            <nav className="flex justify-center gap-4">
+              <a
+                href="https://www.facebook.com/share/14EpJLUsXwc/"
+                aria-label="Facebook"
+                target="_blank" rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors"
+              >FB</a>
+              <a
+                href="https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA=="
+                aria-label="Instagram"
+                target="_blank" rel="noopener noreferrer"
+                className="hover:text-pink-600 transition-colors"
+              >IG</a>
+              <a
+                href="https://www.youtube.com/@sobrepoxi"
+                aria-label="YouTube"
+                target="_blank" rel="noopener noreferrer"
+                className="hover:text-red-600 transition-colors"
+              >YT</a>
+              <a
+                href="https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
+                aria-label="TikTok"
+                target="_blank" rel="noopener noreferrer"
+                className="hover:text-black transition-colors"
+              >TT</a>
+            </nav>
+          </footer>
+
+        </section>
+      </div>
+    </Suspense>
   );
 }

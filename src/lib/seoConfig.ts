@@ -43,12 +43,13 @@ export function mapLocale(locale: string) {
  * @param image    Imagen OG/Twitter específica (opcional).
  */
 export function buildMetadata(opts: {
+  overrides?: Metadata;
   locale: "es" | "en";
   pathname: string;
   title?: string;
   image?: { url: string; width?: number; height?: number; alt?: string };
 }): Metadata {
-  const { locale, pathname, title, image } = opts;
+  const { locale, pathname, title, image, overrides } = opts;
   const t = SEO_TEXT[locale];
 
   /* --------------------------------------------------------------------- */
@@ -76,6 +77,7 @@ export function buildMetadata(opts: {
   /* Metadatos finales                                                     */
   /* --------------------------------------------------------------------- */
   return {
+    ...overrides,
     title: baseTitle,
     description: t.description,
     keywords: t.keywords,

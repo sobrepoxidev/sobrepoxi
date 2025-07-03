@@ -25,14 +25,12 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
   const { locale } = await params;
 
-  // 🚀 Generación de rutas pares
-  const path = pathname === "/" ? "" : pathname;        // raíz => ""
+  const path = pathname === "/" ? "" : pathname;       
   const otherLocale = locale === "es" ? "en" : "es";
 
   return {
     metadataBase: new URL(`https://${host}`),
 
-    // ——— Enlaza la función que ya genera title/desc/og ———
     ...buildMetadata({
       locale: locale === "es" ? "es" : "en",
       pathname,
@@ -67,8 +65,8 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={mapLocale(locale)} className="bg-white">
-      <body className="antialiased">
+    <html lang={mapLocale(locale)}>
+      <body className="antialiased bg-[#121212]">
         <NextIntlClientProvider locale={locale}>
           <SessionLayout>
             <Navbar locale={locale} />

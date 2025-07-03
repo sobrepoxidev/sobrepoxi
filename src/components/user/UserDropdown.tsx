@@ -47,7 +47,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 text-sm rounded-md px-3 py-1.5 text-gray-700 hover:bg-gray-50 transition"
+        className="flex items-center space-x-1 text-sm  px-3 py-1.5 text-white hover:bg-gray-950 p-1 rounded focus:outline-none transition"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -62,12 +62,12 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
 
       {isOpen && (
         <div 
-          className="absolute right-0 mt-1 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50"
+          className="absolute right-0 mt-1 w-64 bg-[#303030] border border-gray-950 rounded-md shadow-lg z-50"
           style={{ zIndex: 9999 }}
         >
           {!session ? (
             <>
-              <div className="p-3 border-b border-gray-100">
+              <div className="p-3 border-b border-gray-950">
                 <div className="flex justify-center py-2">
                   <button
                     onClick={() => {
@@ -88,7 +88,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                       router.push(`/register?returnUrl=${fullPath}`);
                       setIsOpen(false);
                     }}
-                    className="text-teal-600 hover:text-teal-800 transition"
+                    className="text-white hover:text-gray-200 transition"
                   >
                     {locale === 'es' ? 'Crear una cuenta' : 'Create an account'}
                   </button>
@@ -96,15 +96,15 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               </div>
             </>
           ) : (
-            <div className="p-3 border-b border-gray-100">
+            <div className="p-3 border-b border-gray-950">
               <div className="flex justify-between items-center mb-2">
-                <span className="font-medium text-gray-800">{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
+                <span className="font-medium text-white">{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
                 <button
                   onClick={async () => {
                     await onLogout(window.location.href);
                     setIsOpen(false);
                   }}
-                  className="text-xs text-red-600 hover:text-red-800"
+                  className="text-xs text-red-600 hover:text-red-200"
                 >
                   {locale === 'es' ? 'Cerrar sesión' : 'Sign out'}
                 </button>
@@ -118,7 +118,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
           <div className="py-1">
             <Link 
               href="/account"
-              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+              className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
               <User className="h-4 w-4 mr-3 text-gray-500" />
@@ -126,7 +126,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
             </Link>
             <Link 
               href="/viewed-history"
-              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+              className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
               <History className="h-4 w-4 mr-3 text-gray-500" />
@@ -134,7 +134,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
             </Link>
             <Link 
               href="/favorites"
-              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+              className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
               <Heart className="h-4 w-4 mr-3 text-gray-500" />
