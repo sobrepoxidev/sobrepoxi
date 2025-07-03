@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
-interface CarouselArrowProps {
-  direction: 'left' | 'right';
-  onClick: () => void;
-}
+// interface CarouselArrowProps {
+//   direction: 'left' | 'right';
+//   onClick: () => void;
+// }
 
 interface CarouselIndicatorsProps {
   total: number;
