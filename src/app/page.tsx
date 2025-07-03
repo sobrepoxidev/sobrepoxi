@@ -12,7 +12,11 @@ export default async function RootPage() {
 
   // --- Detección por dominio -------------------------------------------------
   const host = (h.get('x-forwarded-host') ?? h.get('host') ?? '').trim().toLowerCase();
-  const domainCfg = (routing as any).domains?.find((d: any) => d.domain === host);
+  interface DomainEntry {
+    domain: string;
+    defaultLocale: 'es' | 'en';
+  }
+  const domainCfg = (routing.domains as readonly DomainEntry[] | undefined)?.find(d => d.domain === host);
   let locale: string | undefined = domainCfg?.defaultLocale;
 
   // --- Detección por encabezado Accept-Language -----------------------------
