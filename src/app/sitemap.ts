@@ -17,10 +17,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: products, error } = await supabase
     .from("products")
     .select("name")
-    .eq("is_active", true) as { data: ProductRow[] | null, error: any };
+    .eq("is_active", true) as { data: ProductRow[] | null, error: unknown };
 
   if (error) {
-    console.error("Error fetching products for sitemap:", error.message);
+    console.error("Error fetching products for sitemap:", error);
   }
 
   const locales = [
