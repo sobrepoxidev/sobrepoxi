@@ -1,7 +1,5 @@
-//src\actions.ts
-"use server";
-
 import { sendMail } from '@/lib/email';
+import { use } from 'react';
 
 // Define interfaces for type safety
 interface VacationFormData {
@@ -149,7 +147,7 @@ export async function handleVacationForm(_: unknown, formData: FormData) {
     `;
 
     // Send email
-    await sendMail('Nuevo mensaje de contacto - Hand Made Art Web', html, "bryamlopez4@gmail.com");
+    use(sendMail('Nuevo mensaje de contacto - SobrePoxi', html, "bryamlopez4@gmail.com"));
 
     return {
       success: true,
