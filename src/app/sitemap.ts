@@ -1,12 +1,18 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from 'next';
 import { headers } from 'next/headers';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@supabase/supabase-js';
 import slugify from 'slugify';
 
 export const runtime  = 'edge';
 export const dynamic  = 'force-dynamic'; // ⬅ fuerza renderizado por petición
 export const revalidate = 0;             // ⬅ desactiva Full-Route & Data Cache
+
+// 1️⃣  Instancia de Supabase aislada
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const hdr  = await headers();
