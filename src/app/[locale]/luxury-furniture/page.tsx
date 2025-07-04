@@ -4,7 +4,11 @@ import Link from 'next/link';
 
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+type ParamsPromise = Promise<{ locale: "es" | "en" }>;
+
+export async function generateMetadata({ params }: { params: ParamsPromise }): Promise<Metadata> {
+
+  const { locale } = await params;
 
   return {
     title: locale === 'es' ? 'Muebles de Lujo | SobrePoxi' : 'Luxury Furniture | SobrePoxi',
@@ -17,7 +21,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   };
 }
 
-export default async function LuxuryFurniturePage({ params: { locale } }: { params: { locale: string } }) {
+export default async function LuxuryFurniturePage({ params }: { params: ParamsPromise }) {
+  const { locale } = await params;
   const t = {
     heroTag: locale === "es" ? "Muebles de Lujo" : "Luxury Furniture",
     heroTitle: locale === "es" ? "Arte funcional para tu espacio" : "Functional Art for Your Space",
