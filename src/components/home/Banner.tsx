@@ -143,36 +143,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
     >
       
 
-      <div className=" absolute top-14 left-0 right-0 flex justify-between items-center px-4 transform -translate-y-1/2 z-40 text-white/50 pointer-events-none md:hidden">
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="opacity-20"
-        >
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="opacity-20"
-        >
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </div>
+     
 
       <button 
         onClick={togglePause}
