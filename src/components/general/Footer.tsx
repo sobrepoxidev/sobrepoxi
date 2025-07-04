@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, Gem } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer({ locale }: { locale: string }) {
