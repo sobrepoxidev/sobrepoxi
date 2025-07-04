@@ -6,7 +6,6 @@ export const runtime = "edge";
 export const revalidate = 1800; // 30 min
 
 async function buildSitemap(): Promise<string> {
-  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
   const now = new Date().toISOString();
 
   // Rutas estáticas
