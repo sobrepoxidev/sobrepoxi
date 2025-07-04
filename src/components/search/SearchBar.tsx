@@ -224,7 +224,7 @@ export default function SearchBar({
               // En móvil no enfocar automáticamente el input
               // Esto previene que el dropdown se cierre inmediatamente
             }}
-            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-black font-medium  border border-r-0 border-black rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#b68b44]  ${isMobile ? 'w-24 bg-gold-gradient-bright' : isNavbar ? 'w-32 bg-gold-gradient-70' : 'w-40 bg-gold-gradient-70'
+            className={`flex items-center justify-between w-full h-10 px-3 text-sm text-black font-medium  border border-r-0 border-black rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#b68b44]  ${isMobile ? 'w-24 bg-gold-gradient-bright' : isNavbar ? 'w-32 bg-gold-gradient-90' : 'w-40 bg-gold-gradient-90'
               }`}
             aria-expanded={isCategoryMenuOpen}
             aria-haspopup="true"
@@ -249,7 +249,7 @@ export default function SearchBar({
                 <li>
                   <button
                     type="button"
-                    className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-50 "
+                    className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-90 "
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -274,7 +274,7 @@ export default function SearchBar({
                     <li key={cat.id}>
                       <button
                         type="button"
-                        className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-50"
+                        className="block w-full px-4 py-2 text-left text-sm text-black font-medium hover:bg-gold-gradient-100 bg-gold-gradient-90"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -302,7 +302,7 @@ export default function SearchBar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          className={`flex-1 h-10 px-3 py-2 text-sm text-black  border border-black  ${isMobile ? 'w-full bg-gold-gradient-bright ' : isNavbar ? 'w-full bg-gold-gradient-70 ' : 'w-96 bg-gold-gradient-70 '
+          className={`flex-1 h-10 px-3 py-2 text-sm text-black  border border-black  ${isMobile ? 'w-full bg-gold-gradient-bright ' : isNavbar ? 'w-full bg-gold-gradient-90 ' : 'w-96 bg-gold-gradient-90 '
             }`}
           ref={inputRef}
         />
@@ -313,7 +313,7 @@ export default function SearchBar({
           aria-label={locale === 'es' ? 'Buscar' : 'Search'}
           className={`flex h-10 w-10 items-center justify-center
             rounded-r-md border border-black border-l-0
-             ${isMobile ? 'bg-gold-gradient-bright' : isNavbar ? 'bg-gold-gradient-70' : 'bg-gold-gradient-80'}      
+             ${isMobile ? 'bg-gold-gradient-bright' : isNavbar ? 'bg-gold-gradient-90' : 'bg-gold-gradient-90'}      
             text-black 
             hover:brightness-110`}
         >
