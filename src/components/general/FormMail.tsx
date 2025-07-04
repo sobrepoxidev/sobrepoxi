@@ -21,7 +21,7 @@ export default function FormMail() {
       >
         <div className="space-y-4 text-start">
           <div>
-            <label className="block mb-2 font-medium text-gray-700 text-sm">
+            <label className="block mb-2 font-medium text-gray-200 text-sm">
               {locale === "es" ? "Nombre" : "Name"}
             </label>
             <input
@@ -29,15 +29,15 @@ export default function FormMail() {
               name="name"
               required
               placeholder="Tu nombre"
-              className="w-full p-3 border border-gray-300 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+              className="w-full p-3 border border-gray-200 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700 text-sm">
+            <label className="block mb-2 font-medium text-gray-200 text-sm">
               {locale === "es" ? "Correo electrónico" : "Email"}
             </label>
             <input
@@ -45,30 +45,30 @@ export default function FormMail() {
               name="email"
               required
               placeholder="tu@email.com"
-              className="w-full p-3 border border-gray-300 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+              className="w-full p-3 border border-gray-200 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700 text-sm">
+            <label className="block mb-2 font-medium text-gray-200 text-sm">
               {locale === "es" ? "Teléfono" : "Phone"}
             </label>
             <input
               type="tel"
               name="phone"
               placeholder="+52 XXX XXX XXXX"
-              className="w-full p-3 border border-gray-300 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+              className="w-full p-3 border border-gray-200 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700 text-sm">
+            <label className="block mb-2 font-medium text-gray-200 text-sm">
               {locale === "es" ? "Mensaje" : "Message"}
             </label>
             <textarea
@@ -76,8 +76,8 @@ export default function FormMail() {
               required
               rows={4}
               placeholder="¿Cómo podemos ayudarte?"
-              className="w-full p-3 border border-gray-300 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+              className="w-full p-3 border border-gray-200 rounded-lg 
+                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all resize-y min-h-24 text-sm md:text-base"
               disabled={isPending }
             />
@@ -89,8 +89,8 @@ export default function FormMail() {
             className={`w-full py-3 rounded-lg transition-all duration-300 flex items-center justify-center
                       text-sm md:text-base font-medium
                       ${state?.success 
-                        ? 'bg-green-600 hover:bg-green-700 text-white' 
-                        : 'rounded-md bg-teal-600 px-6 py-3 text-white shadow transition hover:bg-teal-700 flex items-center justify-center gap-1'} 
+                        ? 'bg-gold-gradient-95 hover:bg-gold-gradient-bright text-black' 
+                        : 'rounded-md bg-gold-gradient-95 px-6 py-3 text-black shadow transition hover:bg-gold-gradient-bright flex items-center justify-center gap-1'} 
                       disabled:opacity-70 disabled:cursor-not-allowed`}
           >
             {isPending ? (
@@ -104,7 +104,7 @@ export default function FormMail() {
                 <span>{locale === "es" ? "Enviado con éxito!" : "Message sent successfully"}</span>
               </>
             ) : (
-              <span>{locale === "es" ? "Enviar mensaje" : "Send message"}</span>
+              <span className="font-semibold">{locale === "es" ? "Enviar mensaje" : "Send message"}</span>
             )}
           </button>
           {state && !state?.success && (
@@ -112,7 +112,7 @@ export default function FormMail() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className={`text-center text-sm md:text-base font-medium p-2 rounded
-                ${state?.success ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'}`}
+                ${state?.success ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50 gold-gradient-95'}`}
             >
               {state?.message}
             </motion.p>

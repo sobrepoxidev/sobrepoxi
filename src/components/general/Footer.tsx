@@ -3,16 +3,16 @@ import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, Gem } from 'lu
 
 export default function Footer({ locale }: { locale: string }) {
   return (
-    <footer className="bg-[#303030] text-white py-2 px-4 border-t-4 border-[#d4af37]">
+    <footer className="bg-[#000000] text-white py-2 px-4 border-t-4 border-[#d4af37]">
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo y descripción */}
           <div className="space-y-4">
             <div className="flex items-center">
-              <Gem className="h-8 w-8 text-[#d4af37] mr-2" />
+            <Gem className="h-8 w-8 icon-gold-bright mr-2" />
               
 
-              <span className="text-2xl font-bold gold-gradient">SobrePoxi</span>
+              <span className="text-2xl font-bold gold-gradient-bright">SobrePoxi</span>
               
             </div>
             <p className="text-gray-300 text-sm">
@@ -24,7 +24,7 @@ export default function Footer({ locale }: { locale: string }) {
 
           {/* Contacto */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#d4af37]">
+            <h3 className="text-lg font-semibold mb-4  gold-gradient-bright ">
               {locale === 'es' ? 'Contacto' : 'Contact'}
             </h3>
             <ul className="space-y-3">
@@ -60,32 +60,32 @@ export default function Footer({ locale }: { locale: string }) {
 
           {/* Enlaces rápidos */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#d4af37]">
+            <h3 className="text-lg font-semibold mb-4 gold-gradient-bright">
               {locale === 'es' ? 'Enlaces' : 'Links'}
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-[#d4af37] transition-colors">
+                <Link href="/products" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Productos' : 'Products'}
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-[#d4af37] transition-colors">
+                <Link href="/about" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Nosotros' : 'About Us'}
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-[#d4af37] transition-colors">
+                <Link href="/contact" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Contacto' : 'Contact'}
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policies" className="text-gray-300 hover:text-[#d4af37] transition-colors">
+                <Link href="/privacy-policies" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Políticas de Privacidad' : 'Privacy Policies'}
                 </Link>
               </li>
               <li>
-                <Link href="/conditions-service" className="text-gray-300 hover:text-[#d4af37] transition-colors">
+                <Link href="/conditions-service" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Términos de Servicio' : 'Terms of Service'}
                 </Link>
               </li>
@@ -94,7 +94,7 @@ export default function Footer({ locale }: { locale: string }) {
 
           {/* Redes sociales */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#d4af37]">
+            <h3 className="text-lg font-semibold mb-4 gold-gradient-bright">
               {locale === 'es' ? 'Síguenos' : 'Follow Us'}
             </h3>
             <div className="flex flex-wrap gap-3">

@@ -11,6 +11,7 @@
 import { Suspense }                 from "react";
 
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
+import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
 
 import type { Metadata }            from "next";
 import { buildTitle, getCommonMetadata } from "@/lib/seo";
@@ -31,6 +32,8 @@ export async function generateMetadata(
   const { locale } = await params;
 
   return {
+    keywords: [
+      "SobrePoxi", "contact", "epoxy floors", "muebles de lujo", "resin furniture", "Costa Rica", "WhatsApp", "luxury epoxy"],
     title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us"),
     ...getCommonMetadata(locale, {
       // Page-specific overrides ↓
@@ -54,15 +57,15 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
   /* ------------------------------------------------------------------- */
   return (
     <Suspense>
-      <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center bg-[#121212]">
         <section className="w-full max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
 
           {/* ---------- Heading ---------- */}
           <header className="mb-8">
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-teal-800">
+            <h1 className="text-3xl sm:text-5xl font-extrabold gold-gradient-bright">
               {locale === "es" ? "Contáctanos" : "Contact us"}
             </h1>
-            <p className="mt-2 text-gray-600 text-base sm:text-lg max-w-2xl">
+            <p className="mt-2 text-gray-300 text-base sm:text-lg max-w-2xl">
               {locale === "es" ? "Estamos aquí para ayudarte. ¡No dudes en escribirnos!" : "We are here to help you. Don’t hesitate to reach out!"}
             </p>
           </header>
@@ -72,9 +75,9 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
             {/* --- Contact information card --- */}
             <div
-              className="bg-white shadow-md rounded-xl p-6"
+              className="bg-[#303030] shadow-md rounded-xl p-6"
             >
-              <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-teal-800">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-6 gold-gradient">
                 {locale === "es" ? "Información de contacto" : "Contact information"}
               </h2>
 
@@ -86,11 +89,11 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
                     <FaPhone className="w-5 h-5" />
                   </span>
                   <div>
-                    <h3 className="font-semibold">{locale === "es" ? "Teléfono" : "Phone"}</h3>
-                    <p className="text-gray-700">+506 8585 0000</p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {locale === "es" ? "Lunes – Viernes · 7 a.m. – 5:30 p.m." : "Mon – Fri · 7 a.m. – 5:30 p.m."}
-                    </p>
+                    <h3 className="font-semibold ">{locale === "es" ? "Teléfono" : "Phone"}</h3>
+                    <p className="text-gray-300 font-semibold">(+506) 8585-0000</p>
+                    <p className="text-gray-300 font-semibold">(+506) 8875-7576</p>
+           
+                     
                   </div>
                 </li>
 
@@ -101,9 +104,9 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
                   </span>
                   <div>
                     <h3 className="font-semibold">WhatsApp</h3>
-                    <p className="text-gray-700">+506 8585 0000</p>
+                    <p className="text-gray-300 font-semibold">(+506) 8875-7576</p>
                     <a
-                      href="https://wa.me/50685850000"
+                      href="https://wa.me/50688757576"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"
@@ -113,15 +116,83 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
                   </div>
                 </li>
 
+                {/* Email */}
+                <li className="flex gap-4 items-start">
+                  <span className="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+                    <Mail className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">Email</h3>
+                    <a href="mailto:info@sobrepoxi.com" className="text-gray-300 font-semibold hover:underline">info@sobrepoxi.com</a>
+                  </div>
+                </li>
+
               </ul>
+               {/* ---------- Social links ---------- */}
+          <div className="mt-12 text-center">
+            <h3 className="text-lg font-semibold mb-4 gold-gradient-bright">
+              {locale === 'es' ? 'Síguenos' : 'Follow Us'}
+            </h3>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a
+                href="https://www.facebook.com/share/14EpJLUsXwc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#3b5998] hover:bg-[#4c70ba] p-2 rounded-full transition-colors text-white"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 p-2 rounded-full transition-colors text-white"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black hover:bg-gray-800 p-2 rounded-full transition-colors text-white"
+                aria-label="TikTok"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43V7.93a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.04.64z" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                href="https://www.youtube.com/@sobrepoxi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#ff0000] hover:bg-[#cc0000] p-2 rounded-full transition-colors text-white"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a
+                href="https://wa.me/50685850000?text=Hola%2C%20me%20gustaría%20hacer%20una%20consulta%20acerca%20de%20los%20productos%20y%20servicios%20que%20ofrece%20SobrePoxi."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#25D366] hover:bg-[#128C7E] p-2 rounded-full transition-colors text-white"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp className="w-5 h-5" />
+              </a>
+            </div>
+          
+            
+          </div>
             </div>
 
             {/* --- Contact form --- */}
             <div
               
-              className="bg-white shadow-md rounded-xl p-6"
+              className="bg-[#303030] shadow-md rounded-xl p-6"
             >
-              <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-teal-800">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-6 gold-gradient">
                 {locale === "es" ? "Formulario de contacto" : "Contact form"}
               </h2>
               {/* Client-side form */}
@@ -129,38 +200,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
             </div>
           </div>
 
-          {/* ---------- Social links ---------- */}
-          <footer className="mt-12 text-center">
-            <p className="text-sm text-gray-500 mb-3">
-              {locale === "es" ? "Síguenos en redes sociales" : "Follow us on social media"}
-            </p>
-            <nav className="flex justify-center gap-4">
-              <a
-                href="https://www.facebook.com/share/14EpJLUsXwc/"
-                aria-label="Facebook"
-                target="_blank" rel="noopener noreferrer"
-                className="hover:text-blue-600 transition-colors"
-              >FB</a>
-              <a
-                href="https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA=="
-                aria-label="Instagram"
-                target="_blank" rel="noopener noreferrer"
-                className="hover:text-pink-600 transition-colors"
-              >IG</a>
-              <a
-                href="https://www.youtube.com/@sobrepoxi"
-                aria-label="YouTube"
-                target="_blank" rel="noopener noreferrer"
-                className="hover:text-red-600 transition-colors"
-              >YT</a>
-              <a
-                href="https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
-                aria-label="TikTok"
-                target="_blank" rel="noopener noreferrer"
-                className="hover:text-black transition-colors"
-              >TT</a>
-            </nav>
-          </footer>
+         
 
         </section>
       </div>

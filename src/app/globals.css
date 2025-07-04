@@ -97,6 +97,32 @@ body {
     background-size: 300% 100%;           /* suaviza la animación */
   }
 
+  /* Variante más brillante para texto sobre fondos oscuros */
+  .gold-gradient-bright {
+    background: linear-gradient(
+      90deg,
+      #b98a2c 0%,     /* dorado más claro */
+      #ffca52 25%,    /* dorado vivo */
+      #fff2c4 50%,    /* casi blanco */
+      #ffca52 75%,    /* retorno dorado vivo */
+      #b98a2c 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-size: 300% 100%;
+  }
+
+  /* ----- Utilidades de color para iconos ----- */
+  .icon-gold {
+    color: #d4af37; /* oro estándar */
+  }
+
+  .icon-gold-bright {
+    color: #ffca52; /* oro más luminoso */
+  }
+
   .bg-gold-gradient {
     background: linear-gradient(
       90deg,
@@ -248,6 +274,30 @@ body {
       rgba(252, 239, 166, 0.95) 50%,
       rgba(210, 168, 87, 0.95) 75%,
       rgba(153, 115, 38, 0.95) 100%
+    );
+  }
+
+  /* Fondo dorado totalmente opaco y algo más luminoso */
+  .bg-gold-gradient-100 {
+    background: linear-gradient(
+      90deg,
+      #b98a2c 0%,
+      #ffca52 25%,
+      #fff9d6 50%,
+      #ffca52 75%,
+      #b98a2c 100%
+    );
+  }
+
+  /* Variante brillante con contraste para #121212 */
+  .bg-gold-gradient-bright {
+    background: linear-gradient(
+      90deg,
+      #c4962d 0%,
+      #ffd86a 25%,
+      #fff7e1 50%,
+      #ffd86a 75%,
+      #c4962d 100%
     );
   }
 

@@ -48,7 +48,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
               {locale === "es" ? "Detalles de calidad" : "Quality details"}
             </span>
 
-            <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight gold-gradient">
+            <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight gold-gradient-bright">
               {locale === "es" ? "Sobre SobrePoxi" : "About SobrePoxi"}
             </h1>
 
@@ -59,7 +59,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
               <Link
                 href="/products"
-                className="bg-gold-gradient-60 hover:bg-gold-gradient-60 text-black font-semibold px-6 py-3 rounded-md shadow transition"
+                className="bg-gold-gradient-90 hover:bg-gold-gradient-bright text-black font-semibold px-6 py-3 rounded-md shadow transition"
               >
                 {locale === "es" ? "Explorar portafolio" : "Explore portfolio"}
               </Link>
@@ -114,7 +114,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8">
           <div className="w-full lg:w-1/2">
             <Image
-              src="/about/founders.webp"
+              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/creators-9xn4qjXfTeYY9FA4jgdFxQ71YWIg7z.webp"
               alt={locale === "es" ? "Fundadores de SobrePoxi" : "SobrePoxi founders"}
               width={520}
               height={350}
@@ -126,7 +126,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
               {locale === "es" ? "Nuestra Historia" : "Our Story"}
             </h2>
             <p className="text-white mb-4">
-              {locale === "es" ? "Nacimos en San Carlos, Costa Rica, combinando la tradición maderera local con química de polímeros avanzada. Hoy exportamos piezas a Miami, Nueva York y Dubái." : "Born in San Carlos, Costa Rica, we merged local woodcraft tradition with advanced polymer chemistry. Today we ship pieces to Miami, New York and Dubai."}
+              {locale === "es" ? "Nacimos en Heredia, Costa Rica, combinando la tradición maderera local con química de polímeros avanzada. Hoy exportamos piezas a diversos lugares." : "Born in Heredia, Costa Rica, we merged local woodcraft tradition with advanced polymer chemistry. Today we ship pieces to diverse locations."}
             </p>
             <p className="text-white">
               {locale === "es" ? "Cada proyecto refleja tres pilares: innovación, sostenibilidad y precisión. Así garantizamos un legado estético que trasciende modas." : "Every project reflects three pillars: innovation, sustainability and precision, ensuring an aesthetic legacy that transcends trends."}
@@ -168,7 +168,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
       </section>
 
       {/* ╭────────────────────────── CTA ───────────────────────────────╮ */}
-      <section className="py-12 bg-teal-700 text-white text-center">
+      <section className="py-12 bg-gold-gradient-95 text-white text-center">
         <h2 className="text-3xl font-bold mb-4">
           {locale === "es" ? "Convierte tu visión en realidad" : "Turn your vision into reality"}
         </h2>
@@ -209,7 +209,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <div className="text-center mb-12 px-4">
       <h2 className="text-3xl font-bold text-white">{children}</h2>
-      <div className="mt-2 h-1 w-24 mx-auto bg-teal-600" />
+      <div className="mt-2 h-1 w-36 mx-auto bg-gold-gradient-95" />
     </div>
   );
 }
@@ -245,11 +245,11 @@ function Timeline({ locale }: { locale: "es" | "en" }) {
     <ol className="max-w-3xl mx-auto space-y-12">
       {steps.map(([title, text], idx) => (
         <li key={idx} className="relative pl-12">
-          <span className="absolute left-0 top-0 w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center">
+          <span className="absolute left-0 top-0 w-8 h-8 rounded-full bg-gold-gradient-95 text-[#121212] font-bold  flex items-center justify-center">
             {idx + 1}
           </span>
           <h3 className="text-lg font-semibold text-white">{title}</h3>
-          <p className="text-white mt-1">{text}</p>
+          <p className="text-gray-300 mt-1">{text}</p>
         </li>
       ))}
     </ol>

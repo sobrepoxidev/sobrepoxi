@@ -27,7 +27,7 @@ export default function SearchBar({
   const [query, setQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [selectedCategorySlug, setselectedCategorySlug] = useState<string | null>(null);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -151,9 +151,9 @@ export default function SearchBar({
 
     const searchParams = new URLSearchParams();
     searchParams.set('q', query);
-    if (selectedCategory !== 'Todo' && selectedCategoryId) {
+    if (selectedCategory !== 'Todo' && selectedCategorySlug) {
       searchParams.set('category', selectedCategory);
-      searchParams.set('categoryId', selectedCategoryId.toString());
+      searchParams.set('categoryId', selectedCategorySlug);
     }
 
     router.push(`/search?${searchParams.toString()}`);
@@ -166,10 +166,9 @@ export default function SearchBar({
 
   // Handle category selection
   const handleCategorySelect = (category: { id: number, name: string, name_es: string, name_en: string }) => {
-    console.log('Selected category:', category);
     const displayName = locale === 'es' ? category.name_es : category.name_en || category.name;
     setSelectedCategory(displayName);
-    setSelectedCategoryId(category.id);
+    setselectedCategorySlug(category.name);
     setIsCategoryMenuOpen(false);
 
     // Focus input after selection
@@ -336,6 +335,7 @@ export default function SearchBar({
           <SearchSuggestions
             query={query}
             category={selectedCategory}
+            selectedCategorySlug={selectedCategorySlug}
             results={searchResults}
             loading={isLoading}
             onClose={() => setShowSuggestions(false)}

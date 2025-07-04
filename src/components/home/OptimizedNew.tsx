@@ -35,7 +35,7 @@ export default function OptimizedNewHome({
 
   return (
     <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
-      <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-bl from-[#303030] via-[#121212] to-[#121212]
+      <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
          hover:bg-[length:200%_100%] hover:bg-right
          transition-[background-size,background-position] duration-300">
         <Carousel>
@@ -52,7 +52,7 @@ export default function OptimizedNewHome({
             >
               {/* Columna 1 — texto */}
               <div className="max-w-[100%] text-center md:text-left">
-                <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide gold-gradient drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
+                <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
                   {locale === 'es'
                     ? 'Solicita tu pieza a medida'
                     : 'Commission your bespoke piece'}
@@ -103,7 +103,7 @@ export default function OptimizedNewHome({
               <h2 className="text-lg sm:text-2xl font-light text-white">
                 {locale === 'es' ? 'Transforma tus espacios' : 'Transform your spaces'}
               </h2>
-              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 sm:mt-1">
+              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 sm:mt-1">
                 {locale === 'es' ? 'Pisos epóxicos de lujo' : 'Luxury Epoxy Floors'}
               </h1>
               <p className="mt-1 text-sm sm:text-base text-white max-w-lg">
@@ -124,7 +124,7 @@ export default function OptimizedNewHome({
               <h2 className="text-md sm:text-xl font-light text-white">
                 {locale === 'es' ? 'Descubre nuestra' : 'Discover our'}
               </h2>
-              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
+              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
                 {locale === 'es' ? 'COLECCIÓN ICÓNICA' : 'SIGNATURE COLLECTION'}
               </h1>
               <p className="mt-1 text-sm sm:text-base text-white">

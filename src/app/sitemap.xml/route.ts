@@ -40,7 +40,7 @@ export async function GET() {
     '/account',
     '/feria-artesanias',
     '/feria-artesanias-terminos',
-    '/impact',
+    '/epoxy-floors',
     '/search',
   ];
 

@@ -223,7 +223,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                       <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
                         {categoryProducts.slice(0, 4).map((product, idx) => (
                           <Link key={idx} href={`/product/${product.name}`} className="block text-center">
-                            <div className="h-44 flex items-center justify-center bg-white rounded-lg shadow-sm">
+                            <div className={`h-44 flex items-center justify-center ${cardColor == 'bg-gold-gradient' ? 'bg-[#303030]' : 'bg-gold-gradient'} rounded-lg shadow-sm`}>
                               <Image
                                 src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
                                 alt={product.name || ''}
@@ -242,7 +242,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         ))}
                       </div>
                     ),
-                    link: `/products?category=${category.id}`,
+                    link: `/products?category=${category.name}`,
                     className: `${cardColor}  rounded-xl px-3 pt-2 pb-3 shadow-sm`
                   };
                 })

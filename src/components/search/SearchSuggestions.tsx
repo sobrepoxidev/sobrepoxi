@@ -15,16 +15,18 @@ interface SearchSuggestionsProps {
   onClose: () => void;
   variant: 'navbar' | 'standalone' | 'mobile';
   locale: string;
+  selectedCategorySlug: string | null;
 }
 
 export default function SearchSuggestions({
+  selectedCategorySlug,
   query,
   category,
   results,
   loading,
   onClose,
   variant,
-  locale
+  locale,
 }: SearchSuggestionsProps) {
   // Apply different styles based on variant
   const isNavbar = variant === 'navbar';
@@ -84,7 +86,7 @@ export default function SearchSuggestions({
               {results.slice(0, 5).map((product) => (
                 <li key={product.id} className="border-b border-gray-100 last:border-b-0">
                   <Link 
-                    href={`/product/${product.id}`}
+                    href={`/product/${product.name}`}
                     className="flex items-center p-3 hover:bg-gray-50 transition"
                     onClick={onClose}
                   >
@@ -139,7 +141,7 @@ export default function SearchSuggestions({
             
             <div className="bg-gray-50 p-3 text-center">
               <Link
-                href={`/search?q=${encodeURIComponent(query)}${(category && !['Todo','All','Todas'].includes(category)) ? `&category=${encodeURIComponent(category)}` : ''}`}
+                href={`/search?q=${encodeURIComponent(query)}${(category && !['Todo','All','Todas'].includes(category)) ? `&category=${selectedCategorySlug}` : ''}`}
                 className="inline-flex items-center justify-center text-sm text-teal-700 hover:text-teal-800 font-medium"
                 onClick={onClose}
               >

@@ -123,17 +123,17 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           setTotalCount(totalCount);
         } else if (isCategoryFilter) {
           // Only category filter – categoryParam may be ID or name
-          let categoryId: number | null = null;
+          let categoryId: string | null = null;
 
           if (/^\d+$/.test(category)) {
-            categoryId = parseInt(category, 10);
+            categoryId = category;
           } else {
             const { data: catData } = await supabase
               .from('categories')
-              .select('id')
+              .select('name')
               .eq('name', category)
               .single();
-            categoryId = catData?.id ?? null;
+            categoryId = catData?.name ?? null;
           }
 
           if (categoryId === null) {

@@ -53,7 +53,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 className="
                   flex items-center gap-0
                   text-lg md:text-3xl font-extrabold tracking-wider
-                  gold-gradient              
+                  gold-gradient-bright            
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
                   motion-safe:animate-shine"
               >
