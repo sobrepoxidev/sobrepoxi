@@ -3,8 +3,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { headers } from 'next/headers';
 import slugify from "slugify"; //  npm i slugify   ✅ tiny, sin deps
 
-export const dynamic = 'force-static'; // generado en build
-export const revalidate = 1800; // 30 min
+export const runtime = 'edge';
 
 
 export function HEAD() {
