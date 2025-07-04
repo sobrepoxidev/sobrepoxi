@@ -80,14 +80,14 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {/* Category badge */}
         {category && (
-          <span className="bg-[#303030] text-gray-300 text-xs px-2 py-1 rounded-full border border-[#303030]">
+          <span className=" gold-gradient text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
             {locale === 'es' ? category.name_es : category.name_en}
           </span>
         )}
         
         {/* Featured badge */}
         {product.is_featured && (
-          <span className="bg-[#303030] gold-gradient-bright text-xs px-2 py-1 rounded-full border border-[#303030] flex items-center">
+          <span className=" gold-gradient text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
             <Star className="h-3 w-3 mr-1 icon-gold" />
             {locale === 'es' ? 'Destacado' : 'Featured'}
           </span>
@@ -143,13 +143,13 @@ export default function ProductCard({ product }: { product: Product }) {
       
       {/* Imagen del producto */}
       <Link href={`/product/${product.name}`} className="block h-48 sm:h-60 relative">
-        <div className="h-full w-full flex items-center justify-center bg-gold-gradient-60 mt-4">
+      <div className="h-full w-full flex items-center justify-center bg-[#303030]  p-4">
           <Image
             src={mainImageUrl}
             alt={product.name || ''}
-            width={260}
-            height={260}
-            className={`object-contain rounded-sm max-w-full p-6 bg-[#303030] transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
+            width={180}
+            height={180}
+            className={`object-contain max-h-full max-w-full  transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
           />
         </div>
       </Link>
