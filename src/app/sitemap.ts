@@ -10,8 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
   const now = new Date();
 
-  // Locales y rutas estáticas
-  const locales = ["es", "en"] as const;
+  // Rutas estáticas
   const staticBases = [
     "", "about", "products", "shipping", "contact",
     "privacy-policies", "conditions-service", "qr",
