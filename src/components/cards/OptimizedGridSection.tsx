@@ -162,7 +162,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
   return (
     <div className="w-full">
       {/* Versión de escritorio - Muestra categorías en grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 px-4 gap-4 mb-4 mt-4 max-lg:hidden">
+      <div className="grid grid-cols-2 md:grid-cols-3 px-4 gap-4 pb-4 max-lg:hidden">
         {desktopCards.map((card, index) => (
           <Card key={index} {...card} />
         ))}
