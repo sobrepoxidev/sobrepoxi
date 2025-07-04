@@ -5,7 +5,7 @@
 export const runtime = "nodejs";
 export const dynamic = 'force-dynamic';
 
-async function buildSitemap(): Promise<string> {
+async function buildSitemap() {
   const now = new Date().toISOString();
 
   // Rutas estáticas
