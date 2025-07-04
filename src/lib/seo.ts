@@ -10,6 +10,7 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
   });
 
   const {
+    
     title: _title,
     alternates: _alternates,
     twitter: _twitter,
