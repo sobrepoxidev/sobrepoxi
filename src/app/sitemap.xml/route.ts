@@ -6,6 +6,17 @@ import slugify from "slugify"; //  npm i slugify   ✅ tiny, sin deps
 export const dynamic = 'force-static'; // generado en build
 export const revalidate = 1800; // 30 min
 
+
+export function HEAD() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=0, must-revalidate",
+    },
+  });
+}
+
 export async function GET() {
   // Host según cabecera o env
   const host =
@@ -104,19 +115,11 @@ export async function GET() {
 return new Response(xml, {
   headers: {
     // Cabeceras recomendadas
-    "Content-Type": "text/xml",
+   "Content-Type": "application/xml",
     "Cache-Control": "public, max-age=0, must-revalidate",
   },
 });
 }
-export function HEAD() {
-  return new Response(null, {
-    status: 200,
-    headers: {
-      "Content-Type": "text/xml",
-      "Cache-Control": "public, max-age=0, must-revalidate"
-    }
-  });
-}
+
 
 
