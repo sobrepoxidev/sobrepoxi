@@ -567,12 +567,12 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             {product.tags && product.tags.length > 0 && (
               <div>
                 <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Etiquetas' : 'Tags'}</h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {product.tags.map((tag, index) => (
                     <Link 
                       key={index} 
                       href={`/products?tag=${tag}`}
-                      className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm transition"
+                      className="inline-flex items-center px-1 py-0.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm transition"
                     >
                       <Tag className="h-3 w-3 mr-1" />
                       {locale === 'es' ? tag : tag}
