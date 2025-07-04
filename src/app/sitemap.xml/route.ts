@@ -10,10 +10,10 @@ async function buildSitemap(): Promise<string> {
 
   // Rutas estáticas
   const staticBases = [
-    "", "about", "products", "shipping", "contact",
+    "", "about", "products", "contact",
     "privacy-policies", "conditions-service", "qr",
     "account", "feria-artesanias", "feria-artesanias-terminos",
-    "epoxy-floors", "search",
+    "epoxy-floors", "luxury-furniture", "search",
   ];
 
   // Generar URLs estáticas
