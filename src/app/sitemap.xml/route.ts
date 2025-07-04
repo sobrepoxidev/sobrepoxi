@@ -1,5 +1,7 @@
+//src\app\sitemap.xml\route.ts
 import { supabase } from '@/lib/supabaseClient';
 import { headers } from 'next/headers';
+import slugify from "slugify"; //  npm i slugify   ✅ tiny, sin deps
 
 export const dynamic = 'force-static'; // generado en build
 export const revalidate = 1800; // 30 min
@@ -66,8 +68,15 @@ export async function GET() {
   if (products) {
     for (const { name } of products) {
       if (!name) continue;
+    
+      // 1) generamos un slug SEO-friendly
+      const slug = slugify(name, { lower: true, strict: true }); // “Mesa Río XL 2×1 m” → "mesa-rio-xl-2x1m"
+    
+      // 2) escapamos por si acaso quedara algo raro (espacios, #, etc.)
+      const encoded = encodeURIComponent(slug);
+    
       for (const { prefix } of locales) {
-        entries.push(makeEntry(prefix, `/product/${name}`, true));
+        entries.push(makeEntry(prefix, `/product/${encoded}`, true));
       }
     }
   }

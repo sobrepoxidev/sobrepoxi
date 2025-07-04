@@ -28,6 +28,7 @@
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
     "react-tooltip": "^5.29.1",
+    "slugify": "^1.6.6",
     "swiper": "^11.2.10"
   },
   "devDependencies": {
