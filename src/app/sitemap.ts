@@ -1,84 +1,84 @@
-/* src/app/sitemap.ts */
-import type { MetadataRoute } from "next";
-import { supabase } from "@/lib/supabaseClient";
-import slugify from "slugify";
+// src/app/sitemap.ts
+import type { MetadataRoute } from 'next';
+import { headers } from 'next/headers';
+import { createClient } from '@supabase/supabase-js';
+import slugify from 'slugify';
 
-export const runtime  = "edge";
-export const dynamic  = "force-dynamic";     // <- explícito
-export const revalidate = 1800;              // 30 min (opcional)
+export const runtime  = 'edge';
+export const dynamic  = 'force-dynamic'; // ⬅ fuerza renderizado por petición
+export const revalidate = 0;             // ⬅ desactiva Full-Route & Data Cache
 
-/* ───────────────────────── Config base ───────────────────────── */
-const locales = [
-  { prefix: "es", tag: "es-cr" },
-  { prefix: "en", tag: "en-us" },
-] as const;
+// 1️⃣  Instancia de Supabase aislada
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-const staticBases = [
-  "",                // home
-  "about",
-  "products",
-  "shipping",
-  "contact",
-  "privacy-policies",
-  "conditions-service",
-  "qr",
-  "account",
-  "feria-artesanias",
-  "feria-artesanias-terminos",
-  "epoxy-floors",
-  "search",
-];
-
-/* ────────────────────────── Helper make() ────────────────────── */
-function make(
-  host: string,
-  base: string,               // ← sin prefijo, sin barra inicial
-  isProduct = false
-): MetadataRoute.Sitemap[number][] {
-
-  const lastmod = new Date();
-  return locales.map(({ prefix }) => {
-    const url = `https://${host}/${prefix}/${base}`;
-    return {
-      url,
-      lastModified: lastmod,
-      changeFrequency: isProduct ? "weekly" : "monthly",
-      priority: isProduct ? 0.8 : 0.6,
-      alternates: {
-        languages: Object.fromEntries(
-          locales.map(({ prefix: p2, tag: t2 }) => [
-            t2,
-            `https://${host}/${p2}/${base}`,
-          ])
-        ),
-      },
-    };
-  });
-}
-
-/* ────────────────────────── Main fn ──────────────────────────── */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
+  const hdr  = await headers();
+  const host = hdr.get('x-forwarded-host') ??
+               hdr.get('host') ??
+               process.env.NEXT_PUBLIC_SITE_URL ??
+               'sobrepoxi.com';
 
+  const now  = new Date();
+
+  /* ─── Config ─────────────────────────────────────────────────── */
+  const locales = [
+    { prefix: 'es', tag: 'es-cr' },
+    { prefix: 'en', tag: 'en-us' },
+  ] as const;
+
+  const staticPaths = [
+    '', '/about', '/products', '/shipping', '/contact',
+    '/privacy-policies', '/conditions-service', '/qr', '/account',
+    '/feria-artesanias', '/feria-artesanias-terminos',
+    '/epoxy-floors', '/search',
+  ];
+
+  /* ─── Productos activos ──────────────────────────────────────── */
+  const { data: products } = await supabase
+    .from('products')
+    .select('name')
+    .eq('is_active', true)
+    .throwOnError(); // lanza si hay error (Edge lo loguea)
+
+  /* ─── Helper ─────────────────────────────────────────────────── */
+  const make = (
+    path: string,
+    isProduct = false,
+  ): MetadataRoute.Sitemap[number] => ({
+    url: `https://${host}${path}`,
+    lastModified: now,
+    changeFrequency: isProduct ? 'weekly' : 'monthly',
+    priority: isProduct ? 0.8 : 0.6,
+    alternates: {
+      languages: locales.reduce<Record<string, string>>((acc, l) => {
+        acc[l.tag] = `https://${host}${path.replace(/^\/[a-z]{2}\//, `/${l.prefix}/`)}`;
+        return acc;
+      }, {}),
+    },
+  });
+
+  /* ─── Generar entries ────────────────────────────────────────── */
   const entries: MetadataRoute.Sitemap = [];
 
-  /* 1) rutas estáticas */
-  for (const base of staticBases) {
-    entries.push(...make(host, base));
+  // 1) Rutas estáticas
+  for (const path of staticPaths) {
+    for (const { prefix } of locales) {
+      const full = `/${prefix}${path ? path : ''}`;
+      entries.push(make(full));
+    }
   }
 
-  /* 2) productos activos */
-  type Row = { name: string | null };
-  const { data: products } = await supabase
-    .from("products")
-    .select("name")
-    .eq("is_active", true) as { data: Row[] | null };
-
-  if (products) {
-    for (const { name } of products) {
-      if (!name) continue;
-      const slug = slugify(name, { lower: true, strict: true });
-      entries.push(...make(host, `product/${slug}`, true));
+  // 2) Productos dinámicos
+  for (const row of products ?? []) {
+    if (!row.name) continue;
+    const slug = encodeURIComponent(
+      slugify(row.name, { lower: true, strict: true }),
+    );
+    for (const { prefix } of locales) {
+      entries.push(make(`/${prefix}/product/${slug}`, true));
     }
   }
 
