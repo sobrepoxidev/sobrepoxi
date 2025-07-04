@@ -82,18 +82,32 @@ export async function GET() {
   }
 
   /* ---------------- Construir XML ---------------- */
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries
+  const xml =
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n` +
+  `        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n` +
+  `        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 ` +
+  `                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">\n` +
+  entries
     .map(
-      (e) => `  <url>\n    <loc>${e.loc}</loc>\n    <lastmod>${e.lastmod}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
+      (e) =>
+        `  <url>\n` +
+        `    <loc>${e.loc}</loc>\n` +
+        `    <lastmod>${e.lastmod}</lastmod>\n` +
+        `    <changefreq>${e.changefreq}</changefreq>\n` +
+        `    <priority>${e.priority}</priority>\n` +
+        `  </url>`
     )
-    .join('\n')}\n</urlset>`;
+    .join("\n") +
+  `\n</urlset>`;
 
-    return new Response(xml, {
-      headers: {
-        "Content-Type": "text/xml",          // ← sin charset
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
-    });
+return new Response(xml, {
+  headers: {
+    // Cabeceras recomendadas
+    "Content-Type": "text/xml",
+    "Cache-Control": "public, max-age=0, must-revalidate",
+  },
+});
 }
 export function HEAD() {
   return new Response(null, {
