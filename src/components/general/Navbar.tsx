@@ -52,7 +52,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                 src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt="Hand Made Art Logo"
                 width={70}
-                height={10}
+                height={0}
                 className="w-[70px] h-[43px] md:w-[65px] md:h-[65px] object-fill ml-1.5"
                 priority
                 unoptimized

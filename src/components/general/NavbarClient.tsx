@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-//import Image from 'next/image';
+import Image from 'next/image';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { Menu, X, User, ShoppingCart, ChevronDown, Globe, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
@@ -109,7 +109,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
       {/* Desktop Navigation - Amazon Style */}
       <div className="hidden w-full flex-col lg:flex" style={{ position: 'static' }}>
         {/* Primary Header Row */}
-        <div className="flex w-full items-center justify-between px-4 py-2">
+        <div className="flex w-full items-center justify-between px-4 py-0.5">
           {/* Left */}
           <div className="flex items-center gap-2">
             {/* Hamburger button visible on desktop too */}
@@ -122,22 +122,23 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               {isMenuOpen ? <X className="h-5 w-5 text-white" /> : <Menu className="h-5 w-5 text-white" />}
             </button>
             <Link href="/" target='_self' className="flex items-center gap-2">
-              {/* <Image
-                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                alt="HandMadeArt Logo"
-                width={60}
-                height={60}
-                className="w-12 md:w-16 object-cover"
-                priority
-                unoptimized
-              /> */}
+              <Image
+                              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                              alt="Hand Made Art Logo"
+                              width={130}
+                              height={0}
+                              className="w-[130px] h-[75px] object-fill ml-1.5"
+                              priority
+                              unoptimized
+                            />
               <h1
                 className="
                   flex items-center gap-0
                   text-md md:text-3xl font-extrabold tracking-wider
                   gold-gradient              
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
-                  motion-safe:animate-shine"
+                  motion-safe:animate-shine 
+                  sr-only"
               >
                 SobrePoxi
               </h1>
