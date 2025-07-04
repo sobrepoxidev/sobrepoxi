@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   if (error) console.error('Sitemap | error fetching products:', error);
 
-  /* ─────────────────────────────────────────────── ░ Helper ░ */
+  /* ────────────────────────────────────────────── ░ Helper ░ */
   const make = (
     prefix: (typeof locales)[number]['prefix'],
     path: string,
@@ -87,7 +87,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ); // ej. “Mesa Río XL 2×1 m” → mesa-rio-xl-2x1m
 
       for (const { prefix } of locales)
-        entries.push(make(prefix, `/product/${slug}`, true));
+        entries.push(make(prefix, `/product/${slug}`));
     }
   }
 
