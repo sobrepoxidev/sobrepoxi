@@ -200,7 +200,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                   // Si ambas tienen 4+ o ambas tienen menos de 4, ordenar por cantidad
                   return bProducts - aProducts; // Ordenar de mayor a menor
                 })
-                .map((category, index) => {
+                .map((category) => {
                   // Convertir la categoría a formato esperado por CarrucelSectionA
                   const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
 
