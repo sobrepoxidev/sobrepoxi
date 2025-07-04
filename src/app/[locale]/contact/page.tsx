@@ -12,6 +12,7 @@ import { Suspense }                 from "react";
 
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
 import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
+import Link from "next/link";
 
 import type { Metadata }            from "next";
 import { buildTitle, getCommonMetadata } from "@/lib/seo";
@@ -99,7 +100,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
                 {/* WhatsApp */}
                 <li className="flex gap-4 items-start">
-                  <span className="bg-green-100 text-green-600 p-3 rounded-full">
+                  <span className="bg-[#25D366] hover:bg-[#128C7E] p-2 rounded-full transition-colors text-white">
                     <FaWhatsapp className="w-5 h-5" />
                   </span>
                   <div>
@@ -134,53 +135,46 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
               {locale === 'es' ? 'Síguenos' : 'Follow Us'}
             </h3>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a
+              <Link
                 href="https://www.facebook.com/share/14EpJLUsXwc/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#3b5998] hover:bg-[#4c70ba] p-2 rounded-full transition-colors text-white"
+                className="bg-[#3b5998] hover:bg-[#4c70ba] p-1 rounded-full transition-colors text-white"
                 aria-label="Facebook"
+                
               >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
+                <Facebook className="w-5 h-5"/>
+              </Link>
+              <Link
                 href="https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA=="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 p-2 rounded-full transition-colors text-white"
+                className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 p-1 rounded-full transition-colors text-white"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-black hover:bg-gray-800 p-2 rounded-full transition-colors text-white"
+                className="bg-black hover:bg-gray-800 p-1 rounded-full transition-colors text-white"
                 aria-label="TikTok"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43V7.93a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.04.64z" fill="currentColor" />
                 </svg>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="https://www.youtube.com/@sobrepoxi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#ff0000] hover:bg-[#cc0000] p-2 rounded-full transition-colors text-white"
+                className="bg-[#ff0000] hover:bg-[#cc0000] p-1 rounded-full transition-colors text-white"
                 aria-label="YouTube"
               >
                 <Youtube className="w-5 h-5" />
-              </a>
-              <a
-                href="https://wa.me/50685850000?text=Hola%2C%20me%20gustaría%20hacer%20una%20consulta%20acerca%20de%20los%20productos%20y%20servicios%20que%20ofrece%20SobrePoxi."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#128C7E] p-2 rounded-full transition-colors text-white"
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp className="w-5 h-5" />
-              </a>
+              </Link>
+              
             </div>
           
             
