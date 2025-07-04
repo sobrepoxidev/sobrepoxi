@@ -204,17 +204,10 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                   // Convertir la categoría a formato esperado por CarrucelSectionA
                   const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
 
-                  // Colores para las tarjetas
-                  const cardColors = [
-                    'bg-gold-gradient',  // Verde
-                    'bg-[#303030]',   // Azul
-                   
-                    'bg-gold-gradient' ,    // Rojo
-                    'bg-[#303030]',   // Rosa
-                  ];
+                
 
                   // Seleccionar color
-                  const cardColor = cardColors[index % cardColors.length];
+                  const cardColor = 'bg-gold-gradient';
 
                   return {
                     textColor: cardColor === 'bg-gold-gradient' ? 'text-black' : 'text-white',
