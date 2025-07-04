@@ -42,7 +42,7 @@ export default function SearchBar({
   useEffect(() => {
     async function fetchCategories() {
       const categoryList = await getProductCategories(locale);
-      console.log("Categories:", categoryList);
+    
       setCategories(categoryList);
     }
 
@@ -51,7 +51,7 @@ export default function SearchBar({
 
   // Debounce search query con tiempo más corto para mejor respuesta
   useEffect(() => {
-    console.log('Query cambiada:', query); // Logging para debuggear
+
     const timer = setTimeout(() => {
       setDebouncedQuery(query);
     }, 200); // 200ms debounce para mejor respuesta
@@ -62,7 +62,6 @@ export default function SearchBar({
   // Perform search when debounced query changes - implementación mejorada para desktop
   useEffect(() => {
     async function performSearch() {
-      console.log('Realizando búsqueda:', debouncedQuery, selectedCategory); // Debug
 
       if (debouncedQuery.length < 2) {
         setSearchResults([]);
@@ -84,7 +83,7 @@ export default function SearchBar({
 
         );
 
-        console.log('Resultados encontrados:', results.length);
+
         setSearchResults(results);
 
         // Siempre mostrar sugerencias si tenemos al menos 2 caracteres, independientemente de los resultados
