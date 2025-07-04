@@ -2,7 +2,7 @@
 import { supabase } from "@/lib/supabaseClient";
 import slugify from "slugify";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const revalidate = 1800; // 30 min
 
 async function buildSitemap(): Promise<string> {
