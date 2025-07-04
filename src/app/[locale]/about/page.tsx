@@ -114,7 +114,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8">
           <div className="w-full lg:w-1/2">
             <Image
-              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/creators-9xn4qjXfTeYY9FA4jgdFxQ71YWIg7z.webp"
+              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/creaters-jmaVe9NzJWkXM1VpBKoVj9HcgvH8Q7.webp"
               alt={locale === "es" ? "Fundadores de SobrePoxi" : "SobrePoxi founders"}
               width={520}
               height={350}
