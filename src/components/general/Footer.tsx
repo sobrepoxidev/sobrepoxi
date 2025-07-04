@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, Gem } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer({ locale }: { locale: string }) {
   return (
@@ -7,15 +8,19 @@ export default function Footer({ locale }: { locale: string }) {
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo y descripción */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center">
             <div className="flex items-center">
-            <Gem className="h-8 w-8 icon-gold-bright mr-2" />
-              
-
-              <span className="text-2xl font-bold gold-gradient-bright">SobrePoxi</span>
+            <Image
+                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                alt="Logo"
+                width={350}
+                height={300}
+                className="w-40 h-32"
+                unoptimized
+                />
               
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-300 text-sm text-center">
               {locale === 'es'
                 ? 'Muebles de lujo y pisos epóxicos artísticos, hechos en Costa Rica'
                 : 'Luxury furniture and artistic epoxy floors handcrafted in Costa Rica'}
