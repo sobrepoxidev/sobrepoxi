@@ -37,7 +37,7 @@ function make(
 ): MetadataRoute.Sitemap[number][] {
 
   const lastmod = new Date();
-  return locales.map(({ prefix, tag }) => {
+  return locales.map(({ prefix }) => {
     const url = `https://${host}/${prefix}/${base}`;
     return {
       url,
