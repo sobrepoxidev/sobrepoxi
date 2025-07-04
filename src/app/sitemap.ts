@@ -1,93 +1,84 @@
-// src/app/sitemap.ts
-import type { MetadataRoute } from 'next';
-import { headers } from 'next/headers';
-import { supabase } from '@/lib/supabaseClient';
-import slugify from 'slugify';           // npm i slugify – 0 deps, ≤4 kB
+/* src/app/sitemap.ts */
+import type { MetadataRoute } from "next";
+import { supabase } from "@/lib/supabaseClient";
+import slugify from "slugify";
 
-export const runtime = 'edge';
+export const runtime  = "edge";
+export const dynamic  = "force-dynamic";     // <- explícito
+export const revalidate = 1800;              // 30 min (opcional)
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  /* ────────────────────────────────────────────────────────────── ░ Host ░ */
-  const host =
-    (await headers()).get('x-forwarded-host') ??
-    (await headers()).get('host') ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    'sobrepoxi.com';
+/* ───────────────────────── Config base ───────────────────────── */
+const locales = [
+  { prefix: "es", tag: "es-cr" },
+  { prefix: "en", tag: "en-us" },
+] as const;
 
-  const now = new Date();
+const staticBases = [
+  "",                // home
+  "about",
+  "products",
+  "shipping",
+  "contact",
+  "privacy-policies",
+  "conditions-service",
+  "qr",
+  "account",
+  "feria-artesanias",
+  "feria-artesanias-terminos",
+  "epoxy-floors",
+  "search",
+];
 
-  /* ──────────────────────────────────────────── ░ Configuración base ░ */
-  const locales = [
-    { prefix: 'es', tag: 'es-cr' },
-    { prefix: 'en', tag: 'en-us' },
-  ] as const;
+/* ────────────────────────── Helper make() ────────────────────── */
+function make(
+  host: string,
+  base: string,               // ← sin prefijo, sin barra inicial
+  isProduct = false
+): MetadataRoute.Sitemap[number][] {
 
-  const staticPaths = [
-    '', // home
-    '/about',
-    '/products',
-    '/shipping',
-    '/contact',
-    '/privacy-policies',
-    '/conditions-service',
-    '/qr',
-    '/account',
-    '/feria-artesanias',
-    '/feria-artesanias-terminos',
-    '/epoxy-floors',
-    '/search',
-  ];
-
-  /* ──────────────────────────────────────────────── ░ Productos ░ */
-  type ProductRow = { name: string | null };
-
-  const { data: products, error } = await supabase
-    .from('products')
-    .select('name')
-    .eq('is_active', true) as {
-      data: ProductRow[] | null;
-      error: unknown;
+  const lastmod = new Date();
+  return locales.map(({ prefix, tag }) => {
+    const url = `https://${host}/${prefix}/${base}`;
+    return {
+      url,
+      lastModified: lastmod,
+      changeFrequency: isProduct ? "weekly" : "monthly",
+      priority: isProduct ? 0.8 : 0.6,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map(({ prefix: p2, tag: t2 }) => [
+            t2,
+            `https://${host}/${p2}/${base}`,
+          ])
+        ),
+      },
     };
-
-  if (error) console.error('Sitemap | error fetching products:', error);
-
-  /* ────────────────────────────────────────────── ░ Helper ░ */
-  const make = (
-    prefix: (typeof locales)[number]['prefix'],
-    path: string,
-    isProduct = false,
-  ): MetadataRoute.Sitemap[number] => ({
-    url: `https://${host}/${prefix}${path}`,
-    lastModified: now,
-    changeFrequency: isProduct ? 'weekly' : 'monthly',
-    priority: isProduct ? 0.8 : 0.6,
-    alternates: {
-      languages: locales.reduce<Record<string, string>>((acc, l) => {
-        acc[l.tag] = `https://${host}/${l.prefix}${path}`;
-        return acc;
-      }, {}),
-    },
   });
+}
 
-  /* ────────────────────────────────────── ░ Generar entradas ░ */
+/* ────────────────────────── Main fn ──────────────────────────── */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
+
   const entries: MetadataRoute.Sitemap = [];
 
-  // 1) Rutas estáticas para cada locale
-  for (const path of staticPaths) {
-    for (const { prefix } of locales) entries.push(make(prefix, path));
+  /* 1) rutas estáticas */
+  for (const base of staticBases) {
+    entries.push(...make(host, base));
   }
 
-  // 2) Rutas dinámicas de productos activos
+  /* 2) productos activos */
+  type Row = { name: string | null };
+  const { data: products } = await supabase
+    .from("products")
+    .select("name")
+    .eq("is_active", true) as { data: Row[] | null };
+
   if (products) {
     for (const { name } of products) {
       if (!name) continue;
-
-      const slug = encodeURIComponent(
-        slugify(name, { lower: true, strict: true }),
-      ); // ej. “Mesa Río XL 2×1 m” → mesa-rio-xl-2x1m
-
-      for (const { prefix } of locales)
-        entries.push(make(prefix, `/product/${slug}`));
+      const slug = slugify(name, { lower: true, strict: true });
+      entries.push(...make(host, `product/${slug}`, true));
     }
   }
 
