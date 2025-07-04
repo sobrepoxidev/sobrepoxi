@@ -1,77 +1,76 @@
-import { createClient } from '@supabase/supabase-js';
-import slugify from 'slugify';
+/* ───────────────────────────────────────────── app/sitemap.xml/route.ts */
+import { supabase } from "@/lib/supabaseClient";
+import slugify      from "slugify";
 
-export const runtime = 'edge';          // sigue siendo Edge
-export const revalidate = 0;            // sin caché
+export const runtime   = "edge";
+export const revalidate = 1800;          // 30 min
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+/* ---------- función que arma el XML ---------- */
+async function buildSitemap(): Promise<string> {
+  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
+  const now  = new Date().toISOString();
 
-function url(host: string, path = '') {
-  return `https://${host}${path}`;
-}
-
-export async function GET() {
-  /* ─── Host ─────────────────────────────── */
-  const host =
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'sobrepoxi.com';
-
-  /* ─── Datos de productos ───────────────── */
-  const { data: products = [] } = await supabase
-    .from('products')
-    .select('name')
-    .eq('is_active', true);
-
-  /* ─── Entradas base ────────────────────── */
-  const staticPaths = [
-    '', '/about', '/products', '/shipping', '/contact',
-    '/privacy-policies', '/conditions-service', '/qr', '/account',
-    '/feria-artesanias', '/feria-artesanias-terminos',
-    '/epoxy-floors', '/search',
+  /* locales + rutas estáticas (sin barra inicial) */
+  const locales = ["es", "en"] as const;
+  const staticBases = [
+    "", "about", "products", "shipping", "contact",
+    "privacy-policies", "conditions-service", "qr",
+    "account", "feria-artesanias", "feria-artesanias-terminos",
+    "epoxy-floors", "search",
   ];
 
-  const locales = ['es', 'en'] as const;
-  const nowISO  = new Date().toISOString();
+  type Row = { name: string | null };
+  const { data } = await supabase.from("products")
+                        .select("name")
+                        .eq("is_active", true) as { data: Row[] | null };
 
-  /* ─── Construir XML ────────────────────── */
-  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ';
-  xml += 'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+  const urls: string[] = [];
 
-  const push = (loc: string, lastmod = nowISO, priority = '0.6') => {
-    xml += '  <url>\n';
-    xml += `    <loc>${loc}</loc>\n`;
-    xml += `    <lastmod>${lastmod}</lastmod>\n`;
-    xml += `    <priority>${priority}</priority>\n`;
-    xml += '  </url>\n';
-  };
-
-  // ① páginas estáticas
-  for (const path of staticPaths) {
-    for (const lang of locales) {
-      push(url(host, `/${lang}${path}`));
+  /* estáticas */
+  for (const base of staticBases) {
+    for (const prefix of locales) {
+      urls.push(`https://${host}/${prefix}/${base}`);
     }
   }
 
-  // ② productos dinámicos
-if(products){
-    for (const { name } of products) {
-        if (!name) continue;
-        const slug = encodeURIComponent(
-          slugify(name, { lower: true, strict: true })
-        );
-        for (const lang of locales) {
-          push(url(host, `/${lang}/product/${slug}`), nowISO, '0.8');
-        }
+  /* productos */
+  if (data) {
+    for (const { name } of data) {
+      if (!name) continue;
+      const slug = slugify(name, { lower: true, strict: true });
+      for (const prefix of locales) {
+        urls.push(`https://${host}/${prefix}/product/${slug}`);
       }
+    }
+  }
+
+  /* construimos XML */
+  return (
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    urls.map(u => `  <url><loc>${u}</loc><lastmod>${now}</lastmod></url>`).join("\n") +
+    `\n</urlset>`
+  );
 }
 
-  xml += '</urlset>';
-
-  /* ─── Respuesta ────────────────────────── */
+/* ---------- GET ---------- */
+export async function GET() {
+  const xml = await buildSitemap();
   return new Response(xml, {
-    headers: { 'Content-Type': 'application/xml' }, // sin charset
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=0, must-revalidate",
+    },
+  });
+}
+
+/* ---------- HEAD ---------- */
+export function HEAD() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=0, must-revalidate",
+    },
   });
 }
