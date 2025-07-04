@@ -74,7 +74,7 @@ export async function GET() {
     return new Response(xml, {
       status: 200,
       headers: {
-        "Content-Type": "application/xml; charset=utf-8",
+        "Content-Type": "text/xml",
         "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
       },
     });
@@ -88,7 +88,7 @@ export async function HEAD() {
   return new Response(null, {
     status: 200,
     headers: {
-      "Content-Type": "application/xml; charset=utf-8",
+      "Content-Type": "text/xml",
       "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
     },
   });
