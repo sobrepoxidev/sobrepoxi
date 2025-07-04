@@ -48,8 +48,8 @@ export default async function EpoxyFloorsPage(
   const t = {
     heroTag  : locale === "es" ? "Pisos Epóxicos" : "Epoxy Floors",
     heroTitle: locale === "es"
-      ? "Arte que se camina"
-      : "Walkable Art",
+      ? "Acabados de lujo"
+      : "Luxury Finishing",
     heroSub  : locale === "es"
       ? "Transformamos superficies ordinarias en obras maestras reflectantes que elevan el valor de tu propiedad."
       : "We turn ordinary surfaces into mirror-like masterpieces that raise your property’s value.",
@@ -83,17 +83,17 @@ export default async function EpoxyFloorsPage(
       <section className="relative overflow-hidden pb-12 pt-20 sm:pt-28">
         {/* Imagen de fondo */}
         <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/floor-hero-W6YfOA.webp"
+          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner-rqcdjol5sTo1NLeMVxeHmdlTqWikoQ.webp"
           alt="Epoxy floor hero"
           fill
           priority
-          className="object-cover opacity-20"
+          className="object-contain opacity-20"
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
           <span className="inline-block mb-4 rounded-full bg-[#303030]/80 px-4 py-1 text-sm font-medium">
             {t.heroTag}
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4">
+          <h1 className="text-4xl py-1.5 sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4">
             {t.heroTitle}
           </h1>
           <p className="text-lg max-w-xl text-gray-300 mb-8">
