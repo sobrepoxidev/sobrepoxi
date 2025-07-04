@@ -2,13 +2,13 @@
 import { supabase } from "@/lib/supabaseClient";
 import slugify      from "slugify";
 
-export const runtime   = "nodejs";
+export const runtime   = "edge";
 export const revalidate = 1800;          // 30 min
 
 /* ---------- función que arma el XML ---------- */
 async function buildSitemap(): Promise<string> {
   const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
-
+  
   const now  = new Date().toISOString();
 
   /* locales + rutas estáticas (sin barra inicial) */
@@ -66,12 +66,10 @@ export async function GET() {
 }
 
 /* ---------- HEAD ---------- */
-export function HEAD() {
-  return new Response(null, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/xml",
-      "Cache-Control": "public, max-age=0, must-revalidate",
-    },
-  });
-}
+export async function HEAD() {
+    const res = await GET();                 // reutiliza la lógica de GET
+    return new Response(null, {              // cuerpo vacío
+      status: 200,
+      headers: res.headers,                  // copia las cabeceras (incl. application/xml)
+    });
+  }
