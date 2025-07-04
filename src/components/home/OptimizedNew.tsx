@@ -1,15 +1,13 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import { Carousel, BannerTemplate } from "@/components/home/Banner";
 import { ProductsProvider } from '@/components/providers/ProductsProvider';
-import { useProductsContext } from '@/context/ProductsContext';
 import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
-import FeaturedProductsSection from '../cards/FeaturedProductsSection';
-import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
+// import FeaturedProductsSection from '../cards/FeaturedProductsSection';
+// import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
 import type { Database } from '@/types-db';
 import Link from 'next/link';
+import ProductCategoriesBanner from './ProductCategoriesBanner';
 // Tipos para los datos pre-cargados desde el servidor
 type Product = Database['products'];
 type Category = Database['categories'];
@@ -29,7 +27,6 @@ interface OptimizedNewHomeProps {
 
 
 function OptimizedNewHomeContent({ locale }: { locale?: string }) {
-  const { sectionProducts } = useProductsContext();
   
   return (
     <div className="max-w-[1500px] mx-auto relative z-0 bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
@@ -140,11 +137,11 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
 
         {/* Secciones de productos optimizadas */}
         <OptimizedGridSection />
-        {sectionProducts?.gifts?.length > 0 && <GiftsCarouselSection />}
-        {/* Nueva sección de productos destacados con mayor visibilidad */}
-        {sectionProducts?.featured?.length > 0 && (
-          <FeaturedProductsSection maxProducts={9} />
-        )}
+        <ProductCategoriesBanner locale={locale || 'es'} />
+
+        {/* <GiftsCarouselSection />
+     
+        <FeaturedProductsSection maxProducts={9} /> */}
 
 
 

@@ -87,7 +87,7 @@ export default async function EpoxyFloorsPage(
           alt="Epoxy floor hero"
           fill
           priority
-          className="object-contain opacity-20"
+          className="object-contain opacity-30"
           unoptimized
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
