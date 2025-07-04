@@ -88,6 +88,7 @@ export default async function EpoxyFloorsPage(
           fill
           priority
           className="object-contain opacity-20"
+          unoptimized
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
           <span className="inline-block mb-4 rounded-full bg-[#303030]/80 px-4 py-1 text-sm font-medium">
