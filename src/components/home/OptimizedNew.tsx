@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Carousel, BannerTemplate } from "@/components/home/Banner";
 import { ProductsProvider } from '@/components/providers/ProductsProvider';
+import { useProductsContext } from '@/context/ProductsContext';
 import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
 import FeaturedProductsSection from '../cards/FeaturedProductsSection';
 import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
@@ -27,17 +28,13 @@ interface OptimizedNewHomeProps {
 }
 
 
-export default function OptimizedNewHome({
-  initialCategories = [],
-  initialProducts = [],
-  locale
-}: OptimizedNewHomeProps) {
-
+function OptimizedNewHomeContent({ locale }: { locale?: string }) {
+  const { sectionProducts } = useProductsContext();
+  
   return (
-    <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
-      <div className="max-w-[1500px] mx-auto relative z-0 h-full bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
-         hover:bg-[length:200%_100%] hover:bg-right
-         transition-[background-size,background-position] duration-300">
+    <div className="max-w-[1500px] mx-auto relative z-0 bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
+       hover:bg-[length:200%_100%] hover:bg-right
+       transition-[background-size,background-position] duration-300">
         <Carousel>
           <BannerTemplate
             linkHref="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
@@ -143,16 +140,29 @@ export default function OptimizedNewHome({
 
         {/* Secciones de productos optimizadas */}
         <OptimizedGridSection />
-        <GiftsCarouselSection />
+        {sectionProducts?.gifts?.length > 0 && <GiftsCarouselSection />}
         {/* Nueva sección de productos destacados con mayor visibilidad */}
-        <FeaturedProductsSection maxProducts={9} />
+        {sectionProducts?.featured?.length > 0 && (
+          <FeaturedProductsSection maxProducts={9} />
+        )}
 
 
 
         {/* <SecondaryGridSection />
         
         <DetailsCarouselSection /> */}
-      </div>
+    </div>
+  );
+}
+
+export default function OptimizedNewHome({
+  initialCategories = [],
+  initialProducts = [],
+  locale
+}: OptimizedNewHomeProps) {
+  return (
+    <ProductsProvider initialCategories={initialCategories} initialProducts={initialProducts}>
+      <OptimizedNewHomeContent locale={locale} />
     </ProductsProvider>
   );
 }
