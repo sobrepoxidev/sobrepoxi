@@ -2,13 +2,13 @@
 import { supabase } from "@/lib/supabaseClient";
 import slugify      from "slugify";
 
-export const runtime   = "edge";
+export const runtime   = "nodejs";
 export const revalidate = 1800;          // 30 min
 
 /* ---------- función que arma el XML ---------- */
 async function buildSitemap(): Promise<string> {
   const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
-  
+
   const now  = new Date().toISOString();
 
   /* locales + rutas estáticas (sin barra inicial) */
