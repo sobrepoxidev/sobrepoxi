@@ -104,9 +104,9 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
                   </span>
                   <div>
                     <h3 className="font-semibold">WhatsApp</h3>
-                    <p className="text-gray-300 font-semibold">(+506) 8875-7576</p>
+                    <p className="text-gray-300 font-semibold">(+506) 8585-0000</p>
                     <a
-                      href="https://wa.me/50688757576"
+                      href="https://wa.me/50685850000"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"

@@ -92,7 +92,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
 
 
           {/* 2️⃣ BANNER — Pisos epóxicos artísticos */}
-          <BannerTemplate linkHref="/epoxy-floors">
+          <BannerTemplate linkHref="/contact">
             <div className="relative  flex flex-col items-center justify-center text-center px-6 py-0 sm:py-6 max-sm:mt-0.5">
               <h2 className="text-lg sm:text-2xl font-light text-white">
                 {locale === 'es' ? 'Transforma tus espacios' : 'Transform your spaces'}
