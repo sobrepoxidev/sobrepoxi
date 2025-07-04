@@ -89,6 +89,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     { name: locale === 'es' ? 'Inicio' : 'Home', path: '/' },
     { name: locale === 'es' ? 'Acerca de' : 'About', path: '/about' },
     { name: locale === 'es' ? 'Pisos Epoxy' : 'Epoxy Floors', path: '/epoxy-floors' },
+    { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
     { name: locale === 'es' ? 'Envíos' : 'Shipping', path: '/shipping' },
     // Store se trata de manera especial ahora, con categorías desplegables
   ]
