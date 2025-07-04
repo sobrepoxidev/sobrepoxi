@@ -34,7 +34,7 @@ export default function RelatedProductsClient({
       setLoading(true);
       let query = supabase
         .from("products")
-        .select("id, name, name_es, name_en, colon_price, dolar_price, media, category_id")
+        .select("id, name, name_es, name_en, colon_price, dolar_price, media, category_id, discount_percentage")
         .eq("is_active", true)
         .order("created_at", { ascending: false })
         .limit(limit);
