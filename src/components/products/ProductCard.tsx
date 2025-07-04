@@ -206,7 +206,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 {inventory > 10 ? locale === 'es' ? 'En stock' : 'In stock' : `${inventory} ${locale === 'es' ? 'disponibles' : 'available'}`}
               </span>
             ) : (
-              <span className="text-red-600">{locale === 'es' ? 'Agotado' : 'Out of stock'}</span>
+              <span className="text-red-600">{locale === 'es' ? 'Vendido' : 'Sold out'}</span>
             )}
           </p>
 
