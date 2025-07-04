@@ -246,7 +246,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   // Si está cargando, muestra un spinner
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
+      <div className="container mx-auto px-4 py-8 flex justify-center bg-[#121212] items-center min-h-[60vh]">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b68b44]"></div>
       </div>
     );
@@ -281,7 +281,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   const isVideo = currentMedia?.type === 'video';
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#121212]">
+    <div className="max-w-[1500px] mx-auto px-4 py-8 bg-[#121212]">
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center text-sm text-[#b68b44]">
         <Link href="/" className="hover:text-teal-600">Inicio</Link>
