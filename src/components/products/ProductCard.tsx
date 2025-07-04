@@ -77,7 +77,7 @@ export default function ProductCard({ product }: { product: Product }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Badges */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+      <div className="absolute top-1 left-1 z-10 flex flex-row gap-1">
         {/* Category badge */}
         {category && (
           <span className=" gold-gradient text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
@@ -95,7 +95,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Discount badge */}
         {Number(product.discount_percentage) > 0 && (
-          <span className="text-[0.55rem] sm:text-xs font-medium border sm:ml-1 border-red-700 text-red-700 px-0.5 py-0.5 rounded">
+          <span className="text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full border border-red-500 text-red-500">
             {product.discount_percentage}% OFF
           </span>
         )}
@@ -103,7 +103,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* Botón de favorito */}
       <button
-        className="absolute top-3 right-3 z-10 text-[#b68b44] hover:text-[#b68b44] transition-colors"
+        className="absolute top-1 right-1 z-10 text-[#b68b44] hover:text-[#b68b44] transition-colors"
         onClick={async (e) => {
           e.preventDefault();
 
