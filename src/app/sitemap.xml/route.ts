@@ -1,4 +1,4 @@
-//src\app\sitemap.xml\route.ts
+//ssrc\app\sitemap.xml\route.ts
 import { supabase } from '@/lib/supabaseClient';
 import { headers } from 'next/headers';
 import slugify from "slugify"; //  npm i slugify   ✅ tiny, sin deps
@@ -88,9 +88,21 @@ export async function GET() {
     )
     .join('\n')}\n</urlset>`;
 
-  return new Response(xml, {
+    return new Response(xml, {
+      headers: {
+        "Content-Type": "text/xml",          // ← sin charset
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    });
+}
+export function HEAD() {
+  return new Response(null, {
+    status: 200,
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-    },
+      "Content-Type": "text/xml",
+      "Cache-Control": "public, max-age=0, must-revalidate"
+    }
   });
 }
+
+
