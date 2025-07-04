@@ -59,10 +59,10 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
   return (
     <Suspense>
       <div className="w-full flex flex-col items-center bg-[#121212]">
-        <section className="w-full max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
+        <section className="w-full max-w-7xl py-0.5 px-4 sm:px-6 lg:px-8">
 
           {/* ---------- Heading ---------- */}
-          <header className="mb-8">
+          <header className="mb-2">
             <h1 className="text-3xl sm:text-5xl font-extrabold gold-gradient-bright">
               {locale === "es" ? "Contáctanos" : "Contact us"}
             </h1>
