@@ -1,9 +1,9 @@
 // app/sitemap.xml/route.ts
-import { supabase } from "@/lib/supabaseClient";
-import slugify from "slugify";
+
+
 
 export const runtime = "nodejs";
-export const revalidate = 1800; // 30 min
+export const dynamic = 'force-dynamic';
 
 async function buildSitemap(): Promise<string> {
   const now = new Date().toISOString();
@@ -31,39 +31,10 @@ async function buildSitemap(): Promise<string> {
     );
   }
 
-  // Obtener productos
-  const productUrls: string[] = [];
-  try {
-    type Row = { name: string | null };
-    const { data } = await supabase
-      .from("products")
-      .select("name")
-      .eq("is_active", true) as { data: Row[] | null };
-
-    if (data) {
-      for (const { name } of data) {
-        if (!name) continue;
-        const slug = slugify(name, { lower: true, strict: true });
-        productUrls.push(
-          `<url>
-<loc>https://sobrepoxi.com/es/product/${slug}</loc>
-
-<lastmod>${now}</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>`
-        );
-      }
-    }
-  } catch (error) {
-    console.error("Error fetching products for sitemap:", error);
-  }
-
   // Construir XML completo
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${staticUrls.join('\n')}
-${productUrls.join('\n')}
 </urlset>`;
 }
 
