@@ -168,7 +168,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
       </section>
 
       {/* ╭────────────────────────── CTA ───────────────────────────────╮ */}
-      <section className="py-12 bg-gold-gradient-95 text-white text-center">
+      <section className="py-12 bg-[#121212] text-white text-center">
         <h2 className="text-3xl font-bold mb-4">
           {locale === "es" ? "Convierte tu visión en realidad" : "Turn your vision into reality"}
         </h2>
@@ -178,13 +178,13 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             href="/products"
-            className="bg-white text-teal-700 px-6 py-3 rounded-md shadow hover:bg-gray-100 transition"
+            className="bg-gold-gradient-90 text-black font-semibold px-6 py-3 rounded-md shadow hover:bg-gray-100 transition"
           >
             {locale === "es" ? "Ver portafolio" : "View portfolio"}
           </Link>
           <Link
             href="/contact"
-            className="border border-white px-6 py-3 rounded-md hover:bg-white/10 transition"
+            className="border border-white text-white font-semibold px-6 py-3 rounded-md hover:bg-white/10 transition"
           >
             {locale === "es" ? "Hablemos de tu proyecto" : "Let's talk about your project"}
           </Link>
