@@ -246,26 +246,26 @@ export default function ProductsPageContent() {
   
   
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-[#121212]">
       {/* Breadcrumb */}
-      <div className="mb-6 flex items-center text-sm text-gray-500">
-        <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
+      <div className="mb-6 flex items-center text-sm text-gray-300">
+        <Link href="/" className="hover:text-teal-200">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">{locale === 'es' ? 'Productos' : 'Products'}</span>
+        <span className="font-medium text-gray-300">{locale === 'es' ? 'Productos' : 'Products'}</span>
         {categoryFilter && (
           <>
             <ChevronRight className="h-4 w-4 mx-1" />
-            <span className="font-medium text-gray-900">{categoryName}</span>
+            <span className="font-medium text-gray-300">{categoryName}</span>
           </>
         )}
       </div>
       
       {/* Encabezado */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl font-bold text-gray-200 mb-2">
           {categoryFilter ? `${categoryName}` : locale === 'es' ? 'Todos los Productos' : 'All Products'}
         </h1>
-        <p className="text-gray-600">
+        <p className="text-gray-300">
           {locale === 'es' ? 'Descubre nuestra colección de productos hechos a mano.' : 'Discover our collection of handmade products.'}
           {totalCount > 0 && ` ${locale === 'es' ? 'Mostrando' : 'Showing'} ${products.length} ${locale === 'es' ? 'de' : 'of'} ${totalCount} ${locale === 'es' ? 'productos' : 'products'}.`}
         </p>
@@ -299,10 +299,10 @@ export default function ProductsPageContent() {
           {/* Barra de control */}
           <div className="flex flex-wrap items-center justify-between gap-2 mb-6 pb-3 border-b border-gray-200">
             {/* Información de resultados */}
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-300">
               {totalCount > 0 && (
                 <p>
-                  {locale === 'es' ? 'Mostrando' : 'Showing'} <span className="font-medium text-gray-900">{products.length}</span> {locale === 'es' ? 'de' : 'of'} <span className="font-medium text-gray-900">{totalCount}</span> {locale === 'es' ? 'productos' : 'products'}
+                  {locale === 'es' ? 'Mostrando' : 'Showing'} <span className="font-medium text-gray-200">{products.length}</span> {locale === 'es' ? 'de' : 'of'} <span className="font-medium text-gray-200">{totalCount}</span> {locale === 'es' ? 'productos' : 'products'}
                   {currentPage > 1 && ` (${locale === 'es' ? 'página' : 'page'} ${currentPage} de ${totalPages})`}
                 </p>
               )}
@@ -313,7 +313,7 @@ export default function ProductsPageContent() {
               {/* Selector de ordenamiento */}
               <div className="relative">
                 <select
-                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 text-gray-900 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:border-transparent"
+                  className="appearance-none h-9 pl-3 pr-8 text-sm border border-gray-300 text-gray-200 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:border-transparent"
                   value={sortBy}
                   onChange={(e) => {
                     const params = new URLSearchParams(searchParams.toString());
@@ -336,18 +336,18 @@ export default function ProductsPageContent() {
               {/* Cambio de vista (grid/list) */}
               <div className="hidden md:flex border border-gray-300 rounded-md">
                 <button
-                  className={`p-1.5 ${viewMode === 'grid' ? 'bg-teal-50 text-teal-700' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`p-1.5 ${viewMode === 'grid' ? ' text-black' : 'text-gray-500 hover:text-gray-700'}`}
                   onClick={() => setViewMode('grid')}
                   aria-label="Ver en cuadrícula"
                 >
-                  <GridIcon className="h-5 w-5" />
+                  <GridIcon className="h-5 w-5 text-gray-500" />
                 </button>
                 <button
-                  className={`p-1.5 ${viewMode === 'list' ? 'bg-teal-50 text-teal-700' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`p-1.5 ${viewMode === 'list' ? 'text-black' : 'text-gray-500 hover:text-gray-700'}`}
                   onClick={() => setViewMode('list')}
                   aria-label="Ver en lista"
                 >
-                  <ListIcon className="h-5 w-5" />
+                  <ListIcon className="h-5 w-5 text-gray-500" />
                 </button>
               </div>
             </div>
@@ -362,17 +362,17 @@ export default function ProductsPageContent() {
           
           {/* Mensaje de error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="bg-[#303030] border border-red-200 rounded-lg p-4 mb-6">
               <p className="text-red-700">{error}</p>
             </div>
           )}
           
           {/* Sin resultados */}
           {!loading && !error && products.length === 0 && (
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 text-center">
-              <h2 className="text-lg font-medium text-gray-900 mb-2">No se encontraron productos</h2>
-              <p className="text-gray-600 mb-4">
-                No hay productos disponibles con los filtros seleccionados.
+            <div className="bg-[#303030] rounded-lg border border-[#303030] p-6 text-center">
+              <h2 className="text-lg font-medium text-gray-200 mb-2">{locale === 'es' ? 'No se encontraron productos' : 'No products found'}</h2>
+              <p className="text-gray-300 mb-4">
+                {locale === 'es' ? 'No hay productos disponibles con los filtros seleccionados.' : 'No products are available with the selected filters.'}
               </p>
               <button
                 onClick={() => {
@@ -424,10 +424,10 @@ export default function ProductsPageContent() {
                   
                   {/* Información del producto */}
                   <div className="flex-1 p-4 flex flex-col">
-                    <div className="mb-2">
+                    <div className="mb-2 flex flex-row">
                       <Link 
                         href={`/product/${product.id}`}
-                        className="text-lg font-medium text-gray-900 hover:text-teal-700 transition"
+                        className="text-lg font-medium text-gray-200 hover:text-gray-200 transition"
                       >
                         {locale === 'es' ? product.name : product.name}
                       </Link>
@@ -439,13 +439,13 @@ export default function ProductsPageContent() {
                         </div>
                       )}
                       {product.brand && (
-                        <span className="ml-1 inline-block px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-100">
+                        <span className="ml-1 inline-block px-1 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-100">
                           {product.brand}
                         </span>
                       )}
                     </div>
                     
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                    <p className="text-sm text-gray-300 mb-4 line-clamp-2">
                       {product.description || 'No hay descripción disponible para este producto.'}
                     </p>
                     
@@ -456,7 +456,7 @@ export default function ProductsPageContent() {
                             {product.discount_percentage && product.discount_percentage > 0 ? (
                               <div className="flex flex-col">
                                 <div className="flex items-center gap-2">
-                                  <p className="text-lg font-bold text-teal-700">
+                                  <p className="text-lg font-bold text-teal-200">
                                     ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                                   </p>
                                   <span className="text-xs font-medium bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
@@ -468,13 +468,13 @@ export default function ProductsPageContent() {
                                 </p>
                               </div>
                             ) : (
-                              <p className="text-lg font-bold text-teal-700">
+                              <p className="text-lg font-bold text-teal-200">
                                 ${((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100)).toFixed(2)}
                               </p>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm font-medium text-gray-700">
+                          <p className="text-sm font-medium text-gray-200">
                            {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
                           </p>
                         )}
@@ -482,7 +482,7 @@ export default function ProductsPageContent() {
                       
                       <Link 
                         href={`/product/${product.id}`}
-                        className="inline-flex items-center px-3 py-1.5 border border-teal-600 text-sm font-medium rounded text-teal-700 bg-white hover:bg-teal-50 transition"
+                        className="inline-flex items-center px-3 py-1.5 border border-gray-200 text-sm font-medium rounded text-teal-200 bg-white hover:bg-teal-50 transition"
                       >
                         {locale === 'es' ? 'Ver detalles' : 'View details'}
                       </Link>

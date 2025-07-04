@@ -57,7 +57,7 @@ export default function ProductFilters({
       {/* Categories Section */}
       <div className="border-b border-gray-200 pb-4">
         <button 
-          className="flex w-full items-center justify-between text-lg font-medium text-gray-900 mb-2"
+          className="flex w-full items-center justify-between text-lg font-medium text-gray-200 mb-2"
           onClick={() => setCategoryOpen(!categoryOpen)}
         >
           {locale === 'es' ? 'Categorías' : 'Categories'}
@@ -69,7 +69,7 @@ export default function ProductFilters({
             <button 
               onClick={() => updateFilters({ category: null })}
               className={`flex items-center w-full px-2 py-1.5 text-sm rounded-md ${
-                !selectedCategory ? 'bg-teal-50 text-teal-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                !selectedCategory ? 'bg-gray-50 gold-gradient font-medium' : 'text-gray-300 hover:bg-gray-50'
               }`}
             >
               <span className="flex-1 text-left">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</span>
@@ -81,7 +81,7 @@ export default function ProductFilters({
                 key={category.id}
                 onClick={() => updateFilters({ category: String(category.id) })}
                 className={`flex items-center w-full px-2 py-1.5 text-sm rounded-md ${
-                  selectedCategory === String(category.id) ? 'bg-teal-50 text-teal-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  selectedCategory === String(category.id) ? 'bg-gray-50 gold-gradient-bright font-medium' : 'text-gray-300 hover:bg-gray-50'
                 }`}
               >
                 <span className="flex-1 text-left">{locale === 'es' ? category.name_es : category.name_en}</span>
@@ -100,7 +100,7 @@ export default function ProductFilters({
       <div className="md:hidden">
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="flex items-center justify-center w-full py-2 px-4 bg-white border border-gray-300 rounded-md shadow-sm text-sm text-gray-700"
+          className="flex items-center justify-center w-full py-2 px-4 bg-gray-50 gold-gradient-bright border border-gray-300 rounded-md shadow-sm text-sm text-gray-700"
         >
           <Sliders className="h-4 w-4 mr-2" />
           {locale === 'es' ? 'Filtrar productos' : 'Filter products'}
@@ -108,12 +108,12 @@ export default function ProductFilters({
         
         {mobileFiltersOpen && (
           <div className="fixed inset-0 z-40 overflow-y-auto bg-black bg-opacity-25">
-            <div className="relative bg-white p-4 w-full max-w-lg mx-auto mt-10 rounded-t-lg">
+            <div className="relative bg-gray-50 gold-gradient-bright p-4 w-full max-w-lg mx-auto mt-10 rounded-t-lg">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-medium text-gray-900">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
                 <button
                   onClick={() => setMobileFiltersOpen(false)}
-                  className="text-gray-400 hover:text-gray-500"
+                  className="text-gray-300 hover:text-gray-500"
                 >
                   <span className="sr-only">{locale === 'es' ? 'Cerrar panel' : 'Close panel'}</span>
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

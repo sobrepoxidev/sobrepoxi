@@ -87,7 +87,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Featured badge */}
         {product.is_featured && (
-          <span className=" gold-gradient text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
+          <span className=" gold-gradient flex flex-row text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
             <Star className="h-3 w-3 mr-1 icon-gold" />
             {locale === 'es' ? 'Destacado' : 'Featured'}
           </span>

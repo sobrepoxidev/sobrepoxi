@@ -127,7 +127,7 @@ export default function AddToCartButton({
       type="button"
       onClick={handleAddToCart}
       disabled={isLoading}
-      className="w-full rounded-lg bg-teal-600 hover:bg-teal-700 text-white py-2.5 flex items-center justify-center gap-2 transition font-medium"
+      className="w-full rounded-lg bg-[#303030] hover:bg-[#121212] text-white py-2.5 flex items-center justify-center gap-2 transition font-medium"
     >
       <ShoppingCartIcon className="h-4 w-4" />
       {isLoading ? 

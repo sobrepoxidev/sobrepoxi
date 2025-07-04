@@ -14,5 +14,9 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
 
 export default async function SearchPage({ params }: { params: tParams }) {
     const { locale } = await params;
-    return <SearchResultsPage locale={locale} />;
+    return (
+      <div className="bg-[#121212]">
+        <SearchResultsPage locale={locale} />
+      </div>
+    );
 }

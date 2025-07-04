@@ -33,7 +33,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
   const [sortBy, setSortBy] = useState(currentSortBy);
   const [categories, setCategories] = useState<Database['categories'][]>([]);
   const [categoryName, setCategoryName] = useState('');
-  
+
   // Cargar categorías
   useEffect(() => {
     async function fetchCategories() {
@@ -177,15 +177,15 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
-      <div className="mb-6 flex items-center text-sm text-gray-500">
+      <div className="mb-6 flex items-center text-sm text-gray-300">
         <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">{locale === 'es' ? 'Resultados de búsqueda' : 'Search results'}</span>
+        <span className="font-medium text-gray-300">{locale === 'es' ? 'Resultados de búsqueda' : 'Search results'}</span>
       </div>
 
       {/* Search header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl font-bold text-gray-200 mb-2">
           {totalCount > 0
             ? `${locale === 'es' ? 'Resultados para' : 'Results for'} "${query === '' ? categoryName : query}"`
             : query.length >= 2
@@ -194,19 +194,19 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           }
         </h1>
         {totalCount > 0 && (
-          <p className="text-gray-500">Se encontraron {totalCount} productos</p>
+          <p className="text-gray-300">Se encontraron {totalCount} productos</p>
         )}
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Filters - Desktop */}
         <div className="hidden lg:block w-64 flex-shrink-0">
-          <div className="bg-white rounded-lg border border-gray-200 p-4 sticky top-24">
-            <h2 className="font-medium text-lg mb-4 text-gray-800">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
+          <div className="bg-[#303030] rounded-lg border border-[#d4af37] p-4 sticky top-24">
+            <h2 className="font-medium text-lg mb-4 text-gray-200">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
 
             <div className="mb-6">
-              <h3 className="font-medium mb-2 text-gray-800">{locale === 'es' ? 'Categoría' : 'Category'}</h3>
-              <div className="space-y-2 text-gray-800">
+              <h3 className="font-medium mb-2 text-gray-200">{locale === 'es' ? 'Categoría' : 'Category'}</h3>
+              <div className="space-y-2 text-gray-200">
                 <label className="flex items-center">
                   <input
                     type="radio"
@@ -237,9 +237,9 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
             </div>
 
             <div>
-              <h3 className="font-medium mb-2 text-gray-800">{locale === 'es' ? 'Ordenar por' : 'Sort by'}</h3>
+              <h3 className="font-medium mb-2 text-gray-200">{locale === 'es' ? 'Ordenar por' : 'Sort by'}</h3>
               <select
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-800"
+                className="w-full border border-[#d4af37] rounded-md p-2 text-sm text-gray-200"
                 value={sortBy}
                 onChange={(e) => {
                   setSortBy(e.target.value);
@@ -258,7 +258,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
         {/* Mobile filters button */}
         <div className="lg:hidden mb-4">
           <button
-            className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md bg-white text-gray-700"
+            className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md bg-[#303030] text-gray-200"
             onClick={() => setShowFilters(!showFilters)}
           >
             <SlidersHorizontal className="h-4 w-4 mr-2" />
@@ -266,11 +266,11 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           </button>
 
           {showFilters && (
-            <div className="mt-2 p-4 border border-gray-200 rounded-md bg-white">
+            <div className="mt-2 p-4 border border-[#d4af37] rounded-md bg-[#303030]">
               <div className="mb-4">
                 <h3 className="font-medium mb-2">{locale === 'es' ? 'Categoría' : 'Category'}</h3>
                 <select
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                  className="w-full border border-[#d4af37] rounded-md p-2 text-sm"
                   value={category}
                   onChange={(e) => {
                     const params = new URLSearchParams(searchParams.toString());
@@ -286,7 +286,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
               <div>
                 <h3 className="font-medium mb-2">{locale === 'es' ? 'Ordenar por' : 'Sort by'}</h3>
                 <select
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                  className="w-full border border-[#d4af37] rounded-md p-2 text-sm"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                 >
@@ -310,19 +310,20 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {results.map((product) => (
-                  <div key={product.id} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
-                    <Link href={`/product/${product.id}`} className="block">
-                      <div className="relative h-56 overflow-hidden bg-gray-50 flex items-center justify-center">
+                  <div key={product.id} className="bg-gold-gradient   rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                    <Link href={`/product/${product.name}`} className="block">
+                      <div className="relative h-56 overflow-hidden bg-[#303030] flex items-center justify-center">
                         <Image
                           src={product.media?.[0]?.url || '/product-placeholder.png'}
                           alt={product.name || ''}
-                          width={110}
+                          width={160}
                           height={0}
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                        <span className="absolute top-1 left-1 bg-teal-50 text-teal-700 text-xs px-2 py-0.5 rounded-full border border-teal-100">
+                        <span className="absolute top-1 left-1 gold-gradient text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full border border-[#b68b44]">
                           {locale === 'es' ? categories?.find((cat) => cat.id === product.category_id)?.name_es || 'Artesanía' : categories?.find((cat) => cat.id === product.category_id)?.name_en || 'Craft'}
                         </span>
+
                       </div>
                     </Link>
 
@@ -330,20 +331,35 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                       <div className="mb-4">
                         <h3 className="font-semibold text-gray-800 mb-1">{locale === 'es' ? product.name_es : product.name_en}</h3>
                         {product.highlight && (
-                          <p className="text-sm text-gray-600 line-clamp-2 mb-2">{product.highlight}</p>
+                          <p className="text-sm text-gray-800 line-clamp-2 mb-2">{product.highlight}</p>
                         )}
                         <div className="flex items-center justify-between">
-                          <p className="font-bold text-teal-700">
-                            {product.dolar_price ? `${formatUSD(product.dolar_price)}` : (
-                              <Link 
+                          <p className="font-bold text-[#303030]">
+                            {product.dolar_price ? <div>
+                              {product.discount_percentage ? (
+                                <div className="mb-2">
+                                  <p className="text-sm sm:text-lg font-bold text-green-700">
+                                    {formatUSD(product.dolar_price * (1 - product.discount_percentage / 100))}
+                                  </p>
+                                  <p className="text-[0.6rem] sm:text-sm text-green-600 line-through">
+                                    {formatUSD(product.dolar_price || 0)}
+                                  </p>
+                                </div>
+                              ) : (
+                                <p className="text-sm sm:text-lg font-bold text-black mb-2">
+                                  {formatUSD(product.dolar_price || 0)}
+                                </p>
+                              )}
+                            </div> : (
+                              <Link
                                 href={`https://wa.me/50684237555?text=${encodeURIComponent(
-                                  locale === 'es' 
-                                ? `¡Hola! Estoy interesado en el producto: ${product.name_es} (https://artehechoamano.com/product/${product.id}).\n¿Podrían darme más información?`
-                                      : `Hello! I'm interested in the product: ${product.name_en} (https://handmadeart.store/product/${product.id}).\nCould you give me more information?`
-                                )}`} 
-                                target='_blank' 
-                                rel="noopener noreferrer" 
-                                 className="flex items-center justify-center w-full px-0.5 py-0.5 mr-0.5 text-sm font-medium text-teal-600 border border-teal-600 rounded-md hover:bg-teal-50 transition-colors"
+                                  locale === 'es'
+                                    ? `¡Hola! Estoy interesado en el producto: ${product.name_es} (https://sobrepoxi.com/product/${product.name}).\n¿Podrían darme más información?`
+                                    : `Hello! I'm interested in the product: ${product.name_en} (https://sobrepoxi.com/product/${product.name}).\nCould you give me more information?`
+                                )}`}
+                                target='_blank'
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center w-full px-0.5 py-0.5 mr-0.5 text-sm font-medium text-[#303030] border border-[#303030] rounded-md hover:bg-[#303030] transition-colors"
                               >
                                 {locale === 'es' ? 'Consultar precio' : 'Check price'}
                                 <svg className="w-4 h-4 ml-0.5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -352,8 +368,8 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                               </Link>
                             )}
                           </p>
-                          <span className="bg-amber-50 text-amber-700 text-xs px-2 py-0.5 rounded-full border border-amber-200">
-                            {locale === 'es' ? 'Hecho a mano' : 'Handmade'}
+                          <span className="text-[#303030] text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full  border border-[#303030]">
+                            {locale === 'es' ? 'SobrePoxi' : 'SobrePoxi'}
                           </span>
                         </div>
                       </div>
