@@ -125,7 +125,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
           setIsFavorite(!!favoriteData);
         }
 
-      } catch (err) {
+      } catch {
         setError('Error al cargar el producto');
       } finally {
         setLoading(false);
