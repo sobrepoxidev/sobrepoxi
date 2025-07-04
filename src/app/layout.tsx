@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
 import { Suspense } from "react";
 
-
 /* ————— METADATA GLOBAL ————— */
 export const metadata: Metadata = {
   metadataBase: new URL("https://sobrepoxi.com"),
