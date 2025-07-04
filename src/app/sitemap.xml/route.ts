@@ -6,6 +6,7 @@ export const runtime = "edge";
 export const revalidate = 1800; // 30 min
 
 async function buildSitemap(): Promise<string> {
+  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
   const now = new Date().toISOString();
 
   // Rutas estáticas
@@ -21,14 +22,14 @@ async function buildSitemap(): Promise<string> {
   for (const base of staticBases) {
     const path = base === "" ? "" : `/${base}`;
     staticUrls.push(
-      `  <url>
-    <loc>https://sobrepoxi.com/es${path}</loc>
-    <xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es${path}" />
-    <xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en${path}" />
-    <lastmod>${now}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`
+      `<url>
+<loc>https://sobrepoxi.com/es${path}</loc>
+<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es${path}" />
+<xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en${path}" />
+<lastmod>${now}</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>`
     );
   }
 
@@ -46,14 +47,14 @@ async function buildSitemap(): Promise<string> {
         if (!name) continue;
         const slug = slugify(name, { lower: true, strict: true });
         productUrls.push(
-          `  <url>
-    <loc>https://sobrepoxi.com/es/product/${slug}</loc>
-    <xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es/product/${slug}" />
-    <xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en/product/${slug}" />
-    <lastmod>${now}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`
+          `<url>
+<loc>https://sobrepoxi.com/es/product/${slug}</loc>
+<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es/product/${slug}" />
+<xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en/product/${slug}" />
+<lastmod>${now}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>`
         );
       }
     }
@@ -76,7 +77,7 @@ export async function GET() {
     return new Response(xml, {
       status: 200,
       headers: {
-        "Content-Type": "text/xml; charset=utf-8",
+        "Content-Type": "application/xml; charset=utf-8",
         "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
       },
     });
@@ -90,7 +91,7 @@ export async function HEAD() {
   return new Response(null, {
     status: 200,
     headers: {
-      "Content-Type": "text/xml; charset=utf-8",
+      "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
     },
   });

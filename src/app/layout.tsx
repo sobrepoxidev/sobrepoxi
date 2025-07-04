@@ -1,98 +1,90 @@
-// app/sitemap.xml/route.ts
-import { supabase } from "@/lib/supabaseClient";
-import slugify from "slugify";
+// src/app/layout.tsx
+import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import { CartProvider } from "@/context/CartContext";
+import { Suspense } from "react";
 
-export const runtime = "edge";
-export const revalidate = 1800; // 30 min
+/* ————— METADATA GLOBAL ————— */
+export const metadata: Metadata = {
+  metadataBase: new URL("https://sobrepoxi.com"),
 
-async function buildSitemap(): Promise<string> {
-  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
-  const now = new Date().toISOString();
+  // ——— Generales ———
+  keywords: [		
+    // Core ES-CR		
+    "pisos epóxicos Costa Rica",		
+    "muebles de resina de lujo",		
+    // Long-tail ES		
+    "empresas de pisos epóxicos",		
+    "mantenimiento de pisos epóxicos",		
+    // Core EN-US		
+    "epoxy flooring Costa Rica",		
+    "luxury resin furniture",		
+    // Long-tail EN		
+    "epoxy floor contractors",		
+    "decorative epoxy floors"		
+    ],
 
-  // Rutas estáticas
-  const staticBases = [
-    "", "about", "products", "shipping", "contact",
-    "privacy-policies", "conditions-service", "qr",
-    "account", "feria-artesanias", "feria-artesanias-terminos",
-    "epoxy-floors", "search",
-  ];
-
-  // Generar URLs estáticas
-  const staticUrls: string[] = [];
-  for (const base of staticBases) {
-    const path = base === "" ? "" : `/${base}`;
-    staticUrls.push(
-      `<url>
-<loc>https://sobrepoxi.com/es${path}</loc>
-<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es${path}" />
-<xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en${path}" />
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.6</priority>
-</url>`
-    );
-  }
-
-  // Obtener productos
-  const productUrls: string[] = [];
-  try {
-    type Row = { name: string | null };
-    const { data } = await supabase
-      .from("products")
-      .select("name")
-      .eq("is_active", true) as { data: Row[] | null };
-
-    if (data) {
-      for (const { name } of data) {
-        if (!name) continue;
-        const slug = slugify(name, { lower: true, strict: true });
-        productUrls.push(
-          `<url>
-<loc>https://sobrepoxi.com/es/product/${slug}</loc>
-<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es/product/${slug}" />
-<xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en/product/${slug}" />
-<lastmod>${now}</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>`
-        );
-      }
-    }
-  } catch (error) {
-    console.error("Error fetching products for sitemap:", error);
-  }
-
-  // Construir XML completo
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${staticUrls.join('\n')}
-${productUrls.join('\n')}
-</urlset>`;
-}
-
-export async function GET() {
-  try {
-    const xml = await buildSitemap();
-    
-    return new Response(xml, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/xml; charset=utf-8",
-        "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
+  // ——— Open Graph ———
+  openGraph: {
+    type:        "website",
+    url:         "https://sobrepoxi.com",
+    title:       "SobrePoxi · Muebles y pisos de resina epóxica de lujo",
+    description:
+      "Diseño artesanal + resina de alto rendimiento para proyectos residenciales y contract Costa Rica. Descubre nuestro portafolio.",
+    locale:      "es_CR",
+    alternateLocale: ["en_US"],
+    images: [
+      {
+        url:   "https://sobrepoxi.com/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt:  "Mesa río de madera y resina epóxica · SobrePoxi",
       },
-    });
-  } catch (error) {
-    console.error("Error generating sitemap:", error);
-    return new Response("Error generating sitemap", { status: 500 });
-  }
-}
+    ],
+  },
 
-export async function HEAD() {
-  return new Response(null, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=1800, stale-while-revalidate=3600",
+  // ——— Twitter Card ———
+  twitter: {
+    card:        "summary_large_image",
+    title:       "SobrePoxi · Muebles y pisos de lujo en resina epóxica",
+    description:
+      "Piezas únicas y pisos artísticos instalados por expertos certificados. #HechoEnCostaRica",
+    images:      ["https://sobrepoxi.com/og-image.webp"],
+  },
+
+  // ——— Alternates (se sobreescribirán por‐página) ———
+  alternates: {
+    canonical: "https://sobrepoxi.com/es",
+    languages: {
+      "es-cr": "https://sobrepoxi.com/es",
+      "en-us": "https://sobrepoxi.com/en",
+      "x-default": "https://sobrepoxi.com",
     },
-  });
+  },
+
+  // ——— Otros micro‐detalles útiles ———
+  icons: { icon: "/favicon.ico" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { "max-video-preview": -1, "max-image-preview": "large" },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",              // Negro ébano de la nueva identidad
+  colorScheme: "light",               // Sin modo oscuro por ahora
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // En Next 15 no es obligatorio envolver con <html>, 
+  // porque un layout anidado (el de locale) ya lo hace.
+  return (
+    <Suspense>
+      <CartProvider>{children}</CartProvider>
+    </Suspense>
+  );
 }
