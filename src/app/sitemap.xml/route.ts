@@ -23,7 +23,7 @@ async function buildSitemap(): Promise<string> {
     staticUrls.push(
       `<url>
 <loc>https://sobrepoxi.com/es${path}</loc>
-<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es${path}" />
+
 <lastmod>${now}</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.6</priority>
@@ -47,7 +47,7 @@ async function buildSitemap(): Promise<string> {
         productUrls.push(
           `<url>
 <loc>https://sobrepoxi.com/es/product/${slug}</loc>
-<xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es/product/${slug}" />
+
 <lastmod>${now}</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
