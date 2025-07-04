@@ -116,9 +116,9 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
     return (
       <div className="py-4">
         <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-[#303030] rounded w-1/4"></div>
+          <div className="h-4 bg-[#303030] rounded w-1/2"></div>
+          <div className="h-4 bg-[#303030] rounded w-3/4"></div>
         </div>
       </div>
     );
@@ -127,7 +127,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
   if (reviews.length === 0) {
     return (
       <div className="py-4">
-        <p className="text-gray-500">{locale === 'es' ? 'Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu opinión!' : 'This product has no reviews yet. Be the first to share your opinion!'}</p>
+        <p className="text-gray-200">{locale === 'es' ? 'Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu opinión!' : 'This product has no reviews yet. Be the first to share your opinion!'}</p>
       </div>
     );
   }
@@ -148,7 +148,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
           <span className="text-lg font-medium">
             {averageRating.toFixed(1)} de 5
           </span>
-          <span className="text-gray-500 ml-2">
+          <span className="text-gray-200 ml-2">
             ({reviews.length} {reviews.length === 1 ? 'reseña' : 'reseñas'})
           </span>
         </div>
@@ -167,7 +167,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
                   />
                 ))}
               </div>
-              <span className="text-sm text-gray-500 ml-2">
+              <span className="text-sm text-gray-200 ml-2">
                 {review.created_at && formatRelativeTime(review.created_at)}
               </span>
             </div>
@@ -175,7 +175,7 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
             <h3 className="font-medium">{users[review.user_id]?.full_name || 'Usuario anónimo'}</h3>
             
             {review.comment && (
-              <p className="text-gray-700 mt-2">{review.comment}</p>
+              <p className="text-gray-200 mt-2">{review.comment}</p>
             )}
           </div>
         ))}

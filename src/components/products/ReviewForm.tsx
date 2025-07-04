@@ -99,17 +99,17 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
   };
   
   return (
-    <div className="bg-gray-50 p-4 rounded-lg mt-6">
-      <h3 className="text-lg font-medium mb-4 text-gray-800">{locale === 'es' ? 'Deja tu opinión' : 'Leave your review'}</h3>
+    <div className="bg-[#303030] p-4 rounded-lg mt-6">
+      <h3 className="text-lg font-medium mb-4 text-gray-200">{locale === 'es' ? 'Deja tu opinión' : 'Leave your review'}</h3>
       
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+        <div className="bg-[#303030] border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
           {error}
         </div>
       )}
       
       {successMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
+        <div className="bg-[#303030] border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
           {successMessage}
         </div>
       )}
@@ -117,7 +117,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
       <form onSubmit={handleSubmit}>
         {/* Rating */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-200 mb-1">
             {locale === 'es' ? 'Calificación' : 'Rating'}
           </label>
           <div className="flex">
@@ -141,12 +141,12 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
         
         {/* Comment */}
         <div className="mb-4">
-          <label htmlFor="review-comment" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="review-comment" className="block text-sm font-medium text-gray-200 mb-1">
             {locale === 'es' ? 'Opinión' : 'Opinion'} <span className="text-red-500">*</span>
           </label>
           <textarea
             id="review-comment"
-            className="w-full p-2 border border-gray-300 rounded-md h-24 text-gray-800"
+            className="w-full p-2 border border-amber-300 rounded-md h-24 text-gray-100"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder={locale === 'es' ? 'Comparte tu experiencia con este producto...' : 'Share your experience with this product...'}
@@ -157,7 +157,7 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
         {/* Submit button */}
         <button
           type="submit"
-          className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-gold-gradient text-black px-4 py-2 rounded-md cursor-pointer font-bold hover:bg-gold-gradient-bright transition disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isSubmitting}
         >
           {isSubmitting ? (locale === 'es' ? 'Enviando...' : 'Sending...') : (locale === 'es' ? 'Enviar reseña' : 'Submit review')}

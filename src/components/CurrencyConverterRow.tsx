@@ -43,10 +43,10 @@ export default function CurrencyConverterRow({
   };
 
   return (
-    <div className="inline-flex flex-nowrap items-center gap-3 text-sm rounded-md border border-amber-300 dark:border-zinc-700  px-1 py-0.5 shadow-xs">
+    <div className="inline-flex flex-nowrap items-center gap-1 text-sm rounded-md border border-[#303030] bg-gray-200  px-0 py-0.5 shadow-xs">
       {/* Selector de divisas */}
       <select
-        className="border-none bg-transparent px-1 py-0.5 focus:outline-none focus:ring-0 text-black font-medium"
+        className="border-none bg-transparent px-1 py-0.5 focus:outline-none focus:ring-0 text-black font-semibold"
         value={currency}
         onChange={e => {
           setCurrency(e.target.value.toUpperCase());
@@ -72,17 +72,17 @@ export default function CurrencyConverterRow({
         onClick={onConvert}
         disabled={disabled}
         title="Convertir"
-        className="p-1 rounded border border-transparent bg-black hover:border-teal-800 hover:bg-teal-600 hover:text-white transition-colors disabled:opacity-50"
+        className="px-6 py-1 rounded border border-transparent bg-black hover:border-[#303030] hover:bg-[#303030] hover:text-white transition-colors disabled:opacity-50"
       >
         {pending ? (
-          <Loader2 className="h-4 w-4 animate-spin font-bold text-white" />
+          <Loader2 className="h-4 w-4 animate-spin  font-extrabold text-white" />
         ) : (
-          <RefreshCcw className="h-4 w-4 font-bold text-white" />
+          <RefreshCcw className="h-4 w-4 font-extrabold text-white" />
         )}
       </button>
 
       {/* Resultado */}
-      <div className="min-w-[8rem] font-semibold text-black">
+      <div className="min-w-[8rem] font-semibold text-black text-xs">
         {result ? (
           result.currency && result.converted ? (
             new Intl.NumberFormat('es-CR', {
@@ -93,7 +93,7 @@ export default function CurrencyConverterRow({
             <span className="text-red-500">{locale === 'es' ? 'Error en conversión' : 'Conversion error'}</span>
           )
         ) : (
-          <span className="flex items-center gap-1 text-gray-600"><ArrowLeft className="h-3 w-3" />{locale === 'es' ? 'Convertir' : 'Convert'}</span>
+          <span className="flex items-center gap-1 text-gray-600"><ArrowLeft className="h-3 w-3 font-extrabold text-black" />{locale === 'es' ? 'click para convertir' : 'Click to convert'}</span>
         )}
       </div>
     </div>

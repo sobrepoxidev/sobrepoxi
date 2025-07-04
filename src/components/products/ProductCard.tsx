@@ -72,7 +72,7 @@ export default function ProductCard({ product }: { product: Product }) {
   
   return (
     <div 
-      className="bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col transition-shadow duration-300 h-full relative"
+      className="bg-gold-gradient-75 border border-[#303030] rounded-lg overflow-hidden flex flex-col transition-shadow duration-300 h-full relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -80,22 +80,22 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {/* Category badge */}
         {category && (
-          <span className="bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">
+          <span className="bg-[#303030] text-gray-300 text-xs px-2 py-1 rounded-full border border-[#303030]">
             {locale === 'es' ? category.name_es : category.name_en}
           </span>
         )}
         
         {/* Featured badge */}
         {product.is_featured && (
-          <span className="bg-amber-50 text-amber-700 text-xs px-2 py-1 rounded-full border border-amber-100 flex items-center">
-            <Star className="h-3 w-3 mr-1 fill-amber-500" />
+          <span className="bg-[#303030] gold-gradient-bright text-xs px-2 py-1 rounded-full border border-[#303030] flex items-center">
+            <Star className="h-3 w-3 mr-1 icon-gold" />
             {locale === 'es' ? 'Destacado' : 'Featured'}
           </span>
         )}
         
         {/* Discount badge */}
         {Number(product.discount_percentage) > 0 && (
-          <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full border border-red-200 font-medium">
+          <span className="text-xs font-medium border sm:ml-1 border-red-700 text-red-700 px-0.5 py-0.5 rounded">
             {product.discount_percentage}% OFF
           </span>
         )}
@@ -103,7 +103,7 @@ export default function ProductCard({ product }: { product: Product }) {
       
       {/* Botón de favorito */}
       <button 
-        className="absolute top-3 right-3 z-10 text-gray-400 hover:text-red-500 transition-colors"
+        className="absolute top-3 right-3 z-10 text-gray-300 hover:text-red-500 transition-colors"
         onClick={async (e) => {
           e.preventDefault();
           
@@ -142,14 +142,14 @@ export default function ProductCard({ product }: { product: Product }) {
       </button>
       
       {/* Imagen del producto */}
-      <Link href={`/product/${product.name}`} className="block h-48 sm:h-56 relative">
-        <div className="h-full w-full flex items-center justify-center bg-gray-50  p-4">
+      <Link href={`/product/${product.name}`} className="block h-48 sm:h-60 relative">
+        <div className="h-full w-full flex items-center justify-center bg-gold-gradient-60 mt-4">
           <Image
             src={mainImageUrl}
             alt={product.name || ''}
-            width={180}
-            height={180}
-            className={`object-contain max-h-full max-w-full transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
+            width={260}
+            height={260}
+            className={`object-contain rounded-sm max-w-full p-6 bg-[#303030] transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
           />
         </div>
       </Link>
@@ -158,19 +158,19 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="p-4 flex-grow flex flex-col">
         <Link 
           href={`/product/${product.name}`}
-          className="text-gray-800 font-medium mb-1 hover:text-teal-700 transition-colors line-clamp-2 min-h-[48px]"
+          className="text-black font-medium mb-1 hover:text-[#303030] transition-colors line-clamp-2 min-h-[48px]"
         >
           {locale === 'es' ? product.name_es : product.name_en}
         </Link>
         
         {/* Calificación simulada - En un sistema real se calcularía basado en reseñas */}
-        <div className="flex items-center text-amber-400 mb-2">
-          <Star className="fill-current h-4 w-4" />
-          <Star className="fill-current h-4 w-4" />
-          <Star className="fill-current h-4 w-4" />
-          <Star className="fill-current h-4 w-4" />
-          <Star className="fill-current h-4 w-4 text-gray-300" />
-          <span className="text-xs text-gray-500 ml-1">(4.0)</span>
+        <div className="flex items-center text-gold-gradient-90 mb-2">
+          <Star className="fill-current h-4 w-4 icon-gold" />
+          <Star className="fill-current h-4 w-4 icon-gold" />
+          <Star className="fill-current h-4 w-4 icon-gold" />
+          <Star className="fill-current h-4 w-4 icon-gold" />
+          <Star className="fill-current h-4 w-4 icon-gold" />
+          <span className="text-xs text-gray-300 ml-1">(5.0)</span>
         </div>
         
         {/* Precio e Inventario */}
@@ -179,21 +179,21 @@ export default function ProductCard({ product }: { product: Product }) {
             <div>
               {product.discount_percentage && product.discount_percentage > 0 ? (
                 <div className="mb-2">
-                  <p className="text-lg font-bold text-teal-700">
+                  <p className="text-lg font-bold text-green-600">
                     {formatUSD(finalPrice || 0)}
                   </p>
-                  <p className="text-xs text-gray-500 line-through">
+                  <p className="text-xs text-green-600 line-through">
                     {formatUSD(product.dolar_price || 0)}
                   </p>
                 </div>
               ) : (
-                <p className="text-lg font-bold text-teal-700 mb-2">
+                <p className="text-lg font-bold text-green-600 mb-2">
                   {formatUSD(product.dolar_price || 0)}
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-sm font-medium text-gray-700 mb-2">
+            <p className="text-sm font-semibold text-white  mb-2">
               {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
             </p>
           )}
@@ -201,7 +201,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Inventory status */}
           <p className="text-xs mb-2">
             {inventory > 0 ? (
-              <span className="text-green-600 flex items-center">
+              <span className="text-black flex items-center">
                 <Check className="h-3 w-3 mr-1" />
                 {inventory > 10 ? locale === 'es' ? 'En stock' : 'In stock' : `${inventory} ${locale === 'es' ? 'disponibles' : 'available'}`}
               </span>
@@ -214,18 +214,18 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="flex space-x-2 mt-2">
             <Link 
               href={`/product/${product.name}`}
-              className="flex-1 py-2 text-sm text-center text-teal-700 border border-teal-600 rounded hover:bg-teal-50 transition"
+              className="flex-1 py-2 text-sm text-center text-black border border-black rounded hover:bg-black hover:text-white transition"
             >
               {locale === 'es' ? 'Ver detalles' : 'View details'}
             </Link>
             <button 
               onClick={() => addToCart(product, 1)}
               className={`flex items-center justify-center p-2 rounded transition
-                ${inventory > 0 ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                ${inventory > 0 ? ' text-black border border-black hover:bg-black hover:text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
               aria-label={locale === 'es' ? 'Añadir al carrito' : 'Add to cart'}
               disabled={inventory <= 0}
             >
-              <ShoppingCart className="h-4 w-4" />
+              <ShoppingCart className="h-4 w-4 fill-current" />
             </button>
           </div>
         </div>

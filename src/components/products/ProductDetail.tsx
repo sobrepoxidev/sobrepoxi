@@ -126,7 +126,6 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
         }
 
       } catch (err) {
-        console.error('Error al cargar el producto:', err);
         setError('Error al cargar el producto');
       } finally {
         setLoading(false);
@@ -248,7 +247,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b68b44]"></div>
       </div>
     );
   }
@@ -256,17 +255,17 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   // Si hay un error, muestra un mensaje
   if (error || !product) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 inline-block">
-          <h1 className="text-xl font-semibold text-red-700 mb-2">
+      <div className="container mx-auto px-4 py-8 text-center bg-[#121212]">
+        <div className="bg-[#303030] border border-[#b68b44] rounded-lg p-6 inline-block">
+          <h1 className="text-xl font-semibold gold-gradient-bright mb-2">
             {error || 'Producto no encontrado'}
           </h1>
-          <p className="text-red-600 mb-4">
+          <p className="gold-gradient mb-4">
             {locale === 'es' ? 'Lo sentimos, no pudimos encontrar el producto que estás buscando.' : 'We apologize, we were unable to find the product you were looking for.'}
           </p>
           <Link 
             href="/products" 
-            className="inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
+            className="inline-flex items-center justify-center px-4 py-2 bg-gold-gradient-100 text-black font-semibold rounded-md hover:bg-gold-gradient-bright transition"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             {locale === 'es' ? 'Volver a productos' : 'Back to products'}
@@ -282,14 +281,14 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   const isVideo = currentMedia?.type === 'video';
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-[#121212]">
       {/* Breadcrumb */}
-      <div className="mb-6 flex items-center text-sm text-gray-500">
+      <div className="mb-6 flex items-center text-sm text-[#b68b44]">
         <Link href="/" className="hover:text-teal-600">Inicio</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
         <Link href="/products" className="hover:text-teal-600"> {locale === 'es' ? 'Productos' : 'Products'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900 truncate max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
+        <span className="font-medium text-[#b68b44] truncate max-sm:max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
       </div>
 
       {/* Contenido principal */}
@@ -299,7 +298,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
           <div className="sticky top-24">
             {/* Media principal: imagen o video */}
             <div
-              className={`relative bg-white h-[400px] md:h-[500px] flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden mb-4 ${isVideo ? '' : 'cursor-zoom-in'}`}
+              className={`relative bg-[#303030] h-[400px] md:h-[500px] flex items-center justify-center border border-[#b68b44] rounded-lg overflow-hidden mb-4 ${isVideo ? '' : 'cursor-zoom-in'}`}
               onMouseEnter={!isVideo ? () => setIsZoomed(true) : undefined}
               onMouseLeave={!isVideo ? () => setIsZoomed(false) : undefined}
               onMouseMove={!isVideo ? handleMouseMove : undefined}
@@ -308,7 +307,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
               <div className="relative w-full h-full">
                 {isVideo ? (
                   <video
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full gold-gradient-bright"
                     preload="none"
                     controls
                     playsInline
@@ -328,8 +327,8 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   />
                 )}
                 {!isVideo && isZoomed && (
-                  <div className="absolute top-2 right-2 bg-white bg-opacity-80 rounded-full p-2">
-                    <Search className="h-4 w-4 text-gray-700" />
+                  <div className="absolute top-2 right-2 bg-[#303030] bg-opacity-80 rounded-full p-2">
+                    <Search className="h-4 w-4 icon-gold" />
                   </div>
                 )}
               </div>
@@ -341,8 +340,8 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                 {product.media.map((item, index) => (
                   <button
                     key={index}
-                    className={`relative h-20 border rounded-md overflow-hidden transition hover:border-teal-500 ${
-                      activeImageIndex === index ? 'border-teal-500 ring-2 ring-teal-300' : 'border-gray-200'
+                    className={`relative h-20 border rounded-md overflow-hidden transition hover:border-[#b68b44] ${
+                      activeImageIndex === index ? 'border-[#b68b44] ring-2 ring-[#b68b44]' : 'border-gray-200'
                     }`}
                     onClick={() => setActiveImageIndex(index)}
                     aria-label={`Ver media ${index + 1}`}
@@ -355,7 +354,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                           className="object-cover absolute inset-0 w-full h-full"
                         />
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <PlayCircle className="h-6 w-6 text-white" />
+                          <PlayCircle className="h-6 w-6 icon-gold" />
                         </div>
                       </>
                     ) : (
@@ -375,7 +374,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
 
         {/* Columna derecha: Información del producto */}
         <div className="w-full md:w-5/12">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold gold-gradient-bright mb-2">
             {locale === 'es' ? product.name_es : product.name_en}
           </h1>
           
@@ -384,13 +383,13 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             {category && (
               <Link 
                 href={`/products?category=${category.id}`}
-                className="inline-block px-3 py-1 bg-teal-50 text-teal-700 text-sm rounded-full border border-teal-100 hover:bg-teal-100 transition"
+                className="inline-block px-3 py-1 bg-[#303030] gold-gradient text-sm rounded-full border border-[#b68b44] hover:bg-[#b68b44] transition"
               >
                 {locale === 'es' ? category.name_es : category.name_en}
               </Link>
             )}
             {product.brand && (
-              <span className="ml-2 inline-block px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full border border-blue-100">
+              <span className="ml-2 inline-block px-3 py-1 bg-[#303030] gold-gradient text-sm rounded-full border border-[#b68b44]">
                 {product.brand}
               </span>
             )}
@@ -404,18 +403,18 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                  <div className="flex items-center gap-0.5">
                    {product.discount_percentage && product.discount_percentage > 0 ? (
                      <>
-                       <p className="text-3xl font-bold text-teal-700">
+                       <p className="text-3xl font-bold text-green-600 ">
                          {formatUSD((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100))}
                        </p>
-                       <p className="text-lg text-gray-500 line-through">
-                         {formatUSD((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100))}
+                       <p className="text-lg text-green-600 line-through">
+                         {formatUSD((Number(product.dolar_price) || 0))}
                        </p>
-                       <span className="text-sm font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded">
+                       <span className="text-xs font-medium border sm:ml-1 border-red-700 text-red-700 px-0.5 py-0.5 rounded">
                          {product.discount_percentage}% OFF
                        </span>
                      </>
                    ) : (
-                     <p className="text-3xl font-bold text-teal-700">
+                     <p className="text-3xl font-bold text-green-600">
                        {formatUSD((Number(product.dolar_price) || 0) * (1 - (Number(product.discount_percentage) || 0) / 100))}
                      </p>
                    )}
@@ -428,7 +427,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                  </div>
                </div>
             ) : (
-              <p className="text-xl font-medium text-teal-700">
+              <p className="text-xl font-bold text-white">
                 {locale === 'es' ? 'Precio a consultar' : 'Price to consult'}
               </p>
             )}
@@ -447,39 +446,39 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             
             {/* SKU */}
             {product.sku && (
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-400 mt-1">
                 SKU: {product.sku}
               </p>
             )}
           </div>
           
           {/* Descripción */}
-          <div className="mb-8 border-b border-gray-200 pb-6">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">{locale === 'es' ? 'Descripción' : 'Description'}</h2>
-            <p className="text-gray-700 whitespace-pre-line">
+          <div className="mb-8 border-b border-[#b68b44] pb-6">
+            <h2 className="text-lg font-semibold mb-2 text-gray-200">{locale === 'es' ? 'Descripción' : 'Description'}</h2>
+            <p className="text-gray-300 whitespace-pre-line">
               {product.description || 'No hay descripción disponible para este producto.'}
             </p>
           </div>
           
           {/* Acciones */}
-          <div className="space-y-6 border-b border-gray-200 pb-6 mb-6">
+          <div className="space-y-6 border-b border-[#b68b44] pb-6 mb-6">
             {/* Selector de cantidad */}
             <div>
-              <h2 className="text-sm font-medium mb-2 text-gray-800">{locale === 'es' ? 'Cantidad' : 'Quantity'}</h2>
+              <h2 className="text-sm font-medium mb-2 text-gray-200">{locale === 'es' ? 'Cantidad' : 'Quantity'}</h2>
               <div className="flex items-center space-x-2">
                 <button 
                   onClick={handleDecrement}
                   disabled={quantity <= 1}
-                  className="text-gray-500 disabled:text-gray-300"
+                  className="text-gray-200 disabled:text-gray-300"
                   aria-label="Disminuir cantidad"
                 >
                   <MinusCircle className="h-6 w-6" />
                 </button>
-                <span className="w-8 text-center font-medium text-gray-800">{quantity}</span>
+                <span className="w-8 text-center font-medium text-gray-200">{quantity}</span>
                 <button 
                   onClick={handleIncrement}
                   disabled={quantity >= 10}
-                  className="text-gray-500 disabled:text-gray-300"
+                  className="text-gray-200 disabled:text-gray-300"
                   aria-label="Aumentar cantidad"
                 >
                   <PlusCircle className="h-6 w-6" />
@@ -492,9 +491,9 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
               {inventory > 0 ? (
                 <button 
                   onClick={handleAddToCart}
-                  className="flex items-center justify-center w-full py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-sm"
+                  className="flex items-center justify-center w-full py-3 px-4 bg-gold-gradient-bright sm:text-lg font-semibold text-black rounded-lg hover:bg-[#b68b44] transition shadow-sm"
                 >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  <ShoppingCart className="h-5 w-5 mr-2 text-black fill-black" />
                   {locale === 'es' ? 'Añadir al carrito' : 'Add to cart'}
                 </button>
               ) : (
@@ -517,13 +516,13 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
               <div className="flex space-x-3">
                 <button 
                   onClick={handleToggleFavorite}
-                  className={`flex items-center justify-center flex-1 py-2 px-4 border rounded-lg transition ${isFavorite ? 'bg-red-50 text-red-600 border-red-300' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                  className={`flex items-center justify-center flex-1 py-2 px-4 border rounded-lg transition ${isFavorite ? 'bg-red-50 text-red-600 border-red-300' : ' text-gray-200 hover:bg-[#303030]'}`}
                 >
-                  <Heart className={`h-5 w-5 mr-2 ${isFavorite ? 'fill-red-600' : ''}`} />
+                  <Heart className={`h-5 w-5 mr-2 ${isFavorite ? 'fill-red-600' : 'text-gray-200'}`} />
                   {isFavorite ? (locale === 'es' ? 'Guardado' : 'Saved') : (locale === 'es' ? 'Favorito' : 'Favorite')}
                 </button>
                 <button 
-                  className="flex items-center justify-center flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                  className="flex items-center justify-center flex-1 py-2 px-4 border border-gray-300 text-gray-200 rounded-lg hover:bg-[#303030] transition"
                   onClick={() => {
                     // Use Web Share API if available
                     if (navigator.share) {
@@ -540,7 +539,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     }
                   }}
                 >
-                  <Share2 className="h-5 w-5 mr-2" />
+                  <Share2 className="h-5 w-5 mr-2 text-gray-200" />
                   {locale === 'es' ? 'Compartir' : 'Share'}
                 </button>
               </div>
@@ -552,12 +551,12 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             {/* Especificaciones */}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold mb-3 text-gray-800">{locale === 'es' ? 'Especificaciones' : 'Specifications'}</h2>
+                <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Especificaciones' : 'Specifications'}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                   {Object.entries(product.specifications).map(([key, value]) => (
                     <div key={key} className="py-1 border-b border-gray-100">
-                      <span className="text-gray-600 text-sm">{key}: </span>
-                      <span className="text-gray-900 font-medium text-sm">{String(value)}</span>
+                      <span className="text-gray-200 text-sm">{key}: </span>
+                      <span className="text-gray-200 font-medium text-sm">{String(value)}</span>
                     </div>
                   ))}
                 </div>
@@ -567,7 +566,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             {/* Etiquetas */}
             {product.tags && product.tags.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold mb-3 text-gray-800">{locale === 'es' ? 'Etiquetas' : 'Tags'}</h2>
+                <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Etiquetas' : 'Tags'}</h2>
                 <div className="flex flex-wrap gap-2">
                   {product.tags.map((tag, index) => (
                     <Link 
@@ -585,19 +584,19 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
             
             {/* Características generales */}
             <div>
-              <h2 className="text-lg font-semibold mb-3 text-gray-800">{locale === 'es' ? 'Características' : 'Features'}</h2>
+              <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Características' : 'Features'}</h2>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span className="text-gray-800">{locale === 'es' ? 'Producto hecho a mano con materiales de calidad' : 'Product made by hand with quality materials'}</span>
+                  <span className="text-gray-200">{locale === 'es' ? 'Producto hecho a mano con materiales de calidad' : 'Product made by hand with quality materials'}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span className="text-gray-800">{locale === 'es' ? 'Diseño único y exclusivo' : 'Unique and exclusive design'}</span>
+                  <span className="text-gray-200">{locale === 'es' ? 'Diseño único y exclusivo' : 'Unique and exclusive design'}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-teal-700 font-medium mr-2">•</span>
-                  <span className="text-gray-800">{locale === 'es' ? 'Artesanía local de Costa Rica' : 'Local craftsmanship from Costa Rica'}</span>
+                  <span className="text-gray-200">{locale === 'es' ? 'Artesanía local de Costa Rica' : 'Local craftsmanship from Costa Rica'}</span>
                 </li>
               </ul>
             </div>
@@ -618,7 +617,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
       {/* Reviews Section */}
       {!loading && !error && product && (
         <div className="mt-16 border-t border-gray-200 pt-10">
-          <h2 className="text-2xl font-bold flex items-center mb-6 text-gray-800">
+          <h2 className="text-2xl font-bold flex items-center mb-6 text-gray-200">
             <MessageSquare className="h-6 w-6 mr-2" />
             {locale === 'es' ? 'Reseñas y opiniones' : 'Reviews and opinions'}
           </h2>

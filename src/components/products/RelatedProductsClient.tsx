@@ -34,7 +34,7 @@ export default function RelatedProductsClient({
       setLoading(true);
       let query = supabase
         .from("products")
-        .select("id, name_es, name_en, colon_price, dolar_price, media, category_id")
+        .select("id, name, name_es, name_en, colon_price, dolar_price, media, category_id")
         .eq("is_active", true)
         .order("created_at", { ascending: false })
         .limit(limit);
@@ -69,7 +69,7 @@ export default function RelatedProductsClient({
 
   return (
     <div ref={ref} className="mt-6 rounded-md overflow-hidden shadow-md">
-      <div className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold">
+      <div className="px-4 py-2 bg-gold-gradient-90 text-black text-sm font-semibold">
         {title}
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
