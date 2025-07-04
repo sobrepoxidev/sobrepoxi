@@ -113,7 +113,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
           </BannerTemplate>
 
           {/* 3️⃣ BANNER — Mesas río / muebles exclusivos */}
-          <BannerTemplate linkHref="/gallery">
+          <BannerTemplate linkHref="/products">
             <div className="relative h-full flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6">
               <h2 className="text-md sm:text-xl font-light text-white">
                 {locale === 'es' ? 'Descubre nuestra' : 'Discover our'}
@@ -127,8 +127,8 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
                   : 'River tables & bars in hardwood + resin'}
               </p>
 
-              <Link href="/gallery" className="mt-0.5 sm:mt-3 bg-white/90 hover:bg-white text-black text-sm font-semibold px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full transition-all max-sm:text-xs">
-                {locale === 'es' ? 'Ver galería' : 'View gallery'}
+              <Link href="/products" className="mt-0.5 sm:mt-3 bg-white/90 hover:bg-white text-black text-sm font-semibold px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full transition-all max-sm:text-xs">
+                {locale === 'es' ? 'Ver productos' : 'View products'}
               </Link>
             </div>
           </BannerTemplate>
