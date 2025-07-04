@@ -6,7 +6,6 @@ export const runtime = "edge";
 export const revalidate = 1800; // 30 min
 
 async function buildSitemap(): Promise<string> {
-  const host = process.env.NEXT_PUBLIC_SITE_URL ?? "sobrepoxi.com";
   const now = new Date().toISOString();
 
   // Rutas estáticas
@@ -23,9 +22,9 @@ async function buildSitemap(): Promise<string> {
     const path = base === "" ? "" : `/${base}`;
     staticUrls.push(
       `  <url>
-    <loc>https://${host}/es${path}</loc>
-    <xhtml:link rel="alternate" hreflang="es-cr" href="https://${host}/es${path}" />
-    <xhtml:link rel="alternate" hreflang="en-us" href="https://${host}/en${path}" />
+    <loc>https://sobrepoxi.com/es${path}</loc>
+    <xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es${path}" />
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en${path}" />
     <lastmod>${now}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -48,9 +47,9 @@ async function buildSitemap(): Promise<string> {
         const slug = slugify(name, { lower: true, strict: true });
         productUrls.push(
           `  <url>
-    <loc>https://${host}/es/product/${slug}</loc>
-    <xhtml:link rel="alternate" hreflang="es-cr" href="https://${host}/es/product/${slug}" />
-    <xhtml:link rel="alternate" hreflang="en-us" href="https://${host}/en/product/${slug}" />
+    <loc>https://sobrepoxi.com/es/product/${slug}</loc>
+    <xhtml:link rel="alternate" hreflang="es-cr" href="https://sobrepoxi.com/es/product/${slug}" />
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://sobrepoxi.com/en/product/${slug}" />
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
