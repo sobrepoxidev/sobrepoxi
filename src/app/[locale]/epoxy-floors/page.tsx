@@ -80,7 +80,7 @@ export default async function EpoxyFloorsPage(
   return (
     <main className="min-h-screen bg-[#121212] text-white">
       {/* ╭──────────────────────── Hero ───────────────────────────────╮ */}
-      <section className="relative overflow-hidden pb-12 pt-20 sm:pt-28">
+      <section className="relative overflow-hidden pb-12 pt-2 sm:pt-28">
         {/* Imagen de fondo */}
         <Image
           src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner-rqcdjol5sTo1NLeMVxeHmdlTqWikoQ.webp"
@@ -91,10 +91,10 @@ export default async function EpoxyFloorsPage(
           unoptimized
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
-          <span className="inline-block mb-4 rounded-full bg-[#303030]/80 px-4 py-1 text-sm font-medium">
+          <span className="inline-block mb-4 rounded-full bg-gold-gradient-50 text-gray-300 px-4 py-1 text-sm font-medium">
             {t.heroTag}
           </span>
-          <h1 className="text-4xl py-1.5 sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4">
+          <h1 className="text-4xl py-1.5 sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4 max-sm:mt-2">
             {t.heroTitle}
           </h1>
           <p className="text-lg max-w-xl text-gray-300 mb-8">
@@ -110,7 +110,7 @@ export default async function EpoxyFloorsPage(
       </section>
 
       {/* ╭────────────────────── Advantages Grid ────────────────────────╮ */}
-      <section className="py-14">
+      <section className="py-2 sm:py-8">
         <h2 className="text-center text-3xl font-bold gold-gradient-bright mb-10">
           {t.section1T}
         </h2>
@@ -127,7 +127,7 @@ export default async function EpoxyFloorsPage(
       </section>
 
       {/* ╭────────────────────── Process Steps ──────────────────────────╮ */}
-      <section className="py-16 bg-[#181818]">
+      <section className="py-2 sm:py-8 bg-[#181818]">
         <h2 className="text-center text-3xl font-bold gold-gradient-bright mb-12">
           {t.processT}
         </h2>
@@ -149,9 +149,9 @@ export default async function EpoxyFloorsPage(
       </section>
 
       {/* ╭────────────────────────── CTA ────────────────────────────────╮ */}
-      <section className="py-20 text-center bg-[#121212]">
+      <section className="py-2 sm:py-10 text-center bg-[#121212]">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-wide gold-gradient-bright mb-6">
-          {locale === "es" ? "Listo para pisar arte?" : "Ready to walk on art?"}
+          {locale === "es" ? "Listo para pisar alta calidad?" : "Ready to walk on high quality floors?"}
         </h2>
         <Link
           href="/contact"
