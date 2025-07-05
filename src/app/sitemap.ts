@@ -34,7 +34,7 @@ async function fetchActiveProductSlugs(): Promise<string[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const hostHeaders = headers()
+  const hostHeaders = await headers()
   const host =
     hostHeaders.get('x-forwarded-host') ?? hostHeaders.get('host') ?? 'sobrepoxi.com'
   const now = new Date()
