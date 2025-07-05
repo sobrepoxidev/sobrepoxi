@@ -1,6 +1,5 @@
 // app/page.tsx
 import { redirect } from 'next/navigation';
-import { routing } from '@/i18n/routing';
 
 // Redirige dinámicamente a la mejor coincidencia de idioma
 // 1. Si el dominio está definido en routing.domains, usa su defaultLocale
