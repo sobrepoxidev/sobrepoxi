@@ -8,6 +8,12 @@ import HomeContainer from "./HomeContainer";
 import React from "react"; // Import React
 
 type tParams = Promise<{ locale: string }>;
+/**
+ * P gina de inicio para la ruta ra z
+ * Utiliza suspense para mejorar la carga progresiva
+ * @param {{ params: tParams }} props 
+ * @returns {JSX.Element}
+ */
 export default async function Home({ params }: { params: tParams }) {
   const { locale } = await params;
   return <HomeContainer locale={locale.toString()} />;
