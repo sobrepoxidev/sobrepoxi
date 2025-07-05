@@ -3,18 +3,13 @@ import { defineRouting } from 'next-intl/routing';
 // Configuración por defecto (fallback) - solo se usa cuando no se puede determinar dinámicamente
 export const routing = defineRouting({
   locales: ['es', 'en'],
-  defaultLocale: 'en', // fallback default
-  localeDetection: false,
+  defaultLocale: 'es', // fallback default
+  localeDetection: true,
   domains: [
     {
-      domain: 'artehechoamano.com',
+      domain: 'sobrepoxi.com',
       defaultLocale: 'es',
-      locales: ['es']
-    },
-    {
-      domain: 'handmadeart.store',
-      defaultLocale: 'en',
-      locales: ['en']
+      locales: ['es', 'en']
     },
   ]
 });
