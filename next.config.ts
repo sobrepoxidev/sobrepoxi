@@ -12,6 +12,8 @@ const withNextIntl = createNextIntlPlugin();
  *                           (they get the “classic” blocking HTML).
  */
 const nextConfig: NextConfig = {
+  // 1️⃣  Crawler control – disable streaming for these user-agents
+  htmlLimitedBots: /Googlebot|bingbot|Baiduspider|YandexBot|DuckDuckBot|facebookexternalhit|Twitterbot|MyBot|OtherBot|SimpleCrawler/,
 
   // 2️⃣  Existing image-domain whitelist
   images: {
