@@ -1,12 +1,9 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from 'next'
-import { headers } from 'next/headers'
 import slugify from 'slugify'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const runtime = 'edge'
 
 /**
  * Fetch active product names from Supabase using REST to keep bundle small.
@@ -34,9 +31,6 @@ async function fetchActiveProductSlugs(): Promise<string[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const hostHeaders = await headers()
-  const host =
-    hostHeaders.get('x-forwarded-host') ?? hostHeaders.get('host') ?? 'sobrepoxi.com'
   const now = new Date()
 
   const staticBases = [
@@ -55,28 +49,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'search'
   ]
 
-  const staticEntries: MetadataRoute.Sitemap = staticBases.map((base) => ({
-    url: `https://${host}/es${base ? `/${base}` : ''}`,
+  const staticEntries = staticBases.map(base => ({
+    url: `https://sobrepoxi.com/es${base ? `/${base}` : ''}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.6,
     alternates: {
       languages: {
-        'en-us': `https://${host}/en${base ? `/${base}` : ''}`,
-      },
-    },
+        'en-us': `https://sobrepoxi.com/en${base ? `/${base}` : ''}`
+      }
+    }
   }))
 
   // Dynamic product URLs
   const productSlugs = await fetchActiveProductSlugs()
   const productEntries: MetadataRoute.Sitemap = productSlugs.map((slug) => ({
-    url: `https://${host}/es/product/${slug}`,
+    url: `https://sobrepoxi.com/es/product/${slug}`,
     lastModified: now,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
     alternates: {
       languages: {
-        'en-us': `https://${host}/en/product/${slug}`,
+        'en-us': `https://sobrepoxi.com/en/product/${slug}`,
       },
     },
   }))
