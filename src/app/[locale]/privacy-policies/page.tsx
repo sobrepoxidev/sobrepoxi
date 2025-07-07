@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
 export default async function PoliticaPrivacidadPage({ params }: { params: tParams }) {
   const { locale } = await params;
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#121212] py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="px-6 py-8 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-blue-50">
           <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-2">
