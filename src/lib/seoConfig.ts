@@ -31,11 +31,6 @@ export const SEO_TEXT = {
 } as const;
 
 
-/* Devuelve 'es-CR' / 'en-US' para <html lang> y og:locale */
-export function mapLocale(locale: string) {
-  return locale === "es" ? "es-CR" : "en-US";
-}
-
 /**
  * Construye metadatos completos para Next 13/14 App Router.
  * @param pathname Ruta absoluta (para canonical) – usa request.url o un slug simple.
@@ -94,7 +89,6 @@ export function buildMetadata(opts: {
       url: `https://sobrepoxi.com${pathname}`,
       siteName: "SobrePoxi",
       images: [ogImage],
-      locale: mapLocale(locale),
       type: "website"
     },
     twitter: {
