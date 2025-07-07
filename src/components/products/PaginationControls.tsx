@@ -1,7 +1,7 @@
 // src/components/products/PaginationControls.tsx
 'use client'; // Necesita Link y hooks del lado del cliente
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 

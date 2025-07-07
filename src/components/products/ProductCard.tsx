@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Star, ShoppingCart, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Database } from '@/types-db';

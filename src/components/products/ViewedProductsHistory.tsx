@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { Database } from '@/types-db';
 import { getLocalViewedHistory, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { Clock, AlertCircle } from 'lucide-react';
 import { useLocale } from 'next-intl';

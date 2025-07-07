@@ -6,7 +6,7 @@ import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
 // import FeaturedProductsSection from '../cards/FeaturedProductsSection';
 // import GiftsCarouselSection from '@/components/cards/GiftsCarouselSection';
 import type { Database } from '@/types-db';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import ProductCategoriesBanner from './ProductCategoriesBanner';
 // Tipos para los datos pre-cargados desde el servidor
 type Product = Database['products'];
