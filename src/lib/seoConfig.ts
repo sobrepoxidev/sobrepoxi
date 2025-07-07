@@ -9,7 +9,7 @@ export const SEO_TEXT = {
   es: {
     title: {
       // 60-65 caracteres máx. · keyword principal al inicio
-      default : "Muebles de resina epóxica y pisos epóxicos en Costa Rica",
+      default : "Muebles con resina epóxica y pisos epóxicos en Costa Rica",
       template: "%s"
     },
     description:
@@ -64,7 +64,7 @@ export function buildMetadata(opts: {
     height: 630,
     alt:
       locale === "es"
-        ? "SobrePoxi | Muebles de resina y pisos de lujo"
+        ? "SobrePoxi | Muebles con resina y pisos epóxicos de lujo"
         : "SobrePoxi | Luxury resin furniture and epoxy floors"
   };
 

@@ -281,13 +281,13 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   const isVideo = currentMedia?.type === 'video';
 
   return (
-    <div className="max-w-[1500px] mx-auto px-4 py-8 bg-[#121212]">
+    <div className="max-w-[1500px] mx-auto px-4 bg-[#121212]">
       {/* Breadcrumb */}
-      <div className="mb-6 flex items-center text-sm text-[#b68b44]">
-        <Link href="/" className="hover:text-teal-600">Inicio</Link>
-        <ChevronRight className="h-4 w-4 mx-1" />
+      <div className="mb-1.5 flex items-center text-xs text-[#b68b44]">
+        <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
+        <ChevronRight className="h-4 w-4" />
         <Link href="/products" className="hover:text-teal-600"> {locale === 'es' ? 'Productos' : 'Products'}</Link>
-        <ChevronRight className="h-4 w-4 mx-1" />
+        <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-[#b68b44] truncate max-sm:max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
       </div>
 
@@ -295,10 +295,10 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
       <div className="flex flex-col md:flex-row md:gap-8">
         {/* Columna izquierda: Imágenes */}
         <div className="w-full md:w-7/12">
-          <div className="sticky top-24">
+          <div className="sticky">
             {/* Media principal: imagen o video */}
             <div
-              className={`relative bg-[#303030] h-[400px] md:h-[500px] flex items-center justify-center border border-[#b68b44] rounded-lg overflow-hidden mb-4 ${isVideo ? '' : 'cursor-zoom-in'}`}
+              className={`relative bg-[#303030] h-[400px] md:h-[500px] flex items-center justify-center border border-[#b68b44] rounded-lg overflow-hidden mb-1.5 ${isVideo ? '' : 'cursor-zoom-in'}`}
               onMouseEnter={!isVideo ? () => setIsZoomed(true) : undefined}
               onMouseLeave={!isVideo ? () => setIsZoomed(false) : undefined}
               onMouseMove={!isVideo ? handleMouseMove : undefined}
@@ -314,12 +314,12 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     poster="/video-placeholder.png"
                   >
                     <source src={mainMediaUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    {locale === 'es' ? 'Tu navegador no soporta video HTML5.' : 'Your browser does not support HTML5 video.'}
                   </video>
                 ) : (
                   <Image
                     src={mainMediaUrl}
-                    alt={product.name || ''}
+                    alt={product.name || '' + locale === 'es' ? 'Pisos Epóxicos Costarricense' : 'Costarican Epoxy Floors'}
                     fill
                     className={`object-contain transition-transform duration-300 ${isZoomed ? 'scale-150' : 'scale-100'}`}
                     style={isZoomed ? { transformOrigin: `${zoomPosition.x * 100}% ${zoomPosition.y * 100}%` } : undefined}
@@ -503,7 +503,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                   className="flex items-center bg-teal-200 justify-center w-full px-4 py-2 text-sm font-medium text-teal-700 hover:text-teal-900 border border-teal-600 rounded-md hover:bg-teal-400 transition-colors"
+                   className="flex items-center bg-gold-gradient justify-center w-full px-4 py-2 text-sm sm:text-lg  text-black hover:text-[#303030] font-bold border border-[#b68b44] rounded-md hover:bg-gold-gradient-bright transition-colors"
                 >
                  
                   {locale === 'es' ? 'Consultar disponibilidad' : 'Check availability'}

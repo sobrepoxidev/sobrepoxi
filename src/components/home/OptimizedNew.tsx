@@ -32,7 +32,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
     <div className="max-w-[1500px] mx-auto relative z-0 bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
        hover:bg-[length:200%_100%] hover:bg-right
        transition-[background-size,background-position] duration-300">
-        <h1></h1>
+        
         <Carousel>
           <BannerTemplate
             linkHref="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"
@@ -47,12 +47,12 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
             >
               {/* Columna 1 — texto */}
               <div className="max-w-[100%] text-center md:text-left">
-                <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide leading-[1.2] gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 py-0 sm:mt-1">
                   {locale === 'es'
-                    ? 'Solicita tu pieza a medida'
-                    : 'Commission your bespoke piece'}
-                </h2>
-                <p className="mt-0 sm:mt-1 text-sm sm:text-base text-white ">
+                    ? 'Muebles con resina y pisos epóxicos en Costa Rica'
+                    : 'Epoxy Resin Furniture and Flooring in Costa Rica'}
+                </h1>
+                <p className="mt-0 sm:mt-1 text-start text-xs sm:text-base text-white ">
                   {locale === 'es'
                     ? 'Habla ahora con nuestro equipo por WhatsApp'
                     : 'Chat with our team on WhatsApp'}
@@ -94,32 +94,32 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
 
           {/* 2️⃣ BANNER — Pisos epóxicos artísticos */}
           <BannerTemplate linkHref="/contact">
-            <div className="relative  flex flex-col items-center justify-center text-center px-6 py-0 sm:py-6 max-sm:mt-0.5">
-              <h2 className="text-lg sm:text-2xl font-light text-white">
-                {locale === 'es' ? 'Transforma tus espacios' : 'Transform your spaces'}
-              </h2>
-              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 sm:mt-1">
+            <div className="flex flex-col items-center justify-center text-center px-6 sm:py-6">
+              <h2 className="text-md sm:text-2xl font-light text-white">
                 {locale === 'es' ? 'Pisos epóxicos de lujo' : 'Luxury Epoxy Floors'}
+              </h2>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 py-0 sm:mt-1">
+                {locale === 'es' ? 'efecto 3D, vinilo y madera' : '3D effect, vinyl and wood'}
               </h1>
-              <p className="mt-1 text-sm sm:text-base text-white max-w-lg">
+              <p className="mt-1 py-0 text-[0.73rem] sm:text-base text-white max-w-lg">
                 {locale === 'es'
                   ? 'Efecto espejo, vetas marmoleadas y diseños únicos in-situ'
                   : 'Mirror finish, marble veins & site-specific designs'}
               </p>
 
-              <Link href="/contact" className="mt-0.5 sm:mt-3 bg-white/90 hover:bg-white text-black text-sm font-semibold px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full transition-all max-sm:text-xs">
-                {locale === 'es' ? 'Solicitar visita técnica' : 'Request a site visit'}
+              <Link href="/contact" className=" mt-2 sm:mt-3 text-gray-300 text-[0.6rem] sm:text-sm font-semibold px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full transition-all  underline">
+                {locale === 'es' ? '*clic para solicitar visita técnica' : '*click to request a site visit'}
               </Link>
             </div>
           </BannerTemplate>
 
           {/* 3️⃣ BANNER — Mesas río / muebles exclusivos */}
           <BannerTemplate linkHref="/products">
-            <div className="relative h-full flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6">
+            <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6">
               <h2 className="text-md sm:text-xl font-light text-white">
                 {locale === 'es' ? 'Descubre nuestra' : 'Discover our'}
               </h2>
-              <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
                 {locale === 'es' ? 'COLECCIÓN ICÓNICA' : 'SIGNATURE COLLECTION'}
               </h1>
               <p className="mt-1 text-sm sm:text-base text-white">
