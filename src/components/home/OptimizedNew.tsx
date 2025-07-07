@@ -32,6 +32,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
     <div className="max-w-[1500px] mx-auto relative z-0 bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]
        hover:bg-[length:200%_100%] hover:bg-right
        transition-[background-size,background-position] duration-300">
+        <h1></h1>
         <Carousel>
           <BannerTemplate
             linkHref="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto%20a%20medida"

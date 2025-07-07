@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { Locale } from 'next-intl';
 import { ChangeEvent, ReactNode, useTransition } from 'react';
 import { usePathname, useRouter } from '@/i18n/navigation';
+import { Globe } from 'lucide-react';
 
 type Props = {
   children: ReactNode;
@@ -53,15 +54,16 @@ export default function LocaleSwitcherSelect({
         <Image src="/flags/en.svg" alt="English" width={20} height={20} />
       )}
     </span> */}
+     <Globe height={17} width={17} className="absolute left-2 top-1/2 transform -translate-y-1/2" />
           <select
-            className="inline-flex appearance-none bg-transparent py-2 px-4" // Ajusta el padding-left para dejar espacio al ícono
+            className="inline-flex appearance-none bg-transparent py-0.5 pl-6 pr-2 ml-0.5" // Ajusta el padding-left para dejar espacio al ícono
             defaultValue={defaultValue}
             disabled={isPending}
             onChange={onSelectChange}
           >
             {children}
           </select>
-          <span className="pointer-events-none absolute right-1 top-1/3 transform -translate-y-1/2">⌄</span>
+         
         </div>
       </label>
     </div>
