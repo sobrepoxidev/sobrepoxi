@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { Menu, X, User, ShoppingCart, ChevronDown, Globe, Package } from 'lucide-react';
+import { Menu, X, User, ShoppingCart, ChevronDown, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/context/CartContext';
@@ -13,6 +13,7 @@ import UserDropdown from '@/components/user/UserDropdown';
 import SearchBar from '@/components/search/SearchBar';
 import { getCategories } from '@/lib/categories';
 import CategoryCarousel from '@/components/search/CategoryCarousel';
+import LocaleSwitcher from '../LocaleSwitcher';
 
 type NavLink = {
   name: string;
@@ -149,16 +150,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
           <div className="hidden lg:flex items-center gap-4">
             <UserDropdown session={session} onLogout={handleLogout} />
             {/* Language selector */}
-            <button
-              onClick={() => {
-                const targetLocale = locale === 'es' ? 'en' : 'es';
-                router.replace(pathname, { locale: targetLocale });
-              }}
-              className="flex items-center space-x-1 text-sm text-white hover:bg-gray-950 p-1 rounded focus:outline-none"
-            >
-              <Globe className="h-4 w-4" />
-              <span>{locale === 'es' ? 'ES' : 'EN'}</span>
-            </button>
+            <LocaleSwitcher />
             {/* Cart */}
             <Link href="/cart" className="relative flex items-center text-white hover:bg-gray-950 p-1 rounded">
               <ShoppingCart className="h-5 w-5" />
@@ -196,16 +188,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         {/* Desktop action icons */}
         <div className="hidden">
           {/* Language selector */}
-          <button
-            onClick={() => {
-              const targetLocale = locale === 'es' ? 'en' : 'es';
-              router.replace(pathname, { locale: targetLocale });
-            }}
-            className="flex items-center space-x-1 text-sm text-white hover:bg-gray-950 p-1 rounded focus:outline-none"
-          >
-            <Globe className="h-4 w-4" />
-            <span>{locale === 'es' ? 'ES' : 'EN'}</span>
-          </button>
+         <LocaleSwitcher />
 
           {/* Cart */}
           <Link
@@ -271,19 +254,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
         </div>
 
         {/* Language selector - Implementado con next-intl */}
-        <button
-          onClick={() => {
-            // cargamos desde 0 toda la ruta cambiando el locale
-            router.replace(pathname, { locale: locale === 'es' ? 'en' : 'es' });
-            // forzamos un refresh de la pagina
-            window.location.reload();
-          }}
-          className="flex h-10 items-center space-x-1 rounded-md px-2 text-sm text-white transition hover:bg-gray-950"
-          aria-label={locale === 'es' ? 'Cambiar idioma' : 'Change language'}
-        >
-          <Globe className="h-4 w-4" />
-          <span>{locale === 'es' ? 'ES' : 'EN'}</span>
-        </button>
+        <LocaleSwitcher />
 
         {/* Cart */}
         <Link
