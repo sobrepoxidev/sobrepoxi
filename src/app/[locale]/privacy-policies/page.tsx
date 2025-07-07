@@ -15,7 +15,7 @@ export default async function PoliticaPrivacidadPage({ params }: { params: tPara
   return (
     <div className="min-h-screen bg-[#121212] py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-[#303030] shadow-lg rounded-lg overflow-hidden">
-        <div className="px-6 py-8 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-blue-50">
+        <div className="px-6 py-8 border-b border-gray-500 bg-gradient-to-br from-[#363636] via-[#121212] to-[#363636]">
           <h1 className="text-4xl font-extrabold gold-gradient-bright text-center mb-2">
             {locale === "es" ? "Política de Privacidad" : "Privacy policy"}
           </h1>
