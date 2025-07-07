@@ -206,7 +206,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 {inventory > 10 ? locale === 'es' ? 'En stock' : 'In stock' : `${inventory} ${locale === 'es' ? 'disponibles' : 'available'}`}
               </span>
             ) : (
-              <span className="text-red-600">{locale === 'es' ? 'Vendido' : 'Sold out'}</span>
+              <span className="text-[#121212]">{locale === 'es' ? 'Consulta vía WhatsAp' : 'Consult via WhatsApp'}</span>
             )}
           </p>
 
@@ -229,7 +229,7 @@ export default function ProductCard({ product }: { product: Product }) {
               </button>
             ) : (
               <a
-                href="https://wa.me/50685850000"
+                href={`https://wa.me/50685850000?text=Hola, me gustaría consultar sobre el producto: ${locale === 'es' ? product.name_es : product.name_en} (URL: https://sobrepoxi.com/product/${product.name})`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center p-1 rounded transition text-black border border-black hover:bg-black hover:text-white"
