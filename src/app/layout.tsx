@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     "empresas de pisos epóxicos",		
     "mantenimiento de pisos epóxicos",		
     // Core EN-US		
-    "epoxy flooring Costa Rica",		
-    "luxury resin furniture",		
+    "pios con  3d y vinilo epoxi", 		
+    "como hacer pisos epoxi", 		
     // Long-tail EN		
-    "epoxy floor contractors",		
-    "decorative epoxy floors"		
+    "pisos de resina epoxica cr",		
+    "resina epoxica cr"		
     ],
 
   // ——— Open Graph ———
