@@ -260,11 +260,11 @@ export default async function PoliticaPrivacidadPage({ params }: { params: tPara
             </p>
           </section>
 
-          <div className="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-200 text-center">
-            <p className="text-gray-300 font-medium">
+          <div className="mt-12 p-6 bg-[#121212] rounded-lg border border-gray-200 text-center">
+            <p className="text-gray-200 font-medium">
               {locale === "es" ? "Al utilizar nuestros servicios, usted reconoce que ha leído y comprendido esta Política de Privacidad." : "By using our services, you acknowledge that you have read and understood this Privacy Policy."}
             </p>
-            <p className="text-gray-300 mt-2">
+            <p className="text-gray-200 mt-2">
               {locale === "es" ? "Esta política está específicamente diseñada para un sistema minimalista de inicio de sesión que asocia su perfil únicamente con información básica como pedidos y preferencias." : "This policy is specifically designed for a minimal login system that associates your profile uniquely with basic information such as orders and preferences."}
             </p>
           </div>
