@@ -3,7 +3,7 @@
 
 import React from "react";
 import { createVCard } from "./actions";
-import { useEffect, useRef } from "react";d
+import { useEffect, useRef } from "react";
 
 const initialState: { error?: string; success?: boolean } = { error: undefined, success: false };
 
