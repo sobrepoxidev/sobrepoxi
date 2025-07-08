@@ -135,6 +135,18 @@ export type Database = {
         product_id: number;
         viewed_at: string;
     },
+    vcards: {
+        id: string; // UUID references auth.users(id) optional
+        user_id: string | null; // UUID, optional association to existing user
+        full_name: string;
+        email: string;
+        phone: string | null;
+        company: string | null;
+        job_title: string | null;
+        website: string | null;
+        notes: string | null;
+        created_at: string;
+    },
     user_profiles: {
         id: string; // UUID references auth.users(id)
         full_name: string | null;
