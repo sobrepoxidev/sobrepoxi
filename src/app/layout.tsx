@@ -83,12 +83,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   // En Next 15 no es obligatorio envolver con <html>, 
   // porque un layout anidado (el de locale) ya lo hace.
   return (
-    <html lang="es">
-      <body>
         <Suspense>
           <CartProvider>{children}</CartProvider>
         </Suspense>
-      </body>
-    </html>
   );
 }

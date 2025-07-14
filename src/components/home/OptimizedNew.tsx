@@ -41,18 +41,18 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
               className="
                 relative
                 grid grid-cols-1 md:grid-cols-2
-                items-center gap-4 md:gap-6
-                px-6 md:px-30 py-0.5 sm:py-6
+                items-center justify-center gap-4 md:gap-6
+                px-2 md:px-30 py-0.5 sm:py-6 h-[100%]
               "
             >
               {/* Columna 1 — texto */}
               <div className="max-w-[100%] text-center md:text-left">
-                <h1 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] leading-[1.2] ">
+                <h1 className=" text-lg sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] leading-[1.2] ">
                   {locale === 'es'
                     ? 'MUEBLES DE RESINA Y PISOS EPÓXICOS EN COSTA RICA'
                     : 'EPOXY RESIN FURNITURE AND FLOORING IN COSTA RICA'}
                 </h1>
-                <p className="mt-0 sm:mt-1 text-start text-xs sm:text-base text-white ">
+                <p className="mt-0 sm:mt-1 text-start text-xs sm:text-base text-white  indent-2">
                   {locale === 'es'
                     ? 'Habla ahora con nuestro equipo por WhatsApp'
                     : 'Chat with our team on WhatsApp'}
@@ -94,11 +94,11 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
 
           {/* 2️⃣ BANNER — Pisos epóxicos artísticos */}
           <BannerTemplate linkHref="/contact">
-            <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6">
+            <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6 h-[100%]">
               <h3 className="text-md sm:text-2xl font-light text-white">
                 {locale === 'es' ? 'Pisos epóxicos de lujo' : 'Luxury Epoxy Floors'}
               </h3>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 py-0 sm:mt-1">
+              <h2 className="text-xl sm:text-3xl font-extrabold tracking-wide gold-gradient-bright drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] mt-0 py-0 sm:mt-1">
                 {locale === 'es' ? 'Efecto 3D, vinilo y madera' : '3D EFFECT, VINYL AND WOOD'}
               </h2>
               <p className="mt-1 py-0 text-[0.73rem] sm:text-base text-white max-w-lg">
@@ -115,7 +115,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
 
           {/* 3️⃣ BANNER — Mesas río / muebles exclusivos */}
           <BannerTemplate linkHref="/products">
-            <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6">
+            <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6 ">
               <h3 className="text-md sm:text-xl font-light text-white">
                 {locale === 'es' ? 'Descubre nuestra' : 'Discover our'}
               </h3>
