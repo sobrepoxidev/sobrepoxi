@@ -334,21 +334,21 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                           <p className="text-sm text-gray-800 line-clamp-2 mb-2">{product.highlight}</p>
                         )}
                         <div className="flex items-center justify-between">
-                          <p className="font-bold text-[#303030]">
+                          <div className="font-bold text-[#303030]">
                             {product.dolar_price ? <div>
                               {product.discount_percentage ? (
                                 <div className="mb-2">
-                                  <p className="text-sm sm:text-lg font-bold text-green-700">
+                                  <span className="text-sm sm:text-lg font-bold text-green-700">
                                     {formatUSD(product.dolar_price * (1 - product.discount_percentage / 100))}
-                                  </p>
-                                  <p className="text-[0.6rem] sm:text-sm text-green-600 line-through">
+                                  </span>
+                                  <span className="text-[0.6rem] sm:text-sm text-green-600 line-through">
                                     {formatUSD(product.dolar_price || 0)}
-                                  </p>
+                                  </span>
                                 </div>
                               ) : (
-                                <p className="text-sm sm:text-lg font-bold text-black mb-2">
+                                <span className="text-sm sm:text-lg font-bold text-black mb-2">
                                   {formatUSD(product.dolar_price || 0)}
-                                </p>
+                                </span>
                               )}
                             </div> : (
                               <Link
@@ -367,7 +367,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
                                 </svg>
                               </Link>
                             )}
-                          </p>
+                          </div>
                           <span className="text-[#303030] text-[0.5rem] sm:text-xs px-1 py-0.5 rounded-full  border border-[#303030]">
                             {locale === 'es' ? 'SobrePoxi' : 'SobrePoxi'}
                           </span>
