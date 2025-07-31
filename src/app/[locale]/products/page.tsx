@@ -58,8 +58,8 @@ export async function generateMetadata({
   });
 }
 
-export default async function ProductsPage({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function ProductsPage({ params }: { params: tParams }) {
+  const { locale } = await params;
   
   return (
     <>
