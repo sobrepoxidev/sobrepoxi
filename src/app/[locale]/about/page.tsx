@@ -194,17 +194,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         </div>
       </section>
     </div>
-    <AboutSchema locale={locale} />
-    </>
-  );
-}
-
-/* ====================================================================== */
-/*  SCHEMA.ORG MARKUP                                                    */
-/* ====================================================================== */
-export function AboutSchema({ locale }: { locale: string }) {
-  return (
-    <Script id="ld-organization" type="application/ld+json">
+     <Script id="ld-organization" type="application/ld+json">
       {JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
@@ -243,8 +233,14 @@ export function AboutSchema({ locale }: { locale: string }) {
         ]
       })}
     </Script>
+    </>
   );
 }
+
+/* ====================================================================== */
+/*  SCHEMA.ORG MARKUP                                                    */
+/* ====================================================================== */
+
 
 /* ╭─────────────────────────── Helpers ─────────────────────────────╮ */
 
