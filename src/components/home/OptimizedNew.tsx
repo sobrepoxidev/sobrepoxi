@@ -92,7 +92,7 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
           </BannerTemplate>
 
 
-          {/* 2️⃣ BANNER — Pisos epóxicos artísticos */}
+          {/* 2️⃣ BANNER — Pisos epóxicos de diseño */}
           <BannerTemplate linkHref="/contact">
             <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-6 py-0 sm:py-6 h-[100%]">
               <h3 className="text-md sm:text-2xl font-light text-white">

@@ -8,7 +8,9 @@
  * ----------------------------------------------------------------------- */
 
 import Link                      from "next/link";
+
 import Image                     from "next/image";
+import Script                    from "next/script";
 import type { Metadata }         from "next";
 import { buildTitle, getCommonMetadata } from "@/lib/seo";
 
@@ -36,6 +38,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
 
   /* ------------------------------------------------------------------- */
   return (
+    <>
     <div className="min-h-screen bg-[#121212]">
 
       {/* ╭──────────────────────── Hero ───────────────────────────────╮ */}
@@ -191,6 +194,55 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         </div>
       </section>
     </div>
+    <AboutSchema locale={locale} />
+    </>
+  );
+}
+
+/* ====================================================================== */
+/*  SCHEMA.ORG MARKUP                                                    */
+/* ====================================================================== */
+export function AboutSchema({ locale }: { locale: string }) {
+  return (
+    <Script id="ld-organization" type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://sobrepoxi.com/#organization",
+        "name": "SobrePoxi",
+        "url": "https://sobrepoxi.com",
+        "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
+        "description": locale === "es" 
+          ? "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU."
+          : "Luxury furniture in wood and resin, and designer & industrial epoxy floors. Projects in Costa Rica and USA.",
+        "foundingDate": "2018",
+        "founders": [
+          {
+            "@type": "Person",
+            "name": "Bryam Mora"
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "CR",
+          "addressRegion": "San José",
+          "addressLocality": "San José",
+          "postalCode": "10001"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+50685850000",
+          "contactType": "customer service",
+          "availableLanguage": ["Spanish", "English"]
+        },
+        "sameAs": [
+          "https://www.facebook.com/share/14EpJLUsXwc/",
+          "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
+          "https://www.youtube.com/@sobrepoxi",
+          "https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
+        ]
+      })}
+    </Script>
   );
 }
 

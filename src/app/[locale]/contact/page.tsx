@@ -13,6 +13,7 @@ import { Suspense }                 from "react";
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
 import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 
 import type { Metadata }            from "next";
 import { buildTitle, getCommonMetadata } from "@/lib/seo";
@@ -198,6 +199,56 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
         </section>
       </div>
+       <Script id="ld-contact-localbusiness" type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://sobrepoxi.com/#sobrepoxi",
+        "name": "SobrePoxi",
+        "description": locale === "es" 
+          ? "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU."
+          : "Luxury furniture in wood and resin, and designer & industrial epoxy floors. Projects in Costa Rica and USA.",
+        "url": "https://sobrepoxi.com",
+        "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
+        "areaServed": ["CR", "US"],
+        "telephone": "+50685850000",
+        "email": "info@sobrepoxi.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "CR",
+          "addressRegion": "San José",
+          "addressLocality": "San José",
+          "postalCode": "10001"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 9.9355431, "longitude": -84.1545449 },
+        "hasMap": "https://maps.app.goo.gl/6HMDWY7bBbwdS3rN7",
+        "sameAs": [
+          "https://www.facebook.com/share/14EpJLUsXwc/",
+          "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
+          "https://www.youtube.com/@sobrepoxi",
+          "https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "17:00"
+          }
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+50685850000",
+            "contactType": "customer service",
+            "availableLanguage": ["Spanish", "English"]
+          }
+        ]
+      })}
+    </Script>
     </Suspense>
+
+
+   
   );
 }

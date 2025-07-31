@@ -22,8 +22,8 @@ export default function Footer({ locale }: { locale: string }) {
             </div>
             <p className="text-gray-300 text-sm text-center">
               {locale === 'es'
-                ? 'Muebles de lujo y pisos epóxicos artísticos, hechos en Costa Rica'
-                : 'Luxury furniture and artistic epoxy floors handcrafted in Costa Rica'}
+                ? 'Muebles de lujo y pisos epóxicos de diseño, hechos en Costa Rica'
+                : 'Luxury furniture and designer epoxy floors handcrafted in Costa Rica'}
             </p>
           </div>
 

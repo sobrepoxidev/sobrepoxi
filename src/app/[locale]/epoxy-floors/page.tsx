@@ -8,6 +8,7 @@
 
 import Image from "next/image";
 import Link  from "next/link";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { buildTitle, getCommonMetadata } from "@/lib/seo";
 
@@ -160,6 +161,47 @@ export default async function EpoxyFloorsPage(
           {t.ctaVisit}
         </Link>
       </section>
+      <Script id="ld-epoxy-service" type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Artistic Epoxy Floors",
+        "provider": {
+          "@type": "LocalBusiness",
+          "name": "Sobrepoxi"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Costa Rica"
+        },
+        "description": locale === "es" 
+          ? "Instalamos pisos epóxicos de lujo con diseños únicos: efecto mármol, agua, galaxias y más. Servicio llave en mano en Costa Rica y EE. UU."
+          : "We install luxury artistic epoxy floors – marble, water, galaxy effects & more. Turn-key service in Costa Rica and the US.",
+        "offers": {
+          "@type": "Offer",
+          "areaServed": "Costa Rica"
+        },
+        "category": ["Artistic Flooring", "Epoxy Floors", "Luxury Flooring", "Decorative Floors"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Artistic Epoxy Flooring Options",
+          "itemListElement": [
+            {
+              "@type": "OfferCatalog",
+              "name": "Marble Effect Epoxy"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Water Effect Epoxy"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Galaxy Effect Epoxy"
+            }
+          ]
+        }
+      })}
+    </Script>
     </main>
   );
 }

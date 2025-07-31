@@ -81,7 +81,7 @@ export default async function LocaleLayout({
             "@type": "HomeAndConstructionBusiness",
             "@id": "https://sobrepoxi.com/#sobrepoxi",
             "name": "SobrePoxi",
-            "description": "Muebles de lujo en madera y resina, y pisos epóxicos artísticos. Proyectos en Costa Rica y EE. UU.",
+            "description": "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU.",
             "url": "https://sobrepoxi.com",
             "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
             "areaServed": ["CR", "US"],

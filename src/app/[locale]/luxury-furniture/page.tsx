@@ -1,6 +1,7 @@
 // src/app/[locale]/luxury-furniture/page.tsx
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 
 import { Metadata } from 'next';
 
@@ -11,10 +12,12 @@ export async function generateMetadata({ params }: { params: ParamsPromise }): P
   const { locale } = await params;
 
   return {
-    title: locale === 'es' ? 'Muebles de Lujo | SobrePoxi' : 'Luxury Furniture | SobrePoxi',
+    title: locale === 'es' 
+      ? 'Muebles de Lujo en Resina y Madera para Hogares y Proyectos Comerciales | SobrePoxi' 
+      : 'Luxury Resin and Wood Furniture for Homes and Commercial Projects | SobrePoxi',
     description: locale === 'es' 
-      ? 'Piezas únicas de mobiliario artesanal en madera y resina epóxica. Diseños exclusivos que transforman espacios en experiencias.' 
-      : 'Unique handcrafted furniture in wood and epoxy resin. Exclusive designs that transform spaces into experiences.',
+      ? 'Diseñamos muebles de lujo en resina epóxica y madera para residencias, hoteles y oficinas en Costa Rica. Mesas river, escritorios y piezas personalizadas.' 
+      : 'We design luxury epoxy resin and wood furniture for residences, hotels, and offices in Costa Rica. River tables, desks, and custom pieces.',
     openGraph: {
       images: ['/images/og-luxury-furniture.jpg'],
     },
@@ -60,8 +63,49 @@ export default async function LuxuryFurniturePage({ params }: { params: ParamsPr
           ? "Construidos para durar generaciones con el cuidado adecuado." 
           : "Built to last for generations with proper care.",
         icon: "🛡️"
+      },
+      {
+        title: locale === "es" ? "Calidad Comercial" : "Contract Quality",
+        description: locale === "es" 
+          ? "Construcción reforzada y acabados duraderos para uso comercial de alto tráfico." 
+          : "Reinforced construction and durable finishes for high-traffic commercial use.",
+        icon: "🏢"
       }
     ],
+    
+    // Sección para proyectos comerciales
+    commercialT: locale === "es" ? "Muebles para Proyectos Comerciales y Hoteleros" : "Furniture for Commercial and Hospitality Projects",
+    commercialDesc: locale === "es"
+      ? "Entendemos las necesidades de durabilidad y diseño de los sectores hotelero y corporativo. Creamos piezas visualmente impactantes construidas para uso continuo que reflejan la identidad de su marca."
+      : "We understand the durability and design needs of the hospitality and corporate sectors. We create visually impactful pieces built for continuous use that reflect your brand identity.",
+    applications: [
+      {
+        title: locale === "es" ? "Hoteles Boutique" : "Boutique Hotels",
+        icon: "🏨"
+      },
+      {
+        title: locale === "es" ? "Restaurantes y Cafés" : "Restaurants & Cafés",
+        icon: "🍽️"
+      },
+      {
+        title: locale === "es" ? "Recepciones Personalizadas" : "Custom Reception Desks",
+        icon: "💼"
+      },
+      {
+        title: locale === "es" ? "Salas de Reuniones" : "Meeting Rooms",
+        icon: "🤝"
+      },
+      {
+        title: locale === "es" ? "Espacios Comerciales" : "Commercial Spaces",
+        icon: "🏪"
+      }
+    ],
+    commercialTestimonial: {
+      quote: locale === "es"
+        ? "Los muebles de SobrePoxi han transformado completamente el lobby de nuestro hotel. Nuestros huéspedes constantemente comentan sobre la belleza y originalidad de las piezas."
+        : "SobrePoxi's furniture has completely transformed our hotel lobby. Our guests constantly comment on the beauty and originality of the pieces.",
+      author: locale === "es" ? "María Rodríguez, Gerente de Hotel Boutique" : "Maria Rodriguez, Boutique Hotel Manager"
+    },
 
     // Sección 2: Proceso
     processT: locale === "es" ? "Nuestro proceso artesanal" : "Our Artisanal Process",
@@ -117,19 +161,18 @@ export default async function LuxuryFurniturePage({ params }: { params: ParamsPr
       <section className="relative overflow-hidden pb-12 pt-2 sm:pt-28">
         <Image
           src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp"
-          alt="Luxury furniture hero"
+          alt="River table made of epoxy resin and Guanacaste wood, luxury furniture made in Costa Rica"
           fill
           priority
           className="object-contain opacity-30"
-          unoptimized
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
-          <span className="inline-block mb-4 rounded-full bg-gold-gradient-50 text-gray-300 px-4 py-1 text-sm font-medium">
+          <h1 className="inline-block mb-4 rounded-full bg-gold-gradient-50 text-gray-300 px-4 py-1 text-sm font-medium">
             {t.heroTag}
-          </span>
-          <h1 className="text-4xl py-1.5 sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4 max-sm:mt-2">
-            {t.heroTitle}
           </h1>
+          <p className="text-4xl py-1.5 sm:text-5xl lg:text-6xl font-extrabold tracking-tight gold-gradient-bright mb-4 max-sm:mt-2">
+            {t.heroTitle}
+          </p>
           <p className="text-lg max-w-xl text-gray-300 mb-8">
             {t.heroSub}
           </p>
@@ -147,7 +190,7 @@ export default async function LuxuryFurniturePage({ params }: { params: ParamsPr
         <h2 className="text-center text-3xl font-bold gold-gradient-bright mb-10">
           {t.section1T}
         </h2>
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {t.advantages.map((advantage, index) => (
             <div key={index} className="bg-[#1a1a1a] p-6 rounded-xl hover:bg-[#222] transition-colors">
               <div className="text-4xl mb-4">{advantage.icon}</div>
@@ -155,6 +198,55 @@ export default async function LuxuryFurniturePage({ params }: { params: ParamsPr
               <p className="text-gray-300">{advantage.description}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Commercial and Hospitality Section */}
+      <section className="py-2 sm:py-8 bg-[#181818]">
+        <h2 className="text-center text-3xl font-bold gold-gradient-bright mb-6">
+          {t.commercialT}
+        </h2>
+        <div className="max-w-4xl mx-auto px-4 text-center mb-10">
+          <p className="text-lg text-gray-300">
+            {t.commercialDesc}
+          </p>
+        </div>
+        
+        {/* Applications */}
+        <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+          {t.applications.map((app, index) => (
+            <div key={index} className="bg-[#1a1a1a] p-4 rounded-xl text-center hover:bg-[#222] transition-colors">
+              <div className="text-4xl mb-2">{app.icon}</div>
+              <h3 className="text-lg font-bold text-white">{app.title}</h3>
+            </div>
+          ))}
+        </div>
+        
+        {/* Commercial Gallery Placeholder */}
+        <div className="max-w-6xl mx-auto px-4 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-[#1a1a1a] aspect-video rounded-xl flex items-center justify-center">
+              <p className="text-gray-400">{locale === "es" ? "Mesa de conferencias" : "Conference table"}</p>
+            </div>
+            <div className="bg-[#1a1a1a] aspect-video rounded-xl flex items-center justify-center">
+              <p className="text-gray-400">{locale === "es" ? "Mostrador de recepción" : "Reception desk"}</p>
+            </div>
+            <div className="bg-[#1a1a1a] aspect-video rounded-xl flex items-center justify-center">
+              <p className="text-gray-400">{locale === "es" ? "Mesas de restaurante" : "Restaurant tables"}</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Testimonial */}
+        <div className="max-w-4xl mx-auto px-4">
+          <blockquote className="bg-[#1a1a1a] p-6 rounded-xl border-l-4 border-[#b68b44]">
+            <p className="text-lg italic text-gray-300 mb-4">
+              {t.commercialTestimonial.quote}
+            </p>
+            <footer className="text-right text-gray-400">
+              — {t.commercialTestimonial.author}
+            </footer>
+          </blockquote>
         </div>
       </section>
 
@@ -189,11 +281,69 @@ export default async function LuxuryFurniturePage({ params }: { params: ParamsPr
         </h2>
         <Link
           href="/contact"
-          className="inline-block gold-gradient text-black font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-all"
+          className="inline-block bg-gold-gradient text-black font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-all"
         >
           {t.ctaButton}
         </Link>
       </section>
+       <Script id="ld-furniture-product" type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": locale === "es" ? "Muebles de Lujo en Resina y Madera" : "Luxury Resin and Wood Furniture",
+        "brand": {
+          "@type": "Brand",
+          "name": "Sobrepoxi"
+        },
+        "manufacturer": {
+          "@type": "Organization",
+          "name": "Sobrepoxi",
+          "areaServed": {
+            "@type": "Country",
+            "name": "Costa Rica"
+          }
+        },
+        "description": locale === "es" 
+          ? "Diseñamos muebles de lujo en resina epóxica y madera para residencias, hoteles y oficinas en Costa Rica. Mesas river, escritorios y piezas personalizadas."
+          : "We design luxury epoxy resin and wood furniture for residences, hotels, and offices in Costa Rica. River tables, desks, and custom pieces.",
+        "material": "Epoxy Resin, Wood",
+        "offers": {
+          "@type": "AggregateOffer",
+          "areaServed": "Costa Rica",
+          "availability": "https://schema.org/PreOrder"
+        },
+        "category": ["Luxury Furniture", "Epoxy Resin Furniture", "Custom Furniture", "Contract Furniture", "Hospitality Furniture"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Luxury Furniture Collection",
+          "itemListElement": [
+            {
+              "@type": "OfferCatalog",
+              "name": "River Tables"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Hospitality Furniture"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Custom Reception Desks"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Conference Tables"
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Decorative Furniture Pieces"
+            }
+          ]
+        }
+      })}
+    </Script>
     </main>
+
+   
+   
   );
 }
