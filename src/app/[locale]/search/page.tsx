@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { getCommonMetadata, buildTitle } from "@/lib/seo";
 
-type tParams = Promise<{ locale: string }>;
+type tParams = Promise<{ locale: string, q: string }>;
 
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
   const { locale } = await params;
@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   };
 }
 
-export default async function SearchPage({ params, searchParams }: { params: tParams, searchParams: { q?: string } }) {
-    const { locale } = await params;
-    const { q = '' } = searchParams;
+export default async function SearchPage({ params }: { params: tParams }) {
+    const { locale, q='' } = await params;
+  
     
     return (
       <div className="bg-[#121212]">
