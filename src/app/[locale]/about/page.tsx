@@ -23,9 +23,18 @@ export async function generateMetadata(
 
   const { locale } = await params;
 
-  return {
-    title: buildTitle(locale === "es" ? "Sobre SobrePoxi" : "About SobrePoxi"),
-    ...getCommonMetadata(locale),
+  const title = locale === "es" 
+    ? "Sobre Nosotros: Expertos en Pisos Epóxicos y Muebles de Lujo en Costa Rica" 
+    : "About Us: Experts in Epoxy Floors & Luxury Furniture in Costa Rica"; 
+
+  const description = locale === "es" 
+    ? "Conoce la historia de SobrePoxi. Desde pisos industriales de alto rendimiento hasta muebles de diseño y pisos de lujo, fusionamos ingeniería y arte en cada proyecto." 
+    : "Learn about SobrePoxi's story. From high-performance industrial floors to designer furniture and luxury flooring, we merge engineering and art in every project."; 
+
+  return { 
+    title,
+    description, 
+    ...getCommonMetadata(locale), 
   };
 }
 
@@ -52,11 +61,11 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
             </span>
 
             <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight gold-gradient-bright">
-              {locale === "es" ? "Sobre SobrePoxi" : "About SobrePoxi"}
+              {locale === "es" ? "Fusionando Arte e Ingeniería" : "Fusing Art and Engineering"}
             </h1>
 
             <p className="mb-6 text-lg text-gray-300">
-              {locale === "es" ? "Fusionamos maderas nobles y resina epóxica de grado marino para crear muebles escultóricos y pisos artísticos que transforman espacios residenciales y comerciales." : "We fuse fine woods with marine-grade epoxy resin to craft sculptural furniture and artistic floors that elevate residential and commercial spaces."}
+              {locale === "es" ? "En SobrePoxi, unimos dos mundos: la precisión de la ingeniería para crear pisos industriales de máxima durabilidad y la sensibilidad del arte para diseñar pisos y muebles de lujo que se convierten en el alma de un espacio. Con sede en Costa Rica, nuestra pasión es transformar materiales en experiencias únicas." : "At SobrePoxi, we unite two worlds: the precision of engineering to create maximum-durability industrial floors, and the sensitivity of art to design luxury floors and furniture that become the soul of a space. Based in Costa Rica, our passion is to transform materials into unique experiences."}
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
@@ -88,8 +97,101 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         </div>
       </section>
 
+      {/* ╭────────────────────── Our 3 Areas of Specialization ─────────────────────╮ */}
+      <section className="py-16 bg-[#121212]">
+        <SectionTitle>
+          {locale === "es" ? "Un Portafolio, Tres Especialidades" : "One Portfolio, Three Specialties"}
+        </SectionTitle>
+        
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8">
+          {/* Luxury & Design Flooring */}
+          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
+            <div className="h-48 overflow-hidden">
+              <Image 
+                src="/home/luxury-floor.webp" 
+                alt={locale === "es" ? "Piso epóxico de lujo" : "Luxury epoxy floor"}
+                width={400}
+                height={300}
+                className="w-full h-full object-cover transition-transform hover:scale-105"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {locale === "es" ? "Pisos de Lujo y Diseño" : "Luxury & Design Flooring"}
+              </h3>
+              <p className="text-gray-300 mb-4">
+                {locale === "es" ? "Superficies artísticas que definen residencias y espacios comerciales con acabados tipo mármol, metálicos y personalizados." : "Artistic surfaces that define residences and commercial spaces with marble-like, metallic, and custom finishes."}
+              </p>
+              <Link
+                href="/luxury-design-flooring"
+                className="inline-block bg-gold-gradient-90 hover:bg-gold-gradient-bright text-black font-medium px-4 py-2 rounded-md transition"
+              >
+                {locale === "es" ? "Ver Diseños" : "View Designs"}
+              </Link>
+            </div>
+          </div>
+
+          {/* Industrial & Commercial Flooring */}
+          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
+            <div className="h-48 overflow-hidden">
+              <Image 
+                src="/home/industrial-floor.webp" 
+                alt={locale === "es" ? "Piso epóxico industrial" : "Industrial epoxy floor"}
+                width={400}
+                height={300}
+                className="w-full h-full object-cover transition-transform hover:scale-105"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {locale === "es" ? "Pisos Industriales y Comerciales" : "Industrial & Commercial Flooring"}
+              </h3>
+              <p className="text-gray-300 mb-4">
+                {locale === "es" ? "Soluciones de alto rendimiento para almacenes, plantas de grado alimenticio y talleres. Durabilidad, seguridad y cumplimiento normativo." : "High-performance solutions for warehouses, food-grade plants, and workshops. Durability, safety, and compliance."}
+              </p>
+              <Link
+                href="/industrial-epoxy-flooring"
+                className="inline-block bg-gold-gradient-90 hover:bg-gold-gradient-bright text-black font-medium px-4 py-2 rounded-md transition"
+              >
+                {locale === "es" ? "Ver Soluciones Técnicas" : "See Technical Solutions"}
+              </Link>
+            </div>
+          </div>
+
+          {/* Luxury Furniture & Resin */}
+          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
+            <div className="h-48 overflow-hidden">
+              <Image 
+                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp" 
+                alt={locale === "es" ? "Mesa de río en madera y resina" : "River table in wood and resin"}
+                width={400}
+                height={300}
+                className="w-full h-full object-cover transition-transform hover:scale-105"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {locale === "es" ? "Muebles de Lujo y Resina" : "Luxury Furniture & Resin"}
+              </h3>
+              <p className="text-gray-300 mb-4">
+                {locale === "es" ? "Piezas centrales hechas a mano que combinan maderas nobles y resina epóxica para proyectos residenciales y de hospitalidad." : "Handcrafted centerpieces combining noble woods and epoxy resin for residential and hospitality projects."}
+              </p>
+              <Link
+                href="/luxury-furniture"
+                className="inline-block bg-gold-gradient-90 hover:bg-gold-gradient-bright text-black font-medium px-4 py-2 rounded-md transition"
+              >
+                {locale === "es" ? "Descubrir Muebles" : "Discover Furniture"}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ╭────────────────────── Feature Highlights ─────────────────────╮ */}
       <section className="py-12 bg-[#121212]">
+        <SectionTitle>
+          {locale === "es" ? "Nuestro Compromiso con la Calidad" : "Our Commitment to Quality"}
+        </SectionTitle>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8">
 
           {/* Design + Engineering */}
@@ -203,8 +305,8 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         "url": "https://sobrepoxi.com",
         "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
         "description": locale === "es" 
-          ? "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU."
-          : "Luxury furniture in wood and resin, and designer & industrial epoxy floors. Projects in Costa Rica and USA.",
+          ? "En SobrePoxi, unimos dos mundos: la precisión de la ingeniería para crear pisos industriales de máxima durabilidad y la sensibilidad del arte para diseñar pisos y muebles de lujo que se convierten en el alma de un espacio. Con sede en Costa Rica, nuestra pasión es transformar materiales en experiencias únicas."
+          : "At SobrePoxi, we unite two worlds: the precision of engineering to create maximum-durability industrial floors, and the sensitivity of art to design luxury floors and furniture that become the soul of a space. Based in Costa Rica, our passion is to transform materials into unique experiences.",
         "foundingDate": "2018",
         "founders": [
           {
@@ -228,7 +330,6 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         "sameAs": [
           "https://www.facebook.com/share/14EpJLUsXwc/",
           "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
-          "https://www.youtube.com/@sobrepoxi",
           "https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
         ]
       })}
