@@ -125,7 +125,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             <Link href="/" target='_self' className="flex items-center gap-2">
               <Image
                               src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                              alt="Hand Made Art Logo"
+                              alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
                               width={130}
                               height={0}
                               className="w-[130px] h-[75px] object-fill ml-1.5"

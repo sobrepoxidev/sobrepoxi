@@ -50,7 +50,7 @@ export default async function Navbar({ locale }: { locale: string }) {
               </div> */}
               <Image
                 src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                alt="Hand Made Art Logo"
+                alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
                 width={70}
                 height={0}
                 className="w-[70px] h-[43px] md:w-[65px] md:h-[65px] object-fill ml-1.5"

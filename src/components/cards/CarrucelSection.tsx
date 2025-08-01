@@ -190,7 +190,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                   width={150}
                   height={150}
                   className="object-contain max-h-full"
-                  unoptimized
+               
                 />
               </div>
               {/* No product name or price shown, just like Amazon's carousel */}
@@ -236,7 +236,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                       width={100}
                       height={100}
                       className="object-contain max-h-full"
-                      unoptimized
+                   
                     />
                   </div>
                   <p className="text-xs truncate px-2 pb-1 text-gray-700">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>
@@ -265,7 +265,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
                       width={100}
                       height={100}
                       className="object-contain max-h-full"
-                      unoptimized
+              
                     />
                   </div>
                   <p className="text-xs truncate px-2 pb-1">{locale === 'es' ? product.name_es : product.name_en || product.name}</p>

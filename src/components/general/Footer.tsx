@@ -12,7 +12,7 @@ export default function Footer({ locale }: { locale: string }) {
             <div className="flex items-center">
             <Image
                 src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                alt="Logo"
+                alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
                 width={350}
                 height={300}
                 className="w-40 h-32"
