@@ -333,6 +333,20 @@ export default async function LuxuryDesignFlooringPage(
         </div>
       </section>
 
+      {/* ╭────────────────── Educational Comparison Section ────────────────────╮ */}
+      <section className="py-16 bg-[#121212]">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold gold-gradient-bright mb-6">
+            {locale === "es" ? "La Evolución del Piso: Más Allá de la Cerámica y el Vinil" : "The Evolution of Flooring: Beyond Ceramic & Vinyl"}
+          </h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            {locale === "es"
+              ? "¿Cansado de limpiar juntas sucias o rayones? Nuestros pisos epóxicos son monolíticos, 100% impermeables y fáciles de limpiar. Son la solución definitiva en estética moderna y durabilidad."
+              : "Tired of dirty grout or scratches? Our epoxy floors are seamless, waterproof, and easy to clean. The ultimate solution for modern aesthetics and lasting durability."}
+          </p>
+        </div>
+      </section>
+
       {/* ╭────────────────── Testimonials ────────────────────╮ */}
       <section className="py-16 bg-[#121212]">
         <div className="max-w-4xl mx-auto px-4">
@@ -352,6 +366,49 @@ export default async function LuxuryDesignFlooringPage(
                   <p className="font-semibold gold-gradient-bright">{testimonial.author}</p>
                   <p className="text-gray-400 text-sm">{testimonial.role}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ╭────────────────── FAQ Comparison Section ────────────────────╮ */}
+      <section className="py-16 bg-[#181818]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl font-bold gold-gradient-bright text-center mb-12">
+            {locale === "es" ? "Preguntas Frecuentes" : "Frequently Asked Questions"}
+          </h2>
+          
+          {/* FAQ Accordion */}
+          <div className="space-y-4">
+            {[
+              {
+                question: locale === "es" ? "¿Es más caro que la cerámica?" : "Is epoxy flooring more expensive than tile?",
+                answer: locale === "es"
+                  ? "La inversión puede ser similar o mayor que porcelanato de gama alta, pero su durabilidad y bajo mantenimiento lo hacen una mejor inversión a largo plazo."
+                  : "The cost may be comparable or higher than high-end tile, but its durability and low maintenance make it a smarter long-term investment."
+              },
+              {
+                question: locale === "es" ? "¿Qué tan resistente es comparado con vinil?" : "How durable is it compared to vinyl?",
+                answer: locale === "es"
+                  ? "Mucho más resistente. La resina epóxica está basada en tecnología industrial, resiste impactos, abrasión y químicos que dañarían vinil o laminado."
+                  : "Far more durable. Epoxy is based on industrial tech—resists impacts, abrasion, and chemicals that would damage vinyl or laminate."
+              },
+            ].map((faq, idx) => (
+              <div key={idx} className="bg-[#1e1e1e] rounded-lg overflow-hidden">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold gold-gradient-bright">{faq.question}</h3>
+                    <span className="text-gold-500 transition-transform group-open:rotate-180">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 text-gray-300">
+                    <p>{faq.answer}</p>
+                  </div>
+                </details>
               </div>
             ))}
           </div>
@@ -409,6 +466,35 @@ export default async function LuxuryDesignFlooringPage(
             }
           ]
         }
+      })}
+    </Script>
+
+    <Script id="luxury-faq-schema" type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": locale === "es" ? "¿Es más caro que la cerámica?" : "Is epoxy flooring more expensive than tile?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": locale === "es"
+                ? "La inversión puede ser similar o mayor que porcelanato de gama alta, pero su durabilidad y bajo mantenimiento lo hacen una mejor inversión a largo plazo."
+                : "The cost may be comparable or higher than high-end tile, but its durability and low maintenance make it a smarter long-term investment."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": locale === "es" ? "¿Qué tan resistente es comparado con vinil?" : "How durable is it compared to vinyl?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": locale === "es"
+                ? "Mucho más resistente. La resina epóxica está basada en tecnología industrial, resiste impactos, abrasión y químicos que dañarían vinil o laminado."
+                : "Epoxy resists impacts, abrasion, and chemicals—far beyond what vinyl or laminate can handle."
+            }
+          }
+        ]
       })}
     </Script>
     </main>
