@@ -75,13 +75,13 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                       router.push(`/login?returnUrl=${fullPath}`);
                       setIsOpen(false);
                     }}
-                    className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition"
+                    className="block w-full text-center px-4 py-2 text-sm font-medium text-black bg-gold-gradient hover:bg-teal-700 rounded-md transition"
                   >
                     {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
                   </button>
                 </div>
                 <div className="text-center text-sm mt-2">
-                  <span className="text-gray-600">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
+                  <span className="gold-gradient-bright">{locale === 'es' ? '¿Eres nuevo?' : 'Are you new?'}</span>{' '}
                   <button
                     onClick={() => {
                       const fullPath = window.location.pathname + window.location.search;
