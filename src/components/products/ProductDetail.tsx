@@ -498,7 +498,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                 </button>
               ) : (
                 <Link 
-                  href={`https://wa.me/50684237555?text=${encodeURIComponent(
+                  href={`https://wa.me/5068585000?text=${encodeURIComponent(
                     locale === 'es' ? 'Hola, estoy interesado en el producto: ' + product?.name_es + ' (' + window.location.href + ')' : 'Hello, I am interested in the product: ' + product?.name_en + ' (' + window.location.href + ')'
                   )}`}
                   target="_blank"
