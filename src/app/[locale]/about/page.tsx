@@ -316,10 +316,11 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         ],
         "address": {
           "@type": "PostalAddress",
-          "addressCountry": "CR",
-          "addressRegion": "San José",
-          "addressLocality": "San José",
-          "postalCode": "10001"
+          "streetAddress": "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
+          "addressLocality": "Vásquez de Coronado",
+          "addressRegion": "San Isidro",
+          "postalCode": "11101",
+          "addressCountry": "CR"
         },
         "contactPoint": {
           "@type": "ContactPoint",

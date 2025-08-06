@@ -1,5 +1,5 @@
 import { Link } from '@/i18n/navigation';
-import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer({ locale }: { locale: string }) {
@@ -153,6 +153,22 @@ export default function Footer({ locale }: { locale: string }) {
                 </svg>
               </a>
             </div>
+            
+            {/* Dirección de la empresa */}
+            <div className="mt-6 pt-4 border-t border-gray-700">
+              <div className="flex items-start text-gray-300 text-sm">
+                <MapPin className="w-4 h-4 mr-2 text-[#d4af37] mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="leading-relaxed">
+                    Centro Comercial Velasuma,<br />
+                    2da. Planta local No. 9<br />
+                    San Isidro Downtown<br />
+                    Vásquez de Coronado, San Isidro, <br />
+                   San José, Costa Rica
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -161,18 +177,7 @@ export default function Footer({ locale }: { locale: string }) {
           <p className="text-gray-400 text-sm mb-2">
             © {new Date().getFullYear()} SobrePoxi. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
           </p>
-          <p className="text-[.50rem] text-gray-500 flex flex-wrap items-center justify-center gap-1">
-            {locale === 'es' ? 'Desarrollado por ' : 'Developed by '}
-            <Link
-              href="https://sobrepoxi.com"
-              target="_blank"
-              rel="author noopener noreferrer"
-              className="font-semibold text-[#d4af37] hover:underline inline-flex items-center gap-1"
-            >
-              Sobrepoxi
-              <ExternalLink className="w-3 h-3 text-[#d4af37]" />
-            </Link>
-          </p>
+         
         </div>
 
       </div>

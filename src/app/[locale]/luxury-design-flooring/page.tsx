@@ -434,7 +434,17 @@ export default async function LuxuryDesignFlooringPage(
         "serviceType": "Luxury & Designer Epoxy Flooring",
         "provider": {
           "@type": "LocalBusiness",
-          "name": "Sobrepoxi"
+          "name": "Sobrepoxi",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
+            "addressLocality": "Vásquez de Coronado",
+            "addressRegion": "San Isidro",
+            "postalCode": "11101",
+            "addressCountry": "CR"
+          },
+          "telephone": "+50685850000",
+          "email": "info@sobrepoxi.com"
         },
         "areaServed": {
           "@type": "Country",

@@ -88,10 +88,11 @@ export default async function LocaleLayout({
             "telephone": "+50685850000",
             "address": {
               "@type": "PostalAddress",
-              "addressCountry": "CR",
-              "addressRegion": "San José",
-              "addressLocality": "San José",
-              "postalCode": "10001",
+              "streetAddress": "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
+              "addressLocality": "Vásquez de Coronado",
+              "addressRegion": "San Isidro",
+              "postalCode": "11101",
+              "addressCountry": "CR"
             },
             "geo": { "@type": "GeoCoordinates", "latitude": 9.9355431, "longitude": -84.1545449 },
             "hasMap": "https://maps.app.goo.gl/6HMDWY7bBbwdS3rN7",
