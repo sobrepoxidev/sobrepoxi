@@ -266,12 +266,8 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
     pathname: "/"
   });
 
-  const {
-    title: _,
-    alternates: __,
-    twitter: ___,
-    ...common
-  } = meta;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { title, alternates, twitter, ...common } = meta;
 
   return {
     ...common,

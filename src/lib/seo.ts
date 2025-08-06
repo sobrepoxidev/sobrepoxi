@@ -16,12 +16,8 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
   });
 
   // Extraemos solo los metadatos comunes (sin title específico)
-  const {
-    title: _,
-    alternates: __,
-    twitter: ___,
-    ...common
-  } = meta;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { title, alternates, twitter, ...common } = meta;
 
   return common;
 }
