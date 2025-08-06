@@ -20,34 +20,59 @@ export default async function TerminosCondicionesPage({ params }: { params: tPar
             {locale === "es" ? "Términos y Condiciones de Servicio" : "Terms and Conditions"}
           </h1>
           <p className="text-gray-200 text-center">
-            {locale === "es" ? "Última actualización: 9 de abril de 2025" : "Last updated: April 9, 2025"}
+            {locale === "es" ? "Última actualización: 06 de agosto de 2025" : "Last updated:  august 06, 2025"}
           </p>
         </div>
 
         <div className="px-6 py-8 prose prose-gray max-w-none text-gray-200 leading-relaxed">
           <div className="mb-12">
             <p className="text-lg font-medium">
-              {locale === "es" ? `Bienvenido a nuestro servicio. Estos Términos y Condiciones ("Términos") constituyen un acuerdo legal entre usted y nuestra plataforma de autenticación. Lea detenidamente estos Términos antes de utilizar nuestro sistema de inicio de sesión.` : "Welcome to our service. These Terms and Conditions (&ldquo;Terms&rdquo;) constitute a legal agreement between you and our authentication platform. Read these Terms carefully before using our login system."}
+              {locale === "es" ? `Bienvenido a SobrePoxi. Estos Términos y Condiciones ("Términos") constituyen un acuerdo legal entre usted y SobrePoxi para la prestación de nuestros servicios de diseño, fabricación e instalación de muebles con resina epóxica y pisos epóxicos. Lea detenidamente estos Términos antes de contratar nuestros servicios.` : "Welcome to SobrePoxi. These Terms and Conditions (&ldquo;Terms&rdquo;) constitute a legal agreement between you and SobrePoxi for the provision of our design, manufacturing and installation services for epoxy resin furniture and epoxy floors. Read these Terms carefully before hiring our services."}
             </p>
             <p>
-              {locale === "es" ? "Al registrarse, acceder o utilizar nuestros servicios de autenticación, usted acepta estar legalmente vinculado por estos Términos. Si no está de acuerdo con alguna parte de estos Términos, le pedimos que no utilice nuestros servicios." : "By registering, accessing or using our authentication services, you accept being legally bound by these Terms. If you do not agree with any part of these Terms, we ask you not to use our services."}
+              {locale === "es" ? "Al solicitar una cotización, contratar nuestros servicios o utilizar nuestro sitio web, usted acepta estar legalmente vinculado por estos Términos. Si no está de acuerdo con alguna parte de estos Términos, le pedimos que no utilice nuestros servicios." : "By requesting a quote, hiring our services or using our website, you accept being legally bound by these Terms. If you do not agree with any part of these Terms, we ask you not to use our services."}
             </p>
           </div>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">{locale === "es" ? "Definiciones" : "Definitions"}</h2>
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">1. {locale === "es" ? "Descripción del Servicio" : "Service Description"}</h2>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "SobrePoxi ofrece servicios especializados en el diseño, fabricación e instalación de muebles con resina epóxica y pisos epóxicos personalizados. Nuestro proceso incluye consultoría inicial, diseño personalizado, selección de materiales, fabricación artesanal e instalación profesional."
+                : "SobrePoxi offers specialized services in the design, manufacturing and installation of custom epoxy resin furniture and epoxy floors. Our process includes initial consultation, custom design, material selection, artisanal manufacturing and professional installation."
+              }
+            </p>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Trabajamos con resinas epóxicas de alta calidad, maderas selectas y materiales premium para crear piezas únicas que combinan funcionalidad, durabilidad y estética excepcional."
+                : "We work with high-quality epoxy resins, select woods and premium materials to create unique pieces that combine functionality, durability and exceptional aesthetics."
+              }
+            </p>
+            <p className="text-gray-300">
+              {locale === "es" 
+                ? "Nuestros servicios incluyen mesas de río, encimeras, pisos decorativos, muebles personalizados y soluciones epóxicas para espacios comerciales y residenciales, con garantía de calidad y servicio postventa."
+                : "Our services include river tables, countertops, decorative floors, custom furniture and epoxy solutions for commercial and residential spaces, with quality guarantee and after-sales service."
+              }
+            </p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">2. {locale === "es" ? "Definiciones" : "Definitions"}</h2>
             <ul className="space-y-4 pl-5 list-disc">
               <li>
-                <span className="font-medium">{locale === "es" ? "Servicio:" : "Service:"}</span> {locale === "es" ? "Sistema de autenticación e inicio de sesión que facilita el acceso a nuestra plataforma mediante credenciales de usuario." : "Authentication and login system that facilitates access to our platform through user credentials."}
+                <span className="font-medium">{locale === "es" ? "SobrePoxi:" : "SobrePoxi:"}</span> {locale === "es" ? "Empresa especializada en el diseño, fabricación e instalación de muebles con resina epóxica y pisos epóxicos personalizados." : "Company specialized in the design, manufacturing and installation of custom epoxy resin furniture and epoxy floors."}
               </li>
               <li>
-                <span className="font-medium">{locale === "es" ? "Usuario:" : "User:"}</span> {locale === "es" ? "Cualquier persona que acceda, se registre o utilice nuestro sistema de autenticación." : "Any person who accesses, registers or uses our authentication system."}
+                <span className="font-medium">{locale === "es" ? "Cliente:" : "Client:"}</span> {locale === "es" ? "Cualquier persona física o jurídica que solicite cotizaciones, contrate o utilice nuestros servicios de fabricación e instalación." : "Any individual or legal entity that requests quotes, hires or uses our manufacturing and installation services."}
               </li>
               <li>
-                <span className="font-medium">{locale === "es" ? "Credenciales:" : "Credentials:"}</span> {locale === "es" ? "Información que permite identificar y verificar la identidad del usuario, principalmente correo electrónico y contraseña." : "Information that allows identifying and verifying the user's identity, mainly email and password."}
+                <span className="font-medium">{locale === "es" ? "Servicios:" : "Services:"}</span> {locale === "es" ? "Diseño personalizado, fabricación, instalación y mantenimiento de muebles con resina epóxica y pisos epóxicos, incluyendo asesoría técnica y garantías." : "Custom design, manufacturing, installation and maintenance of epoxy resin furniture and epoxy floors, including technical advice and warranties."}
               </li>
               <li>
-                <span className="font-medium">{locale === "es" ? "Datos de perfil:" : "Profile data:"}</span> {locale === "es" ? "Información mínima asociada a su cuenta, como correo electrónico e imagen de perfil." : "Minimum information associated with your account, such as email and profile picture."}
+                <span className="font-medium">{locale === "es" ? "Proyecto:" : "Project:"}</span> {locale === "es" ? "Trabajo específico contratado que incluye diseño, materiales, fabricación e instalación de productos epóxicos según especificaciones acordadas." : "Specific contracted work that includes design, materials, manufacturing and installation of epoxy products according to agreed specifications."}
+              </li>
+              <li>
+                <span className="font-medium">{locale === "es" ? "Cotización:" : "Quote:"}</span> {locale === "es" ? "Propuesta comercial detallada que incluye especificaciones técnicas, materiales, plazos de entrega y costos del proyecto solicitado." : "Detailed commercial proposal that includes technical specifications, materials, delivery times and costs of the requested project."}
               </li>
             </ul>
           </section>
@@ -86,105 +111,123 @@ export default async function TerminosCondicionesPage({ params }: { params: tPar
               <li>{locale === "es" ? "Notifíquenos inmediatamente si detecta actividad sospechosa o accesos no autorizados a su cuenta." : "Notify us immediately if you detect suspicious activity or unauthorized access to your account."}</li>
             </ul>
             
-            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">2.3 {locale === "es" ? "Responsabilidad de la Cuenta" : "Account Responsibility"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">2.3 {locale === "es" ? "Responsabilidades del Cliente" : "Client Responsibilities"}</h3>
             <p>
-              {locale === "es" ? "Usted es plenamente responsable de todas las actividades realizadas bajo su cuenta. Nos reservamos el derecho de:" : "You are fully responsible for all activities carried out under your account. We reserve the right to:"}
+              {locale === "es" ? "Al contratar nuestros servicios, el cliente se compromete a cumplir con las siguientes responsabilidades para garantizar el éxito del proyecto y la calidad del resultado final." : "By hiring our services, the client commits to fulfill the following responsibilities to ensure project success and the quality of the final result."}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Suspender o cancelar cuentas con actividades sospechosas o que violen estos Términos." : "Suspend or cancel accounts with suspicious activities or that violate these Terms."}</li>
-              <li>{locale === "es" ? "Solicitar información adicional para verificar su identidad en caso de actividades inusuales." : "Request additional information to verify your identity in case of unusual activities."}</li>
-              <li>{locale === "es" ? "Implementar medidas de seguridad adicionales como autenticación de dos factores en el futuro." : "Implement additional security measures such as two-factor authentication in the future."}</li>
+              <li>{locale === "es" ? "Proporcionar información precisa sobre el espacio, medidas y especificaciones del proyecto" : "Provide accurate information about the space, measurements and project specifications"}</li>
+              <li>{locale === "es" ? "Facilitar el acceso al lugar de instalación en las fechas acordadas" : "Facilitate access to the installation site on agreed dates"}</li>
+              <li>{locale === "es" ? "Realizar los pagos según el cronograma establecido en la cotización" : "Make payments according to the schedule established in the quote"}</li>
+              <li>{locale === "es" ? "Preparar el espacio según las indicaciones técnicas proporcionadas" : "Prepare the space according to the technical instructions provided"}</li>
+              <li>{locale === "es" ? "Comunicar cualquier cambio o modificación antes del inicio de la fabricación" : "Communicate any changes or modifications before manufacturing begins"}</li>
+              <li>{locale === "es" ? "Mantener las condiciones ambientales adecuadas durante el proceso de curado" : "Maintain adequate environmental conditions during the curing process"}</li>
             </ul>
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">3. {locale === "es" ? "Sistema de Inicio de Sesión" : "Login System"}</h2>
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">3. {locale === "es" ? "Proceso de Proyecto" : "Project Process"}</h2>
             
-            <h3 className="text-xl font-semibold text-gray-200 mt-6 mb-4">3.1 {locale === "es" ? "Proceso de Autenticación" : "Authentication Process"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-6 mb-4">3.1 {locale === "es" ? "Consulta Inicial y Cotización" : "Initial Consultation and Quote"}</h3>
             <p>
-              {locale === "es" ? "Nuestro sistema de inicio de sesión está diseñado para ser seguro y sencillo:" : "Our login system is designed to be secure and simple:"}
+              {locale === "es" ? "Nuestro proceso inicia con una consulta detallada para entender sus necesidades y proporcionar una cotización precisa:" : "Our process begins with a detailed consultation to understand your needs and provide an accurate quote:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "El inicio de sesión requiere únicamente su correo electrónico y contraseña." : "The login process requires only your email address and password."}</li>
-              <li>{locale === "es" ? "Podremos implementar métodos adicionales de verificación para proteger su cuenta." : "We may implement additional verification methods to protect your account."}</li>
-              <li>{locale === "es" ? "Utilizamos conexiones seguras (HTTPS) para transmitir sus credenciales." : "We use secure connections (HTTPS) to transmit your credentials."}</li>
-              <li>{locale === "es" ? "Sus datos de inicio de sesión son procesados mediante técnicas de cifrado modernas." : "Your login data is processed using modern encryption techniques."}</li>
+              <li>{locale === "es" ? "Evaluación del espacio y mediciones precisas" : "Space evaluation and precise measurements"}</li>
+              <li>{locale === "es" ? "Análisis de requerimientos técnicos y estéticos" : "Analysis of technical and aesthetic requirements"}</li>
+              <li>{locale === "es" ? "Selección de materiales y acabados" : "Material and finish selection"}</li>
+              <li>{locale === "es" ? "Cotización detallada con cronograma de trabajo" : "Detailed quote with work schedule"}</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">3.2 {locale === "es" ? "Sesiones Activas" : "Active Sessions"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">3.2 {locale === "es" ? "Diseño y Aprobación" : "Design and Approval"}</h3>
             <p>
-              {locale === "es" ? "Para su comodidad y seguridad:" : "For your convenience and security:"}
+              {locale === "es" ? "Una vez aceptada la cotización, procedemos con el diseño personalizado:" : "Once the quote is accepted, we proceed with the custom design:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Las sesiones tienen un tiempo de expiración por inactividad." : "Sessions have an expiration time due to inactivity."}</li>
-              <li>{locale === "es" ? "Podrá ver y gestionar sus sesiones activas en su perfil de usuario." : "You can view and manage your active sessions in your user profile."}</li>
-              <li>{locale === "es" ? "Tiene la capacidad de cerrar remotamente sesiones en otros dispositivos." : "You have the ability to remotely close sessions on other devices."}</li>
+              <li>{locale === "es" ? "Creación de diseños 3D y renders fotorrealistas" : "Creation of 3D designs and photorealistic renders"}</li>
+              <li>{locale === "es" ? "Revisiones y ajustes según feedback del cliente" : "Reviews and adjustments based on client feedback"}</li>
+              <li>{locale === "es" ? "Aprobación final del diseño antes de fabricación" : "Final design approval before manufacturing"}</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">3.3 {locale === "es" ? "Recuperación de Acceso" : "Access Recovery"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">3.3 {locale === "es" ? "Fabricación e Instalación" : "Manufacturing and Installation"}</h3>
             <p>
-              {locale === "es" ? "Si olvida su contraseña o tiene dificultades para acceder:" : "If you forget your password or have difficulty accessing it:"}
+              {locale === "es" ? "La fabricación e instalación se realizan con los más altos estándares de calidad:" : "Manufacturing and installation are carried out with the highest quality standards:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Puede solicitar el restablecimiento de su contraseña en cualquier momento." : "You can request a password reset at any time."}</li>
-              <li>{locale === "es" ? "El proceso de recuperación se realiza a través de un enlace seguro enviado a su correo electrónico." : "The recovery process is carried out through a secure link sent to your email address."}</li>
-              <li>{locale === "es" ? "Los enlaces de restablecimiento tienen una validez limitada por seguridad." : "The reset links have a limited validity for security."}</li>
-              <li>{locale === "es" ? "En caso de no tener acceso a su correo electrónico, contáctenos para asistencia especializada." : "In case you do not have access to your email, contact us for specialized assistance."}</li>
+              <li>{locale === "es" ? "Fabricación artesanal con materiales premium" : "Artisanal manufacturing with premium materials"}</li>
+              <li>{locale === "es" ? "Control de calidad en cada etapa del proceso" : "Quality control at each stage of the process"}</li>
+              <li>{locale === "es" ? "Instalación profesional por técnicos especializados" : "Professional installation by specialized technicians"}</li>
+              <li>{locale === "es" ? "Entrega con garantía y manual de cuidados" : "Delivery with warranty and care manual"}</li>
             </ul>
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">4. {locale === "es" ? "Datos de Usuario y Privacidad" : "User Data and Privacy"}</h2>
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">4. {locale === "es" ? "Datos del Cliente y Privacidad" : "Client Data and Privacy"}</h2>
             
-            <h3 className="text-xl font-semibold text-gray-200 mt-6 mb-4">4.1 {locale === "es" ? "Datos Recopilados" : "Collected Data"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-6 mb-4">4.1 {locale === "es" ? "Información Recopilada" : "Information Collected"}</h3>
             <p>
-              {locale === "es" ? "Nuestro sistema de autenticación recopila únicamente la información esencial para su funcionamiento:" : "Our authentication system collects only the essential information for its operation:"}
+              {locale === "es" ? "Para proporcionar nuestros servicios de diseño y fabricación, recopilamos la información necesaria para el proyecto:" : "To provide our design and manufacturing services, we collect the information necessary for the project:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Correo electrónico como identificador principal de la cuenta." : "Email as the main identifier of the account."}</li>
-              <li>{locale === "es" ? "Contraseña (almacenada de forma segura mediante técnicas de hash)." : "Password (stored securely using hash techniques)."}</li>
-              <li>{locale === "es" ? "Imagen de perfil (opcional)." : "Profile picture (optional)."}</li>
-              <li>{locale === "es" ? "Datos técnicos básicos como dirección IP, tipo de dispositivo y navegador para seguridad y estadísticas." : "Basic technical data such as IP address, device type, and browser for security and statistics."}</li>
-              <li>{locale === "es" ? "Registros de inicio de sesión para protección de su cuenta." : "Login records for your account protection."}</li>
+              <li>{locale === "es" ? "Datos de contacto (nombre, teléfono, correo electrónico, dirección)" : "Contact information (name, phone, email, address)"}</li>
+              <li>{locale === "es" ? "Especificaciones del proyecto (medidas, materiales, diseño)" : "Project specifications (measurements, materials, design)"}</li>
+              <li>{locale === "es" ? "Fotografías del espacio y referencias de diseño" : "Space photographs and design references"}</li>
+              <li>{locale === "es" ? "Información de facturación y pagos" : "Billing and payment information"}</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">4.2 {locale === "es" ? "Uso de los Datos" : "Use of Data"}</h3>
+            <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">4.2 {locale === "es" ? "Uso de la Información" : "Information Usage"}</h3>
             <p>
-              {locale === "es" ? "Los datos recopilados se utilizan exclusivamente para:" : "The collected data is used exclusively for:"}
+              {locale === "es" ? "Su información se utiliza exclusivamente para:" : "Your information is used exclusively for:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Facilitar el proceso de autenticación y acceso seguro." : "Facilitating the authentication process and secure access."}</li>
-              <li>{locale === "es" ? "Identificarle dentro de nuestro sistema." : "Identifying you within our system."}</li>
-              <li>{locale === "es" ? "Proteger su cuenta de accesos no autorizados." : "Protecting your account from unauthorized access."}</li>
-              <li>{locale === "es" ? "Comunicarnos con usted sobre asuntos de seguridad o cambios importantes." : "Communicating with you about security matters or important changes."}</li>
-              <li>{locale === "es" ? "Cumplir con obligaciones legales cuando sea necesario." : "Complying with legal obligations when necessary."}</li>
+              <li>{locale === "es" ? "Diseñar y fabricar productos según sus especificaciones" : "Design and manufacture products according to your specifications"}</li>
+              <li>{locale === "es" ? "Coordinar la instalación y entrega del proyecto" : "Coordinate project installation and delivery"}</li>
+              <li>{locale === "es" ? "Procesar pagos y generar facturas" : "Process payments and generate invoices"}</li>
+              <li>{locale === "es" ? "Proporcionar garantía y servicio postventa" : "Provide warranty and after-sales service"}</li>
+              <li>{locale === "es" ? "Crear portfolio con su consentimiento expreso" : "Create portfolio with your express consent"}</li>
             </ul>
 
             <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">4.3 {locale === "es" ? "Protección de Datos" : "Data Protection"}</h3>
             <p>
-              {locale === "es" ? "Su privacidad es importante para nosotros:" : "Your privacy is important to us:"}
+              {locale === "es" ? "Implementamos medidas estrictas de seguridad para proteger su información:" : "We implement strict security measures to protect your information:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Implementamos medidas técnicas y organizativas para proteger sus datos." : "We implement technical and organizational measures to protect your data."}</li>
-              <li>{locale === "es" ? "No compartimos su información con terceros sin su consentimiento explícito." : "We do not share your information with third parties without your explicit consent."}</li>
-              <li>{locale === "es" ? "Aplicamos los principios de minimización de datos, recopilando solo lo estrictamente necesario." : "We apply the principles of data minimization, collecting only what is strictly necessary."}</li>
-              <li>{locale === "es" ? "Puede solicitar acceso, corrección o eliminación de sus datos personales en cualquier momento." : "You can request access, correction, or deletion of your personal data at any time."}</li>
+              <li>{locale === "es" ? "Almacenamiento seguro de archivos de proyecto y fotografías" : "Secure storage of project files and photographs"}</li>
+              <li>{locale === "es" ? "Acceso restringido solo a personal autorizado" : "Restricted access only to authorized personnel"}</li>
+              <li>{locale === "es" ? "Encriptación de datos sensibles y financieros" : "Encryption of sensitive and financial data"}</li>
+              <li>{locale === "es" ? "Políticas de confidencialidad para todo el equipo" : "Confidentiality policies for the entire team"}</li>
+              <li>{locale === "es" ? "Eliminación segura de datos temporales" : "Secure deletion of temporary data"}</li>
             </ul>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">5. {locale === "es" ? "Uso Aceptable" : "Acceptable Use"}</h2>
-            <p>
-              {locale === "es" ? "Al utilizar nuestro sistema de autenticación, usted se compromete a:" : "When using our authentication system, you commit to:"}
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Al utilizar nuestros servicios y sitio web, usted se compromete a:"
+                : "By using our services and website, you agree to:"
+              }
             </p>
-            <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "No intentar acceder a cuentas que no le pertenecen." : "Not trying to access accounts that do not belong to you."}</li>
-              <li>{locale === "es" ? "No realizar intentos de fuerza bruta u otros ataques contra nuestro sistema." : "Not performing brute force attacks or other attacks against our system."}</li>
-              <li>{locale === "es" ? "No utilizar herramientas automatizadas para crear cuentas falsas o iniciar sesión." : "Not using automated tools to create fake accounts or log in."}</li>
-              <li>{locale === "es" ? "No utilizar nuestros servicios para actividades ilegales o fraudulentas." : "Not using our services for illegal or fraudulent activities."}</li>
-              <li>{locale === "es" ? "No intentar eludir, desactivar o interferir con las medidas de seguridad." : "Not trying to bypass, disable, or interfere with security measures."}</li>
-              <li>{locale === "es" ? "No realizar acciones que puedan comprometer la estabilidad o seguridad de nuestro sistema." : "Not performing actions that could compromise the stability or security of our system."}</li>
-              <li>{locale === "es" ? "No compartir públicamente sus credenciales de acceso." : "Not sharing your access credentials publicly."}</li>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Proporcionar información veraz y precisa sobre su proyecto" : "Provide truthful and accurate information about your project"}</li>
+              <li>{locale === "es" ? "Respetar los derechos de propiedad intelectual de nuestros diseños" : "Respect the intellectual property rights of our designs"}</li>
+              <li>{locale === "es" ? "Utilizar nuestros servicios únicamente para fines legítimos" : "Use our services only for legitimate purposes"}</li>
+              <li>{locale === "es" ? "Mantener comunicación respetuosa con nuestro equipo" : "Maintain respectful communication with our team"}</li>
+              <li>{locale === "es" ? "Cumplir con los pagos según los términos acordados" : "Comply with payments according to agreed terms"}</li>
+            </ul>
+
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Está prohibido:"
+                : "It is prohibited to:"
+              }
+            </p>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300">
+              <li>{locale === "es" ? "Reproducir o copiar nuestros diseños sin autorización" : "Reproduce or copy our designs without authorization"}</li>
+              <li>{locale === "es" ? "Utilizar nuestras fotografías o contenido sin permiso" : "Use our photographs or content without permission"}</li>
+              <li>{locale === "es" ? "Realizar modificaciones no autorizadas durante la instalación" : "Make unauthorized modifications during installation"}</li>
+              <li>{locale === "es" ? "Interferir con el proceso de trabajo de nuestro equipo" : "Interfere with our team's work process"}</li>
+              <li>{locale === "es" ? "Solicitar trabajos que violen regulaciones locales" : "Request work that violates local regulations"}</li>
             </ul>
           </section>
 
@@ -193,77 +236,137 @@ export default async function TerminosCondicionesPage({ params }: { params: tPar
             
             <h3 className="text-xl font-semibold text-gray-200 mt-6 mb-4">6.1 {locale === "es" ? "Modificaciones a los Términos" : "Modifications to the Terms"}</h3>
             <p>
-              {locale === "es" ? "Nos reservamos el derecho de modificar estos Términos en cualquier momento:" : "We reserve the right to modify these Terms at any time:"}
+              {locale === "es" ? "SobrePoxi se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento:" : "SobrePoxi reserves the right to modify these Terms and Conditions at any time:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Las modificaciones entrarán en vigor al publicarse en esta página." : "Modifications will take effect upon publication on this page."}</li>
-              <li>{locale === "es" ? "Para cambios sustanciales, notificaremos a los usuarios mediante el correo electrónico registrado." : "For significant changes, we will notify users via the registered email address."}</li>
-              <li>{locale === "es" ? "El uso continuado de nuestros servicios después de dichos cambios constituye su aceptación de los mismos." : "Continued use of our services after such changes constitutes your acceptance of them."}</li>
+              <li>{locale === "es" ? "Las modificaciones entrarán en vigor inmediatamente después de su publicación en nuestro sitio web." : "Modifications will take effect immediately after publication on our website."}</li>
+              <li>{locale === "es" ? "Para cambios sustanciales, notificaremos a los clientes mediante el correo electrónico proporcionado." : "For significant changes, we will notify clients via the provided email address."}</li>
+              <li>{locale === "es" ? "La contratación continuada de nuestros servicios después de dichos cambios constituye su aceptación de los mismos." : "Continued hiring of our services after such changes constitutes your acceptance of them."}</li>
               <li>{locale === "es" ? "Le recomendamos revisar estos Términos periódicamente." : "We recommend periodically reviewing these Terms."}</li>
             </ul>
 
             <h3 className="text-xl font-semibold text-gray-200 mt-8 mb-4">6.2 {locale === "es" ? "Comunicaciones" : "Communications"}</h3>
             <p>
-              {locale === "es" ? "Para comunicaciones importantes:" : "For important communications:"}
+              {locale === "es" ? "Para comunicaciones importantes relacionadas con su proyecto:" : "For important communications related to your project:"}
             </p>
             <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Utilizaremos principalmente su correo electrónico registrado." : "We will primarily use your registered email address."}</li>
-              <li>{locale === "es" ? "Es su responsabilidad mantener actualizada su dirección de correo electrónico." : "It is your responsibility to keep your email address updated."}</li>
-              <li>{locale === "es" ? "Las notificaciones importantes incluyen alertas de seguridad, cambios en los Términos o confirmaciones de acceso." : "Important notifications include security alerts, changes to the Terms, or access confirmations."}</li>
+              <li>{locale === "es" ? "Utilizaremos el correo electrónico proporcionado en su cotización." : "We will use the email address provided in your quote."}</li>
+              <li>{locale === "es" ? "Comunicación directa durante el proceso del proyecto." : "Direct communication during the project process."}</li>
+              <li>{locale === "es" ? "Avisos prominentes en nuestro sitio web." : "Prominent notices on our website."}</li>
+              <li>{locale === "es" ? "Notificaciones en nuestras redes sociales oficiales." : "Notifications on our official social media."}</li>
             </ul>
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">7. {locale === "es" ? "Terminación" : "Termination"}</h2>
-            <p>
-              {locale === "es" ? "Nos reservamos el derecho de:" : "We reserve the right to:"}
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">7. {locale === "es" ? "Cancelación y Terminación" : "Cancellation and Termination"}</h2>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Las condiciones de cancelación varían según la etapa del proyecto:"
+                : "Cancellation conditions vary depending on the project stage:"
+              }
             </p>
-            <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Suspender o cancelar su cuenta si viola estos Términos." : "Suspend or cancel your account if you violate these Terms."}</li>
-              <li>{locale === "es" ? "Restringir el acceso a usuarios que representen un riesgo para la plataforma." : "Restrict access to users who represent a risk to the platform."}</li>
-              <li>{locale === "es" ? "Eliminar cuentas inactivas después de un período prolongado de inactividad." : "Delete inactive accounts after a prolonged period of inactivity."}</li>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Antes del inicio de fabricación: cancelación sin penalización" : "Before manufacturing begins: cancellation without penalty"}</li>
+              <li>{locale === "es" ? "Durante fabricación: se cobrará el trabajo realizado más materiales" : "During manufacturing: work completed plus materials will be charged"}</li>
+              <li>{locale === "es" ? "Después de instalación: no se aceptan cancelaciones, aplican garantías" : "After installation: cancellations not accepted, warranties apply"}</li>
             </ul>
-            <p className="mt-4">
-              {locale === "es" ? "Usted puede solicitar la eliminación de su cuenta en cualquier momento, lo que resultará en la eliminación permanente de sus datos de perfil conforme a nuestra política de retención." : "You can request the deletion of your account at any time, which will result in the permanent deletion of your profile data in accordance with our retention policy."}
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "SobrePoxi puede terminar el servicio en casos de:"
+                : "SobrePoxi may terminate service in cases of:"
+              }
+            </p>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Incumplimiento de pagos según cronograma acordado" : "Non-compliance with payments according to agreed schedule"}</li>
+              <li>{locale === "es" ? "Violación de estos términos y condiciones" : "Violation of these terms and conditions"}</li>
+              <li>{locale === "es" ? "Imposibilidad técnica de realizar el proyecto" : "Technical impossibility to carry out the project"}</li>
+            </ul>
+            <p className="text-gray-300">
+              {locale === "es" 
+                ? "En caso de terminación, los datos del proyecto serán manejados conforme a nuestra Política de Privacidad y se proporcionará un informe final del trabajo realizado."
+                : "In case of termination, project data will be handled according to our Privacy Policy and a final report of work completed will be provided."
+              }
             </p>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">8. {locale === "es" ? "Limitación de Responsabilidad" : "Limitation of Liability"}</h2>
-            <p>
-              {locale === "es" ? "En la máxima medida permitida por la ley aplicable:" : "To the maximum extent permitted by applicable law:"}
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "SobrePoxi se compromete a proporcionar servicios de alta calidad, sin embargo, nuestra responsabilidad está limitada a:"
+                : "SobrePoxi is committed to providing high-quality services, however, our liability is limited to:"
+              }
             </p>
-            <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "No garantizamos que el servicio sea ininterrumpido o libre de errores." : "We do not guarantee that the service will be uninterrupted or free of errors."}</li>
-              <li>{locale === "es" ? "No somos responsables de pérdidas o daños resultantes del uso o imposibilidad de uso del servicio." : "We are not liable for losses or damages resulting from the use or inability to use the service."}</li>
-              <li>{locale === "es" ? "No asumimos responsabilidad por accesos no autorizados cuando se deban a negligencia en la protección de credenciales." : "We do not assume liability for unauthorized access when resulting from negligence in credential protection."}</li>
-              <li>{locale === "es" ? "Implementamos medidas de seguridad razonables, pero ningún sistema de seguridad es infalible." : "We implement reasonable security measures, but no security system is infallible."}</li>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Defectos de fabricación cubiertos por la garantía del producto" : "Manufacturing defects covered by product warranty"}</li>
+              <li>{locale === "es" ? "Errores de instalación realizados por nuestro equipo técnico" : "Installation errors made by our technical team"}</li>
+              <li>{locale === "es" ? "Daños causados por materiales defectuosos bajo nuestro control" : "Damage caused by defective materials under our control"}</li>
             </ul>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "No seremos responsables por:"
+                : "We will not be liable for:"
+              }
+            </p>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Daños causados por uso inadecuado o falta de mantenimiento" : "Damage caused by improper use or lack of maintenance"}</li>
+              <li>{locale === "es" ? "Modificaciones realizadas por terceros sin autorización" : "Modifications made by third parties without authorization"}</li>
+              <li>{locale === "es" ? "Daños por condiciones ambientales extremas no previstas" : "Damage from extreme environmental conditions not foreseen"}</li>
+              <li>{locale === "es" ? "Pérdidas indirectas o consecuenciales" : "Indirect or consequential losses"}</li>
+            </ul>
+            <p className="text-gray-300">
+              {locale === "es" 
+                ? "Nuestra responsabilidad total no excederá el valor del proyecto contratado. Esta limitación no aplica en casos de negligencia grave o dolo."
+                : "Our total liability will not exceed the value of the contracted project. This limitation does not apply in cases of gross negligence or willful misconduct."
+              }
+            </p>
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">9. {locale === "es" ? "Disposiciones Generales" : "General Dispositions"}</h2>
-            <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Estos Términos constituyen el acuerdo completo entre usted y nosotros respecto al uso del sistema de autenticación." : "These Terms constitute the complete agreement between you and us regarding the use of the authentication system."}</li>
-              <li>{locale === "es" ? "Si alguna disposición de estos Términos se considera inválida, las demás disposiciones seguirán siendo válidas y aplicables." : "If any provision of these Terms is considered invalid, the remaining provisions will remain valid and enforceable."}</li>
-              <li>{locale === "es" ? "Nuestro sistema de autenticación está diseñado para ser simple y recopilar solo la información esencial." : "Our authentication system is designed to be simple and collect only essential information."}</li>
-              <li>{locale === "es" ? "La falta de ejercicio de un derecho no constituye una renuncia a dicho derecho." : "The failure to exercise a right does not constitute a waiver of such right."}</li>
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">9. {locale === "es" ? "Disposiciones Generales" : "General Provisions"}</h2>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Estos Términos y Condiciones constituyen el acuerdo completo entre el cliente y SobrePoxi respecto a la prestación de servicios de diseño, fabricación e instalación de productos epóxicos."
+                : "These Terms and Conditions constitute the complete agreement between the client and SobrePoxi regarding the provision of design, manufacturing and installation services for epoxy products."
+              }
+            </p>
+            <ul className="space-y-3 pl-5 list-disc text-gray-300 mb-6">
+              <li>{locale === "es" ? "Si alguna disposición es inválida, el resto permanece en vigor" : "If any provision is invalid, the rest remains in force"}</li>
+              <li>{locale === "es" ? "Estos términos se rigen por las leyes de Colombia" : "These terms are governed by the laws of Colombia"}</li>
+              <li>{locale === "es" ? "Cualquier disputa será resuelta en los tribunales competentes de Bogotá, Colombia" : "Any dispute will be resolved in the competent courts of Bogotá, Colombia"}</li>
+              <li>{locale === "es" ? "Los contratos específicos de proyecto complementan estos términos generales" : "Specific project contracts complement these general terms"}</li>
             </ul>
+            <p className="text-gray-300">
+              {locale === "es" 
+                ? "La falta de ejercicio de cualquier derecho por parte de SobrePoxi no constituye una renuncia al mismo. Estos términos prevalecen sobre cualquier condición contradictoria del cliente."
+                : "SobrePoxi's failure to exercise any right does not constitute a waiver thereof. These terms prevail over any contradictory conditions from the client."
+              }
+            </p>
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">10. {locale === "es" ? "Contacto" : "Contact"}</h2>
-            <p>
-              {locale === "es" ? "Si tiene preguntas, inquietudes o necesita asistencia relacionada con estos Términos o nuestro sistema de autenticación, puede contactarnos a través de:" : "If you have questions, concerns, or need assistance related to these Terms or our authentication system, you can contact us through:"}
+            <h2 className="text-2xl font-bold text-gray-200 border-b-2 border-gray-200 pb-2 mb-6">10. {locale === "es" ? "Información de Contacto" : "Contact Information"}</h2>
+            <p className="text-gray-300 mb-4">
+              {locale === "es" 
+                ? "Si tiene preguntas sobre estos Términos y Condiciones o desea solicitar nuestros servicios, puede contactarnos:"
+                : "If you have questions about these Terms and Conditions or wish to request our services, you can contact us:"
+              }
             </p>
-            <ul className="space-y-3 pl-5 list-disc mt-4">
-              <li>{locale === "es" ? "Nuestro formulario de contacto en la página principal." : "Our contact form on the main page."}</li>
-              <li>{locale === "es" ? "Correo electrónico de soporte: soporte@nuestrodominio.com" : "Support email: support@ourdomain.com"}</li>
-              <li>{locale === "es" ? "Sección de ayuda dentro de nuestra plataforma." : "Help section within our platform."}</li>
-            </ul>
-            <p className="mt-4">
-              {locale === "es" ? "Nos esforzamos por responder a todas las consultas en un plazo máximo de 48 horas hábiles." : "We strive to respond to all inquiries within a maximum of 48 business hours."}
-            </p>
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <ul className="space-y-3 text-gray-300">
+                <li><span className="font-medium">{locale === "es" ? "Empresa:" : "Company:"}</span> SobrePoxi</li>
+                <li><span className="font-medium">{locale === "es" ? "Correo electrónico:" : "Email:"}</span> info@sobrepoxi.com</li>
+                <li><span className="font-medium">{locale === "es" ? "Teléfono:" : "Phone:"}</span> +57 301 234 5678</li>
+                <li><span className="font-medium">{locale === "es" ? "Sitio web:" : "Website:"}</span> www.sobrepoxi.com</li>
+                <li><span className="font-medium">{locale === "es" ? "Dirección:" : "Address:"}</span> Calle 123 #45-67, Bogotá, Colombia</li>
+              </ul>
+              <p className="text-gray-400 text-sm mt-4">
+                {locale === "es" 
+                  ? "Horario de atención: Lunes a Viernes de 8:00 AM a 6:00 PM, Sábados de 9:00 AM a 2:00 PM"
+                  : "Business hours: Monday to Friday 8:00 AM to 6:00 PM, Saturdays 9:00 AM to 2:00 PM"
+                }
+              </p>
+            </div>
           </section>
 
           <div className="mt-12 p-6 bg-[#121212] rounded-lg border border-gray-200 text-center">
