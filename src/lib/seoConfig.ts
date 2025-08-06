@@ -267,9 +267,9 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
   });
 
   const {
-    title,
-    alternates,
-    twitter,
+    title: _,
+    alternates: __,
+    twitter: ___,
     ...common
   } = meta;
 
