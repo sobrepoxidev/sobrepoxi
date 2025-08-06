@@ -9,7 +9,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildTitle, getCommonMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seoConfig";
 import Script from "next/script";
 
 // Keep this typed promise for consistency with other routes
@@ -21,20 +21,19 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { locale } = await params;
 
-  const title = locale === "es" ? "Pisos Epóxicos de Lujo y Diseño" : "Luxury & Designer Epoxy Floors";
-  const description = locale === "es"
-    ? "Pisos epóxicos de lujo y diseño para residencias, oficinas y espacios comerciales en Costa Rica. Acabados personalizados con efectos de mármol, metálicos y más."
-    : "Luxury and designer epoxy floors for residences, offices, and commercial spaces in Costa Rica. Custom finishes with marble effects, metallic finishes, and more.";
-
-  return {
-    title: buildTitle(title),
-    description,
-    keywords: [
-      "luxury epoxy floors", "pisos epóxicos de lujo", "designer flooring", "pisos de diseño",
-      "marble effect epoxy", "metallic epoxy", "custom flooring", "pisos personalizados", "Costa Rica"
-    ],
-    ...getCommonMetadata(locale),
-  };
+  return buildMetadata({
+    locale: locale === "es" ? "es" : "en",
+    pathname: `/${locale}/luxury-design-flooring`,
+    title: locale === "es"
+      ? "Pisos Epóxicos de Lujo y Diseño | Elegancia premium | SobrePoxi"
+      : "Luxury & Designer Epoxy Flooring | Premium elegance | SobrePoxi",
+    description: locale === "es"
+      ? "Descubre nuestros pisos epóxicos de lujo y diseño. Elegancia premium, acabados sofisticados y durabilidad excepcional para espacios exclusivos en Costa Rica."
+      : "Discover our luxury and designer epoxy flooring. Premium elegance, sophisticated finishes and exceptional durability for exclusive spaces in Costa Rica.",
+    keywords: locale === "es"
+      ? "pisos epóxicos de lujo, diseño premium costa rica, acabados sofisticados, espacios exclusivos, sobrepoxi"
+      : "luxury epoxy flooring, premium design costa rica, sophisticated finishes, exclusive spaces, sobrepoxi"
+  });
 }
 
 /* ====================================================================== */

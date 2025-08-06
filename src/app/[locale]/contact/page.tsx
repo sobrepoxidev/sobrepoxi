@@ -16,7 +16,7 @@ import Link from "next/link";
 import Script from "next/script";
 
 import type { Metadata }            from "next";
-import { buildTitle, getCommonMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seoConfig";
 
 /* ---------  Lazy-loaded client modules (SSR enabled)  --------- */
 
@@ -33,19 +33,17 @@ export async function generateMetadata(
 
   const { locale } = await params;
 
-  return {
-    keywords: [
-      "SobrePoxi", "contact", "epoxy floors", "muebles de lujo", "resin furniture", "Costa Rica", "WhatsApp", "luxury epoxy"],
-    title: buildTitle(locale === "es" ? "Contáctanos" : "Contact us"),
-    ...getCommonMetadata(locale, {
-      // Page-specific overrides ↓
-      description:
-        locale === "es"
-          ? "¿Proyecto en mente? Contáctanos vía WhatsApp o teléfono y obtén tu cotización de pisos o muebles en resina epóxica."
-          : "Have a project in mind? Call or message us on WhatsApp to get a quote for luxury epoxy floors or resin furniture.",
-      alternates: { canonical: `/contact` }
-    }),
-  };
+  return buildMetadata({
+    locale: locale === "es" ? "es" : "en",
+    pathname: `/${locale}/contact`,
+    title: locale === "es" ? "Contáctanos | SobrePoxi" : "Contact us | SobrePoxi",
+    description: locale === "es"
+      ? "¿Proyecto en mente? Contáctanos vía WhatsApp o teléfono y obtén tu cotización de pisos epóxicos industriales o muebles en resina epóxica. Atención personalizada en Costa Rica."
+      : "Have a project in mind? Call or message us on WhatsApp to get a quote for industrial epoxy floors or resin furniture. Personalized service in Costa Rica.",
+    keywords: locale === "es"
+      ? "contacto sobrepoxi, cotización pisos epóxicos, presupuesto muebles resina, whatsapp costa rica, servicio personalizado"
+      : "contact sobrepoxi, epoxy flooring quote, resin furniture budget, whatsapp costa rica, personalized service"
+  });
 }
 
 /* ====================================================================== */

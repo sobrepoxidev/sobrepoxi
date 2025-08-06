@@ -12,7 +12,7 @@ import Link                      from "next/link";
 import Image                     from "next/image";
 import Script                    from "next/script";
 import type { Metadata }         from "next";
-import { getCommonMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seoConfig";
 
 type ParamsPromise = Promise<{ locale: "es" | "en" }>;
 
@@ -23,19 +23,19 @@ export async function generateMetadata(
 
   const { locale } = await params;
 
-  const title = locale === "es" 
-    ? "Sobre Nosotros: Expertos en Pisos Epóxicos y Muebles de Lujo en Costa Rica" 
-    : "About Us: Experts in Epoxy Floors & Luxury Furniture in Costa Rica"; 
-
-  const description = locale === "es" 
-    ? "Conoce la historia de SobrePoxi. Desde pisos industriales de alto rendimiento hasta muebles de diseño y pisos de lujo, fusionamos ingeniería y arte en cada proyecto." 
-    : "Learn about SobrePoxi's story. From high-performance industrial floors to designer furniture and luxury flooring, we merge engineering and art in every project."; 
-
-  return { 
-    title,
-    description, 
-    ...getCommonMetadata(locale), 
-  };
+  return buildMetadata({
+    locale: locale === "es" ? "es" : "en",
+    pathname: `/${locale}/about`,
+    title: locale === "es"
+      ? "Acerca de SobrePoxi | Muebles con resina epóxica y pisos epóxicos"
+      : "About SobrePoxi | Epoxy resin furniture and epoxy floors",
+    description: locale === "es"
+      ? "Conoce la historia de SobrePoxi, empresa líder en Costa Rica en muebles con resina epóxica y pisos epóxicos industriales. Calidad, innovación y diseño personalizado."
+      : "Learn about SobrePoxi's story, leading company in Costa Rica for epoxy resin furniture and industrial epoxy floors. Quality, innovation and custom design.",
+    keywords: locale === "es"
+      ? "sobre sobrepoxi, historia empresa, muebles resina epóxica costa rica, pisos epóxicos industriales, calidad garantizada"
+      : "about sobrepoxi, company history, epoxy resin furniture costa rica, industrial epoxy floors, guaranteed quality"
+  });
 }
 
 /* ====================================================================== */

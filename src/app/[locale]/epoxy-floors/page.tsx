@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link  from "next/link";
 import Script from "next/script";
 import type { Metadata } from "next";
-import { buildTitle, getCommonMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seoConfig";
 
 // Mantener esta promesa tipada para consistencia con otras rutas
 export type tParams = Promise<{ id: string; locale: "es" | "en" }>;
@@ -21,20 +21,19 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { locale } = await params;
 
-  const title       = locale === "es" ? "Pisos Epóxicos Artísticos" : "Artistic Epoxy Floors";
-  const description = locale === "es"
-    ? "Instalamos pisos epóxicos de lujo con diseños únicos: efecto mármol, agua, galaxias y más. Servicio llave en mano en Costa Rica y EE. UU."
-    : "We install luxury artistic epoxy floors – marble, water, galaxy effects & more. Turn-key service in Costa Rica and the US.";
-
-  return {
-    title: buildTitle(title),
-    description,
-    keywords: [
-      "epoxy floors", "pisos epóxicos", "artistic floors", "luxury flooring",
-      "SobrePoxi", "Costa Rica", "resin floors"
-    ],
-    ...getCommonMetadata(locale),
-  };
+  return buildMetadata({
+    locale: locale === "es" ? "es" : "en",
+    pathname: `/${locale}/epoxy-floors`,
+    title: locale === "es"
+      ? "Pisos Epóxicos Artísticos | Diseños únicos en Costa Rica | SobrePoxi"
+      : "Artistic Epoxy Floors | Unique designs in Costa Rica | SobrePoxi",
+    description: locale === "es"
+      ? "Transforma tu espacio con nuestros pisos epóxicos artísticos. Diseños únicos, colores vibrantes y acabados de lujo para residencias y comercios en Costa Rica."
+      : "Transform your space with our artistic epoxy floors. Unique designs, vibrant colors and luxury finishes for residential and commercial spaces in Costa Rica.",
+    keywords: locale === "es"
+      ? "pisos epóxicos artísticos, diseños únicos costa rica, pisos decorativos, acabados de lujo, sobrepoxi"
+      : "artistic epoxy floors, unique designs costa rica, decorative flooring, luxury finishes, sobrepoxi"
+  });
 }
 
 /* ====================================================================== */

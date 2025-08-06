@@ -1,16 +1,34 @@
 import SearchResultsPage from "@/components/search/SearchResultsPage";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { getCommonMetadata, buildTitle } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seoConfig";
 
 type tParams = Promise<{ locale: string, q: string }>;
 
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
   const { locale } = await params;
-  return {
-    title: buildTitle(locale === "es" ? "Resultados de búsqueda" : "Search results"),
-    ...getCommonMetadata(locale),
-  };
+  return buildMetadata({
+    locale: locale === "es" ? "es" : "en",
+    pathname: `/${locale}/search`,
+    title: locale === "es" ? "Resultados de búsqueda | SobrePoxi" : "Search results | SobrePoxi",
+    description: locale === "es"
+      ? "Encuentra productos y servicios de SobrePoxi: muebles con resina epóxica, pisos epóxicos industriales y artísticos en Costa Rica."
+      : "Find SobrePoxi products and services: epoxy resin furniture, industrial and artistic epoxy floors in Costa Rica.",
+    keywords: locale === "es"
+      ? "búsqueda sobrepoxi, productos muebles resina, pisos epóxicos costa rica, catálogo servicios"
+      : "search sobrepoxi, resin furniture products, epoxy floors costa rica, services catalog",
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1
+      }
+    }
+  });
 }
 
 export default async function SearchPage({ params }: { params: tParams }) {

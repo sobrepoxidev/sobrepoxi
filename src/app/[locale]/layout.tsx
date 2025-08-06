@@ -33,6 +33,12 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
     ...buildMetadata({
       locale: locale === "es" ? "es" : "en",
       pathname,
+      title: locale === "es" 
+        ? "SobrePoxi - Muebles con Resina Epóxica y Pisos Epóxicos Industriales en Costa Rica"
+        : "SobrePoxi - Epoxy Resin Furniture and Industrial Epoxy Floors in Costa Rica",
+      description: locale === "es"
+        ? "Empresa líder en Costa Rica especializada en muebles únicos con resina epóxica y pisos epóxicos industriales de alta resistencia. Calidad garantizada y diseños personalizados."
+        : "Leading company in Costa Rica specialized in unique epoxy resin furniture and high-resistance industrial epoxy floors. Guaranteed quality and custom designs."
     }),
 
     // ——— Canonical + hreflangs ———
@@ -75,35 +81,55 @@ export default async function LocaleLayout({
             <Analytics />
           </SessionLayout>
         </NextIntlClientProvider>
-        <Script id="ld-localbusiness" type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "HomeAndConstructionBusiness",
-            "@id": "https://sobrepoxi.com/#sobrepoxi",
-            "name": "SobrePoxi",
-            "description": "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU.",
-            "url": "https://sobrepoxi.com",
-            "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
-            "areaServed": ["CR", "US"],
-            "telephone": "+50685850000",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
-              "addressLocality": "Vásquez de Coronado",
-              "addressRegion": "San Isidro",
-              "postalCode": "11101",
-              "addressCountry": "CR"
-            },
-            "geo": { "@type": "GeoCoordinates", "latitude": 9.9355431, "longitude": -84.1545449 },
-            "hasMap": "https://maps.app.goo.gl/6HMDWY7bBbwdS3rN7",
-            "sameAs": [
-              "https://www.facebook.com/share/14EpJLUsXwc/",
-              "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
-              "https://www.youtube.com/@sobrepoxi",
-              "https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
-            ]
-          })}
-        </Script>
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HomeAndConstructionBusiness",
+              name: "SobrePoxi",
+              description: locale === "es"
+                ? "Empresa líder en Costa Rica especializada en muebles únicos con resina epóxica y pisos epóxicos industriales de alta resistencia. Calidad garantizada y diseños personalizados."
+                : "Leading company in Costa Rica specialized in unique epoxy resin furniture and high-resistance industrial epoxy floors. Guaranteed quality and custom designs.",
+              url: "https://sobrepoxi.com",
+              logo: "https://sobrepoxi.com/logo.png",
+              image: [
+                "https://sobrepoxi.com/og-image.jpg",
+                "https://sobrepoxi.com/gallery/epoxy-floors-1.jpg",
+                "https://sobrepoxi.com/gallery/luxury-furniture-1.jpg"
+              ],
+              areaServed: "Costa Rica",
+              telephone: "+506 8888-8888",
+              email: "info@sobrepoxi.com",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Barrio San José, 200 metros sur de la Iglesia Católica",
+                addressLocality: "San José",
+                addressRegion: "San José",
+                postalCode: "10101",
+                addressCountry: "CR"
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 9.9281,
+                longitude: -84.0907
+              },
+              hasMap: "https://maps.google.com/?q=9.9281,-84.0907",
+              priceRange: "$$-$$$",
+              openingHours: [
+                "Mo-Fr 08:00-17:00",
+                "Sa 08:00-12:00"
+              ],
+              sameAs: [
+                "https://www.facebook.com/sobrepoxi",
+                "https://www.instagram.com/sobrepoxi",
+                "https://www.tiktok.com/@sobrepoxi",
+                "https://www.youtube.com/@sobrepoxi"
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );
