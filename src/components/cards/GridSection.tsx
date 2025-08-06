@@ -124,7 +124,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
                 {displayProducts.map((product: Product, idx: number) => (
                   <Link key={idx} href={`/product/${product.id}`} className="block group">
                     <div className="flex flex-col items-center bg-gray-50 rounded p-2 hover:shadow-sm transition-shadow">
-                      <div className="h-44 flex items-center justify-center mb-1">
+                      <div className="h-44 flex items-center justify-center mb-1 overflow-hidden">
                         <Image
                           src={product.media && product.media.length > 0 ?
                             (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : '/placeholder.jpg') :
@@ -159,7 +159,7 @@ const GridSection = ({ indexStart, indexEnd, mobileActive = true }: { indexStart
             </>
           ) : (
             <>
-              <div className="flex items-center justify-center h-48">
+              <div className="flex items-center justify-center h-48 overflow-hidden">
                 <Image
                   src={typeof category.image_url === 'string' ? category.image_url : '/placeholder.jpg'}
                   alt={category.name || 'Categoría'}

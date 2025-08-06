@@ -44,7 +44,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                   {displayProducts.map((product, idx) => (
                     <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} target="_self" className="block group">
                       <div className="flex flex-col items-center bg-[#121212] p-2 hover:shadow-sm transition-shadow">
-                        <div className="h-44 flex items-center justify-center mb-1">
+                        <div className="h-44 flex items-center justify-center mb-1 overflow-hidden">
                           <Image
                             src={product.media && product.media.length > 0 ?
                               (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp') :
@@ -101,7 +101,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
               </>
             ) : (
               <>
-                <div className="flex items-center justify-center h-48">
+                <div className="flex items-center justify-center h-48 overflow-hidden">
                   <Image
                     src={locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
                     alt={category.name || 'Categoría'}

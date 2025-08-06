@@ -429,7 +429,7 @@ export default function ProductsPageContent() {
                         href={`/product/${product.id}`}
                         className="text-lg font-medium text-gray-200 hover:text-gray-200 transition"
                       >
-                        {locale === 'es' ? product.name : product.name}
+                        {locale === 'es' ? product.name_es : product.name_en}
                       </Link>
                       {product.category_id && (
                         <div className="mt-1">
