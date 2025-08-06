@@ -1,5 +1,5 @@
 import { Link } from '@/i18n/navigation';
-import { Facebook, Instagram, Phone, Mail, ExternalLink, Youtube, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, Youtube, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer({ locale }: { locale: string }) {
