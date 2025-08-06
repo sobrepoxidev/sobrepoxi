@@ -224,7 +224,7 @@ export function generateBreadcrumbSchema(
 /**
  * Convierte un esquema a JSON-LD string
  */
-export function schemaToJsonLd(schema: any): string {
+export function schemaToJsonLd(schema: LocalBusinessSchema | ServiceSchema | ProductSchema | FAQSchema | BreadcrumbSchema): string {
   return JSON.stringify(schema, null, 0);
 }
 

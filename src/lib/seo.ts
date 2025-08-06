@@ -17,9 +17,9 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
 
   // Extraemos solo los metadatos comunes (sin title específico)
   const {
-    title: _title,
-    alternates: _alternates,
-    twitter: _twitter,
+    title,
+    alternates,
+    twitter,
     ...common
   } = meta;
 

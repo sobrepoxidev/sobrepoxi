@@ -204,8 +204,6 @@ export function buildMetadata(opts: {
   /* URLs canónicas y alternativas                                         */
   /* --------------------------------------------------------------------- */
   const canonicalUrl = `${config.siteUrl}${pathname}`;
-  const alternateLocale = locale === "es" ? "en" : "es";
-  const alternatePath = pathname.replace(`/${locale}`, `/${alternateLocale}`);
 
   /* --------------------------------------------------------------------- */
   /* Metadatos finales optimizados                                         */
@@ -269,9 +267,9 @@ export function getCommonMetadata(locale: string, overrides?: Metadata): Partial
   });
 
   const {
-    title: _title,
-    alternates: _alternates,
-    twitter: _twitter,
+    title,
+    alternates,
+    twitter,
     ...common
   } = meta;
 
