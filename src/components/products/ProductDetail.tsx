@@ -528,7 +528,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     if (navigator.share) {
                       navigator.share({
                         title: product?.name || 'Producto artesanal',
-                        text: product?.description || 'Mira este increíble producto artesanal',
+                        text: product?.description || 'Mira estE increíble artículo artesanal',
                         url: window.location.href
                       })
                       .catch(err => console.error('Error al compartir:', err));

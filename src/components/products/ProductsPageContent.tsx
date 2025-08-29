@@ -58,7 +58,10 @@ export default function ProductsPageContent() {
           .order(locale === 'es' ? 'name_es' : 'name_en', { ascending: true });
         
         setCategoryName(locale === 'es' ? categoriesData?.find(c => c.name === categoryFilter)?.name_es : categoriesData?.find(c => c.name === categoryFilter)?.name_en ?? ''); 
-        if (categoriesError) throw categoriesError;
+        if (categoriesError){
+          console.error('Error fetching categories:', categoriesError);
+          throw categoriesError;
+        };
         setCategories(categoriesData as Category[]);
         
         
