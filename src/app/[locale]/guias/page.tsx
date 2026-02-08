@@ -9,7 +9,8 @@ import { buildMetadata } from "@/lib/seoConfig";
 import { getGuides, getGuideCategories } from "@/lib/guidesContent";
 import Script from "next/script";
 import { generateBreadcrumbSchema } from "@/lib/structuredData";
-import { BookOpen, Clock, ArrowRight, ChevronRight } from "lucide-react";
+import { BookOpen, ArrowRight, ChevronRight } from "lucide-react";
+import GuidesGrid from "./GuidesGrid";
 
 type tParams = Promise<{ locale: "es" | "en" }>;
 
@@ -45,9 +46,6 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
     pageSubtitle: locale === "es"
       ? "Todo lo que necesitas saber sobre resina epóxica, pisos y muebles"
       : "Everything you need to know about epoxy resin, flooring and furniture",
-    allCategories: locale === "es" ? "Todas" : "All",
-    readMore: locale === "es" ? "Leer guía completa" : "Read full guide",
-    readingTime: locale === "es" ? "de lectura" : "read",
     ctaTitle: locale === "es"
       ? "¿Listo para tu proyecto de resina epóxica?"
       : "Ready for your epoxy resin project?",
@@ -57,6 +55,13 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
     ctaButton: locale === "es" ? "Solicitar cotización gratuita" : "Request free quote",
     breadcrumbHome: locale === "es" ? "Inicio" : "Home",
     breadcrumbGuides: locale === "es" ? "Guías" : "Guides",
+  };
+
+  const gridTranslations = {
+    all: locale === "es" ? "Todas" : "All",
+    readMore: locale === "es" ? "Leer guía completa" : "Read full guide",
+    readingTime: locale === "es" ? "de lectura" : "read",
+    noResults: locale === "es" ? "No hay guías en esta categoría" : "No guides in this category",
   };
 
   /* Structured data */
@@ -80,6 +85,17 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
     }
   };
 
+  // Serialize guides to plain objects for the client component
+  const guideCards = guides.map((g) => ({
+    slug: g.slug,
+    title: g.title,
+    metaDescription: g.metaDescription,
+    readingTime: g.readingTime,
+    category: g.category,
+    categorySlug: g.categorySlug,
+    faqCount: g.faqs.length,
+  }));
+
   return (
     <>
       <Script
@@ -95,7 +111,7 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
 
       <main className="min-h-screen bg-[#121212]">
         {/* ─── Hero Section ─── */}
-        <section className="relative py-16 md:py-24 overflow-hidden">
+        <section className="relative py-16 md:py-24">
           <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] to-[#121212]" />
           <div className="relative mx-auto max-w-6xl px-4 text-center">
             {/* Breadcrumb */}
@@ -121,70 +137,13 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
           </div>
         </section>
 
-        {/* ─── Category Filter ─── */}
-        <section className="mx-auto max-w-6xl px-4 mt-2 mb-10">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((cat) => (
-              <span
-                key={cat.slug}
-                className="inline-flex items-center gap-1.5 rounded-full border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-amber-500 hover:text-amber-400 transition-colors"
-              >
-                {cat.name}
-                <span className="text-xs text-gray-500">({cat.count})</span>
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {/* ─── Guides Grid ─── */}
-        <section className="mx-auto max-w-6xl px-4 pb-16">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {guides.map((guide) => (
-              <article
-                key={guide.slug}
-                className="group flex flex-col rounded-xl border border-gray-800 bg-[#1a1a1a] overflow-hidden hover:border-amber-600/50 transition-colors"
-              >
-                <div className="flex-1 p-6">
-                  {/* Category badge */}
-                  <span className="inline-block text-xs font-medium text-amber-400 bg-amber-400/10 rounded-full px-2.5 py-0.5 mb-3">
-                    {guide.category}
-                  </span>
-
-                  <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-amber-400 transition-colors">
-                    <Link href={`/${locale}/guias/${guide.slug}`} className="hover:underline">
-                      {guide.title}
-                    </Link>
-                  </h2>
-
-                  <p className="text-sm text-gray-400 mb-4 line-clamp-3">
-                    {guide.metaDescription}
-                  </p>
-
-                  {/* Meta info */}
-                  <div className="flex items-center gap-3 text-xs text-gray-500">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {guide.readingTime} {t.readingTime}
-                    </span>
-                    <span>•</span>
-                    <span>{guide.faqs.length} FAQ</span>
-                  </div>
-                </div>
-
-                {/* Read more link */}
-                <div className="border-t border-gray-800 px-6 py-3">
-                  <Link
-                    href={`/${locale}/guias/${guide.slug}`}
-                    className="flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors"
-                  >
-                    {t.readMore}
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* ─── Filterable Grid (Client Component) ─── */}
+        <GuidesGrid
+          guides={guideCards}
+          categories={categories}
+          locale={locale}
+          translations={gridTranslations}
+        />
 
         {/* ─── CTA Section ─── */}
         <section className="bg-gradient-to-r from-[#1a1a1a] via-[#1f1a10] to-[#1a1a1a] py-16">
