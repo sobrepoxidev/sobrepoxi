@@ -122,12 +122,12 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
         </section>
 
         {/* ─── Category Filter ─── */}
-        <section className="mx-auto max-w-6xl px-4 -mt-4 mb-8">
-          <div className="flex flex-wrap gap-2 justify-center">
+        <section className="mx-auto max-w-6xl px-4 mt-2 mb-10">
+          <div className="flex flex-wrap gap-3 justify-center">
             {categories.map((cat) => (
               <span
                 key={cat.slug}
-                className="inline-flex items-center gap-1 rounded-full border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:border-amber-500 hover:text-amber-400 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-full border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-amber-500 hover:text-amber-400 transition-colors"
               >
                 {cat.name}
                 <span className="text-xs text-gray-500">({cat.count})</span>

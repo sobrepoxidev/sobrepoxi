@@ -57,7 +57,7 @@ const guidesES: Guide[] = [
     heroSubtitle: "Transforma tu garaje con un piso resistente, moderno y fácil de mantener",
     publishedDate: "2026-02-08",
     updatedDate: "2026-02-08",
-    readingTime: "8 min",
+    readingTime: "12 min",
     category: "Pisos Residenciales",
     categorySlug: "pisos-residenciales",
     sections: [
@@ -120,6 +120,30 @@ const guidesES: Guide[] = [
 <li><strong>Sistema completo con poliaspártico:</strong> Máxima durabilidad y resistencia UV</li>
 </ul>
 <p>Cada proyecto es único, por lo que te invitamos a <strong>solicitar una cotización personalizada</strong> sin compromiso. En SobrePoxi evaluamos tu espacio y te damos opciones que se ajusten a tu presupuesto.</p>`
+      },
+      {
+        heading: "Errores comunes al instalar epóxico en cocheras",
+        content: `<p>Muchos proyectos de pisos epóxicos fallan no por el material, sino por errores en la preparación o aplicación. Estos son los más frecuentes que vemos en Costa Rica:</p>
+<ul>
+<li><strong>No preparar el concreto:</strong> Aplicar epóxico sobre concreto sucio, húmedo o sin perfilar es la causa #1 de desprendimiento. El concreto debe estar limpio, seco y con perfil abierto (CSP 2-3)</li>
+<li><strong>Aplicar sobre concreto nuevo sin curar:</strong> El concreto necesita mínimo 28 días de curado antes de aplicar epóxico. La humedad residual causa ampollas y fallas de adherencia</li>
+<li><strong>Ignorar la humedad del sustrato:</strong> En Costa Rica, con nuestro clima tropical, la humedad asciende desde el suelo. Se debe hacer una prueba de humedad (máximo 4.5% con medidor) antes de aplicar</li>
+<li><strong>Mezclar mal los componentes:</strong> La resina y el endurecedor deben mezclarse en proporciones exactas. Un error del 5% ya compromete el curado y la resistencia final</li>
+<li><strong>Aplicar con temperaturas inadecuadas:</strong> La temperatura ideal es entre 15°C y 30°C. En Costa Rica generalmente estamos en rango, pero en zonas muy calientes como Guanacaste hay que aplicar en horas frescas</li>
+<li><strong>No aplicar topcoat UV:</strong> En cocheras con entrada de sol directo, el epóxico sin protección UV se amarillea en meses. Siempre se debe aplicar un topcoat de poliuretano alifático o poliaspártico</li>
+</ul>
+<p>En <strong>SobrePoxi</strong> evitamos todos estos problemas con protocolos profesionales de preparación e instalación. Cada proyecto incluye medición de humedad, perfilado mecánico y sistema completo con topcoat protector.</p>`
+      },
+      {
+        heading: "Cocheras epóxicas en el clima de Costa Rica",
+        content: `<p>Costa Rica tiene condiciones climáticas específicas que influyen en la elección del sistema epóxico para cocheras:</p>
+<h3>Zona del Valle Central (GAM)</h3>
+<p>Clima templado con lluvias frecuentes. La cochera necesita textura antideslizante y excelente resistencia a la humedad. Los sistemas con escamas son ideales porque combinan estética con tracción. La temperatura estable favorece un curado óptimo.</p>
+<h3>Zona costera (Guanacaste, Puntarenas, Limón)</h3>
+<p>Calor intenso, humedad alta y salinidad. Aquí se requiere un sistema de alto rendimiento: epóxico 100% sólidos con topcoat de poliaspártico para máxima resistencia UV y a la sal. La preparación del sustrato es aún más crítica por la humedad ascendente.</p>
+<h3>Zona de montaña (Cartago, zonas altas de Heredia)</h3>
+<p>Temperaturas más bajas y alta humedad. Se debe prestar especial atención al tiempo de curado, ya que las temperaturas bajas lo prolongan. Recomendamos sistemas con endurecedores acelerados para estas zonas.</p>
+<p>En todos los casos, un profesional debe evaluar las condiciones específicas del sitio antes de recomendar el sistema. En <strong>SobrePoxi</strong> realizamos visitas técnicas sin costo para garantizar el sistema correcto.</p>`
       }
     ],
     faqs: [
@@ -146,7 +170,7 @@ const guidesES: Guide[] = [
     heroSubtitle: "Dale a tu hogar un look contemporáneo con pisos sin juntas de resina epóxica",
     publishedDate: "2026-02-08",
     updatedDate: "2026-02-08",
-    readingTime: "7 min",
+    readingTime: "11 min",
     category: "Pisos Residenciales",
     categorySlug: "pisos-residenciales",
     sections: [
@@ -189,6 +213,33 @@ const guidesES: Guide[] = [
 <li><strong>vs. Microcemento:</strong> Mayor resistencia química, más opciones de color, mejor brillo</li>
 <li><strong>vs. Mármol:</strong> Fracción del costo, más resistente a manchas, mismo efecto visual</li>
 </ul>`
+      },
+      {
+        heading: "Cómo integrar pisos epóxicos con tu decoración existente",
+        content: `<p>Uno de los temores más comunes es que el piso epóxico no combine con la decoración actual. La realidad es que es uno de los pisos más versátiles para integrar con cualquier estilo:</p>
+<h3>Estilo Minimalista / Nórdico</h3>
+<p>Epóxico en tonos blancos, grises claros o beige con acabado satinado. La superficie continua sin juntas refuerza la limpieza visual que define este estilo. Combina perfectamente con muebles de líneas rectas, maderas claras y plantas.</p>
+<h3>Estilo Industrial / Loft</h3>
+<p>Epóxico efecto concreto pulido o gris oscuro con acabado mate o satinado. Se complementa con ladrillo expuesto, estructuras metálicas y mobiliario robusto. El look es sofisticado sin esfuerzo.</p>
+<h3>Estilo Tropical / Costero</h3>
+<p>Epóxico en tonos arena, turquesa suave o blanco con efecto océano. Perfecto para casas de playa en Guanacaste o el Caribe costarricense. Combina con ratán, maderas naturales y textiles orgánicos.</p>
+<h3>Estilo Contemporáneo / Lujo</h3>
+<p>Epóxico metálico en tonos grafito, negro o dorado. Crea un impacto visual dramático que eleva cualquier espacio. Ideal para residencias premium, penthouses y espacios de entretenimiento.</p>
+<h3>Estilo Rústico / Campo</h3>
+<p>Epóxico en tonos terracota, miel o efecto piedra natural. Complementa vigas de madera, paredes de piedra y muebles de campo sin sacrificar la practicidad de una superficie moderna.</p>
+<p>En <strong>SobrePoxi</strong> te ayudamos a seleccionar el color, textura y acabado que mejor se integre con tu decoración. Creamos muestras físicas que puedes llevar a casa para verlas con tu iluminación y mobiliario real.</p>`
+      },
+      {
+        heading: "Pisos epóxicos en apartamentos y condominios",
+        content: `<p>Los apartamentos presentan desafíos únicos que el epóxico resuelve mejor que otros pisos:</p>
+<ul>
+<li><strong>Espacios compactos:</strong> La superficie sin juntas amplía visualmente apartamentos pequeños hasta un 15-20% percibido</li>
+<li><strong>Ruido:</strong> El epóxico sobre concreto no genera el ruido de tacones que sí produce el porcelanato. Se puede agregar una capa aislante bajo el sistema para mayor reducción acústica</li>
+<li><strong>Mascotas:</strong> En condominios pet-friendly, el epóxico no se daña con uñas de perros ni absorbe olores como la madera o alfombra</li>
+<li><strong>Reventa:</strong> Un apartamento con piso epóxico de diseño se distingue en el mercado inmobiliario y puede justificar un precio mayor</li>
+<li><strong>Regulaciones:</strong> A diferencia de la madera que puede propagarse en incendios, el epóxico no es inflamable, cumpliendo códigos de construcción para edificios residenciales</li>
+</ul>
+<p><strong>Dato importante para Costa Rica:</strong> En torres de apartamentos, la preparación del sustrato debe considerar que los entrepisos de concreto pueden tener menor espesor que una losa de fundación. Un diagnóstico profesional asegura que el sistema elegido sea compatible con la estructura existente.</p>`
       }
     ],
     faqs: [
@@ -214,7 +265,7 @@ const guidesES: Guide[] = [
     heroSubtitle: "Guía completa para elegir la resina correcta según tu proyecto",
     publishedDate: "2026-02-08",
     updatedDate: "2026-02-08",
-    readingTime: "9 min",
+    readingTime: "14 min",
     category: "Guías Técnicas",
     categorySlug: "guias-tecnicas",
     sections: [
@@ -266,6 +317,40 @@ const guidesES: Guide[] = [
 <li><strong>Para reparaciones de concreto:</strong> Mortero epóxico o resina de inyección</li>
 </ul>
 <p>En <strong>SobrePoxi</strong> somos expertos en todos estos sistemas. Te asesoramos sin costo para que uses el producto correcto en tu proyecto.</p>`
+      },
+      {
+        heading: "Marcas y calidades de resina: lo que debes saber",
+        content: `<p>No todas las resinas epóxicas son iguales, y la calidad del producto determina directamente el resultado final de tu proyecto:</p>
+<h3>Resinas de grado profesional vs. comercial</h3>
+<p>Las resinas de grado profesional tienen mayor porcentaje de sólidos, mejor resistencia química y mayor vida útil. Las de grado comercial (las que encuentras en ferreterías) son más delgadas, menos resistentes y pueden fallar en aplicaciones exigentes como pisos de cochera o muebles de uso diario.</p>
+<h3>Factores que determinan la calidad</h3>
+<ul>
+<li><strong>Porcentaje de sólidos:</strong> Las resinas 100% sólidos no tienen solventes que se evaporen — todo lo que aplicas se queda. Las resinas con 50-70% sólidos pierden espesor al curar</li>
+<li><strong>Resistencia a compresión:</strong> Las buenas resinas para pisos superan los 10,000 PSI de resistencia a compresión. Las económicas pueden estar por debajo de 5,000 PSI</li>
+<li><strong>Resistencia UV:</strong> Las resinas sin estabilizadores UV se amarillean en semanas. Busca resinas con protección UV integrada o aplica siempre un topcoat protector</li>
+<li><strong>Tiempo de trabajo (pot life):</strong> Una resina profesional te da 30-45 minutos de tiempo de trabajo. Las económicas pueden curar en 15-20 minutos, dificultando la aplicación</li>
+<li><strong>Viscosidad:</strong> Para pisos, una viscosidad media permite autonivelar sin escurrir. Para mesas, necesitas viscosidad baja para eliminar burbujas</li>
+</ul>
+<h3>¿Por qué en SobrePoxi usamos productos premium?</h3>
+<p>Trabajamos exclusivamente con resinas de grado profesional con certificaciones de calidad. Esto significa que tu piso o mueble va a mantener su aspecto y rendimiento durante décadas, no meses. La diferencia de costo entre un producto bueno y uno mediocre es mínima comparada con el costo de rehacer un proyecto fallido.</p>`
+      },
+      {
+        heading: "Glosario de términos sobre resina epóxica",
+        content: `<p>Si estás investigando sobre resina epóxica, estos son los términos que encontrarás con frecuencia:</p>
+<ul>
+<li><strong>Pot life (vida en bote):</strong> Tiempo que tienes para trabajar la mezcla antes de que empiece a endurecer</li>
+<li><strong>Curado:</strong> Proceso químico por el cual la resina líquida se convierte en un sólido duro. No es lo mismo que "secado" — es una reacción química irreversible</li>
+<li><strong>Exotérmico:</strong> La reacción de curado genera calor. En volúmenes grandes (como mesas río), el calor excesivo puede causar fisuras o amarillamiento</li>
+<li><strong>CSP (Concrete Surface Profile):</strong> Nivel de rugosidad del concreto necesario para que el epóxico se adhiera. Se logra con esmerilado o shot blasting</li>
+<li><strong>Topcoat:</strong> Capa final transparente que protege el epóxico de rayos UV, abrasión y químicos</li>
+<li><strong>Poliaspártico:</strong> Tipo de poliurea alifática que se usa como topcoat de alta resistencia. Cura rápido y tiene excelente resistencia UV</li>
+<li><strong>Deep pour:</strong> Resina formulada para vertidos profundos (hasta 5cm por capa) sin generar calor excesivo</li>
+<li><strong>Table top:</strong> Resina de alta transparencia diseñada para superficies de muebles y encapsulados delgados</li>
+<li><strong>Borde vivo (live edge):</strong> Borde natural de la madera sin cortar, usado en mesas río y muebles artísticos</li>
+<li><strong>Flake/escamas:</strong> Trozos decorativos de vinilo que se esparcen sobre el epóxico húmedo para dar textura y diseño</li>
+<li><strong>Primer/imprimante:</strong> Primera capa que penetra el concreto y sella poros para mejorar la adherencia del sistema</li>
+<li><strong>Broadcast:</strong> Técnica de esparcir arena, cuarzo o escamas sobre la superficie húmeda del epóxico</li>
+</ul>`
       }
     ],
     faqs: [
@@ -714,18 +799,35 @@ const guidesES: Guide[] = [
     title: "Preguntas Frecuentes sobre Resina Epóxica: Todo lo que Necesitas Saber",
     metaTitle: "Preguntas Frecuentes Resina Epóxica | FAQ Completo | SobrePoxi",
     metaDescription: "Respuestas a las preguntas más comunes sobre resina epóxica: durabilidad, costos, mantenimiento, aplicaciones, seguridad y más. Guía experta de SobrePoxi.",
-    keywords: "preguntas resina epóxica, FAQ epóxico, es segura la resina epóxica, cuánto dura resina, cuánto cuesta piso epóxico, resina epóxica dudas",
+    keywords: "preguntas resina epóxica, FAQ epóxico, es segura la resina epóxica, cuánto dura resina, cuánto cuesta piso epóxico, resina epóxica dudas, resina epóxica Costa Rica",
     heroTitle: "Preguntas Frecuentes sobre Resina Epóxica",
     heroSubtitle: "Respuestas claras a las dudas más comunes",
     publishedDate: "2026-02-08",
     updatedDate: "2026-02-08",
-    readingTime: "10 min",
+    readingTime: "15 min",
     category: "Guías Técnicas",
     categorySlug: "guias-tecnicas",
     sections: [
       {
         heading: "Sobre la resina epóxica en general",
-        content: `<p>La resina epóxica genera muchas preguntas, especialmente para quienes la descubren por primera vez. Aquí respondemos las más frecuentes de forma clara y honesta.</p>`
+        content: `<p>La resina epóxica genera muchas preguntas, especialmente para quienes la descubren por primera vez. Como especialistas en resina epóxica en Costa Rica, en SobrePoxi recibimos estas preguntas diariamente de clientes residenciales, comerciales e industriales.</p>
+<p>Hemos recopilado las preguntas más frecuentes organizadas por categoría para que encuentres exactamente la información que necesitas. Desde dudas básicas sobre qué es la resina epóxica hasta consultas técnicas sobre instalación, mantenimiento y costos.</p>`
+      },
+      {
+        heading: "Resina epóxica en Costa Rica: consideraciones locales",
+        content: `<p>Costa Rica tiene condiciones particulares que afectan los proyectos con resina epóxica:</p>
+<h3>Clima y humedad</h3>
+<p>Nuestro clima tropical con estaciones lluviosas y secas influye directamente en la instalación y curado de sistemas epóxicos. Durante la época lluviosa (mayo a noviembre), la humedad ambiental puede superar el 80%, lo que requiere precauciones adicionales en la preparación del sustrato y tiempos de curado extendidos.</p>
+<h3>Disponibilidad de materiales</h3>
+<p>No todas las resinas disponibles en el mercado costarricense son de calidad profesional. Muchas ferreterías venden productos de grado comercial que no están diseñados para pisos de alto tráfico o muebles de uso diario. En SobrePoxi importamos directamente productos de grado industrial y profesional con certificaciones de calidad.</p>
+<h3>Normativas y permisos</h3>
+<p>Para proyectos industriales y comerciales en Costa Rica, los pisos epóxicos deben cumplir normativas del Ministerio de Salud (especialmente en áreas de manipulación de alimentos) y del INS (Instituto Nacional de Seguros) en cuanto a seguridad contra incendios y superficies antideslizantes.</p>
+<h3>Zonas sísmicas</h3>
+<p>Costa Rica es zona sísmica. Los pisos epóxicos tienen una ventaja importante: su flexibilidad les permite absorber micro-movimientos del sustrato sin agrietarse, a diferencia de pisos rígidos como el porcelanato que pueden fisurarse. Sin embargo, grietas estructurales en el concreto deben repararse profesionalmente antes de la aplicación.</p>`
+      },
+      {
+        heading: "Preguntas sobre proyectos específicos",
+        content: `<p>Cada tipo de proyecto tiene sus propias consideraciones. Aquí abordamos las dudas más comunes por tipo de aplicación para que puedas tomar decisiones informadas sobre tu proyecto de resina epóxica.</p>`
       }
     ],
     faqs: [
@@ -734,13 +836,19 @@ const guidesES: Guide[] = [
       { question: "¿Es segura la resina epóxica?", answer: "Durante la aplicación se deben usar equipos de protección (guantes, mascarilla, gafas) ya que puede irritar piel y vías respiratorias. Una vez curada (48-72 horas), es completamente inerte y segura, incluso para contacto con alimentos en formulaciones certificadas." },
       { question: "¿La resina epóxica se pone amarilla?", answer: "Las resinas económicas pueden amarillear con exposición UV. Las resinas profesionales con estabilizadores UV y los topcoats de poliuretano alifático o poliaspártico minimizan este efecto. En SobrePoxi solo usamos sistemas UV-estables." },
       { question: "¿Se puede aplicar resina epóxica uno mismo (DIY)?", answer: "Para proyectos pequeños de arte o muebles, sí con la capacitación adecuada. Para pisos, NO recomendamos DIY: la preparación del sustrato, la mezcla precisa y la aplicación uniforme requieren equipo y experiencia profesional. Un piso mal aplicado puede fallar en meses." },
-      { question: "¿Cuánto cuesta un piso epóxico en Costa Rica?", answer: "El precio varía según el sistema, área y condición del sustrato. Factores que afectan el precio: estado del concreto, sistema elegido (básico vs. premium), complejidad del diseño, y área total. Solicita una cotización personalizada para tu proyecto." },
+      { question: "¿Cuánto cuesta un piso epóxico en Costa Rica?", answer: "El precio varía según el sistema, área y condición del sustrato. Factores que afectan el precio: estado del concreto, sistema elegido (básico vs. premium), complejidad del diseño, y área total. Solicita una cotización personalizada para tu proyecto específico." },
       { question: "¿Sobre qué superficies se puede aplicar epóxico?", answer: "Principalmente sobre concreto, pero también sobre cerámica, porcelanato, metal y madera con la preparación adecuada. El sustrato debe estar limpio, seco y perfilado correctamente para garantizar adherencia." },
       { question: "¿El piso epóxico huele mal?", answer: "Durante la aplicación, los sistemas base solvente tienen olor fuerte (24-48h). Los sistemas base agua tienen olor mínimo. Una vez curado, el piso no tiene ningún olor." },
       { question: "¿Se puede reparar un piso epóxico dañado?", answer: "Sí. Los daños localizados se reparan lijando el área y aplicando nueva resina. No es necesario rehacer todo el piso. Esto es una ventaja significativa sobre cerámica o porcelanato." },
       { question: "¿El epóxico resiste el calor?", answer: "Los pisos epóxicos resisten temperaturas de hasta 60-80°C sin problema. Para entornos con temperaturas más altas, se usan sistemas especiales de alta temperatura." },
       { question: "¿Se puede poner epóxico en exteriores?", answer: "El epóxico estándar no es recomendable para exteriores con sol directo por la sensibilidad UV. Para exteriores se usan topcoats de poliuretano alifático o sistemas de poliaspártico que sí resisten UV." },
-      { question: "¿Cuánto tarda en curar la resina epóxica?", answer: "Al tacto: 12-24 horas. Tráfico peatonal ligero: 24-48 horas. Tráfico completo: 5-7 días. El curado completo para resistencia química máxima toma 14-28 días dependiendo de la temperatura ambiente." }
+      { question: "¿Cuánto tarda en curar la resina epóxica?", answer: "Al tacto: 12-24 horas. Tráfico peatonal ligero: 24-48 horas. Tráfico completo: 5-7 días. El curado completo para resistencia química máxima toma 14-28 días dependiendo de la temperatura ambiente." },
+      { question: "¿Puedo poner piso epóxico en mi cochera si tiene manchas de aceite?", answer: "Sí, pero las manchas de aceite deben limpiarse profesionalmente antes de la aplicación. El aceite penetra el concreto y puede impedir la adherencia del epóxico. Se usan desengrasantes industriales y en casos severos, esmerilado mecánico para remover el concreto contaminado." },
+      { question: "¿El piso epóxico sirve para un restaurante?", answer: "Sí, es una de las mejores opciones para restaurantes. Cumple normativas sanitarias por ser una superficie sin juntas ni poros, resiste derrames de alimentos y líquidos, es fácil de limpiar y desinfectar, y está disponible con acabado antideslizante para áreas de cocina." },
+      { question: "¿Se puede hacer una mesa río con madera de Costa Rica?", answer: "Sí. Maderas como guanacaste, cenízaro, laurel y cedro son excelentes para mesas río por sus formas naturales y vetas distintivas. Cada especie tiene características únicas que hacen la pieza irrepetible. En SobrePoxi trabajamos con madera local responsablemente cosechada." },
+      { question: "¿Los pisos epóxicos son aptos para personas alérgicas?", answer: "Sí. A diferencia de alfombras o pisos con juntas que acumulan ácaros, polvo y alérgenos, los pisos epóxicos son superficies completamente lisas y no porosas. Se limpian fácilmente y no albergan microorganismos, siendo ideales para personas con alergias o asma." },
+      { question: "¿Necesito desocupar completamente el espacio para instalar epóxico?", answer: "Sí, el área debe estar completamente desocupada para la preparación del sustrato y la aplicación. Dependiendo del tamaño, podemos trabajar por secciones para minimizar el impacto, especialmente en negocios que no pueden cerrar completamente." },
+      { question: "¿SobrePoxi trabaja en todo Costa Rica?", answer: "Sí, realizamos proyectos en todo el territorio nacional: Gran Área Metropolitana (GAM), Guanacaste, Puntarenas, Limón, zona norte y zona sur. Para proyectos fuera del GAM, coordinamos logística especial para asegurar la misma calidad de instalación." }
     ],
     relatedSlugs: ["tipos-de-resina-epoxica", "mantenimiento-pisos-epoxicos", "pisos-epoxicos-para-cocheras"],
     ctaText: "¿Tienes más preguntas? Nuestros expertos te responden sin compromiso",
