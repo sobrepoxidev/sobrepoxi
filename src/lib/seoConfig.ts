@@ -78,6 +78,11 @@ export const SEO_TEXT = {
         title: "Búsqueda de productos | SobrePoxi Costa Rica",
         description: "Encuentra los mejores muebles con resina epóxica y productos para pisos epóxicos en nuestro catálogo.",
         keywords: "buscar productos SobrePoxi, catálogo resina epóxica, productos pisos epóxicos Costa Rica"
+      },
+      guides: {
+        title: "Guías sobre Resina Epóxica | Pisos, Muebles, Diseño y Más | SobrePoxi",
+        description: "Guías completas sobre resina epóxica: pisos para cocheras, interiores modernos, tipos de resina, mantenimiento, diseños tendencia y más. Aprende de los expertos en Costa Rica.",
+        keywords: "guías resina epóxica, pisos epóxicos guía, tipos resina epóxica, diseños pisos epóxicos, muebles resina epóxica, mantenimiento epóxico, blog resina epóxica Costa Rica"
       }
     }
   },
@@ -124,6 +129,11 @@ export const SEO_TEXT = {
         title: "Product search | SobrePoxi Costa Rica",
         description: "Find the best epoxy resin furniture and epoxy flooring products in our catalog.",
         keywords: "search SobrePoxi products, epoxy resin catalog, epoxy flooring products Costa Rica"
+      },
+      guides: {
+        title: "Epoxy Resin Guides | Flooring, Furniture, Design & More | SobrePoxi",
+        description: "Complete guides on epoxy resin: garage floors, modern interiors, resin types, maintenance, trending designs and more. Learn from the experts in Costa Rica.",
+        keywords: "epoxy resin guides, epoxy flooring guide, types of epoxy resin, epoxy floor designs, epoxy resin furniture, epoxy maintenance, epoxy resin blog Costa Rica"
       }
     }
   }

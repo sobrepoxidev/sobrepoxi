@@ -91,6 +91,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
     { name: locale === 'es' ? 'Pisos de Lujo y Diseño' : 'Luxury Design Flooring', path: '/luxury-design-flooring' },
     { name: locale === 'es' ? 'Pisos Industriales' : 'Industrial Flooring', path: '/industrial-epoxy-flooring' },
     { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
+    { name: locale === 'es' ? 'Guías' : 'Guides', path: '/guias' },
     // Store se trata de manera especial ahora, con categorías desplegables
   ]
 
