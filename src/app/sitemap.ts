@@ -1,6 +1,7 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from 'next'
 import slugify from 'slugify'
+import { getAllGuideSlugs } from '@/lib/guidesContent'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -76,5 +77,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   }))
 
-  return [...staticEntries, ...productEntries]
+  // Guide pages
+  const guideSlugs = getAllGuideSlugs()
+  const guideEntries: MetadataRoute.Sitemap = [
+    // Guides index page
+    {
+      url: 'https://sobrepoxi.com/es/guias',
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+      alternates: {
+        languages: {
+          'en-us': 'https://sobrepoxi.com/en/guias',
+        },
+      },
+    },
+    // Individual guide pages
+    ...guideSlugs.map(({ slug, locale }) => ({
+      url: `https://sobrepoxi.com/${locale}/guias/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+      alternates: {
+        languages: {
+          ...(locale === 'es'
+            ? { 'en-us': `https://sobrepoxi.com/en/guias/${slug}` }
+            : { 'es-cr': `https://sobrepoxi.com/es/guias/${slug}` }),
+        },
+      },
+    })),
+  ]
+
+  return [...staticEntries, ...productEntries, ...guideEntries]
 }
