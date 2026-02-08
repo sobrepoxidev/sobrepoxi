@@ -11,7 +11,6 @@ import {
   getGuideBySlug,
   getAllGuideSlugs,
   getRelatedGuides,
-  type Guide,
 } from "@/lib/guidesContent";
 import Script from "next/script";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structuredData";
