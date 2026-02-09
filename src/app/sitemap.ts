@@ -46,8 +46,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'feria-artesanias',
     'feria-artesanias-terminos',
     'luxury-furniture',
-    'luxury-design-flooring',  // New landing page for luxury market
-    'industrial-epoxy-flooring', // New landing page for industrial market
+    'epoxy-floors',              // Main epoxy floors page (most indexed)
+    'industrial-epoxy-flooring', // Landing page for industrial market
     'search'
   ]
 

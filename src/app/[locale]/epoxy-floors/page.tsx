@@ -89,6 +89,39 @@ export default async function EpoxyFloorsPage(
       { icon: "paintbrush", name: "Decorative Flakes", desc: "Multi-color vinyl flakes over resin. Natural anti-slip texture. Perfect for garages, gyms and commercial spaces.", tag: "Versatile" },
       { icon: "star", name: "Self-Leveling Solid", desc: "Mirror-smooth surface in custom solid color. Minimalist finish for offices, clinics and modern spaces.", tag: "Elegant" },
     ],
+    // Architects
+    architectsTitle: locale === "es" ? "Para Arquitectos y Diseñadores" : "For Architects & Designers",
+    architectsContent: locale === "es"
+      ? "Colaboramos estrechamente con profesionales del diseño para crear soluciones de pisos que complementen perfectamente su visión creativa. Nuestro equipo técnico trabaja con usted desde la conceptualización hasta la instalación, asegurando que cada detalle cumpla con sus especificaciones exactas."
+      : "We collaborate closely with design professionals to create flooring solutions that perfectly complement your creative vision. Our technical team works with you from conceptualization to installation, ensuring every detail meets your exact specifications.",
+    architectsPoints: locale === "es" ? [
+      "Muestras personalizadas para presentaciones a clientes",
+      "Soporte técnico durante todo el proyecto",
+      "Capacidad de igualar colores específicos",
+      "Soluciones a medida para proyectos únicos",
+    ] : [
+      "Custom samples for client presentations",
+      "Technical support throughout the project",
+      "Ability to match specific colors",
+      "Tailored solutions for unique projects",
+    ],
+    // Benefits
+    benefitsTitle: locale === "es" ? "Beneficios estéticos" : "Aesthetic Benefits",
+    benefits: locale === "es" ? [
+      ["Acabado sin juntas", "Superficie continua y elegante sin líneas divisorias que interrumpan el diseño."],
+      ["Efectos de mármol", "Patrones fluidos que emulan la belleza natural del mármol con infinitas variaciones."],
+      ["Personalización de color", "Posibilidad de igualar cualquier tono para complementar su esquema de diseño."],
+      ["Acabados metálicos", "Superficies con profundidad visual y reflejos que cambian con la luz."],
+      ["Durabilidad superior", "Belleza que perdura, resistente a manchas, rayones y desgaste diario."],
+      ["Mantenimiento sencillo", "Fácil de limpiar y mantener, sin necesidad de tratamientos especiales."],
+    ] : [
+      ["Seamless finish", "Continuous, elegant surface with no dividing lines to interrupt the design."],
+      ["Marble effects", "Fluid patterns that emulate the natural beauty of marble with endless variations."],
+      ["Color matching", "Ability to match any shade to complement your design scheme."],
+      ["Metallic finishes", "Surfaces with visual depth and reflections that change with the light."],
+      ["Superior durability", "Beauty that lasts, resistant to stains, scratches, and daily wear."],
+      ["Simple maintenance", "Easy to clean and maintain, with no need for special treatments."],
+    ],
     // Gallery
     galleryTitle: locale === "es" ? "Nuestros proyectos" : "Our projects",
     gallerySub: locale === "es"
@@ -315,6 +348,48 @@ export default async function EpoxyFloorsPage(
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-amber-400 transition-colors">{type.name}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{type.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ FOR ARCHITECTS ═══════════════ */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t.architectsTitle}</h2>
+            <p className="text-gray-300 leading-relaxed text-lg mb-6">{t.architectsContent}</p>
+            <ul className="space-y-3">
+              {t.architectsPoints.map((point, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+                  <span className="text-gray-300">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+            <Image
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp"
+              alt={locale === "es" ? "Piso epóxico diseñado para proyecto arquitectónico" : "Epoxy floor designed for architectural project"}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ BENEFITS ═══════════════ */}
+      <section className="py-16 md:py-24 bg-[#0e0e0e]">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.benefitsTitle}</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {t.benefits.map(([title, text]) => (
+              <div key={title} className="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800">
+                <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{text}</p>
               </div>
             ))}
           </div>
