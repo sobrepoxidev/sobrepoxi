@@ -853,6 +853,448 @@ const guidesES: Guide[] = [
     relatedSlugs: ["tipos-de-resina-epoxica", "mantenimiento-pisos-epoxicos", "pisos-epoxicos-para-cocheras"],
     ctaText: "¿Tienes más preguntas? Nuestros expertos te responden sin compromiso",
     ctaLink: "/contact"
+  },
+
+  // ── 11. Pisos epóxicos 3D y metálicos ────────────────────────────────────
+  {
+    slug: "pisos-epoxicos-3d-efectos-metalicos",
+    locale: "es",
+    title: "Pisos Epóxicos 3D y Metálicos: Efectos Impresionantes Bajo tus Pies",
+    metaTitle: "Pisos Epóxicos 3D y Metálicos | Efectos Wow | SobrePoxi",
+    metaDescription: "Descubre los pisos epóxicos 3D y metálicos: efectos lava, océano, mármol, galaxia y más. Cómo se hacen, dónde usarlos y por qué cada piso es único e irrepetible.",
+    keywords: "pisos epóxicos 3D, pisos metálicos epóxicos, piso efecto lava, piso efecto océano, pisos 3D resina, pisos epóxicos con diseño, pisos artísticos resina",
+    heroTitle: "Pisos Epóxicos 3D y Metálicos",
+    heroSubtitle: "Efectos tridimensionales que convierten tu piso en una obra de arte",
+    publishedDate: "2026-02-09",
+    updatedDate: "2026-02-09",
+    readingTime: "10 min",
+    category: "Inspiración",
+    categorySlug: "inspiracion",
+    sections: [
+      {
+        heading: "¿Qué son los pisos epóxicos 3D?",
+        content: `<p>Los <strong>pisos epóxicos 3D</strong> son superficies decorativas que utilizan pigmentos metálicos especiales, vinilos impresos o técnicas de aplicación artística para crear ilusiones ópticas de profundidad y movimiento. A diferencia de un piso de color sólido, un piso 3D parece tener capas, flujo y textura visual que cambia según el ángulo desde el que lo mires.</p>
+<p>Existen dos categorías principales:</p>
+<ul>
+<li><strong>Pisos metálicos (metallic epoxy):</strong> Usan pigmentos metálicos reales (mica, aluminio) mezclados en la resina. El instalador manipula los pigmentos con sopletes, rodillos y espátulas para crear efectos naturales como lava, océano o mármol. Cada piso es <strong>100% único e irrepetible</strong></li>
+<li><strong>Pisos 3D con imagen impresa:</strong> Se coloca una imagen de alta resolución sobre el sustrato y se cubre con capas de resina cristalina. El grosor de la resina crea efecto de profundidad tridimensional</li>
+</ul>
+<p>En <strong>SobrePoxi</strong> nos especializamos en pisos metálicos por su autenticidad artística y durabilidad superior.</p>`
+      },
+      {
+        heading: "Los 10 efectos metálicos más solicitados",
+        content: `<p>Estos son los diseños que más nos piden nuestros clientes en Costa Rica:</p>
+<h3>1. Efecto Lava Volcánica</h3>
+<p>Tonos rojos, naranjas y negros que simulan flujos de magma. Dramático e impactante — ideal para bares, restaurantes temáticos y garajes de entusiastas.</p>
+<h3>2. Efecto Océano / Playa</h3>
+<p>Azules turquesa, blancos espumosos y arenas doradas. Perfecto para casas de playa, spas y baños de lujo. Los pigmentos se manipulan para crear olas que parecen agua real.</p>
+<h3>3. Efecto Mármol Italiano</h3>
+<p>Blancos, grises y dorados con vetas naturales que imitan Carrara o Calacatta. La opción más elegante para salas y lobbies de hotel.</p>
+<h3>4. Efecto Galaxia / Nebulosa</h3>
+<p>Negros profundos con azules, púrpuras y destellos plateados. Espectacular para home theaters y espacios de entretenimiento.</p>
+<h3>5. Efecto Tormenta / Nube</h3>
+<p>Grises claros y blancos con transiciones suaves. El más versátil — combina con cualquier decoración moderna.</p>
+<h3>6. Efecto Jade / Piedra Preciosa</h3>
+<p>Verdes esmeralda con vetas doradas. Sofisticado — ideal para joyerías y spas.</p>
+<h3>7. Efecto Cobre Oxidado</h3>
+<p>Tonos cobrizos con pátina verdosa. Look industrial-chic para cervecerías artesanales y lofts.</p>
+<h3>8. Efecto Arena del Desierto</h3>
+<p>Dorados, beiges y marrones cálidos. Popular para restaurantes mediterráneos y hoteles boutique.</p>
+<h3>9. Efecto Perla / Madreperla</h3>
+<p>Blancos iridiscentes con reflejos que cambian con la luz. Perfecto para boutiques y salones de belleza.</p>
+<h3>10. Efecto Carbón / Grafito</h3>
+<p>Negro satinado con vetas grises sutiles. Ideal para garajes premium y estudios.</p>`
+      },
+      {
+        heading: "¿Cómo se crean los efectos 3D metálicos?",
+        content: `<p>El proceso es parte ciencia, parte arte:</p>
+<ol>
+<li><strong>Preparación del sustrato:</strong> Limpieza, reparación y perfilado del concreto</li>
+<li><strong>Primer epóxico:</strong> Sella el concreto y mejora adherencia</li>
+<li><strong>Mezcla de resina + pigmentos metálicos:</strong> La cantidad de pigmento determina la intensidad</li>
+<li><strong>Vertido y distribución:</strong> Se vierte y distribuye con llana dentada</li>
+<li><strong>Manipulación artística:</strong> Con sopletes de calor, pistolas de aire y espátulas, el instalador mueve los pigmentos para crear los patrones. Los pigmentos reaccionan al calor de formas impredecibles y orgánicas</li>
+<li><strong>Curado:</strong> 24-48 horas sin tocar</li>
+<li><strong>Topcoat protector:</strong> Capa final de poliuretano o poliaspártico con resistencia UV</li>
+</ol>
+<p><strong>¿Por qué cada piso es único?</strong> Los pigmentos metálicos se mueven de forma caótica — es imposible replicar exactamente el mismo patrón. Tu piso será literalmente el único en el mundo con ese diseño.</p>`
+      },
+      {
+        heading: "¿Dónde instalar pisos 3D metálicos?",
+        content: `<h3>Ideales para:</h3>
+<ul>
+<li><strong>Salas de estar:</strong> Efecto mármol o nube — elegancia sin sobrecarga</li>
+<li><strong>Garajes premium:</strong> Efecto grafito o lava — impresionante al abrir la puerta</li>
+<li><strong>Restaurantes y bares:</strong> Se convierte en parte de la identidad del local</li>
+<li><strong>Lobbies de hotel:</strong> Primera impresión de lujo</li>
+<li><strong>Showrooms:</strong> Efecto personalizado con colores de marca</li>
+<li><strong>Baños de lujo:</strong> Efecto océano o jade — transforma un baño ordinario</li>
+<li><strong>Home theaters:</strong> Efecto galaxia — experiencia inmersiva</li>
+</ul>
+<h3>Considerar con cuidado:</h3>
+<ul>
+<li><strong>Cocinas de alto tráfico:</strong> Usar topcoat antideslizante obligatorio</li>
+<li><strong>Exteriores:</strong> Solo con topcoat UV premium y en áreas techadas</li>
+<li><strong>Áreas industriales:</strong> Para uso industrial pesado, mejor un sistema de cuarzo</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuánto cuesta un piso epóxico 3D metálico?", answer: "Los pisos metálicos cuestan más que sistemas estándar por los pigmentos especiales y la técnica artística. El precio depende del área, complejidad del diseño y número de colores. Solicita cotización para tu proyecto." },
+      { question: "¿Se puede elegir exactamente cómo quedará?", answer: "Se define el estilo general (mármol, océano, lava) y los colores, pero los patrones exactos son orgánicos y únicos. Hacemos muestras de prueba para que apruebes el estilo antes de aplicar." },
+      { question: "¿El piso metálico se ve bien con cualquier iluminación?", answer: "Cambia de aspecto según la luz — con luz natural se ve más sutil, con artificial se intensifican los reflejos. Recomendamos planificar la iluminación como parte del diseño." },
+      { question: "¿Se puede combinar metálico con otro sistema?", answer: "Sí. Podemos hacer metálico en la sala y epóxico sólido en la cocina. Las transiciones se hacen de forma limpia y profesional." }
+    ],
+    relatedSlugs: ["disenos-pisos-epoxicos-tendencias", "pisos-epoxicos-modernos-para-interiores", "pisos-epoxicos-para-cocheras"],
+    ctaText: "¿Quieres un piso que sea una obra de arte? Hablemos de tu diseño",
+    ctaLink: "/contact"
+  },
+
+  // ── 12. Cocinas con resina epóxica ───────────────────────────────────────
+  {
+    slug: "cocinas-con-resina-epoxica",
+    locale: "es",
+    title: "Cocinas con Resina Epóxica: Pisos, Mesones y Backsplash",
+    metaTitle: "Cocinas con Resina Epóxica | Pisos, Mesones, Paredes | SobrePoxi",
+    metaDescription: "Guía completa para usar resina epóxica en cocinas: pisos sin juntas, mesones personalizados, backsplash decorativo. Seguridad alimentaria y diseños modernos.",
+    keywords: "cocina resina epóxica, piso epóxico cocina, mesón resina epóxica, encimera epóxica, backsplash resina, cocina moderna epóxico, cocina sin juntas",
+    heroTitle: "Cocinas con Resina Epóxica",
+    heroSubtitle: "Pisos, mesones y paredes que transforman el corazón de tu hogar",
+    publishedDate: "2026-02-09",
+    updatedDate: "2026-02-09",
+    readingTime: "9 min",
+    category: "Pisos Residenciales",
+    categorySlug: "pisos-residenciales",
+    sections: [
+      {
+        heading: "¿Por qué la cocina es el espacio perfecto para resina epóxica?",
+        content: `<p>La cocina recibe el mayor castigo del hogar: derrames, grasa, impactos, humedad constante y limpieza agresiva. La <strong>resina epóxica</strong> soporta exactamente estas condiciones.</p>
+<ul>
+<li><strong>Cero juntas = cero suciedad acumulada:</strong> Sin líneas de fragua donde se acumule grasa y bacterias</li>
+<li><strong>Impermeabilidad total:</strong> Agua, aceite, vino, café — nada penetra la superficie</li>
+<li><strong>Resistencia a manchas:</strong> Incluso cúrcuma y salsa de tomate se limpian con un trapo</li>
+<li><strong>Higiénico:</strong> Superficie no porosa que no alberga bacterias ni hongos</li>
+<li><strong>Estética continua:</strong> Un solo material que fluye sin interrupciones por toda la cocina</li>
+</ul>`
+      },
+      {
+        heading: "Pisos epóxicos para cocinas",
+        content: `<h3>Sistemas recomendados</h3>
+<ul>
+<li><strong>Epóxico autonivelante con topcoat antideslizante:</strong> La opción más popular — superficie lisa, continua y segura</li>
+<li><strong>Epóxico metálico efecto mármol:</strong> Para cocinas premium — look Calacatta o Carrara sin el mantenimiento del mármol real</li>
+<li><strong>Epóxico con microescamas:</strong> Textura sutil que oculta el polvo y aporta tracción</li>
+</ul>
+<h3>Colores tendencia para cocinas 2026</h3>
+<ul>
+<li><strong>Blanco perla:</strong> Amplía el espacio, combina con todo</li>
+<li><strong>Gris cálido (greige):</strong> El favorito de diseñadores</li>
+<li><strong>Negro satinado:</strong> Dramático con gabinetes claros</li>
+<li><strong>Efecto concreto pulido:</strong> Industrial-chic con cocinas de acero inoxidable</li>
+</ul>`
+      },
+      {
+        heading: "Mesones y encimeras de resina epóxica",
+        content: `<h3>Recubrimiento sobre mesón existente</h3>
+<p>Se puede aplicar resina sobre mesones de concreto, madera, laminado o granito desgastado. Crea una superficie nueva y brillante sin demoler.</p>
+<h3>Mesones nuevos con resina y madera</h3>
+<p>Los mesones estilo "río" combinan madera de borde vivo con ríos de resina — piezas funcionales y artísticas únicas.</p>
+<h3>¿Es seguro para alimentos?</h3>
+<p>Las resinas de grado alimentario están certificadas como seguras una vez curadas. En SobrePoxi usamos resinas certificadas FDA para superficies con contacto alimentario. Importante: usar siempre tabla de cortar.</p>
+<h3>Mantenimiento de mesones epóxicos</h3>
+<ul>
+<li>Limpiar con agua y jabón neutro después de cada uso</li>
+<li>No colocar ollas calientes directamente (usar salvamanteles para +60°C)</li>
+<li>No usar limpiadores abrasivos ni estropajos de acero</li>
+</ul>`
+      },
+      {
+        heading: "Backsplash y paredes de cocina con resina",
+        content: `<p>El backsplash (pared detrás de estufa y fregadero) es ideal para resina epóxica:</p>
+<ul>
+<li><strong>Sin juntas ni fragua:</strong> No hay líneas donde se acumule grasa</li>
+<li><strong>Fácil de limpiar:</strong> Un trapo con desengrasante y listo</li>
+<li><strong>Diseños ilimitados:</strong> Efectos metálicos o colores que combinan con el piso</li>
+<li><strong>Aplicación rápida:</strong> Se instala en un día</li>
+</ul>
+<p>Un backsplash de resina metálica que combine con el piso crea una continuidad visual espectacular.</p>`
+      },
+      {
+        heading: "Cocinas abiertas: la ventaja del epóxico continuo",
+        content: `<p>En cocinas abiertas (conectadas con sala y comedor), un solo material puede fluir por todo el espacio <strong>sin ninguna transición</strong>:</p>
+<ul>
+<li>Amplía visualmente todo el espacio de forma dramática</li>
+<li>Elimina perfiles de transición antiestéticos</li>
+<li>Simplifica la limpieza — un solo piso, un solo método</li>
+<li>Un apartamento de 60m² se puede sentir como uno de 80m²</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "¿El piso epóxico de cocina se pone resbaloso con agua?", answer: "Con topcoat antideslizante, no. La superficie queda suave al tacto pero con micro-textura que previene resbalones incluso con agua derramada." },
+      { question: "¿Se puede poner epóxico sobre cerámica de cocina?", answer: "En la mayoría de casos sí, sin demoler. Se evalúa que la cerámica esté bien adherida y se prepara la superficie. Ahorra tiempo, dinero y escombros." },
+      { question: "¿La resina del mesón resiste el calor?", answer: "Resiste hasta 60°C, pero usar salvamanteles para ollas calientes. El contacto directo con calor extremo puede dejar marcas." },
+      { question: "¿Cuánto toma instalar epóxico en cocina?", answer: "Piso: 3-4 días. Mesones: 2-3 días adicionales. Piso + mesón + backsplash: planificar una semana. La cocina debe estar desocupada." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-modernos-para-interiores", "mantenimiento-pisos-epoxicos", "disenos-pisos-epoxicos-tendencias"],
+    ctaText: "¿Quieres una cocina de revista? Agenda tu consulta de diseño",
+    ctaLink: "/contact"
+  },
+
+  // ── 13. Resina epóxica para piscinas y áreas húmedas ─────────────────────
+  {
+    slug: "resina-epoxica-piscinas-areas-humedas",
+    locale: "es",
+    title: "Resina Epóxica para Piscinas, Baños y Áreas Húmedas",
+    metaTitle: "Resina Epóxica para Piscinas y Baños | SobrePoxi",
+    metaDescription: "Guía sobre resina epóxica para piscinas, baños, duchas, spas y áreas húmedas. Impermeabilización, antideslizante y acabados decorativos en Costa Rica.",
+    keywords: "resina epóxica piscina, piso epóxico baño, resina para ducha, epóxico áreas húmedas, impermeabilización epóxica, piso antideslizante baño, resina piscina Costa Rica",
+    heroTitle: "Resina Epóxica para Piscinas y Áreas Húmedas",
+    heroSubtitle: "Impermeabilización, belleza y seguridad donde el agua es protagonista",
+    publishedDate: "2026-02-09",
+    updatedDate: "2026-02-09",
+    readingTime: "8 min",
+    category: "Pisos Residenciales",
+    categorySlug: "pisos-residenciales",
+    sections: [
+      {
+        heading: "Resina epóxica y agua: combinación natural",
+        content: `<p>La resina epóxica es <strong>100% impermeable</strong> una vez curada — el recubrimiento ideal para superficies expuestas al agua: piscinas, baños, duchas, jacuzzis, fuentes y decks.</p>
+<p>En Costa Rica, con humedad alta y lluvias frecuentes, la impermeabilidad del epóxico previene la infiltración de humedad ascendente — un problema común que daña pisos convencionales y provoca moho.</p>`
+      },
+      {
+        heading: "Piscinas con recubrimiento epóxico",
+        content: `<h3>Ventajas sobre azulejo y fibra de vidrio</h3>
+<ul>
+<li><strong>Sin juntas:</strong> Elimina puntos débiles donde filtra agua y crece alga</li>
+<li><strong>Superficie lisa:</strong> No hay bordes de azulejos que rayen la piel</li>
+<li><strong>Colores personalizados:</strong> Desde azul caribeño hasta arena o negro profundo</li>
+<li><strong>Reparabilidad:</strong> Daños localizados se reparan sin rehacer toda la piscina</li>
+<li><strong>Resistencia al cloro:</strong> Soporta productos de tratamiento de agua</li>
+</ul>
+<h3>Proceso de aplicación</h3>
+<ol>
+<li>Vaciado y secado completo (mínimo 2 semanas)</li>
+<li>Reparación de fisuras y nivelación</li>
+<li>Esmerilado total para perfil de adherencia</li>
+<li>Primer epóxico de penetración</li>
+<li>Dos capas de epóxico de inmersión con el color elegido</li>
+<li>Curado mínimo de 7 días antes de llenar</li>
+</ol>`
+      },
+      {
+        heading: "Baños y duchas con piso epóxico",
+        content: `<h3>¿Por qué epóxico en el baño?</h3>
+<ul>
+<li><strong>Cero moho en juntas:</strong> El problema #1 de baños con cerámica eliminado completamente</li>
+<li><strong>Limpieza sin esfuerzo:</strong> Una pasada con limpiador y queda impecable</li>
+<li><strong>Antideslizante:</strong> Con topcoat R11+ la superficie mojada es segura</li>
+<li><strong>Continuidad piso-pared:</strong> Se aplica en piso y paredes de ducha para un look continuo</li>
+<li><strong>Efecto spa:</strong> Acabados metálicos o efecto piedra convierten el baño en spa de hotel</li>
+</ul>
+<h3>Sistema recomendado para duchas</h3>
+<ul>
+<li>Primer epóxico de alta adherencia</li>
+<li>Epóxico autonivelante o metálico</li>
+<li>Topcoat con aditivo antideslizante R11 o superior</li>
+<li>Pendiente correcta hacia desagüe (1-2% mínimo)</li>
+</ul>`
+      },
+      {
+        heading: "Áreas de piscina, terrazas y decks",
+        content: `<p>El deck de piscina necesita:</p>
+<ul>
+<li><strong>Antideslizante:</strong> Seguridad prioridad #1 en superficies mojadas</li>
+<li><strong>Resistente a UV:</strong> Exposición solar directa requiere topcoat UV premium</li>
+<li><strong>Resistente al cloro:</strong> Salpicaduras no deben dañar el acabado</li>
+<li><strong>Fresco al tacto:</strong> Colores claros reducen absorción de calor — clave en el clima tropical</li>
+</ul>
+<p>Recomendamos <strong>poliaspártico con cuarzo broadcast</strong>: máxima tracción, resistencia UV y 15+ años de vida útil.</p>
+<p><strong>Para Costa Rica:</strong> En zonas como Guanacaste o Jacó, las superficies pueden superar 50°C. Colores claros (arena, gris perla, blanco) reducen la temperatura para caminar descalzo.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿La resina se despega con el agua?", answer: "No. La resina curada es 100% impermeable y se adhiere químicamente al sustrato. Para piscinas se usan sistemas de inmersión permanente diseñados para estar sumergidos." },
+      { question: "¿Cada cuánto se renueva el epóxico de piscina?", answer: "Un sistema de calidad dura 7-10 años en piscina antes de renovar, dependiendo del mantenimiento del agua y la exposición UV." },
+      { question: "¿Se puede aplicar sobre azulejo de piscina?", answer: "Sí, si el azulejo está bien adherido. Se prepara por esmerilado y se aplica el sistema encima, ahorrando demolición." },
+      { question: "¿Es seguro para personas mayores?", answer: "Sí, con topcoat antideslizante R11 o R12 que proporcionan tracción excelente incluso en pisos mojados con jabón." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-modernos-para-interiores", "cocinas-con-resina-epoxica", "mantenimiento-pisos-epoxicos"],
+    ctaText: "¿Necesitas impermeabilización para áreas húmedas? Contáctanos",
+    ctaLink: "/contact"
+  },
+
+  // ── 14. Pisos epóxicos para gimnasios ────────────────────────────────────
+  {
+    slug: "pisos-epoxicos-gimnasios-crossfit",
+    locale: "es",
+    title: "Pisos Epóxicos para Gimnasios, CrossFit y Centros Deportivos",
+    metaTitle: "Pisos Epóxicos para Gimnasios y CrossFit | SobrePoxi",
+    metaDescription: "Pisos epóxicos para gimnasios, boxes de CrossFit, estudios de yoga y centros deportivos. Resistencia a impacto, antideslizante y zonificación por colores.",
+    keywords: "piso epóxico gimnasio, piso crossfit, piso centro deportivo, pisos para gym, piso antideslizante gimnasio, pisos deportivos, piso estudio yoga",
+    heroTitle: "Pisos Epóxicos para Gimnasios y CrossFit",
+    heroSubtitle: "Rendimiento, seguridad y estética para espacios de alto impacto",
+    publishedDate: "2026-02-09",
+    updatedDate: "2026-02-09",
+    readingTime: "7 min",
+    category: "Pisos Comerciales",
+    categorySlug: "pisos-comerciales",
+    sections: [
+      {
+        heading: "¿Por qué los gimnasios modernos eligen epóxico?",
+        content: `<ul>
+<li><strong>Resistencia al impacto:</strong> Sistemas de alto espesor con elastómero absorben impactos sin dañarse</li>
+<li><strong>Antideslizante:</strong> Textura que previene resbalones con sudor</li>
+<li><strong>Higiénico:</strong> No absorbe sudor ni olores — se desinfecta fácilmente</li>
+<li><strong>Zonificación integrada:</strong> Colores para delimitar áreas de cardio, pesas, estiramiento</li>
+<li><strong>Branding:</strong> Logo del gimnasio encapsulado en el piso</li>
+<li><strong>Durabilidad:</strong> 10-15 años de vida útil</li>
+</ul>`
+      },
+      {
+        heading: "Sistemas por tipo de espacio deportivo",
+        content: `<h3>Box de CrossFit</h3>
+<p>El entorno más exigente: barras olímpicas que caen, cuerdas, sudor. Sistema multicapa de <strong>epóxico 100% sólidos + poliuretano elastomérico</strong> con 3mm+ de espesor. Plataformas de caucho sobre epóxico en zonas de levantamiento olímpico.</p>
+<h3>Gimnasio de máquinas y peso libre</h3>
+<p><strong>Epóxico autonivelante con cuarzo broadcast</strong> — excelente relación costo-rendimiento. Superficie lisa para mover equipos con tracción suficiente.</p>
+<h3>Estudio de yoga / pilates / danza</h3>
+<p><strong>Epóxico autonivelante con topcoat satinado</strong> — cálido al tacto para ejercicios descalzos, antideslizante sin ser áspero a la piel.</p>
+<h3>Área de cardio</h3>
+<p>El epóxico absorbe vibración de máquinas mejor que concreto, reduciendo ruido. Colores claros energizan el espacio.</p>
+<h3>Piscina del gimnasio</h3>
+<p>Sistema antideslizante R12 con resistencia a cloro y productos de limpieza agresivos.</p>`
+      },
+      {
+        heading: "Zonificación por colores: el arma secreta",
+        content: `<ul>
+<li><strong>Rojo:</strong> Zonas de alta intensidad — levantamiento, funcional</li>
+<li><strong>Azul:</strong> Áreas de cardio — cintas, bicicletas, elípticas</li>
+<li><strong>Verde:</strong> Estiramiento, yoga, recuperación</li>
+<li><strong>Gris/Negro:</strong> Máquinas y peso libre</li>
+<li><strong>Amarillo:</strong> Pasillos peatonales y zonas de seguridad</li>
+<li><strong>Logo central:</strong> Encapsulado en resina en la entrada o área principal</li>
+</ul>
+<p>La zonificación mejora la experiencia del usuario, organiza el flujo de personas y comunica profesionalismo.</p>`
+      },
+      {
+        heading: "Mantenimiento en gimnasios",
+        content: `<h3>Rutina diaria</h3>
+<ol>
+<li>Barrido con mopa para remover polvo</li>
+<li>Trapeado con desinfectante neutro (pH 7-8)</li>
+</ol>
+<h3>Rutina semanal</h3>
+<ul>
+<li>Limpieza profunda con fregadora automática en áreas grandes</li>
+<li>Atención a zonas de alto sudor (funcional, mats)</li>
+</ul>
+<p><strong>Ahorro:</strong> Un gimnasio con epóxico gasta hasta 60% menos en mantenimiento que con rubber flooring o cerámica.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Resiste la caída de pesas?", answer: "Sistemas de 3mm+ con elastómero resisten impactos normales. Para levantamiento olímpico con barras cayendo desde altura, recomendamos plataformas de caucho encima del epóxico en esas zonas." },
+      { question: "¿Es mejor que piso de caucho?", answer: "El epóxico es superior en durabilidad, higiene, estética y mantenimiento. El caucho absorbe mejor impactos extremos. Lo ideal: epóxico base + caucho en zonas de levantamiento." },
+      { question: "¿Se puede poner el logo del gym?", answer: "Sí, es muy popular. El logo se encapsula en resina — es permanente, no se desgasta y le da identidad al espacio." },
+      { question: "¿El sudor daña el piso?", answer: "No. El epóxico resiste sudor, desinfectantes y productos de limpieza. A diferencia del caucho, no absorbe olores." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-para-negocios", "mantenimiento-pisos-epoxicos", "pisos-epoxicos-industriales-bodegas"],
+    ctaText: "¿Abriendo un gimnasio o renovando el piso? Cotiza tu proyecto",
+    ctaLink: "/contact"
+  },
+
+  // ── 15. Antes y después: transformaciones ────────────────────────────────
+  {
+    slug: "transformaciones-antes-despues-epoxicos",
+    locale: "es",
+    title: "Antes y Después: Transformaciones Increíbles con Pisos Epóxicos",
+    metaTitle: "Antes y Después Pisos Epóxicos | Transformaciones | SobrePoxi",
+    metaDescription: "Transformaciones reales de pisos epóxicos: cocheras, salas, restaurantes y más. De concreto gris a superficies espectaculares sin demoler. Inspiración para tu proyecto.",
+    keywords: "antes y después piso epóxico, transformación cochera epóxico, renovar piso concreto, cambio piso resina, pisos epóxicos resultados, renovación sin demoler",
+    heroTitle: "Transformaciones con Pisos Epóxicos",
+    heroSubtitle: "De concreto gris a superficies espectaculares — sin demoler nada",
+    publishedDate: "2026-02-09",
+    updatedDate: "2026-02-09",
+    readingTime: "8 min",
+    category: "Inspiración",
+    categorySlug: "inspiracion",
+    sections: [
+      {
+        heading: "El poder de la transformación epóxica",
+        content: `<p>Los pisos epóxicos <strong>transforman completamente un espacio sin demoler el piso existente</strong>. El concreto viejo, manchado y agrietado se convierte en una superficie de revista en 3-5 días.</p>`
+      },
+      {
+        heading: "Cocheras: de mancha de aceite a showroom",
+        content: `<p>La transformación más dramática. Las cocheras costarricenses típicamente tienen concreto con manchas de aceite, grietas por sismos, descoloramiento y polvo constante.</p>
+<h3>Después del epóxico:</h3>
+<ul>
+<li>Superficie brillante que parece concesionario de autos</li>
+<li>Grietas reparadas e invisibles bajo el recubrimiento</li>
+<li>Cero polvo — superficie sellada</li>
+<li>Manchas de aceite se limpian en segundos</li>
+<li>La cochera se siente como extensión de la casa</li>
+</ul>
+<p><strong>Tiempo:</strong> 3-4 días. El auto vuelve a entrar al 5º día.</p>`
+      },
+      {
+        heading: "Salas: de cerámica vieja a piso continuo",
+        content: `<p>Muchas casas en Costa Rica tienen cerámica de los 90-2000 con juntas manchadas y diseños anticuados.</p>
+<h3>La alternativa epóxica:</h3>
+<p>Se aplica <strong>directamente sobre la cerámica existente</strong> en muchos casos:</p>
+<ul>
+<li>De piso fragmentado a superficie perfectamente continua</li>
+<li>De colores desgastados a acabado metálico impecable</li>
+<li>Sin escombros, sin polvo de demolición</li>
+<li>El espacio se ve más grande y moderno</li>
+</ul>
+<p><strong>Ahorro:</strong> Hasta 40% menos que demoler + instalar porcelanato nuevo.</p>`
+      },
+      {
+        heading: "Locales comerciales: de genérico a identidad de marca",
+        content: `<ul>
+<li><strong>Restaurantes:</strong> De cerámica manchada con grasa a piso metálico que se limpia en minutos</li>
+<li><strong>Tiendas retail:</strong> De piso opaco a superficie brillante que refleja productos y atrae clientes</li>
+<li><strong>Oficinas:</strong> De alfombra con ácaros a piso hipoalergénico y moderno</li>
+<li><strong>Clínicas:</strong> De juntas sucias a superficie sin juntas que cumple normativas sanitarias</li>
+</ul>
+<p><strong>Impacto:</strong> Un piso brillante y limpio hace que clientes permanezcan más tiempo en el local.</p>`
+      },
+      {
+        heading: "Bodegas: de polvo a superficie profesional",
+        content: `<p>Bodegas con concreto desnudo generan polvo que contamina productos, absorben derrames y se deterioran con montacargas.</p>
+<h3>Después:</h3>
+<ul>
+<li>100% libre de polvo</li>
+<li>Derrames se contienen y limpian en minutos</li>
+<li>Resiste tráfico de montacargas</li>
+<li>Señalización de seguridad integrada</li>
+<li>Mejor reflectividad — menos luminarias necesarias</li>
+</ul>
+<p><strong>ROI:</strong> Se paga solo en 2-3 años gracias a menores costos de mantenimiento.</p>`
+      },
+      {
+        heading: "¿Qué esperar durante la transformación?",
+        content: `<h3>Día 1: Evaluación</h3>
+<p>Visita técnica, medición de humedad, definición del sistema ideal.</p>
+<h3>Día 2: Preparación</h3>
+<p>Esmerilado mecánico, reparación de grietas, nivelación. La etapa más importante.</p>
+<h3>Día 3: Aplicación</h3>
+<p>Primer, capa base, elementos decorativos. Aquí sucede la magia.</p>
+<h3>Día 4: Topcoat y curado</h3>
+<p>Sello protector final.</p>
+<h3>Día 5+: Listo</h3>
+<p>Tráfico ligero. Tráfico completo a los 5-7 días.</p>
+<p>En <strong>SobrePoxi</strong> documentamos todo el proceso para que veas la transformación paso a paso.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Se puede aplicar sin demoler el piso actual?", answer: "En la mayoría de casos sí — sobre concreto, cerámica, porcelanato y otros sustratos sólidos. Solo se requiere que esté bien adherido. Una evaluación técnica confirma viabilidad." },
+      { question: "¿Cuánto tarda la transformación?", answer: "Espacio residencial promedio (50-100m²): 4-5 días. Más grande o complejo: 5-7 días." },
+      { question: "¿Se genera mucho polvo?", answer: "Usamos equipos con aspiración integrada que capturan 95%+ del polvo. Las áreas adyacentes se protegen con plástico." },
+      { question: "¿Qué pasa si no me gusta el resultado?", answer: "Hacemos muestras físicas antes de cada proyecto. Apruebas color, acabado y textura antes de que toquemos tu piso. El resultado final coincide con la muestra." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-para-cocheras", "pisos-epoxicos-modernos-para-interiores", "pisos-epoxicos-para-negocios"],
+    ctaText: "¿Listo para transformar tu espacio? Agenda una visita técnica gratuita",
+    ctaLink: "/contact"
   }
 ];
 
