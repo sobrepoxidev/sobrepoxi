@@ -88,7 +88,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
   const navigationLinks: NavLink[] = [
     { name: locale === 'es' ? 'Inicio' : 'Home', path: '/' },
     { name: locale === 'es' ? 'Acerca de' : 'About', path: '/about' },
-    { name: locale === 'es' ? 'Pisos de Lujo y Diseño' : 'Luxury Design Flooring', path: '/luxury-design-flooring' },
+    { name: locale === 'es' ? 'Pisos Epóxicos' : 'Epoxy Floors', path: '/epoxy-floors' },
     { name: locale === 'es' ? 'Pisos Industriales' : 'Industrial Flooring', path: '/industrial-epoxy-flooring' },
     { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
     { name: locale === 'es' ? 'Guías' : 'Guides', path: '/guias' },

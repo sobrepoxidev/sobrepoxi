@@ -38,6 +38,16 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/:locale/luxury-design-flooring',
+        destination: '/:locale/epoxy-floors',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
