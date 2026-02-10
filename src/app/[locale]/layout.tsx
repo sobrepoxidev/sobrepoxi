@@ -9,6 +9,7 @@ import {
 import Script from "next/script";
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
+import WhatsAppBubble from "@/components/general/WhatsAppBubble";
 import SessionLayout from "@/components/SessionLayout";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
@@ -77,6 +78,7 @@ export default async function LocaleLayout({
             <Navbar locale={locale} />
             {children}
             <Footer locale={locale} />
+            <WhatsAppBubble />
             <Toaster position="top-center" />
             <Analytics />
           </SessionLayout>
