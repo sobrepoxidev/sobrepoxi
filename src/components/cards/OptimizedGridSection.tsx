@@ -8,6 +8,7 @@ import { useProductsContext } from "@/context/ProductsContext";
 import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/lib/formatCurrency";
+import { ChevronRight } from "lucide-react";
 
 
 interface GridSectionProps {
@@ -168,55 +169,39 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
         ))}
       </div>
 
-      {/* Versión móvil - Usa CarrucelSectionA para mostrar tarjetas en carrusel horizontal */}
+      {/* Versión móvil - Carrusel con 3 categorías principales + resto abajo */}
       {mobileActive && (
         <div className="lg:hidden">
           <CarrucelSectionA
             items={
               // Ordenamos las categorías dando prioridad a Paintings y Napkin Holders
-              [...categories.slice(indexStart, indexEnd - 2)]
+              [...categories.slice(indexStart, indexEnd)]
                 .sort((a, b) => {
-                  // Obtener nombres de categorías para comparación (case insensitive)
                   const aName = (a.name || '').toLowerCase();
                   const bName = (b.name || '').toLowerCase();
-
-                  // Priorizar Paintings y Napkin Holders
                   const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
                   const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
-
-                  // Si a es prioritario y b no, a va primero
                   if (isPrioritizedA && !isPrioritizedB) return -1;
-                  // Si b es prioritario y a no, b va primero
                   if (!isPrioritizedA && isPrioritizedB) return 1;
-
-                  // Si ambos son prioritarios o ninguno lo es, priorizamos por cantidad de productos
                   const aProducts = (sectionProducts.gridByCategory[a.id] || []).length;
                   const bProducts = (sectionProducts.gridByCategory[b.id] || []).length;
-
-                  // Priorizar categorías con 4 o más productos
                   if (aProducts >= 4 && bProducts < 4) return -1;
                   if (aProducts < 4 && bProducts >= 4) return 1;
-
-                  // Si ambas tienen 4+ o ambas tienen menos de 4, ordenar por cantidad
-                  return bProducts - aProducts; // Ordenar de mayor a menor
+                  return bProducts - aProducts;
                 })
+                .slice(0, 3) // Solo 3 en el carrusel
                 .map((category) => {
-                  // Convertir la categoría a formato esperado por CarrucelSectionA
                   const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
-
-                
-
-                  // Seleccionar color
                   const cardColor = 'bg-gold-gradient';
 
                   return {
-                    textColor: cardColor === 'bg-gold-gradient' ? 'text-black' : 'text-white',
+                    textColor: 'text-black',
                     title: `${locale === 'es' ? category.name_es : category.name_en || category.name}`,
                     content: (
                       <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
                         {categoryProducts.slice(0, 4).map((product, idx) => (
                           <Link key={idx} href={`/product/${product.name}`} className="block text-center">
-                            <div className={`h-44 flex items-center justify-center ${cardColor == 'bg-gold-gradient' ? 'bg-[#303030]' : 'bg-gold-gradient'} rounded-lg shadow-sm`}>
+                            <div className="h-44 flex items-center justify-center bg-[#303030] rounded-lg shadow-sm">
                               <Image
                                 src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
                                 alt={product.name || ''}
@@ -226,25 +211,128 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                                 className="p-0.5"
                                 priority
                               />
-
-
                             </div>
-                            {/*precio*/}
-
                           </Link>
                         ))}
                       </div>
                     ),
                     link: `/products?category=${category.name}`,
-                    className: `${cardColor}  rounded-xl px-3 pt-2 pb-3 shadow-sm`
+                    className: `${cardColor} rounded-xl px-3 pt-2 pb-3 shadow-sm`
                   };
                 })
             }
+          />
+
+          {/* Categorías restantes en formato compacto */}
+          <MobileRemainingCategories
+            categories={categories}
+            sectionProducts={sectionProducts}
+            indexStart={indexStart}
+            indexEnd={indexEnd}
+            locale={locale}
           />
         </div>
       )}
     </div>
   );
 };
+
+/* ---------------------------------------------------------------------------
+ * Categorías restantes – presentación compacta debajo del carrusel (mobile)
+ * ------------------------------------------------------------------------ */
+function MobileRemainingCategories({
+  categories,
+  sectionProducts,
+  indexStart,
+  indexEnd,
+  locale,
+}: {
+  categories: ReturnType<typeof useProductsContext>['categories'];
+  sectionProducts: ReturnType<typeof useProductsContext>['sectionProducts'];
+  indexStart: number;
+  indexEnd: number;
+  locale: string;
+}) {
+  // Misma lógica de sorting que el carrusel para obtener las 3 restantes
+  const sorted = [...categories.slice(indexStart, indexEnd)].sort((a, b) => {
+    const aName = (a.name || '').toLowerCase();
+    const bName = (b.name || '').toLowerCase();
+    const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
+    const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
+    if (isPrioritizedA && !isPrioritizedB) return -1;
+    if (!isPrioritizedA && isPrioritizedB) return 1;
+    const aProducts = (sectionProducts.gridByCategory[a.id] || []).length;
+    const bProducts = (sectionProducts.gridByCategory[b.id] || []).length;
+    if (aProducts >= 4 && bProducts < 4) return -1;
+    if (aProducts < 4 && bProducts >= 4) return 1;
+    return bProducts - aProducts;
+  });
+
+  const remaining = sorted.slice(3); // Las 3 que no están en el carrusel
+
+  if (remaining.length === 0) return null;
+
+  return (
+    <div className="px-4 pt-4 pb-2 space-y-3">
+      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+        {locale === 'es' ? 'Más categorías' : 'More categories'}
+      </h3>
+      <div className="grid grid-cols-1 gap-2.5">
+        {remaining.map((category) => {
+          const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
+          const previews = categoryProducts.slice(0, 3);
+          const categoryName = locale === 'es' ? category.name_es : (category.name_en || category.name);
+          const productCount = categoryProducts.length;
+
+          return (
+            <Link
+              key={category.id}
+              href={`/products?category=${category.name}`}
+              className="flex items-center gap-3 bg-[#1a1a1a] border border-gray-800 rounded-xl p-3 hover:border-amber-600/40 transition-all group"
+            >
+              {/* Thumbnails de productos */}
+              <div className="flex -space-x-2 shrink-0">
+                {previews.length > 0 ? (
+                  previews.map((product, idx) => (
+                    <div
+                      key={idx}
+                      className="w-12 h-12 rounded-lg bg-[#252525] border-2 border-[#1a1a1a] overflow-hidden flex items-center justify-center"
+                    >
+                      <Image
+                        src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
+                        alt={product.name || ''}
+                        width={40}
+                        height={40}
+                        style={{ objectFit: 'contain' }}
+                        className="p-0.5"
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="w-12 h-12 rounded-lg bg-[#252525] border-2 border-[#1a1a1a] flex items-center justify-center">
+                    <span className="text-gray-600 text-xs">—</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Info de la categoría */}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white truncate group-hover:text-amber-400 transition-colors">
+                  {categoryName}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {productCount} {locale === 'es' ? 'productos' : 'products'}
+                </p>
+              </div>
+
+              {/* Flecha */}
+              <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-amber-400 transition-colors shrink-0" />
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default OptimizedGridSection;

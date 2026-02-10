@@ -45,6 +45,17 @@ const nextConfig: NextConfig = {
         destination: '/:locale/epoxy-floors',
         permanent: true,
       },
+      // Old event pages that no longer exist — redirect to home
+      {
+        source: '/:locale/feria-artesanias',
+        destination: '/:locale',
+        permanent: true,
+      },
+      {
+        source: '/:locale/feria-artesanias-terminos',
+        destination: '/:locale',
+        permanent: true,
+      },
     ];
   },
 

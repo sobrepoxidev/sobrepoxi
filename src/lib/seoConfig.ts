@@ -213,7 +213,13 @@ export function buildMetadata(opts: {
   /* --------------------------------------------------------------------- */
   /* URLs canónicas y alternativas                                         */
   /* --------------------------------------------------------------------- */
-  const canonicalUrl = `${config.siteUrl}${pathname}`;
+  // Support pathnames that already include query strings
+  const canonicalUrl = pathname.startsWith("http")
+    ? pathname
+    : `${config.siteUrl}${pathname}`;
+
+  // Strip query params and locale for hreflang alternates
+  const cleanPath = pathname.replace(/\?.*$/, "").replace(`/${locale}`, "");
 
   /* --------------------------------------------------------------------- */
   /* Metadatos finales optimizados                                         */
@@ -229,8 +235,8 @@ export function buildMetadata(opts: {
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        "es-CR": `${config.siteUrl}/es${pathname.replace(`/${locale}`, "")}`,
-        "en-US": `${config.siteUrl}/en${pathname.replace(`/${locale}`, "")}`,
+        "es-CR": `${config.siteUrl}/es${cleanPath}`,
+        "en-US": `${config.siteUrl}/en${cleanPath}`,
         "x-default": canonicalUrl
       }
     },
