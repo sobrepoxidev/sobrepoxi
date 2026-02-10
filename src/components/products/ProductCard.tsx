@@ -68,25 +68,25 @@ export default function ProductCard({ product }: { product: Product }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Badges */}
-      <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5">
+      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 max-w-[calc(100%-40px)]">
         {category && (
-          <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-400 border border-amber-500/20 backdrop-blur-sm">
+          <span className="text-[9px] sm:text-[11px] font-medium px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-black/50 text-amber-400 border border-amber-500/20 backdrop-blur-sm truncate">
             {locale === 'es' ? category.name_es : category.name_en}
           </span>
         )}
         {Number(product.discount_percentage) > 0 && (
-          <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 backdrop-blur-sm">
-            {product.discount_percentage}% OFF
+          <span className="text-[9px] sm:text-[11px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 backdrop-blur-sm w-fit">
+            -{product.discount_percentage}%
           </span>
         )}
       </div>
 
       {/* Favorite button */}
       <button
-        className={`absolute top-3 right-3 z-10 p-2 rounded-full backdrop-blur-sm transition-all ${
+        className={`absolute top-2 right-2 z-10 p-1.5 sm:p-2 rounded-full backdrop-blur-sm transition-all ${
           isFavorite
             ? 'bg-red-500/20 text-red-400'
-            : 'bg-black/30 text-gray-400 hover:text-white hover:bg-black/50'
+            : 'bg-black/40 text-gray-400 hover:text-white hover:bg-black/50'
         }`}
         onClick={async (e) => {
           e.preventDefault();
