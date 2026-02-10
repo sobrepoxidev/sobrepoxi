@@ -10,7 +10,7 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 export default function HomeContainer({locale}: {locale: string}) {
   return (
     <div className="bg-[#121212] " role="main">
-      <main className="max-w-screen-2xl mx-auto bg-[#121212]">
+      <main className="bg-[#121212]">
         
           <HomePageData locale={locale} />
  
