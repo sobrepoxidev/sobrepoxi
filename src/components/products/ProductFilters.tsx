@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Check, ChevronDown, ChevronUp, Sliders } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, Sliders, X } from 'lucide-react';
 import { Database } from '@/types-db';
 
 type Category = Database['categories'];
@@ -15,27 +15,22 @@ interface FilterProps {
   locale: string;
 }
 
-export default function ProductFilters({ 
-  categories, 
+export default function ProductFilters({
+  categories,
   isMobile = false,
   locale
 }: FilterProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
-  // State for UI toggles
+
   const [categoryOpen, setCategoryOpen] = useState(true);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  
-  // Get current filter values from URL
+
   const selectedCategory = searchParams.get('category');
 
-  // Memoize the filter content to prevent unnecessary re-renders
   const updateFilters = useCallback((updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
-    
-    // Apply updates
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null || value === '') {
         params.delete(key);
@@ -43,49 +38,48 @@ export default function ProductFilters({
         params.set(key, value);
       }
     });
-    
-    // Always reset to first page when filters change
     params.set('page', '1');
-    
-    // Update URL without page reload
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }, [searchParams, router, pathname]);
 
-  // Filter content component
   const filterContent = useMemo(() => (
-    <div className="space-y-6">
-      {/* Categories Section */}
-      <div className="border-b border-gray-200 pb-4">
-        <button 
-          className="flex w-full items-center justify-between text-lg font-medium text-gray-200 mb-2"
+    <div className="space-y-4">
+      {/* Categories */}
+      <div className="pb-4 border-b border-gray-800">
+        <button
+          className="flex w-full items-center justify-between text-sm font-semibold text-white mb-3 uppercase tracking-wider"
           onClick={() => setCategoryOpen(!categoryOpen)}
         >
           {locale === 'es' ? 'Categorías' : 'Categories'}
-          {categoryOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+          {categoryOpen ? <ChevronUp className="h-4 w-4 text-gray-500" /> : <ChevronDown className="h-4 w-4 text-gray-500" />}
         </button>
-        
+
         {categoryOpen && (
-          <div className="mt-2 space-y-1">
-            <button 
+          <div className="space-y-0.5">
+            <button
               onClick={() => updateFilters({ category: null })}
-              className={`flex items-center w-full px-2 py-1.5 text-sm rounded-md ${
-                !selectedCategory ? 'bg-gray-50 gold-gradient font-medium' : 'text-gray-300 hover:bg-gray-50'
+              className={`flex items-center w-full px-3 py-2 text-sm rounded-lg transition-colors ${
+                !selectedCategory
+                  ? 'bg-amber-400/10 text-amber-400 font-medium'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              <span className="flex-1 text-left">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</span>
-              {!selectedCategory && <Check className="h-4 w-4" />}
+              <span className="flex-1 text-left">{locale === 'es' ? 'Todas' : 'All'}</span>
+              {!selectedCategory && <Check className="h-3.5 w-3.5" />}
             </button>
-            
+
             {categories.map((category) => (
-              <button 
+              <button
                 key={category.id}
                 onClick={() => updateFilters({ category: String(category.id) })}
-                className={`flex items-center w-full px-2 py-1.5 text-sm rounded-md ${
-                  selectedCategory === String(category.id) ? 'bg-gray-50 gold-gradient-bright font-medium' : 'text-gray-300 hover:bg-gray-50'
+                className={`flex items-center w-full px-3 py-2 text-sm rounded-lg transition-colors ${
+                  selectedCategory === String(category.id)
+                    ? 'bg-amber-400/10 text-amber-400 font-medium'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <span className="flex-1 text-left">{locale === 'es' ? category.name_es : category.name_en}</span>
-                {selectedCategory === String(category.id) && <Check className="h-4 w-4" />}
+                {selectedCategory === String(category.id) && <Check className="h-3.5 w-3.5" />}
               </button>
             ))}
           </div>
@@ -94,31 +88,35 @@ export default function ProductFilters({
     </div>
   ), [categories, categoryOpen, selectedCategory, updateFilters, locale]);
 
-  // Mobile view
+  // Mobile
   if (isMobile) {
     return (
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <button
-          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className="flex items-center justify-center w-full py-2 px-4 bg-gray-50 gold-gradient-bright border border-gray-300 rounded-md shadow-sm text-sm text-gray-700"
+          onClick={() => setMobileFiltersOpen(true)}
+          className="flex items-center justify-center w-full py-2.5 px-4 bg-[#1a1a1a] border border-gray-700 rounded-lg text-sm text-gray-300 hover:border-amber-500/50 hover:text-amber-400 transition-all"
         >
           <Sliders className="h-4 w-4 mr-2" />
-          {locale === 'es' ? 'Filtrar productos' : 'Filter products'}
+          {locale === 'es' ? 'Filtrar' : 'Filter'}
+          {selectedCategory && (
+            <span className="ml-2 text-xs bg-amber-400/10 text-amber-400 px-2 py-0.5 rounded-full">1</span>
+          )}
         </button>
-        
+
         {mobileFiltersOpen && (
-          <div className="fixed inset-0 z-40 overflow-y-auto bg-black bg-opacity-25">
-            <div className="relative bg-gray-50 gold-gradient-bright p-4 w-full max-w-lg mx-auto mt-10 rounded-t-lg">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-medium text-gray-900">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
+          <div className="fixed inset-0 z-50 flex" onClick={() => setMobileFiltersOpen(false)}>
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <div
+              className="relative ml-auto w-full max-w-xs bg-[#1a1a1a] h-full overflow-y-auto p-5 border-l border-gray-800"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-white">{locale === 'es' ? 'Filtros' : 'Filters'}</h2>
                 <button
                   onClick={() => setMobileFiltersOpen(false)}
-                  className="text-gray-300 hover:text-gray-500"
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
                 >
-                  <span className="sr-only">{locale === 'es' ? 'Cerrar panel' : 'Close panel'}</span>
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <X className="h-5 w-5" />
                 </button>
               </div>
               {filterContent}
@@ -128,10 +126,10 @@ export default function ProductFilters({
       </div>
     );
   }
-  
-  // Desktop view
+
+  // Desktop
   return (
-    <div className="hidden md:block">
+    <div className="hidden lg:block">
       {filterContent}
     </div>
   );
