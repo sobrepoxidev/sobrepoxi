@@ -75,7 +75,7 @@ function HeroSection({ locale }: { locale: string }) {
   const c = t[locale as 'es' | 'en'] || t.es;
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[calc(100vh-120px)] sm:min-h-[90vh] flex items-start sm:items-center overflow-hidden">
       {/* Background layers */}
       <div className="absolute inset-0 bg-[#0a0a0a]" />
       <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-transparent" />
@@ -92,7 +92,7 @@ function HeroSection({ locale }: { locale: string }) {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left — Text */}
           <div className="space-y-6 sm:space-y-8">
@@ -594,6 +594,88 @@ function ProductsHeader({ locale }: { locale: string }) {
 }
 
 /* =========================================================================
+ * TRUST MARQUEE — scrolling keywords
+ * ========================================================================= */
+function TrustMarquee({ locale }: { locale: string }) {
+  const items = locale === 'es'
+    ? ['Pisos Epóxicos', 'Muebles de Lujo', 'River Tables', 'Pisos Industriales', 'Diseño 3D', 'Resina Epóxica', 'Hecho en Costa Rica', 'A Tu Medida']
+    : ['Epoxy Floors', 'Luxury Furniture', 'River Tables', 'Industrial Floors', '3D Design', 'Epoxy Resin', 'Made in Costa Rica', 'Custom Made'];
+
+  const row = items.map((item, i) => (
+    <span key={i} className="flex items-center gap-4 shrink-0">
+      <span className="text-sm sm:text-base font-semibold text-white/60 uppercase tracking-widest whitespace-nowrap">
+        {item}
+      </span>
+      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/50 shrink-0" />
+    </span>
+  ));
+
+  return (
+    <div className="relative bg-[#0e0e0e] border-y border-white/5 py-4 overflow-hidden">
+      <div className="flex gap-4 animate-marquee">
+        {row}{row}{row}
+      </div>
+      {/* Fade edges */}
+      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0e0e0e] to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0e0e0e] to-transparent z-10" />
+    </div>
+  );
+}
+
+/* =========================================================================
+ * PROCESS SECTION — How we work
+ * ========================================================================= */
+function ProcessSection({ locale }: { locale: string }) {
+  const steps = locale === 'es'
+    ? [
+        { num: '01', title: 'Consulta', desc: 'Nos cuentas tu visión. Evaluamos el espacio y definimos objetivos juntos.' },
+        { num: '02', title: 'Diseño', desc: 'Creamos propuestas de diseño, selección de materiales y presupuesto detallado.' },
+        { num: '03', title: 'Ejecución', desc: 'Nuestro equipo ejecuta con precisión, respetando tiempos y estándares.' },
+        { num: '04', title: 'Entrega', desc: 'Verificamos cada detalle y entregamos un resultado que supera expectativas.' },
+      ]
+    : [
+        { num: '01', title: 'Consultation', desc: 'Share your vision. We evaluate the space and define goals together.' },
+        { num: '02', title: 'Design', desc: 'We create design proposals, material selection and detailed budgets.' },
+        { num: '03', title: 'Execution', desc: 'Our team executes with precision, respecting timelines and standards.' },
+        { num: '04', title: 'Delivery', desc: 'We verify every detail and deliver results that exceed expectations.' },
+      ];
+
+  return (
+    <section className="py-16 sm:py-20 bg-[#121212]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
+            {locale === 'es' ? 'Nuestro Proceso' : 'Our Process'}
+          </span>
+          <h2 className="mt-3 text-3xl sm:text-4xl font-black text-white">
+            {locale === 'es' ? 'De la Idea a la Realidad' : 'From Idea to Reality'}
+          </h2>
+          <div className="mt-4 w-16 h-1 bg-gold-gradient mx-auto rounded-full" />
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {steps.map((step, i) => (
+            <div key={i} className="relative group">
+              {/* Connector line (hidden on first, visible between) */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:block absolute top-8 left-[calc(50%+24px)] right-0 h-px bg-gradient-to-r from-amber-500/30 to-transparent -translate-x-0" style={{ width: 'calc(100% - 24px)' }} />
+              )}
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-400/10 border border-amber-500/20 mb-4 group-hover:bg-amber-400/20 transition-colors">
+                  <span className="text-lg sm:text-xl font-black text-amber-400">{step.num}</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
  * MAIN CONTENT ORCHESTRATOR
  * ========================================================================= */
 function OptimizedNewHomeContent({ locale }: { locale?: string }) {
@@ -605,10 +687,13 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
       {/* 1. Hero — Full viewport, memorable */}
       <HeroSection locale={resolvedLocale} />
 
-      {/* 2. Services — 3 main divisions */}
+      {/* 2. Trust marquee */}
+      <TrustMarquee locale={resolvedLocale} />
+
+      {/* 3. Services — 3 main divisions */}
       <ServicesSection locale={resolvedLocale} />
 
-      {/* 3. Products by category */}
+      {/* 4. Products by category */}
       <section className="bg-[#121212] pb-8">
         <ProductsHeader locale={resolvedLocale} />
         <div className="max-w-7xl mx-auto">
@@ -616,13 +701,16 @@ function OptimizedNewHomeContent({ locale }: { locale?: string }) {
         </div>
       </section>
 
-      {/* 4. Why choose us */}
+      {/* 5. Why choose us */}
       <WhyChooseUsSection locale={resolvedLocale} />
 
-      {/* 5. Testimonials */}
+      {/* 6. Process */}
+      <ProcessSection locale={resolvedLocale} />
+
+      {/* 7. Testimonials */}
       <TestimonialsSection locale={resolvedLocale} />
 
-      {/* 6. Final CTA */}
+      {/* 8. Final CTA */}
       <FinalCTASection locale={resolvedLocale} />
     </div>
   );
