@@ -178,7 +178,7 @@ function HeroSection({ locale }: { locale: string }) {
                 </div>
                 <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/5">
                   <Image
-                    src="/home/artisan-working.webp"
+                    src="/artesanal1.webp"
                     alt="Artisan working"
                     fill
                     className="object-cover"
@@ -210,7 +210,7 @@ function HeroSection({ locale }: { locale: string }) {
                 </div>
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5">
                   <Image
-                    src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp"
+                    src="/mesariomain.webp"
                     alt="Luxury furniture"
                     fill
                     className="object-cover"
