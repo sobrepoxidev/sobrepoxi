@@ -304,7 +304,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Luxury Furniture',
           desc: 'River tables, bars, desks and unique pieces in wood and epoxy resin, made to measure.',
           href: '/luxury-furniture',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pacific-xl/main2.webp',
           tag: 'Artisan',
         },
       ];
