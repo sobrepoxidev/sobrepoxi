@@ -33,12 +33,10 @@ export async function generateMetadata({
     .single();
 
   if (!product) {
-    // Products listing page — build canonical that includes category/tag params
-    const canonicalParams = new URLSearchParams();
-    if (query.category) canonicalParams.set('category', String(query.category));
-    if (query.tag) canonicalParams.set('tag', String(query.tag));
-    const qs = canonicalParams.toString();
-    const canonicalPath = `/${locale}/products${qs ? `?${qs}` : ''}`;
+    // Products listing page — canonical always points to the base /products URL
+    // Filtered views (?tag=, ?category=) are duplicate content and should not be indexed
+    const canonicalPath = `/${locale}/products`;
+    const hasFilters = !!(query.category || query.tag);
 
     // Dynamic title based on active filters
     let title = locale === "es" ? "Productos | Pisos Epóxicos y Muebles de Resina" : "Products | Epoxy Floors & Resin Furniture";
@@ -65,6 +63,20 @@ export async function generateMetadata({
       keywords: locale === "es"
         ? "productos resina epóxica, mesas river table, pisos epóxicos, muebles resina, sobrepoxi productos"
         : "epoxy resin products, river tables, epoxy floors, resin furniture, sobrepoxi products",
+      // Filtered views should not be indexed — they are duplicate content
+      ...(hasFilters && {
+        robots: {
+          index: false,
+          follow: true,
+          googleBot: {
+            index: false,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large" as const,
+            "max-snippet": -1,
+          },
+        },
+      }),
     });
   }
 

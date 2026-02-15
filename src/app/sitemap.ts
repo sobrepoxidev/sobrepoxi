@@ -41,14 +41,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'contact',
     'privacy-policies',
     'conditions-service',
-    'qr',
-    'account',
-    'feria-artesanias',
-    'feria-artesanias-terminos',
     'luxury-furniture',
     'epoxy-floors',              // Main epoxy floors page (most indexed)
     'industrial-epoxy-flooring', // Landing page for industrial market
-    'search'
   ]
 
   const staticEntries = staticBases.map(base => ({
