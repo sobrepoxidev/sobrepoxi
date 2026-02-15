@@ -18,23 +18,22 @@ import { Toaster } from "react-hot-toast";
 type tParams = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
   const headersList = await headers();
-  const host =
-    headersList.get("x-forwarded-host")?.trim() ||
-    headersList.get("host")?.trim() ||
-    "sobrepoxi.com";
   const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
   const { locale } = await params;
 
-  const path = pathname === "/" ? "" : pathname;       
+  // Always use the canonical domain — never trust host headers (avoids www / http variants)
+  const CANONICAL_HOST = "sobrepoxi.com";
+
+  const path = pathname === "/" ? "" : pathname;
   const otherLocale = locale === "es" ? "en" : "es";
 
   return {
-    metadataBase: new URL(`https://${host}`),
+    metadataBase: new URL(`https://${CANONICAL_HOST}`),
 
     ...buildMetadata({
       locale: locale === "es" ? "es" : "en",
       pathname,
-      title: locale === "es" 
+      title: locale === "es"
         ? "SobrePoxi - Muebles con Resina Epóxica y Pisos Epóxicos Industriales en Costa Rica"
         : "SobrePoxi - Epoxy Resin Furniture and Industrial Epoxy Floors in Costa Rica",
       description: locale === "es"
@@ -44,13 +43,13 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
 
     // ——— Canonical + hreflangs ———
     alternates: {
-      canonical: `https://${host}/${locale}${path}`,
+      canonical: `https://${CANONICAL_HOST}/${locale}${path}`,
       languages: {
         [locale === "es" ? "es-cr" : "en-us"]:
-          `https://${host}/${locale}${path}`,
+          `https://${CANONICAL_HOST}/${locale}${path}`,
         [otherLocale === "es" ? "es-cr" : "en-us"]:
-          `https://${host}/${otherLocale}${path}`,
-        "x-default": `https://${host}/${locale}${path}`,
+          `https://${CANONICAL_HOST}/${otherLocale}${path}`,
+        "x-default": `https://${CANONICAL_HOST}/${locale}${path}`,
       },
     },
   };

@@ -8,6 +8,15 @@ const intlMiddleware = createIntlMiddleware(routing);
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") || "";
+
+  /* --- 0. www → non-www redirect (301) --- */
+  if (host.startsWith("www.")) {
+    const url = req.nextUrl.clone();
+    url.host = host.replace(/^www\./, "");
+    url.protocol = "https";
+    return NextResponse.redirect(url, 301);
+  }
 
   /* --- 1. Si es /auth → omite intl, sólo Supabase --- */
   if (pathname.startsWith("/auth")) {

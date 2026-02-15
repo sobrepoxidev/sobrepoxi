@@ -56,6 +56,12 @@ const nextConfig: NextConfig = {
         destination: '/:locale',
         permanent: true,
       },
+      // Bare /products without locale — redirect to default locale
+      {
+        source: '/products',
+        destination: '/es/products',
+        permanent: true,
+      },
     ];
   },
 

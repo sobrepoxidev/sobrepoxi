@@ -221,6 +221,9 @@ export function buildMetadata(opts: {
   // Strip query params and locale for hreflang alternates
   const cleanPath = pathname.replace(/\?.*$/, "").replace(`/${locale}`, "");
 
+  // x-default should always point to the default locale (es) version
+  const xDefaultUrl = `${config.siteUrl}/es${cleanPath}`;
+
   /* --------------------------------------------------------------------- */
   /* Metadatos finales optimizados                                         */
   /* --------------------------------------------------------------------- */
@@ -237,7 +240,7 @@ export function buildMetadata(opts: {
       languages: {
         "es-CR": `${config.siteUrl}/es${cleanPath}`,
         "en-US": `${config.siteUrl}/en${cleanPath}`,
-        "x-default": canonicalUrl
+        "x-default": xDefaultUrl
       }
     },
     openGraph: {
