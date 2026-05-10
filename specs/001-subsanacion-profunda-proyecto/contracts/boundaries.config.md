@@ -61,6 +61,16 @@ export default [
 - Imports a `@/shared/<área>` desde cualquier feature: permitidos (no requieren barrel global de shared, cada subárea de shared es estable).
 - Imports a `@/shared/types/database` desde dominio: permitidos (tipos puros).
 
+## Limitación conocida: aislamiento cross-feature a nivel de capa
+
+`boundaries/element-types` usa patrones globales (p. ej. `src/features/*/application/**`), por lo que la regla
+`{ from: "feature-application", allow: ["feature-application", ...] }` técnicamente permite que la capa
+`application` de una feature importe desde la `application` de **otra** feature a través de paths absolutos.
+
+**Mitigación**: `no-restricted-imports` con `@/features/*/*` captura y bloquea esos imports siempre que
+usen el alias `@/`. Los imports relativos entre features son inusuales y quedan al criterio de revisión de código.
+Esta limitación es aceptable hasta que se disponga de una herramienta que soporte restricciones per-feature-family.
+
 ## Verificación
 
 `pnpm lint` ejecuta esta configuración. El check forma parte del flujo de cierre de cada `MigrationTask` (FR-016).

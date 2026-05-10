@@ -1,6 +1,7 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import boundaries from "eslint-plugin-boundaries";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,6 +12,49 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    plugins: { boundaries },
+    settings: {
+      "boundaries/elements": [
+        { type: "app",                    pattern: "src/app/**" },
+        { type: "feature-domain",         pattern: "src/features/*/domain/**" },
+        { type: "feature-application",    pattern: "src/features/*/application/**" },
+        { type: "feature-infrastructure", pattern: "src/features/*/infrastructure/**" },
+        { type: "feature-presentation",   pattern: "src/features/*/presentation/**" },
+        { type: "feature-barrel",         pattern: "src/features/*/index.{ts,tsx}", mode: "file" },
+        { type: "shared",                 pattern: "src/shared/**" },
+      ],
+      "boundaries/include": ["src/**/*.{ts,tsx}"],
+    },
+    rules: {
+      // Rule renamed in eslint-plugin-boundaries v6 (element-types → dependencies).
+      // String selectors son legacy pero funcionales; migración completa a v6 object selectors queda en Phase 9.
+      "boundaries/dependencies": [
+        "warn",
+        {
+          default: "disallow",
+          rules: [
+            { from: "app",                    allow: ["feature-barrel", "shared"] },
+            { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
+            { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
+            { from: "feature-infrastructure", allow: ["feature-domain", "feature-application", "shared"] },
+            { from: "feature-domain",         allow: ["feature-domain", "shared"] },
+            { from: "feature-barrel",         allow: ["feature-application", "feature-domain", "feature-presentation"] },
+            { from: "shared",                 allow: ["shared"] },
+          ],
+        },
+      ],
+      "no-restricted-imports": [
+        "warn",
+        {
+          patterns: [
+            { group: ["@/features/*/*"],   message: "Importa solo desde @/features/<feature> (barrel). No uses deep imports cross-feature." },
+            { group: ["@/features/*/*/*"], message: "Importa solo desde @/features/<feature> (barrel). No uses deep imports cross-feature." },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;
