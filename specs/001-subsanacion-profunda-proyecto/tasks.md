@@ -88,18 +88,18 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ### T-Sec-1: Cerrar relay abierto `/api/send-email` (F-001)
 
-- [ ] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`).
-- [ ] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle.
-- [ ] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide.
-- [ ] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2).
-- [ ] T024 [US4] Manejo de error genérico en `src/app/api/send-email/route.ts`: cualquier excepción devuelve `{ error: "Internal error" }` con status 500; el detalle queda en `console.error`. Verificación: `curl -X POST .../api/send-email` sin sesión → 401; con sesión y `to` no permitido → 400.
+- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`).
+- [X] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle.
+- [X] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide.
+- [X] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2).
+- [X] T024 [US4] Manejo de error genérico en `src/app/api/send-email/route.ts`: cualquier excepción devuelve `{ error: "Internal error" }` con status 500; el detalle queda en `console.error`. Verificación: `curl -X POST .../api/send-email` sin sesión → 401; con sesión y `to` no permitido → 400.
 
 ### T-Sec-2: Cerrar `/api/send-order-email` (F-002)
 
-- [ ] T025 [US4] Añadir schema `zod` para input en `src/app/api/send-order-email/route.ts` (todos los campos: `orderId`, `customerName`, `shippingAddress`, `items`, `subtotal`, `shipping`, `total`, `paymentMethod`, `discountInfo?`, `userEmail`).
-- [ ] T026 [US4] Añadir verificación de sesión en `src/app/api/send-order-email/route.ts`; obtener `session.user.id` y validar que `orders.user_id === session.user.id` para el `orderId` recibido. Si no, 403.
-- [ ] T027 [US4] Añadir same-origin + logging idéntico al de `/api/send-email`. Reemplazar el `fetch('/api/send-email', ...)` por llamada directa a una función helper local en el mismo archivo (refactor full a server action ocurre en T-Notif).
-- [ ] T028 [US4] Manejo de error genérico en `src/app/api/send-order-email/route.ts`. Verificación: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401.
+- [X] T025 [US4] Añadir schema `zod` para input en `src/app/api/send-order-email/route.ts` (todos los campos: `orderId`, `customerName`, `shippingAddress`, `items`, `subtotal`, `shipping`, `total`, `paymentMethod`, `discountInfo?`, `userEmail`).
+- [X] T026 [US4] Añadir verificación de sesión en `src/app/api/send-order-email/route.ts`; obtener `session.user.id` y validar que `orders.user_id === session.user.id` para el `orderId` recibido. Si no, 403.
+- [X] T027 [US4] Añadir same-origin + logging idéntico al de `/api/send-email`. Reemplazar el `fetch('/api/send-email', ...)` por llamada directa a una función helper local en el mismo archivo (refactor full a server action ocurre en T-Notif).
+- [X] T028 [US4] Manejo de error genérico en `src/app/api/send-order-email/route.ts`. Verificación: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401.
 
 ### T-Sec-3: Eliminar mock fallbacks silenciosos de PayPal (F-004)
 
