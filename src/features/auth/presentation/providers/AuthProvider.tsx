@@ -2,13 +2,13 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { createBrowserSupabaseClient } from '@/shared/supabase/client'
-import type { Session, User } from '@supabase/supabase-js'
+import type { Session, User, SupabaseClient } from '@supabase/supabase-js'
 
 interface AuthContextValue {
   session: Session | null
   user: User | null
   loading: boolean
-  supabase: ReturnType<typeof createBrowserSupabaseClient>
+  supabase: SupabaseClient
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -52,4 +52,12 @@ export function useAuth() {
     throw new Error('useAuth must be used within AuthProvider')
   }
   return context
+}
+
+export function useSupabase() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useSupabase must be used within AuthProvider')
+  }
+  return { supabase: context.supabase, session: context.session }
 }
