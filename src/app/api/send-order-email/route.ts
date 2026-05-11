@@ -3,7 +3,7 @@ export const runtime = "nodejs";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
-import { generateOrderConfirmationEmail } from "@/lib/orderConfirmationEmail";
+import { renderOrderConfirmationHtml } from "@/features/notifications";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
 
 const COMPANY_EMAIL = "sobrepoxidev@gmail.com";
@@ -145,12 +145,11 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    const emailHtml = generateOrderConfirmationEmail({
+    const emailHtml = renderOrderConfirmationHtml({
       orderId: data.orderId,
       customerName: data.customerName,
       shippingAddress: data.shippingAddress,
-      // CartItem[] estructural — el renderer maneja la forma interna.
-      items: data.items as Parameters<typeof generateOrderConfirmationEmail>[0]["items"],
+      items: data.items as { name: string; quantity: number; price: number }[],
       subtotal: data.subtotal,
       shipping: data.shipping,
       total: data.total,

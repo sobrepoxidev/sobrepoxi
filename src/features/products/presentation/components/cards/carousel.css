@@ -1,0 +1,141 @@
+/**
+ * Estilos para carruseles con scrollbar que MANTIENE su espacio
+ * pero es invisible hasta que se hace hover/focus
+ */
+
+/* Técnica avanzada: crear un contenedor con pseudoelemento */
+.carousel-wrapper {
+  position: relative; 
+  /* Reservamos espacio fijo y constante para el carrusel */
+  padding-bottom: 17px; /* Valor exacto para evitar saltos */
+  /* Hack para mantener el espacio consistente */
+  overflow: hidden;
+}
+
+/* Configuración básica del carrusel */
+.carousel-scroll {
+  /* Siempre mostrar overflow-x para mantener el scrollbar siempre montado */
+  overflow-x: scroll;
+  /* Configuración mínima sin padding, el padding lo da el wrapper */
+  position: relative;
+  /* Para Internet Explorer */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Chrome/Safari/Opera: scrollbar siempre visible pero totalmente transparente */
+.carousel-scroll::-webkit-scrollbar {
+  height: 6px; /* Altura fija y constante */
+  width: auto;
+  /* El scrollbar siempre existe pero es totalmente transparente */
+  background-color: transparent;
+}
+
+/* Track del scrollbar (invisible por defecto) */
+.carousel-scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+/* Thumb del scrollbar (invisible por defecto) */
+.carousel-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: transparent; /* Invisible */
+}
+
+/* Al hacer hover, hacemos visible SOLO el thumb (no el track) */
+.carousel-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Visible en hover */
+}
+
+/* Al hacer focus, misma visibilidad */
+.carousel-scroll:focus::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Firefox: transparente por defecto, visible en hover */
+.carousel-scroll {
+  /* Siempre fino pero completamente transparente */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.carousel-scroll:hover,
+.carousel-scroll:focus {
+  /* Al hacer hover o focus, hacer ligeramente visible */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Los estilos de carousel-wrapper ya están declarados arriba */
+
+/* Ocultar scrollbar por defecto en WebKit */
+.carousel-scroll::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  background: transparent;
+}
+
+/* Mostrar scrollbar fino al hacer hover */
+.carousel-scroll:hover::-webkit-scrollbar,
+.carousel-scroll:focus::-webkit-scrollbar {
+  height: 4px; /* Scrollbar muy fino */
+  width: 4px;
+  display: block;
+}
+
+/* Estilo del track (fondo) del scrollbar */
+.carousel-scroll:hover::-webkit-scrollbar-track,
+.carousel-scroll:focus::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+/* Estilo del thumb (la parte que se mueve) del scrollbar */
+.carousel-scroll:hover::-webkit-scrollbar-thumb,
+.carousel-scroll:focus::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Para Firefox */
+.carousel-scroll:hover,
+.carousel-scroll:focus {
+  scrollbar-width: thin;
+}
+
+/* Asegurarse que los elementos dentro del carrusel tengan el espaciado correcto */
+.carousel-scroll > div {
+  margin-right: 8px;
+}
+
+/* Estilos para las flechas de navegación */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-arrow-left {
+  left: 0;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.carousel-arrow-right {
+  right: 0;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}

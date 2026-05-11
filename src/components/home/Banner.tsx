@@ -95,7 +95,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPaused, bannerCount]);
+  }, [isPaused, bannerCount, startAutoPlay]);
 
   const togglePause = () => {
     setIsPaused(!isPaused);

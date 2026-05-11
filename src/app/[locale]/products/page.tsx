@@ -1,9 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { buildMetadata } from "@/lib/seoConfig";
-import Loading from "@/components/products/LoadingGallery";
-import ProductsPageContent from "@/components/products/ProductsPageContent";
+import { buildMetadata } from "@/shared/seo/seoConfig";
+import { LoadingGallery as Loading, ProductsPageContent } from "@/features/products";
 import { createClient } from "@/utils/supabase/server";
 
 /**

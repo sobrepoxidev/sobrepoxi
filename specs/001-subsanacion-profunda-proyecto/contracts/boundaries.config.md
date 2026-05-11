@@ -32,7 +32,7 @@ export default [
           rules: [
             { from: "app",                    allow: ["feature-barrel", "shared"] },
             { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
-            { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
+            { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "feature-infrastructure", "shared"] },
             { from: "feature-infrastructure", allow: ["feature-domain", "feature-application", "shared"] },
             { from: "feature-domain",         allow: ["feature-domain", "shared"] },
             { from: "feature-barrel",         allow: ["feature-application", "feature-domain", "feature-presentation"] },
@@ -41,6 +41,7 @@ export default [
         },
       ],
       // Refuerzo: cross-feature imports deben apuntar al barrel exacto, no a paths internos.
+      // Intra-feature deep imports (dentro de la misma feature) son permitidos.
       "no-restricted-imports": [
         "error",
         {

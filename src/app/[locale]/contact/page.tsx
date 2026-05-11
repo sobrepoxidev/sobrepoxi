@@ -16,11 +16,11 @@ import Link from "next/link";
 import Script from "next/script";
 
 import type { Metadata }            from "next";
-import { buildMetadata } from "@/lib/seoConfig";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 
 /* ---------  Lazy-loaded client modules (SSR enabled)  --------- */
 
-import FormMail from "@/components/general/FormMail";
+import { FormMail } from "@/features/content";
 
 /* ------------  Params helper  ------------ */
 type ParamsPromise = Promise<{ locale: "es" | "en" }>;

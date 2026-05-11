@@ -1,12 +1,11 @@
 import { redirect } from 'next/navigation';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/shared/supabase/server';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 
-// Lista de correos electrónicos de administradores autorizados
-const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com'];
-
-
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
+  .split(',')
+  .map(e => e.trim())
+  .filter(Boolean);
 
 export default async function AdminProductsPage({
   params
@@ -14,7 +13,7 @@ export default async function AdminProductsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = await createServerSupabaseClient();
   
   const { data: { session } } = await supabase.auth.getSession();
   
@@ -25,7 +24,7 @@ export default async function AdminProductsPage({
   
   const userEmail = session.user?.email;
   
-  if (!userEmail || !AUTHORIZED_ADMINS.includes(userEmail)) {
+  if (!userEmail || !ADMIN_EMAILS.includes(userEmail)) {
     redirect(`/${locale}`);
   }
   

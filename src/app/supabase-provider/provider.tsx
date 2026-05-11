@@ -1,28 +1,22 @@
 'use client'
 
 import React from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Session, SupabaseClient } from '@supabase/supabase-js'
-import { Database } from '@/types-db' // si tienes un type global de tu DB
 
-type SupabaseContextProps = {
-  supabase: SupabaseClient<Database>
+const Context = React.createContext<{
+  supabase: SupabaseClient
   session: Session | null
-}
-
-const Context = React.createContext<SupabaseContextProps | undefined>(undefined)
+} | undefined>(undefined)
 
 export default function SupabaseProvider({
   children,
   session,
+  supabase,
 }: {
   children: React.ReactNode
   session: Session | null
+  supabase: SupabaseClient
 }) {
-  const [supabase] = React.useState(() =>
-    createClientComponentClient<Database>()
-  )
-
   return (
     <Context.Provider value={{ supabase, session }}>
       {children}
@@ -30,8 +24,7 @@ export default function SupabaseProvider({
   )
 }
 
-// Hook para usar el contexto
-export const useSupabase = () => {
+export function useSupabase() {
   const context = React.useContext(Context)
   if (!context) {
     throw new Error('useSupabase must be used inside SupabaseProvider')

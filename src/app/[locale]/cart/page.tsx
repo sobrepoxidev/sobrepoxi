@@ -4,16 +4,16 @@ import React, { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/features/cart";
 import { useSupabase } from "@/app/supabase-provider/provider";
-import { Database } from "@/types-db";
+import { Database } from "@/shared/types/database";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcPaypal } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { AlertTriangle, Share2 } from "lucide-react";
-import RelatedProductsClient from "@/components/products/RelatedProductsClient";
+import { RelatedProductsClient } from "@/features/products";
 import { useLocale } from "next-intl";
-import { formatUSD } from "@/lib/formatCurrency";
-import CurrencyConverterRow from "@/components/CurrencyConverterRow";
+import { formatUSD } from "@/shared/utils/formatCurrency";
+import { CurrencyConverterRow } from "@/components/CurrencyConverterRow";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 // ──────────────────── Share Cart Button ─────────────────────

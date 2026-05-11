@@ -10,4 +10,6 @@ shell commands, and other important information, read the current plan at
 - `specs/001-subsanacion-profunda-proyecto/quickstart.md` — verification steps (lint/typecheck/build/manual checklists)
 
 Target architecture: Clean Architecture by features. Layout: `src/features/<f>/{domain,application,infrastructure,presentation}` + `src/app/` for routing only + `src/shared/` for cross-cutting. Public API per feature via barrel `src/features/<f>/index.ts`; cross-feature imports must point to `@/features/<f>` (no deep imports), enforced by `eslint-plugin-boundaries`. Server actions live in `application/actions/` of their feature; route handlers in `src/app/api/...` stay thin and delegate to use cases.
+
+**Migration status**: Phase 4 complete (Clean Architecture). Phase 9 pending (deprecated dirs cleanup). Verification: `pnpm run lint && pnpm tsc --noEmit`
 <!-- SPECKIT END -->

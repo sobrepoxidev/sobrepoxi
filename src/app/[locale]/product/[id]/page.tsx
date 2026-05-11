@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { getCommonMetadata, buildTitle } from "@/lib/seo";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 // Server component
-import ProductDetail from '@/components/products/ProductDetail';
+import { ProductDetail } from '@/features/products';
 
 // The server component handles params extraction
 type tParams = Promise<{ id: string, locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
-  const { locale } = await params;
-  // Try to derive product name via query param or fallback
+  const { locale, id } = await params;
   const genericTitle = locale === "es" ? "Producto" : "Product";
-  return {
-    title: buildTitle(genericTitle),
-    ...getCommonMetadata(locale),
-  };
+  return buildMetadata({
+    locale: locale as "es" | "en",
+    pathname: `/${locale}/product/${id}`,
+    title: genericTitle,
+  });
 }
 
 export default async function ProductPage({ params }: { params: tParams }) {

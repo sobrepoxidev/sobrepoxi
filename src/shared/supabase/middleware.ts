@@ -1,5 +1,6 @@
-import { createServerClient } from '@supabase/ssr';
-import type { NextRequest, NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export function createMiddlewareSupabaseClient(req: NextRequest, res: NextResponse) {
   return createServerClient(
@@ -8,14 +9,14 @@ export function createMiddlewareSupabaseClient(req: NextRequest, res: NextRespon
     {
       cookies: {
         getAll() {
-          return req.cookies.getAll();
+          return req.cookies.getAll()
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
-            res.cookies.set(name, value, options);
-          });
+            res.cookies.set(name, value, options)
+          })
         },
       },
     }
-  );
+  )
 }

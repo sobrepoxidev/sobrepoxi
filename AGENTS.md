@@ -31,30 +31,35 @@ pnpm tsc --noEmit   # TypeScript type checking
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── [locale]/          # i18n routing (es, en, etc.)
-│   │   ├── products/
-│   │   ├── product/[id]/
-│   │   ├── cart/
-│   │   ├── checkout/
-│   │   ├── admin/
-│   │   ├── qr/
-│   │   └── ...
-│   ├── api/               # API routes
-│   └── layout.tsx
-├── components/            # React components
-│   ├── admin/
-│   ├── cards/
-│   ├── Carousel/
-│   ├── checkout/
-│   ├── home/
-│   ├── products/
-│   └── search/
-├── context/               # React contexts (CartContext, etc.)
-├── lib/                   # Utilities, hooks, supabase
-│   └── hooks/
-└── i18n/                  # Internationalization
+├── features/                    # Clean Architecture by feature
+│   ├── products/{application,presentation,domain,infrastructure}/
+│   ├── cart/{application,presentation}/
+│   ├── checkout/{application,presentation,infrastructure}/
+│   ├── auth/{application,presentation}/
+│   ├── account/{application,presentation}/
+│   ├── admin/{application,presentation}/
+│   ├── notifications/{application,infrastructure}/
+│   ├── content/{application,presentation}/
+│   └── currency/{application,infrastructure}/
+├── shared/{supabase,i18n,seo,ui,types,utils}/  # Cross-cutting concerns
+└── app/[locale]/...            # Thin pages (routing only)
+    ├── products/
+    ├── product/[id]/
+    ├── cart/
+    ├── checkout/
+    ├── admin/
+    ├── qr/
+    └── api/                    # Thin API routes delegating to feature use cases
 ```
+
+**Verification commands** (run after any change):
+```bash
+pnpm run lint      # ESLint check
+pnpm tsc --noEmit  # TypeScript type checking
+pnpm run build     # Production build (full verification)
+```
+
+**Migration status**: Phase 4 complete (Clean Architecture). Phase 9 pending (deprecated dirs cleanup).
 
 ## Key Libraries
 

@@ -6,15 +6,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { buildMetadata } from "@/lib/seoConfig";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 import {
   getGuideBySlug,
   getAllGuideSlugs,
   getRelatedGuides,
-} from "@/lib/guidesContent";
+} from "@/features/content";
 import Script from "next/script";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structuredData";
-import { SEO_CONFIG } from "@/lib/seoConfig";
+import { generateBreadcrumbSchema, generateFAQSchema } from "@/shared/seo/structuredData";
+import { SEO_CONFIG } from "@/shared/seo/seoConfig";
 import {
   Clock,
   Calendar,

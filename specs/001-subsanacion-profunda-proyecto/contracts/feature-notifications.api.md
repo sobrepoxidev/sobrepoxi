@@ -15,8 +15,8 @@ export function sendOrderConfirmationEmail(input: {
   subtotal: number;
   shipping: number;
   total: number;
-  paymentMethod: string;
-  discountInfo?: { code: string; amount: number };
+  paymentMethod: z.enum(["paypal", "sinpe"]);
+  discountInfo?: { code: string; discountAmount: number; description?: string } | null;
 }): Promise<{ success: boolean; error?: string }>;
 
 "use server";

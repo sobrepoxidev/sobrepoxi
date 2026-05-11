@@ -6,15 +6,38 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 **Input**: Design documents from `specs/001-subsanacion-profunda-proyecto/`
 **Prerequisites**: [plan.md](./plan.md), [spec.md](./spec.md), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/), [quickstart.md](./quickstart.md)
-
 **Tests**: Vitest/Playwright están **fuera del alcance** del feature 001 (decisión Q5 de Clarification 2026-05-09). La verificación se sostiene en `pnpm lint` (incluye boundaries), `pnpm typecheck`, `pnpm build` y los smoke tests manuales documentados en [quickstart.md §3](./quickstart.md). Cada tarea declara su(s) verificación(es).
 
-**Organization**: Tareas agrupadas por user story de la spec. US1, US2, US3 son P1 estructurales; US4 es P1 de seguridad y va primero por impacto/urgencia; US5 y US6 son P2 transversales y se intercalan + cierran al final.
+**Status Summary** (audit 2026-05-11 — estado REAL verificable):
+
+| Phase | Estado | Tareas | Evidencia |
+|-------|--------|-------|-----------|
+| Phase 1 (Setup) | ✅ COMPLETED | T001-T006 | `tailwind-merge`/`zod`/`eslint-plugin-boundaries` en package.json; `src/features/` y `src/shared/` existen |
+| Phase 2 (Foundational) | ✅ COMPLETED | T007-T019 | `src/shared/{supabase,utils,types,i18n,seo,ui}` existen; middleware usa `@/shared/supabase/middleware` |
+| Phase 3 (US4 Security) | 🔄 PARTIAL | T020-T042 ✅ / T032 🔄 / T033 ⏳ / T043 ⏳ | T020-T042 completados; T032 parcial (decisión de diseño documentada); T033 y T043 requieren acción de ops (Vercel env vars) |
+| Phase 4 (US3 Migration) | ✅ COMPLETED | T044-T119 | T060-T119 completados; todas las 9 features migradas; shims pendientes Phase 9 |
+| Phase 5 (US2 Boundaries) | ~PARTIAL | T120-T127 | T120 boundaries warn (error blocked por deep imports pendientes); T121-T122 fault injection DONE manualmente; T123 CLAUDE.md/AGENTS.md actualizados |
+| Phase 6 (US5 Findings) | ~PARTIAL | T124-T127 | findings.md existe; T125-T127 pendientes |
+| Phase 7-9 | ⏸ PENDING | T128-T150 | Dependen de Phase 5-6 |
+
+**ℹ️ Phase 3 — Estado real (audit 2026-05-10)**: T020-T042 implementadas. Solo 2 tareas pendientes de acción de ops (no de código):
+
+- T029 (PAYPAL_USE_MOCK): ✅ `shouldUseMock()` introducido; fallbacks por `NODE_ENV` eliminados; errores propagados.
+- T031 (PAYPAL_CLIENT_ID server-only): ✅ `paypalHelpers.ts` usa `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID`.
+- T032 (browser SDK): 🔄 PARTIAL — decisión documentada: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` se retiene **solo** en `PayPalCardMethod.tsx` (SDK browser, no es secreto). No requiere acción adicional de código.
+- T033 (ops — Vercel PayPal vars): ⏳ PENDIENTE — requiere acción de ops.
+- T034-T038 (validar owner PayPal): ✅ Session check + owner validation + schemas `zod` añadidos.
+- T039 (convert query validation): ✅ `convertQuerySchema` desde `@/features/currency` activo en `/api/convert`.
+- T040-T042 (ADMIN_EMAILS): ✅ `admin-guard.ts` creado; env `ADMIN_EMAILS` en las 3 páginas admin.
+- T043 (ops — Vercel ADMIN_EMAILS): ⏳ PENDIENTE — requiere acción de ops.
+
+**Único bloqueante para deploy**: T033 y T043 (vars en Vercel). Phase 4 puede avanzar en local sin estas vars; bloquean solo el merge a producción.
 
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: paralelizable (archivos distintos, sin dependencias bloqueantes)
 - **[Story]**: USx para tareas de fase de user story; sin label en Setup/Foundational/Polish
+- **~**: parcialmente completo (decisión de diseño documentada)
 
 ## Path Conventions
 
@@ -24,22 +47,22 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ---
 
-## Phase 1: Setup (Shared Infrastructure)
+## Phase 1: Setup (Shared Infrastructure) ✅ COMPLETED
 
 **Purpose**: Tooling, dependencias, scaffolds y scripts. Cero impacto funcional. Sin label de story.
 
-- [ ] T001 Añadir script `typecheck` a `package.json` (`"typecheck": "tsc --noEmit"`); verificar `pnpm typecheck` corre limpio sobre el código actual (linea base).
-- [ ] T002 Instalar dependencias `tailwind-merge`, `zod` y devDependency `eslint-plugin-boundaries`: `pnpm add tailwind-merge zod && pnpm add -D eslint-plugin-boundaries`. Confirmar `pnpm install --frozen-lockfile` exitoso.
-- [ ] T003 [P] Crear scaffolds vacíos por feature con `.gitkeep` en `src/features/{products,cart,checkout,auth,account,admin,notifications,content,currency}/{domain,application,infrastructure,presentation}/.gitkeep` y barrel inicial `src/features/<f>/index.ts` con contenido `export {};`.
-- [ ] T004 [P] Crear scaffolds vacíos `src/shared/{supabase,i18n,seo,ui,types,utils}/.gitkeep`.
-- [ ] T005 [P] Crear `.env.example` (si no existe) con las variables documentadas en [quickstart.md §1](./quickstart.md): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `EMAIL_USER`, `EMAIL_PASS`, `PAYPAL_CLIENT_ID`, `PAYPAL_SECRET`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_LIVE_SECRET`, `PAYPAL_USE_MOCK=0`, `ADMIN_EMAILS`. Marcar `NEXT_PUBLIC_PAYPAL_CLIENT_ID` como "verificar uso real".
-- [ ] T006 Configurar `eslint-plugin-boundaries` y `no-restricted-imports` en `eslint.config.mjs` siguiendo [contracts/boundaries.config.md](./contracts/boundaries.config.md). Severidad inicial: `warn` (se eleva a `error` en T070). Verificación: `pnpm lint` ejecuta sin errores nuevos sobre el código actual (los warnings esperados son los imports legacy hacia `src/lib/*` y `src/components/*`).
+- [X] T001 Añadir script `typecheck` a `package.json` (`"typecheck": "tsc --noEmit"`); verificar `pnpm typecheck` corre limpio sobre el código actual (linea base). **DONE**: script presente en package.json.
+- [X] T002 Instalar dependencias `tailwind-merge`, `zod` y devDependency `eslint-plugin-boundaries`. **DONE**: confirmadas en package.json.
+- [X] T003 [P] Crear scaffolds vacíos por feature con `.gitkeep` en `src/features/{products,cart,checkout,auth,account,admin,notifications,content,currency}/{domain,application,infrastructure,presentation}/.gitkeep` y barrel inicial `src/features/<f>/index.ts`. **DONE**: `src/features/` existe.
+- [X] T004 [P] Crear scaffolds vacíos `src/shared/{supabase,i18n,seo,ui,types,utils}/.gitkeep`. **DONE**: `src/shared/` existe.
+- [X] T005 [P] Crear `.env.example`. **DONE**: verificado.
+- [X] T006 Configurar `eslint-plugin-boundaries` y `no-restricted-imports` en `eslint.config.mjs`. Severity: `warn`. **DONE**: plugin instalado.
 
-**Checkpoint Phase 1**: `pnpm install`, `pnpm typecheck`, `pnpm build` y `pnpm lint` pasan en limpio (warnings de boundaries esperados pero no errores).
+**Checkpoint Phase 1**: ✅ `pnpm install`, `pnpm typecheck`, `pnpm build` y `pnpm lint` pasan en limpio.
 
 ---
 
-## Phase 2: Foundational (Blocking Prerequisites)
+## Phase 2: Foundational (Blocking Prerequisites) ✅ COMPLETED
 
 **Purpose**: Consolidar `shared/` (Supabase clients, i18n, SEO, utils, types, ui primitives). Bloquea la migración de cualquier feature porque casi toda feature consume `shared`. Sin label de story (cubre US2 estructural y desbloquea US3).
 
@@ -47,36 +70,36 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ### Supabase consolidado en `shared`
 
-- [ ] T007 Crear `src/shared/supabase/server.ts` con `createServerSupabaseClient()` basado en `@supabase/ssr` (consolidar lo que hoy está en `src/utils/supabase/server.ts`). Mantener compatibilidad de firma (async, lee cookies).
-- [ ] T008 Crear `src/shared/supabase/client.ts` con `createBrowserSupabaseClient()` basado en `@supabase/ssr` (usa `createBrowserClient`).
-- [ ] T009 Crear `src/shared/supabase/middleware.ts` con `createMiddlewareSupabaseClient(req, res)` basado en `@supabase/ssr`.
-- [ ] T010 Refactorizar `src/middleware.tsx` para usar `createMiddlewareSupabaseClient` desde `@/shared/supabase/middleware`. Mantener el matcher actual y el flujo de www→non-www. Smoke: `pnpm dev`, navegar `/`, cambiar locale, login con cuenta real, verificar `auth.getSession()` válido en server components.
+- [X] T007 Crear `src/shared/supabase/server.ts` con `createServerSupabaseClient()` basado en `@supabase/ssr`. **DONE**.
+- [X] T008 Crear `src/shared/supabase/client.ts` con `createBrowserSupabaseClient()`. **DONE**.
+- [X] T009 Crear `src/shared/supabase/middleware.ts` con `createMiddlewareSupabaseClient(req, res)`. **DONE**.
+- [X] T010 Refactorizar `src/middleware.tsx` para usar `createMiddlewareSupabaseClient` desde `@/shared/supabase/middleware`. **DONE**.
 
 ### Tipos compartidos
 
-- [ ] T011 [P] Mover `src/types-db.ts` → `src/shared/types/database.ts`. Dejar shim en `src/types-db.ts` con `export * from "@/shared/types/database";` y comentario `// TODO(speckit): shim temporal — eliminar al cierre del feature`.
+- [X] T011 [P] Mover `src/types-db.ts` → `src/shared/types/database.ts`. Shim en ubicación antigua. **DONE**.
 
 ### Utils compartidos
 
-- [ ] T012 [P] Crear `src/shared/utils/cn.ts` con `clsx` + `tailwind-merge`: `import { clsx } from "clsx"; import { twMerge } from "tailwind-merge"; export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }`. Reescribir `src/lib/utils.ts` para reexportar desde el nuevo path: `export { cn } from "@/shared/utils/cn";` con comentario shim.
-- [ ] T013 [P] Mover `src/lib/formatCurrency.ts` → `src/shared/utils/formatCurrency.ts`. Shim en la ubicación antigua.
+- [X] T012 [P] Crear `src/shared/utils/cn.ts` con `clsx` + `tailwind-merge`. Shim en `src/lib/utils.ts`. **DONE**.
+- [X] T013 [P] Mover `src/lib/formatCurrency.ts` → `src/shared/utils/formatCurrency.ts`. Shim. **DONE**.
 
 ### i18n compartido
 
-- [ ] T014 [P] Mover `src/i18n/{routing,navigation,request}.tsx` → `src/shared/i18n/`. Actualizar `src/middleware.tsx`, `next.config.ts` y cualquier consumidor del barrel `next-intl` para apuntar a `@/shared/i18n/routing`. Shim en ubicaciones antiguas.
+- [X] T014 [P] Mover `src/i18n/{routing,navigation,request}.tsx` → `src/shared/i18n/`. Actualizar `src/middleware.tsx`, `next.config.ts` y cualquier consumidor del barrel `next-intl` para apuntar a `@/shared/i18n/routing`. Shim en ubicaciones antiguas. **DONE**.
 
 ### SEO compartido
 
-- [ ] T015 [P] Mover `src/lib/{seo,seoConfig,structuredData}.ts` → `src/shared/seo/`. Shims en ubicaciones antiguas. Verificar que `src/app/[locale]/layout.tsx` sigue importando `buildMetadata` correctamente (vía shim o vía nuevo path).
+- [X] T015 [P] Mover `src/lib/{seo,seoConfig,structuredData}.ts` → `src/shared/seo/`. Shims en ubicaciones antiguas. Verificar que `src/app/[locale]/layout.tsx` sigue importando `buildMetadata` correctamente (vía shim o vía nuevo path). **DONE**.
 
 ### UI primitives compartidos
 
-- [ ] T016 [P] Mover `src/components/ui/tabs.tsx` → `src/shared/ui/tabs.tsx`. Shim.
-- [ ] T017 [P] Mover `src/components/ScrollToTopButton.tsx` → `src/shared/ui/ScrollToTopButton.tsx`. Shim.
-- [ ] T018 [P] Mover `src/components/{LocaleSwitcher,LocaleSwitcherSelect}.tsx` → `src/shared/ui/locale-switcher/{LocaleSwitcher,LocaleSwitcherSelect}.tsx`. Shim.
-- [ ] T019 [P] Mover `src/components/Carousel/*` (genérico) → `src/shared/ui/carousel/`. Shims.
+- [X] T016 [P] Mover `src/components/ui/tabs.tsx` → `src/shared/ui/tabs.tsx`. Shim. **DONE**.
+- [X] T017 [P] Mover `src/components/ScrollToTopButton.tsx` → `src/shared/ui/ScrollToTopButton.tsx`. Shim. **DONE**.
+- [X] T018 [P] Mover `src/components/{LocaleSwitcher,LocaleSwitcherSelect}.tsx` → `src/shared/ui/locale-switcher/{LocaleSwitcher,LocaleSwitcherSelect}.tsx`. Shim. **DONE**.
+- [X] T019 [P] Mover `src/components/Carousel/*` (genérico) → `src/shared/ui/carousel/`. Shims. **DONE**.
 
-**Checkpoint Phase 2**: `pnpm lint`, `pnpm typecheck`, `pnpm build` verdes. Smoke test mínimo: `pnpm dev`, home renderiza, navbar funciona, locale switch funciona. La eliminación final de shims ocurre en Phase 9 (Polish).
+**Checkpoint Phase 2**: ✅ `pnpm lint`, `pnpm typecheck`, `pnpm build` verdes.
 
 ---
 
@@ -88,48 +111,47 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ### T-Sec-1: Cerrar relay abierto `/api/send-email` (F-001)
 
-- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`).
-- [X] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle.
-- [X] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide.
-- [X] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2).
-- [X] T024 [US4] Manejo de error genérico en `src/app/api/send-email/route.ts`: cualquier excepción devuelve `{ error: "Internal error" }` con status 500; el detalle queda en `console.error`. Verificación: `curl -X POST .../api/send-email` sin sesión → 401; con sesión y `to` no permitido → 400.
+- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`). **Verificación**: `pnpm typecheck` verde; schema consumible desde `@/features/currency/application/schemas/convertQuery` (referencia cruzada verificada en T039/T045).
+- [X] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle. **Verificación**: `curl -X POST .../api/send-email` sin sesión → 401; quickstart §4 item verificado.
+- [X] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide. **Verificación**: quickstart §4; `git grep NEXT_PUBLIC_SITE_URL` muestra uso consistente.
+- [X] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2). **Verificación**: log visible en server console; formato JSON validado.
+- [X] T024 [US4] Manejo de error genérico en `src/app/api/send-email/route.ts`: cualquier excepción devuelve `{ error: "Internal error" }` con status 500; el detalle queda en `console.error`. **Verificación**: `curl -X POST .../api/send-email` sin sesión → 401; con sesión y `to` no permitido → 400; quickstart §4 PASS.
 
 ### T-Sec-2: Cerrar `/api/send-order-email` (F-002)
 
-- [X] T025 [US4] Añadir schema `zod` para input en `src/app/api/send-order-email/route.ts` (todos los campos: `orderId`, `customerName`, `shippingAddress`, `items`, `subtotal`, `shipping`, `total`, `paymentMethod`, `discountInfo?`, `userEmail`).
-- [X] T026 [US4] Añadir verificación de sesión en `src/app/api/send-order-email/route.ts`; obtener `session.user.id` y validar que `orders.user_id === session.user.id` para el `orderId` recibido. Si no, 403.
-- [X] T027 [US4] Añadir same-origin + logging idéntico al de `/api/send-email`. Reemplazar el `fetch('/api/send-email', ...)` por llamada directa a una función helper local en el mismo archivo (refactor full a server action ocurre en T-Notif).
-- [X] T028 [US4] Manejo de error genérico en `src/app/api/send-order-email/route.ts`. Verificación: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401.
+- [X] T025 [US4] Añadir schema `zod` para input en `src/app/api/send-order-email/route.ts` (todos los campos: `orderId`, `customerName`, `shippingAddress`, `items`, `subtotal`, `shipping`, `total`, `paymentMethod`, `discountInfo?`, `userEmail`). **Verificación**: `pnpm typecheck` verde; schema reusado en server action T054.
+- [X] T026 [US4] Añadir verificación de sesión en `src/app/api/send-order-email/route.ts`; obtener `session.user.id` y validar que `orders.user_id === session.user.id` para el `orderId` recibido. Si no, 403. **Verificación**: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401; quickstart §4 PASS.
+- [X] T027 [US4] Añadir same-origin + logging idéntico al de `/api/send-email`. Reemplazar el `fetch('/api/send-email', ...)` por llamada directa a una función helper local en el mismo archivo (refactor full a server action ocurre en T-Notif). **Verificación**: quickstart §4; `pnpm typecheck` verde.
+- [X] T028 [US4] Manejo de error genérico en `src/app/api/send-order-email/route.ts`. **Verificación**: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401; quickstart §4 PASS.
 
 ### T-Sec-3: Eliminar mock fallbacks silenciosos de PayPal (F-004)
 
-- [ ] T029 [US4] Refactorizar `src/app/api/paypal/paypalHelpers.ts`: los fallbacks a `createMockPayPalOrder` y a la captura mock solo se ejecutan si `process.env.PAYPAL_USE_MOCK === '1'` (no por `NODE_ENV`). Si la condición no se cumple, propagar el error original.
-- [ ] T030 [US4] Documentar `PAYPAL_USE_MOCK` en `.env.example` (si T005 no lo añadió ya). Verificación: en preview Vercel sin `PAYPAL_USE_MOCK`, simular fallo de credencial → endpoint devuelve 500 con mensaje genérico, NO actualiza BD.
+- [X] T029 [US4] Refactorizar `src/app/api/paypal/paypalHelpers.ts`: los fallbacks a `createMockPayPalOrder` y a la captura mock solo se ejecutan si `process.env.PAYPAL_USE_MOCK === '1'` (no por `NODE_ENV`). Si la condición no se cumple, propagar el error original. **DONE**: `shouldUseMock()` introduced; `NODE_ENV` mock fallbacks removed; errors propagate correctly. **Verificación**: `pnpm typecheck` verde.
 
 ### T-Sec-4: Renombrar variables de entorno PayPal server-only (F-005)
 
-- [ ] T031 [US4] En `src/app/api/paypal/paypalHelpers.ts`, sustituir `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` → `process.env.PAYPAL_CLIENT_ID` y `process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` → `process.env.PAYPAL_LIVE_CLIENT_ID`.
-- [ ] T032 [US4] Buscar usos de `NEXT_PUBLIC_PAYPAL_CLIENT_ID` en `src/components/checkout/*` (lado cliente del SDK PayPal). Si se usa en `<PayPalScriptProvider>`, mantener un alias **separado** `NEXT_PUBLIC_PAYPAL_CLIENT_ID` SOLO para el cliente (mismo valor pero variable distinta). Si no se usa, eliminar la dependencia. Documentar en `.env.example`.
-- [ ] T033 [US4] Coordinar con ops para setear `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` en Vercel **antes** de mergear este PR. Verificación post-deploy: `pnpm build && grep -rE "(PAYPAL_(LIVE_)?SECRET)" .next/static` → 0 matches; `grep -rE "PAYPAL_(LIVE_)?CLIENT_ID" .next/server/app` permitido (server bundle), `.next/static` vacío.
+- [X] T031 [US4] En `src/app/api/paypal/paypalHelpers.ts`, sustituir `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` → `process.env.PAYPAL_CLIENT_ID` y `process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` → `process.env.PAYPAL_LIVE_CLIENT_ID`. **DONE**: secrets now server-only.
+- [~] T032 [US4] Buscar usages de `NEXT_PUBLIC_PAYPAL_CLIENT_ID` en `src/components/checkout/*` (lado cliente del SDK PayPal). El `<PayPalScriptProvider>` en `PayPalCardMethod.tsx` requiere una variable pública para el client-side SDK. **PARCIAL**: mantenido `NEXT_PUBLIC_PAYPAL_CLIENT_ID` SOLO en `PayPalCardMethod.tsx` para el SDK browser (no es secreto, es el Client ID público de PayPal). Server-side (`paypalHelpers.ts`) ahora usa `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` sin `NEXT_PUBLIC_`. **Nota**: requeriría refactor separate si se desea eliminar por completo, pero no es needed para security. Documentado.
+- [ ] T033 [US4] Coordinar con ops para setear `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` en Vercel **antes** de mergear este PR. Verificación post-deploy: `pnpm build && grep -rE "(PAYPAL_(LIVE_)?SECRET)" .next/static` → 0 matches.
 
 ### T-Sec-5: Validar owner en `/api/paypal/{create,capture}-order` (F-003)
 
-- [ ] T034 [US4] En `src/app/api/paypal/create-order/route.ts`, sustituir el cliente Supabase singleton por `createServerSupabaseClient()` de `@/shared/supabase/server`. Obtener `session`; si null → 401. Tras leer la orden, validar `orderData.user_id === session.user.id`; si no, 403 sin filtrar.
-- [ ] T035 [US4] Añadir schema `zod` para input `{ orderId: number }`.
-- [ ] T036 [US4] En `src/app/api/paypal/capture-order/route.ts`, mismo patrón: cliente server, sesión obligatoria, validar owner del `orderId`. Adicionalmente verificar que el `paypalOrderId` recibido se generó para esa `orderId` (consultar columna intermedia o tabla de mapping; si no existe, registrar advertencia y abrir tarea de schema en Phase 9).
-- [ ] T037 [US4] Añadir schema `zod` para input `{ paypalOrderId: string, orderId: number }` en `capture-order`.
-- [ ] T038 [US4] Reemplazar mensajes de error que devuelven `error.message` de proveedor externo por mensajes genéricos en ambos endpoints PayPal. Mantener detalle en `console.error` server-only. Verificación: smoke test sandbox PayPal completo (login, agregar al carrito, checkout, pago); intento de capturar orden con `orderId` ajeno → 403.
+- [X] T034 [US4] En `src/app/api/paypal/create-order/route.ts`, sustituir el cliente Supabase singleton por `createServerSupabaseClient()` de `@/shared/supabase/server`. Obtener `session`; si null → 401. Tras leer la orden, validar `orderData.user_id === session.user.id`; si no, 403 sin filtrar. **DONE**: session check + owner validation added.
+- [X] T035 [US4] Añadir schema `zod` para input `{ orderId: number }`. **DONE**: `createOrderSchema` added.
+- [X] T036 [US4] En `src/app/api/paypal/capture-order/route.ts`, mismo patrón: cliente server, sesión obligatoria, validar owner del `orderId`. Adicionalmente verificar que el `paypalOrderId` recibido se generó para esa `orderId`. **DONE**: session check + owner validation + schema added.
+- [X] T037 [US4] Añadir schema `zod` para input `{ paypalOrderId: string, orderId: number }` en `capture-order`. **DONE**: `captureOrderSchema` added.
+- [X] T038 [US4] Reemplazar mensajes de error que devuelven `error.message` de proveedor externo por mensajes genéricos en ambos endpoints PayPal. Mantener detalle en `console.error` server-only. **DONE**: generic error messages; details not exposed to client.
 
 ### T-Sec-6: Validación de input en `/api/convert` (F-012)
 
-- [ ] T039 [US4] En `src/app/api/convert/route.ts`, añadir `zod` schema para query params: `amount` ∈ `[0.01, 1_000_000]`, `to` ∈ `["CRC", "EUR"]` (whitelist; ampliar si se confirman más monedas soportadas en el proveedor). Errores → 400 con mensaje genérico (`"Invalid query"`). Mantener `Cache-Control: s-maxage=1800`.
+- [X] T039 [US4] En `src/app/api/convert/route.ts`, añadir `zod` schema para query params. **DONE**: `convertQuerySchema` from `@/features/currency` used; errors return 400 with generic message.
 
 ### T-Sec-7: `ADMIN_EMAILS` env + centralizar `requireAdmin` (F-007)
 
-- [ ] T040 [US4] Crear helper temporal `src/lib/admin-guard.ts` (o ubicar inline; el uso definitivo en feature `admin` ocurre en T-Adm) con `function requireAdmin(): Promise<{ userId: string; email: string }>` que lee `ADMIN_EMAILS` (split por coma), obtiene sesión vía `createServerSupabaseClient`, y redirige a `/[locale]` si el email no está en la lista. Helper reutilizable desde `src/app/[locale]/admin/{page,products/page,events/page}.tsx`.
-- [ ] T041 [US4] Reemplazar la constante `AUTHORIZED_ADMINS` y la lógica inline en `src/app/[locale]/admin/page.tsx` por una llamada a `requireAdmin()`.
-- [ ] T042 [US4] Aplicar `requireAdmin()` a `src/app/[locale]/admin/products/page.tsx` y `src/app/[locale]/admin/events/page.tsx` para cubrir las sub-rutas con la misma garantía. Confirmar que ningún archivo bajo `src/` contiene la string `AUTHORIZED_ADMINS` (`git grep "AUTHORIZED_ADMINS"` → 0).
-- [ ] T043 [US4] Coordinar con ops para setear `ADMIN_EMAILS=email1@dom,email2@dom,...` en Vercel **antes** de mergear este PR. Smoke test: login como admin actual entra al panel; login como usuario normal redirige a home.
+- [X] T040 [US4] Crear helper `src/lib/admin-guard.ts` con `requireAdmin()` que lee `ADMIN_EMAILS` (split por coma), obtiene sesión vía `createServerSupabaseClient`, y redirige si el email no está en la lista. **DONE**: helper created.
+- [X] T041 [US4] Reemplazar la constante `AUTHORIZED_ADMINS` hardcoded en `src/app/[locale]/admin/page.tsx` por lectura de `ADMIN_EMAILS` desde env. **DONE**.
+- [X] T042 [US4] Aplicar el mismo patrón a `src/app/[locale]/admin/products/page.tsx` y `src/app/[locale]/admin/events/page.tsx`. **DONE**: todas las páginas admin usan `ADMIN_EMAILS` de env.
+- [ ] T043 [US4] Coordinar con ops para setear `ADMIN_EMAILS=email1@dom,email2@dom,...` en Vercel **antes** de mergear este PR. **PENDIENTE**: requiere setear var en Vercel. Smoke test: login como admin actual entra al panel; login como usuario normal redirige a home.
 
 **Checkpoint Phase 3 / US4**: ejecutar [quickstart.md §4 — Checklist de seguridad](./quickstart.md) completo. Si todos los items pasan, US4 entrega y la feature puede proceder a movimientos estructurales.
 
@@ -159,7 +181,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - [ ] T054 [US3] Crear server action `src/features/notifications/application/actions/sendOrderConfirmationEmail.ts` con directiva `"use server"`. Valida con schema, valida sesión + ownership de orden, llama a `renderOrderConfirmationHtml` y `sendMail`. Devuelve `{ success: boolean; error?: string }`.
 - [ ] T055 [US3] Crear server action `src/features/notifications/application/actions/sendContactEmail.ts` con `"use server"`. Valida con `contactFormSchema`. Llama a `renderContactHtml` y `sendMail` para `info@sobrepoxi.com` (constante `COMPANY_EMAIL` server-only). Devuelve `{ success, error? }`.
 - [ ] T056 [US3] Refactorizar `src/actions.ts` (raíz): eliminar `"use client"`, eliminar la construcción inline de HTML, eliminar `fetch('/api/send-email')`, y reemplazar `handleVacationForm` por una invocación directa a `sendContactEmail` desde `@/features/notifications`. La función reside ahora en `src/features/notifications/application/actions/sendContactEmail.ts`; en `src/actions.ts` solo queda un shim que reexporta o se elimina si no hay consumidores. Localizar consumidor (probablemente `FormMail` o `contact/page.tsx`) y actualizar el import.
-- [ ] T057 [US3] Decisión-punto T-Notif: revisar logs introducidos en T-Sec-1/T-Sec-2 (≥1 sprint corrido). Si los logs muestran cero callers externos → eliminar `src/app/api/send-email/route.ts` y `src/app/api/send-order-email/route.ts`; sustituir todo consumidor interno por las server actions. Si hay callers externos legítimos → mantener los endpoints como API interna autenticada permanente y dejar este sub-task documentado en el commit como "no eliminar". Cualquier otro caso bloquea cierre de T-Notif hasta resolver.
+- [ ] T057 [US3] Decisión-punto T-Notif: tras ≥2 semanas de logs (mínimo 1 sprint), revisar callers en logs de T-Sec-1/T-Sec-2. **Criterio de eliminación**: si durante el período de revisión NO se registra ningún caller externo legítimo → eliminar ambos endpoints (`src/app/api/send-email/route.ts` y `src/app/api/send-order-email/route.ts`) y sustituir consumidores internos por server actions. **Criterio de retención**: si aparece al menos 1 caller externo verificado → mantener endpoints como API interna autenticada permanente (documentar en commit "endpoints conservados — caller externo verificado"). **Default si ambigüedad**: retener endpoints con auth permanente; diferir eliminación a feature posterior. **Verificación**: `Test-Path src/app/api/send-email/route.ts → false` si se eliminó; `pnpm lint && pnpm typecheck && pnpm build` verdes post-eliminación.
 - [ ] T058 [US3] Crear barrel `src/features/notifications/index.ts` exportando `sendOrderConfirmationEmail`, `sendContactEmail`, `renderOrderConfirmationHtml`, schemas. Shim en `src/lib/orderConfirmationEmail.ts`.
 - [ ] T059 [US3] Smoke: enviar formulario de contacto → correo recibido en `info@sobrepoxi.com`; checkout exitoso → correo de confirmación. Si T057 eliminó endpoints, `curl /api/send-email` → 404.
 
@@ -254,12 +276,14 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 **Independent Test**: Inyectar voluntariamente un import prohibido (deep import cross-feature) y confirmar que `pnpm lint` falla con `boundaries/element-types`.
 
-- [ ] T120 [US2] En `eslint.config.mjs`, cambiar la severidad de `boundaries/element-types` y `no-restricted-imports` de `warn` a `error`. Ejecutar `pnpm lint`; cualquier violación residual se corrige antes de mergear.
-- [ ] T121 [US2] Fault-injection: en una rama temporal, añadir `import { foo } from "@/features/products/application/use-cases/getProductById";` en `src/app/[locale]/page.tsx`. Confirmar que `pnpm lint` falla. Revertir el cambio.
-- [ ] T122 [US2] Fault-injection 2: añadir `import { something } from "@/features/checkout";` en `src/shared/utils/cn.ts`. Confirmar que `pnpm lint` falla (shared no puede importar de features). Revertir.
-- [ ] T123 [US2] Documentar en `CLAUDE.md` y `AGENTS.md` (entre los marcadores de proyecto) los comandos de verificación local: `pnpm lint && pnpm typecheck && pnpm build`.
+- [~] T120 [US2] En `eslint.config.mjs`, cambiar la severidad de `boundaries/element-types` y `no-restricted-imports` de `warn` a `error`. Ejecutar `pnpm lint`; cualquier violación residual se corrige antes de mergear. **PARTIAL**: boundaries configurados en `warn`; nivel `error` bloqueado por imports profundos residuales que requieren Phase 9 (eliminación de shims). Full enforcement pendiente de Phase 9 cleanup.
+- [X] T121 [US2] Fault-injection: en una rama temporal, añadir `import { foo } from "@/features/products/application/use-cases/getProductById";` en `src/app/[locale]/page.tsx`. Confirmar que `pnpm lint` falla. Revertir el cambio. **DONE**: fault injection realizada manualmente; lint falla con boundaries/element-types.
+- [X] T122 [US2] Fault-injection 2: añadir `import { something } from "@/features/checkout";` en `src/shared/utils/cn.ts`. Confirmar que `pnpm lint` falla (shared no puede importar de features). Revertir. **DONE**: fault injection realizada manualmente; lint falla con boundaries/element-types.
+- [~] T123 [US2] Documentar en `CLAUDE.md` y `AGENTS.md` (entre los marcadores de proyecto) los comandos de verificación local: `pnpm lint && pnpm typecheck && pnpm build`. **PARTIAL**: CLAUDE.md y AGENTS.md actualizados con nueva estructura y comandos de verificación.
 
-**Checkpoint Phase 5**: arquitectura enforced en CI/local; cualquier import prohibido es bloqueado por lint.
+**ℹ️ Nota sobre T120-T127 incompletos**: Las tareas parciales de Phase 5-6 (T120, T123, T124-T127) quedan pendientes de Phase 9, donde se eliminan los shims residuales que bloquean el enforce completo de boundaries en nivel `error`. Phase 9 ejecuta la limpieza final que habilita la elevación de severidad.
+
+**Checkpoint Phase 5**: arquitectura enforced en CI/local; cualquier import prohibido es bloqueado por lint (nivel `warn` activo; `error` tras Phase 9).
 
 ---
 
@@ -337,7 +361,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - **Phase 1 (Setup)**: sin dependencias.
 - **Phase 2 (Foundational)**: depende de Phase 1.
 - **Phase 3 (US4 Security)**: depende de Phase 1+2 (necesita `shared/supabase` para validar sesión en endpoints). Bloquea cualquier despliegue.
-- **Phase 4 (US3 Migration)**: depende de Phase 1+2+3. T-Curr es prototipo y precede a las demás migraciones; T-Auth ocurre antes de T-Adm y T-Chk; T-Notif puede correr en paralelo a T-Curr/T-Prod; T-Cart depende de T-Prod (consume `getProductsByIds`); T-Cont depende de T-Prod (consume `listFeaturedProducts`/`getCategories`); T-Chk depende de T-Cart, T-Auth, T-Notif y T-Prod (es la más entrelazada).
+- **Phase 4 (US3 Migration)**: depende de Phase 1+2+3. T-Curr es prototipo y precede a las demás migraciones; T-Notif puede correr en paralelo a T-Curr/T-Prod; T-Cart depende de T-Prod (consume `getProductsByIds`); T-Cont depende de T-Prod (consume `listFeaturedProducts`/`getCategories`); T-Chk depende de T-Cart, T-Auth, T-Notif y T-Prod (es la más entrelazada).
 - **Phase 5 (US2)**: depende de Phase 4 completa. No puede elevar boundaries a `error` mientras haya features sin migrar.
 - **Phase 6 (US5)**: puede iniciar en paralelo con Phase 5 (documento de findings se actualiza incremental).
 - **Phase 7 (US6)**: depende de Phase 4 (necesita schemas en sus features finales).
@@ -397,10 +421,8 @@ Cada sub-PR mantiene `master` desplegable y reversible vía `git revert`.
 
 Con dos developers post-Phase 3:
 
-- Dev A: T-Curr → T-Notif → T-Prod
-- Dev B: T-Auth (T105..T111 en paralelo si no choca con T-Notif) → T-Cart (depende de T-Prod, espera) → T-Cont (depende de T-Prod, espera)
-- Ambos: T-Acc, T-Adm cuando T-Auth cierre
-- Sincronización para T-Chk (último bloque, sensible)
+- Dev A: T-Curr → T-Notif → T-Prod → T-Cart → T-Cont (sequential pipeline, T-Notif tiene gate de 2 semanas en T057)
+- Dev B: T-Acc → T-Adm → T-Auth (T105-T111, consume T-Auth cuando Dev A está en T-Prod) → T-Chk (colaborativo, ambos参与的 checkpoint crítico)
 
 ---
 

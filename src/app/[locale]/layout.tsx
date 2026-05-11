@@ -2,14 +2,12 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { hasLocale } from "next-intl";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/shared/i18n/routing";
 import {
   buildMetadata
-} from "@/lib/seoConfig";
+} from "@/shared/seo/seoConfig";
 import Script from "next/script";
-import Navbar from "@/components/general/Navbar";
-import Footer from "@/components/general/Footer";
-import WhatsAppBubble from "@/components/general/WhatsAppBubble";
+import { Navbar, Footer, WhatsAppBubble } from "@/features/content";
 import SessionLayout from "@/components/SessionLayout";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";

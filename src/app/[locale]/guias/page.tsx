@@ -5,10 +5,10 @@
 
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seoConfig";
-import { getGuides, getGuideCategories } from "@/lib/guidesContent";
+import { buildMetadata } from "@/shared/seo/seoConfig";
+import { getGuides, getGuideCategories } from "@/features/content";
 import Script from "next/script";
-import { generateBreadcrumbSchema } from "@/lib/structuredData";
+import { generateBreadcrumbSchema } from "@/shared/seo/structuredData";
 import { BookOpen, ArrowRight, ChevronRight } from "lucide-react";
 import GuidesGrid from "./GuidesGrid";
 

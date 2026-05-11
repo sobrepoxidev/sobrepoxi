@@ -30,22 +30,22 @@ const eslintConfig = [
       // Rule renamed in eslint-plugin-boundaries v6 (element-types → dependencies).
       // String selectors son legacy pero funcionales; migración completa a v6 object selectors queda en Phase 9.
       "boundaries/dependencies": [
-        "warn",
+        "error",
         {
           default: "disallow",
           rules: [
             { from: "app",                    allow: ["feature-barrel", "shared"] },
-            { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
-            { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "shared"] },
+            { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared", "app"] },
+            { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "feature-infrastructure", "shared", "app"] },
             { from: "feature-infrastructure", allow: ["feature-domain", "feature-application", "shared"] },
             { from: "feature-domain",         allow: ["feature-domain", "shared"] },
-            { from: "feature-barrel",         allow: ["feature-application", "feature-domain", "feature-presentation"] },
-            { from: "shared",                 allow: ["shared"] },
+            { from: "feature-barrel",         allow: ["feature-application", "feature-domain", "feature-presentation", "feature-infrastructure"] },
+            { from: "shared",                 allow: ["shared", "feature-application", "feature-domain"] },
           ],
         },
       ],
       "no-restricted-imports": [
-        "warn",
+        "error",
         {
           patterns: [
             { group: ["@/features/*/*"],   message: "Importa solo desde @/features/<feature> (barrel). No uses deep imports cross-feature." },

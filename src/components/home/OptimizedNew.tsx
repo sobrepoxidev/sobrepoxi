@@ -2,9 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { ProductsProvider } from '@/components/providers/ProductsProvider';
-import OptimizedGridSection from '@/components/cards/OptimizedGridSection';
-import type { Database } from '@/types-db';
+import { ProductsProvider, OptimizedGridSection } from '@/features/products';
+import type { Database } from '@/shared/types/database';
 import { Link } from '@/i18n/navigation';
 import { useLocale } from 'next-intl';
 import {

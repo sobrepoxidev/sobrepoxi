@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useCart } from '@/context/CartContext';
+import { useCart } from '@/features/cart';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { ShoppingCartIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
 

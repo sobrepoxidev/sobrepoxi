@@ -2,17 +2,17 @@
 // Server component – renders the vCard form
 
 import type { Metadata } from "next";
-import { buildTitle, getCommonMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 import FormVCard from "./FormVCard";
 
 export const dynamic = "force-dynamic"; // Always fresh – ensures form SSR
 
-export const metadata: Metadata = getCommonMetadata("es", {
-  // The helper already merges locale; /vcard is language-agnostic for now
-  title: buildTitle("Crear vCard"),
+export const metadata: Metadata = buildMetadata({
+  locale: "es",
+  pathname: "/vcard",
+  title: "Crear vCard",
   description:
     "Completa el formulario para enviarnos tu información de contacto y generar tu tarjeta vCard.",
-  alternates: { canonical: "/vcard" },
 });
 
 export default function VCardPage() {

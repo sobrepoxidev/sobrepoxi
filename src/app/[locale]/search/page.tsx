@@ -1,7 +1,7 @@
-import SearchResultsPage from "@/components/search/SearchResultsPage";
+import { SearchResultsPage } from "@/features/products";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { buildMetadata } from "@/lib/seoConfig";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 
 type tParams = Promise<{ locale: string, q: string }>;
 

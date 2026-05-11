@@ -1,5 +1,5 @@
 
-import PayPalCardMethod from "./PayPalCardMethod";
+import { PayPalCardMethod } from '@/features/checkout';
 import toast from "react-hot-toast";
 
 type PaymentMethod = "sinpe" | "paypal" | "transfer" | "card";

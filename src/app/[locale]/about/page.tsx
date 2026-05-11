@@ -12,7 +12,7 @@ import Link                      from "next/link";
 import Image                     from "next/image";
 import Script                    from "next/script";
 import type { Metadata }         from "next";
-import { buildMetadata } from "@/lib/seoConfig";
+import { buildMetadata } from "@/shared/seo/seoConfig";
 
 type ParamsPromise = Promise<{ locale: "es" | "en" }>;
 

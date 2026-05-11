@@ -1,2 +1,1 @@
-// TODO(speckit): shim temporal — eliminar al cierre del feature
-export { default } from "@/shared/ui/locale-switcher/LocaleSwitcher";
+export { LocaleSwitcher as default } from '@/features/content';

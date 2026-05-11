@@ -4,7 +4,7 @@ import { useSupabase } from '@/app/supabase-provider/provider';
 import { Session } from '@supabase/supabase-js';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
-import { formatUSD } from "@/lib/formatCurrency";
+import { formatUSD } from "@/shared/utils/formatCurrency";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 type DiscountInfo = {

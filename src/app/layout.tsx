@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { CartProvider } from "@/context/CartContext";
+import { CartProvider } from "@/features/cart";
 import { Suspense } from "react";
 
 /* ————— METADATA GLOBAL ————— */

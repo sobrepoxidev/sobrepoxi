@@ -1,35 +1,50 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { createRouteHandlerClient }
-  from "@supabase/auth-helpers-nextjs";        // 👈 helper correcto
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get("code");
-  let next = searchParams.get("next") ?? "/";
-  // Si viene codificado, decodificarlo para mantener correctamente los parámetros de consulta
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
+  let next = searchParams.get('next') ?? '/'
+
   try {
-    next = decodeURIComponent(next);
+    next = decodeURIComponent(next)
   } catch {
-    // si falla la decodificación, usar valor original
+    // use original value
   }
 
-  // 1.  Si no hay code ► a /login
   if (!code) {
-    return NextResponse.redirect(`${origin}/login?error=code_missing`);
+    return NextResponse.redirect(`${origin}/login?error=code_missing`)
   }
 
-  // 2.  Crear cliente ligado a las cookies de la respuesta
-  const supabase = createRouteHandlerClient({ cookies });
+  const cookieStore = await cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
+          } catch {
+            // Ignore errors from Server Components
+          }
+        },
+      },
+    }
+  )
 
-  // 3.  Intercambiar el code y ESCRIBIR cookies HttpOnly
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { error } = await supabase.auth.exchangeCodeForSession(code)
+
   if (error) {
-    console.error("OAuth error:", error.message);
-    return NextResponse.redirect(`${origin}/login?error=oauth`);
+    console.error('OAuth error:', error.message)
+    return NextResponse.redirect(`${origin}/login?error=oauth`)
   }
 
-  // 4.  Redirigir al destino final
-  return NextResponse.redirect(`${origin}${next}`);
+  return NextResponse.redirect(`${origin}${next}`)
 }
-

@@ -8,8 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seoConfig";
-import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/structuredData";
+import { buildMetadata } from "@/shared/seo/seoConfig";
+import { generateFAQSchema, generateBreadcrumbSchema } from "@/shared/seo/structuredData";
 import { ChevronRight, ArrowRight, Star, Shield, Paintbrush, Sparkles, CheckCircle2, Phone } from "lucide-react";
 
 export type tParams = Promise<{ id: string; locale: "es" | "en" }>;

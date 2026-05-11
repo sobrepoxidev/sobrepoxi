@@ -1,21 +1,22 @@
 import { redirect } from 'next/navigation';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/shared/supabase/server';
 import Link from 'next/link';
 import { Package, Calendar, ArrowRight } from 'lucide-react';
 
-// Lista de correos electrónicos de administradores autorizados
-const AUTHORIZED_ADMINS = ['sobrepoxidev@gmail.com', 'bryamlopez4@gmail.com'];
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
+  .split(',')
+  .map(e => e.trim())
+  .filter(Boolean);
 
-const AdminCard = ({ 
-  title, 
-  href, 
-  description, 
+const AdminCard = ({
+  title,
+  href,
+  description,
   icon: Icon,
   locale
-}: { 
-  title: string; 
-  href: string; 
+}: {
+  title: string;
+  href: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
   locale: string;
@@ -45,33 +46,33 @@ export default async function AdminPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const supabase = createServerComponentClient({ cookies });
-  
+  const supabase = await createServerSupabaseClient();
+
   const { data: { session } } = await supabase.auth.getSession();
-  
+
   if (!session) {
     const returnUrl = encodeURIComponent(`/${locale}/admin`);
     redirect(`/${locale}/login?returnUrl=${returnUrl}`);
   }
-  
+
   const userEmail = session.user?.email;
-  
-  if (!userEmail || !AUTHORIZED_ADMINS.includes(userEmail)) {
+
+  if (!userEmail || !ADMIN_EMAILS.includes(userEmail)) {
     redirect(`/${locale}`);
   }
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">{locale === 'es' ? 'Panel de Administración' : 'Admin Panel'}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <AdminCard 
+        <AdminCard
           href={`/${locale}/admin/products`}
           title={locale === 'es' ? 'Productos' : 'Products'}
           description={locale === 'es' ? 'Administra los productos de la tienda, incluyendo su información, precios y disponibilidad.' : 'Manage the products in the store, including their information, prices, and availability.'}
           icon={Package}
           locale={locale}
         />
-        <AdminCard 
+        <AdminCard
           href={`/${locale}/admin/events`}
           title={locale === 'es' ? 'Eventos' : 'Events'}
           description={locale === 'es' ? 'Gestiona los eventos y actividades programadas.' : 'Manage the events and activities scheduled.'}
@@ -81,5 +82,4 @@ export default async function AdminPage({
       </div>
     </div>
   );
-
 }

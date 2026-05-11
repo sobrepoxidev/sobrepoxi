@@ -1,26 +1,19 @@
 // app/api/paypal/paypalHelpers.ts
 
-/**
- * Determines if the application is running in production mode
- * This can be customized based on your deployment environment variables
- */
 const isProduction = (): boolean => {
   return process.env.NODE_ENV === 'production';
 };
 
-/**
- * Gets the appropriate PayPal API URL based on environment
- */
+const shouldUseMock = (): boolean => {
+  return process.env.PAYPAL_USE_MOCK === '1';
+};
+
 const getPayPalApiUrl = (): string => {
   return isProduction()
     ? 'https://api-m.paypal.com'
     : 'https://api-m.sandbox.paypal.com';
 };
 
-/**
- * For testing purposes - creates a mock PayPal order response
- * Only used when credentials are missing in development
- */
 const createMockPayPalOrder = (amount: number) => {
   return {
     id: `MOCK_ORDER_${Date.now()}`,
@@ -43,25 +36,20 @@ const createMockPayPalOrder = (amount: number) => {
   };
 };
 
-/**
- * Gets an access token from PayPal API for authentication
- */
 export async function getPaypalAccessToken(): Promise<string> {
-  // Use different credentials based on environment
   const CLIENT_ID = isProduction()
-    ? process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID
-    : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+    ? process.env.PAYPAL_LIVE_CLIENT_ID
+    : process.env.PAYPAL_CLIENT_ID;
 
   const CLIENT_SECRET = isProduction()
     ? process.env.PAYPAL_LIVE_SECRET
     : process.env.PAYPAL_SECRET;
 
-  // For development, if credentials are missing, use a mock token
+  if (shouldUseMock()) {
+    return 'PAYPAL_MOCK_TOKEN';
+  }
+
   if (!CLIENT_ID || !CLIENT_SECRET) {
-    if (!isProduction()) {
-      console.warn('PayPal credentials missing. Using mock token for development.');
-      return 'MOCK_ACCESS_TOKEN_FOR_DEVELOPMENT';
-    }
     throw new Error(`PayPal credentials not found for ${isProduction() ? 'production' : 'sandbox'} environment`);
   }
 
@@ -84,21 +72,13 @@ export async function getPaypalAccessToken(): Promise<string> {
     }
 
     const data = await res.json();
-    console.log(`Successfully got PayPal access token in ${isProduction() ? 'production' : 'sandbox'} mode`);
     return data.access_token;
   } catch (error) {
     console.error('Error getting PayPal access token:', error);
-    if (!isProduction()) {
-      console.warn('Using mock token for development due to error.');
-      return 'MOCK_ACCESS_TOKEN_FOR_DEVELOPMENT';
-    }
     throw error;
   }
 }
 
-/**
- * Creates a PayPal order with the specified amount and currency
- */
 export async function createPaypalOrder({
   accessToken,
   amount,
@@ -108,9 +88,7 @@ export async function createPaypalOrder({
   amount: number;
   currency: string;
 }) {
-  // For development with mock token
-  if (accessToken === 'MOCK_ACCESS_TOKEN_FOR_DEVELOPMENT' && !isProduction()) {
-    console.log('Using mock PayPal order for development');
+  if (shouldUseMock() || accessToken === 'PAYPAL_MOCK_TOKEN') {
     return createMockPayPalOrder(amount);
   }
 
@@ -126,7 +104,6 @@ export async function createPaypalOrder({
   });
 
   try {
-
     const res = await fetch(`${API_URL}/v2/checkout/orders`, {
       method: "POST",
       headers: {
@@ -138,32 +115,17 @@ export async function createPaypalOrder({
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`PayPal create order error in ${isProduction() ? 'production' : 'sandbox'} mode:`, errorText);
-
-      // In development, fall back to mock order on error
-      if (!isProduction()) {
-        console.warn('Falling back to mock order due to API error');
-        return createMockPayPalOrder(amount);
-      }
-      return null;
+      console.error(`PayPal create order error:`, errorText);
+      throw new Error(`PayPal create order failed: ${res.status}`);
     }
 
-    return res.json(); // { id: "PAYPAL_ORDER_ID", etc. }
+    return res.json();
   } catch (error) {
     console.error('Error creating PayPal order:', error);
-
-    // In development, fall back to mock order on error
-    if (!isProduction()) {
-      console.warn('Falling back to mock order due to exception');
-      return createMockPayPalOrder(amount);
-    }
-    return null;
+    throw error;
   }
 }
 
-/**
- * Captures a previously created PayPal order
- */
 export async function capturePaypalOrder({
   accessToken,
   paypalOrderId
@@ -171,9 +133,7 @@ export async function capturePaypalOrder({
   accessToken: string;
   paypalOrderId: string;
 }) {
-  // For development with mock token
-  if ((accessToken === 'MOCK_ACCESS_TOKEN_FOR_DEVELOPMENT' || paypalOrderId.startsWith('MOCK_ORDER_')) && !isProduction()) {
-    console.log('Using mock PayPal capture for development');
+  if (shouldUseMock() || accessToken === 'PAYPAL_MOCK_TOKEN' || paypalOrderId.startsWith('MOCK_ORDER_')) {
     return {
       id: paypalOrderId,
       status: 'COMPLETED',
@@ -206,55 +166,13 @@ export async function capturePaypalOrder({
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`PayPal capture order error in ${isProduction() ? 'production' : 'sandbox'} mode:`, errorText);
-
-      // In development, return mock capture on error
-      if (!isProduction()) {
-        console.warn('Falling back to mock capture due to API error');
-        return {
-          id: paypalOrderId,
-          status: 'COMPLETED',
-          purchase_units: [
-            {
-              payments: {
-                captures: [
-                  {
-                    id: `MOCK_CAPTURE_${Date.now()}`,
-                    status: 'COMPLETED'
-                  }
-                ]
-              }
-            }
-          ]
-        };
-      }
-      throw new Error("Capture request failed");
+      console.error(`PayPal capture order error:`, errorText);
+      throw new Error(`PayPal capture order failed: ${res.status}`);
     }
 
-    return res.json(); // { status: "COMPLETED", etc. }
+    return res.json();
   } catch (error) {
     console.error('Error capturing PayPal order:', error);
-
-    // In development, return mock capture on error
-    if (!isProduction()) {
-      console.warn('Falling back to mock capture due to exception');
-      return {
-        id: paypalOrderId,
-        status: 'COMPLETED',
-        purchase_units: [
-          {
-            payments: {
-              captures: [
-                {
-                  id: `MOCK_CAPTURE_${Date.now()}`,
-                  status: 'COMPLETED'
-                }
-              ]
-            }
-          }
-        ]
-      };
-    }
     throw error;
   }
 }
