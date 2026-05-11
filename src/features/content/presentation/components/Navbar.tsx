@@ -109,7 +109,7 @@ export default async function Navbar({ locale }: { locale: string }) {
           locale={locale}
           className="w-full px-2"
         />
-        <CategoryCarousel locale={locale} className="mt-1" />
+        <CategoryCarousel locale={locale} className="mt-1" categories={[]} />
       </div>
     </header>
   );
