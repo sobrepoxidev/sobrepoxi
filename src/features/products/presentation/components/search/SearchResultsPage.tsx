@@ -52,7 +52,8 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
     }
 
     fetchCategories();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryParam, isCategoryFilter, locale]);
 
   // Función para actualizar los parámetros de búsqueda y navegar
   const updateSearchParams = useCallback((updates: Record<string, string | null>) => {
@@ -164,7 +165,8 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
     }
 
     fetchResults();
-  }, [query, category, sortBy, currentPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, categoryParam, isCategoryFilter, sortBy, currentPage, locale]);
 
   // Actualizar el estado local cuando cambian los parámetros de URL
   useEffect(() => {

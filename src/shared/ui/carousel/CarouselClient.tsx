@@ -37,6 +37,8 @@ export default function CarouselClient({ children }: CarouselClientProps) {
   useEffect(() => (run(), () => clearInterval(intervalRef.current!)), [
     paused,
     count,
+    run,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   ]);
 
   /* ───────────── Swipe handlers ───────────── */

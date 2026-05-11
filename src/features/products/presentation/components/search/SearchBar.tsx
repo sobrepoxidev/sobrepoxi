@@ -99,7 +99,8 @@ export default function SearchBar({
 
     // Siempre realizar búsqueda cuando cambia la consulta
     performSearch();
-  }, [debouncedQuery, selectedCategory]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuery, selectedCategory, locale]);
 
   // Handle click outside to close suggestions
   useEffect(() => {

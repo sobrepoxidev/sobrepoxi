@@ -75,24 +75,25 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
     carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   };
   
-  // Manejador para el evento de scroll
+// Manejador para el evento de scroll
   const handleScroll = () => {
     updateScrollInfo();
   };
-  
+
   // Configuramos el observador de scroll al montar el componente
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
       carousel.addEventListener('scroll', handleScroll);
       // Inicializamos la información de scroll
       updateScrollInfo();
-      
+
       return () => {
         carousel.removeEventListener('scroll', handleScroll);
       };
     }
-  }, []);
+  }, [handleScroll]);
   
   // Actualizamos la información de scroll cuando cambian los productos
   useEffect(() => {
