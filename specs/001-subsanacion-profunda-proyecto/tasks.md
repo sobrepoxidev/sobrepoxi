@@ -42,6 +42,457 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 Phase 4 puede avanzar en local sin las vars; bloquea solo el merge a producción. **Sin embargo**, mientras el render loop esté abierto, ninguna verificación del Principio VII de la constitución pasa, así que el feature en su conjunto está bloqueado para merge.
 
+> **Actualización 2026-05-11 post-fix**: El render loop fue diagnosticado y cerrado. Causa raíz: **tres wrappers (`useCart`, `CheckoutProvider`, `ProductsProvider`) se importaban a sí mismos vía el barrel de su propia feature, produciendo recursión infinita en runtime**. Plus: clientes Supabase recreados en cada render dentro de hooks y componentes (singleton legacy + ausencia de lazy init). Ambos patrones están ahora prohibidos explícitamente en la sección **Anti-Patterns Catalog** abajo. Cualquier modelo o agente que continúe con Phase 4-9 DEBE leer ese catálogo + los **Canonical Patterns** + ejecutar el **Pre-Flight Checklist** ANTES de marcar `[X]` cualquier tarea de movimiento.
+
+---
+
+## Anti-Patterns Catalog — DO NOT REPRODUCE
+
+Cada uno de estos patrones produjo un bug real durante la ejecución de Phase 4 por un agente previo (Minimax M2.7) y costó un rework de emergencia. Están prohibidos por la constitución (`.specify/memory/constitution.md`). **Si tu cambio introduce cualquiera de estos, la tarea NO se cierra y el PR se rechaza.** Las verificaciones son mecánicas y reproducibles — córrelas antes de marcar `[X]`.
+
+### AP-1: Self-importing wrapper via own barrel → stack overflow
+
+**Síntoma en runtime**: `RangeError: Maximum call stack size exceeded` al primer render que invoca el hook/provider. En Chrome puede aparecer como `Out of Memory` porque V8 preasigna heap antes del overflow.
+
+**Patrón roto** (real, encontrado en 3 archivos antes del fix):
+
+```ts
+// src/features/cart/application/hooks/useCart.ts  ❌ ROTO
+import { useCart as useCartContext } from '@/features/cart';
+// El barrel reexporta useCart DESDE ESTE MISMO ARCHIVO → recursión infinita.
+export function useCart(): UseCartReturn {
+  return useCartContext();   // se llama a sí misma
+}
+```
+
+**Patrón correcto**:
+
+```ts
+// src/features/cart/presentation/state/CartContext.tsx  ✅
+import { createContext, useContext } from 'react';
+const CartContext = createContext<UseCartReturn | null>(null);
+export function useCart(): UseCartReturn {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  return ctx;
+}
+export { CartContext };
+```
+
+Y el barrel reexporta directamente:
+
+```ts
+// src/features/cart/index.ts  ✅
+export { CartContext, useCart } from './presentation/state/CartContext';
+```
+
+**Regla absoluta**: **un archivo dentro de `src/features/<f>/**` JAMÁS importa desde `@/features/<f>`** (su propio barrel). Usa paths relativos (`./`, `../`) para todo lo intra-feature. El barrel solo lo consumen archivos FUERA de la feature.
+
+**Detección mecánica** (debe retornar 0 matches después de tu tarea):
+
+```bash
+# PowerShell
+$feat = "cart"   # repetir por feature
+Select-String -Path "src/features/$feat/**/*.ts","src/features/$feat/**/*.tsx" `
+  -Pattern "from\s+[`"']@/features/$feat[`"']" -Exclude "index.ts"
+
+# Bash / Git Bash
+grep -rn --include='*.ts' --include='*.tsx' \
+  "from ['\"]@/features/cart['\"]" src/features/cart \
+  | grep -v 'src/features/cart/index.ts'
+```
+
+**Histórico**: encontrado en `useCart.ts`, `CheckoutProvider.tsx`, `ProductsProvider.tsx`, `ProductsContext.tsx`, `CartProvider.tsx`. Todos fixed en el commit que cierra Phase 4-V.
+
+---
+
+### AP-2: Cliente Supabase recreado en cada render → invalida deps de useEffect / loop de fetch
+
+**Síntoma**: re-suscripciones constantes a `onAuthStateChange`, refetch infinito de queries, o `useEffect` que nunca alcanza estado estable. Lint puede no detectarlo si el cliente está en deps "correctamente".
+
+**Patrón roto**:
+
+```tsx
+// ❌ ROTO — supabase es un objeto nuevo cada render
+export function AuthProvider({ children }) {
+  const supabase = createBrowserSupabaseClient();   // nueva instancia por render
+  useEffect(() => { /* ... */ }, [supabase]);        // dep cambia siempre → loop
+  return <Provider value={{ supabase }}>{children}</Provider>;
+}
+```
+
+**Patrón correcto** (canon — ver `src/features/auth/presentation/providers/AuthProvider.tsx`):
+
+```tsx
+// ✅
+import { useState, useEffect } from 'react';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  // Lazy init: una sola instancia por vida del provider.
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
+  useEffect(() => { /* ... */ }, [supabase]);   // dep ahora es estable
+  // ...
+}
+```
+
+Si no necesitas el cliente como valor reactivo, también vale crearlo dentro de la función async donde se usa:
+
+```ts
+// ✅ alternativa para use cases / event handlers
+const handleClick = async () => {
+  const supabase = createBrowserSupabaseClient();
+  await supabase.from('products').select('*');
+};
+```
+
+**Detección mecánica** (sospechosos a revisar):
+
+```bash
+# Cliente declarado en cuerpo de componente o hook sin useState/useMemo/useRef
+grep -rn --include='*.tsx' --include='*.ts' \
+  "const supabase = createBrowserSupabaseClient" src/features src/app \
+  | grep -v 'useState(() =>' | grep -v 'useMemo(' | grep -v 'useRef('
+```
+
+Cada match es candidato a refactor. Si está dentro de un `async function` interno o de un event handler, es aceptable. Si está en el top-level del componente/hook, debe envolverse en `useState(() => ...)`.
+
+**Histórico**: 13 archivos migrados del singleton legacy + `RelatedProducts.tsx` con loop activo. Todos fixed.
+
+---
+
+### AP-3: Importar singleton legacy `@/lib/supabaseClient`
+
+**Patrón roto**:
+
+```ts
+// ❌ ROTO en código de producción (singleton anon sin cookies, no respeta sesión)
+import { supabase } from '@/lib/supabaseClient';
+```
+
+**Patrón correcto** (decidir según contexto):
+
+```ts
+// ✅ Server (route handlers, server components, server actions)
+import { createServerSupabaseClient } from '@/shared/supabase/server';
+const supabase = await createServerSupabaseClient();
+
+// ✅ Client (componentes 'use client', hooks)
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+const [supabase] = useState(() => createBrowserSupabaseClient());
+
+// ✅ Middleware
+import { createMiddlewareSupabaseClient } from '@/shared/supabase/middleware';
+```
+
+**Detección mecánica** (debe retornar 0):
+
+```bash
+grep -rn --include='*.ts' --include='*.tsx' \
+  "from ['\"]@/lib/supabaseClient['\"]" src/features src/app src/shared
+```
+
+Nota: el archivo `src/lib/supabaseClient.ts` aún existe como shim hasta Phase 9 (T138). Código NUEVO no debe importarlo. Si encuentras un import, migrar a la variante de `@/shared/supabase/*` apropiada al contexto.
+
+---
+
+### AP-4: Silent catch (errores tragados sin log ni justificación)
+
+**Síntoma**: bugs que no fallan en lint/typecheck/build pero producen estados inconsistentes en runtime (orden marcada paga sin pagar, carrito vacío que debió cargar, etc.). Constitución VI lo prohíbe.
+
+**Patrón roto**:
+
+```ts
+// ❌ ROTO
+try {
+  const result = await riskyOp();
+  return result;
+} catch (e) {
+  return null;    // se traga el error sin contexto
+}
+```
+
+**Patrón correcto** (elegir uno):
+
+```ts
+// ✅ Loguear + propagar (preferido en server)
+try { return await riskyOp(); }
+catch (e) { console.error('[contexto] riskyOp failed:', e); throw e; }
+
+// ✅ Loguear + traducir a estado explícito
+try { return await riskyOp(); }
+catch (e) { console.error('[contexto] riskyOp failed:', e); return { ok: false }; }
+
+// ✅ Silencio justificado por escrito
+try { return JSON.parse(maybeJson); }
+catch { /* intentional swallow: optional JSON, fallback is empty */ return null; }
+```
+
+**Detección mecánica** (sospechosos):
+
+```bash
+# Catches sin console.error / logger / throw / comentario "intentional"
+grep -rn -B1 -A3 --include='*.ts' --include='*.tsx' \
+  "catch\s*(.*)\s*{" src/features src/app \
+  | grep -B3 -A1 "return null\|return false\|return undefined"
+```
+
+Cada match: validar manualmente. Si no hay log ni razón escrita, aplicar fix.
+
+---
+
+### AP-5: Deep import intra-feature (atajando tu propio barrel sin necesidad)
+
+**Patrón roto** (real, encontrado en 17 archivos):
+
+```ts
+// src/features/checkout/presentation/components/StepOne.tsx  ❌
+import { useCheckoutForm } from '@/features/checkout/application/hooks/useCheckoutForm';
+//                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//                          el barrel ya es @/features/checkout — no atajes profundo
+```
+
+**Patrón correcto**:
+
+```ts
+// ✅ relativo (intra-feature) — eslint-plugin-boundaries y no-restricted-imports lo exigen
+import { useCheckoutForm } from '../../application/hooks/useCheckoutForm';
+```
+
+**Regla**: imports dentro de la misma feature SIEMPRE son relativos. Imports cross-feature SIEMPRE pasan por el barrel `@/features/<otra-feature>` (sin segmentos extra).
+
+**Detección mecánica**:
+
+```bash
+# Archivos dentro de features/<f> que importan @/features/<f>/algo
+for f in cart checkout products auth account admin notifications content currency; do
+  grep -rn --include='*.ts' --include='*.tsx' \
+    "from ['\"]@/features/$f/" "src/features/$f" \
+    | grep -v "src/features/$f/index.ts"
+done
+```
+
+Resultado esperado: vacío.
+
+---
+
+### AP-6: BIG component (>300 LOC + multi-responsabilidad)
+
+**Síntoma**: archivo con `useEffect` + `useEffect` + fetch + form state + URL sync + render — todo en uno. Difícil de razonar, fuente típica de bugs de runtime que sobreviven al lint.
+
+Reglas duras de la constitución (Principio III):
+
+- ≤ 300 LOC (excluyendo imports y JSX puro).
+- 1 sola responsabilidad detectable.
+- ≤ 2 `useEffect` por componente, deps claras y memoizadas.
+- No mezclar capas: presentación no consulta Supabase directo; use case no importa primitives UI.
+
+**Detección mecánica** (lista archivos a revisar):
+
+```bash
+# Archivos de presentation con >300 líneas
+find src/features -path "*/presentation/*" \( -name "*.tsx" -o -name "*.ts" \) \
+  -exec wc -l {} \; | awk '$1 > 300' | sort -nr
+
+# Componentes con 3+ useEffect
+grep -rcE "useEffect\s*\(" --include='*.tsx' src/features \
+  | awk -F: '$2 >= 3'
+```
+
+Cada match: descomponer en subcomponentes + custom hooks antes de cerrar la tarea. Las excepciones (templates HTML estáticos, data seed) deben llevar comentario explicando por qué.
+
+---
+
+## Canonical Patterns — Copia exacta cuando construyas Provider+Context+Hook o Use Cases
+
+Los siguientes bloques son referencias ejecutables. Si tu tarea pide crear un Provider de feature, un Context, un hook que consume Context, o un use case server/client, **copia este shape y adapta los nombres**. Desviaciones requieren justificación en el PR.
+
+### CP-1: Feature Provider + Context + Hook (cliente)
+
+Archivos involucrados (un solo flujo):
+
+```
+src/features/<feat>/
+├── presentation/
+│   ├── state/
+│   │   └── <Feat>Context.tsx       # define context + useFeat
+│   └── providers/
+│       └── <Feat>Provider.tsx      # provee state, importa Context relativo
+└── index.ts                        # barrel reexporta <Feat>Provider y useFeat
+```
+
+```tsx
+// src/features/<feat>/presentation/state/<Feat>Context.tsx
+'use client';
+import { createContext, useContext } from 'react';
+
+export interface <Feat>ContextValue {
+  // shape público del context
+}
+
+export const <Feat>Context = createContext<<Feat>ContextValue | null>(null);
+
+export function use<Feat>(): <Feat>ContextValue {
+  const ctx = useContext(<Feat>Context);
+  if (!ctx) throw new Error('use<Feat> must be used within <Feat>Provider');
+  return ctx;
+}
+```
+
+```tsx
+// src/features/<feat>/presentation/providers/<Feat>Provider.tsx
+'use client';
+import React, { useState } from 'react';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { <Feat>Context, type <Feat>ContextValue } from '../state/<Feat>Context';
+
+export function <Feat>Provider({ children }: { children: React.ReactNode }) {
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
+  // ...resto de state local
+  const value: <Feat>ContextValue = { /* ... */ };
+  return <<Feat>Context.Provider value={value}>{children}</<Feat>Context.Provider>;
+}
+```
+
+```ts
+// src/features/<feat>/index.ts
+export { <Feat>Provider } from './presentation/providers/<Feat>Provider';
+export { <Feat>Context, use<Feat> } from './presentation/state/<Feat>Context';
+export type { <Feat>ContextValue } from './presentation/state/<Feat>Context';
+```
+
+**Verificación obligatoria**:
+
+- El Provider importa el Context **vía path relativo** (`../state/<Feat>Context`), nunca vía `@/features/<feat>`.
+- El hook `use<Feat>` vive en `state/<Feat>Context.tsx`, NUNCA en `application/hooks/use<Feat>.ts` reexportando el barrel.
+
+### CP-2: Use case server (route handler / server action / server component)
+
+```ts
+// src/features/<feat>/application/use-cases/getX.ts
+import { createServerSupabaseClient } from '@/shared/supabase/server';
+import { <feat>InputSchema } from '../schemas';
+
+export async function getX(input: unknown) {
+  const parsed = <feat>InputSchema.safeParse(input);
+  if (!parsed.success) return { ok: false as const, error: 'invalid_input' };
+
+  const supabase = await createServerSupabaseClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return { ok: false as const, error: 'unauthorized' };
+
+  try {
+    const { data, error } = await supabase.from('table').select('*').eq('user_id', session.user.id);
+    if (error) {
+      console.error('[<feat>.getX] supabase error:', error);
+      return { ok: false as const, error: 'fetch_failed' };
+    }
+    return { ok: true as const, data };
+  } catch (e) {
+    console.error('[<feat>.getX] unexpected:', e);
+    return { ok: false as const, error: 'internal' };
+  }
+}
+```
+
+Aplicable a server actions (con `"use server"` al inicio) y a route handlers (que delegan a este use case).
+
+### CP-3: Adelgazar route handler
+
+```ts
+// src/app/api/<route>/route.ts
+import { NextResponse } from 'next/server';
+import { getX } from '@/features/<feat>';
+
+export async function POST(req: Request) {
+  const body = await req.json().catch(() => null);
+  const result = await getX(body);
+  if (!result.ok) {
+    const status = result.error === 'unauthorized' ? 401
+                 : result.error === 'invalid_input' ? 400
+                 : 500;
+    return NextResponse.json({ error: result.error }, { status });
+  }
+  return NextResponse.json({ data: result.data });
+}
+```
+
+Cero lógica de proveedor externo, cero queries a BD, cero detalles de error filtrados al cliente.
+
+---
+
+## Pre-Flight Checklist Before Marking [X]
+
+Antes de marcar una tarea de Phase 4 (T044..T119) como `[X]`, ejecuta TODOS estos pasos y pega su salida en el PR description (o como comentario en el commit). **Si cualquiera falla, la tarea sigue `[ ]`**.
+
+### Step 1 — Build/lint/typecheck local
+
+```bash
+pnpm typecheck
+pnpm lint
+pnpm build
+```
+
+Los tres deben terminar con exit 0. Warnings preexistentes de `react-hooks/exhaustive-deps` son aceptables si no introduces nuevos. **Cero errores de `boundaries/dependencies` y `no-restricted-imports` permitidos.**
+
+### Step 2 — Verificación mecánica de anti-patterns por feature tocada
+
+Sustituye `<feat>` por la feature que tocaste (ej. `cart`, `checkout`). Las cuatro deben retornar 0 matches:
+
+```bash
+# AP-1: self-import de la propia feature vía su barrel
+grep -rn --include='*.ts' --include='*.tsx' \
+  "from ['\"]@/features/<feat>['\"]" "src/features/<feat>" \
+  | grep -v "src/features/<feat>/index.ts"
+
+# AP-3: singleton legacy
+grep -rn --include='*.ts' --include='*.tsx' \
+  "from ['\"]@/lib/supabaseClient['\"]" src/features src/app src/shared
+
+# AP-5: deep import intra-feature
+grep -rn --include='*.ts' --include='*.tsx' \
+  "from ['\"]@/features/<feat>/" "src/features/<feat>" \
+  | grep -v "src/features/<feat>/index.ts"
+
+# Wrappers redundantes (Provider que solo retorna <X>{children}</X>):
+# revisión manual del diff de los providers tocados — si es delegación trivial,
+# eliminarlo y exportar directo desde state/context.
+```
+
+### Step 3 — Verificación de cliente Supabase estable
+
+Para cada archivo `.tsx` con `"use client"` que tocaste y que usa `createBrowserSupabaseClient`, confirma que:
+
+- (a) está dentro de `useState(() => createBrowserSupabaseClient())`, o
+- (b) está dentro de una función async invocada por evento/efecto.
+
+Si la creación es directa en el cuerpo (`const supabase = createBrowserSupabaseClient()` en el top-level del componente), volver a CP-1 y aplicar lazy init.
+
+### Step 4 — Vercel preview gate (constitución VII)
+
+Push de la sub-rama del PR. Espera a que Vercel termine el preview deployment. Abre las 6 rutas críticas en el browser con DevTools console abierta:
+
+- `/` (debería redirigir a `/es` o `/en`)
+- `/[locale]/products`
+- `/[locale]/cart`
+- `/[locale]/checkout`
+- `/[locale]/account`
+- `/[locale]/admin`
+
+**Cero errores en la consola** en cada una. Cualquier `RangeError`, `TypeError: Cannot read properties of undefined`, `Hydration failed`, o `Maximum call stack size exceeded` invalida la tarea inmediatamente. Captura screenshot de consola limpia y adjúntalo al PR.
+
+### Step 5 — Smoke manual del feature
+
+Ejecuta el smoke documentado en [quickstart.md §3](./quickstart.md) para la feature tocada. Si el smoke aún no existe para esa feature, escribirlo es parte de la tarea.
+
+### Step 6 — Marca [X] solo entonces
+
+Solo cuando los 5 steps pasen, cambia `[ ]` a `[X]` en esta `tasks.md` para la tarea, agrega bullet `**DONE**: <evidencia 1 línea>` al final, y procede al siguiente bloque.
+
+---
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: paralelizable (archivos distintos, sin dependencias bloqueantes)
@@ -173,6 +624,16 @@ Phase 4 puede avanzar en local sin las vars; bloquea solo el merge a producción
 **Goal**: Mover el código actual a `src/features/<f>/{domain,application,infrastructure,presentation}` siguiendo el mapping declarado en [data-model.md §1](./data-model.md), feature por feature, con shims temporales hasta cierre. Cada bloque (T-Curr/T-Notif/...) deja el proyecto verde y demostrable.
 
 **Independent Test**: Tras cada bloque de feature, ejecutar el smoke test correspondiente de [quickstart.md §3](./quickstart.md) **Y** validar que el Vercel preview deployment del PR carga `/` sin errores en la DevTools console del navegador (Principio VII de la constitución). Sin las dos validaciones, el bloque no cierra.
+
+> **⚠️ LEE ESTO ANTES DE EMPEZAR CUALQUIER T-XXX DE PHASE 4**
+>
+> Si vas a crear un Provider, un Context, un hook que consume Context, un use case server/client, o vas a mover un componente:
+>
+> 1. Lee [Anti-Patterns Catalog](#anti-patterns-catalog--do-not-reproduce) arriba. Los 6 AP describen los bugs reales que tumbaron producción en este mismo feature. Cada uno tiene comando de detección mecánica.
+> 2. Para Provider+Context+Hook, copia exactamente el shape de [CP-1](#cp-1-feature-provider--context--hook-cliente). Las desviaciones requieren justificación en el PR.
+> 3. Para use cases server, copia [CP-2](#cp-2-use-case-server-route-handler--server-action--server-component).
+> 4. Antes de marcar `[X]` cualquier tarea, ejecuta los 6 pasos del [Pre-Flight Checklist](#pre-flight-checklist-before-marking-x) y pega evidencia en el PR.
+> 5. Cualquier patrón de AP-1..AP-6 introducido invalida la tarea sin importar que `pnpm build` pase. Build local NO detecta render loops; el preview de Vercel sí.
 
 > **⚠️ Gate obligatorio por bloque**: cada T-XXX cierra con (a) `pnpm lint && pnpm typecheck && pnpm build` verdes, (b) smoke manual del feature pasa, (c) **preview de Vercel del PR carga sin errores en consola del browser**. El punto (c) existe porque `Maximum call stack size exceeded` y bugs similares de runtime no aparecen en build local.
 

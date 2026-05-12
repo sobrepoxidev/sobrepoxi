@@ -4,6 +4,8 @@
 **Created**: 2026-05-09
 **Last Updated**: 2026-05-11
 
+> **Cómo usar este documento**: cada `F-XXX` es un hallazgo del diagnóstico inicial (`plan.md §C`). Los `F-RL-NNN` son render-loops descubiertos durante Phase 4-V (la sesión de fix de emergencia tras el primer despliegue roto). Cada hallazgo de render-loop está vinculado a un **anti-pattern** en `tasks.md` (AP-1..AP-6). Antes de tocar Phase 4-9, lee la sección **Anti-Patterns Catalog** de `tasks.md` y aplica el **Pre-Flight Checklist** en cada tarea.
+
 ## Summary
 
 | Severity | Total | Closed | Open | Deferred |
@@ -12,7 +14,8 @@
 | HIGH | 11 | 8 | 2 | 1 |
 | MEDIUM | 12 | 3 | 4 | 5 |
 | LOW | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **15** | **6** | **9** |
+| Render-loop (F-RL) | 5 | 5 | 0 | 0 |
+| **Total** | **35** | **20** | **6** | **9** |
 
 ## CRITICAL Findings
 
@@ -238,6 +241,61 @@
 - **Closure**: T144 en Phase 9 → `docs/` con index
 - **Verification**: Phase 9
 
+## Render-loop findings — Phase 4-V (todos closed)
+
+Estos hallazgos NO estaban en el diagnóstico original. Fueron introducidos por la ejecución de Phase 4 por un agente previo (Minimax M2.7) y diagnosticados en la sesión de fix de emergencia tras el primer preview roto en Vercel (`Application error: a client-side exception has occurred` con `Maximum call stack size exceeded` / `Out of Memory`).
+
+Cada uno corresponde a un anti-pattern catalogado en `tasks.md`. **Si tocas Phase 4-9 y reintroduces cualquiera de estos, el preview se romperá igual.**
+
+### F-RL-001: `useCart` se importa a sí mismo vía barrel → stack overflow
+
+- **Status**: ✅ CLOSED
+- **Anti-pattern**: AP-1 (self-importing wrapper via own barrel)
+- **Symptom**: `RangeError: Maximum call stack size exceeded` al primer render del Navbar. En Chrome se reportó como "Out of Memory" porque V8 preasigna heap antes del overflow.
+- **Original location**: `src/features/cart/application/hooks/useCart.ts` (archivo eliminado).
+- **Cause**: El archivo importaba `useCart` desde `@/features/cart` (su propio barrel), que el barrel reexportaba desde ese MISMO archivo. La función se llamaba a sí misma.
+- **Closure**: hook movido a `src/features/cart/presentation/state/CartContext.tsx` consumiendo `useContext(CartContext)`; archivo recursivo eliminado; `src/features/cart/index.ts` reexporta desde la nueva ubicación.
+- **Verification**:
+  ```bash
+  grep -rn "from ['\"]@/features/cart['\"]" src/features/cart \
+    | grep -v "src/features/cart/index.ts"
+  # Expected: 0 matches
+  ```
+
+### F-RL-002: `CheckoutProvider` se importa a sí mismo vía barrel
+
+- **Status**: ✅ CLOSED
+- **Anti-pattern**: AP-1
+- **Symptom**: stack overflow al cargar `/checkout` (hubiera sido el siguiente crash si el usuario hubiera completado el carrito).
+- **Closure**: `CheckoutProvider.tsx` ahora importa desde `../state/CheckoutContext` (path relativo).
+
+### F-RL-003: `ProductsProvider` se importa a sí mismo vía barrel
+
+- **Status**: ✅ CLOSED
+- **Anti-pattern**: AP-1
+- **Symptom**: stack overflow al cargar páginas de productos (listado, detalle, búsqueda).
+- **Closure**: `ProductsProvider.tsx` ahora importa desde `../state/ProductsContext` + tipos desde `../../application/hooks/useProducts`.
+
+### F-RL-004: `ProductsContext` y `CartProvider` con ciclo runtime vía barrel
+
+- **Status**: ✅ CLOSED
+- **Anti-pattern**: AP-1 (variante: no recursivo pero ciclo de evaluación de módulos)
+- **Symptom**: comportamiento errático al hidratar contexts; ocasionalmente undefined refs.
+- **Closure**: ambos cambiados a paths relativos. `CartProvider.tsx` importa `CartContext` de `../state/CartContext`; `ProductsContext.tsx` importa `useProducts` de `../../application/hooks/useProducts`.
+
+### F-RL-005: Cliente Supabase recreado en cada render
+
+- **Status**: ✅ CLOSED
+- **Anti-pattern**: AP-2 (browser client en cuerpo de componente sin lazy init)
+- **Symptom**: `RelatedProducts.tsx` refetcheaba productos en cada render; `AuthProvider` re-suscribía a `onAuthStateChange` en cada render.
+- **Closure**: patrón canónico `useState(() => createBrowserSupabaseClient())` aplicado en `AuthProvider`, `useAuthState`, `useAuthActions`, `PayPalCardMethod`, `ProductDetail`, `ProductCard`, `CheckoutContext`, `useCheckoutSession`. Componentes que no necesitan el cliente como valor reactivo lo instancian dentro de la función async donde se usa. 13 archivos migrados además del singleton legacy `@/lib/supabaseClient`.
+- **Verification**:
+  ```bash
+  grep -rn "const supabase = createBrowserSupabaseClient" src/features src/app \
+    | grep -v 'useState(() =>' | grep -v 'useMemo(' | grep -v 'useRef('
+  # Expected: matches solo dentro de funciones async internas
+  ```
+
 ## NEW Findings (Phase 4 aftermath)
 
 ### F-025: Componentes legacy en `src/components/` con deep imports
@@ -277,22 +335,20 @@
 - **Verification**: `pnpm build` pasa; todos los consumers migrados a imports directos
 
 ### F-029: Barrel exports rotos o incompletos rompen el build
-- **Status**: 🔵 OPEN
+- **Status**: ✅ CLOSED (Phase 4-V)
 - **Severity**: HIGH
 - **Location**: `src/features/products/index.ts`, `src/features/content/presentation/components/NavbarClient.tsx`
-- **Finding**: `pnpm typecheck` muestra 16+ errores: barrel de products no exporta `SearchResultsPage` como default; `NavbarClient.tsx` intenta importar `CartContext` de `@/context/CartContext` que ya no existe
-- **Impact**: Build roto en типичный scenarios (no es solo lint, es TypeScript hard error)
-- **Closure**: Fix barrels para exportar lo que los consumers esperan; fix imports que referencian paths legacy
-- **Verification**: `pnpm typecheck` → 0 errores
+- **Finding original**: `pnpm typecheck` mostraba 16+ errores; barrel de products no exportaba símbolos que los consumers esperaban; `NavbarClient.tsx` importaba `CartContext` de paths legacy.
+- **Closure**: corregido durante Phase 4-V. El barrel `src/features/cart/index.ts` ahora exporta `useCart`/`UseCartReturn` desde `presentation/state/CartContext`; los wrappers self-importing (CheckoutProvider/ProductsProvider) corregidos con paths relativos. Build verde en commit `fix(features): break runtime recursions...`.
+- **Verification**: `pnpm typecheck` → 0 errores, `pnpm build` → exit 0, 21 rutas generadas.
 
 ### F-030: Path aliases legacy (`@/context`, `@/components/search`) aún referenciados
-- **Status**: 🔵 OPEN
+- **Status**: 🔵 OPEN — parcialmente resuelto
 - **Severity**: MEDIUM
-- **Location**: `src/app/layout.tsx`, `src/components/general/Navbar.tsx`, `src/components/general/NavbarClient.tsx`, `src/components/home/AddToCartButton.tsx`, `src/features/cart/application/hooks/useCart.ts`
-- **Finding**: Múltiples archivos aún usan `@/context/CartContext`, `@/components/search/SearchBar`, `@/components/providers/ProductsProvider` — todos paths legacy que no existen en la nueva estructura
-- **Impact**: TypeScript errors en cadena; bloquea `pnpm typecheck`
-- **Closure**: Migrar estos imports a los nuevos feature barrels o crear re-exports en `src/lib/` si son interfaces de legacy layers
-- **Verification**: `pnpm typecheck` → 0 errores
+- **Location**: shims residuales en `src/lib/`, `src/components/`, `src/context/`, `src/utils/supabase/`, `src/i18n/`.
+- **Finding**: shims temporales que reexportan a `@/features/<f>` o `@/shared/<x>` siguen presentes; Phase 9 (T136-T142) los elimina.
+- **Status actual**: TypeScript verde porque los shims son válidos. La eliminación es la última fase y elimina la deuda residual.
+- **Verification de cierre**: tras Phase 9 — `git grep "TODO(speckit): shim temporal"` → 0; `Test-Path src/lib`, `src/components`, `src/context`, `src/i18n`, `src/utils` → todos false (carpetas eliminadas).
 
 ## Deferred Findings
 
