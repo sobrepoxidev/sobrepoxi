@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createBrowserSupabaseClient } from '@/shared/supabase/client'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import type { AuthState } from '../distribute'
 
 export function useAuthState() {
@@ -11,7 +12,7 @@ export function useAuthState() {
     loading: true,
   })
 
-  const supabase = createBrowserSupabaseClient()
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient())
 
   useEffect(() => {
     const getSession = async () => {
@@ -43,7 +44,7 @@ export function useAuthState() {
 }
 
 export function useAuthActions() {
-  const supabase = createBrowserSupabaseClient()
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient())
 
   const signInWithPassword = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })

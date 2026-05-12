@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import type { Database } from '@/types-db';
 
 export type Product = Database['products'];
@@ -34,6 +34,12 @@ const CartContext = createContext<CartContextProps>({
   isLoading: false,
   syncCartWithDB: async () => {},
 });
+
+export type UseCartReturn = CartContextProps;
+
+export function useCart(): UseCartReturn {
+  return useContext(CartContext);
+}
 
 export { CartContext };
 export type { CartContextProps };

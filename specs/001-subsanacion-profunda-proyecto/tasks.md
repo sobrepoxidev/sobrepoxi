@@ -10,15 +10,19 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 **Status Summary** (audit 2026-05-11 — estado REAL verificable):
 
+> ⚠️ **Audit nota 2026-05-11**: El status table previo declaraba Phase 4 ✅ COMPLETED, pero (a) los checkboxes individuales T044-T119 siguieron en `[ ]`, (b) ningún smoke test del `quickstart.md §3` se ejecutó contra Vercel preview, y (c) el deployment actual lanza `Maximum call stack size exceeded` en runtime. Las features SÍ están creadas en `src/features/` con sus barrels, pero la **verificación funcional de Phase 4 está pendiente**. Esta tabla refleja ahora ese estado real.
+
 | Phase | Estado | Tareas | Evidencia |
 |-------|--------|-------|-----------|
 | Phase 1 (Setup) | ✅ COMPLETED | T001-T006 | `tailwind-merge`/`zod`/`eslint-plugin-boundaries` en package.json; `src/features/` y `src/shared/` existen |
 | Phase 2 (Foundational) | ✅ COMPLETED | T007-T019 | `src/shared/{supabase,utils,types,i18n,seo,ui}` existen; middleware usa `@/shared/supabase/middleware` |
 | Phase 3 (US4 Security) | 🔄 PARTIAL | T020-T042 ✅ / T032 🔄 / T033 ⏳ / T043 ⏳ | T020-T042 completados; T032 parcial (decisión de diseño documentada); T033 y T043 requieren acción de ops (Vercel env vars) |
-| Phase 4 (US3 Migration) | ✅ COMPLETED | T044-T119 | T060-T119 completados; todas las 9 features migradas; shims pendientes Phase 9 |
-| Phase 5 (US2 Boundaries) | ~PARTIAL | T120-T127 | T120 boundaries warn (error blocked por deep imports pendientes); T121-T122 fault injection DONE manualmente; T123 CLAUDE.md/AGENTS.md actualizados |
-| Phase 6 (US5 Findings) | ~PARTIAL | T124-T127 | findings.md existe; T125-T127 pendientes |
-| Phase 7-9 | ⏸ PENDING | T128-T150 | Dependen de Phase 5-6 |
+| Phase 4 (US3 Migration) | 🟡 STRUCTURALLY DONE / VERIFICATION PENDING | T044-T119 | Archivos movidos a `src/features/<f>/{domain,application,infrastructure,presentation}` y barrels creados; **pendiente**: (a) smoke tests por feature en Vercel preview (ver Principio VII de `constitution.md`); (b) marcado granular `[X]` por tarea tras verificar; (c) resolver `Maximum call stack size exceeded` en runtime |
+| Phase 5 (US2 Boundaries) | 🟢 ENFORCED | T120-T123 | `eslint.config.mjs` ya tiene `boundaries/dependencies` en severidad `error` (no `warn` como decía el audit previo). T121-T122 fault injection ejecutada manualmente; T123 CLAUDE.md/AGENTS.md actualizados |
+| Phase 6 (US5 Findings) | ⏳ PARTIAL | T124-T127 | findings.md existe; T125-T127 pendientes |
+| Phase 7 (US6 Consistency) | ⏸ PENDING | T128-T132 | Depende de Phase 4 verificada |
+| Phase 8 (US1 Closure) | ⏸ PENDING | T133-T135 | Cierre de diagnóstico — depende de Phases 5-7 |
+| Phase 9 (Polish) | ⏸ PENDING | T136-T150 | Eliminación de shims residuales + sign-off |
 
 **ℹ️ Phase 3 — Estado real (audit 2026-05-10)**: T020-T042 implementadas. Solo 2 tareas pendientes de acción de ops (no de código):
 
@@ -31,13 +35,18 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - T040-T042 (ADMIN_EMAILS): ✅ `admin-guard.ts` creado; env `ADMIN_EMAILS` en las 3 páginas admin.
 - T043 (ops — Vercel ADMIN_EMAILS): ⏳ PENDIENTE — requiere acción de ops.
 
-**Único bloqueante para deploy**: T033 y T043 (vars en Vercel). Phase 4 puede avanzar en local sin estas vars; bloquean solo el merge a producción.
+**Bloqueantes para deploy a producción**:
+
+1. **T033 y T043**: vars en Vercel (`PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `ADMIN_EMAILS`).
+2. **T120c (nuevo)**: el preview actual de Vercel arroja `Application error: a client-side exception has occurred` con `Maximum call stack size exceeded`. Se requiere reproducir en preview con DevTools abierto, identificar el ciclo (sospechas iniciales: `SupabaseProvider` ↔ `useSupabase`, `CartContext` ↔ `useEffect` deps, render loop en Navbar tras commits 2f5110b..4dab07f) y cerrar el bug antes de mergear cualquier feature de Phase 4 a `master`. Ver bloque "Phase 4-V (Verification)" más abajo.
+
+Phase 4 puede avanzar en local sin las vars; bloquea solo el merge a producción. **Sin embargo**, mientras el render loop esté abierto, ninguna verificación del Principio VII de la constitución pasa, así que el feature en su conjunto está bloqueado para merge.
 
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: paralelizable (archivos distintos, sin dependencias bloqueantes)
 - **[Story]**: USx para tareas de fase de user story; sin label en Setup/Foundational/Polish
-- **~**: parcialmente completo (decisión de diseño documentada)
+- **Checkbox**: `[ ]` pendiente, `[X]` completado. Parciales se descomponen en sub-tareas (ej. T120a/T120b) — **no se usa `[~]`** porque no es markdown estándar y rompe parsers (GitHub, agentes). Cuando una tarea tiene matiz, va el detalle inline tras `**DONE**` / `**PARTIAL — ver T-XXXb**`.
 
 ## Path Conventions
 
@@ -56,7 +65,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - [X] T003 [P] Crear scaffolds vacíos por feature con `.gitkeep` en `src/features/{products,cart,checkout,auth,account,admin,notifications,content,currency}/{domain,application,infrastructure,presentation}/.gitkeep` y barrel inicial `src/features/<f>/index.ts`. **DONE**: `src/features/` existe.
 - [X] T004 [P] Crear scaffolds vacíos `src/shared/{supabase,i18n,seo,ui,types,utils}/.gitkeep`. **DONE**: `src/shared/` existe.
 - [X] T005 [P] Crear `.env.example`. **DONE**: verificado.
-- [X] T006 Configurar `eslint-plugin-boundaries` y `no-restricted-imports` en `eslint.config.mjs`. Severity: `warn`. **DONE**: plugin instalado.
+- [X] T006 Configurar `eslint-plugin-boundaries` y `no-restricted-imports` en `eslint.config.mjs`. Severity inicial fue `warn` para no bloquear el setup; severidad final `error` ya activa (ver T120a). **DONE**: plugin instalado y configurado.
 
 **Checkpoint Phase 1**: ✅ `pnpm install`, `pnpm typecheck`, `pnpm build` y `pnpm lint` pasan en limpio.
 
@@ -111,7 +120,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ### T-Sec-1: Cerrar relay abierto `/api/send-email` (F-001)
 
-- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`). **Verificación**: `pnpm typecheck` verde; schema consumible desde `@/features/currency/application/schemas/convertQuery` (referencia cruzada verificada en T039/T045).
+- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`). **Verificación**: `pnpm typecheck` verde; `curl -X POST .../api/send-email -d '{"to":"random@x.com",...}'` con sesión → 400 (`to` no permitido); con `to=COMPANY_EMAIL` → 200.
 - [X] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle. **Verificación**: `curl -X POST .../api/send-email` sin sesión → 401; quickstart §4 item verificado.
 - [X] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide. **Verificación**: quickstart §4; `git grep NEXT_PUBLIC_SITE_URL` muestra uso consistente.
 - [X] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2). **Verificación**: log visible en server console; formato JSON validado.
@@ -128,10 +137,12 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 - [X] T029 [US4] Refactorizar `src/app/api/paypal/paypalHelpers.ts`: los fallbacks a `createMockPayPalOrder` y a la captura mock solo se ejecutan si `process.env.PAYPAL_USE_MOCK === '1'` (no por `NODE_ENV`). Si la condición no se cumple, propagar el error original. **DONE**: `shouldUseMock()` introduced; `NODE_ENV` mock fallbacks removed; errors propagate correctly. **Verificación**: `pnpm typecheck` verde.
 
+> **Nota numérica**: T030 fue absorbida durante refactor de la spec; el número se deja vacío intencionalmente para preservar la trazabilidad de las tareas posteriores (T031..T150) ya referenciadas en commits y reportes. No es una tarea pendiente.
+
 ### T-Sec-4: Renombrar variables de entorno PayPal server-only (F-005)
 
 - [X] T031 [US4] En `src/app/api/paypal/paypalHelpers.ts`, sustituir `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` → `process.env.PAYPAL_CLIENT_ID` y `process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` → `process.env.PAYPAL_LIVE_CLIENT_ID`. **DONE**: secrets now server-only.
-- [~] T032 [US4] Buscar usages de `NEXT_PUBLIC_PAYPAL_CLIENT_ID` en `src/components/checkout/*` (lado cliente del SDK PayPal). El `<PayPalScriptProvider>` en `PayPalCardMethod.tsx` requiere una variable pública para el client-side SDK. **PARCIAL**: mantenido `NEXT_PUBLIC_PAYPAL_CLIENT_ID` SOLO en `PayPalCardMethod.tsx` para el SDK browser (no es secreto, es el Client ID público de PayPal). Server-side (`paypalHelpers.ts`) ahora usa `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` sin `NEXT_PUBLIC_`. **Nota**: requeriría refactor separate si se desea eliminar por completo, pero no es needed para security. Documentado.
+- [X] T032 [US4] Buscar usages de `NEXT_PUBLIC_PAYPAL_CLIENT_ID` en `src/components/checkout/*` (lado cliente del SDK PayPal). El `<PayPalScriptProvider>` en `PayPalCardMethod.tsx` requiere una variable pública para el client-side SDK. **DONE (decisión documentada)**: mantenido `NEXT_PUBLIC_PAYPAL_CLIENT_ID` SOLO en `PayPalCardMethod.tsx` para el SDK browser (no es secreto, es el Client ID público de PayPal — ver Principio V de `constitution.md`, excepción explícita). Server-side (`paypalHelpers.ts`) ahora usa `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` sin `NEXT_PUBLIC_`. Carry-forward a T112 (mover componente a `features/checkout/presentation/`).
 - [ ] T033 [US4] Coordinar con ops para setear `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` en Vercel **antes** de mergear este PR. Verificación post-deploy: `pnpm build && grep -rE "(PAYPAL_(LIVE_)?SECRET)" .next/static` → 0 matches.
 
 ### T-Sec-5: Validar owner en `/api/paypal/{create,capture}-order` (F-003)
@@ -161,7 +172,9 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 **Goal**: Mover el código actual a `src/features/<f>/{domain,application,infrastructure,presentation}` siguiendo el mapping declarado en [data-model.md §1](./data-model.md), feature por feature, con shims temporales hasta cierre. Cada bloque (T-Curr/T-Notif/...) deja el proyecto verde y demostrable.
 
-**Independent Test**: Tras cada bloque de feature, ejecutar el smoke test correspondiente de [quickstart.md §3](./quickstart.md) y confirmar que el comportamiento del sitio no cambió.
+**Independent Test**: Tras cada bloque de feature, ejecutar el smoke test correspondiente de [quickstart.md §3](./quickstart.md) **Y** validar que el Vercel preview deployment del PR carga `/` sin errores en la DevTools console del navegador (Principio VII de la constitución). Sin las dos validaciones, el bloque no cierra.
+
+> **⚠️ Gate obligatorio por bloque**: cada T-XXX cierra con (a) `pnpm lint && pnpm typecheck && pnpm build` verdes, (b) smoke manual del feature pasa, (c) **preview de Vercel del PR carga sin errores en consola del browser**. El punto (c) existe porque `Maximum call stack size exceeded` y bugs similares de runtime no aparecen en build local.
 
 ### T-Curr — Feature `currency` (prototipo del flujo)
 
@@ -257,7 +270,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ### T-Chk — Feature `checkout` (último por sensibilidad)
 
-- [ ] T112 [P] [US3] Mover `src/components/checkout/*` (4 archivos) → `src/features/checkout/presentation/components/`. Shims.
+- [ ] T112 [P] [US3] Mover `src/components/checkout/*` (4 archivos) → `src/features/checkout/presentation/components/`. Shims. **Nota T032 carry-forward**: `PayPalCardMethod.tsx` debe preservar el uso de `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` (es el Client ID público del SDK browser de PayPal, no un secreto). Documentar este uso con comentario inline en el archivo movido.
 - [ ] T113 [US3] Mover `src/app/api/paypal/paypalHelpers.ts` → `src/features/checkout/infrastructure/paypal/client.ts`. Conserva la lógica de mock controlada por `PAYPAL_USE_MOCK` (ya hecha en T029). Shim no necesario porque solo lo consumían los route handlers (que se actualizan en T115/T116).
 - [ ] T114 [US3] Crear use cases en `src/features/checkout/application/use-cases/`: `placeOrder.ts`, `createPaypalOrder.ts`, `capturePaypalOrder.ts`. Cada uno usa `createServerSupabaseClient()`, valida sesión + ownership, invoca el cliente PayPal de infraestructura, actualiza BD. La lógica del check legacy `user_tickets` queda dentro de `capturePaypalOrder.ts` (preservar comportamiento idéntico al actual).
 - [ ] T115 [US3] Crear schemas `src/features/checkout/application/schemas/{createOrderInput,capturePaypalInput}.ts`.
@@ -266,24 +279,40 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - [ ] T118 [US3] Adelgazar `src/app/[locale]/checkout/page.tsx` y `.../order-confirmation/page.tsx` para importar componentes desde `@/features/checkout`.
 - [ ] T119 [US3] Smoke E2E sandbox PayPal: login → carrito → checkout → pagar con cuenta sandbox → captura COMPLETED → BD `payment_status='paid'` → correo de confirmación recibido. Probar con `orderId` ajeno → 403.
 
-**Checkpoint Phase 4 / US3**: las 9 features están migradas; los smoke tests por feature ([quickstart.md §3](./quickstart.md)) pasan; `pnpm lint/typecheck/build` verdes. Aún quedan shims pendientes que se eliminan en Phase 9.
+**Checkpoint Phase 4 / US3**: las 9 features están migradas; los smoke tests por feature ([quickstart.md §3](./quickstart.md)) pasan; `pnpm lint/typecheck/build` verdes; **Vercel preview del PR de cada feature carga `/` sin errores de consola en DevTools**. Aún quedan shims pendientes que se eliminan en Phase 9.
+
+---
+
+## Phase 4-V: Verification — Resolver render loop en preview (BLOQUEANTE para merge)
+
+**Context**: El deployment actual de Vercel arroja `Application error: a client-side exception has occurred` con `Uncaught RangeError: Maximum call stack size exceeded`. Los commits 2f5110b..4dab07f intentaron parches, pero el preview sigue rojo. Esta fase resuelve el bug antes de cualquier merge a `master`. Las tareas T44V-T49V son aditivas a Phase 4 y se ejecutan tras el último bloque de migración (T-Chk) o en cuanto se reproduzca el error, lo que ocurra primero.
+
+**Independent Test**: el preview de Vercel del HEAD de la rama carga `/` y `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account` sin errores en la consola del browser; reload duro funciona; navegación entre rutas funciona.
+
+- [ ] T044V [US3] Reproducir el render loop en Vercel preview con DevTools abierto. Capturar: (a) componente raíz del stack `s -> _$ -> s -> s -> ...`, (b) source map del chunk `3186-*.js`, (c) flag `React DevTools > Profiler` con "Highlight updates when components render" activado. Documentar el componente que cicla en un comentario en el PR. **Verificación**: archivo `findings.md` actualizado con la entrada `F-RL-001` (Render Loop 001) describiendo el ciclo exacto.
+- [ ] T045V [US3] Auditar dependencias de `useEffect`/`useMemo`/`useCallback` en los archivos tocados por commits 2f5110b..4dab07f: `src/features/auth/presentation/providers/SupabaseProvider.tsx`, `src/features/auth/application/hooks/useSupabase.ts`, `src/features/cart/presentation/state/CartContext.tsx`, `src/features/content/presentation/layout/Navbar*.tsx`. Buscar: dependencias que se recrean en cada render (objetos/arrays sin memoización), llamadas a `setState` dentro de efectos cuya dep es el mismo state, providers que se renderizan a sí mismos. **Verificación**: lista en `findings.md` con cada efecto sospechoso y razón.
+- [ ] T046V [US3] Aplicar el fix mínimo identificado en T045V. Si el ciclo está entre `SupabaseProvider` y `useSupabase` (commit 1035101 sugiere el barrel se movió pero el consumer no): forzar al provider a recibir el cliente como prop estable creado una vez en `app/layout.tsx`, no recreado por hook. Si el ciclo está en `CartContext` `useEffect [searchParams]` (F-016 según plan): partir en dos hooks `useHydrateCartFromUrl` (run-once) y `useReflectCartInUrl` (debounced). **Verificación**: `pnpm build && pnpm dev` local + preview Vercel, ambos sin error de consola en `/` y rutas críticas. **Constitución III** aplica: el componente fixed no debe recrecer en LOC; si lo hace, descomponerlo.
+- [ ] T047V [US3] Añadir un Error Boundary en `src/shared/ui/ErrorBoundary.tsx` y envolver `<body>` en `src/app/layout.tsx` (o `[locale]/layout.tsx`). Su `componentDidCatch` loguea con `@/shared/observability/logger` (crear stub mínimo si aún no existe) y renderiza un fallback en español ("Algo salió mal, recarga la página"). **Verificación**: forzar un throw en un componente hijo confirma que el boundary captura sin tumbar el árbol.
+- [ ] T048V [US3] Auditar imports circulares con `pnpm tsc --noEmit --listFiles | sort | uniq -d` y/o `npx madge --circular --extensions ts,tsx src/`. Reportar cualquier ciclo en `findings.md` como `F-RL-NNN`. **Verificación**: `madge --circular` muestra 0 ciclos o solo los explícitamente justificados.
+- [ ] T049V [US3] **Vercel preview gate**: confirmar que el deployment preview del PR final de Phase 4-V carga las 6 rutas críticas sin error de consola: `/`, `/[locale]/products`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account`, `/[locale]/admin`. Capturar screenshot de DevTools console limpio en cada una. Adjuntar al PR description. **Verificación**: 6 screenshots adjuntos; el PR está autorizado a mergear a `master`.
+
+**Checkpoint Phase 4-V**: render loop resuelto; preview verde en las 6 rutas; Error Boundary instalado; 0 ciclos de import. Sin estos cinco items, el feature 001 **no mergea a `master`**.
 
 ---
 
 ## Phase 5: User Story 2 — Definición y enforce de la arquitectura objetivo (Priority: P1) 🏗️
 
-**Goal**: La definición ya existe en [research.md](./research.md), [data-model.md](./data-model.md) y [contracts/](./contracts/). Lo que falta es **elevar** las reglas de boundaries a `error` (de `warn`) y validar que toda la base de código cumple, una vez que la migración está completa.
+**Goal**: La definición ya existe en [research.md](./research.md), [data-model.md](./data-model.md) y [contracts/](./contracts/). Las reglas de boundaries ya están en severidad `error` (T120a `DONE`); lo que falta es cerrar deep imports residuales (T120b) y mantener la verificación con fault-injection.
 
-**Independent Test**: Inyectar voluntariamente un import prohibido (deep import cross-feature) y confirmar que `pnpm lint` falla con `boundaries/element-types`.
+**Independent Test**: Inyectar voluntariamente un import prohibido (deep import cross-feature) y confirmar que `pnpm lint` falla con `boundaries/dependencies` (regla v6) o `no-restricted-imports`.
 
-- [~] T120 [US2] En `eslint.config.mjs`, cambiar la severidad de `boundaries/element-types` y `no-restricted-imports` de `warn` a `error`. Ejecutar `pnpm lint`; cualquier violación residual se corrige antes de mergear. **PARTIAL**: boundaries configurados en `warn`; nivel `error` bloqueado por imports profundos residuales que requieren Phase 9 (eliminación de shims). Full enforcement pendiente de Phase 9 cleanup.
-- [X] T121 [US2] Fault-injection: en una rama temporal, añadir `import { foo } from "@/features/products/application/use-cases/getProductById";` en `src/app/[locale]/page.tsx`. Confirmar que `pnpm lint` falla. Revertir el cambio. **DONE**: fault injection realizada manualmente; lint falla con boundaries/element-types.
-- [X] T122 [US2] Fault-injection 2: añadir `import { something } from "@/features/checkout";` en `src/shared/utils/cn.ts`. Confirmar que `pnpm lint` falla (shared no puede importar de features). Revertir. **DONE**: fault injection realizada manualmente; lint falla con boundaries/element-types.
-- [~] T123 [US2] Documentar en `CLAUDE.md` y `AGENTS.md` (entre los marcadores de proyecto) los comandos de verificación local: `pnpm lint && pnpm typecheck && pnpm build`. **PARTIAL**: CLAUDE.md y AGENTS.md actualizados con nueva estructura y comandos de verificación.
+- [X] T120a [US2] Configurar `boundaries/dependencies` (nombre vigente en `eslint-plugin-boundaries` v6; reemplaza `boundaries/element-types` v5) y `no-restricted-imports` en `eslint.config.mjs` con severidad `error`. **DONE**: `eslint.config.mjs` ya tiene severidad `error` (verificado 2026-05-11). El audit previo declaraba `warn` por error de transcripción.
+- [X] T121 [US2] Fault-injection: en una rama temporal, añadir `import { foo } from "@/features/products/application/use-cases/getProductById";` en `src/app/[locale]/page.tsx`. Confirmar que `pnpm lint` falla. Revertir el cambio. **DONE**: fault injection realizada manualmente; lint falla con boundaries/dependencies.
+- [X] T122 [US2] Fault-injection 2: añadir `import { something } from "@/features/checkout";` en `src/shared/utils/cn.ts`. Confirmar que `pnpm lint` falla (shared no puede importar de features). Revertir. **DONE**: fault injection realizada manualmente; lint falla con boundaries/dependencies.
+- [X] T123 [US2] Documentar en `CLAUDE.md` y `AGENTS.md` (entre los marcadores de proyecto) los comandos de verificación local: `pnpm lint && pnpm typecheck && pnpm build`. **DONE**: CLAUDE.md y AGENTS.md actualizados con nueva estructura y comandos de verificación.
+- [ ] T120b [US2] Auditoría de deep imports residuales: ejecutar `Grep "from\\s+[\"']@/features/[^/\"']+/[^\"']+[\"']" --type ts -n` (cualquier path con `>1` segmento tras `features/<f>/`). Para cada match cross-feature, mover el símbolo al barrel de su feature. Para matches intra-feature, dejarlos (son permitidos). Tras corregir, `pnpm lint` debe pasar verde sin warnings. Esta tarea es **dependencia de Phase 9 T136** (eliminar shims), no al revés: primero se cierran deep imports legítimos, luego se eliminan shims que reexportaban.
 
-**ℹ️ Nota sobre T120-T127 incompletos**: Las tareas parciales de Phase 5-6 (T120, T123, T124-T127) quedan pendientes de Phase 9, donde se eliminan los shims residuales que bloquean el enforce completo de boundaries en nivel `error`. Phase 9 ejecuta la limpieza final que habilita la elevación de severidad.
-
-**Checkpoint Phase 5**: arquitectura enforced en CI/local; cualquier import prohibido es bloqueado por lint (nivel `warn` activo; `error` tras Phase 9).
+**Checkpoint Phase 5**: `eslint.config.mjs` con `boundaries/dependencies` y `no-restricted-imports` en `error` ya activo. T120b cierra el último gap de imports profundos residuales antes de Phase 9.
 
 ---
 
@@ -298,7 +327,15 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - [ ] T126 [US5] Añadir sección en `CLAUDE.md` con el flujo de verificación post-cambio: `pnpm lint && pnpm typecheck && pnpm build`, mención al checklist manual de quickstart.
 - [ ] T127 [US5] Documentar en `quickstart.md` cómo correr la fault-injection de boundaries (ya está en §5, asegurar que sigue vigente con la severidad `error`).
 
-**Checkpoint Phase 6**: documento `findings.md` cerrado con verificación por hallazgo HIGH+CRITICAL.
+### T-Errors — Detección y cierre de errores silenciosos (FR-013 / SC-010)
+
+> **Constitución VI** (No Silent Errors) exige que todo `catch` registre, propague, traduzca o tenga comentario `intentional swallow`. Este bloque mide y cierra el gap.
+
+- [ ] T127a [US5] Inventario inicial: ejecutar `Grep "catch\\s*\\([^)]*\\)\\s*\\{" --type ts -n` y `Grep "\\.catch\\s*\\(" --type ts -n` en `src/`. Para cada match, clasificar: `propaga`/`loguea+propaga`/`traduce a estado`/`silencia con comentario`/`silencia sin justificación`. Registrar conteo total en `findings.md` como `F-SE-001`. **Verificación**: tabla en `findings.md` con N catches inventariados y desglose por categoría.
+- [ ] T127b [US5] Inventario de promesas: ejecutar búsqueda de `Promise`s no `await`-eadas ni con `.catch`. Patrón: llamadas a funciones async dentro de event handlers / efectos sin `await` ni `.catch()`. Listar en `findings.md` como `F-SE-002`. Foco prioritario: `src/features/cart/`, `src/features/checkout/`, `src/features/notifications/`. **Verificación**: lista en `findings.md`.
+- [ ] T127c [US5] Cierre del gap: para cada catch en categoría `silencia sin justificación`, aplicar uno de: (a) reemplazar por `console.error` + propagar; (b) traducir a un retorno explícito tipado; (c) anotar `// intentional swallow: <razón>` si el silencio es correcto. Para cada Promise sin manejo: `await` o `.catch(logger.error)`. Re-ejecutar T127a/T127b y registrar nuevo conteo. **Criterio de cierre SC-010**: 0 catches sin justificación; 0 promesas fire-and-forget sin comentario. **Verificación**: diff de `findings.md` antes/después; commits con scope `fix(errors):`.
+
+**Checkpoint Phase 6**: documento `findings.md` cerrado con verificación por hallazgo HIGH+CRITICAL **y** con T127a-T127c registrando el cumplimiento de FR-013/SC-010.
 
 ---
 
@@ -318,15 +355,17 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 ---
 
-## Phase 8: User Story 1 — Diagnóstico técnico priorizado (Priority: P1) 📋
+## Phase 8: User Story 1 — Cierre del diagnóstico técnico (Priority: P1) 📋
+
+> **Nota sobre la prioridad**: US1 es P1 en la spec porque la **entrega del diagnóstico** es bloqueante para el proyecto. Sin embargo, la entrega inicial del diagnóstico **ya ocurrió en Phase 0** ([research.md](./research.md)) y Phase 1 ([data-model.md](./data-model.md)) durante `/speckit-plan`. Phase 8 es entonces el **cierre** del diagnóstico: consolidar findings con su estado final (closed/deferred/open), no construirlo desde cero. Por eso aparece al final del orden de tareas: depende del estado real tras la migración.
 
 **Goal**: La radiografía inicial está en [research.md](./research.md) y [data-model.md](./data-model.md). El cierre del feature exige consolidar el diagnóstico final con findings cerrados, abiertos y diferidos.
 
 **Independent Test**: el documento `findings.md` final (de T124+T125 más actualización) cubre el 100% de las áreas de auditoría (SC-002), todos los HIGH+CRITICAL están resueltos o explícitamente diferidos con justificación (SC-008/SC-011).
 
 - [ ] T133 [US1] Actualizar `findings.md` (creado en T124) con el estado final tras Phase 7: cada hallazgo F-001..F-024 marcado `closed` (con tarea Tnnn que lo cerró), `deferred` (con feature destino y razón) o `open` (con justificación si quedó abierto excepcionalmente).
-- [ ] T134 [US1] Verificar SC-001..SC-012 de la spec uno por uno y registrar evidencia en `findings.md`. Ejemplo SC-001: 100% del código bajo `src/` queda en una feature o en `shared` → comprobado por `pnpm lint` (boundaries no detecta archivos huérfanos) + revisión visual del árbol.
-- [ ] T135 [US1] Producir `closure-report.md` resumen ejecutivo (1-2 páginas) con: features migradas, hallazgos cerrados/diferidos, métricas (LOC movido vs reescrito, dependencias añadidas/removidas), próximas features propuestas (002 consolidación visual, 003 testing, futura `user_roles`).
+- [ ] T134 [US1] Verificar SC-001..SC-012 de la spec uno por uno y registrar evidencia en `findings.md`. Ejemplo SC-001: 100% del código bajo `src/` queda en una feature o en `shared` → comprobado por `pnpm lint` (boundaries no detecta archivos huérfanos) + revisión visual del árbol. **Para SC-009** (breaking changes documentadas): ejecutar `git log master..HEAD --grep="BREAKING CHANGE" --oneline` y cruzar con la lista de eliminaciones efectivas (`/api/send-email`, `/api/send-order-email` si aplica, envs renombradas, `auth-helpers-nextjs` retirado). Toda eliminación o renombre debe aparecer con `BREAKING CHANGE:` footer o estar declarada en `closure-report.md` con su path de migración. **Verificación**: tabla en `findings.md` con columnas `change | breaking? | documentado_en | migración_para_consumidores`. **Para SC-010** (errores silenciosos): copiar el conteo final de T127c y confirmar 0 sin justificación.
+- [ ] T135 [US1] Producir `closure-report.md` resumen ejecutivo (1-2 páginas) con: features migradas, hallazgos cerrados/diferidos, métricas (LOC movido vs reescrito, dependencias añadidas/removidas), **lista de breaking changes con su path de migración** (SC-009), próximas features propuestas (002 consolidación visual, 003 testing, futura `user_roles`).
 
 **Checkpoint Phase 8**: documentos de cierre completos; señal de "ready to merge to master" tras Polish.
 
@@ -362,11 +401,12 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - **Phase 2 (Foundational)**: depende de Phase 1.
 - **Phase 3 (US4 Security)**: depende de Phase 1+2 (necesita `shared/supabase` para validar sesión en endpoints). Bloquea cualquier despliegue.
 - **Phase 4 (US3 Migration)**: depende de Phase 1+2+3. T-Curr es prototipo y precede a las demás migraciones; T-Notif puede correr en paralelo a T-Curr/T-Prod; T-Cart depende de T-Prod (consume `getProductsByIds`); T-Cont depende de T-Prod (consume `listFeaturedProducts`/`getCategories`); T-Chk depende de T-Cart, T-Auth, T-Notif y T-Prod (es la más entrelazada).
-- **Phase 5 (US2)**: depende de Phase 4 completa. No puede elevar boundaries a `error` mientras haya features sin migrar.
-- **Phase 6 (US5)**: puede iniciar en paralelo con Phase 5 (documento de findings se actualiza incremental).
+- **Phase 4-V (Verification)**: depende de Phase 4 estructural. Es **bloqueante para merge a `master`** mientras el render loop esté abierto. Puede iniciar tan pronto como el bug sea reproducible en preview (es decir, ahora).
+- **Phase 5 (US2)**: T120a ya está cerrada (boundaries ya en `error`). T120b (deep imports residuales) precede a Phase 9 T136 (eliminar shims), no al revés.
+- **Phase 6 (US5)**: puede iniciar en paralelo con Phase 5 (documento de findings se actualiza incremental). T127a-T127c (errores silenciosos) deberían correr antes de Phase 8 para que T134 tenga cifras finales.
 - **Phase 7 (US6)**: depende de Phase 4 (necesita schemas en sus features finales).
-- **Phase 8 (US1)**: depende de Phases 5-7.
-- **Phase 9 (Polish)**: depende de todo lo anterior.
+- **Phase 8 (US1)**: depende de Phases 5-7 y de T127c (para SC-010).
+- **Phase 9 (Polish)**: depende de todo lo anterior incluida Phase 4-V verde.
 
 ### Within each migration block (Phase 4)
 

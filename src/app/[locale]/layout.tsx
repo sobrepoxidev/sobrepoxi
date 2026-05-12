@@ -12,6 +12,7 @@ import SessionLayout from "@/components/SessionLayout";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
+import { ErrorBoundary } from "@/shared/ui/ErrorBoundary";
 
 type tParams = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
@@ -70,16 +71,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="antialiased bg-[#121212]">
-        <NextIntlClientProvider locale={locale}>
-          <SessionLayout>
-            <Navbar locale={locale} />
-            {children}
-            <Footer locale={locale} />
-            <WhatsAppBubble />
-            <Toaster position="top-center" />
-            <Analytics />
-          </SessionLayout>
-        </NextIntlClientProvider>
+        <ErrorBoundary>
+          <NextIntlClientProvider locale={locale}>
+            <SessionLayout>
+              <Navbar locale={locale} />
+              {children}
+              <Footer locale={locale} />
+              <WhatsAppBubble />
+              <Toaster position="top-center" />
+              <Analytics />
+            </SessionLayout>
+          </NextIntlClientProvider>
+        </ErrorBoundary>
         <Script
           id="structured-data"
           type="application/ld+json"

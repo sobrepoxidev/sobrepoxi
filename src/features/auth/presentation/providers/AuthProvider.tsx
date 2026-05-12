@@ -17,7 +17,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const supabase = createBrowserSupabaseClient()
+  // Lazy init: client se crea una sola vez por instancia del provider.
+  // Pasar el cliente como dep de useEffect cuando se recrea por render dispara
+  // re-suscripciones constantes y, junto con un consumer que cause re-render,
+  // amplifica loops. Ver Principio III (No BIG components) en constitution.md.
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient())
 
   useEffect(() => {
     const initAuth = async () => {

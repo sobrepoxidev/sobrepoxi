@@ -3,11 +3,13 @@ export type { CartItem, CartContextProps, Product } from './application/types';
 
 // State & Providers
 export { CartProvider } from './presentation/providers/CartProvider';
-export { CartContext, encodeCartToBase64, decodeCartFromBase64 } from './presentation/state/CartContext';
-
-// Hooks
-export { useCart } from './application/hooks/useCart';
-export type { UseCartReturn } from './application/hooks/useCart';
+export {
+  CartContext,
+  useCart,
+  encodeCartToBase64,
+  decodeCartFromBase64,
+} from './presentation/state/CartContext';
+export type { UseCartReturn } from './presentation/state/CartContext';
 
 // Use cases
 export { addToCartUseCase } from './application/use-cases/addToCart';
