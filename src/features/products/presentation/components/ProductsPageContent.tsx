@@ -9,7 +9,7 @@ import { ChevronDown, ChevronRight, GridIcon, ListIcon } from 'lucide-react';
 import ProductCard from './ProductCard';
 import ProductFilters from './ProductFilters';
 import PaginationControls from './PaginationControls';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { Database } from '@/types-db';
 import ViewedProductsHistory from './ViewedProductsHistory';
 
@@ -47,6 +47,7 @@ export default function ProductsPageContent() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const supabase = createBrowserSupabaseClient();
         const { data: categoriesData, error: categoriesError } = await supabase
           .from('categories')
           .select('*')
@@ -79,7 +80,7 @@ export default function ProductsPageContent() {
       }
     }
     fetchData();
-  }, [supabase, locale, categoryFilter]);
+  }, [locale, categoryFilter]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -87,6 +88,7 @@ export default function ProductsPageContent() {
       setError(null);
 
       try {
+        const supabase = createBrowserSupabaseClient();
         const from = (currentPage - 1) * PRODUCTS_PER_PAGE;
         const to = from + PRODUCTS_PER_PAGE - 1;
 
@@ -152,7 +154,7 @@ export default function ProductsPageContent() {
       }
     }
     fetchProducts();
-  }, [currentPage, categoryFilter, brandFilter, tagFilter, minPrice, maxPrice, sortBy, stockFilter, featuredOnly, supabase, locale, categories]);
+  }, [currentPage, categoryFilter, brandFilter, tagFilter, minPrice, maxPrice, sortBy, stockFilter, featuredOnly, locale, categories]);
 
   const handleFilterChange = (params: URLSearchParams) => {
     router.push(`${pathname}?${params.toString()}`);

@@ -8,7 +8,7 @@
 
 import { use } from "react";
 import Link from "next/link";
-import { getProductCategories } from "@/features/products";
+import { getProductCategories } from "../../../application/search";
 
 interface Category {
   id: number;

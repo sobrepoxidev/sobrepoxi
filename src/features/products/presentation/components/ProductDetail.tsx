@@ -19,10 +19,13 @@ import {
   MessageSquare,
   PlayCircle
 } from 'lucide-react';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/features/cart';
-import { ReviewsList, RelatedProductsClient, ReviewForm } from '@/features/products';
+import ReviewsList from './ReviewsList';
+import RelatedProductsClient from './RelatedProductsClient';
+import ReviewForm from './ReviewForm';
 import { formatUSD } from '@/lib/formatCurrency';
 import { Database } from '@/shared/types/database';
 
@@ -31,6 +34,8 @@ type Category = Database['categories'];
 
 // The client component that handles UI and state
 export default function ProductDetail({ name, locale }: { name: string, locale: string }) {
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
+
   // Ensure viewport starts at top when navigating to product page
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -123,7 +128,8 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
           setIsFavorite(!!favoriteData);
         }
 
-      } catch {
+      } catch (err) {
+        console.error('[ProductDetail] fetch error:', err);
         setError('Error al cargar el producto');
       } finally {
         setLoading(false);
@@ -133,7 +139,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
     if (name) {
       fetchProductAndRelatedData();
     }
-  }, [name]); // Use id as dependency
+  }, [name, session?.user, supabase]); // Use id as dependency
 
   // Manejar la cantidad
   const handleIncrement = () => {

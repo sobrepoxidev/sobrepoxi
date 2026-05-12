@@ -17,7 +17,6 @@ interface RelatedProductsProps {
 export default function RelatedProducts({ currentProductId, categoryId, maxProducts = 4 }: RelatedProductsProps) {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const supabase = createBrowserSupabaseClient()
   const locale = useLocale()
 
   useEffect(() => {
@@ -27,6 +26,7 @@ export default function RelatedProducts({ currentProductId, categoryId, maxProdu
         return
       }
 
+      const supabase = createBrowserSupabaseClient()
       const { data, error } = await supabase
         .from('products')
         .select('*')
@@ -36,7 +36,7 @@ export default function RelatedProducts({ currentProductId, categoryId, maxProdu
         .limit(maxProducts)
 
       if (error) {
-        console.error('Error fetching related products:', error)
+        console.error('[RelatedProducts] fetch error:', error)
         setLoading(false)
         return
       }
@@ -46,7 +46,7 @@ export default function RelatedProducts({ currentProductId, categoryId, maxProdu
     }
 
     fetchRelatedProducts()
-  }, [categoryId, currentProductId, maxProducts, supabase])
+  }, [categoryId, currentProductId, maxProducts])
 
   if (loading) {
     return (

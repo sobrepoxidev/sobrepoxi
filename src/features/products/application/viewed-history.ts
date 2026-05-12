@@ -92,7 +92,8 @@ export async function syncViewedHistoryWithServer(): Promise<boolean> {
       return false;
     }
     return true;
-  } catch {
+  } catch (err) {
+    console.error('[syncViewedHistory]', err);
     return false;
   }
 }

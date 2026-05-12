@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabaseClient'
+import { createBrowserSupabaseClient } from '@/shared/supabase/client'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 import { useLocale } from 'next-intl';
@@ -28,6 +28,7 @@ export default function OrderConfirmationPage() {
     const fetchOrderDetails = async () => {
       if (!orderId) return
 
+      const supabase = createBrowserSupabaseClient()
       const { data, error } = await supabase
         .from('orders')
         .select('*')

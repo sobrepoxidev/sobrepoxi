@@ -47,7 +47,8 @@ export default function LoginClient() {
         setConfirmationMsg('Iniciando sesión...')
         router.replace(decodeURIComponent(returnUrl))
       }
-    } catch {
+    } catch (err) {
+      console.error('[LoginClient] sign-in error:', err)
       setErrorMsg('Error inesperado. Intenta de nuevo o usa el inicio de sesión con Google.')
       setLoading(false)
     }

@@ -58,7 +58,8 @@ export default function RegisterClient() {
         setConfirmationMsg('Registro exitoso. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.')
         setLoading(false)
       }
-    } catch {
+    } catch (err) {
+      console.error('[RegisterClient] sign-up error:', err)
       setErrorMsg('Error inesperado. Intenta de nuevo.')
       setLoading(false)
     }

@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ProductsProvider as ProductsContextProvider, type Product, type Category } from '@/features/products';
+import { ProductsProvider as ProductsContextProvider } from '../state/ProductsContext';
+import type { Product, Category } from '../../application/hooks/useProducts';
 
 /**
  * Proveedor global para datos de productos

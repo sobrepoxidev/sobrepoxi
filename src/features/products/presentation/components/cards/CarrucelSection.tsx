@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { Database } from '@/types-db';
 import { useLocale } from 'next-intl';
 import './carousel.css'; // Importamos los estilos para el scrollbar fino
@@ -100,6 +100,7 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
       try {
         setLoading(true);
         setError(null);
+        const supabase = createBrowserSupabaseClient();
 
         // Cargar categorías
         const { data: categoriesData, error: categoriesError } = await supabase
@@ -143,7 +144,8 @@ const CarrucelSection: React.FC<CarrucelSectionProps> = ({
               setProducts(recentData);
             }
           }
-        } catch {
+        } catch (err) {
+          console.error('[CarrucelSection] featured fetch error, using fallback:', err);
           // Si hay algún error, intentamos cargar productos recientes
           const { data: fallbackData, error: fallbackError } = await query
             .limit(20);

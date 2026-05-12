@@ -2,7 +2,7 @@
 
 import PayPalCardMethod from './PayPalCardMethod';
 import toast from 'react-hot-toast';
-import { BANCOS, type PaymentMethod, type Banco } from '@/features/checkout';
+import { BANCOS, type PaymentMethod, type Banco } from '../../application/distribute';
 
 interface PaymentFormProps {
   paymentMethod: PaymentMethod | null;

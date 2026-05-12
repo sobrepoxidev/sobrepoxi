@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import PaymentForm from './PaymentForm';
-import type { CartItem, PaymentMethod, Banco } from '@/features/checkout';
+import type { CartItem, PaymentMethod, Banco } from '../../application/distribute';
 
 interface StepTwoProps {
   paymentMethod: PaymentMethod | null;

@@ -2,7 +2,8 @@
 
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { formatUSD } from '@/lib/formatCurrency';
-import { useCheckoutForm, type CartItem, type ShippingAddress } from '@/features/checkout';
+import { useCheckoutForm } from '../../application/hooks/useCheckoutForm';
+import type { CartItem, ShippingAddress } from '../../application/distribute';
 
 const PROVINCIAS = [
   'San José', 'Alajuela', 'Cartago', 'Heredia',

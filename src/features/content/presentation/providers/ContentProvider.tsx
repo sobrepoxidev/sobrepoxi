@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ContentProvider as ContentContextProvider } from '@/features/content';
+import { ContentProvider as ContentContextProvider } from '../state/ContentContext';
 
 interface ContentProviderProps {
   children: React.ReactNode;

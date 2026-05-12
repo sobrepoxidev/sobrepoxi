@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { CarrucelItem } from './CarrucelSectionA';
+import type { CarrucelItem } from './CarrucelSectionA';
 
 const CarouselCard: React.FC<{
   textColor: string;

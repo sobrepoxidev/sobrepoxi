@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CheckoutProvider as CheckoutContextProvider } from '@/features/checkout';
+import { CheckoutProvider as CheckoutContextProvider } from '../state/CheckoutContext';
 
 interface CheckoutProviderProps {
   children: React.ReactNode;

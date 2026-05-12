@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { Database } from '@/types-db';
 import { getLocalViewedHistory, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
 import { Link } from '@/i18n/navigation';
@@ -24,8 +24,9 @@ export default function ViewedProductsHistory() {
     async function fetchViewedProducts() {
       setLoading(true);
       setError(null);
-      
+
       try {
+        const supabase = createBrowserSupabaseClient();
         // Check if user is authenticated
         const { data: { session } } = await supabase.auth.getSession();
         const isLoggedIn = !!session?.user;

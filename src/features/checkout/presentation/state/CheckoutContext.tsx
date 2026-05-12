@@ -1,9 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabaseClient';
-import type { ShippingAddress, DiscountInfo, PaymentMethod, Banco } from '@/features/checkout';
+import type { Session, SupabaseClient } from '@supabase/supabase-js';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import type { ShippingAddress, DiscountInfo, PaymentMethod, Banco } from '../../application/distribute';
 
 interface CheckoutState {
   currentStep: number;
@@ -36,6 +36,7 @@ interface CheckoutProviderProps {
 }
 
 export function CheckoutProvider({ children }: CheckoutProviderProps) {
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
   const [session, setSession] = useState<Session | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress | null>(null);
@@ -64,7 +65,7 @@ export function CheckoutProvider({ children }: CheckoutProviderProps) {
     return () => {
       listener?.subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase]);
 
   const goNext = () => setCurrentStep((s) => s + 1);
   const goBack = () => setCurrentStep((s) => s - 1);

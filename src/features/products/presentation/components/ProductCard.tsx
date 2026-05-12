@@ -6,7 +6,8 @@ import { Link } from '@/i18n/navigation';
 import { Star, ShoppingCart, Check, Heart } from 'lucide-react';
 import { useCart } from '@/features/cart';
 import { Database } from '@/types-db';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useLocale } from 'next-intl';
 import { formatUSD } from '@/lib/formatCurrency';
 
@@ -20,6 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const { addToCart } = useCart();
   const locale = useLocale();
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
 
   const mainImageUrl = product?.media?.[0]?.url || '/product-placeholder.png';
 
@@ -53,7 +55,7 @@ export default function ProductCard({ product }: { product: Product }) {
       }
     }
     fetchData();
-  }, [product.id, product.category_id]);
+  }, [product.id, product.category_id, supabase]);
 
   const finalPrice = product.dolar_price
     ? product.discount_percentage && product.discount_percentage > 0

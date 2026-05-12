@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { Database } from '@/types-db';
 import { Star } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -66,7 +66,8 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
   useEffect(() => {
     const fetchReviews = async () => {
       setLoading(true);
-      
+      const supabase = createBrowserSupabaseClient();
+
       // Fetch reviews for the product
       const { data, error } = await supabase
         .from('reviews')

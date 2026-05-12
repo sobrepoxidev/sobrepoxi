@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import Card from "./Card";
 import { Link } from "@/shared/i18n/navigation";
 import Image from "next/image";
-import { useProductsContext } from "@/features/products";
+import { useProductsContext } from "../../state/ProductsContext";
 import CarrucelSectionA from "./CarrucelSectionA";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/shared/utils/formatCurrency";

@@ -6,8 +6,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SearchResult, searchProducts } from '@/lib/search';
 import { ChevronRight, SlidersHorizontal, } from 'lucide-react';
-import { PaginationControls, ProductCard } from '@/features/products';
-import { supabase } from '@/lib/supabaseClient';
+import PaginationControls from '../PaginationControls';
+import ProductCard from '../ProductCard';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { Database } from '@/shared/types/database';
 
 // Número de productos por página
@@ -35,6 +36,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
   useEffect(() => {
     async function fetchCategories() {
       try {
+        const supabase = createBrowserSupabaseClient();
         const { data, error } = await supabase
           .from('categories')
           .select('*')
@@ -123,6 +125,7 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
           // Only category filter – categoryParam may be ID or name
           let categoryId: string | null = null;
 
+          const supabase = createBrowserSupabaseClient();
           if (/^\d+$/.test(category)) {
             categoryId = category;
           } else {

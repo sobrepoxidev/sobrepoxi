@@ -14,7 +14,8 @@ export async function GET(req: Request) {
   try {
     const data = await convertUsd(amount, to as Currency);
     return NextResponse.json(data, { headers: { 'Cache-Control': 's-maxage=1800' } });
-  } catch {
+  } catch (err) {
+    console.error('[api/convert] conversion error:', err);
     return NextResponse.json({ error: 'Conversion failed' }, { status: 500 });
   }
 }

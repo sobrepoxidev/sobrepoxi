@@ -5,7 +5,8 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useRouter } from 'next/navigation';
 import { Session } from '@supabase/supabase-js';
 import { useCart, type CartItem } from '@/features/cart';
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { Loader2 } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -30,6 +31,7 @@ export default function PayPalCardMethod({
   const router = useRouter();
   const { cart, clearCart } = useCart();
   const locale = useLocale();
+  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
 
   const [session, setSession] = useState<Session | null>(null);
   const userId = session?.user?.id || 'guest-user';
@@ -41,7 +43,7 @@ export default function PayPalCardMethod({
     return () => {
       listener?.subscription.unsubscribe();
     };
-  }, [supabase.auth]);
+  }, [supabase]);
 
   useEffect(() => {
     console.log('PayPal client ID: ', PAYPAL_CLIENT_ID);

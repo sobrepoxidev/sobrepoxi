@@ -2,7 +2,7 @@
 
 import { sendOrderEmailInputSchema, type SendOrderEmailInput } from "../schemas";
 import { renderOrderConfirmationHtml } from "../templates/order-confirmation";
-import { sendMail } from "@/features/notifications";
+import { sendMail } from "../../infrastructure/transport/nodemailer";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
 
 const COMPANY_EMAIL = "sobrepoxidev@gmail.com";

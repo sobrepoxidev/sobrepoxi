@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabaseClient';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import type { CartItem, ShippingAddress, DiscountInfo, PaymentMethod, Banco } from '../distribute';
 
 export interface CreateOrderParams {
@@ -31,6 +31,7 @@ export async function createOrder(params: CreateOrderParams): Promise<{ orderId:
     paymentReference = `4 ultimos digitos: ${ultimos4} - Banco: ${bancoSeleccionado.nombre}`;
   }
 
+  const supabase = createBrowserSupabaseClient();
   const { data: orderInsert, error: orderError } = await supabase
     .from('orders')
     .insert({
@@ -63,13 +64,16 @@ export async function createOrder(params: CreateOrderParams): Promise<{ orderId:
 }
 
 export async function updateOrderPaymentReference(orderId: number, reference: string): Promise<void> {
+  const supabase = createBrowserSupabaseClient();
   await supabase.from('orders').update({ payment_reference: reference }).eq('id', orderId);
 }
 
 export async function clearUserCart(userId: string): Promise<void> {
+  const supabase = createBrowserSupabaseClient();
   await supabase.from('cart_items').delete().eq('user_id', userId);
 }
 
 export async function getOrderDetails(orderId: number) {
+  const supabase = createBrowserSupabaseClient();
   return supabase.from('orders').select('*, order_items(*)').eq('id', orderId).single();
 }

@@ -7,7 +7,7 @@ import { Search, Filter, RefreshCw, MoreVertical, Check, X, Edit } from 'lucide-
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { ProductEditor } from './ProductEditor';
-import { formatModifiedDate } from '@/features/admin';
+import { formatModifiedDate } from '../../application/distribute';
 
 type Product = Database['products'];
 

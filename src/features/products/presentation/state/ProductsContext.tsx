@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext } from 'react';
-import { useProducts, ProductsData, Product, Category } from '@/features/products';
+import { useProducts, type ProductsData, type Product, type Category } from '../../application/hooks/useProducts';
 
 // Crear el contexto
 const ProductsContext = createContext<ProductsData | undefined>(undefined);

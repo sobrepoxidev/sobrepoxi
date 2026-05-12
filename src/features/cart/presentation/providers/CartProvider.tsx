@@ -4,12 +4,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   CartContext,
-  CartItem,
   encodeCartToBase64,
   decodeCartFromBase64,
+  type CartItem,
   type Product,
-} from '@/features/cart';
-import { supabase } from '@/lib/supabaseClient';
+} from '../state/CartContext';
+import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 
 interface CartProviderProps {
   children: React.ReactNode;
@@ -80,6 +80,7 @@ export function CartProvider({ children }: CartProviderProps) {
     const fetchProductsAndRebuildCart = async () => {
       setIsLoading(true);
       try {
+        const supabase = createBrowserSupabaseClient();
         const productIds = parsed.map(item => item.id);
 
         const { data: products, error } = await supabase

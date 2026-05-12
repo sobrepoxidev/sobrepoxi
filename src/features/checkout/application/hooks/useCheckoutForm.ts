@@ -6,7 +6,7 @@ import { Session } from '@supabase/supabase-js';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
 import type { Database } from '@/shared/types/database';
-import type { ShippingAddress, DiscountInfo } from '@/features/checkout';
+import type { ShippingAddress, DiscountInfo } from '../distribute';
 
 export interface UseCheckoutFormOptions {
   locale: string;
