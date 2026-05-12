@@ -1,1 +1,1 @@
-export { useSupabase } from '@/features/auth/presentation/providers/AuthProvider'
+export { useSupabase } from '@/features/auth'

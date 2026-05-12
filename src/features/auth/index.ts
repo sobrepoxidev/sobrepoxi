@@ -4,7 +4,7 @@ export { signIn, signUp, signOut, getSession, getUser } from './application/use-
 
 export { useAuthState, useAuthActions } from './application/hooks'
 
-export { AuthProvider, useAuth } from './presentation/providers/AuthProvider'
+export { AuthProvider, useAuth, useSupabase } from './presentation/providers/AuthProvider'
 export { AuthStateContext, useAuthStateContext } from './presentation/state/AuthStateContext'
 
 export { default as LoginClient } from './presentation/components/LoginClient'
