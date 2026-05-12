@@ -1,7 +1,7 @@
 'use client';
 
 import { useSupabase } from '@/app/supabase-provider/provider';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 import { useCheckoutForm } from '../../application/hooks/useCheckoutForm';
 import type { CartItem, ShippingAddress } from '../../application/distribute';
 

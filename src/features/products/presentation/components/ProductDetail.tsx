@@ -26,7 +26,7 @@ import { useCart } from '@/features/cart';
 import ReviewsList from './ReviewsList';
 import RelatedProductsClient from './RelatedProductsClient';
 import ReviewForm from './ReviewForm';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 import { Database } from '@/shared/types/database';
 
 type Product = Database['products'];

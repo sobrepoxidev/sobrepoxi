@@ -5,7 +5,7 @@ import { useProductsContext } from '../../state/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 
 interface GiftsCarouselSectionProps {
   /** Identificador único para este componente, usado para la distribución de productos */

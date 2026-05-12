@@ -9,7 +9,7 @@ import { Database } from '@/types-db';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { useLocale } from 'next-intl';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 
 type Product = Database['products'];
 type Category = Database['categories'];

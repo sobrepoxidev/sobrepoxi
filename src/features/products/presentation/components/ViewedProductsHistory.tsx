@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import { Database } from '@/types-db';
-import { getLocalViewedHistory, syncViewedHistoryWithServer } from '@/lib/viewedHistory';
+import { Database } from '@/shared/types/database';
+import { getLocalViewedHistory, syncViewedHistoryWithServer } from '@/features/products';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { Clock, AlertCircle } from 'lucide-react';
 import { useLocale } from 'next-intl';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 
 type Product = Database['products'];
 

@@ -3,9 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { SearchResult } from '@/lib/search';
+import { type SearchResult } from '@/features/products';
 import { Search, X } from 'lucide-react';
-import { formatUSD } from '@/lib/formatCurrency';
+import { formatUSD } from '@/shared/utils/formatCurrency';
 
 interface SearchSuggestionsProps {
   query: string;

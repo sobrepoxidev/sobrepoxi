@@ -10,8 +10,7 @@ import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/features/cart';
 import UserDropdown from './UserDropdown';
-import { SearchBar, CategoryCarousel } from '@/features/products';
-import { getCategoriesFromDB } from '@/lib/categories';
+import { SearchBar, CategoryCarousel, getCategoriesFromDB } from '@/features/products';
 import LocaleSwitcher from './LocaleSwitcher';
 
 type NavLink = {

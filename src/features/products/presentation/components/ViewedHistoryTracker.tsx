@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { addProductToHistory } from '@/lib/viewedHistory';
+import { addProductToHistory } from '@/features/products';
 
 interface ViewedHistoryTrackerProps {
   product: {

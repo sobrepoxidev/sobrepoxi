@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCommonMetadata, buildTitle } from '@/lib/seo';
+import { getCommonMetadata, buildTitle } from '@/shared/seo/seo';
 import type { Metadata } from "next";
 type tParams = Promise<{ id: string, locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {

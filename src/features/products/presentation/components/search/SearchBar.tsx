@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, ChevronDown } from 'lucide-react';
-import { SearchResult, searchProducts, getProductCategories } from '@/lib/search';
+import { SearchResult, searchProducts, getProductCategories } from '@/features/products';
 import SearchSuggestions from './SearchSuggestions';
 
 interface SearchBarProps {

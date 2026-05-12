@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-import { getCommonMetadata, buildTitle } from '@/lib/seo'
+import { createServerSupabaseClient } from '@/shared/supabase/server'
+import { getCommonMetadata, buildTitle } from '@/shared/seo/seo'
 import type { Metadata } from 'next'
 import { AccountClient } from '@/features/account'
 
@@ -17,28 +16,7 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
 
 export default async function AccountPage() {
   try {
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                cookieStore.set(name, value, options)
-              )
-            } catch {
-              // Ignore
-            }
-          },
-        },
-      }
-    )
-
+    const supabase = await createServerSupabaseClient()
     const { data: { user }, error: userError } = await supabase.auth.getUser()
 
     if (userError) throw userError

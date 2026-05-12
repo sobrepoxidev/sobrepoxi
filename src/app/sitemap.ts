@@ -1,14 +1,11 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from 'next'
 import slugify from 'slugify'
-import { getAllGuideSlugs } from '@/lib/guidesContent'
+import { getAllGuideSlugs } from '@/features/content'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-/**
- * Fetch active product names from Supabase using REST to keep bundle small.
- */
 async function fetchActiveProductSlugs(): Promise<string[]> {
   if (!SUPABASE_URL || !SUPABASE_KEY) return []
 
@@ -19,7 +16,6 @@ async function fetchActiveProductSlugs(): Promise<string[]> {
         apikey: SUPABASE_KEY,
         Authorization: `Bearer ${SUPABASE_KEY}`,
       },
-      // Revalidate at runtime every 30 min to keep sitemap fresh.
       next: { revalidate: 1800 },
     }
   )
@@ -35,15 +31,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
 
   const staticBases = [
-    '',            // /
+    '',
     'about',
     'products',
     'contact',
     'privacy-policies',
     'conditions-service',
     'luxury-furniture',
-    'epoxy-floors',              // Main epoxy floors page (most indexed)
-    'industrial-epoxy-flooring', // Landing page for industrial market
+    'epoxy-floors',
+    'industrial-epoxy-flooring',
   ]
 
   const staticEntries = staticBases.map(base => ({
@@ -58,7 +54,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }))
 
-  // Dynamic product URLs
   const productSlugs = await fetchActiveProductSlugs()
   const productEntries: MetadataRoute.Sitemap = productSlugs.map((slug) => ({
     url: `https://sobrepoxi.com/es/product/${slug}`,
@@ -72,10 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   }))
 
-  // Guide pages
   const guideSlugs = getAllGuideSlugs()
   const guideEntries: MetadataRoute.Sitemap = [
-    // Guides index page
     {
       url: 'https://sobrepoxi.com/es/guias',
       lastModified: now,
@@ -87,8 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     },
-    // Individual guide pages
-    ...guideSlugs.map(({ slug, locale }) => ({
+    ...guideSlugs.map(({ slug, locale }: { slug: string; locale: string }) => ({
       url: `https://sobrepoxi.com/${locale}/guias/${slug}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
