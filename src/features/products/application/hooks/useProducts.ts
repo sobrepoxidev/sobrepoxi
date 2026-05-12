@@ -159,7 +159,7 @@ export function useProducts(
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialCategories, initialProducts]);
 
   return data;
 }

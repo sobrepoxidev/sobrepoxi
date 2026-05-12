@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
@@ -74,17 +74,17 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
 
-  const startAutoPlay = () => {
+  const startAutoPlay = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     intervalRef.current = setInterval(() => {
       if (!isPaused) {
         setCurrentBanner((prev) => (prev + 1) % bannerCount);
       }
     }, 4500);
-  };
+  }, [isPaused, bannerCount]);
   const locale = useLocale();
 
   useEffect(() => {

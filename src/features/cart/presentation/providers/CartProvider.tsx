@@ -118,7 +118,7 @@ export function CartProvider({ children }: CartProviderProps) {
     };
 
     fetchProductsAndRebuildCart();
-  }, [searchParams]);
+  }, []);
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + (item.quantity * (item.product.dolar_price || 0)), 0);

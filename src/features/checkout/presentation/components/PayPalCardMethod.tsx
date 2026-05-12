@@ -41,7 +41,7 @@ export default function PayPalCardMethod({
     return () => {
       listener?.subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, [supabase.auth]);
 
   useEffect(() => {
     console.log('PayPal client ID: ', PAYPAL_CLIENT_ID);
@@ -81,7 +81,7 @@ export default function PayPalCardMethod({
         }
       };
     }
-  }, [redirecting]);
+  }, [redirecting, locale]);
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4">

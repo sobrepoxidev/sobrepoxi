@@ -79,7 +79,7 @@ export default function ProductsPageContent() {
       }
     }
     fetchData();
-  }, []);
+  }, [supabase, locale, categoryFilter]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -152,7 +152,7 @@ export default function ProductsPageContent() {
       }
     }
     fetchProducts();
-  }, [currentPage, categoryFilter, brandFilter, tagFilter, minPrice, maxPrice, sortBy, stockFilter, featuredOnly]);
+  }, [currentPage, categoryFilter, brandFilter, tagFilter, minPrice, maxPrice, sortBy, stockFilter, featuredOnly, supabase, locale, categories]);
 
   const handleFilterChange = (params: URLSearchParams) => {
     router.push(`${pathname}?${params.toString()}`);
