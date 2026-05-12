@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { Loader2, RefreshCcw, ArrowLeft } from 'lucide-react';
 import { useLocale } from 'next-intl';
+import { type ConversionResult, type Currency } from '@/features/currency';
 
 type Props = {
   amount: number;
@@ -14,29 +15,29 @@ export default function CurrencyConverterRow({
   defaultCurrency = 'CRC',
 }: Props) {
   const locale = useLocale();
-  const [currency, setCurrency] = useState(defaultCurrency.toUpperCase());
-
-  interface ConversionResult {
-    currency: string;
-    converted: number;
-    rate: number;
-    timestamp: string;
-  }
+  const [currency, setCurrency] = useState<Currency>(defaultCurrency.toUpperCase() as Currency);
 
   const [result, setResult] = useState<ConversionResult | null>(null);
-  const [last, setLast] = useState<{ amt: number; cur: string } | null>(null);
+  const [last, setLast] = useState<{ amt: number; cur: Currency } | null>(null);
   const [pending, start] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const disabled: boolean =
     pending || (!!last && last.amt === amount && last.cur === currency);
 
   const onConvert = async () => {
     if (disabled) return;
+    setError(null);
     start(async () => {
       const res = await fetch(`/api/convert?amount=${amount}&to=${currency}`);
       const data = await res.json();
-      setResult(data);
-      setLast({ amt: amount, cur: currency });
+      if (!res.ok || data.error) {
+        setError(data.error || 'Conversion error');
+        setResult(null);
+      } else {
+        setResult(data as ConversionResult);
+        setLast({ amt: amount, cur: currency });
+      }
     });
   };
 
@@ -46,7 +47,7 @@ export default function CurrencyConverterRow({
         className="border-none bg-transparent px-1 py-0.5 focus:outline-none focus:ring-0 text-black font-semibold"
         value={currency}
         onChange={e => {
-          setCurrency(e.target.value.toUpperCase());
+          setCurrency(e.target.value as Currency);
           setResult(null);
         }}
       >
@@ -77,15 +78,13 @@ export default function CurrencyConverterRow({
       </button>
 
       <div className="min-w-[8rem] font-semibold text-black text-xs">
-        {result ? (
-          result.currency && result.converted ? (
-            new Intl.NumberFormat('es-CR', {
-              style: 'currency',
-              currency: result.currency,
-            }).format(result.converted)
-          ) : (
-            <span className="text-red-500">{locale === 'es' ? 'Error en conversión' : 'Conversion error'}</span>
-          )
+        {error ? (
+          <span className="text-red-500">{locale === 'es' ? 'Error en conversión' : 'Conversion error'}</span>
+        ) : result ? (
+          new Intl.NumberFormat('es-CR', {
+            style: 'currency',
+            currency: result.to,
+          }).format(result.amount * result.rate)
         ) : (
           <span className="flex items-center gap-1 text-gray-600"><ArrowLeft className="h-3 w-3 font-extrabold text-black" />{locale === 'es' ? 'click para convertir' : 'Click to convert'}</span>
         )}

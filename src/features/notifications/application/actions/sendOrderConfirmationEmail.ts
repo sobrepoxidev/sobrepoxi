@@ -5,7 +5,7 @@ import { renderOrderConfirmationHtml } from "../templates/order-confirmation";
 import { sendMail } from "../../infrastructure/transport/nodemailer";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
 
-const COMPANY_EMAIL = "sobrepoxidev@gmail.com";
+const COMPANY_EMAIL = "info@sobrepoxi.com";
 
 export async function sendOrderConfirmationEmail(
   input: SendOrderEmailInput

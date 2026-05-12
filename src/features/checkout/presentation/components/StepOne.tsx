@@ -32,7 +32,7 @@ export default function StepOne({ cart, onContinue, initialData, locale }: StepO
     handleAddressSelection,
   } = useCheckoutForm({ locale, initialData });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
       const firstError = document.querySelector('[data-error="true"]');
@@ -56,7 +56,12 @@ export default function StepOne({ cart, onContinue, initialData, locale }: StepO
       const confirmed = window.confirm('¿Deseas guardar esta dirección en tu perfil para futuros pedidos?');
       if (confirmed) {
         const addressToSave = { ...shippingAddress };
-        supabase.from('user_profiles').update({ shipping_address: addressToSave }).eq('id', session.user.id);
+        try {
+          const { error } = await supabase.from('user_profiles').update({ shipping_address: addressToSave }).eq('id', session.user.id);
+          if (error) throw error;
+        } catch (err) {
+          console.error('[StepOne] failed to save address to profile:', err);
+        }
       }
     }
 
