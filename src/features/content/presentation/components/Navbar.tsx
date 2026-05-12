@@ -1,6 +1,6 @@
 // components/layout/Navbar/index.tsx
 // Componente principal SSR
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
 import { SearchBar, CategoryCarousel } from '@/features/products';

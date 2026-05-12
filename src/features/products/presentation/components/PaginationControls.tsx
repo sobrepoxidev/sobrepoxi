@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

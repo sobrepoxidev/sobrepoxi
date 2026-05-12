@@ -2,9 +2,9 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
-import { useRouter } from '@/i18n/navigation';
+import { useRouter } from '@/shared/i18n/navigation';
 import { Menu, X, User, ShoppingCart, ChevronDown, Package } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';

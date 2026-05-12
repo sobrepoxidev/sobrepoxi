@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { buildMetadata } from "@/shared/seo/seoConfig";
 import { LoadingGallery as Loading, ProductsPageContent } from "@/features/products";
-import { createClient } from "@/utils/supabase/server";
+import { createServerSupabaseClient } from '@/shared/supabase/server';
 
 /**
  * Página de productos que muestra todos los productos disponibles.
@@ -24,7 +24,7 @@ export async function generateMetadata({
   const query = await searchParams;
 
   // Fetch product data from Supabase (for individual product pages)
-  const supabase = await createClient();
+  const supabase = await createServerSupabaseClient();
   const { data: product } = await supabase
     .from('products')
     .select('id, name, name_es, name_en, media')

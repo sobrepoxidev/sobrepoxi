@@ -1,5 +1,5 @@
 // Server Component
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import type { ReactNode } from 'react';
 
 interface Props {

@@ -1,7 +1,7 @@
 // src/app/vcard/actions.ts
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
+import { createServerSupabaseClient } from '@/shared/supabase/server';
 
 interface FormState {
   error?: string;
@@ -30,7 +30,7 @@ export async function createVCard(prevState: FormState, formData: FormData): Pro
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createServerSupabaseClient();
 
     const { error } = await supabase.from("vcards").insert({
       full_name,

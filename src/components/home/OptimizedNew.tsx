@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { ProductsProvider, OptimizedGridSection } from '@/features/products';
 import type { Database } from '@/shared/types/database';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import { useLocale } from 'next-intl';
 import {
   ArrowRight,

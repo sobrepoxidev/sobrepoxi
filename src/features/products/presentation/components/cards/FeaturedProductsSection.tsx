@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { useProductsContext } from '../../state/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import { formatUSD } from '@/shared/utils/formatCurrency';
 
 interface FeaturedProductsSectionProps {

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocale } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 
 // interface CarouselArrowProps {
 //   direction: 'left' | 'right';

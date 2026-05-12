@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/shared/i18n/navigation';
 import { Facebook, Instagram, Phone, Mail, Youtube, MapPin } from 'lucide-react';
 import Image from 'next/image';
 

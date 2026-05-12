@@ -1,5 +1,5 @@
 import {useLocale} from 'next-intl';
-import {routing} from '@/i18n/routing';
+import {routing} from '@/shared/i18n/routing';
 import LocaleSwitcherSelect from './LocaleSwitcherSelect';
 
 export default function LocaleSwitcher() {
