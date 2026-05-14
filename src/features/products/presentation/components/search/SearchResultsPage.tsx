@@ -54,7 +54,6 @@ export default function SearchResultsPage({ locale }: { locale: string }) {
     }
 
     fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryParam, isCategoryFilter, locale]);
 
   // Función para actualizar los parámetros de búsqueda y navegar

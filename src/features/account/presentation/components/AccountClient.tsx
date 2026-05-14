@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { User } from '@supabase/supabase-js';
 import { useState, useEffect } from 'react';
 import { useSupabase } from '@/app/supabase-provider/provider';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { toast } from 'react-hot-toast';
 import ProfileTab from './ProfileTab';
 import AddressTab from './AddressTab';

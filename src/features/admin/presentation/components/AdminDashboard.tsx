@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSupabase } from '@/app/supabase-provider/provider';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import { Search, Filter, RefreshCw, MoreVertical, Check, X, Edit } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';

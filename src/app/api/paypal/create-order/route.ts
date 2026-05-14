@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
 import { getPaypalAccessToken, createPaypalOrder } from "../paypalHelpers";
+import { logger } from "@/shared/observability/logger";
 import { z } from "zod";
 
 const createOrderSchema = z.object({
@@ -52,12 +53,12 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({ paypalOrderId: paypalOrder.id }, { status: 200 });
     } catch (paypalError: unknown) {
-      console.error('PayPal API error:', paypalError);
+      logger.error('PayPal API error:', { error: paypalError });
       const message = paypalError instanceof Error ? paypalError.message : 'Unknown error';
       return NextResponse.json({ error: `PayPal error: ${message}` }, { status: 500 });
     }
   } catch (err: unknown) {
-    console.error("Error in create-order route:", err);
+    logger.error("Error in create-order route:", { error: err });
     const message = err instanceof Error ? err.message : 'Unknown error occurred';
     return NextResponse.json({ error: message }, { status: 500 });
   }

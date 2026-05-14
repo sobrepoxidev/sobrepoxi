@@ -13,7 +13,7 @@ import { AlertTriangle, Share2 } from "lucide-react";
 import { RelatedProductsClient } from "@/features/products";
 import { useLocale } from "next-intl";
 import { formatUSD } from "@/shared/utils/formatCurrency";
-import { CurrencyConverterRow } from "@/components/CurrencyConverterRow";
+import { CurrencyConverterRow } from "@/features/currency";
 
 // Tipo para la información de descuento basado en la tabla discount_codes
 // ──────────────────── Share Cart Button ─────────────────────

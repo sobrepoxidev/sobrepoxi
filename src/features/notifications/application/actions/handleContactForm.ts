@@ -2,7 +2,7 @@
 
 import { sendContactEmail, type ContactFormData } from "@/features/notifications";
 
-export async function handleVacationForm(
+export async function handleContactForm(
   _: unknown,
   formData: FormData
 ): Promise<{ success: boolean; message: string }> {

@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import { z } from "zod";
 import { renderOrderConfirmationHtml } from "@/features/notifications";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
+import { logger } from "@/shared/observability/logger";
 
 const COMPANY_EMAIL = "sobrepoxidev@gmail.com";
 
@@ -134,16 +135,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    console.log(
-      JSON.stringify({
-        event: "send-order-email-call",
-        timestamp: new Date().toISOString(),
-        origin: request.headers.get("origin"),
-        userId: session.user.id,
-        to: data.userEmail,
-        subject: `order-${data.orderId}`,
-      })
-    );
+    logger.info("send-order-email-call", {
+      origin: request.headers.get("origin"),
+      userId: session.user.id,
+      to: data.userEmail,
+      subject: `order-${data.orderId}`,
+    });
 
     const emailHtml = renderOrderConfirmationHtml({
       orderId: data.orderId,
@@ -170,7 +167,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[send-order-email] error:", error);
+    logger.error("[send-order-email] error:", { error });
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

@@ -2,7 +2,7 @@
 
 import { contactFormSchema, type ContactFormData } from "../schemas";
 import { renderContactHtml } from "../templates/contact";
-import { sendMail } from "../../infrastructure/transport/nodemailer";
+import { sendMail } from "../../infrastructure/transport/nodemailer.server";
 
 const COMPANY_EMAIL = "info@sobrepoxi.com";
 

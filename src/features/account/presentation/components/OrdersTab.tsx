@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import type { Database } from '@/types-db';
+import type { Database } from '@/shared/types/database';
 
 type Order = Database['orders'] & {
   order_items: (Database['order_items'] & {

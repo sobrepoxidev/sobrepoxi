@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import { Star } from 'lucide-react';
 import { useLocale } from 'next-intl';
 

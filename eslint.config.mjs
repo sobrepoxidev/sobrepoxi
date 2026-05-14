@@ -34,7 +34,7 @@ const eslintConfig = [
         {
           default: "disallow",
           rules: [
-            { from: "app",                    allow: ["feature-barrel", "shared"] },
+{ from: "app", allow: ["feature-barrel", "feature-presentation", "shared"] },
             { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared", "app"] },
             { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "feature-infrastructure", "shared", "app"] },
             { from: "feature-infrastructure", allow: ["feature-domain", "feature-application", "shared"] },

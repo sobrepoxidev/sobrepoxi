@@ -12,7 +12,6 @@
   "dependencies": {
     "@paypal/react-paypal-js": "^8.8.3",
     "@radix-ui/react-tabs": "^1.1.12",
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.50.3",
     "@vercel/analytics": "^1.5.0",

@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
 import { getPaypalAccessToken, capturePaypalOrder } from "../paypalHelpers";
+import { logger } from "@/shared/observability/logger";
 import { z } from "zod";
 
 const captureOrderSchema = z.object({
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
       .select();
 
     if (updateOrderError) {
-      console.error("Error updating order:", updateOrderError);
+      logger.error("Error updating order:", { error: updateOrderError });
       return NextResponse.json({ error: "Error updating order" }, { status: 500 });
     }
 
@@ -80,13 +81,13 @@ export async function POST(request: NextRequest) {
         .eq("order_id", orderId);
 
       if (updateTicketsError) {
-        console.log('Continuing despite ticket update error');
+        logger.warn('Continuing despite ticket update error');
       }
     }
 
     return NextResponse.json({ status: "COMPLETED" }, { status: 200 });
   } catch (err: unknown) {
-    console.error("Error in capture-order route:", err);
+    logger.error("Error in capture-order route:", { error: err });
     const message = err instanceof Error ? err.message : 'Unknown error occurred';
     return NextResponse.json({ error: message }, { status: 500 });
   }

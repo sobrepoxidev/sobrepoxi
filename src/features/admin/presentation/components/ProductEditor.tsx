@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import { X, Save, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';

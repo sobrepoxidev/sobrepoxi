@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Link } from '@/shared/i18n/navigation';
 import { Star, ShoppingCart, Check, Heart } from 'lucide-react';
 import { useCart } from '@/features/cart';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { useLocale } from 'next-intl';

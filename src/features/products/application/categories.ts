@@ -1,5 +1,5 @@
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import type { Database } from '@/types-db';
+import type { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
 

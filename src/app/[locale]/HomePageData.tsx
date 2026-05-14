@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { Database } from '@/types-db'
-import OptimizedNew from '@/components/home/OptimizedNew'
+import { Database } from '@/shared/types/database'
+import { OptimizedNew } from '@/features/content';
 
 export default async function HomePageData({ locale }: { locale: string }) {
   const cookieStore = await cookies()

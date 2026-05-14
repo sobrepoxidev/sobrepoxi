@@ -2,7 +2,7 @@
 
 import { ProductCardModal } from './ProductModal';
 import ViewedHistoryTracker from './ViewedHistoryTracker';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 
 type Product = Database['products'] & { category: string | null };
 

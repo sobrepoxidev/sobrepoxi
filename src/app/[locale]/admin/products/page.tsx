@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/shared/supabase/server';
-import AdminDashboard from '@/components/admin/AdminDashboard';
+import { AdminDashboard } from '@/features/admin';
 
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
   .split(',')

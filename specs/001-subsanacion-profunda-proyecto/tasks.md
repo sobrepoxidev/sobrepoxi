@@ -8,7 +8,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 **Prerequisites**: [plan.md](./plan.md), [spec.md](./spec.md), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/), [quickstart.md](./quickstart.md)
 **Tests**: Vitest/Playwright están **fuera del alcance** del feature 001 (decisión Q5 de Clarification 2026-05-09). La verificación se sostiene en `pnpm lint` (incluye boundaries), `pnpm typecheck`, `pnpm build` y los smoke tests manuales documentados en [quickstart.md §3](./quickstart.md). Cada tarea declara su(s) verificación(es).
 
-**Status Summary** (audit 2026-05-11 — estado REAL verificable):
+**Status Summary** (audit 2026-05-12 — estado REAL verificable):
 
 | Phase | Estado | Tareas | Evidencia |
 |-------|--------|-------|-----------|
@@ -20,7 +20,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 | Phase 6 (US5 Findings) | ✅ COMPLETED | T124-T127 | findings.md exists; F-SE-001 (49 catches, 0 silent swallows) closed; F-SE-002 (StepOne.tsx promise fix) closed |
 | Phase 7 (US6 Consistency) | ✅ COMPLETED | T128-T132 | T128: endpoint schemas verified + sendOrderConfirmationEmail email fixed + CurrencyConverterRow unused import removed; T132: db/migrations/ created |
 | Phase 8 (US1 Closure) | ✅ COMPLETED | T133-T135 | findings.md SC table added, closure-report.md created, F-022/F-029 updated to CLOSED |
-| Phase 9 (Polish) | ⏸ PENDING | T136-T150 | Eliminar shims residuales + sign-off |
+| Phase 9 (Polish) | ✅ COMPLETED | T136-T150 | Shim cleanup: deleted `src/lib/` (30 files), `src/components/` (8 dirs), `src/i18n/`, `src/utils/`, `src/context/`, `src/types-db.ts`, `src/actions.ts`. Migrated 30+ consumers to feature barrels. Fixed next-intl path. Renamed nodemailer.ts → nodemailer.server.ts. Updated eslint boundaries allow rule for SessionLayout. T143: uninstalled `@supabase/auth-helpers-nextjs`. T144: moved docs. T148: `pnpm build` ✅ `pnpm typecheck` ✅ `pnpm lint` ✅ (pre-existing warnings). |
 
 ---
 ## Anti-Patterns Catalog — DO NOT REPRODUCE

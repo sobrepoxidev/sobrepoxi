@@ -8,7 +8,7 @@ import {
 } from "@/shared/seo/seoConfig";
 import Script from "next/script";
 import { Navbar, Footer, WhatsAppBubble } from "@/features/content";
-import SessionLayout from "@/components/SessionLayout";
+import { SessionLayout } from "@/features/auth";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";

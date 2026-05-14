@@ -1,4 +1,4 @@
-import type { Database } from '@/types-db';
+import type { Database } from '@/shared/types/database';
 
 export type ShippingAddress = Database['user_profiles']['shipping_address'];
 

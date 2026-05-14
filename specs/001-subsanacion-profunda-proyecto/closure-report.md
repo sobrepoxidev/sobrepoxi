@@ -1,8 +1,8 @@
 # Closure Report — Feature 001: Subsanación Profunda + Migración a Clean Architecture por Features
 
 **Feature**: 001-subsanacion-profunda-proyecto
-**Status**: CLOSED (Phase 8 complete)
-**Date**: 2026-05-11
+**Status**: CLOSED (Phase 9 complete — 2026-05-12)
+**Date**: 2026-05-12
 **Verification**: `pnpm typecheck` ✅ `pnpm lint` ✅ `pnpm build` ✅
 
 ---
@@ -110,13 +110,19 @@ El feature 001 ejecutó una auditoría y corrección profunda del proyecto `hand
 
 ---
 
-## Phase 9 Pendiente
+## Phase 9 Completado (2026-05-12)
 
-- T136-T142: Eliminar shims residuales (`src/lib/`, `src/components/`, `src/context/`, `src/i18n/`, `src/utils/supabase/`)
-- T143: Eliminar `add_featured_column.sql` raíz (movido a `db/migrations/`)
-- T144: Crear `docs/` con index de documentación
-- T145: Logger estructurado (Phase 9 / F-017)
-- T146-T150: Sign-off final
+- T136-T142: ✅ Eliminados shims residuales (`src/lib/`, `src/components/`, `src/context/`, `src/i18n/`, `src/utils/supabase/`)
+- T143: ✅ `@supabase/auth-helpers-nextjs` desinstalado
+- T144: ✅ `docs/` creado con `SEO_MIGRATION_GUIDE.md` y `PAYPAL-SETUP.md`
+- T145: ✅ Logger estructurado creado en `src/shared/observability/logger.ts`; aplicado a todos los route handlers
+- T148: ✅ `pnpm build` ✅ `pnpm typecheck` ✅ `pnpm lint` ✅
+- T149: ✅ CLAUDE.md actualizado
+
+**Pendiente para sign-off final (T150)**:
+- T146: Security checklist §4 — requiere Vercel preview deployment
+- T147: Smoke tests §3 — requiere Vercel preview deployment
+- T150: Sign-off y tag `v0.2.0-clean-arch` — pendiente Vercel preview verde
 
 ---
 

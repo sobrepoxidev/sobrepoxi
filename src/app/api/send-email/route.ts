@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
+import { logger } from "@/shared/observability/logger";
 
 const COMPANY_EMAIL = "sobrepoxidev@gmail.com";
 
@@ -73,16 +74,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Recipient not allowed" }, { status: 400 });
     }
 
-    console.log(
-      JSON.stringify({
-        event: "send-email-call",
-        timestamp: new Date().toISOString(),
-        origin: req.headers.get("origin"),
-        userId: session.user.id,
-        to,
-        subject,
-      })
-    );
+    logger.info("send-email-call", {
+      origin: req.headers.get("origin"),
+      userId: session.user.id,
+      to,
+      subject,
+    });
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -100,7 +97,7 @@ export async function POST(req: NextRequest) {
 
     return new Response(null, { status: 204 });
   } catch (error) {
-    console.error("[send-email] error:", error);
+    logger.error("[send-email] error:", { error });
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

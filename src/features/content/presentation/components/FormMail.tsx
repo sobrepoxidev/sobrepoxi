@@ -1,13 +1,13 @@
 "use client";
 import { useActionState} from 'react';
-import { handleVacationForm } from "@/actions";
+import { handleContactForm } from "@/features/notifications";
 import { motion } from 'framer-motion';
 import { FaSpinner, FaCheck } from 'react-icons/fa';
 import { useLocale } from 'next-intl';
 
 export default function FormMail() {
 
-  const [state, formAction, isPending] = useActionState(handleVacationForm, null);
+  const [state, formAction, isPending] = useActionState(handleContactForm, null);
   const locale = useLocale();
 
   return (

@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Check, ChevronDown, ChevronUp, Sliders, X } from 'lucide-react';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 
 type Category = Database['categories'];
 

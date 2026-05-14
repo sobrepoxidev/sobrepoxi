@@ -1,4 +1,5 @@
 // app/api/paypal/paypalHelpers.ts
+import { logger } from "@/shared/observability/logger";
 
 const isProduction = (): boolean => {
   return process.env.NODE_ENV === 'production';
@@ -74,7 +75,7 @@ export async function getPaypalAccessToken(): Promise<string> {
     const data = await res.json();
     return data.access_token;
   } catch (error) {
-    console.error('Error getting PayPal access token:', error);
+    logger.error('Error getting PayPal access token:', { error });
     throw error;
   }
 }
@@ -115,13 +116,13 @@ export async function createPaypalOrder({
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`PayPal create order error:`, errorText);
+      logger.error(`PayPal create order error:`, { errorText });
       throw new Error(`PayPal create order failed: ${res.status}`);
     }
 
     return res.json();
   } catch (error) {
-    console.error('Error creating PayPal order:', error);
+    logger.error('Error creating PayPal order:', { error });
     throw error;
   }
 }
@@ -166,13 +167,13 @@ export async function capturePaypalOrder({
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`PayPal capture order error:`, errorText);
+      logger.error(`PayPal capture order error:`, { errorText });
       throw new Error(`PayPal capture order failed: ${res.status}`);
     }
 
     return res.json();
   } catch (error) {
-    console.error('Error capturing PayPal order:', error);
+    logger.error('Error capturing PayPal order:', { error });
     throw error;
   }
 }

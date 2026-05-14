@@ -10,7 +10,7 @@ import ProductCard from './ProductCard';
 import ProductFilters from './ProductFilters';
 import PaginationControls from './PaginationControls';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import ViewedProductsHistory from './ViewedProductsHistory';
 
 type Product = Database['products'];

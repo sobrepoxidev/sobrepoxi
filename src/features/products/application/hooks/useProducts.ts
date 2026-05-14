@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { distributeProducts, type DistributeProductsResult } from '../distribute';
-import type { Database } from '@/types-db';
+import type { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
 type Category = Database['categories'];

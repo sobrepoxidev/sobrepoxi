@@ -3,12 +3,13 @@ import {
   useState,
   useEffect,
   useRef,
+  useCallback,
   Children,
   type ReactNode,
   type TouchEvent,
 } from 'react';
 import { useLocale } from 'next-intl';
-import CarouselIndicators from '@/components/Carousel/CarouselIndicators';
+import CarouselIndicators from '@/shared/ui/carousel/CarouselIndicators';
 
 export interface CarouselClientProps {
   children: ReactNode;
@@ -26,19 +27,18 @@ export default function CarouselClient({ children }: CarouselClientProps) {
   const locale = useLocale();
 
   /* ───────────── Auto-play ───────────── */
-  const run = () => {
+  const run = useCallback(() => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
     intervalRef.current = setInterval(
       () => !paused && setCurrent((p) => (p + 1) % count),
       4500,
     );
-  };
+  }, [paused, count]);
 
   useEffect(() => (run(), () => clearInterval(intervalRef.current!)), [
     paused,
     count,
     run,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   ]);
 
   /* ───────────── Swipe handlers ───────────── */

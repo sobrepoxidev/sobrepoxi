@@ -5,7 +5,7 @@ import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import { Database } from '@/types-db';
+import { Database } from '@/shared/types/database';
 import { useLocale } from 'next-intl';
 import './carousel.css'; // Importamos los estilos para el scrollbar fino
 

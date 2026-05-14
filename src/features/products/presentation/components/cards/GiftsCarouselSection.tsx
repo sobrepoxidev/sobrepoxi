@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { useProductsContext } from '../../state/ProductsContext';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
@@ -76,17 +76,14 @@ const GiftsCarouselSection: React.FC<GiftsCarouselSectionProps> = ({
   };
   
 // Manejador para el evento de scroll
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     updateScrollInfo();
-  };
+  }, []);
 
-  // Configuramos el observador de scroll al montar el componente
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
       carousel.addEventListener('scroll', handleScroll);
-      // Inicializamos la información de scroll
       updateScrollInfo();
 
       return () => {

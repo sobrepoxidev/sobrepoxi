@@ -18,7 +18,8 @@ export { default as UserDropdown } from './presentation/components/UserDropdown'
 export { default as FormMail } from './presentation/components/FormMail';
 export { default as LocaleSwitcher } from './presentation/components/LocaleSwitcher';
 export { default as LocaleSwitcherSelect } from './presentation/components/LocaleSwitcherSelect';
-export { default as ScrollToTopButton } from './presentation/components/ScrollToTopButton';
+export { default as ScrollToTopButton } from './presentation/components/ScrollToTopButton'
+export { default as OptimizedNew } from './presentation/components/OptimizedNew';;
 
 // Providers & State
 export { ContentProvider, useContentContext } from './presentation/state/ContentContext';
