@@ -104,8 +104,8 @@ export default function NavbarClient({ locale }: NavbarClientProps) {
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 lg:flex">
-            <Link href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-amber-200 px-4 py-2 text-sm font-bold text-stone-950 transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 active:scale-[0.98]">
-              <Phone className="h-4 w-4" aria-hidden="true" />
+            <Link href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-amber-200 px-5 py-2 text-sm font-bold text-stone-950 shadow-[inset_0_-2px_0_oklch(55%_0.12_76_/_0.22)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-amber-100 hover:shadow-[inset_0_-2px_0_oklch(55%_0.12_76_/_0.14),0_14px_34px_oklch(70%_0.12_76_/_0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 active:scale-[0.98]">
+              <Phone className="h-3.5 w-3.5" aria-hidden="true" />
               {locale === 'es' ? 'Cotizar' : 'Quote'}
             </Link>
             <LocaleSwitcher />

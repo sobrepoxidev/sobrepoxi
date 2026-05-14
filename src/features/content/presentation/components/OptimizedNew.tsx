@@ -34,7 +34,7 @@ const whatsappHref = 'https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quie
 
 const copy = {
   es: {
-    eyebrow: 'Atelier técnico en Costa Rica',
+    eyebrow: 'Especialistas en resina epóxica',
     headline: 'Resina epóxica, madera y pisos de alto valor.',
     sub: 'Diseñamos e instalamos acabados epóxicos para hogares, comercios e industria, con piezas a medida que se sienten tan sólidas como se ven.',
     whatsapp: 'Cotizar por WhatsApp',
@@ -56,7 +56,7 @@ const copy = {
     finalText: 'Cuéntanos medidas, uso y acabado deseado. Te orientamos con materiales, tiempos y presupuesto sin compromiso.',
   },
   en: {
-    eyebrow: 'Technical atelier in Costa Rica',
+    eyebrow: 'Epoxy resin specialists in Costa Rica',
     headline: 'Epoxy resin, wood, and high-value floors.',
     sub: 'We design and install epoxy finishes for homes, businesses, and industrial spaces, with custom pieces that feel as solid as they look.',
     whatsapp: 'Quote on WhatsApp',
