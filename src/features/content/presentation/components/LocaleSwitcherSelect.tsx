@@ -13,11 +13,7 @@ type Props = {
   label: string;
 };
 
-export default function LocaleSwitcherSelect({
-  children,
-  defaultValue,
-  label
-}: Props) {
+export default function LocaleSwitcherSelect({ children, defaultValue, label }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
@@ -27,9 +23,7 @@ export default function LocaleSwitcherSelect({
     const nextLocale = event.target.value as Locale;
     startTransition(() => {
       router.replace(
-        // @ts-expect-error -- TypeScript will validate that only known `params`
-        // are used in combination with a given `pathname`. Since the two will
-        // always match for the current route, we can skip runtime checks.
+        // @ts-expect-error -- pathname and params correspond to the active route.
         { pathname, params },
         { locale: nextLocale }
       );
@@ -37,35 +31,18 @@ export default function LocaleSwitcherSelect({
   }
 
   return (
-    <div className="flex items-end">
-      <label
-        className={clsx(
-          'relative text-gray-200 ',
-          isPending && 'transition-opacity [&:disabled]:opacity-30'
-        )}
+    <label className={clsx('relative inline-flex items-center text-stone-200', isPending && 'opacity-60')}>
+      <span className="sr-only">{label}</span>
+      <Globe className="pointer-events-none absolute left-3 h-4 w-4 text-amber-100" aria-hidden="true" />
+      <select
+        aria-label={label}
+        className="h-10 min-w-20 appearance-none rounded-full border border-stone-50/10 bg-stone-50/6 py-0 pl-9 pr-4 text-sm font-bold text-stone-100 transition-[border-color,background-color] duration-300 hover:border-amber-200/35 hover:bg-stone-50/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 disabled:cursor-wait"
+        defaultValue={defaultValue}
+        disabled={isPending}
+        onChange={onSelectChange}
       >
-        <p className="sr-only">{label}</p>
-        <div className="relative">
-          {/* Ícono de bandera (ajusta la lógica según el locale actual) */}
-          {/* <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-      {currentLocale === 'es' ? (
-        <Image src="/flags/es.svg" alt="Español" width={20} height={20} />
-      ) : (
-        <Image src="/flags/en.svg" alt="English" width={20} height={20} />
-      )}
-    </span> */}
-     <Globe height={17} width={17} className="absolute left-2 top-1/2 transform -translate-y-1/2" />
-          <select
-            className="inline-flex appearance-none bg-transparent py-0.5 pl-6 pr-2 ml-0.5" // Ajusta el padding-left para dejar espacio al ícono
-            defaultValue={defaultValue}
-            disabled={isPending}
-            onChange={onSelectChange}
-          >
-            {children}
-          </select>
-         
-        </div>
-      </label>
-    </div>
+        {children}
+      </select>
+    </label>
   );
 }

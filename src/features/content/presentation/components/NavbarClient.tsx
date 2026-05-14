@@ -1,442 +1,196 @@
-// components/layout/Navbar/NavbarClient.tsx
-"use client"
+'use client';
 
-import { useState, useEffect } from 'react';
-import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
-import { useRouter } from '@/shared/i18n/navigation';
-import { Menu, X, User, ShoppingCart, ChevronDown, Package } from 'lucide-react';
-import { Session } from '@supabase/supabase-js';
+import { useCallback, useEffect, useState } from 'react';
+import { ChevronDown, LogOut, Menu, Phone, Search, ShoppingCart, User, X } from 'lucide-react';
+import { Link, usePathname, useRouter } from '@/shared/i18n/navigation';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/features/cart';
-import UserDropdown from './UserDropdown';
-import { SearchBar, CategoryCarousel, getCategoriesFromDB } from '@/features/products';
+import { CategoryCarousel, SearchBar, getCategoriesFromDB } from '@/features/products';
 import LocaleSwitcher from './LocaleSwitcher';
 
-type NavLink = {
-  name: string;
-  path: string;
-};
+interface NavbarClientProps {
+  locale: string;
+}
 
+type Category = { id: number; name_es: string; name_en: string };
 
-export default function NavbarClient({ locale, session: initialSession }: { locale: string; session: Session | null }) {
+const navItems = (locale: string) => [
+  { name: locale === 'es' ? 'Inicio' : 'Home', path: '/' },
+  { name: locale === 'es' ? 'Pisos Epóxicos' : 'Epoxy Floors', path: '/epoxy-floors' },
+  { name: locale === 'es' ? 'Pisos Industriales' : 'Industrial Floors', path: '/industrial-epoxy-flooring' },
+  { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
+  { name: locale === 'es' ? 'Guías' : 'Guides', path: '/guias' },
+  { name: locale === 'es' ? 'Tienda' : 'Shop', path: '/products' },
+  { name: locale === 'es' ? 'Contacto' : 'Contact', path: '/contact' },
+];
 
+export default function NavbarClient({ locale }: NavbarClientProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { supabase } = useSupabase();
   const { totalItems } = useCart();
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null);
 
-  // Estados para la UI
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categoryList, setCategoryList] = useState<{ id: number, name_es: string, name_en: string }[]>([]);
-  const [showStoreCategories, setShowStoreCategories] = useState(false);
-  // Estado local para la sesión que escuchará cambios
-  const [session, setSession] = useState<Session | null>(initialSession);
-
-
-
-  // Cargar categorías de la base de datos
   useEffect(() => {
-    const loadCategories = async () => {
-      const categories = await getCategoriesFromDB();
-      setCategoryList(categories);
-    };
+    let mounted = true;
 
-    loadCategories();
-  }, []);
+    getCategoriesFromDB()
+      .then((categories) => {
+        if (mounted) setCategoryList(categories as Category[]);
+      })
+      .catch(() => {
+        if (mounted) setCategoryList([]);
+      });
 
+    supabase.auth.getSession().then(({ data }) => {
+      if (mounted) setSessionEmail(data.session?.user.email ?? null);
+    });
 
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSessionEmail(session?.user.email ?? null);
+    });
 
-  // Suscripción a cambios en la sesión
-  useEffect(() => {
-    // Configurar suscripción a cambios de autenticación
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
-
-    // Actualizar la sesión inicial
-    const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-    };
-
-    getInitialSession();
-
-    // Limpiar la suscripción cuando el componente se desmonte
     return () => {
-      subscription.unsubscribe();
+      mounted = false;
+      listener.subscription.unsubscribe();
     };
-  }, [session]);
+  }, [supabase]);
 
-  // Cerrar menú móvil al cambiar el tamaño de la ventana
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768 && isMenuOpen) {
-        setIsMenuOpen(false);
-      }
-    };
+  const handleLogout = useCallback(async () => {
+    await supabase.auth.signOut();
+    setAccountOpen(false);
+    router.refresh();
+  }, [router, supabase]);
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isMenuOpen]);
-
-
-  // Definir los enlaces de navegación
-  const navigationLinks: NavLink[] = [
-    { name: locale === 'es' ? 'Inicio' : 'Home', path: '/' },
-    { name: locale === 'es' ? 'Acerca de' : 'About', path: '/about' },
-    { name: locale === 'es' ? 'Pisos Epóxicos' : 'Epoxy Floors', path: '/epoxy-floors' },
-    { name: locale === 'es' ? 'Pisos Industriales' : 'Industrial Flooring', path: '/industrial-epoxy-flooring' },
-    { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
-    { name: locale === 'es' ? 'Guías' : 'Guides', path: '/guias' },
-    // Store se trata de manera especial ahora, con categorías desplegables
-  ]
-
-  // Logout function
-  const handleLogout = async (currentUrl: string) => {
-    try {
-      await supabase.auth.signOut();
-      // Redirect to home or login page
-      window.location.href = currentUrl;
-    } catch (error) {
-      console.error('Error logging out:', error);
+  const handleAccountClick = useCallback(() => {
+    if (sessionEmail) {
+      router.push('/account');
+      return;
     }
-  };
+
+    router.push(`/login?returnUrl=${encodeURIComponent(pathname || '/')}`);
+  }, [pathname, router, sessionEmail]);
 
   return (
-    <>
-      {/* Desktop Navigation - Amazon Style */}
-      <div className="hidden w-full flex-col lg:flex" style={{ position: 'static' }}>
-        {/* Primary Header Row */}
-        <div className="flex w-full items-center justify-between px-4 py-0.5">
-          {/* Left */}
-          <div className="flex items-center gap-2">
-            {/* Hamburger button visible on desktop too */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex h-8 w-8 items-center justify-center text-white hover:bg-gray-950 rounded focus-visible:outline-none"
-              aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? <X className="h-5 w-5 text-white" /> : <Menu className="h-5 w-5 text-white" />}
-            </button>
-            <Link href="/" target='_self' className="flex items-center gap-2">
-              <Image
-                              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                              alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
-                              width={130}
-                              height={0}
-                              className="w-[130px] h-[75px] object-fill ml-1.5"
-                              priority
-                              unoptimized
-                            />
-              <h1
-                className="
-                  flex items-center gap-0
-                  text-md md:text-3xl font-extrabold tracking-wider
-                  gold-gradient              
-                  drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
-                  motion-safe:animate-shine 
-                  sr-only"
-              >
-                SobrePoxi
-              </h1>
-            </Link>
-          </div>
+    <header className="sticky top-0 z-50 border-b border-stone-50/10 bg-[oklch(12%_0.017_58_/_0.94)] text-stone-50 shadow-[0_18px_50px_oklch(4%_0.01_40_/_0.28)] backdrop-blur-xl">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-amber-200 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-stone-950">
+        {locale === 'es' ? 'Saltar al contenido' : 'Skip to content'}
+      </a>
 
-          {/* Right */}
-          <div className="hidden lg:flex items-center gap-4">
-            <UserDropdown session={session} onLogout={handleLogout} />
-            {/* Language selector */}
-            <LocaleSwitcher />
-            {/* Cart */}
-            <Link href="/cart" className="relative flex items-center text-white hover:bg-gray-950 p-1 rounded">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold-gradient text-xs  text-black font-bold ml-0.5">
-                {totalItems}
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Top Row: Search bar with filter dropdown */}
-        <div className="flex w-full items-center justify-center pt-3 px-4">
-          <div className="flex w-full max-w-6xl items-center">
-            <div
-              className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible"
-              style={{
-                zIndex: 40, // Lower z-index to stay below mobile menu
-                position: 'relative',
-              }}
-            >
-              {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
-              <SearchBar
-                variant="navbar"
-                initialCategory={locale === 'es' ? 'Todo' : 'All'}
-                locale={locale}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Category carousel - horizontally scrollable */}
-        {/* reservar espacio mientras se carga */}
-        <div className="w-full flex justify-center h-8"><CategoryCarousel locale={locale} categories={categoryList} className="mt-1 max-w-6xl" /></div>
-
-        {/* Desktop action icons */}
-        <div className="hidden">
-          {/* Language selector */}
-         <LocaleSwitcher />
-
-          {/* Cart */}
-          <Link
-            href="/cart"
-            className="relative flex items-center space-x-0.5 text-sm text-white hover:bg-gray-950 p-1 rounded focus:outline-none"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span className="sr-only">{locale === 'es' ? 'Carrito' : 'Cart'}</span>
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold-gradient-50 text-xs font-medium text-black">
-              {totalItems}
-            </span>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex min-h-[76px] items-center gap-4">
+          <Link href="/" aria-label="SobrePoxi" className="flex shrink-0 items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+            <Image
+              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/logo_sobrepoxi-PyTtAVxwqtJhTlGNrYoSmlxWg3d0ER.webp"
+              alt="SobrePoxi"
+              width={150}
+              height={42}
+              className="h-10 w-auto object-contain"
+              priority
+              unoptimized
+            />
           </Link>
 
-          {/* Hamburger */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-8 w-8 items-center justify-center text-white hover:bg-gray-950 rounded focus-visible:outline-none"
-            aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <X className="h-5 w-5 text-white" /> : <Menu className="h-5 w-5 text-white" />}
-          </button>
-        </div>
-
-        {/* Bottom Row: Navigation links */}
-        <div className="hidden">
-          <ul className="flex items-center gap-x-6">
-            {navigationLinks.map((link) => (
-              <li key={link.path}>
-                <Link
-                  href={link.path}
-                  className="block py-1 text-sm text-white transition hover:bg-gray-950 p-1 rounded"
-                >
-                  {link.name}
-                </Link>
-              </li>
+          <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'} className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+            {navItems(locale).map((item) => (
+              <Link key={item.path} href={item.path} className="rounded-full px-3 py-2 text-sm font-semibold text-stone-300 transition-colors duration-300 hover:bg-stone-50/8 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                {item.name}
+              </Link>
             ))}
-            <li>
-              <Link
-                href="/products"
-                className="block py-1 text-sm text-white transition hover:bg-gray-950 p-1 rounded"
-              >
-                {locale === 'es' ? 'Tienda' : 'Store'}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="block py-1 text-sm text-white transition hover:bg-gray-950 p-1 rounded"
-              >
-                {locale === 'es' ? 'Contacto' : 'Contact'}
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Actions - Right Side */}
-      <div className="flex items-center justify-end space-x-0.5 sm:space-x-1 ml-auto lg:hidden" style={{ minWidth: '100px', flexShrink: 0 }}>
-        {/* User Dropdown - Desktop */}
-        <div className="hidden md:flex items-center">
-          <UserDropdown session={session} onLogout={handleLogout} />
-        </div>
-
-        {/* Language selector - Implementado con next-intl */}
-        <LocaleSwitcher />
-
-        {/* Cart */}
-        <Link
-          href="/cart"
-          className="relative flex h-10 items-center space-x-0.5 rounded-md px-0.5 text-sm text-white transition hover:bg-gray-950"
-          aria-label={locale === 'es' ? 'Carrito' : 'Cart'}
-        >
-          <ShoppingCart className="h-5 w-5" />
-          <span className="hidden md:inline">{locale === 'es' ? 'Carrito' : 'Cart'}</span>
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold-gradient text-xs font-medium text-black">
-            {totalItems}
-          </span>
-        </Link>
-        {/* Mobile menu toggle */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center text-white transition hover:bg-gray-950 focus-visible:outline-none"
-          style={{ width: '40px', height: '40px', flexShrink: 0 }}
-          aria-label={isMenuOpen ? (locale === 'es' ? 'Cerrar menú' : 'Close menu') : (locale === 'es' ? 'Abrir menú' : 'Open menu')}
-          aria-expanded={isMenuOpen}
-        >
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '20px', height: '20px' }}>
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </div>
-        </button>
-
-      </div>
-
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="absolute left-0 right-0 top-full z-50 max-h-[calc(100vh-57px)] overflow-y-auto bg-[#303030] shadow-lg w-full lg:fixed lg:top-0 lg:left-0 lg:h-full lg:w-72 lg:max-h-none">
-
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="absolute top-0 right-0 p-1 text-white hover:bg-gray-950 rounded lg:block hidden z-50"
-            aria-label="Cerrar menú"
-          >
-            <X className="h-5 w-5" />
-          </button>
-
-          <nav className="px-4 py-2 mt-5">
-            {/* Mobile Search - Amazon Style */}
-
-
-            {/* Cart Link - Movido arriba */}
-            <div className="mb-2">
-              <Link
-                href="/cart"
-                className="flex items-center space-x-2 text-sm font-medium bg-[#121212] p-3 rounded-md text-white w-full"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                <span>{locale === 'es' ? 'Ver carrito' : 'View cart'} ({totalItems})</span>
-              </Link>
-            </div>
-
-            {/* Mobile Auth Links */}
-            <div className="mb-3">
-              <div className="flex items-center justify-between">
-                {session ? (
-                  <>
-                    <Link
-                      href="/account"
-                      className="flex items-center space-x-1 text-sm font-medium text-white"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <User className="h-5 w-5" />
-                      <span>{locale === 'es' ? 'Mi cuenta' : 'My account'}</span>
-                    </Link>
-                    <button
-                      onClick={async () => await handleLogout(window.location.href)}
-                      className="text-sm text-white"
-                    >
-                      {locale === 'es' ? 'Cerrar sesión' : 'Logout'}
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => {
-                        const fullPath = window.location.pathname + window.location.search;
-                        router.push(`/login?returnUrl=${fullPath}`);
-                        setIsMenuOpen(false);
-                      }}
-                      className="text-sm text-white"
-                    >
-                      {locale === 'es' ? 'Iniciar sesión' : 'Login'}
-                    </button>
-                    <button
-                      onClick={() => {
-                        const fullPath = window.location.pathname + window.location.search;
-                        router.push(`/register?returnUrl=${fullPath}`);
-                        setIsMenuOpen(false);
-                      }}
-                      className="text-sm text-white"
-                    >
-                      {locale === 'es' ? 'Registrarse' : 'Register'}
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="my-3 h-px bg-gray-100"></div>
-
-            {/* Mobile Navigation Links - Amazon Style */}
-            <div>
-              <p className="mb-2 font-semibold text-sm text-white">{locale === 'es' ? 'Navegar por:' : 'Browse by:'}</p>
-              <ul className="space-y-2">
-                {navigationLinks.map((link) => (
-                  <li key={link.path}>
-                    <Link
-                      href={link.path}
-                      className="block text-sm text-white hover:text-gray-200"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link
-                    href="/contact"
-                    className="block text-sm text-white hover:text-gray-200"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {locale === 'es' ? 'Contacto' : 'Contact'}
-                  </Link>
-                </li>
-                {/* Store con categorías desplegables */}
-                <li className="mb-2">
-                  <div className="mb-1">
-                    <button
-                      className="flex items-center justify-between w-full py-2 px-3 bg-gold-gradient rounded-md font-medium text-sm hover:bg-gold-gradient-90 transition-colors cursor-pointer"
-                      onClick={() => setShowStoreCategories(!showStoreCategories)}
-                      aria-expanded={showStoreCategories}
-                    >
-                      <div className="flex items-center text-black">
-                        <Package className="h-4 w-4 mr-2" />
-                        <span>{locale === 'es' ? 'Tienda' : 'Store'}</span>
-                      </div>
-                      <ChevronDown
-                        className={`h-4 w-4 transition-transform text-black ${showStoreCategories ? 'transform rotate-180' : ''}`}
-                      />
-                    </button>
-                  </div>
-
-
-                  {/* Lista de categorías */}
-                  {showStoreCategories && (
-                    <ul className="ml-4 space-y-1 border-l-2 border-gray-100 pl-3">
-                      <li>
-                        <Link
-                          href="/products"
-                          className="block text-sm text-white hover:text-gray-200 py-1"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {locale === 'es' ? 'Todos los productos' : 'All products'}
-                        </Link>
-                      </li>
-                      {categoryList.map((category) => (
-                        <li key={category.id}>
-                          <Link
-                            href={`/products?category=${category.id}`}
-                            className="block text-sm text-white hover:text-gray-200 py-1"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            {locale === 'es' ? category.name_es : category.name_en}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-
-
-
-                {/* Enlace a carrito eliminado - ya movido arriba */}
-              </ul>
-            </div>
           </nav>
+
+          <div className="ml-auto hidden items-center gap-2 lg:flex">
+            <Link href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-amber-200 px-4 py-2 text-sm font-bold text-stone-950 transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 active:scale-[0.98]">
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {locale === 'es' ? 'Cotizar' : 'Quote'}
+            </Link>
+            <LocaleSwitcher />
+
+            <div className="relative">
+              <button type="button" onClick={() => setAccountOpen((open) => !open)} aria-expanded={accountOpen} aria-label={locale === 'es' ? 'Abrir menú de cuenta' : 'Open account menu'} className="inline-flex h-10 items-center gap-2 rounded-full border border-stone-50/10 bg-stone-50/6 px-3 text-sm font-semibold text-stone-200 transition-colors duration-300 hover:bg-stone-50/10 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                <User className="h-4 w-4" aria-hidden="true" />
+                <span>{sessionEmail ? (locale === 'es' ? 'Cuenta' : 'Account') : (locale === 'es' ? 'Entrar' : 'Sign in')}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${accountOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+              </button>
+              {accountOpen && (
+                <div className="absolute right-0 mt-3 w-60 rounded-2xl border border-stone-50/10 bg-[oklch(15%_0.018_60)] p-2 shadow-[0_24px_70px_oklch(4%_0.01_40_/_0.45)]">
+                  {sessionEmail ? (
+                    <>
+                      <button type="button" onClick={handleAccountClick} className="w-full rounded-xl px-3 py-2 text-left text-sm text-stone-200 transition-colors duration-300 hover:bg-stone-50/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                        {sessionEmail}
+                      </button>
+                      <button type="button" onClick={handleLogout} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold text-amber-100 transition-colors duration-300 hover:bg-stone-50/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                        <LogOut className="h-4 w-4" aria-hidden="true" />
+                        {locale === 'es' ? 'Cerrar sesión' : 'Sign out'}
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" onClick={handleAccountClick} className="w-full rounded-xl px-3 py-2 text-left text-sm font-semibold text-amber-100 transition-colors duration-300 hover:bg-stone-50/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                      {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <Link href="/cart" aria-label={locale === 'es' ? `Carrito con ${totalItems} productos` : `Cart with ${totalItems} items`} className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-50/10 bg-stone-50/6 text-stone-200 transition-colors duration-300 hover:bg-stone-50/10 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+              <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+              {totalItems > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-200 px-1 text-[11px] font-bold text-stone-950 tabular-nums">{totalItems}</span>}
+            </Link>
+          </div>
+
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
+            <LocaleSwitcher />
+            <Link href="/cart" aria-label={locale === 'es' ? `Carrito con ${totalItems} productos` : `Cart with ${totalItems} items`} className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-50/10 bg-stone-50/6 text-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+              <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+              {totalItems > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-200 px-1 text-[11px] font-bold text-stone-950 tabular-nums">{totalItems}</span>}
+            </Link>
+            <button type="button" onClick={() => setMobileOpen((open) => !open)} aria-expanded={mobileOpen} aria-label={locale === 'es' ? 'Abrir menú' : 'Open menu'} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-50/10 bg-stone-50/6 text-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+              {mobileOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden border-t border-stone-50/10 py-3 lg:block">
+          <div className="grid grid-cols-[minmax(340px,520px)_1fr] items-center gap-5">
+            <SearchBar variant="navbar" locale={locale} initialCategory={locale === 'es' ? 'Todo' : 'All'} />
+            <CategoryCarousel locale={locale} categories={categoryList} className="max-w-full" />
+          </div>
+        </div>
+      </div>
+
+      {mobileOpen && (
+        <div className="border-t border-stone-50/10 bg-[oklch(13%_0.017_58)] px-4 pb-5 pt-4 shadow-[0_24px_60px_oklch(4%_0.01_40_/_0.42)] lg:hidden">
+          <div className="mb-4 rounded-2xl border border-stone-50/10 bg-stone-50/[0.045] p-3">
+            <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-500">
+              <Search className="h-3.5 w-3.5" aria-hidden="true" />
+              {locale === 'es' ? 'Buscar productos' : 'Search products'}
+            </div>
+            <SearchBar variant="mobile" locale={locale} initialCategory={locale === 'es' ? 'Todo' : 'All'} />
+          </div>
+
+          <nav aria-label={locale === 'es' ? 'Navegación móvil' : 'Mobile navigation'} className="grid gap-2">
+            {navItems(locale).map((item) => (
+              <Link key={item.path} href={item.path} onClick={() => setMobileOpen(false)} className="rounded-2xl border border-stone-50/10 bg-stone-50/[0.045] px-4 py-3 text-sm font-semibold text-stone-200 transition-colors duration-300 hover:bg-stone-50/8 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {categoryList.length > 0 && (
+            <div className="mt-4 rounded-2xl border border-stone-50/10 bg-stone-50/[0.045] p-3">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-500">
+                {locale === 'es' ? 'Categorías' : 'Categories'}
+              </p>
+              <CategoryCarousel locale={locale} categories={categoryList} />
+            </div>
+          )}
         </div>
       )}
-    </>
+    </header>
   );
 }

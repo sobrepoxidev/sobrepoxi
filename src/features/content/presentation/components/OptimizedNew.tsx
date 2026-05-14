@@ -8,20 +8,17 @@ import { Link } from '@/shared/i18n/navigation';
 import { useLocale } from 'next-intl';
 import {
   ArrowRight,
-  Star,
-  Shield,
   Award,
-  Zap,
-  Hammer,
-  Sparkles,
+  CheckCircle2,
   Factory,
   Gem,
-  TreePine,
-  Phone,
-  ChevronRight,
-  Quote,
-  CheckCircle2,
+  Hammer,
   MapPin,
+  Phone,
+  Shield,
+  Sparkles,
+  Star,
+  TreePine,
 } from 'lucide-react';
 
 type Product = Database['products'];
@@ -33,216 +30,127 @@ interface OptimizedNewHomeProps {
   locale?: string;
 }
 
-/* =========================================================================
- * HERO SECTION — Full viewport, visually striking
- * ========================================================================= */
+const whatsappHref = 'https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto';
+
+const copy = {
+  es: {
+    eyebrow: 'Atelier técnico en Costa Rica',
+    headline: 'Resina epóxica, madera y pisos de alto valor.',
+    sub: 'Diseñamos e instalamos acabados epóxicos para hogares, comercios e industria, con piezas a medida que se sienten tan sólidas como se ven.',
+    whatsapp: 'Cotizar por WhatsApp',
+    products: 'Ver Productos',
+    contact: 'Contacto',
+    proof: ['500+ proyectos', '10+ años', 'Garantía total', '4.9 calificación'],
+    divisionsKicker: 'Tres líneas, un estándar',
+    divisionsTitle: 'Del taller artesanal a la planta industrial',
+    shopKicker: 'Tienda y proyectos',
+    shopTitle: 'Categorías con intención comercial',
+    shopText: 'Explora piezas listas, materiales y líneas de trabajo. Si una categoría todavía no muestra inventario, la convertimos en cotización a medida.',
+    whyKicker: 'Por qué SobrePoxi',
+    whyTitle: 'Lujo que también resiste trabajo real',
+    processKicker: 'Proceso claro',
+    processTitle: 'De la primera idea a la entrega protegida',
+    testimonialsKicker: 'Confianza local',
+    testimonialsTitle: 'Clientes que buscaban acabado, resistencia y criterio',
+    finalTitle: 'Hablemos de tu espacio.',
+    finalText: 'Cuéntanos medidas, uso y acabado deseado. Te orientamos con materiales, tiempos y presupuesto sin compromiso.',
+  },
+  en: {
+    eyebrow: 'Technical atelier in Costa Rica',
+    headline: 'Epoxy resin, wood, and high-value floors.',
+    sub: 'We design and install epoxy finishes for homes, businesses, and industrial spaces, with custom pieces that feel as solid as they look.',
+    whatsapp: 'Quote on WhatsApp',
+    products: 'View Products',
+    contact: 'Contact',
+    proof: ['500+ projects', '10+ years', 'Full warranty', '4.9 rating'],
+    divisionsKicker: 'Three lines, one standard',
+    divisionsTitle: 'From artisan workshop to industrial plant',
+    shopKicker: 'Shop and projects',
+    shopTitle: 'Categories with commercial intent',
+    shopText: 'Browse ready pieces, materials, and work lines. If a category has no visible stock yet, we turn it into a custom quote.',
+    whyKicker: 'Why SobrePoxi',
+    whyTitle: 'Luxury that also withstands real work',
+    processKicker: 'Clear process',
+    processTitle: 'From first idea to protected delivery',
+    testimonialsKicker: 'Local trust',
+    testimonialsTitle: 'Clients who needed finish, resistance, and judgment',
+    finalTitle: 'Tell us about your space.',
+    finalText: 'Share measurements, use case, and desired finish. We guide you on materials, timing, and budget with no commitment.',
+  },
+};
+
+function getCopy(locale: string) {
+  return locale === 'en' ? copy.en : copy.es;
+}
+
 function HeroSection({ locale }: { locale: string }) {
-  const t = {
-    es: {
-      badge: 'Costa Rica',
-      headline: 'Pisos Epóxicos &',
-      headlineAccent: 'Muebles de Lujo',
-      sub: 'Transformamos espacios con acabados de clase mundial. Desde pisos industriales de alto rendimiento hasta muebles artesanales con resina y madera.',
-      cta1: 'Cotizar Proyecto',
-      cta2: 'Ver Productos',
-      stat1: '500+',
-      stat1Label: 'Proyectos',
-      stat2: '10+',
-      stat2Label: 'Años',
-      stat3: '100%',
-      stat3Label: 'Garantía',
-      stat4: '4.9',
-      stat4Label: 'Calificación',
-    },
-    en: {
-      badge: 'Costa Rica',
-      headline: 'Epoxy Floors &',
-      headlineAccent: 'Luxury Furniture',
-      sub: 'We transform spaces with world-class finishes. From high-performance industrial floors to artisan resin and wood furniture.',
-      cta1: 'Get a Quote',
-      cta2: 'View Products',
-      stat1: '500+',
-      stat1Label: 'Projects',
-      stat2: '10+',
-      stat2Label: 'Years',
-      stat3: '100%',
-      stat3Label: 'Warranty',
-      stat4: '4.9',
-      stat4Label: 'Rating',
-    },
-  };
-  const c = t[locale as 'es' | 'en'] || t.es;
+  const c = getCopy(locale);
 
   return (
-    <section className="relative min-h-[calc(100vh-120px)] sm:min-h-[90vh] flex items-start sm:items-center overflow-hidden">
-      {/* Background layers */}
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-transparent" />
-      <div className="absolute top-0 right-0 w-[60%] h-full opacity-[0.07]"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.4) 0%, transparent 50%)',
-        }}
-      />
-      {/* Decorative grid pattern */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Left — Text */}
-          <div className="space-y-6 sm:space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-500/20 rounded-full px-4 py-1.5">
-              <MapPin className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-xs font-medium text-amber-400 tracking-wide uppercase">
-                {c.badge}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white">
-                {c.headline}
-                <br />
-                <span className="gold-gradient-bright">{c.headlineAccent}</span>
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-base sm:text-lg text-gray-400 max-w-lg leading-relaxed">
-              {c.sub}
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link
-                href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto"
-                target="_blank"
-                className="inline-flex items-center justify-center gap-2 bg-gold-gradient text-black font-bold px-6 py-3.5 rounded-xl hover:shadow-lg hover:shadow-amber-500/20 transition-all text-sm sm:text-base"
-              >
-                <Phone className="w-4 h-4" />
-                {c.cta1}
-              </Link>
-              <Link
-                href="/products"
-                className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white font-semibold px-6 py-3.5 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all text-sm sm:text-base"
-              >
-                {c.cta2}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Stats bar */}
-            <div className="grid grid-cols-4 gap-3 pt-4 border-t border-white/10">
-              {[
-                { value: c.stat1, label: c.stat1Label },
-                { value: c.stat2, label: c.stat2Label },
-                { value: c.stat3, label: c.stat3Label },
-                { value: c.stat4, label: c.stat4Label, icon: true },
-              ].map((stat, i) => (
-                <div key={i} className="text-center sm:text-left">
-                  <div className="flex items-center justify-center sm:justify-start gap-1">
-                    <span className="text-xl sm:text-2xl font-black text-white">{stat.value}</span>
-                    {stat.icon && <Star className="w-4 h-4 text-amber-400 fill-amber-400" />}
-                  </div>
-                  <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider">{stat.label}</span>
-                </div>
-              ))}
-            </div>
+    <section className="relative isolate overflow-hidden bg-[oklch(16%_0.018_63)] text-stone-50">
+      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_18%,oklch(63%_0.12_72_/_0.22),transparent_34%),linear-gradient(135deg,oklch(18%_0.018_62),oklch(10%_0.012_48)_58%,oklch(20%_0.04_132))]" />
+      <div className="absolute inset-0 -z-10 opacity-[0.09] [background-image:linear-gradient(90deg,oklch(86%_0.04_78_/_0.22)_1px,transparent_1px),linear-gradient(oklch(86%_0.04_78_/_0.18)_1px,transparent_1px)] [background-size:72px_72px]" />
+      <div className="mx-auto grid min-h-[calc(100svh-104px)] w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:py-20">
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-stone-950/55 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-amber-200 shadow-[0_0_0_1px_oklch(70%_0.09_74_/_0.08)] backdrop-blur-sm">
+            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+            {c.eyebrow}
           </div>
 
-          {/* Right — Visual grid */}
-          <div className="relative hidden lg:block">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-3">
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5">
-                  <Image
-                    src="/home/industrial-floor.webp"
-                    alt="Industrial epoxy floor"
-                    fill
-                    className="object-cover"
-                    sizes="25vw"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-3 left-3">
-                    <span className="text-xs font-semibold text-amber-400 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
-                      {locale === 'es' ? 'Pisos Industriales' : 'Industrial Floors'}
-                    </span>
-                  </div>
-                </div>
-                <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/5">
-                  <Image
-                    src="/artesanal1.webp"
-                    alt="Artisan working"
-                    fill
-                    className="object-cover"
-                    sizes="25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-3 left-3">
-                    <span className="text-xs font-semibold text-amber-400 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
-                      {locale === 'es' ? 'Artesanal' : 'Handcrafted'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-3 pt-8">
-                <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/5">
-                  <Image
-                    src="/home/luxury-floor.webp"
-                    alt="Luxury epoxy floor"
-                    fill
-                    className="object-cover"
-                    sizes="25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-3 left-3">
-                    <span className="text-xs font-semibold text-amber-400 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
-                      {locale === 'es' ? 'Pisos de Lujo' : 'Luxury Floors'}
-                    </span>
-                  </div>
-                </div>
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5">
-                  <Image
-                    src="/mesariomain.webp"
-                    alt="Luxury furniture"
-                    fill
-                    className="object-cover"
-                    sizes="25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-3 left-3">
-                    <span className="text-xs font-semibold text-amber-400 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
-                      {locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Glow effect behind grid */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent rounded-3xl -z-10 blur-2xl" />
+          <h1 className="font-display mt-7 max-w-[12ch] text-balance text-[clamp(3.15rem,9vw,7.4rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-stone-50">
+            {c.headline}
+          </h1>
+
+          <p className="mt-7 max-w-xl text-pretty text-base leading-8 text-stone-300 sm:text-lg">
+            {c.sub}
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link href={whatsappHref} target="_blank" rel="noopener noreferrer" className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[oklch(80%_0.13_78)] px-6 py-3 text-sm font-bold text-stone-950 shadow-[0_18px_48px_oklch(70%_0.12_74_/_0.24)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-[oklch(86%_0.12_82)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 active:scale-[0.98]">
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {c.whatsapp}
+            </Link>
+            <Link href="/products" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-stone-200/18 bg-stone-50/7 px-6 py-3 text-sm font-semibold text-stone-50 backdrop-blur-sm transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-amber-200/45 hover:bg-stone-50/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 active:scale-[0.98]">
+              {c.products}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-stone-200 underline decoration-amber-300/40 underline-offset-8 transition-colors duration-300 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950">
+              {c.contact}
+            </Link>
           </div>
 
-          {/* Mobile hero image */}
-          <div className="relative lg:hidden -mx-4">
-            <div className="grid grid-cols-3 gap-2 px-4">
-              {[
-                { src: '/home/industrial-floor.webp', label: locale === 'es' ? 'Industrial' : 'Industrial' },
-                { src: '/home/luxury-floor.webp', label: locale === 'es' ? 'Lujo' : 'Luxury' },
-                { src: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp', label: locale === 'es' ? 'Muebles' : 'Furniture' },
-              ].map((img, i) => (
-                <div key={i} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5">
-                  <Image src={img.src} alt={img.label} fill className="object-cover" sizes="33vw" priority={i === 0} unoptimized={img.src.startsWith('http')} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-amber-400 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">{img.label}</span>
+          <dl className="mt-10 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-stone-50/12 pt-6 sm:grid-cols-4">
+            {c.proof.map((item) => {
+              const [value, ...labelParts] = item.split(' ');
+              return (
+                <div key={item}>
+                  <dt className="text-xs uppercase tracking-[0.2em] text-stone-500">{labelParts.join(' ')}</dt>
+                  <dd className="mt-1 font-display text-2xl font-semibold tracking-tight text-stone-50 tabular-nums">{value}</dd>
                 </div>
-              ))}
-            </div>
+              );
+            })}
+          </dl>
+        </div>
+
+        <div className="relative min-h-[420px] lg:min-h-[640px]">
+          <div className="absolute left-0 top-4 w-[68%] overflow-hidden rounded-[2rem] border border-amber-100/12 bg-stone-900 shadow-[0_30px_90px_oklch(5%_0.02_40_/_0.55)] sm:rounded-[2.5rem]">
+            <Image src="/home/industrial-floor.webp" alt={locale === 'es' ? 'Piso epóxico industrial con acabado brillante' : 'Industrial epoxy floor with a polished finish'} width={760} height={980} priority className="h-[420px] w-full object-cover sm:h-[560px]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
+            <span className="absolute bottom-5 left-5 rounded-full bg-stone-950/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-100 backdrop-blur-md">
+              {locale === 'es' ? 'Pisos industriales' : 'Industrial floors'}
+            </span>
+          </div>
+          <div className="absolute right-0 top-24 w-[45%] overflow-hidden rounded-[1.5rem] border border-stone-50/14 bg-stone-900 shadow-[0_24px_60px_oklch(5%_0.02_40_/_0.45)] sm:rounded-[2rem]">
+            <Image src="/mesariomain.webp" alt={locale === 'es' ? 'Mesa de madera y resina epóxica hecha a medida' : 'Custom wood and epoxy resin table'} width={420} height={520} className="h-[250px] w-full object-cover sm:h-[340px]" />
+            <span className="absolute bottom-4 left-4 rounded-full bg-stone-950/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-100 backdrop-blur-md">
+              {locale === 'es' ? 'Madera y resina' : 'Wood and resin'}
+            </span>
+          </div>
+          <div className="absolute bottom-4 right-8 w-[54%] overflow-hidden rounded-[1.75rem] border border-stone-50/14 bg-stone-900 shadow-[0_24px_70px_oklch(5%_0.02_40_/_0.5)]">
+            <Image src="/home/luxury-floor.webp" alt={locale === 'es' ? 'Piso epóxico residencial de lujo con acabado continuo' : 'Luxury residential epoxy floor with seamless finish'} width={540} height={420} className="h-[230px] w-full object-cover sm:h-[300px]" />
+            <span className="absolute bottom-4 left-4 rounded-full bg-stone-950/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-100 backdrop-blur-md">
+              {locale === 'es' ? 'Acabados premium' : 'Premium finishes'}
+            </span>
           </div>
         </div>
       </div>
@@ -250,121 +158,72 @@ function HeroSection({ locale }: { locale: string }) {
   );
 }
 
-/* =========================================================================
- * SERVICES SECTION — 3 main divisions
- * ========================================================================= */
+function TrustMarquee({ locale }: { locale: string }) {
+  const items = locale === 'es'
+    ? ['Pisos epóxicos', 'Muebles de lujo', 'River tables', 'Pisos industriales', 'Diseño 3D', 'Resina epóxica', 'Hecho en Costa Rica', 'A tu medida']
+    : ['Epoxy floors', 'Luxury furniture', 'River tables', 'Industrial floors', '3D design', 'Epoxy resin', 'Made in Costa Rica', 'Custom made'];
+
+  const row = items.map((item) => (
+    <span key={item} className="flex shrink-0 items-center gap-5">
+      <span className="text-sm font-semibold uppercase tracking-[0.26em] text-stone-300/70">{item}</span>
+      <span className="h-1.5 w-1.5 rounded-full bg-amber-300/70" aria-hidden="true" />
+    </span>
+  ));
+
+  return (
+    <div className="relative overflow-hidden border-y border-stone-50/10 bg-[oklch(13%_0.016_58)] py-5">
+      <div className="flex gap-5 animate-marquee motion-reduce:animate-none">{row}{row}{row}</div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[oklch(13%_0.016_58)] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[oklch(13%_0.016_58)] to-transparent" />
+    </div>
+  );
+}
+
 function ServicesSection({ locale }: { locale: string }) {
+  const c = getCopy(locale);
   const services = locale === 'es'
     ? [
-        {
-          icon: Factory,
-          title: 'Pisos Epóxicos Industriales',
-          desc: 'Alto rendimiento para fábricas, bodegas, plantas de producción y estacionamientos. Resistencia química y mecánica certificada.',
-          href: '/industrial-epoxy-flooring',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp',
-          tag: 'Industrial',
-        },
-        {
-          icon: Gem,
-          title: 'Pisos Epóxicos de Lujo',
-          desc: 'Diseños 3D, efectos mármol, espejo y metálicos para residencias, oficinas premium y espacios comerciales.',
-          href: '/epoxy-floors',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp',
-          tag: 'Residencial',
-        },
-        {
-          icon: TreePine,
-          title: 'Muebles de Lujo',
-          desc: 'Mesas river table, barras, escritorios y piezas únicas en madera y resina epóxica hechas a medida.',
-          href: '/luxury-furniture',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp',
-          tag: 'Artesanal',
-        },
+        { icon: Factory, title: 'Pisos Epóxicos Industriales', desc: 'Sistemas para bodegas, plantas, talleres y estacionamientos con resistencia química y mecánica.', href: '/industrial-epoxy-flooring', img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp', tag: 'Industrial' },
+        { icon: Gem, title: 'Pisos Epóxicos de Lujo', desc: 'Acabados tipo mármol, espejo, metálico y 3D para residencias, oficinas y comercios premium.', href: '/epoxy-floors', img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp', tag: 'Residencial' },
+        { icon: TreePine, title: 'Muebles de Lujo', desc: 'Mesas river table, barras, escritorios y piezas únicas en madera y resina epóxica.', href: '/luxury-furniture', img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp', tag: 'Artesanal' },
       ]
     : [
-        {
-          icon: Factory,
-          title: 'Industrial Epoxy Flooring',
-          desc: 'High-performance solutions for factories, warehouses, production plants and parking facilities. Certified chemical and mechanical resistance.',
-          href: '/industrial-epoxy-flooring',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp',
-          tag: 'Industrial',
-        },
-        {
-          icon: Gem,
-          title: 'Luxury Epoxy Floors',
-          desc: '3D designs, marble, mirror and metallic effects for residences, premium offices and commercial spaces.',
-          href: '/epoxy-floors',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp',
-          tag: 'Residential',
-        },
-        {
-          icon: TreePine,
-          title: 'Luxury Furniture',
-          desc: 'River tables, bars, desks and unique pieces in wood and epoxy resin, made to measure.',
-          href: '/luxury-furniture',
-          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pacific-xl/main2.webp',
-          tag: 'Artisan',
-        },
+        { icon: Factory, title: 'Industrial Epoxy Flooring', desc: 'Systems for warehouses, plants, workshops, and parking areas with chemical and mechanical resistance.', href: '/industrial-epoxy-flooring', img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp', tag: 'Industrial' },
+        { icon: Gem, title: 'Luxury Epoxy Floors', desc: 'Marble, mirror, metallic, and 3D finishes for residences, offices, and premium commercial spaces.', href: '/epoxy-floors', img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp', tag: 'Residential' },
+        { icon: TreePine, title: 'Luxury Furniture', desc: 'River tables, bars, desks, and unique pieces in wood and epoxy resin.', href: '/luxury-furniture', img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pacific-xl/main2.webp', tag: 'Artisan' },
       ];
 
   return (
-    <section className="py-16 sm:py-20 bg-[#0e0e0e]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
-            {locale === 'es' ? 'Nuestras Divisiones' : 'Our Divisions'}
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-black text-white">
-            {locale === 'es' ? 'Soluciones Especializadas' : 'Specialized Solutions'}
-          </h2>
-          <div className="mt-4 w-16 h-1 bg-gold-gradient mx-auto rounded-full" />
+    <section className="bg-[oklch(92%_0.018_80)] px-4 py-16 text-stone-950 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[oklch(42%_0.09_73)]">{c.divisionsKicker}</p>
+            <h2 className="font-display mt-4 max-w-xl text-balance text-[clamp(2.35rem,5.5vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.055em]">{c.divisionsTitle}</h2>
+          </div>
+          <p className="max-w-2xl text-pretty text-base leading-8 text-stone-700 sm:text-lg">
+            {locale === 'es'
+              ? 'Cada línea comparte el mismo criterio: diagnóstico del uso real, materiales correctos, muestra visual y ejecución cuidada hasta el último borde.'
+              : 'Every line shares one standard: real-use diagnosis, correct materials, visual sampling, and careful execution down to the last edge.'}
+          </p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {services.map((svc, i) => (
-            <Link
-              key={i}
-              href={svc.href}
-              className="group relative rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 hover:border-amber-500/30 transition-all duration-500"
-            >
-              {/* Image */}
-              <div className="relative h-48 sm:h-56 overflow-hidden">
-                <Image
-                  src={svc.img}
-                  alt={svc.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-black/20 to-transparent" />
-                <div className="absolute top-3 left-3">
-                  <span className="text-[10px] font-bold text-amber-400 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full uppercase tracking-wider border border-amber-500/20">
-                    {svc.tag}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center shrink-0">
-                    <svc.icon className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors leading-tight">
-                    {svc.title}
-                  </h3>
-                </div>
-                <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                  {svc.desc}
-                </p>
-                <div className="flex items-center gap-1 text-sm font-semibold text-amber-400 group-hover:gap-2 transition-all">
-                  {locale === 'es' ? 'Explorar' : 'Explore'}
-                  <ChevronRight className="w-4 h-4" />
-                </div>
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {services.map((service) => (
+            <Link key={service.title} href={service.href} className="group relative min-h-[430px] overflow-hidden rounded-[1.75rem] bg-stone-950 text-stone-50 shadow-[0_24px_60px_oklch(31%_0.05_70_/_0.18)] transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_32px_80px_oklch(31%_0.05_70_/_0.26)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-4 focus-visible:ring-offset-[oklch(92%_0.018_80)]">
+              <Image src={service.img} alt={service.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover opacity-80 transition-transform duration-700 ease-out group-hover:scale-[1.04]" unoptimized />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/45 to-stone-950/6" />
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                <span className="inline-flex items-center gap-2 rounded-full border border-amber-200/25 bg-stone-950/55 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-100 backdrop-blur-sm">
+                  <service.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {service.tag}
+                </span>
+                <h3 className="font-display mt-5 text-3xl font-semibold leading-none tracking-[-0.035em]">{service.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-stone-300">{service.desc}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-amber-200">
+                  {locale === 'es' ? 'Explorar línea' : 'Explore line'}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                </span>
               </div>
             </Link>
           ))}
@@ -374,299 +233,59 @@ function ServicesSection({ locale }: { locale: string }) {
   );
 }
 
-/* =========================================================================
- * WHY CHOOSE US — Value propositions
- * ========================================================================= */
-function WhyChooseUsSection({ locale }: { locale: string }) {
-  const features = locale === 'es'
-    ? [
-        { icon: Shield, title: 'Garantía Total', desc: 'Respaldamos cada proyecto con garantía. Tu inversión está protegida.' },
-        { icon: Award, title: 'Calidad Premium', desc: 'Materiales importados de primera calidad y acabados impecables.' },
-        { icon: Zap, title: 'Instalación Rápida', desc: 'Equipos especializados que minimizan tiempos de ejecución.' },
-        { icon: Hammer, title: 'A Tu Medida', desc: 'Cada proyecto es único. Diseñamos según tus necesidades exactas.' },
-        { icon: Sparkles, title: 'Diseño Exclusivo', desc: 'Efectos únicos: 3D, metálico, mármol, espejo y más.' },
-        { icon: CheckCircle2, title: 'Experiencia Real', desc: '+500 proyectos ejecutados en Costa Rica y la región.' },
-      ]
-    : [
-        { icon: Shield, title: 'Full Warranty', desc: 'We back every project with a warranty. Your investment is protected.' },
-        { icon: Award, title: 'Premium Quality', desc: 'First-class imported materials and flawless finishes.' },
-        { icon: Zap, title: 'Fast Installation', desc: 'Specialized teams that minimize execution times.' },
-        { icon: Hammer, title: 'Custom Made', desc: 'Every project is unique. We design to your exact needs.' },
-        { icon: Sparkles, title: 'Exclusive Design', desc: 'Unique effects: 3D, metallic, marble, mirror and more.' },
-        { icon: CheckCircle2, title: 'Proven Track Record', desc: '500+ completed projects in Costa Rica and the region.' },
-      ];
-
+function ProductsIntro({ locale }: { locale: string }) {
+  const c = getCopy(locale);
   return (
-    <section className="py-16 sm:py-20 bg-[#121212]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
-            {locale === 'es' ? 'Por qué elegirnos' : 'Why Choose Us'}
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-black text-white">
-            {locale === 'es' ? 'La Diferencia SobrePoxi' : 'The SobrePoxi Difference'}
-          </h2>
-          <div className="mt-4 w-16 h-1 bg-gold-gradient mx-auto rounded-full" />
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
-          {features.map((f, i) => (
-            <div
-              key={i}
-              className="group p-4 sm:p-6 rounded-xl bg-[#1a1a1a] border border-white/5 hover:border-amber-500/20 transition-all duration-300"
-            >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-400/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-amber-400/20 transition-colors">
-                <f.icon className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold text-white mb-1 sm:mb-2">{f.title}</h3>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
-        </div>
+    <div className="mx-auto grid max-w-7xl gap-6 px-4 pb-6 pt-16 sm:px-6 sm:pt-24 lg:grid-cols-[0.82fr_1fr] lg:px-8">
+      <div>
+        <p className="text-sm font-bold uppercase tracking-[0.24em] text-amber-300/85">{c.shopKicker}</p>
+        <h2 className="font-display mt-4 text-balance text-[clamp(2.3rem,5vw,4.8rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-stone-50">{c.shopTitle}</h2>
       </div>
-    </section>
-  );
-}
-
-/* =========================================================================
- * TESTIMONIALS SECTION
- * ========================================================================= */
-function TestimonialsSection({ locale }: { locale: string }) {
-  const testimonials = locale === 'es'
-    ? [
-        {
-          name: 'Carlos Méndez',
-          role: 'Gerente de Planta, Zona Franca',
-          text: 'El piso epóxico industrial que nos instalaron superó todas las expectativas. Resistente, fácil de limpiar y con un acabado profesional impecable.',
-          rating: 5,
-        },
-        {
-          name: 'María Fernanda Solís',
-          role: 'Arquitecta de Interiores',
-          text: 'He recomendado SobrePoxi a varios de mis clientes. El efecto mármol que logran es espectacular, y la atención al detalle es algo que valoro muchísimo.',
-          rating: 5,
-        },
-        {
-          name: 'Roberto Álvarez',
-          role: 'Propietario de Restaurante',
-          text: 'La mesa river table que nos diseñaron se convirtió en la pieza central del restaurante. Los clientes siempre preguntan por ella. Arte funcional de primera.',
-          rating: 5,
-        },
-      ]
-    : [
-        {
-          name: 'Carlos Méndez',
-          role: 'Plant Manager, Free Trade Zone',
-          text: 'The industrial epoxy floor they installed exceeded all expectations. Resistant, easy to clean, and with a flawless professional finish.',
-          rating: 5,
-        },
-        {
-          name: 'María Fernanda Solís',
-          role: 'Interior Architect',
-          text: "I've recommended SobrePoxi to several clients. The marble effect they achieve is spectacular, and their attention to detail is something I truly value.",
-          rating: 5,
-        },
-        {
-          name: 'Roberto Álvarez',
-          role: 'Restaurant Owner',
-          text: 'The river table they designed became the centerpiece of the restaurant. Customers always ask about it. First-class functional art.',
-          rating: 5,
-        },
-      ];
-
-  return (
-    <section className="py-16 sm:py-20 bg-[#0e0e0e]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
-            {locale === 'es' ? 'Testimonios' : 'Testimonials'}
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-black text-white">
-            {locale === 'es' ? 'Lo Que Dicen Nuestros Clientes' : 'What Our Clients Say'}
-          </h2>
-          <div className="mt-4 w-16 h-1 bg-gold-gradient mx-auto rounded-full" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="relative p-6 sm:p-8 rounded-2xl bg-[#1a1a1a] border border-white/5"
-            >
-              <Quote className="w-8 h-8 text-amber-400/20 mb-4" />
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: t.rating }).map((_, s) => (
-                  <Star key={s} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                ))}
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-6 italic">
-                &ldquo;{t.text}&rdquo;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-400/10 flex items-center justify-center">
-                  <span className="text-sm font-bold text-amber-400">{t.name[0]}</span>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-white">{t.name}</p>
-                  <p className="text-xs text-gray-500">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================================
- * FINAL CTA SECTION
- * ========================================================================= */
-function FinalCTASection({ locale }: { locale: string }) {
-  return (
-    <section className="relative py-20 sm:py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-amber-900/20 via-transparent to-amber-900/10" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px]" />
-
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
-          {locale === 'es'
-            ? 'Transformemos Tu Espacio'
-            : "Let's Transform Your Space"}
-        </h2>
-        <p className="mt-4 text-base sm:text-lg text-gray-400 max-w-xl mx-auto">
-          {locale === 'es'
-            ? 'Cuéntanos sobre tu proyecto y recibe una cotización personalizada. Sin compromiso.'
-            : 'Tell us about your project and receive a personalized quote. No commitment.'}
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto"
-            target="_blank"
-            className="inline-flex items-center justify-center gap-2 bg-gold-gradient text-black font-bold px-8 py-4 rounded-xl hover:shadow-lg hover:shadow-amber-500/20 transition-all"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
-            </svg>
-            WhatsApp
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/10 transition-all"
-          >
-            {locale === 'es' ? 'Formulario de Contacto' : 'Contact Form'}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================================
- * PRODUCT CATEGORIES LABEL — section header for the grid
- * ========================================================================= */
-function ProductsHeader({ locale }: { locale: string }) {
-  return (
-    <div className="pt-14 sm:pt-18 pb-4 sm:pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
-            {locale === 'es' ? 'Tienda' : 'Shop'}
-          </span>
-          <h2 className="mt-2 text-2xl sm:text-3xl font-black text-white">
-            {locale === 'es' ? 'Explora por Categoría' : 'Explore by Category'}
-          </h2>
-        </div>
-        <Link
-          href="/products"
-          className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-amber-400 hover:text-amber-300 transition-colors"
-        >
-          {locale === 'es' ? 'Ver todo' : 'View all'}
-          <ArrowRight className="w-4 h-4" />
+      <div className="self-end">
+        <p className="max-w-2xl text-pretty text-base leading-8 text-stone-300 sm:text-lg">{c.shopText}</p>
+        <Link href="/products" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-amber-200 transition-colors duration-300 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950">
+          {locale === 'es' ? 'Ver catálogo completo' : 'View full catalog'}
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
-      <div className="mt-3 w-16 h-1 bg-gold-gradient rounded-full" />
     </div>
   );
 }
 
-/* =========================================================================
- * TRUST MARQUEE — scrolling keywords
- * ========================================================================= */
-function TrustMarquee({ locale }: { locale: string }) {
-  const items = locale === 'es'
-    ? ['Pisos Epóxicos', 'Muebles de Lujo', 'River Tables', 'Pisos Industriales', 'Diseño 3D', 'Resina Epóxica', 'Hecho en Costa Rica', 'A Tu Medida']
-    : ['Epoxy Floors', 'Luxury Furniture', 'River Tables', 'Industrial Floors', '3D Design', 'Epoxy Resin', 'Made in Costa Rica', 'Custom Made'];
-
-  const row = items.map((item, i) => (
-    <span key={i} className="flex items-center gap-4 shrink-0">
-      <span className="text-sm sm:text-base font-semibold text-white/60 uppercase tracking-widest whitespace-nowrap">
-        {item}
-      </span>
-      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/50 shrink-0" />
-    </span>
-  ));
-
-  return (
-    <div className="relative bg-[#0e0e0e] border-y border-white/5 py-4 overflow-hidden">
-      <div className="flex gap-4 animate-marquee">
-        {row}{row}{row}
-      </div>
-      {/* Fade edges */}
-      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0e0e0e] to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0e0e0e] to-transparent z-10" />
-    </div>
-  );
-}
-
-/* =========================================================================
- * PROCESS SECTION — How we work
- * ========================================================================= */
-function ProcessSection({ locale }: { locale: string }) {
-  const steps = locale === 'es'
+function WhyChooseUsSection({ locale }: { locale: string }) {
+  const c = getCopy(locale);
+  const features = locale === 'es'
     ? [
-        { num: '01', title: 'Consulta', desc: 'Nos cuentas tu visión. Evaluamos el espacio y definimos objetivos juntos.' },
-        { num: '02', title: 'Diseño', desc: 'Creamos propuestas de diseño, selección de materiales y presupuesto detallado.' },
-        { num: '03', title: 'Ejecución', desc: 'Nuestro equipo ejecuta con precisión, respetando tiempos y estándares.' },
-        { num: '04', title: 'Entrega', desc: 'Verificamos cada detalle y entregamos un resultado que supera expectativas.' },
+        { icon: Shield, title: 'Garantía Total', desc: 'Tu inversión queda respaldada por un equipo que responde por materiales, instalación y acabado.' },
+        { icon: Award, title: 'Materiales Premium', desc: 'Trabajamos resinas, pigmentos y sellos seleccionados para cada uso, no una receta única.' },
+        { icon: Hammer, title: 'A Medida', desc: 'Diseñamos según tránsito, humedad, estilo visual, mantenimiento y presupuesto.' },
+        { icon: Sparkles, title: 'Acabado Exclusivo', desc: 'Mármol, metálico, espejo, vetas y combinaciones con madera real.' },
+        { icon: Factory, title: 'Criterio Técnico', desc: 'Diagnóstico del sustrato, preparación correcta y sistemas de alto desempeño.' },
+        { icon: CheckCircle2, title: 'Experiencia Real', desc: 'Más de 500 proyectos ejecutados en Costa Rica y la región.' },
       ]
     : [
-        { num: '01', title: 'Consultation', desc: 'Share your vision. We evaluate the space and define goals together.' },
-        { num: '02', title: 'Design', desc: 'We create design proposals, material selection and detailed budgets.' },
-        { num: '03', title: 'Execution', desc: 'Our team executes with precision, respecting timelines and standards.' },
-        { num: '04', title: 'Delivery', desc: 'We verify every detail and deliver results that exceed expectations.' },
+        { icon: Shield, title: 'Full Warranty', desc: 'Your investment is backed by a team accountable for materials, installation, and finish.' },
+        { icon: Award, title: 'Premium Materials', desc: 'We choose resins, pigments, and sealers for each use case, not a single recipe.' },
+        { icon: Hammer, title: 'Custom Made', desc: 'We design around traffic, humidity, visual style, maintenance, and budget.' },
+        { icon: Sparkles, title: 'Exclusive Finish', desc: 'Marble, metallic, mirror, veining, and combinations with real wood.' },
+        { icon: Factory, title: 'Technical Judgment', desc: 'Substrate diagnosis, correct preparation, and high-performance systems.' },
+        { icon: CheckCircle2, title: 'Real Experience', desc: 'More than 500 projects completed in Costa Rica and the region.' },
       ];
 
   return (
-    <section className="py-16 sm:py-20 bg-[#121212]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.2em]">
-            {locale === 'es' ? 'Nuestro Proceso' : 'Our Process'}
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-black text-white">
-            {locale === 'es' ? 'De la Idea a la Realidad' : 'From Idea to Reality'}
-          </h2>
-          <div className="mt-4 w-16 h-1 bg-gold-gradient mx-auto rounded-full" />
+    <section className="bg-[oklch(12%_0.017_58)] px-4 py-16 text-stone-50 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.24em] text-amber-300/80">{c.whyKicker}</p>
+          <h2 className="font-display mt-4 text-balance text-[clamp(2.3rem,5vw,4.8rem)] font-semibold leading-[0.95] tracking-[-0.055em]">{c.whyTitle}</h2>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {steps.map((step, i) => (
-            <div key={i} className="relative group">
-              {/* Connector line (hidden on first, visible between) */}
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-8 left-[calc(50%+24px)] right-0 h-px bg-gradient-to-r from-amber-500/30 to-transparent -translate-x-0" style={{ width: 'calc(100% - 24px)' }} />
-              )}
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-400/10 border border-amber-500/20 mb-4 group-hover:bg-amber-400/20 transition-colors">
-                  <span className="text-lg sm:text-xl font-black text-amber-400">{step.num}</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-white mb-2">{step.title}</h3>
-                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{step.desc}</p>
-              </div>
-            </div>
+        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-[1.75rem] border border-stone-50/10 bg-stone-50/10 md:grid-cols-3">
+          {features.map((feature) => (
+            <article key={feature.title} className="group bg-[oklch(15%_0.018_60)] p-6 transition-colors duration-300 hover:bg-[oklch(18%_0.026_66)] sm:p-8">
+              <feature.icon className="h-6 w-6 text-amber-200" aria-hidden="true" />
+              <h3 className="mt-7 text-xl font-semibold tracking-tight">{feature.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-stone-400">{feature.desc}</p>
+            </article>
           ))}
         </div>
       </div>
@@ -674,44 +293,131 @@ function ProcessSection({ locale }: { locale: string }) {
   );
 }
 
-/* =========================================================================
- * MAIN CONTENT ORCHESTRATOR
- * ========================================================================= */
+function ProcessSection({ locale }: { locale: string }) {
+  const c = getCopy(locale);
+  const steps = locale === 'es'
+    ? [
+        ['01', 'Consulta', 'Entendemos uso, medidas, humedad, tránsito y expectativas visuales.'],
+        ['02', 'Diseño', 'Definimos acabado, materiales, muestra o referencia y presupuesto detallado.'],
+        ['03', 'Ejecución', 'Preparamos superficie, instalamos con precisión y controlamos tiempos de curado.'],
+        ['04', 'Entrega', 'Revisamos bordes, brillo, resistencia y cuidados para que el resultado dure.'],
+      ]
+    : [
+        ['01', 'Consultation', 'We understand use, dimensions, humidity, traffic, and visual expectations.'],
+        ['02', 'Design', 'We define finish, materials, sample or reference, and detailed budget.'],
+        ['03', 'Execution', 'We prepare the surface, install with precision, and control cure times.'],
+        ['04', 'Delivery', 'We review edges, shine, resistance, and care so the result lasts.'],
+      ];
+
+  return (
+    <section className="bg-[oklch(90%_0.017_78)] px-4 py-16 text-stone-950 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[oklch(42%_0.09_73)]">{c.processKicker}</p>
+            <h2 className="font-display mt-4 text-balance text-[clamp(2.25rem,4.8vw,4.6rem)] font-semibold leading-[0.96] tracking-[-0.055em]">{c.processTitle}</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {steps.map(([num, title, desc]) => (
+              <article key={num} className="rounded-[1.5rem] border border-stone-950/10 bg-stone-50/65 p-6 shadow-[0_18px_40px_oklch(40%_0.04_70_/_0.08)]">
+                <span className="font-display text-5xl font-semibold tracking-[-0.06em] text-[oklch(55%_0.11_76)] tabular-nums">{num}</span>
+                <h3 className="mt-6 text-xl font-semibold tracking-tight">{title}</h3>
+                <p className="mt-3 text-sm leading-7 text-stone-700">{desc}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection({ locale }: { locale: string }) {
+  const c = getCopy(locale);
+  const testimonials = locale === 'es'
+    ? [
+        ['Carlos Méndez', 'Gerente de Planta, Zona Franca', 'El piso epóxico industrial superó las expectativas. Resistente, fácil de limpiar y con acabado profesional impecable.'],
+        ['María Fernanda Solís', 'Arquitecta de Interiores', 'El efecto mármol que logran es espectacular, y la atención al detalle se nota desde la primera reunión.'],
+        ['Roberto Álvarez', 'Propietario de Restaurante', 'La mesa river table se volvió la pieza central del restaurante. Los clientes siempre preguntan por ella.'],
+      ]
+    : [
+        ['Carlos Méndez', 'Plant Manager, Free Trade Zone', 'The industrial epoxy floor exceeded expectations. Resistant, easy to clean, and professionally finished.'],
+        ['María Fernanda Solís', 'Interior Architect', 'Their marble effect is spectacular, and the attention to detail is clear from the first meeting.'],
+        ['Roberto Álvarez', 'Restaurant Owner', 'The river table became the centerpiece of the restaurant. Customers always ask about it.'],
+      ];
+
+  return (
+    <section className="bg-[oklch(14%_0.018_60)] px-4 py-16 text-stone-50 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.24em] text-amber-300/80">{c.testimonialsKicker}</p>
+          <h2 className="font-display mt-4 text-balance text-[clamp(2.25rem,4.8vw,4.6rem)] font-semibold leading-[0.96] tracking-[-0.055em]">{c.testimonialsTitle}</h2>
+        </div>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {testimonials.map(([name, role, text]) => (
+            <figure key={name} className="rounded-[1.75rem] border border-stone-50/10 bg-stone-50/[0.045] p-6 shadow-[0_24px_60px_oklch(4%_0.01_40_/_0.25)] sm:p-8">
+              <div className="flex gap-1 text-amber-200" aria-label="5 stars">
+                {Array.from({ length: 5 }).map((_, index) => <Star key={index} className="h-4 w-4 fill-current" aria-hidden="true" />)}
+              </div>
+              <blockquote className="mt-6 text-pretty text-base leading-8 text-stone-200">“{text}”</blockquote>
+              <figcaption className="mt-8 flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-200 text-sm font-bold text-stone-950">{name[0]}</span>
+                <span>
+                  <span className="block font-semibold text-stone-50">{name}</span>
+                  <span className="block text-sm text-stone-500">{role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCTASection({ locale }: { locale: string }) {
+  const c = getCopy(locale);
+  return (
+    <section className="relative isolate overflow-hidden bg-[oklch(88%_0.028_78)] px-4 py-16 text-stone-950 sm:px-6 sm:py-24 lg:px-8">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_22%,oklch(76%_0.12_78_/_0.28),transparent_34%),linear-gradient(135deg,transparent,oklch(72%_0.07_120_/_0.16))]" />
+      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-stone-950/10 bg-stone-50/65 p-6 shadow-[0_30px_90px_oklch(35%_0.05_75_/_0.18)] backdrop-blur-sm sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <h2 className="font-display text-balance text-[clamp(2.5rem,5vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.06em]">{c.finalTitle}</h2>
+          <p className="mt-5 max-w-2xl text-pretty text-base leading-8 text-stone-700 sm:text-lg">{c.finalText}</p>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+          <Link href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-stone-950 px-6 py-3 text-sm font-bold text-amber-100 shadow-[0_18px_48px_oklch(12%_0.02_50_/_0.24)] transition-[transform,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-950 focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(88%_0.028_78)] active:scale-[0.98]">
+            <Phone className="h-4 w-4" aria-hidden="true" />
+            {c.whatsapp}
+          </Link>
+          <Link href="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-stone-950/15 px-6 py-3 text-sm font-bold text-stone-950 transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-stone-950/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-950 focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(88%_0.028_78)] active:scale-[0.98]">
+            {c.contact}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function OptimizedNewHomeContent({ locale }: { locale?: string }) {
   const hookLocale = useLocale();
   const resolvedLocale = locale || hookLocale;
 
   return (
-    <div className="bg-[#121212]">
-      {/* 1. Hero — Full viewport, memorable */}
+    <main id="main-content" className="overflow-x-hidden bg-[oklch(12%_0.017_58)]">
       <HeroSection locale={resolvedLocale} />
-
-      {/* 2. Trust marquee */}
       <TrustMarquee locale={resolvedLocale} />
-
-      {/* 3. Services — 3 main divisions */}
       <ServicesSection locale={resolvedLocale} />
-
-      {/* 4. Products by category */}
-      <section className="bg-[#121212] pb-8">
-        <ProductsHeader locale={resolvedLocale} />
-        <div className="max-w-7xl mx-auto">
-          <OptimizedGridSection />
-        </div>
+      <section className="bg-[oklch(12%_0.017_58)] pb-12 sm:pb-20">
+        <ProductsIntro locale={resolvedLocale} />
+        <OptimizedGridSection />
       </section>
-
-      {/* 5. Why choose us */}
       <WhyChooseUsSection locale={resolvedLocale} />
-
-      {/* 6. Process */}
       <ProcessSection locale={resolvedLocale} />
-
-      {/* 7. Testimonials */}
       <TestimonialsSection locale={resolvedLocale} />
-
-      {/* 8. Final CTA */}
       <FinalCTASection locale={resolvedLocale} />
-    </div>
+    </main>
   );
 }
 

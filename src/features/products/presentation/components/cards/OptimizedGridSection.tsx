@@ -1,332 +1,232 @@
 'use client';
 
-import React, { useMemo } from "react";
-import Card from "./Card";
-import { Link } from "@/shared/i18n/navigation";
-import Image from "next/image";
-import { useProductsContext } from "../../state/ProductsContext";
-import CarrucelSectionA from "./CarrucelSectionA";
-import { useLocale } from "next-intl";
-import { formatUSD } from "@/shared/utils/formatCurrency";
-import { ChevronRight } from "lucide-react";
-
+import React, { useMemo } from 'react';
+import Image from 'next/image';
+import { useLocale } from 'next-intl';
+import { ArrowRight, ChevronRight, MessageCircle, PackageSearch } from 'lucide-react';
+import { Link } from '@/shared/i18n/navigation';
+import { formatUSD } from '@/shared/utils/formatCurrency';
+import { useProductsContext } from '../../state/ProductsContext';
+import Card from './Card';
+import CarrucelSectionA from './CarrucelSectionA';
 
 interface GridSectionProps {
-  // Props simplificados
   mobileActive?: boolean;
-  /** Identificador único para este componente, usado para la distribución de productos */
   sectionId?: string;
 }
 
-const OptimizedGridSection: React.FC<GridSectionProps> = ({
-  mobileActive = true,
-}) => {
+const placeholderEs = 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp';
+const placeholderEn = 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp';
+
+function productImage(product: { media?: unknown }, locale: string) {
+  const media = Array.isArray(product.media) ? product.media : [];
+  const first = media[0] as { url?: unknown } | undefined;
+  return typeof first?.url === 'string' ? first.url : locale === 'es' ? placeholderEs : placeholderEn;
+}
+
+function categoryName(category: { name?: string | null; name_es?: string | null; name_en?: string | null }, locale: string) {
+  return (locale === 'es' ? category.name_es : category.name_en) || category.name || '';
+}
+
+function categoryHref(category: { id: number; name?: string | null }) {
+  return `/products?category=${category.name || category.id}`;
+}
+
+const OptimizedGridSection: React.FC<GridSectionProps> = ({ mobileActive = true }) => {
   const locale = useLocale();
   const { categories, sectionProducts, loading, error } = useProductsContext();
+  const visibleCategories = useMemo(() => categories.slice(0, 6), [categories]);
 
-  // Definimos internamente qué categorías mostrar (0-6 por defecto)
-  const indexStart = 0;
-  const indexEnd = 6;
-
-  // Usamos useMemo para evitar cálculos repetidos en cada renderizado
   const desktopCards = useMemo(() => {
-    return categories.slice(indexStart, indexEnd).map(category => {
-      const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
-      const displayProducts = categoryProducts.slice(0, 4); // Mostrar hasta 4 productos por categoría
+    return visibleCategories.map((category) => {
+      const products = sectionProducts.gridByCategory[category.id] || [];
+      const displayProducts = products.slice(0, 4);
+      const name = categoryName(category, locale);
+      const href = categoryHref(category);
 
       return {
-        title: locale === 'es' ? category.name_es : category.name_en || category.name,
-        link: `/products?category=${category.name}`,
+        title: name,
+        link: href,
+        meta: products.length > 0
+          ? locale === 'es' ? `${products.length} piezas visibles` : `${products.length} visible pieces`
+          : locale === 'es' ? 'Cotización a medida' : 'Custom quote',
         content: (
-          <div className="p-3">
+          <div className="flex h-full flex-col">
             {displayProducts.length > 0 ? (
-              <>
-                <div className="grid grid-cols-2 gap-3 ">
-                  {displayProducts.map((product, idx) => (
-                    <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} target="_self" className="block group">
-                      <div className="flex flex-col items-center bg-[#121212] p-2 hover:shadow-sm transition-shadow">
-                        <div className="h-44 flex items-center justify-center mb-1 overflow-hidden">
-                          <Image
-                            src={product.media && product.media.length > 0 ?
-                              (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp') :
-                              locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
-                            alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
-                            width={200}
-                            height={200}
-                            style={{ objectFit: 'contain', maxHeight: '100%' }}
-                            className="group-hover:scale-105 transition-transform"
-                            priority // Solo priorizar las primeras imágenes
-                        
-                          />
-                        </div>
-                        <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-200">
-                          {locale === 'es' ? product.name_es : product.name_en}
-                        </span>
-                        {product.dolar_price && product.dolar_price > 0 ? (
-                          <span className="text-[10px] font-bold text-teal-700 mt-0.5">
-                            {formatUSD(product.dolar_price)}
-                          </span>
-                        ) : (
-                          <div className="flex items-center justify-center">
-                            <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const msg = encodeURIComponent(
-                                locale === 'es'
-                                  ? `Hola, estoy interesado en el producto: ${product?.name_es} (${window.location.href})`
-                                  : `Hello, I am interested in the product: ${product?.name_en} (${window.location.href})`
-                              );
-                              window.open(`https://wa.me/+50684237555?text=${msg}`, '_blank', 'noopener');
-                            }}
-                            className="inline-flex items-center justify-center text-xs font-medium text-teal-600 hover:text-teal-500 border-b border-current pb-0"
-                          >
-                            {locale === 'es' ? 'Consultar precio' : 'Check price'}
-                            <svg className="w-2.5 h-2.5 ml-1 inline-block" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
-                            </svg>
-                          </button>
-                          </div>
-                        )}
-                      </div>
+              <div className="grid grid-cols-2 gap-3">
+                {displayProducts.map((product, idx) => {
+                  const displayName = (locale === 'es' ? product.name_es : product.name_en) || product.name || 'Producto';
+                  return (
+                    <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} className="group/product min-w-0 rounded-2xl bg-stone-950/45 p-2 transition-[transform,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-stone-950/65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                      <span className="relative block aspect-[4/3] overflow-hidden rounded-xl bg-stone-900">
+                        <Image src={productImage(product, locale)} alt={displayName} fill sizes="(max-width: 768px) 45vw, 15vw" className="object-contain p-2 transition-transform duration-500 ease-out group-hover/product:scale-[1.04]" unoptimized />
+                      </span>
+                      <span className="mt-2 block truncate text-xs font-semibold text-stone-100">{displayName}</span>
+                      <span className="mt-1 block text-[11px] font-bold text-amber-200 tabular-nums">
+                        {product.dolar_price && product.dolar_price > 0 ? formatUSD(product.dolar_price) : locale === 'es' ? 'Cotizar por WhatsApp' : 'Quote on WhatsApp'}
+                      </span>
                     </Link>
-                  ))}
-                </div>
-                <div className="mt-3 text-xs text-[#121212] hover:underline text-center">
-                  <Link href={`/products?category=${category.name}`} target="_self" className="inline-flex items-center">
-                    <span>{locale === 'es' ? 'Ver todo en ' + category.name_es : 'View all in ' + category.name_en}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
-              </>
+                  );
+                })}
+              </div>
             ) : (
-              <>
-                <div className="flex items-center justify-center h-48 overflow-hidden">
-                  <Image
-                    src={locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
-                    alt={category.name || 'Categoría'}
-                    width={200}
-                    height={200}
-                    style={{ objectFit: 'contain', maxHeight: '100%' }}
-                    className="transition-transform hover:scale-105"
-                   
-                  />
+              <div className="flex min-h-56 flex-1 flex-col justify-between rounded-2xl border border-dashed border-amber-200/25 bg-stone-950/35 p-5 text-stone-200">
+                <PackageSearch className="h-8 w-8 text-amber-200" aria-hidden="true" />
+                <div>
+                  <p className="text-lg font-semibold tracking-tight">{locale === 'es' ? 'Línea disponible por proyecto' : 'Line available by project'}</p>
+                  <p className="mt-2 text-sm leading-6 text-stone-400">
+                    {locale === 'es'
+                      ? 'No mostramos inventario fijo aquí todavía. Podemos cotizar medidas, acabado y uso real.'
+                      : 'No fixed inventory is shown here yet. We can quote dimensions, finish, and real use.'}
+                  </p>
                 </div>
-                <div className="mt-3 text-xs text-teal-600 hover:underline text-center">
-                  <Link href={`/products?category=${category.name}`} target="_self" className="inline-flex items-center">
-                    <span>{locale === 'es' ? 'Ver todo en ' + category.name_es : 'View all in ' + category.name_en}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
-              </>
+              </div>
             )}
+
+            <Link href={href} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-amber-200 transition-colors duration-300 hover:text-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+              {locale === 'es' ? `Ver ${name}` : `View ${name}`}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         ),
       };
     });
-  }, [categories, sectionProducts, indexStart, indexEnd, locale]);
-
-
+  }, [locale, sectionProducts, visibleCategories]);
 
   if (loading) {
     return (
-      <>
-        {/* Skeleton para desktop */}
-        <div className="max-lg:hidden grid grid-cols-3 gap-5 mt-4 mb-4 mx-4 pb-6">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
-          ))}
-        </div>
-
-        {/* Skeleton para móvil */}
-        <div className="lg:hidden grid grid-rows-3 gap-4 mt-4 mb-4 mx-4 pb-6">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
-          ))}
-        </div>
-      </>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div key={index} className="h-80 animate-pulse rounded-[1.75rem] bg-stone-50/8" />
+        ))}
+      </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-red-500 text-center p-4">
-        <p>{locale === 'es' ? 'Error al cargar categorías' : 'Error loading categories'}</p>
-        <p className="text-sm">{error}</p>
+      <div className="mx-auto max-w-3xl px-4 text-center text-stone-200 sm:px-6 lg:px-8">
+        <div className="rounded-[1.75rem] border border-red-300/25 bg-red-950/25 p-6">
+          <p className="font-semibold">{locale === 'es' ? 'No pudimos cargar las categorías.' : 'We could not load categories.'}</p>
+          <p className="mt-2 text-sm text-stone-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (visibleCategories.length === 0) {
+    return (
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-[2rem] border border-amber-200/20 bg-stone-50/[0.055] p-8 text-stone-100 shadow-[0_24px_60px_oklch(4%_0.01_40_/_0.25)]">
+          <PackageSearch className="h-9 w-9 text-amber-200" aria-hidden="true" />
+          <h3 className="font-display mt-6 text-3xl font-semibold tracking-[-0.04em]">
+            {locale === 'es' ? 'Estamos preparando el catálogo público.' : 'We are preparing the public catalog.'}
+          </h3>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-400">
+            {locale === 'es'
+              ? 'Mientras tanto, podemos cotizar pisos, muebles y acabados directamente por WhatsApp.'
+              : 'Meanwhile, we can quote floors, furniture, and finishes directly on WhatsApp.'}
+          </p>
+          <Link href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-200 px-5 py-3 text-sm font-bold text-stone-950 transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950">
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            {locale === 'es' ? 'Cotizar por WhatsApp' : 'Quote on WhatsApp'}
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      {/* Versión de escritorio - Muestra categorías en grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 px-4 gap-4 pb-4 max-lg:hidden">
-        {desktopCards.map((card, index) => (
-          <Card key={index} {...card} />
+      <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-5 px-4 pb-4 sm:px-6 md:grid-cols-3 lg:grid lg:px-8">
+        {desktopCards.map((card) => (
+          <Card key={card.title} {...card} />
         ))}
       </div>
 
-      {/* Versión móvil - Carrusel con 3 categorías principales + resto abajo */}
       {mobileActive && (
         <div className="lg:hidden">
           <CarrucelSectionA
-            items={
-              // Ordenamos las categorías dando prioridad a Paintings y Napkin Holders
-              [...categories.slice(indexStart, indexEnd)]
-                .sort((a, b) => {
-                  const aName = (a.name || '').toLowerCase();
-                  const bName = (b.name || '').toLowerCase();
-                  const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
-                  const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
-                  if (isPrioritizedA && !isPrioritizedB) return -1;
-                  if (!isPrioritizedA && isPrioritizedB) return 1;
-                  const aProducts = (sectionProducts.gridByCategory[a.id] || []).length;
-                  const bProducts = (sectionProducts.gridByCategory[b.id] || []).length;
-                  if (aProducts >= 4 && bProducts < 4) return -1;
-                  if (aProducts < 4 && bProducts >= 4) return 1;
-                  return bProducts - aProducts;
-                })
-                .slice(0, 3) // Solo 3 en el carrusel
-                .map((category) => {
-                  const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
-                  const cardColor = 'bg-gold-gradient';
-
-                  return {
-                    textColor: 'text-black',
-                    title: `${locale === 'es' ? category.name_es : category.name_en || category.name}`,
-                    content: (
-                      <div className="grid grid-cols-2 gap-2 w-full h-full px-1 pt-4">
-                        {categoryProducts.slice(0, 4).map((product, idx) => (
-                          <Link key={idx} href={`/product/${product.name}`} className="block text-center">
-                            <div className="h-44 flex items-center justify-center bg-[#303030] rounded-lg shadow-sm">
-                              <Image
-                                src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
-                                alt={product.name || ''}
-                                width={100}
-                                height={100}
-                                style={{ objectFit: 'contain', maxHeight: '100%' }}
-                                className="p-0.5"
-                                priority
-                              />
-                            </div>
-                          </Link>
-                        ))}
+            items={visibleCategories.slice(0, 3).map((category) => {
+              const products = sectionProducts.gridByCategory[category.id] || [];
+              const name = categoryName(category, locale);
+              return {
+                textColor: 'text-stone-950',
+                title: name,
+                content: (
+                  <div className="grid h-full w-full grid-cols-2 gap-2 px-1 pt-4">
+                    {products.slice(0, 4).map((product, idx) => (
+                      <Link key={`${product.id}-${idx}`} href={`/product/${product.name}`} className="block rounded-xl bg-stone-950/70 p-2 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+                        <div className="relative h-32 overflow-hidden rounded-lg bg-stone-900">
+                          <Image src={productImage(product, locale)} alt={product.name || ''} fill sizes="45vw" className="object-contain p-2" unoptimized />
+                        </div>
+                      </Link>
+                    ))}
+                    {products.length === 0 && (
+                      <div className="col-span-2 flex h-40 flex-col items-center justify-center rounded-xl border border-dashed border-stone-950/20 bg-stone-50/55 p-4 text-center">
+                        <PackageSearch className="h-7 w-7 text-stone-800" aria-hidden="true" />
+                        <p className="mt-3 text-sm font-semibold text-stone-900">{locale === 'es' ? 'Cotización a medida' : 'Custom quote'}</p>
                       </div>
-                    ),
-                    link: `/products?category=${category.name}`,
-                    className: `${cardColor} rounded-xl px-3 pt-2 pb-3 shadow-sm`
-                  };
-                })
-            }
+                    )}
+                  </div>
+                ),
+                link: categoryHref(category),
+                className: 'rounded-[1.5rem] bg-[oklch(78%_0.12_78)] px-3 pb-3 pt-2 shadow-[0_18px_44px_oklch(4%_0.01_40_/_0.28)]',
+              };
+            })}
           />
 
-          {/* Categorías restantes en formato compacto */}
-          <MobileRemainingCategories
-            categories={categories}
-            sectionProducts={sectionProducts}
-            indexStart={indexStart}
-            indexEnd={indexEnd}
-            locale={locale}
-          />
+          <MobileRemainingCategories categories={visibleCategories} sectionProducts={sectionProducts} locale={locale} />
         </div>
       )}
     </div>
   );
 };
 
-/* ---------------------------------------------------------------------------
- * Categorías restantes – presentación compacta debajo del carrusel (mobile)
- * ------------------------------------------------------------------------ */
 function MobileRemainingCategories({
   categories,
   sectionProducts,
-  indexStart,
-  indexEnd,
   locale,
 }: {
   categories: ReturnType<typeof useProductsContext>['categories'];
   sectionProducts: ReturnType<typeof useProductsContext>['sectionProducts'];
-  indexStart: number;
-  indexEnd: number;
   locale: string;
 }) {
-  // Misma lógica de sorting que el carrusel para obtener las 3 restantes
-  const sorted = [...categories.slice(indexStart, indexEnd)].sort((a, b) => {
-    const aName = (a.name || '').toLowerCase();
-    const bName = (b.name || '').toLowerCase();
-    const isPrioritizedA = aName.includes('painting') || aName.includes('napkin holder');
-    const isPrioritizedB = bName.includes('painting') || bName.includes('napkin holder');
-    if (isPrioritizedA && !isPrioritizedB) return -1;
-    if (!isPrioritizedA && isPrioritizedB) return 1;
-    const aProducts = (sectionProducts.gridByCategory[a.id] || []).length;
-    const bProducts = (sectionProducts.gridByCategory[b.id] || []).length;
-    if (aProducts >= 4 && bProducts < 4) return -1;
-    if (aProducts < 4 && bProducts >= 4) return 1;
-    return bProducts - aProducts;
-  });
-
-  const remaining = sorted.slice(3); // Las 3 que no están en el carrusel
-
+  const remaining = categories.slice(3);
   if (remaining.length === 0) return null;
 
   return (
-    <div className="px-4 pt-4 pb-2 space-y-3">
-      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
-        {locale === 'es' ? 'Más categorías' : 'More categories'}
-      </h3>
-      <div className="grid grid-cols-1 gap-2.5">
+    <div className="px-4 pt-5 pb-2">
+      <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-stone-500">{locale === 'es' ? 'Más líneas SobrePoxi' : 'More SobrePoxi lines'}</h3>
+      <div className="mt-3 grid grid-cols-1 gap-3">
         {remaining.map((category) => {
-          const categoryProducts = sectionProducts.gridByCategory[category.id] || [];
-          const previews = categoryProducts.slice(0, 3);
-          const categoryName = locale === 'es' ? category.name_es : (category.name_en || category.name);
-          const productCount = categoryProducts.length;
+          const products = sectionProducts.gridByCategory[category.id] || [];
+          const previews = products.slice(0, 3);
+          const name = categoryName(category, locale);
+          const hasProducts = products.length > 0;
 
           return (
-            <Link
-              key={category.id}
-              href={`/products?category=${category.name}`}
-              className="flex items-center gap-3 bg-[#1a1a1a] border border-gray-800 rounded-xl p-3 hover:border-amber-600/40 transition-all group"
-            >
-              {/* Thumbnails de productos */}
-              <div className="flex -space-x-2 shrink-0">
-                {previews.length > 0 ? (
-                  previews.map((product, idx) => (
-                    <div
-                      key={idx}
-                      className="w-12 h-12 rounded-lg bg-[#252525] border-2 border-[#1a1a1a] overflow-hidden flex items-center justify-center"
-                    >
-                      <Image
-                        src={product.media && product.media.length > 0 ? product.media[0].url : 'https://r5457gldorgj6mug.public.blob.vercel-storage.com/public/placeholder-Td0lfdJbjHebhgL5vOIH3UC8U6qIIB.webp'}
-                        alt={product.name || ''}
-                        width={40}
-                        height={40}
-                        style={{ objectFit: 'contain' }}
-                        className="p-0.5"
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <div className="w-12 h-12 rounded-lg bg-[#252525] border-2 border-[#1a1a1a] flex items-center justify-center">
-                    <span className="text-gray-600 text-xs">—</span>
-                  </div>
+            <Link key={category.id} href={categoryHref(category)} className="flex items-center gap-3 rounded-2xl border border-stone-50/10 bg-stone-50/[0.055] p-3 text-stone-100 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-0.5 hover:border-amber-200/35 hover:bg-stone-50/[0.075] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200">
+              <div className="flex shrink-0 -space-x-2">
+                {previews.length > 0 ? previews.map((product, idx) => (
+                  <span key={`${product.id}-${idx}`} className="relative h-12 w-12 overflow-hidden rounded-xl border-2 border-[oklch(12%_0.017_58)] bg-stone-900">
+                    <Image src={productImage(product, locale)} alt={product.name || ''} fill sizes="48px" className="object-contain p-1" unoptimized />
+                  </span>
+                )) : (
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-dashed border-amber-200/25 bg-stone-950/55 text-amber-200">
+                    <PackageSearch className="h-5 w-5" aria-hidden="true" />
+                  </span>
                 )}
               </div>
-
-              {/* Info de la categoría */}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white truncate group-hover:text-amber-400 transition-colors">
-                  {categoryName}
-                </p>
-                <p className="text-xs text-gray-500">
-                  {productCount} {locale === 'es' ? 'productos' : 'products'}
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold">{name}</p>
+                <p className="text-xs text-stone-500">
+                  {hasProducts
+                    ? locale === 'es' ? `${products.length} piezas visibles` : `${products.length} visible pieces`
+                    : locale === 'es' ? 'Proyecto a medida' : 'Custom project'}
                 </p>
               </div>
-
-              {/* Flecha */}
-              <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-amber-400 transition-colors shrink-0" />
+              <ChevronRight className="h-4 w-4 shrink-0 text-amber-200" aria-hidden="true" />
             </Link>
           );
         })}
