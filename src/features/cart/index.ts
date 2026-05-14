@@ -1,20 +1,21 @@
-// Types
+﻿// Types
 export type { CartItem, CartContextProps, Product } from './application/types';
 
 // State & Providers
 export { CartProvider } from './presentation/providers/CartProvider';
-export {
-  CartContext,
-  useCart,
-  encodeCartToBase64,
-  decodeCartFromBase64,
-} from './presentation/state/CartContext';
+export { CartContext, useCart } from './presentation/state/CartContext';
 export type { UseCartReturn } from './presentation/state/CartContext';
+
+// Application helpers
+export { encodeCartToBase64, decodeCartFromBase64 } from './application/encode';
+export type { EncodedCartItem } from './application/encode';
 
 // Use cases
 export { addToCartUseCase } from './application/use-cases/addToCart';
 export { removeFromCartUseCase } from './application/use-cases/removeFromCart';
 export { updateCartQuantityUseCase } from './application/use-cases/updateCartQuantity';
+export { rebuildCartFromIds } from './application/use-cases/rebuildCartFromIds';
+export { syncCartWithDB } from './application/use-cases/syncCartWithDB';
 
 // Distribute
 export { distributeCart, accionesCarrito } from './application/distribute';

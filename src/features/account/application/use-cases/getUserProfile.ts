@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/shared/supabase/server'
+import { logger } from '@/shared/observability/logger'
 import type { UserProfile } from '../distribute'
 import type { User } from '@supabase/supabase-js'
 
@@ -12,7 +13,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
     .single()
 
   if (error) {
-    console.error('Error fetching profile:', error)
+    logger.error('[getUserProfile]', { error })
     return null
   }
 
@@ -33,7 +34,7 @@ export async function createUserProfile(user: User): Promise<UserProfile | null>
     .single()
 
   if (error) {
-    console.error('Error creating profile:', error)
+    logger.error('[createUserProfile]', { error })
     return null
   }
 

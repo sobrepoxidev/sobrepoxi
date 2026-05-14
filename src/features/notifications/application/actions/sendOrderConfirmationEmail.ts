@@ -4,6 +4,7 @@ import { sendOrderEmailInputSchema, type SendOrderEmailInput } from "../schemas"
 import { renderOrderConfirmationHtml } from "../templates/order-confirmation";
 import { sendMail } from "../../infrastructure/transport/nodemailer.server";
 import { createServerSupabaseClient } from "@/shared/supabase/server";
+import { logger } from "@/shared/observability/logger";
 
 const COMPANY_EMAIL = "info@sobrepoxi.com";
 
@@ -54,7 +55,7 @@ export async function sendOrderConfirmationEmail(
 
     return { success: true };
   } catch (error) {
-    console.error("[sendOrderConfirmationEmail]", error);
+    logger.error("[sendOrderConfirmationEmail]", { error });
     return { success: false, error: "Internal error" };
   }
 }

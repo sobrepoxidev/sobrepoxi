@@ -6,6 +6,7 @@ import { Session } from '@supabase/supabase-js';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
 import type { Database } from '@/shared/types/database';
+import { logger } from '@/shared/observability/logger';
 import type { ShippingAddress, DiscountInfo } from '../distribute';
 
 export interface UseCheckoutFormOptions {
@@ -44,8 +45,8 @@ export function useCheckoutForm({ locale, initialData }: UseCheckoutFormOptions)
       if (discountInfoStr) {
         try {
           setDiscountInfo(JSON.parse(discountInfoStr));
-        } catch (e) {
-          console.error('Error parsing discount info:', e);
+        } catch (error) {
+          logger.error('[useCheckoutForm] Error parsing discount info', { error });
         }
       }
 

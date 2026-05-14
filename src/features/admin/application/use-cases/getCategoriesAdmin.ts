@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/shared/supabase/server';
+import { logger } from '@/shared/observability/logger';
 import type { Database } from '@/shared/types/database';
 
 type Category = Database['categories'];
@@ -11,7 +12,7 @@ export async function getCategoriesAdmin(): Promise<Category[]> {
     .order('name_es', { ascending: true });
 
   if (error) {
-    console.error('[getCategoriesAdmin]', error);
+    logger.error('[getCategoriesAdmin]', { error });
     return [];
   }
 

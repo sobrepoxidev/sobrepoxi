@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/shared/supabase/server';
+import { logger } from '@/shared/observability/logger';
 import type { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
@@ -15,8 +16,8 @@ export async function updateProductAdmin(
     .eq('id', productId);
 
   if (error) {
-    console.error('[updateProductAdmin]', error);
-    return { success: false, error: error.message };
+    logger.error('[updateProductAdmin]', { error });
+    return { success: false, error: 'Unable to update product' };
   }
 
   return { success: true };

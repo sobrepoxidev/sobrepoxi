@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { Database } from '@/shared/types/database'
-import { OptimizedNew } from '@/features/content';
+import { OptimizedNew } from '@/features/content'
 
 export default async function HomePageData({ locale }: { locale: string }) {
   const cookieStore = await cookies()
@@ -16,14 +16,14 @@ export default async function HomePageData({ locale }: { locale: string }) {
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore.set(name, value, options),
             )
           } catch {
             // Ignore
           }
         },
       },
-    }
+    },
   )
 
   const { data: categories } = await supabase
@@ -32,10 +32,10 @@ export default async function HomePageData({ locale }: { locale: string }) {
     .order('name')
 
   const firstCategories = categories?.slice(0, 3) || []
-  const firstCategoryIds = firstCategories.map(category => category.id)
+  const firstCategoryIds = firstCategories.map((category) => category.id)
 
   const secondCategories = categories?.slice(6, 12) || []
-  const secondCategoryIds = secondCategories.map(category => category.id)
+  const secondCategoryIds = secondCategories.map((category) => category.id)
 
   let initialProducts: Database['products'][] = []
 
@@ -68,10 +68,6 @@ export default async function HomePageData({ locale }: { locale: string }) {
   }
 
   return (
-    <OptimizedNew
-      initialCategories={categories || []}
-      initialProducts={initialProducts}
-      locale={locale}
-    />
+    <OptimizedNew initialCategories={categories || []} initialProducts={initialProducts} locale={locale} />
   )
 }

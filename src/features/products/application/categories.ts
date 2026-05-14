@@ -1,4 +1,5 @@
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { logger } from '@/shared/observability/logger';
 import type { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
@@ -13,7 +14,7 @@ export async function getCategoriesFromDB(): Promise<CategoryRow[]> {
     .order('name');
 
   if (error) {
-    console.error('[getCategories]', error);
+    logger.error('[getCategories]', { error });
     return [];
   }
 
@@ -29,7 +30,7 @@ export async function getFeaturedProductsFromDB(limit = 10): Promise<Product[]> 
     .limit(limit);
 
   if (error) {
-    console.error('[getFeaturedProducts]', error);
+    logger.error('[getFeaturedProducts]', { error });
     return [];
   }
 
@@ -45,7 +46,7 @@ export async function getProductsByCategoryFromDB(categoryId: number, limit = 4)
     .limit(limit);
 
   if (error) {
-    console.error(`[getProductsByCategory] ${categoryId}:`, error);
+    logger.error('[getProductsByCategory]', { categoryId, error });
     return [];
   }
 

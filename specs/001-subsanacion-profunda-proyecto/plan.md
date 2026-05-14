@@ -33,9 +33,9 @@ Detalle completo en [research.md](./research.md). Inventario y entidades en [dat
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-`/.specify/memory/constitution.md` está en estado plantilla (placeholders sin completar). No hay principios concretos definidos por el equipo.
+`/.specify/memory/constitution.md` ya contiene la constitución activa del proyecto (`Sobrepoxi Constitution`, v1.0.0, 2026-05-11). Sus principios MUST son bloqueantes para este feature: Clean Architecture por features, API pública por barrel, No BIG Components, Zod en fronteras server, security baseline, no silent errors, verde por tarea y preservación de URLs.
 
-**Gates derivados** (a partir de la spec y las clarifications, en ausencia de constitution explícita):
+**Gates derivados** (a partir de la constitución activa, la spec y las clarifications):
 
 | Gate | Estado |
 |------|--------|
@@ -43,6 +43,7 @@ Detalle completo en [research.md](./research.md). Inventario y entidades en [dat
 | Migraciones de BD mínimas y reversibles (FR-007 / FR-010) | ✅ Fase principal sin DB migrations; cualquier cambio de schema queda en tarea aislada |
 | Compatibilidad de funcionalidad y URLs públicas (FR-011, R12) | ✅ URLs intactas; quiebres documentados explícitamente cuando ocurran |
 | Sin secretos en bundle cliente (FR-009 / SC-005) | ✅ Tareas Sec-1 a Sec-3 atacan exposición |
+| Barrels client-safe + rutas Next | ✅ Los barrels de feature exponen API pública client-safe; los wrappers de `src/app/**/page.tsx` pueden importar `presentation/pages/*` directamente para no arrastrar módulos server (`next/headers`) al bundle cliente |
 | Boundaries enforced (FR-006 / SC-007) | ✅ `eslint-plugin-boundaries` configurado en T-Setup-2 |
 | Estado verde por tarea (FR-016 / SC-004) | ✅ Cada tarea termina con `lint`, `typecheck`, `build` pasando |
 

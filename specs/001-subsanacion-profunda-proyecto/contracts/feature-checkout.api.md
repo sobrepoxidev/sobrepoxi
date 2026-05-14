@@ -1,8 +1,10 @@
-# Contract: `features/checkout`
+﻿# Contract: `features/checkout`
 
-Barrel: `src/features/checkout/index.ts`
+Primary client-safe barrel: `src/features/checkout/index.ts`
 
-## Tipos
+Server-only PayPal use cases live in `src/features/checkout/application/use-cases/*` and PayPal provider code lives in `src/features/checkout/infrastructure/paypal/client.ts`. They are intentionally not re-exported by the primary barrel because checkout pages/components consume that barrel on the client.
+
+## Types
 
 ```ts
 export interface OrderInput {
@@ -24,48 +26,33 @@ export interface CaptureResult {
 }
 ```
 
-## Use cases (server)
+## Client-safe public API
 
 ```ts
-export function placeOrder(input: OrderInput): Promise<{ orderId: number }>;
-export function createPaypalOrder(args: {
-  userId: string;
-  internalOrderId: number;
-}): Promise<PaypalOrderRef>;
-export function capturePaypalOrder(args: {
-  userId: string;
-  paypalOrderId: string;
-  internalOrderId: number;
-}): Promise<CaptureResult>;
+export { createOrder, updateOrderPaymentReference, clearUserCart, getOrderDetails } from "./application/use-cases/createOrder";
+export { calculateCheckout, calculatePayPalTotal } from "./application/use-cases/calculateTotal";
+export { processSinpePayment, processPayPalPayment } from "./application/use-cases/processPayment";
+export { createOrderInputSchema } from "./application/schemas/createOrderInput";
+export { capturePaypalInputSchema } from "./application/schemas/capturePaypalInput";
+export { PaymentForm, PayPalCardMethod, StepOne, StepTwo } from "./presentation/components";
 ```
 
-## Componentes (presentación)
+## Server-only use cases
 
 ```ts
-export { PaymentForm } from "./presentation/components/PaymentForm";
-export { PayPalCardMethod } from "./presentation/components/PayPalCardMethod";
-export { CheckoutStepOne, CheckoutStepTwo } from "./presentation/components";
+export function createPaypalOrder(input: unknown): Promise<CreatePaypalOrderResult>;
+export function capturePaypalOrder(input: unknown): Promise<CapturePaypalOrderResult>;
 ```
 
-## Schemas
+## Dependencies
 
-```ts
-export {
-  createOrderInputSchema,
-  capturePaypalInputSchema,
-} from "./application/schemas";
-```
+- `@/features/cart` for checkout state.
+- `@/features/products` for product data through client-safe APIs.
+- `@/features/notifications` for confirmation flows.
+- `@/shared/supabase/server` only inside server-only use cases.
 
-## Dependencias declaradas
+## Security rules
 
-- `@/features/cart` (snapshot del cart al iniciar checkout).
-- `@/features/products` (verificación de inventario / precios).
-- `@/features/auth` (sesión / userId).
-- `@/features/notifications` (envío de confirmación post-captura).
-- `@/shared/supabase` (cliente server con cookies).
-
-## Reglas de seguridad (encarnadas por los use cases)
-
-- `createPaypalOrder` y `capturePaypalOrder` validan `orders.user_id === userId` antes de proceder.
-- Mock fallbacks de PayPal solo se activan si `process.env.PAYPAL_USE_MOCK === "1"`.
-- Errores devuelven mensajes genéricos al cliente; detalle queda en logs server.
+- `createPaypalOrder` and `capturePaypalOrder` validate `orders.user_id === session.user.id` before proceeding.
+- PayPal mocks only run when `PAYPAL_USE_MOCK === "1"`.
+- Client responses use generic error codes; provider details stay in server logs.

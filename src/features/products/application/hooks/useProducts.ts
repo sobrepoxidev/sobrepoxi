@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { logger } from '@/shared/observability/logger';
 import { distributeProducts, type DistributeProductsResult } from '../distribute';
 import type { Database } from '@/shared/types/database';
 
@@ -84,7 +85,7 @@ export function useProducts(
     };
 
     if (initialCategories.length > 0 && initialProducts.length > 0 && hasEnoughInitialData()) {
-      console.log('Using initial data - no additional request needed');
+      logger.info('[useProducts] Using initial data');
       return;
     }
 

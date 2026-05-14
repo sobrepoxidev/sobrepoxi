@@ -1,15 +1,15 @@
 # Closure Report — Feature 001: Subsanación Profunda + Migración a Clean Architecture por Features
 
 **Feature**: 001-subsanacion-profunda-proyecto
-**Status**: CLOSED (Phase 9 complete — 2026-05-12)
-**Date**: 2026-05-12
+**Status**: READY FOR PREVIEW SIGN-OFF (local gates green — 2026-05-14)
+**Date**: 2026-05-14
 **Verification**: `pnpm typecheck` ✅ `pnpm lint` ✅ `pnpm build` ✅
 
 ---
 
 ## Resumen Ejecutivo
 
-El feature 001 ejecutó una auditoría y corrección profunda del proyecto `hands-made-art`, migrando la estructura a Clean Architecture por features con barreras de import enforced por ESLint. Se cerraron 4 hallazgos CRITICAL, 8 HIGH, 3 MEDIUM, y 5 render-loops introducidos por un agente previo. El estado final del proyecto: verde en gates locales (`typecheck`, `lint`, `build`) y preparado para Vercel preview smoke test.
+El feature 001 ejecutó una auditoría y corrección profunda del proyecto `hands-made-art`, migrando la estructura a Clean Architecture por features con barreras de import enforced por ESLint. Se cerraron 4 hallazgos CRITICAL, 8 HIGH, 3 MEDIUM, y 5 render-loops introducidos por un agente previo. El estado actual: verde en gates locales (`typecheck`, `lint`, `build`) y pendiente únicamente de evidencia operativa/manual para Vercel preview, variables de entorno y smoke tests.
 
 ---
 
@@ -110,18 +110,19 @@ El feature 001 ejecutó una auditoría y corrección profunda del proyecto `hand
 
 ---
 
-## Phase 9 Completado (2026-05-12)
+## Phase 9 Estado (2026-05-14)
 
 - T136-T142: ✅ Eliminados shims residuales (`src/lib/`, `src/components/`, `src/context/`, `src/i18n/`, `src/utils/supabase/`)
 - T143: ✅ `@supabase/auth-helpers-nextjs` desinstalado
 - T144: ✅ `docs/` creado con `SEO_MIGRATION_GUIDE.md` y `PAYPAL-SETUP.md`
-- T145: ✅ Logger estructurado creado en `src/shared/observability/logger.ts`; aplicado a todos los route handlers
+- T145: ✅ Logger estructurado creado en `src/shared/observability/logger.ts`; aplicado a route handlers/use cases objetivo
 - T148: ✅ `pnpm build` ✅ `pnpm typecheck` ✅ `pnpm lint` ✅
-- T149: ✅ CLAUDE.md actualizado
+- T149: ✅ CLAUDE.md y AGENTS.md actualizados
 
 **Pendiente para sign-off final (T150)**:
-- T146: Security checklist §4 — requiere Vercel preview deployment
-- T147: Smoke tests §3 — requiere Vercel preview deployment
+- T033/T043: setear `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID` y `ADMIN_EMAILS` en Vercel
+- T146: Security checklist §4 — requiere Vercel preview deployment y/o sesión real
+- T147: Smoke tests §3 — requiere Vercel preview deployment y sesión/datos reales
 - T150: Sign-off y tag `v0.2.0-clean-arch` — pendiente Vercel preview verde
 
 ---

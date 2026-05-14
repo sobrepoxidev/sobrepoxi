@@ -1,11 +1,13 @@
+import { logger } from '@/shared/observability/logger';
+
 export async function removeFromCartUseCase(
   productId: number
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    console.log('[removeFromCartUseCase] Removing product:', productId);
+    logger.info('[removeFromCartUseCase] Removing product', { productId });
     return { success: true };
   } catch (error) {
-    console.error('[removeFromCartUseCase] Error:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    logger.error('[removeFromCartUseCase] Error', { error });
+    return { success: false, error: 'Unable to remove product from cart' };
   }
 }

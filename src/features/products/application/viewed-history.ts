@@ -1,6 +1,7 @@
 'use client';
 
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { logger } from '@/shared/observability/logger';
 
 export interface ViewedProduct {
   id: number;
@@ -67,7 +68,7 @@ export async function addProductToHistory(product: {
       }, { onConflict: 'user_id,product_id', ignoreDuplicates: false });
     }
   } catch (error) {
-    console.error('[addProductToHistory]', error);
+    logger.error('[addProductToHistory]', { error });
   }
 }
 
@@ -88,12 +89,12 @@ export async function syncViewedHistoryWithServer(): Promise<boolean> {
       .from('view_history')
       .upsert(historyToSync, { onConflict: 'user_id,product_id', ignoreDuplicates: false });
     if (error) {
-      console.error('[syncViewedHistory]', error);
+      logger.error('[syncViewedHistory]', { error });
       return false;
     }
     return true;
-  } catch (err) {
-    console.error('[syncViewedHistory]', err);
+  } catch (error) {
+    logger.error('[syncViewedHistory]', { error });
     return false;
   }
 }
@@ -104,8 +105,8 @@ export function removeFromHistory(productId: number): void {
     const history = getLocalViewedHistory();
     const filteredHistory = history.filter(item => item.id !== productId);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filteredHistory));
-  } catch (err) {
-    console.error('[removeFromHistory]', err);
+  } catch (error) {
+    logger.error('[removeFromHistory]', { error });
   }
 }
 
@@ -113,7 +114,7 @@ export function clearViewedHistory(): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]));
-  } catch (err) {
-    console.error('[clearViewedHistory]', err);
+  } catch (error) {
+    logger.error('[clearViewedHistory]', { error });
   }
 }

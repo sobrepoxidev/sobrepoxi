@@ -10,6 +10,8 @@ type Props = {
   defaultCurrency?: string;
 };
 
+type ConvertApiResponse = ConversionResult | { error: string };
+
 export default function CurrencyConverterRow({
   amount,
   defaultCurrency = 'CRC',
@@ -30,12 +32,12 @@ export default function CurrencyConverterRow({
     setError(null);
     start(async () => {
       const res = await fetch(`/api/convert?amount=${amount}&to=${currency}`);
-      const data = await res.json();
-      if (!res.ok || data.error) {
-        setError(data.error || 'Conversion error');
+      const data = (await res.json()) as ConvertApiResponse;
+      if (!res.ok || 'error' in data) {
+        setError('error' in data ? data.error : 'Conversion error');
         setResult(null);
       } else {
-        setResult(data as ConversionResult);
+        setResult(data);
         setLast({ amt: amount, cur: currency });
       }
     });

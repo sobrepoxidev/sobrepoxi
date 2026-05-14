@@ -3,7 +3,18 @@ const KEY = process.env.EXRATE_KEY;
 
 let cache: { at: number; data: unknown } | null = null;
 
-export type Currency = "USD" | "CRC" | "EUR";
+export type Currency =
+  | "CRC"
+  | "EUR"
+  | "JPY"
+  | "GBP"
+  | "CNY"
+  | "AUD"
+  | "CAD"
+  | "CHF"
+  | "HKD"
+  | "SEK"
+  | "MXN";
 
 export interface ConversionResult {
   amount: number;

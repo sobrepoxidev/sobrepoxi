@@ -16,14 +16,14 @@ export async function getHomePageData() {
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore.set(name, value, options),
             )
           } catch {
             // Ignore
           }
         },
       },
-    }
+    },
   )
 
   try {
@@ -48,11 +48,11 @@ export async function getHomePageData() {
 
     const productsByCategory: Record<number, unknown[]> = {}
 
-    categories.forEach(category => {
+    categories.forEach((category) => {
       productsByCategory[category.id] = []
     })
 
-    products.forEach(product => {
+    products.forEach((product) => {
       if (
         product.category_id &&
         productsByCategory[product.category_id] &&

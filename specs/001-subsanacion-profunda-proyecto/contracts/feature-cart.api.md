@@ -1,25 +1,30 @@
-# Contract: `features/cart`
+﻿# Contract: `features/cart`
 
 Barrel: `src/features/cart/index.ts`
 
-## Tipos
+## Types
 
 ```ts
 export interface CartItem {
-  product: Product;        // re-uso del tipo de @/features/products
+  product: Product;
   quantity: number;
-  id?: number;             // id en cart_items si está sincronizado
+  id?: number;
+}
+
+export interface EncodedCartItem {
+  id: number;
+  qty: number;
 }
 ```
 
 ## Hook + Provider
 
 ```ts
-export { CartProvider } from "./presentation/state/CartContext";
+export { CartProvider } from "./presentation/providers/CartProvider";
 export { useCart } from "./presentation/state/CartContext";
 ```
 
-`useCart()` retorna:
+`useCart()` returns:
 
 ```ts
 {
@@ -35,21 +40,16 @@ export { useCart } from "./presentation/state/CartContext";
 }
 ```
 
-## Use cases / utilidades
+## Use cases / utilities
 
 ```ts
-export function encodeCartToUrl(cart: CartItem[]): string;
-export function decodeCartFromUrl(encoded: string): { id: number; qty: number }[];
-export function rebuildCartFromIds(ids: number[]): Promise<CartItem[]>;
+export function encodeCartToBase64(cart: CartItem[]): string;
+export function decodeCartFromBase64(encoded: string): EncodedCartItem[];
+export function rebuildCartFromIds(items: EncodedCartItem[]): Promise<CartItem[]>;
+export function syncCartWithDB(userId: string | undefined, cart: CartItem[]): Promise<{ success: boolean; error?: string }>;
 ```
 
-## Schemas
+## Dependencies
 
-```ts
-export { cartUrlSchema } from "./application/schemas";
-```
-
-## Dependencias declaradas
-
-- `@/features/products` (tipo `Product`, use case `getProductsByIds`).
-- `@/shared/supabase` (cliente browser para sync con BD).
+- Product shape is shared via `Database["products"]` to keep cart client-safe.
+- Browser cart rebuild uses `@/shared/supabase/client` because it runs inside `CartProvider`.

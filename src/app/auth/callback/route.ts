@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
-import { createServerSupabaseClient } from '@/shared/supabase/server'
+﻿import { NextResponse } from 'next/server'
+import { exchangeOAuthCode } from '@/features/auth/application/use-cases/exchangeOAuthCode'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -16,11 +16,8 @@ export async function GET(request: Request) {
     // use original value
   }
 
-  const supabase = await createServerSupabaseClient()
-  const { error } = await supabase.auth.exchangeCodeForSession(code)
-
-  if (error) {
-    console.error('OAuth error:', error.message)
+  const result = await exchangeOAuthCode({ code, next })
+  if (result.error) {
     return NextResponse.redirect(`${origin}/login?error=oauth`)
   }
 

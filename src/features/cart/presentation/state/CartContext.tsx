@@ -1,27 +1,7 @@
-'use client';
+﻿'use client';
 
 import { createContext, useContext } from 'react';
-import type { Database } from '@/shared/types/database';
-
-export type Product = Database['products'];
-
-export type CartItem = {
-  product: Product;
-  quantity: number;
-  id?: number;
-};
-
-interface CartContextProps {
-  cart: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
-  removeFromCart: (productId: number) => void;
-  clearCart: () => void;
-  totalItems: number;
-  subtotal: number;
-  isLoading: boolean;
-  syncCartWithDB: (userId?: string) => Promise<void>;
-}
+import type { CartContextProps, CartItem, Product } from '../../application/types';
 
 const CartContext = createContext<CartContextProps>({
   cart: [],
@@ -42,17 +22,4 @@ export function useCart(): UseCartReturn {
 }
 
 export { CartContext };
-export type { CartContextProps };
-export function encodeCartToBase64(cart: CartItem[]): string {
-  const minimalCart = cart.map(item => ({ id: item.product.id, qty: item.quantity }));
-  return btoa(JSON.stringify(minimalCart));
-}
-
-export function decodeCartFromBase64(encoded: string): { id: number; qty: number }[] {
-  try {
-    return JSON.parse(atob(encoded));
-  } catch (error) {
-    console.error("Error decoding cart:", error);
-    return [];
-  }
-}
+export type { CartContextProps, CartItem, Product };

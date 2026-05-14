@@ -1,21 +1,21 @@
-# Contract: `features/admin`
+﻿# Contract: `features/admin`
 
 Barrel: `src/features/admin/index.ts`
 
-## Tipos
+## Types
 
-Re-utiliza `Product`, `Category` desde `@/features/products`. No define dominio nuevo de admin a menos que se introduzca tabla `user_roles`.
+Reuses `Product` and `Category` from admin/product data hooks. Admin role data remains server-only via `ADMIN_EMAILS`.
 
-## Use cases (server)
+## Use cases
 
 ```ts
-export function requireAdmin(): Promise<{ userId: string; email: string }>; // redirect si no es admin
-export function isAdminEmail(email: string): boolean;                       // helper puro
+export function requireAdmin(locale: string, returnPath: string): Promise<{ userId: string; email: string }>;
+export function isAdminEmail(email: string): boolean;
 export function adminListProducts(): Promise<Product[]>;
 export function adminUpdateProduct(productId: number, patch: Partial<Product>): Promise<{ success: boolean; error?: string }>;
 ```
 
-## Componentes
+## Components
 
 ```ts
 export { AdminDashboard } from "./presentation/components/AdminDashboard";
@@ -25,16 +25,11 @@ export { ProductEditor } from "./presentation/components/ProductEditor";
 ## Schemas
 
 ```ts
-export { productEditSchema } from "./application/schemas";
+export { productEditSchema } from "./application/schemas/productEditSchema";
 ```
 
-## Dependencias declaradas
+## Security rules
 
-- `@/features/products` (tipos, use cases CRUD si aplican).
-- `@/features/auth` (sesión + check de rol).
-- `@/shared/supabase`.
-
-## Reglas de seguridad
-
-- `requireAdmin` lee la lista de admins desde `process.env.ADMIN_EMAILS` (server-only) o desde tabla `user_roles` si la migración M-001 se aprueba.
-- Nunca hardcodea emails en código fuente.
+- `requireAdmin` reads `ADMIN_EMAILS` from server env.
+- Admin pages call `requireAdmin` before rendering protected UI.
+- No admin emails are hardcoded in source.

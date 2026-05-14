@@ -1,15 +1,12 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import {
-  CartContext,
-  encodeCartToBase64,
-  decodeCartFromBase64,
-  type CartItem,
-  type Product,
-} from '../state/CartContext';
-import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { CartContext, type CartItem, type Product } from '../state/CartContext';
+import { encodeCartToBase64, decodeCartFromBase64 } from '../../application/encode';
+import { rebuildCartFromIds } from '../../application/use-cases/rebuildCartFromIds';
+import { syncCartWithDB as syncCartWithDBUseCase } from '../../application/use-cases/syncCartWithDB';
+import { logger } from '@/shared/observability/logger';
 
 interface CartProviderProps {
   children: React.ReactNode;
@@ -40,10 +37,10 @@ export function CartProvider({ children }: CartProviderProps) {
   }, [cart, pathname, router, searchParams]);
 
   const addToCart = (product: Product, quantity: number = 1) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.product.id === product.id);
+    setCart((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id);
       return existing
-        ? prev.map(item =>
+        ? prev.map((item) =>
             item.product.id === product.id
               ? { ...item, quantity: item.quantity + quantity }
               : item
@@ -53,13 +50,13 @@ export function CartProvider({ children }: CartProviderProps) {
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
-    setCart(prev => prev.map(item =>
+    setCart((prev) => prev.map((item) =>
       item.product.id === productId ? { ...item, quantity } : item
     ));
   };
 
   const removeFromCart = (productId: number) => {
-    setCart(prev => prev.filter(item => item.product.id !== productId));
+    setCart((prev) => prev.filter((item) => item.product.id !== productId));
   };
 
   const clearCart = () => {
@@ -72,47 +69,15 @@ export function CartProvider({ children }: CartProviderProps) {
 
     const parsed = decodeCartFromBase64(encoded);
     if (parsed.length === 0) return;
-
     if (cart.length > 0) return;
-
-    console.log("Reconstrucción del carrito requerida:", parsed);
 
     const fetchProductsAndRebuildCart = async () => {
       setIsLoading(true);
       try {
-        const supabase = createBrowserSupabaseClient();
-        const productIds = parsed.map(item => item.id);
-
-        const { data: products, error } = await supabase
-          .from('products')
-          .select('*')
-          .in('id', productIds);
-
-        if (error) {
-          console.error('Error fetching products:', error);
-          return;
-        }
-
-        if (!products || products.length === 0) {
-          console.warn('No products found for the IDs in cart');
-          return;
-        }
-
-        const newCartItems: CartItem[] = [];
-
-        parsed.forEach(parsedItem => {
-          const product = products.find(p => p.id === parsedItem.id);
-          if (product) {
-            newCartItems.push({
-              product: product as Product,
-              quantity: parsedItem.qty
-            });
-          }
-        });
-
+        const newCartItems = await rebuildCartFromIds(parsed);
         setCart(newCartItems);
-      } catch (err) {
-        console.error('Error rebuilding cart from URL:', err);
+      } catch (error) {
+        logger.error('[CartProvider] rebuild from URL failed', { error });
       } finally {
         setIsLoading(false);
       }
@@ -122,15 +87,15 @@ export function CartProvider({ children }: CartProviderProps) {
   }, []);
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + (item.quantity * (item.product.dolar_price || 0)), 0);
+  const subtotal = cart.reduce((sum, item) => sum + item.quantity * (item.product.dolar_price || 0), 0);
 
   const syncCartWithDB = async (userId?: string) => {
     if (!userId) return;
     setIsLoading(true);
     try {
-      console.log('Syncing cart with DB for user:', userId);
+      await syncCartWithDBUseCase(userId, cart);
     } catch (error) {
-      console.error('Error syncing cart with DB:', error);
+      logger.error('[CartProvider] sync failed', { error });
     } finally {
       setIsLoading(false);
     }
@@ -146,7 +111,7 @@ export function CartProvider({ children }: CartProviderProps) {
       totalItems,
       subtotal,
       isLoading,
-      syncCartWithDB
+      syncCartWithDB,
     }}>
       {children}
     </CartContext.Provider>

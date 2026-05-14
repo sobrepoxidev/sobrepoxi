@@ -23,7 +23,8 @@ pnpm tsc --noEmit   # TypeScript type checking
   "dev": "next dev --turbopack",
   "build": "next build",
   "start": "next start",
-  "lint": "next lint"
+  "lint": "next lint",
+  "typecheck": "tsc --noEmit"
 }
 ```
 
@@ -59,7 +60,7 @@ pnpm tsc --noEmit  # TypeScript type checking
 pnpm run build     # Production build (full verification)
 ```
 
-**Migration status**: Phase 4 complete (Clean Architecture). Phase 9 pending (deprecated dirs cleanup).
+**Migration status**: Phase 9 cleanup mostly complete. Legacy dirs/files are removed (`src/lib`, `src/components`, `src/context`, `src/i18n`, `src/utils`, `src/types-db.ts`, `src/actions.ts`). Final sign-off still requires Vercel preview/manual smoke evidence.
 
 ## Key Libraries
 

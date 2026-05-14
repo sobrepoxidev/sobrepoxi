@@ -1,56 +1,40 @@
-# Contract: `features/products`
+﻿# Contract: `features/products`
 
-Barrel: `src/features/products/index.ts`
+Primary client-safe barrel: `src/features/products/index.ts`
 
-## Tipos
+Server-only product use cases that import `@/shared/supabase/server` are not exported by the primary barrel, because product components and pages consume that barrel from client bundles.
+
+## Types
 
 ```ts
 export type Product = Database["products"];
 export type Category = Database["categories"];
-
-export interface ProductSearchParams {
-  query?: string;
-  categoryId?: number;
-  minPrice?: number;
-  maxPrice?: number;
-  page?: number;
-  pageSize?: number;
-}
 ```
 
-## Use cases
+## Client-safe public API
+
+```ts
+export { useProducts } from "./application/hooks/useProducts";
+export { getCategoriesFromDB, getFeaturedProductsFromDB, getProductsByCategoryFromDB } from "./application/categories";
+export { searchProductsFn as searchProducts } from "./application/search";
+export { distributeProducts } from "./application/distribute";
+export { ProductCard, ProductDetail, ProductsPageContent, ProductFilters, RelatedProducts } from "./presentation/components";
+export { ProductsProvider, useProductsContext } from "./presentation/providers/ProductsProvider";
+```
+
+## Server-only use cases
 
 ```ts
 export function getProductById(id: number): Promise<Product | null>;
 export function getProductsByIds(ids: number[]): Promise<Product[]>;
-export function searchProducts(params: ProductSearchParams): Promise<{ items: Product[]; total: number }>;
 export function listFeaturedProducts(limit?: number): Promise<Product[]>;
 export function getCategories(): Promise<Category[]>;
-export function distributeProducts(products: Product[], categories: Category[], maxFeatured?: number): {
-  gridByCategory: Record<number, Product[]>;
-  gifts: Product[];
-  featured: Product[];
-};
 ```
 
-## Componentes (presentación pública)
+Route modules or server components may import server-only use cases directly from `src/features/products/application/use-cases/*` when needed.
 
-```ts
-export { ProductCard } from "./presentation/components/ProductCard";
-export { ProductDetail } from "./presentation/components/ProductDetail";
-export { ProductsPageContent } from "./presentation/components/ProductsPageContent";
-export { ProductFilters } from "./presentation/components/ProductFilters";
-export { RelatedProducts } from "./presentation/components/RelatedProducts";
-export { ProductsProvider, useProductsContext } from "./presentation/providers/ProductsProvider";
-```
+## Rules
 
-## Schemas
-
-```ts
-export { productSearchParamsSchema, productIdSchema } from "./application/schemas";
-```
-
-## Reglas de boundaries
-
-- No expone tipos internos como `ProductsData` salvo que estén listados aquí.
-- No reexporta clientes Supabase ni helpers de `shared`.
+- Do not re-export server-only use cases from `src/features/products/index.ts`.
+- Do not expose Supabase clients from the feature API.
+- Cross-feature client imports must use the client-safe barrel only.

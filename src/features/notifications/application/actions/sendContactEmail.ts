@@ -3,6 +3,7 @@
 import { contactFormSchema, type ContactFormData } from "../schemas";
 import { renderContactHtml } from "../templates/contact";
 import { sendMail } from "../../infrastructure/transport/nodemailer.server";
+import { logger } from "@/shared/observability/logger";
 
 const COMPANY_EMAIL = "info@sobrepoxi.com";
 
@@ -25,7 +26,7 @@ export async function sendContactEmail(
 
     return { success: true };
   } catch (error) {
-    console.error("[sendContactEmail]", error);
+    logger.error("[sendContactEmail]", { error });
     return { success: false, error: "Error al enviar el mensaje" };
   }
 }

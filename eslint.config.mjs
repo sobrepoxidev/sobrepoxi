@@ -1,4 +1,4 @@
-import { dirname } from "path";
+﻿import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
 import boundaries from "eslint-plugin-boundaries";
@@ -27,14 +27,14 @@ const eslintConfig = [
       "boundaries/include": ["src/**/*.{ts,tsx}"],
     },
     rules: {
-      // Rule renamed in eslint-plugin-boundaries v6 (element-types → dependencies).
-      // String selectors son legacy pero funcionales; migración completa a v6 object selectors queda en Phase 9.
+      // Rule renamed in eslint-plugin-boundaries v6 (element-types â†’ dependencies).
+      // String selectors son legacy pero funcionales; migraciÃ³n completa a v6 object selectors queda en Phase 9.
       "boundaries/dependencies": [
         "error",
         {
           default: "disallow",
           rules: [
-{ from: "app", allow: ["feature-barrel", "feature-presentation", "shared"] },
+{ from: "app", allow: ["feature-barrel", "feature-presentation", "feature-application", "shared"] },
             { from: "feature-presentation",   allow: ["feature-application", "feature-domain", "feature-barrel", "shared", "app"] },
             { from: "feature-application",    allow: ["feature-application", "feature-domain", "feature-barrel", "feature-infrastructure", "shared", "app"] },
             { from: "feature-infrastructure", allow: ["feature-domain", "feature-application", "shared"] },
@@ -55,6 +55,15 @@ const eslintConfig = [
       ],
     },
   },
+  {
+    files: ["src/app/**/*.{ts,tsx}"],
+    rules: {
+      // Next route modules are the only approved place for direct imports to
+      // server-only page adapters under feature presentation/pages.
+      "no-restricted-imports": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
+

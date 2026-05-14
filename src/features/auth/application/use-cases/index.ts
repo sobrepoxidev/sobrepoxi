@@ -1,1 +1,5 @@
-export { signIn, signUp, signOut, getSession, getUser } from './signIn'
+﻿export { signIn, signUp, signOut, getSession, getUser } from './signIn'
+export { getCurrentSession } from './getCurrentSession'
+export { exchangeOAuthCode } from './exchangeOAuthCode'
+export { requireSession } from './requireSession'
+export { signOutServer } from './signOutServer'

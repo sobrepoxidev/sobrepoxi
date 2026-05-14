@@ -28,6 +28,7 @@ Reglas duras:
 - **Prohibido**: imports cross-feature que apunten a paths distintos de `@/features/<f>` (sin profundidad). Ejemplo prohibido: `import { foo } from "@/features/products/application/use-cases/getProductById"`.
 - **Prohibido**: imports desde `shared/` hacia `features/` (la dirección es features ← shared, nunca al revés).
 - Ambas reglas están enforced por `eslint-plugin-boundaries` + `no-restricted-imports` con severidad `error` en `eslint.config.mjs`.
+- **Excepción de routing Next.js**: los módulos de `src/app/**/page.tsx`, `layout.tsx`, `route.ts` y metadata/static params pueden importar directamente desde `src/features/<f>/presentation/pages/*` cuando el módulo importado usa APIs server-only de Next (`next/headers`, `next-intl/server`, Supabase server clients, etc.). Esos route modules actúan como adaptadores del App Router y no deben reexportarse desde barrels consumidos por componentes cliente.
 
 **Why**: Sin barrels, cualquier consumidor termina dependiendo de la estructura interna de la feature y la refactorización se vuelve cross-cutting. Con barrels, la feature puede reorganizar su interior sin romper consumidores.
 
@@ -186,4 +187,4 @@ Fault-injection periódico: cada feature mete un import prohibido en una rama te
 - **Runtime guidance**: las reglas operativas (comandos `pnpm`, comandos de verificación, paths) viven en `CLAUDE.md` y `AGENTS.md`. Esta constitución fija los principios; las guías fijan los comandos.
 - **Quality gate de PR**: todo PR a `master` debe incluir en su descripción la lista de Verification Gates relevantes con su evidencia (commit del lint verde, captura del preview, item del checklist).
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-11 | **Last Amended**: 2026-05-11
+**Version**: 1.0.1 | **Ratified**: 2026-05-11 | **Last Amended**: 2026-05-14

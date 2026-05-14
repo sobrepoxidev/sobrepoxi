@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/shared/supabase/server';
+import { logger } from '@/shared/observability/logger';
 import type { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
@@ -12,7 +13,7 @@ export async function getProductById(id: number): Promise<Product | null> {
     .single();
 
   if (error) {
-    console.error('[getProductById]', error);
+    logger.error('[getProductById]', { error });
     return null;
   }
 

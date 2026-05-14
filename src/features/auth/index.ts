@@ -1,6 +1,8 @@
-export type { AuthState, AuthCredentials, SignUpCredentials, OAuthCredentials, AuthResult, AuthError, AuthCallbackParams, Session, User } from './application/distribute'
+﻿export type { AuthState, AuthCredentials, SignUpCredentials, OAuthCredentials, AuthResult, AuthError, AuthCallbackParams, Session, User } from './application/distribute'
 
 export { signIn, signUp, signOut, getSession, getUser } from './application/use-cases/signIn'
+export { oauthCallbackSchema } from './application/schemas/oauthCallbackSchema'
+export type { OAuthCallbackInput } from './application/schemas/oauthCallbackSchema'
 
 export { useAuthState, useAuthActions } from './application/hooks'
 

@@ -1,4 +1,4 @@
-export type {
+﻿export type {
   CartItem,
   ShippingAddress,
   DiscountInfo,
@@ -10,6 +10,10 @@ export { BANCOS, SHIPPING_COST, calculateSubtotal, calculateTotal, calculateChec
 export { createOrder, updateOrderPaymentReference, clearUserCart, getOrderDetails } from './application/use-cases/createOrder';
 export { calculateCheckout, calculatePayPalTotal } from './application/use-cases/calculateTotal';
 export { processSinpePayment, processPayPalPayment } from './application/use-cases/processPayment';
+export { createOrderInputSchema } from './application/schemas/createOrderInput';
+export type { CreateOrderInput } from './application/schemas/createOrderInput';
+export { capturePaypalInputSchema } from './application/schemas/capturePaypalInput';
+export type { CapturePaypalInput } from './application/schemas/capturePaypalInput';
 
 export { useCheckoutForm } from './application/hooks/useCheckoutForm';
 export type { UseCheckoutFormOptions } from './application/hooks/useCheckoutForm';

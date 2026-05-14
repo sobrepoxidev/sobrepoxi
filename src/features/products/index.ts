@@ -1,4 +1,4 @@
-// Types
+﻿// Types
 export type { Product, Category } from './application/hooks/useProducts';
 export type { ProductsData } from './application/hooks/useProducts';
 export { useProducts } from './application/hooks/useProducts';
@@ -51,3 +51,5 @@ export { default as GridSection } from './presentation/components/cards/GridSect
 export { default as OptimizedGridSection } from './presentation/components/cards/OptimizedGridSection';
 export { default as OptimizedCarrucelSection } from './presentation/components/cards/OptimizedCarrucelSection';
 export { default as CarouselClient } from './presentation/components/cards/CarouselClient';
+
+

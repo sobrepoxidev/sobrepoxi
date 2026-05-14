@@ -1,6 +1,7 @@
 'use client';
 
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { logger } from '@/shared/observability/logger';
 
 interface MediaItem {
   url: string;
@@ -85,7 +86,7 @@ export async function searchProductsFn(
 
     const { data, error } = await queryBuilder;
     if (error) {
-      console.error('[searchProducts]', error);
+      logger.error('[searchProducts]', { error });
       return { results: [], totalCount: 0 };
     }
 
@@ -122,7 +123,7 @@ export async function searchProductsFn(
 
     return { results, totalCount: totalCount || results.length };
   } catch (error) {
-    console.error('[searchProducts]', error);
+    logger.error('[searchProducts]', { error });
     return { results: [], totalCount: 0 };
   }
 }
@@ -135,12 +136,12 @@ export async function getProductCategories(locale: string): Promise<{ id: number
       .select('id, name, name_es, name_en')
       .order(locale === 'es' ? 'name_es' : 'name_en');
     if (error) {
-      console.error('[getProductCategories]', error);
+      logger.error('[getProductCategories]', { error });
       return [];
     }
     return data || [];
   } catch (error) {
-    console.error('[getProductCategories]', error);
+    logger.error('[getProductCategories]', { error });
     return [];
   }
 }

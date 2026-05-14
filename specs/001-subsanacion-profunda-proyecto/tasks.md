@@ -1,833 +1,183 @@
----
+﻿---
 description: "Task list for feature 001-subsanacion-profunda-proyecto"
 ---
 
-# Tasks: Subsanación Profunda + Migración a Clean Architecture por Features
+# Tasks: Subsanacion Profunda + Migracion a Clean Architecture por Features
 
 **Input**: Design documents from `specs/001-subsanacion-profunda-proyecto/`
+**Generated/Reconciled**: 2026-05-14
 **Prerequisites**: [plan.md](./plan.md), [spec.md](./spec.md), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/), [quickstart.md](./quickstart.md)
-**Tests**: Vitest/Playwright están **fuera del alcance** del feature 001 (decisión Q5 de Clarification 2026-05-09). La verificación se sostiene en `pnpm lint` (incluye boundaries), `pnpm typecheck`, `pnpm build` y los smoke tests manuales documentados en [quickstart.md §3](./quickstart.md). Cada tarea declara su(s) verificación(es).
+**Tests**: Vitest/Playwright are out of scope for feature 001. Verification is `pnpm lint`, `pnpm typecheck`, `pnpm build`, bundle-secret inspection, and manual smoke/security checklists in [quickstart.md](./quickstart.md).
 
-**Status Summary** (audit 2026-05-12 — estado REAL verificable):
+**Status Summary**:
 
-| Phase | Estado | Tareas | Evidencia |
-|-------|--------|-------|-----------|
-| Phase 1 (Setup) | ✅ COMPLETED | T001-T006 | `tailwind-merge`/`zod`/`eslint-plugin-boundaries` en package.json; `src/features/` y `src/shared/` existen |
-| Phase 2 (Foundational) | ✅ COMPLETED | T007-T019 | `src/shared/{supabase,utils,types,i18n,seo,ui}` existen; middleware usa `@/shared/supabase/middleware` |
-| Phase 3 (US4 Security) | ✅ COMPLETED | T020-T043 | 4 CRITICAL cerrados (F-001..F-004); 7 HIGH cerrados; T033/T043 requieren ops Vercel |
-| Phase 4 (US3 Migration) | ✅ COMPLETED | T044-T119 | Estructura migrada + barrels creados; Phase 4-V verification: render loops F-RL-001..005 fixed, AP-1 self-imports fixed, ErrorBoundary installed. Gates: `pnpm typecheck` ✅ `pnpm lint` ✅ `pnpm build` ✅. Vercel preview pending. |
-| Phase 5 (US2 Boundaries) | ✅ COMPLETED | T120-T123 | `boundaries/dependencies` severity error; T121-T122 fault injection passed; CLAUDE.md/AGENTS.md updated |
-| Phase 6 (US5 Findings) | ✅ COMPLETED | T124-T127 | findings.md exists; F-SE-001 (49 catches, 0 silent swallows) closed; F-SE-002 (StepOne.tsx promise fix) closed |
-| Phase 7 (US6 Consistency) | ✅ COMPLETED | T128-T132 | T128: endpoint schemas verified + sendOrderConfirmationEmail email fixed + CurrencyConverterRow unused import removed; T132: db/migrations/ created |
-| Phase 8 (US1 Closure) | ✅ COMPLETED | T133-T135 | findings.md SC table added, closure-report.md created, F-022/F-029 updated to CLOSED |
-| Phase 9 (Polish) | ✅ COMPLETED | T136-T150 | Shim cleanup: deleted `src/lib/` (30 files), `src/components/` (8 dirs), `src/i18n/`, `src/utils/`, `src/context/`, `src/types-db.ts`, `src/actions.ts`. Migrated 30+ consumers to feature barrels. Fixed next-intl path. Renamed nodemailer.ts → nodemailer.server.ts. Updated eslint boundaries allow rule for SessionLayout. T143: uninstalled `@supabase/auth-helpers-nextjs`. T144: moved docs. T148: `pnpm build` ✅ `pnpm typecheck` ✅ `pnpm lint` ✅ (pre-existing warnings). |
+| Area | Status | Notes |
+|------|--------|-------|
+| Setup + foundational architecture | COMPLETE | Feature/shared layout, pnpm scripts, zod, tailwind-merge, boundaries and shared services are present. |
+| Security hardening | LOCAL COMPLETE / OPS PENDING | Code hardening is done locally; Vercel env evidence and final security checklist remain open. |
+| Structural migration | MOSTLY COMPLETE | Legacy `src/lib`, `src/components`, `src/context`, `src/i18n`, root actions/types shims are removed. |
+| Contract parity | OPEN | Some public API contract use cases are not yet represented as dedicated files in cart/admin/auth/checkout. |
+| Verification + closure | OPEN | Local gates are green; Vercel preview, manual smoke evidence, and sign-off remain. |
 
----
-## Anti-Patterns Catalog — DO NOT REPRODUCE
-
-Cada uno de estos patrones produjo un bug real durante la ejecución de Phase 4 por un agente previo (Minimax M2.7) y costó un rework de emergencia. Están prohibidos por la constitución (`.specify/memory/constitution.md`). **Si tu cambio introduce cualquiera de estos, la tarea NO se cierra y el PR se rechaza.** Las verificaciones son mecánicas y reproducibles — córrelas antes de marcar `[X]`.
-
-### AP-1: Self-importing wrapper via own barrel → stack overflow
-
-**Síntoma en runtime**: `RangeError: Maximum call stack size exceeded` al primer render que invoca el hook/provider. En Chrome puede aparecer como `Out of Memory` porque V8 preasigna heap antes del overflow.
-
-**Patrón roto** (real, encontrado en 3 archivos antes del fix):
-
-```ts
-// src/features/cart/application/hooks/useCart.ts  ❌ ROTO
-import { useCart as useCartContext } from '@/features/cart';
-// El barrel reexporta useCart DESDE ESTE MISMO ARCHIVO → recursión infinita.
-export function useCart(): UseCartReturn {
-  return useCartContext();   // se llama a sí misma
-}
-```
-
-**Patrón correcto**:
-
-```ts
-// src/features/cart/presentation/state/CartContext.tsx  ✅
-import { createContext, useContext } from 'react';
-const CartContext = createContext<UseCartReturn | null>(null);
-export function useCart(): UseCartReturn {
-  const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be used within CartProvider');
-  return ctx;
-}
-export { CartContext };
-```
-
-Y el barrel reexporta directamente:
-
-```ts
-// src/features/cart/index.ts  ✅
-export { CartContext, useCart } from './presentation/state/CartContext';
-```
-
-**Regla absoluta**: **un archivo dentro de `src/features/<f>/**` JAMÁS importa desde `@/features/<f>`** (su propio barrel). Usa paths relativos (`./`, `../`) para todo lo intra-feature. El barrel solo lo consumen archivos FUERA de la feature.
-
-**Detección mecánica** (debe retornar 0 matches después de tu tarea):
-
-```bash
-# PowerShell
-$feat = "cart"   # repetir por feature
-Select-String -Path "src/features/$feat/**/*.ts","src/features/$feat/**/*.tsx" `
-  -Pattern "from\s+[`"']@/features/$feat[`"']" -Exclude "index.ts"
-
-# Bash / Git Bash
-grep -rn --include='*.ts' --include='*.tsx' \
-  "from ['\"]@/features/cart['\"]" src/features/cart \
-  | grep -v 'src/features/cart/index.ts'
-```
-
-**Histórico**: encontrado en `useCart.ts`, `CheckoutProvider.tsx`, `ProductsProvider.tsx`, `ProductsContext.tsx`, `CartProvider.tsx`. Todos fixed en el commit que cierra Phase 4-V.
+**Format note**: Completed work is retained as `[X]`; executable remaining work is `[ ]`. All task lines keep Spec Kit checklist shape with ID, optional `[P]`, optional story label, and concrete file path.
 
 ---
 
-### AP-2: Cliente Supabase recreado en cada render → invalida deps de useEffect / loop de fetch
+## Phase 1: Setup (Shared Infrastructure)
 
-**Síntoma**: re-suscripciones constantes a `onAuthStateChange`, refetch infinito de queries, o `useEffect` que nunca alcanza estado estable. Lint puede no detectarlo si el cliente está en deps "correctamente".
+**Purpose**: Establish dependencies, scripts, and target folders needed by every story.
 
-**Patrón roto**:
+- [X] T001 Create feature folders in `src/features/{products,cart,checkout,auth,account,admin,notifications,content,currency}/`.
+- [X] T002 Create shared folders in `src/shared/{supabase,i18n,seo,ui,types,utils,observability}/`.
+- [X] T003 [P] Add `typecheck` script to `package.json`.
+- [X] T004 [P] Add `zod`, `tailwind-merge`, and `eslint-plugin-boundaries` to `package.json`.
+- [X] T005 [P] Configure architectural lint rules in `eslint.config.mjs`.
+- [X] T006 Add project verification commands to `AGENTS.md` and `CLAUDE.md`.
 
-```tsx
-// ❌ ROTO — supabase es un objeto nuevo cada render
-export function AuthProvider({ children }) {
-  const supabase = createBrowserSupabaseClient();   // nueva instancia por render
-  useEffect(() => { /* ... */ }, [supabase]);        // dep cambia siempre → loop
-  return <Provider value={{ supabase }}>{children}</Provider>;
-}
-```
-
-**Patrón correcto** (canon — ver `src/features/auth/presentation/providers/AuthProvider.tsx`):
-
-```tsx
-// ✅
-import { useState, useEffect } from 'react';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  // Lazy init: una sola instancia por vida del provider.
-  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
-  useEffect(() => { /* ... */ }, [supabase]);   // dep ahora es estable
-  // ...
-}
-```
-
-Si no necesitas el cliente como valor reactivo, también vale crearlo dentro de la función async donde se usa:
-
-```ts
-// ✅ alternativa para use cases / event handlers
-const handleClick = async () => {
-  const supabase = createBrowserSupabaseClient();
-  await supabase.from('products').select('*');
-};
-```
-
-**Detección mecánica** (sospechosos a revisar):
-
-```bash
-# Cliente declarado en cuerpo de componente o hook sin useState/useMemo/useRef
-grep -rn --include='*.tsx' --include='*.ts' \
-  "const supabase = createBrowserSupabaseClient" src/features src/app \
-  | grep -v 'useState(() =>' | grep -v 'useMemo(' | grep -v 'useRef('
-```
-
-Cada match es candidato a refactor. Si está dentro de un `async function` interno o de un event handler, es aceptable. Si está en el top-level del componente/hook, debe envolverse en `useState(() => ...)`.
-
-**Histórico**: 13 archivos migrados del singleton legacy + `RelatedProducts.tsx` con loop activo. Todos fixed.
+**Checkpoint**: Setup is complete; user-story work can run against the final folder model.
 
 ---
 
-### AP-3: Importar singleton legacy `@/lib/supabaseClient`
+## Phase 2: Foundational (Blocking Prerequisites)
 
-**Patrón roto**:
+**Purpose**: Consolidate cross-cutting primitives before feature migration.
 
-```ts
-// ❌ ROTO en código de producción (singleton anon sin cookies, no respeta sesión)
-import { supabase } from '@/lib/supabaseClient';
-```
+- [X] T007 Implement Supabase server client in `src/shared/supabase/server.ts`.
+- [X] T008 Implement Supabase browser client in `src/shared/supabase/client.ts`.
+- [X] T009 Implement Supabase middleware client in `src/shared/supabase/middleware.ts`.
+- [X] T010 Move i18n helpers into `src/shared/i18n/`.
+- [X] T011 Move SEO helpers into `src/shared/seo/`.
+- [X] T012 Move database type exports into `src/shared/types/database.ts`.
+- [X] T013 Implement Tailwind-aware `cn` helper in `src/shared/utils/cn.ts`.
+- [X] T014 Implement structured logger in `src/shared/observability/logger.ts`.
 
-**Patrón correcto** (decidir según contexto):
-
-```ts
-// ✅ Server (route handlers, server components, server actions)
-import { createServerSupabaseClient } from '@/shared/supabase/server';
-const supabase = await createServerSupabaseClient();
-
-// ✅ Client (componentes 'use client', hooks)
-import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-const [supabase] = useState(() => createBrowserSupabaseClient());
-
-// ✅ Middleware
-import { createMiddlewareSupabaseClient } from '@/shared/supabase/middleware';
-```
-
-**Detección mecánica** (debe retornar 0):
-
-```bash
-grep -rn --include='*.ts' --include='*.tsx' \
-  "from ['\"]@/lib/supabaseClient['\"]" src/features src/app src/shared
-```
-
-Nota: el archivo `src/lib/supabaseClient.ts` aún existe como shim hasta Phase 9 (T138). Código NUEVO no debe importarlo. Si encuentras un import, migrar a la variante de `@/shared/supabase/*` apropiada al contexto.
+**Checkpoint**: Foundation is complete and supports the feature boundaries required by the constitution.
 
 ---
 
-### AP-4: Silent catch (errores tragados sin log ni justificación)
+## Phase 3: User Story 4 - Endurecimiento de seguridad basica (Priority: P1) MVP
 
-**Síntoma**: bugs que no fallan en lint/typecheck/build pero producen estados inconsistentes en runtime (orden marcada paga sin pagar, carrito vacío que debió cargar, etc.). Constitución VI lo prohíbe.
+**Goal**: Close immediate security risks around SMTP, PayPal, env vars, validation, and admin access.
 
-**Patrón roto**:
+**Independent Test**: Run `quickstart.md` section 4 and confirm no secret is in `.next/static`, sensitive endpoints require session/ownership, and client-facing errors are generic.
 
-```ts
-// ❌ ROTO
-try {
-  const result = await riskyOp();
-  return result;
-} catch (e) {
-  return null;    // se traga el error sin contexto
-}
-```
+- [X] T015 [US4] Close open contact-email relay by moving sending logic into `src/features/notifications/application/actions/sendContactEmail.ts`.
+- [X] T016 [US4] Close open order-email relay by moving sending logic into `src/features/notifications/application/actions/sendOrderConfirmationEmail.ts`.
+- [X] T017 [US4] Validate notification inputs with schemas in `src/features/notifications/application/schemas/`.
+- [X] T018 [US4] Restrict PayPal mocks to explicit flag in `src/app/api/paypal/paypalHelpers.ts` or migrated checkout equivalent.
+- [X] T019 [US4] Validate PayPal create-order input in `src/app/api/paypal/create-order/route.ts`.
+- [X] T020 [US4] Validate PayPal capture-order input in `src/app/api/paypal/capture-order/route.ts`.
+- [X] T021 [US4] Validate order ownership before PayPal mutation in `src/app/api/paypal/create-order/route.ts`.
+- [X] T022 [US4] Validate order ownership before PayPal mutation in `src/app/api/paypal/capture-order/route.ts`.
+- [X] T023 [US4] Move admin emails to server env usage in `src/features/admin/application/`.
+- [X] T024 [US4] Add missing runtime env documentation in `.env.example`.
+- [ ] T025 [US4] Confirm production/preview values for `ADMIN_EMAILS`, `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`, `EMAIL_USER`, `EMAIL_PASS`, `EXRATE_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel project settings.
+- [ ] T026 [US4] Execute security checklist from `specs/001-subsanacion-profunda-proyecto/quickstart.md` section 4 and record evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
 
-**Patrón correcto** (elegir uno):
-
-```ts
-// ✅ Loguear + propagar (preferido en server)
-try { return await riskyOp(); }
-catch (e) { console.error('[contexto] riskyOp failed:', e); throw e; }
-
-// ✅ Loguear + traducir a estado explícito
-try { return await riskyOp(); }
-catch (e) { console.error('[contexto] riskyOp failed:', e); return { ok: false }; }
-
-// ✅ Silencio justificado por escrito
-try { return JSON.parse(maybeJson); }
-catch { /* intentional swallow: optional JSON, fallback is empty */ return null; }
-```
-
-**Detección mecánica** (sospechosos):
-
-```bash
-# Catches sin console.error / logger / throw / comentario "intentional"
-grep -rn -B1 -A3 --include='*.ts' --include='*.tsx' \
-  "catch\s*(.*)\s*{" src/features src/app \
-  | grep -B3 -A1 "return null\|return false\|return undefined"
-```
-
-Cada match: validar manualmente. Si no hay log ni razón escrita, aplicar fix.
+**Checkpoint**: MVP is locally hardened; production sign-off waits on T025-T026.
 
 ---
 
-### AP-5: Deep import intra-feature (atajando tu propio barrel sin necesidad)
+## Phase 4: User Story 3 - Plan y migracion incremental por features (Priority: P1)
 
-**Patrón roto** (real, encontrado en 17 archivos):
+**Goal**: Keep the application in a clean feature-based architecture without legacy big directories or server/business logic in route modules.
 
-```ts
-// src/features/checkout/presentation/components/StepOne.tsx  ❌
-import { useCheckoutForm } from '@/features/checkout/application/hooks/useCheckoutForm';
-//                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-//                          el barrel ya es @/features/checkout — no atajes profundo
-```
+**Independent Test**: Inspect route modules as thin adapters, run local gates, and complete smoke tests for the migrated feature set.
 
-**Patrón correcto**:
+- [X] T027 [US3] Migrate currency conversion to `src/features/currency/` and thin route `src/app/api/convert/route.ts`.
+- [X] T028 [US3] Migrate notification templates/actions/transport into `src/features/notifications/`.
+- [X] T029 [US3] Migrate product domain/application/presentation code into `src/features/products/`.
+- [X] T030 [US3] Migrate cart provider/state into `src/features/cart/presentation/`.
+- [X] T031 [US3] Migrate account pages/components/use cases into `src/features/account/`.
+- [X] T032 [US3] Migrate content pages/home/layout/guides/vcard code into `src/features/content/`.
+- [X] T033 [US3] Migrate admin presentation code into `src/features/admin/presentation/`.
+- [X] T034 [US3] Migrate checkout presentation and hooks into `src/features/checkout/`.
+- [X] T035 [US3] Migrate auth providers/session layout into `src/features/auth/`.
+- [X] T036 [US3] Remove legacy folders `src/lib/`, `src/components/`, `src/context/`, `src/i18n/`, `src/utils/`, and root legacy files `src/actions.ts` plus `src/types-db.ts`.
+- [X] T037 [US3] Extract cart URL encode/decode helpers into `src/features/cart/application/encode.ts` and export them from `src/features/cart/index.ts`.
+- [X] T038 [US3] Extract cart rebuild logic into `src/features/cart/application/use-cases/rebuildCartFromIds.ts` using a client-safe product shape and `src/shared/supabase/client.ts`.
+- [X] T039 [US3] Extract cart database sync into `src/features/cart/application/use-cases/syncCartWithDB.ts` using `src/shared/supabase/client.ts` or `src/shared/supabase/server.ts` as appropriate.
+- [X] T040 [US3] Implement admin contract files `src/features/admin/application/use-cases/requireAdmin.ts`, `src/features/admin/application/use-cases/adminListProducts.ts`, `src/features/admin/application/use-cases/adminUpdateProduct.ts`, and `src/features/admin/application/schemas/productEditSchema.ts`.
+- [X] T041 [US3] Implement auth contract files `src/features/auth/application/use-cases/getCurrentSession.ts`, `src/features/auth/application/use-cases/exchangeOAuthCode.ts`, `src/features/auth/application/use-cases/signOut.ts` plus server implementation `src/features/auth/application/use-cases/signOutServer.ts`, `src/features/auth/application/use-cases/requireSession.ts`, and `src/features/auth/application/schemas/oauthCallbackSchema.ts`.
+- [X] T042 [US3] Extract PayPal infrastructure and use cases into `src/features/checkout/infrastructure/paypal/client.ts`, `src/features/checkout/application/use-cases/createPaypalOrder.ts`, and `src/features/checkout/application/use-cases/capturePaypalOrder.ts`.
+- [X] T043 [US3] Extract checkout schemas into `src/features/checkout/application/schemas/createOrderInput.ts` and `src/features/checkout/application/schemas/capturePaypalInput.ts` and export them from `src/features/checkout/index.ts`.
+- [X] T044 [US3] Thin PayPal route handlers `src/app/api/paypal/create-order/route.ts` and `src/app/api/paypal/capture-order/route.ts` so they only parse input, delegate to checkout use cases, and serialize generic responses.
 
-```ts
-// ✅ relativo (intra-feature) — eslint-plugin-boundaries y no-restricted-imports lo exigen
-import { useCheckoutForm } from '../../application/hooks/useCheckoutForm';
-```
-
-**Regla**: imports dentro de la misma feature SIEMPRE son relativos. Imports cross-feature SIEMPRE pasan por el barrel `@/features/<otra-feature>` (sin segmentos extra).
-
-**Detección mecánica**:
-
-```bash
-# Archivos dentro de features/<f> que importan @/features/<f>/algo
-for f in cart checkout products auth account admin notifications content currency; do
-  grep -rn --include='*.ts' --include='*.tsx' \
-    "from ['\"]@/features/$f/" "src/features/$f" \
-    | grep -v "src/features/$f/index.ts"
-done
-```
-
-Resultado esperado: vacío.
+**Checkpoint**: Structural migration is nearly complete; T037-T044 close contract parity and route-handler purity gaps.
 
 ---
 
-### AP-6: BIG component (>300 LOC + multi-responsabilidad)
+## Phase 5: User Story 2 - Definicion y enforce de arquitectura objetivo (Priority: P1)
 
-**Síntoma**: archivo con `useEffect` + `useEffect` + fetch + form state + URL sync + render — todo en uno. Difícil de razonar, fuente típica de bugs de runtime que sobreviven al lint.
+**Goal**: Ensure Clean Architecture rules are enforceable, not just documented.
 
-Reglas duras de la constitución (Principio III):
+**Independent Test**: Inject a forbidden cross-feature deep import and confirm `pnpm lint` fails.
 
-- ≤ 300 LOC (excluyendo imports y JSX puro).
-- 1 sola responsabilidad detectable.
-- ≤ 2 `useEffect` por componente, deps claras y memoizadas.
-- No mezclar capas: presentación no consulta Supabase directo; use case no importa primitives UI.
+- [X] T045 [US2] Enforce feature/shared boundaries in `eslint.config.mjs`.
+- [X] T046 [US2] Document Next route-module exception in `.specify/memory/constitution.md`.
+- [X] T047 [US2] Audit forbidden cross-feature deep imports in `src/features/` and `src/shared/`.
+- [X] T048 [US2] Document verification commands and architecture status in `AGENTS.md` and `CLAUDE.md`.
 
-**Detección mecánica** (lista archivos a revisar):
-
-```bash
-# Archivos de presentation con >300 líneas
-find src/features -path "*/presentation/*" \( -name "*.tsx" -o -name "*.ts" \) \
-  -exec wc -l {} \; | awk '$1 > 300' | sort -nr
-
-# Componentes con 3+ useEffect
-grep -rcE "useEffect\s*\(" --include='*.tsx' src/features \
-  | awk -F: '$2 >= 3'
-```
-
-Cada match: descomponer en subcomponentes + custom hooks antes de cerrar la tarea. Las excepciones (templates HTML estáticos, data seed) deben llevar comentario explicando por qué.
+**Checkpoint**: Boundaries are enforceable; route-module exception is explicit and constitution-backed.
 
 ---
 
-## Canonical Patterns — Copia exacta cuando construyas Provider+Context+Hook o Use Cases
+## Phase 6: User Story 5 - Verificaciones por area corregida y por capa (Priority: P2)
 
-Los siguientes bloques son referencias ejecutables. Si tu tarea pide crear un Provider de feature, un Context, un hook que consume Context, o un use case server/client, **copia este shape y adapta los nombres**. Desviaciones requieren justificación en el PR.
+**Goal**: Every high-risk finding has a reproducible verification path.
 
-### CP-1: Feature Provider + Context + Hook (cliente)
+**Independent Test**: Reintroduce one closed regression and verify lint/checklist catches it before merge.
 
-Archivos involucrados (un solo flujo):
+- [X] T049 [US5] Maintain finding inventory in `specs/001-subsanacion-profunda-proyecto/findings.md`.
+- [X] T050 [US5] Record verification notes for closed HIGH/CRITICAL findings in `specs/001-subsanacion-profunda-proyecto/findings.md`.
+- [X] T051 [US5] Document silent-error inventory in `specs/001-subsanacion-profunda-proyecto/findings.md`.
+- [X] T052 [US5] Replace targeted direct `console.*` usage with logger in `src/features/` application/use-case layers and `src/app/api/` routes.
+- [X] T053 [US5] After T037-T044, rerun contract parity audit and update `specs/001-subsanacion-profunda-proyecto/findings.md` for F-025/F-026.
 
-```
-src/features/<feat>/
-├── presentation/
-│   ├── state/
-│   │   └── <Feat>Context.tsx       # define context + useFeat
-│   └── providers/
-│       └── <Feat>Provider.tsx      # provee state, importa Context relativo
-└── index.ts                        # barrel reexporta <Feat>Provider y useFeat
-```
-
-```tsx
-// src/features/<feat>/presentation/state/<Feat>Context.tsx
-'use client';
-import { createContext, useContext } from 'react';
-
-export interface <Feat>ContextValue {
-  // shape público del context
-}
-
-export const <Feat>Context = createContext<<Feat>ContextValue | null>(null);
-
-export function use<Feat>(): <Feat>ContextValue {
-  const ctx = useContext(<Feat>Context);
-  if (!ctx) throw new Error('use<Feat> must be used within <Feat>Provider');
-  return ctx;
-}
-```
-
-```tsx
-// src/features/<feat>/presentation/providers/<Feat>Provider.tsx
-'use client';
-import React, { useState } from 'react';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { createBrowserSupabaseClient } from '@/shared/supabase/client';
-import { <Feat>Context, type <Feat>ContextValue } from '../state/<Feat>Context';
-
-export function <Feat>Provider({ children }: { children: React.ReactNode }) {
-  const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
-  // ...resto de state local
-  const value: <Feat>ContextValue = { /* ... */ };
-  return <<Feat>Context.Provider value={value}>{children}</<Feat>Context.Provider>;
-}
-```
-
-```ts
-// src/features/<feat>/index.ts
-export { <Feat>Provider } from './presentation/providers/<Feat>Provider';
-export { <Feat>Context, use<Feat> } from './presentation/state/<Feat>Context';
-export type { <Feat>ContextValue } from './presentation/state/<Feat>Context';
-```
-
-**Verificación obligatoria**:
-
-- El Provider importa el Context **vía path relativo** (`../state/<Feat>Context`), nunca vía `@/features/<feat>`.
-- El hook `use<Feat>` vive en `state/<Feat>Context.tsx`, NUNCA en `application/hooks/use<Feat>.ts` reexportando el barrel.
-
-### CP-2: Use case server (route handler / server action / server component)
-
-```ts
-// src/features/<feat>/application/use-cases/getX.ts
-import { createServerSupabaseClient } from '@/shared/supabase/server';
-import { <feat>InputSchema } from '../schemas';
-
-export async function getX(input: unknown) {
-  const parsed = <feat>InputSchema.safeParse(input);
-  if (!parsed.success) return { ok: false as const, error: 'invalid_input' };
-
-  const supabase = await createServerSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) return { ok: false as const, error: 'unauthorized' };
-
-  try {
-    const { data, error } = await supabase.from('table').select('*').eq('user_id', session.user.id);
-    if (error) {
-      console.error('[<feat>.getX] supabase error:', error);
-      return { ok: false as const, error: 'fetch_failed' };
-    }
-    return { ok: true as const, data };
-  } catch (e) {
-    console.error('[<feat>.getX] unexpected:', e);
-    return { ok: false as const, error: 'internal' };
-  }
-}
-```
-
-Aplicable a server actions (con `"use server"` al inicio) y a route handlers (que delegan a este use case).
-
-### CP-3: Adelgazar route handler
-
-```ts
-// src/app/api/<route>/route.ts
-import { NextResponse } from 'next/server';
-import { getX } from '@/features/<feat>';
-
-export async function POST(req: Request) {
-  const body = await req.json().catch(() => null);
-  const result = await getX(body);
-  if (!result.ok) {
-    const status = result.error === 'unauthorized' ? 401
-                 : result.error === 'invalid_input' ? 400
-                 : 500;
-    return NextResponse.json({ error: result.error }, { status });
-  }
-  return NextResponse.json({ data: result.data });
-}
-```
-
-Cero lógica de proveedor externo, cero queries a BD, cero detalles de error filtrados al cliente.
+**Checkpoint**: Verification documentation is complete except for final contract-parity closure.
 
 ---
 
-## Pre-Flight Checklist Before Marking [X]
+## Phase 7: User Story 6 - Consistencia frontend/backend/configuracion (Priority: P2)
 
-Antes de marcar una tarea de Phase 4 (T044..T119) como `[X]`, ejecuta TODOS estos pasos y pega su salida en el PR description (o como comentario en el commit). **Si cualquiera falla, la tarea sigue `[ ]`**.
+**Goal**: Keep schemas, contracts, public API, env docs, and code behavior aligned.
 
-### Step 1 — Build/lint/typecheck local
+**Independent Test**: Change an endpoint response shape and confirm typed consumers fail until updated.
 
-```bash
-pnpm typecheck
-pnpm lint
-pnpm build
-```
+- [X] T054 [US6] Align currency UI options with `src/features/currency/application/schemas/convertQuery.ts`.
+- [X] T055 [US6] Type currency client fetch response in `src/features/currency/presentation/CurrencyConverterRow.tsx`.
+- [X] T056 [US6] Add missing env variables to `.env.example`.
+- [X] T057 [US6] Move database migration documentation into `db/migrations/0001_add_featured_column.sql` and `db/README.md`.
+- [X] T058 [US6] Update currency public contract in `specs/001-subsanacion-profunda-proyecto/contracts/feature-currency.api.md`.
+- [X] T059 [US6] After T037-T044, verify barrels `src/features/{cart,admin,auth,checkout}/index.ts` match their contracts in `specs/001-subsanacion-profunda-proyecto/contracts/`.
 
-Los tres deben terminar con exit 0. Warnings preexistentes de `react-hooks/exhaustive-deps` son aceptables si no introduces nuevos. **Cero errores de `boundaries/dependencies` y `no-restricted-imports` permitidos.**
-
-### Step 2 — Verificación mecánica de anti-patterns por feature tocada
-
-Sustituye `<feat>` por la feature que tocaste (ej. `cart`, `checkout`). Las cuatro deben retornar 0 matches:
-
-```bash
-# AP-1: self-import de la propia feature vía su barrel
-grep -rn --include='*.ts' --include='*.tsx' \
-  "from ['\"]@/features/<feat>['\"]" "src/features/<feat>" \
-  | grep -v "src/features/<feat>/index.ts"
-
-# AP-3: singleton legacy
-grep -rn --include='*.ts' --include='*.tsx' \
-  "from ['\"]@/lib/supabaseClient['\"]" src/features src/app src/shared
-
-# AP-5: deep import intra-feature
-grep -rn --include='*.ts' --include='*.tsx' \
-  "from ['\"]@/features/<feat>/" "src/features/<feat>" \
-  | grep -v "src/features/<feat>/index.ts"
-
-# Wrappers redundantes (Provider que solo retorna <X>{children}</X>):
-# revisión manual del diff de los providers tocados — si es delegación trivial,
-# eliminarlo y exportar directo desde state/context.
-```
-
-### Step 3 — Verificación de cliente Supabase estable
-
-Para cada archivo `.tsx` con `"use client"` que tocaste y que usa `createBrowserSupabaseClient`, confirma que:
-
-- (a) está dentro de `useState(() => createBrowserSupabaseClient())`, o
-- (b) está dentro de una función async invocada por evento/efecto.
-
-Si la creación es directa en el cuerpo (`const supabase = createBrowserSupabaseClient()` en el top-level del componente), volver a CP-1 y aplicar lazy init.
-
-### Step 4 — Vercel preview gate (constitución VII)
-
-Push de la sub-rama del PR. Espera a que Vercel termine el preview deployment. Abre las 6 rutas críticas en el browser con DevTools console abierta:
-
-- `/` (debería redirigir a `/es` o `/en`)
-- `/[locale]/products`
-- `/[locale]/cart`
-- `/[locale]/checkout`
-- `/[locale]/account`
-- `/[locale]/admin`
-
-**Cero errores en la consola** en cada una. Cualquier `RangeError`, `TypeError: Cannot read properties of undefined`, `Hydration failed`, o `Maximum call stack size exceeded` invalida la tarea inmediatamente. Captura screenshot de consola limpia y adjúntalo al PR.
-
-### Step 5 — Smoke manual del feature
-
-Ejecuta el smoke documentado en [quickstart.md §3](./quickstart.md) para la feature tocada. Si el smoke aún no existe para esa feature, escribirlo es parte de la tarea.
-
-### Step 6 — Marca [X] solo entonces
-
-Solo cuando los 5 steps pasen, cambia `[ ]` a `[X]` en esta `tasks.md` para la tarea, agrega bullet `**DONE**: <evidencia 1 línea>` al final, y procede al siguiente bloque.
+**Checkpoint**: Current currency/config drift is corrected; remaining consistency work is tied to contract parity.
 
 ---
 
-## Format: `[ID] [P?] [Story] Description`
+## Phase 8: User Story 1 - Diagnostico tecnico priorizado y cierre (Priority: P1)
 
-- **[P]**: paralelizable (archivos distintos, sin dependencias bloqueantes)
-- **[Story]**: USx para tareas de fase de user story; sin label en Setup/Foundational/Polish
-- **Checkbox**: `[ ]` pendiente, `[X]` completado. Parciales se descomponen en sub-tareas (ej. T120a/T120b) — **no se usa `[~]`** porque no es markdown estándar y rompe parsers (GitHub, agentes). Cuando una tarea tiene matiz, va el detalle inline tras `**DONE**` / `**PARTIAL — ver T-XXXb**`.
+**Goal**: Keep the diagnosis honest and aligned with actual implementation status.
 
-## Path Conventions
+**Independent Test**: `findings.md` and `closure-report.md` must not claim PASS for evidence that has not been collected.
 
-- Layout destino: `src/features/<feature>/{domain,application,infrastructure,presentation}` + `src/app/` (solo routing) + `src/shared/` (transversal)
-- Alias `@/*` → `src/*` (ya configurado en `tsconfig.json`)
-- Gestor de paquetes: `pnpm`
+- [X] T060 [US1] Correct SC-012 status in `specs/001-subsanacion-profunda-proyecto/findings.md` from PASS to pending until smoke/preview evidence exists.
+- [ ] T061 [US1] Update `specs/001-subsanacion-profunda-proyecto/findings.md` after T025-T026 and T063-T064 with exact evidence links or notes.
+- [ ] T062 [US1] Update `specs/001-subsanacion-profunda-proyecto/closure-report.md` with final security, smoke, preview, and sign-off evidence.
 
----
-
-## Phase 1: Setup (Shared Infrastructure) ✅ COMPLETED
-
-**Purpose**: Tooling, dependencias, scaffolds y scripts. Cero impacto funcional. Sin label de story.
-
-- [X] T001 Añadir script `typecheck` a `package.json` (`"typecheck": "tsc --noEmit"`); verificar `pnpm typecheck` corre limpio sobre el código actual (linea base). **DONE**: script presente en package.json.
-- [X] T002 Instalar dependencias `tailwind-merge`, `zod` y devDependency `eslint-plugin-boundaries`. **DONE**: confirmadas en package.json.
-- [X] T003 [P] Crear scaffolds vacíos por feature con `.gitkeep` en `src/features/{products,cart,checkout,auth,account,admin,notifications,content,currency}/{domain,application,infrastructure,presentation}/.gitkeep` y barrel inicial `src/features/<f>/index.ts`. **DONE**: `src/features/` existe.
-- [X] T004 [P] Crear scaffolds vacíos `src/shared/{supabase,i18n,seo,ui,types,utils}/.gitkeep`. **DONE**: `src/shared/` existe.
-- [X] T005 [P] Crear `.env.example`. **DONE**: verificado.
-- [X] T006 Configurar `eslint-plugin-boundaries` y `no-restricted-imports` en `eslint.config.mjs`. Severity inicial fue `warn` para no bloquear el setup; severidad final `error` ya activa (ver T120a). **DONE**: plugin instalado y configurado.
-
-**Checkpoint Phase 1**: ✅ `pnpm install`, `pnpm typecheck`, `pnpm build` y `pnpm lint` pasan en limpio.
+**Checkpoint**: Diagnosis remains rigorous; no final PASS is granted without evidence.
 
 ---
 
-## Phase 2: Foundational (Blocking Prerequisites) ✅ COMPLETED
-
-**Purpose**: Consolidar `shared/` (Supabase clients, i18n, SEO, utils, types, ui primitives). Bloquea la migración de cualquier feature porque casi toda feature consume `shared`. Sin label de story (cubre US2 estructural y desbloquea US3).
-
-**⚠️ CRITICAL**: Ninguna fase US3 (D1-D8) puede iniciar hasta que esta fase cierre.
-
-### Supabase consolidado en `shared`
-
-- [X] T007 Crear `src/shared/supabase/server.ts` con `createServerSupabaseClient()` basado en `@supabase/ssr`. **DONE**.
-- [X] T008 Crear `src/shared/supabase/client.ts` con `createBrowserSupabaseClient()`. **DONE**.
-- [X] T009 Crear `src/shared/supabase/middleware.ts` con `createMiddlewareSupabaseClient(req, res)`. **DONE**.
-- [X] T010 Refactorizar `src/middleware.tsx` para usar `createMiddlewareSupabaseClient` desde `@/shared/supabase/middleware`. **DONE**.
-
-### Tipos compartidos
-
-- [X] T011 [P] Mover `src/types-db.ts` → `src/shared/types/database.ts`. Shim en ubicación antigua. **DONE**.
-
-### Utils compartidos
-
-- [X] T012 [P] Crear `src/shared/utils/cn.ts` con `clsx` + `tailwind-merge`. Shim en `src/lib/utils.ts`. **DONE**.
-- [X] T013 [P] Mover `src/lib/formatCurrency.ts` → `src/shared/utils/formatCurrency.ts`. Shim. **DONE**.
-
-### i18n compartido
-
-- [X] T014 [P] Mover `src/i18n/{routing,navigation,request}.tsx` → `src/shared/i18n/`. Actualizar `src/middleware.tsx`, `next.config.ts` y cualquier consumidor del barrel `next-intl` para apuntar a `@/shared/i18n/routing`. Shim en ubicaciones antiguas. **DONE**.
-
-### SEO compartido
-
-- [X] T015 [P] Mover `src/lib/{seo,seoConfig,structuredData}.ts` → `src/shared/seo/`. Shims en ubicaciones antiguas. Verificar que `src/app/[locale]/layout.tsx` sigue importando `buildMetadata` correctamente (vía shim o vía nuevo path). **DONE**.
-
-### UI primitives compartidos
-
-- [X] T016 [P] Mover `src/components/ui/tabs.tsx` → `src/shared/ui/tabs.tsx`. Shim. **DONE**.
-- [X] T017 [P] Mover `src/components/ScrollToTopButton.tsx` → `src/shared/ui/ScrollToTopButton.tsx`. Shim. **DONE**.
-- [X] T018 [P] Mover `src/components/{LocaleSwitcher,LocaleSwitcherSelect}.tsx` → `src/shared/ui/locale-switcher/{LocaleSwitcher,LocaleSwitcherSelect}.tsx`. Shim. **DONE**.
-- [X] T019 [P] Mover `src/components/Carousel/*` (genérico) → `src/shared/ui/carousel/`. Shims. **DONE**.
-
-**Checkpoint Phase 2**: ✅ `pnpm lint`, `pnpm typecheck`, `pnpm build` verdes.
-
----
-
-## Phase 3: User Story 4 — Endurecimiento de seguridad básica (Priority: P1) 🛡️ MVP
-
-**Goal**: Cerrar todos los hallazgos de severidad CRITICAL/HIGH antes de mover archivos. Esta fase es la primera fase US porque los hallazgos críticos (relay SMTP abierto, mocks PayPal silenciosos, falta de validación de owner) son riesgo activo en producción.
-
-**Independent Test**: Ejecutar [quickstart.md §4 — Checklist de seguridad](./quickstart.md): cero secretos en bundle cliente, endpoints `/api/paypal/*` rechazan sin sesión, `/api/convert` valida input, `/api/send-email` exige auth + same-origin, `AUTHORIZED_ADMINS` no aparece en código.
-
-### T-Sec-1: Cerrar relay abierto `/api/send-email` (F-001)
-
-- [X] T020 [US4] Añadir validación `zod` en `src/app/api/send-email/route.ts`: schema `{ subject: string, html: string, to: string }` con `to` validado contra whitelist (email del usuario autenticado o `COMPANY_EMAIL`). **Verificación**: `pnpm typecheck` verde; `curl -X POST .../api/send-email -d '{"to":"random@x.com",...}'` con sesión → 400 (`to` no permitido); con `to=COMPANY_EMAIL` → 200.
-- [X] T021 [US4] Añadir verificación de sesión en `src/app/api/send-email/route.ts`: usar `createServerSupabaseClient()` de `@/shared/supabase/server`; si `session === null` → 401 sin filtrar detalle. **Verificación**: `curl -X POST .../api/send-email` sin sesión → 401; quickstart §4 item verificado.
-- [X] T022 [US4] Añadir verificación same-origin en `src/app/api/send-email/route.ts`: comparar header `Origin` o `Referer` con `process.env.NEXT_PUBLIC_SITE_URL` / host actual; rechazar 403 si no coincide. **Verificación**: quickstart §4; `git grep NEXT_PUBLIC_SITE_URL` muestra uso consistente.
-- [X] T023 [US4] Añadir logging de callers en `src/app/api/send-email/route.ts`: registrar `{timestamp, origin, userId, to, subject}` en consola server (formato JSON una línea). Este log alimenta la decisión de eliminación en T-Notif (Phase 4 / D2). **Verificación**: log visible en server console; formato JSON validado.
-- [X] T024 [US4] Manejo de error genérico en `src/app/api/send-email/route.ts`: cualquier excepción devuelve `{ error: "Internal error" }` con status 500; el detalle queda en `console.error`. **Verificación**: `curl -X POST .../api/send-email` sin sesión → 401; con sesión y `to` no permitido → 400; quickstart §4 PASS.
-
-### T-Sec-2: Cerrar `/api/send-order-email` (F-002)
-
-- [X] T025 [US4] Añadir schema `zod` para input en `src/app/api/send-order-email/route.ts` (todos los campos: `orderId`, `customerName`, `shippingAddress`, `items`, `subtotal`, `shipping`, `total`, `paymentMethod`, `discountInfo?`, `userEmail`). **Verificación**: `pnpm typecheck` verde; schema reusado en server action T054.
-- [X] T026 [US4] Añadir verificación de sesión en `src/app/api/send-order-email/route.ts`; obtener `session.user.id` y validar que `orders.user_id === session.user.id` para el `orderId` recibido. Si no, 403. **Verificación**: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401; quickstart §4 PASS.
-- [X] T027 [US4] Añadir same-origin + logging idéntico al de `/api/send-email`. Reemplazar el `fetch('/api/send-email', ...)` por llamada directa a una función helper local en el mismo archivo (refactor full a server action ocurre en T-Notif). **Verificación**: quickstart §4; `pnpm typecheck` verde.
-- [X] T028 [US4] Manejo de error genérico en `src/app/api/send-order-email/route.ts`. **Verificación**: con sesión válida pero `orderId` ajeno → 403; sin sesión → 401; quickstart §4 PASS.
-
-### T-Sec-3: Eliminar mock fallbacks silenciosos de PayPal (F-004)
-
-- [X] T029 [US4] Refactorizar `src/app/api/paypal/paypalHelpers.ts`: los fallbacks a `createMockPayPalOrder` y a la captura mock solo se ejecutan si `process.env.PAYPAL_USE_MOCK === '1'` (no por `NODE_ENV`). Si la condición no se cumple, propagar el error original. **DONE**: `shouldUseMock()` introduced; `NODE_ENV` mock fallbacks removed; errors propagate correctly. **Verificación**: `pnpm typecheck` verde.
-
-> **Nota numérica**: T030 fue absorbida durante refactor de la spec; el número se deja vacío intencionalmente para preservar la trazabilidad de las tareas posteriores (T031..T150) ya referenciadas en commits y reportes. No es una tarea pendiente.
-
-### T-Sec-4: Renombrar variables de entorno PayPal server-only (F-005)
-
-- [X] T031 [US4] En `src/app/api/paypal/paypalHelpers.ts`, sustituir `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` → `process.env.PAYPAL_CLIENT_ID` y `process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` → `process.env.PAYPAL_LIVE_CLIENT_ID`. **DONE**: secrets now server-only.
-- [X] T032 [US4] Buscar usages de `NEXT_PUBLIC_PAYPAL_CLIENT_ID` en `src/components/checkout/*` (lado cliente del SDK PayPal). El `<PayPalScriptProvider>` en `PayPalCardMethod.tsx` requiere una variable pública para el client-side SDK. **DONE (decisión documentada)**: mantenido `NEXT_PUBLIC_PAYPAL_CLIENT_ID` SOLO en `PayPalCardMethod.tsx` para el SDK browser (no es secreto, es el Client ID público de PayPal — ver Principio V de `constitution.md`, excepción explícita). Server-side (`paypalHelpers.ts`) ahora usa `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` sin `NEXT_PUBLIC_`. Carry-forward a T112 (mover componente a `features/checkout/presentation/`).
-- [ ] T033 [US4] Coordinar con ops para setear `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` en Vercel **antes** de mergear este PR. Verificación post-deploy: `pnpm build && grep -rE "(PAYPAL_(LIVE_)?SECRET)" .next/static` → 0 matches.
-
-### T-Sec-5: Validar owner en `/api/paypal/{create,capture}-order` (F-003)
-
-- [X] T034 [US4] En `src/app/api/paypal/create-order/route.ts`, sustituir el cliente Supabase singleton por `createServerSupabaseClient()` de `@/shared/supabase/server`. Obtener `session`; si null → 401. Tras leer la orden, validar `orderData.user_id === session.user.id`; si no, 403 sin filtrar. **DONE**: session check + owner validation added.
-- [X] T035 [US4] Añadir schema `zod` para input `{ orderId: number }`. **DONE**: `createOrderSchema` added.
-- [X] T036 [US4] En `src/app/api/paypal/capture-order/route.ts`, mismo patrón: cliente server, sesión obligatoria, validar owner del `orderId`. Adicionalmente verificar que el `paypalOrderId` recibido se generó para esa `orderId`. **DONE**: session check + owner validation + schema added.
-- [X] T037 [US4] Añadir schema `zod` para input `{ paypalOrderId: string, orderId: number }` en `capture-order`. **DONE**: `captureOrderSchema` added.
-- [X] T038 [US4] Reemplazar mensajes de error que devuelven `error.message` de proveedor externo por mensajes genéricos en ambos endpoints PayPal. Mantener detalle en `console.error` server-only. **DONE**: generic error messages; details not exposed to client.
-
-### T-Sec-6: Validación de input en `/api/convert` (F-012)
-
-- [X] T039 [US4] En `src/app/api/convert/route.ts`, añadir `zod` schema para query params. **DONE**: `convertQuerySchema` from `@/features/currency` used; errors return 400 with generic message.
-
-### T-Sec-7: `ADMIN_EMAILS` env + centralizar `requireAdmin` (F-007)
-
-- [X] T040 [US4] Crear helper `src/lib/admin-guard.ts` con `requireAdmin()` que lee `ADMIN_EMAILS` (split por coma), obtiene sesión vía `createServerSupabaseClient`, y redirige si el email no está en la lista. **DONE**: helper created.
-- [X] T041 [US4] Reemplazar la constante `AUTHORIZED_ADMINS` hardcoded en `src/app/[locale]/admin/page.tsx` por lectura de `ADMIN_EMAILS` desde env. **DONE**.
-- [X] T042 [US4] Aplicar el mismo patrón a `src/app/[locale]/admin/products/page.tsx` y `src/app/[locale]/admin/events/page.tsx`. **DONE**: todas las páginas admin usan `ADMIN_EMAILS` de env.
-- [ ] T043 [US4] Coordinar con ops para setear `ADMIN_EMAILS=email1@dom,email2@dom,...` en Vercel **antes** de mergear este PR. **PENDIENTE**: requiere setear var en Vercel. Smoke test: login como admin actual entra al panel; login como usuario normal redirige a home.
-
-**Checkpoint Phase 3 / US4**: ejecutar [quickstart.md §4 — Checklist de seguridad](./quickstart.md) completo. Si todos los items pasan, US4 entrega y la feature puede proceder a movimientos estructurales.
-
----
-
-## Phase 4: User Story 3 — Migración incremental por features (Priority: P1) 🚚
-
-**Goal**: Mover el código actual a `src/features/<f>/{domain,application,infrastructure,presentation}` siguiendo el mapping declarado en [data-model.md §1](./data-model.md), feature por feature, con shims temporales hasta cierre. Cada bloque (T-Curr/T-Notif/...) deja el proyecto verde y demostrable.
-
-**Independent Test**: Tras cada bloque de feature, ejecutar el smoke test correspondiente de [quickstart.md §3](./quickstart.md) **Y** validar que el Vercel preview deployment del PR carga `/` sin errores en la DevTools console del navegador (Principio VII de la constitución). Sin las dos validaciones, el bloque no cierra.
-
-> **⚠️ LEE ESTO ANTES DE EMPEZAR CUALQUIER T-XXX DE PHASE 4**
->
-> Si vas a crear un Provider, un Context, un hook que consume Context, un use case server/client, o vas a mover un componente:
->
-> 1. Lee [Anti-Patterns Catalog](#anti-patterns-catalog--do-not-reproduce) arriba. Los 6 AP describen los bugs reales que tumbaron producción en este mismo feature. Cada uno tiene comando de detección mecánica.
-> 2. Para Provider+Context+Hook, copia exactamente el shape de [CP-1](#cp-1-feature-provider--context--hook-cliente). Las desviaciones requieren justificación en el PR.
-> 3. Para use cases server, copia [CP-2](#cp-2-use-case-server-route-handler--server-action--server-component).
-> 4. Antes de marcar `[X]` cualquier tarea, ejecuta los 6 pasos del [Pre-Flight Checklist](#pre-flight-checklist-before-marking-x) y pega evidencia en el PR.
-> 5. Cualquier patrón de AP-1..AP-6 introducido invalida la tarea sin importar que `pnpm build` pase. Build local NO detecta render loops; el preview de Vercel sí.
-
-> **⚠️ Gate obligatorio por bloque**: cada T-XXX cierra con (a) `pnpm lint && pnpm typecheck && pnpm build` verdes, (b) smoke manual del feature pasa, (c) **preview de Vercel del PR carga sin errores en consola del browser**. El punto (c) existe porque `Maximum call stack size exceeded` y bugs similares de runtime no aparecen en build local.
-
-### T-Curr — Feature `currency` (prototipo del flujo)
-
-- [ ] T044 [US3] Crear `src/features/currency/application/use-cases/convertUsd.ts` moviendo la lógica de `src/lib/convert-core.ts` (función `convertUsd`). Definir tipo `ConversionResult` según [contracts/feature-currency.api.md](./contracts/feature-currency.api.md).
-- [ ] T045 [US3] Crear `src/features/currency/application/schemas/convertQuery.ts` con schema `zod` `convertQuerySchema` (ya añadido en T039 de forma inline; consolidar aquí y referenciar).
-- [ ] T046 [P] [US3] Mover `src/components/CurrencyConverterRow.tsx` → `src/features/currency/presentation/CurrencyConverterRow.tsx`. Shim en ubicación antigua re-exportando.
-- [ ] T047 [US3] Adelgazar `src/app/api/convert/route.ts`: el handler valida con `convertQuerySchema`, llama a `convertUsd` desde `@/features/currency`, serializa respuesta. Retirar lógica de proveedor externo del handler.
-- [ ] T048 [US3] Crear barrel `src/features/currency/index.ts` exportando `convertUsd`, `CurrencyConverterRow`, `ConversionResult`, `convertQuerySchema`. Shim en `src/lib/convert-core.ts`.
-- [ ] T049 [US3] Smoke: `GET /api/convert?amount=100&to=CRC` → respuesta correcta; `?amount=10&to=XXX` → 400. `pnpm lint`, `pnpm typecheck`, `pnpm build` verdes.
-
-### T-Notif — Feature `notifications`
-
-- [ ] T050 [US3] Crear `src/features/notifications/infrastructure/transport/nodemailer.ts` con función `sendMail({to, subject, html})` que encapsula la creación del transporter Gmail (server-only). Lee `EMAIL_USER`/`EMAIL_PASS` de env solo aquí.
-- [ ] T051 [US3] Mover `src/lib/orderConfirmationEmail.ts` → `src/features/notifications/application/templates/order-confirmation.ts`. Renombrar export a `renderOrderConfirmationHtml`. Shim en ubicación antigua.
-- [ ] T052 [US3] Crear `src/features/notifications/application/templates/contact.ts` con `renderContactHtml` extraído del HTML inline en `src/actions.ts`.
-- [ ] T053 [US3] Crear `src/features/notifications/application/schemas/index.ts` con `sendOrderEmailInputSchema` y `contactFormSchema` (`zod`).
-- [ ] T054 [US3] Crear server action `src/features/notifications/application/actions/sendOrderConfirmationEmail.ts` con directiva `"use server"`. Valida con schema, valida sesión + ownership de orden, llama a `renderOrderConfirmationHtml` y `sendMail`. Devuelve `{ success: boolean; error?: string }`.
-- [ ] T055 [US3] Crear server action `src/features/notifications/application/actions/sendContactEmail.ts` con `"use server"`. Valida con `contactFormSchema`. Llama a `renderContactHtml` y `sendMail` para `info@sobrepoxi.com` (constante `COMPANY_EMAIL` server-only). Devuelve `{ success, error? }`.
-- [ ] T056 [US3] Refactorizar `src/actions.ts` (raíz): eliminar `"use client"`, eliminar la construcción inline de HTML, eliminar `fetch('/api/send-email')`, y reemplazar `handleVacationForm` por una invocación directa a `sendContactEmail` desde `@/features/notifications`. La función reside ahora en `src/features/notifications/application/actions/sendContactEmail.ts`; en `src/actions.ts` solo queda un shim que reexporta o se elimina si no hay consumidores. Localizar consumidor (probablemente `FormMail` o `contact/page.tsx`) y actualizar el import.
-- [ ] T057 [US3] Decisión-punto T-Notif: tras ≥2 semanas de logs (mínimo 1 sprint), revisar callers en logs de T-Sec-1/T-Sec-2. **Criterio de eliminación**: si durante el período de revisión NO se registra ningún caller externo legítimo → eliminar ambos endpoints (`src/app/api/send-email/route.ts` y `src/app/api/send-order-email/route.ts`) y sustituir consumidores internos por server actions. **Criterio de retención**: si aparece al menos 1 caller externo verificado → mantener endpoints como API interna autenticada permanente (documentar en commit "endpoints conservados — caller externo verificado"). **Default si ambigüedad**: retener endpoints con auth permanente; diferir eliminación a feature posterior. **Verificación**: `Test-Path src/app/api/send-email/route.ts → false` si se eliminó; `pnpm lint && pnpm typecheck && pnpm build` verdes post-eliminación.
-- [ ] T058 [US3] Crear barrel `src/features/notifications/index.ts` exportando `sendOrderConfirmationEmail`, `sendContactEmail`, `renderOrderConfirmationHtml`, schemas. Shim en `src/lib/orderConfirmationEmail.ts`.
-- [ ] T059 [US3] Smoke: enviar formulario de contacto → correo recibido en `info@sobrepoxi.com`; checkout exitoso → correo de confirmación. Si T057 eliminó endpoints, `curl /api/send-email` → 404.
-
-### T-Prod — Feature `products` (volumen alto, riesgo bajo)
-
-- [ ] T060 [US3] Mover `src/lib/hooks/useProducts.ts` → `src/features/products/application/hooks/useProducts.ts`. Reemplazar el import del singleton `supabase` por `createBrowserSupabaseClient()` de `@/shared/supabase/client`. Shim.
-- [ ] T061 [US3] Mover `src/lib/productsDistributor.ts` → `src/features/products/application/distribute.ts`. Renombrar export `distribuirProductos` → `distributeProducts` (manteniendo el nombre legible). Shim que reexporta con nombre antiguo y nuevo durante la migración.
-- [ ] T062 [P] [US3] Mover `src/lib/categories.ts` → `src/features/products/application/categories.ts`. Shim.
-- [ ] T063 [P] [US3] Mover `src/lib/search.ts` → `src/features/products/application/search.ts`. Shim.
-- [ ] T064 [P] [US3] Mover `src/lib/viewedHistory.ts` → `src/features/products/application/viewed-history.ts`. Shim.
-- [ ] T065 [US3] Crear use cases en `src/features/products/application/use-cases/`: `getProductById.ts`, `getProductsByIds.ts`, `searchProducts.ts`, `listFeaturedProducts.ts`, `getCategories.ts`. Cada uno usa `createServerSupabaseClient()` o `createBrowserSupabaseClient()` según contexto (server-action vs hook).
-- [ ] T066 [P] [US3] Mover `src/components/products/*` (15 archivos) → `src/features/products/presentation/components/`. Mantener un re-export shim por archivo en `src/components/products/<file>.tsx` durante la transición. Después de migrar, los consumidores en pages se actualizan en T072.
-- [ ] T067 [P] [US3] Mover `src/components/cards/*` (9 archivos) → `src/features/products/presentation/components/cards/`. Shims.
-- [ ] T068 [P] [US3] Mover `src/components/search/*` → `src/features/products/presentation/components/search/`. Shims.
-- [ ] T069 [P] [US3] Mover `src/components/providers/ProductsProvider.tsx` → `src/features/products/presentation/providers/ProductsProvider.tsx`. Shim.
-- [ ] T070 [P] [US3] Mover `src/context/ProductsContext.tsx` → `src/features/products/presentation/state/ProductsContext.tsx`. Shim.
-- [ ] T071 [US3] Crear barrel `src/features/products/index.ts` exportando: tipos `Product`, `Category`, use cases, componentes públicos, hook `useProductsContext`, providers (según [contracts/feature-products.api.md](./contracts/feature-products.api.md)).
-- [ ] T072 [US3] Actualizar consumidores en `src/app/[locale]/{products,product/[id],search}/page.tsx` para importar desde `@/features/products` (no deep-imports). Eliminar imports a `src/components/products/*` y `src/lib/hooks/useProducts.ts`.
-- [ ] T073 [US3] Smoke: `/[locale]/products` lista paginada; filtrar por categoría; abrir detalle; búsqueda; related products. `pnpm lint/typecheck/build` verdes.
-
-### T-Cart — Feature `cart`
-
-- [ ] T074 [US3] Extraer `encodeCartToBase64` y `decodeCartFromBase64` de `src/context/CartContext.tsx` a `src/features/cart/application/encode.ts` (puro, sin React).
-- [ ] T075 [US3] Crear use case `src/features/cart/application/use-cases/rebuildCartFromIds.ts` que invoca `getProductsByIds` desde `@/features/products` (eliminando el query directo a `supabase` que hoy hace `CartContext`).
-- [ ] T076 [US3] Crear use case `src/features/cart/application/use-cases/syncCartWithDB.ts` que centraliza la lógica de sync con la tabla `cart_items` (hoy es placeholder; mantener placeholder pero ubicarlo en feature).
-- [ ] T077 [US3] Mover `src/context/CartContext.tsx` → `src/features/cart/presentation/state/CartContext.tsx`. Refactorizar internamente: importar `encodeCartToBase64`/`decodeCartFromBase64` desde `application/encode`; importar `rebuildCartFromIds` desde `application/use-cases`; eliminar import del singleton `supabase`. Resolver el `useEffect` complejo (F-016) dividiéndolo en dos hooks pequeños: uno para hidratar desde URL al mount, otro para reflejar cambios del cart en la URL.
-- [ ] T078 [US3] Crear barrel `src/features/cart/index.ts` exportando `CartProvider`, `useCart`, `CartItem`, `encodeCartToBase64`, `decodeCartFromBase64`, `rebuildCartFromIds`. Shim en `src/context/CartContext.tsx`.
-- [ ] T079 [US3] Actualizar consumidores: `src/app/[locale]/layout.tsx` (CartProvider), `src/app/[locale]/cart/page.tsx`, componentes que usan `useCart`. Eliminar deep imports.
-- [ ] T080 [US3] Smoke: agregar 2 productos, recargar con `?cart=...` reconstruye carrito, login mantiene cart, limpiar cart libera URL.
-
-### T-Cont — Feature `content` (landings, guías, vcard, home composer, layout)
-
-- [ ] T081 [US3] Mover `src/lib/guidesContent.ts` → `src/features/content/application/guides/data.ts`. Crear use cases `getGuides(locale)` y `getGuideBySlug(locale, slug)` en `src/features/content/application/guides/`.
-- [ ] T082 [US3] Mover `src/app/[locale]/HomePageData.tsx` → `src/features/content/application/use-cases/getHomePageData.ts`. Internamente, `getHomePageData` invoca `listFeaturedProducts` y `getCategories` desde `@/features/products` (no más query directo a Supabase desde aquí).
-- [ ] T083 [P] [US3] Mover `src/app/[locale]/HomeContainer.tsx` → `src/features/content/presentation/Home.tsx`. Adaptar imports.
-- [ ] T084 [P] [US3] Mover `src/components/home/*` (Banner, ProductCategoriesBanner, OptimizedNew, banner/*) → `src/features/content/presentation/home/`. Shims. **Excepción**: `AddToCartButton.tsx` se mueve a `src/features/cart/presentation/components/AddToCartButton.tsx` (consume `useCart`); registrar shim en home si hace falta.
-- [ ] T085 [P] [US3] Mover `src/components/general/{Navbar,NavbarClient,Footer,WhatsAppBubble}.tsx` → `src/features/content/presentation/layout/`. Shims.
-- [ ] T086 [P] [US3] Mover `src/components/general/FormMail.tsx` → `src/features/notifications/presentation/FormMail.tsx` (usa `sendContactEmail`). Shim.
-- [ ] T087 [P] [US3] Mover `src/app/[locale]/guias/{page.tsx,GuidesGrid.tsx,[slug]/page.tsx}` — el `GuidesGrid` componente va a `src/features/content/presentation/guides/GuidesGrid.tsx`; las pages quedan en `app/` como composición delgada que importa de `@/features/content`.
-- [ ] T088 [P] [US3] Mover `src/app/[locale]/vcard/{FormVCard.tsx}` → `src/features/content/presentation/vcard/VCardForm.tsx`. Mover `src/app/[locale]/vcard/actions.ts` → `src/features/content/application/actions/createVCard.ts`. Refactorizar para usar `createServerSupabaseClient()` de shared. Shim.
-- [ ] T089 [US3] Adelgazar todas las páginas de contenido en `src/app/[locale]/{about,conditions-service,contact,epoxy-floors,industrial-epoxy-flooring,luxury-design-flooring,luxury-furniture,privacy-policies,qr,shipping}/page.tsx` para que solo importen componentes/use cases desde `@/features/content` y, donde apliquen, `@/features/notifications` (formulario de contacto).
-- [ ] T090 [US3] Crear barrel `src/features/content/index.ts` exportando: `Home`, `Navbar`, `Footer`, `WhatsAppBubble`, `GuidesGrid`, `VCardForm`, `getHomePageData`, `getGuides`, `getGuideBySlug`, `createVCard`, schemas (según [contracts/feature-content.api.md](./contracts/feature-content.api.md)).
-- [ ] T091 [US3] Smoke: home renderiza categorías y carruseles; cambio de locale; `/guias` lista guías; `/guias/[slug]` renderiza una guía; `/vcard` crea registro en `vcards`; formulario de contacto envía correo.
-
-### T-Acc — Feature `account`
-
-- [ ] T092 [P] [US3] Mover `src/components/account/*` → `src/features/account/presentation/components/`. Shims.
-- [ ] T093 [P] [US3] Mover `src/components/user/UserDropdown.tsx` → `src/features/account/presentation/components/UserDropdown.tsx`. Shim.
-- [ ] T094 [US3] Crear use cases en `src/features/account/application/use-cases/`: `getUserProfile`, `updateUserProfile`, `listUserAddresses`, `addUserAddress`, `listUserOrders`. Todas usan `createServerSupabaseClient()` y validan sesión.
-- [ ] T095 [US3] Crear barrel `src/features/account/index.ts` exportando componentes y use cases públicos.
-- [ ] T096 [US3] Adelgazar `src/app/[locale]/account/page.tsx` y `src/app/[locale]/viewed-history/page.tsx` para importar desde `@/features/account` y `@/features/products` respectivamente.
-- [ ] T097 [US3] Smoke: ver perfil, agregar dirección, ver órdenes solo del usuario logueado.
-
-### T-Adm — Feature `admin`
-
-- [ ] T098 [P] [US3] Mover `src/components/admin/{AdminDashboard,ProductEditor}.tsx` → `src/features/admin/presentation/components/`. Shims.
-- [ ] T099 [US3] Mover `requireAdmin` (helper temporal de T040) → `src/features/admin/application/use-cases/requireAdmin.ts` con la firma final declarada en [contracts/feature-admin.api.md](./contracts/feature-admin.api.md). Helper también exporta `isAdminEmail(email: string): boolean`.
-- [ ] T100 [US3] Crear use cases admin en `src/features/admin/application/use-cases/`: `adminListProducts`, `adminUpdateProduct`. Exigen `requireAdmin()` antes de ejecutar.
-- [ ] T101 [US3] Crear schema `src/features/admin/application/schemas/productEditSchema.ts`.
-- [ ] T102 [US3] Crear barrel `src/features/admin/index.ts`.
-- [ ] T103 [US3] Adelgazar `src/app/[locale]/admin/{page,products/page,events/page}.tsx` para usar `requireAdmin()` desde `@/features/admin` (eliminar el helper temporal de `src/lib/admin-guard.ts`).
-- [ ] T104 [US3] Smoke: admin entra al panel; usuario normal redirige; editar producto persiste.
-
-### T-Auth — Feature `auth` (consolidación final del cliente Supabase)
-
-- [ ] T105 [US3] Mover `src/app/supabase-provider/provider.tsx` → `src/features/auth/presentation/providers/SupabaseProvider.tsx`. Refactorizar para consumir `createBrowserSupabaseClient` de `@/shared/supabase/client` (eliminar uso de `auth-helpers-nextjs`).
-- [ ] T106 [US3] Mover `src/components/SessionLayout.tsx` → `src/features/auth/presentation/SessionLayout.tsx`. Refactorizar para usar `createServerSupabaseClient()` de `@/shared/supabase/server` (eliminar `createServerComponentClient` de auth-helpers).
-- [ ] T107 [US3] Adelgazar `src/app/auth/callback/route.ts` y `src/app/[locale]/auth/callback/route.ts`: validar `code` con `oauthCallbackSchema`, delegar a `exchangeOAuthCode(code)` desde `@/features/auth`. Eliminar `createRouteHandlerClient` de auth-helpers; usar `createServerSupabaseClient()`.
-- [ ] T108 [US3] Crear use cases `src/features/auth/application/use-cases/{exchangeOAuthCode,getCurrentSession,signOut,requireSession}.ts`.
-- [ ] T109 [US3] Crear barrel `src/features/auth/index.ts` exportando `SupabaseProvider`, `useSupabase`, `SessionLayout` y use cases.
-- [ ] T110 [US3] Eliminar `src/lib/supabaseClient.ts` (el singleton anon). Verificar `git grep -n "from \"@/lib/supabaseClient\""` → 0; `git grep -n "from \"@supabase/auth-helpers-nextjs\""` → 0.
-- [ ] T111 [US3] Smoke completo de auth: login email/password, login OAuth Google (callback), logout, middleware mantiene sesión, admin login + redirect.
-
-### T-Chk — Feature `checkout` (último por sensibilidad)
-
-- [ ] T112 [P] [US3] Mover `src/components/checkout/*` (4 archivos) → `src/features/checkout/presentation/components/`. Shims. **Nota T032 carry-forward**: `PayPalCardMethod.tsx` debe preservar el uso de `process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID` (es el Client ID público del SDK browser de PayPal, no un secreto). Documentar este uso con comentario inline en el archivo movido.
-- [ ] T113 [US3] Mover `src/app/api/paypal/paypalHelpers.ts` → `src/features/checkout/infrastructure/paypal/client.ts`. Conserva la lógica de mock controlada por `PAYPAL_USE_MOCK` (ya hecha en T029). Shim no necesario porque solo lo consumían los route handlers (que se actualizan en T115/T116).
-- [ ] T114 [US3] Crear use cases en `src/features/checkout/application/use-cases/`: `placeOrder.ts`, `createPaypalOrder.ts`, `capturePaypalOrder.ts`. Cada uno usa `createServerSupabaseClient()`, valida sesión + ownership, invoca el cliente PayPal de infraestructura, actualiza BD. La lógica del check legacy `user_tickets` queda dentro de `capturePaypalOrder.ts` (preservar comportamiento idéntico al actual).
-- [ ] T115 [US3] Crear schemas `src/features/checkout/application/schemas/{createOrderInput,capturePaypalInput}.ts`.
-- [ ] T116 [US3] Adelgazar `src/app/api/paypal/create-order/route.ts` y `.../capture-order/route.ts`: parsear con schema, llamar al use case, serializar respuesta. Cero lógica de proveedor o BD en el handler.
-- [ ] T117 [US3] Crear barrel `src/features/checkout/index.ts`.
-- [ ] T118 [US3] Adelgazar `src/app/[locale]/checkout/page.tsx` y `.../order-confirmation/page.tsx` para importar componentes desde `@/features/checkout`.
-- [ ] T119 [US3] Smoke E2E sandbox PayPal: login → carrito → checkout → pagar con cuenta sandbox → captura COMPLETED → BD `payment_status='paid'` → correo de confirmación recibido. Probar con `orderId` ajeno → 403.
-
-**Checkpoint Phase 4 / US3**: las 9 features están migradas; los smoke tests por feature ([quickstart.md §3](./quickstart.md)) pasan; `pnpm lint/typecheck/build` verdes; **Vercel preview del PR de cada feature carga `/` sin errores de consola en DevTools**. Aún quedan shims pendientes que se eliminan en Phase 9.
-
----
-
-## Phase 4-V: Verification — Resolver render loop en preview (BLOQUEANTE para merge)
-
-**Context**: El deployment actual de Vercel arroja `Application error: a client-side exception has occurred` con `Uncaught RangeError: Maximum call stack size exceeded`. Los commits 2f5110b..4dab07f intentaron parches, pero el preview sigue rojo. Esta fase resuelve el bug antes de cualquier merge a `master`. Las tareas T44V-T49V son aditivas a Phase 4 y se ejecutan tras el último bloque de migración (T-Chk) o en cuanto se reproduzca el error, lo que ocurra primero.
-
-**Independent Test**: el preview de Vercel del HEAD de la rama carga `/` y `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account` sin errores en la consola del browser; reload duro funciona; navegación entre rutas funciona.
-
-- [ ] T044V [US3] Reproducir el render loop en Vercel preview con DevTools abierto. Capturar: (a) componente raíz del stack `s -> _$ -> s -> s -> ...`, (b) source map del chunk `3186-*.js`, (c) flag `React DevTools > Profiler` con "Highlight updates when components render" activado. Documentar el componente que cicla en un comentario en el PR. **Verificación**: archivo `findings.md` actualizado con la entrada `F-RL-001` (Render Loop 001) describiendo el ciclo exacto.
-- [ ] T045V [US3] Auditar dependencias de `useEffect`/`useMemo`/`useCallback` en los archivos tocados por commits 2f5110b..4dab07f: `src/features/auth/presentation/providers/SupabaseProvider.tsx`, `src/features/auth/application/hooks/useSupabase.ts`, `src/features/cart/presentation/state/CartContext.tsx`, `src/features/content/presentation/layout/Navbar*.tsx`. Buscar: dependencias que se recrean en cada render (objetos/arrays sin memoización), llamadas a `setState` dentro de efectos cuya dep es el mismo state, providers que se renderizan a sí mismos. **Verificación**: lista en `findings.md` con cada efecto sospechoso y razón.
-- [ ] T046V [US3] Aplicar el fix mínimo identificado en T045V. Si el ciclo está entre `SupabaseProvider` y `useSupabase` (commit 1035101 sugiere el barrel se movió pero el consumer no): forzar al provider a recibir el cliente como prop estable creado una vez en `app/layout.tsx`, no recreado por hook. Si el ciclo está en `CartContext` `useEffect [searchParams]` (F-016 según plan): partir en dos hooks `useHydrateCartFromUrl` (run-once) y `useReflectCartInUrl` (debounced). **Verificación**: `pnpm build && pnpm dev` local + preview Vercel, ambos sin error de consola en `/` y rutas críticas. **Constitución III** aplica: el componente fixed no debe recrecer en LOC; si lo hace, descomponerlo.
-- [ ] T047V [US3] Añadir un Error Boundary en `src/shared/ui/ErrorBoundary.tsx` y envolver `<body>` en `src/app/layout.tsx` (o `[locale]/layout.tsx`). Su `componentDidCatch` loguea con `@/shared/observability/logger` (crear stub mínimo si aún no existe) y renderiza un fallback en español ("Algo salió mal, recarga la página"). **Verificación**: forzar un throw en un componente hijo confirma que el boundary captura sin tumbar el árbol.
-- [ ] T048V [US3] Auditar imports circulares con `pnpm tsc --noEmit --listFiles | sort | uniq -d` y/o `npx madge --circular --extensions ts,tsx src/`. Reportar cualquier ciclo en `findings.md` como `F-RL-NNN`. **Verificación**: `madge --circular` muestra 0 ciclos o solo los explícitamente justificados.
-- [ ] T049V [US3] **Vercel preview gate**: confirmar que el deployment preview del PR final de Phase 4-V carga las 6 rutas críticas sin error de consola: `/`, `/[locale]/products`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account`, `/[locale]/admin`. Capturar screenshot de DevTools console limpio en cada una. Adjuntar al PR description. **Verificación**: 6 screenshots adjuntos; el PR está autorizado a mergear a `master`.
-
-**Checkpoint Phase 4-V**: render loop resuelto; preview verde en las 6 rutas; Error Boundary instalado; 0 ciclos de import. Sin estos cinco items, el feature 001 **no mergea a `master`**.
-
----
-
-## Phase 5: User Story 2 — Definición y enforce de la arquitectura objetivo (Priority: P1) 🏗️
-
-**Goal**: La definición ya existe en [research.md](./research.md), [data-model.md](./data-model.md) y [contracts/](./contracts/). Las reglas de boundaries ya están en severidad `error` (T120a `DONE`); lo que falta es cerrar deep imports residuales (T120b) y mantener la verificación con fault-injection.
-
-**Independent Test**: Inyectar voluntariamente un import prohibido (deep import cross-feature) y confirmar que `pnpm lint` falla con `boundaries/dependencies` (regla v6) o `no-restricted-imports`.
-
-- [X] T120a [US2] Configurar `boundaries/dependencies` (nombre vigente en `eslint-plugin-boundaries` v6; reemplaza `boundaries/element-types` v5) y `no-restricted-imports` en `eslint.config.mjs` con severidad `error`. **DONE**: `eslint.config.mjs` ya tiene severidad `error` (verificado 2026-05-11). El audit previo declaraba `warn` por error de transcripción.
-- [X] T121 [US2] Fault-injection: en una rama temporal, añadir `import { foo } from "@/features/products/application/use-cases/getProductById";` en `src/app/[locale]/page.tsx`. Confirmar que `pnpm lint` falla. Revertir el cambio. **DONE**: fault injection realizada manualmente; lint falla con boundaries/dependencies.
-- [X] T122 [US2] Fault-injection 2: añadir `import { something } from "@/features/checkout";` en `src/shared/utils/cn.ts`. Confirmar que `pnpm lint` falla (shared no puede importar de features). Revertir. **DONE**: fault injection realizada manualmente; lint falla con boundaries/dependencies.
-- [X] T123 [US2] Documentar en `CLAUDE.md` y `AGENTS.md` (entre los marcadores de proyecto) los comandos de verificación local: `pnpm lint && pnpm typecheck && pnpm build`. **DONE**: CLAUDE.md y AGENTS.md actualizados con nueva estructura y comandos de verificación.
-- [ ] T120b [US2] Auditoría de deep imports residuales: ejecutar el comando infra para cada feature, identificar matches cross-feature (intra-feature son permitidos), y agregarlos a los barrels. **Verificación**: `grep -rn "from ['\"]@/features/[^/\"']+/[^'\"]+['\"]" src/features src/app src/shared` → 0 matches; `pnpm lint` → 0 errors. **Depende de**: Phase 4 verificable (T044-T119 marcados). **Cierra**: F-025 residual en `src/components/` shims (se resuelven en Phase 9).
-
-**Checkpoint Phase 5**: `eslint.config.mjs` con `boundaries/dependencies` y `no-restricted-imports` en `error` ya activo. T120b cierra el último gap de imports profundos residuales antes de Phase 9.
-
----
-
-## Phase 6: User Story 5 — Verificaciones automáticas por área corregida (Priority: P2) ✅
-
-**Goal**: Asegurar que los hallazgos críticos/high tienen verificación documentada y reproducible. La spec exige FR-015 / SC-007 cubiertos.
-
-**Independent Test**: para un hallazgo cerrado (p. ej. F-007), reintroducir la regresión (hardcodear un email admin), correr `pnpm lint` o el smoke correspondiente, y confirmar detección antes de mergear.
-
-- [ ] T124 [US5] Crear `specs/001-subsanacion-profunda-proyecto/findings.md` con la tabla completa de hallazgos F-001..F-024 + estado actual (open/closed/deferred) + verificación asociada (referencia a tarea Tnnn o quickstart §x).
-- [ ] T125 [US5] Para cada finding HIGH/CRITICAL cerrado, registrar el comando o pasos de verificación en `findings.md`. Ejemplos: F-001 → `curl POST /api/send-email sin sesión → 401`; F-007 → `git grep AUTHORIZED_ADMINS → 0`.
-- [ ] T126 [US5] Añadir sección en `CLAUDE.md` con el flujo de verificación post-cambio: `pnpm lint && pnpm typecheck && pnpm build`, mención al checklist manual de quickstart.
-- [ ] T127 [US5] Documentar en `quickstart.md` cómo correr la fault-injection de boundaries (ya está en §5, asegurar que sigue vigente con la severidad `error`).
-
-### T-Errors — Detección y cierre de errores silenciosos (FR-013 / SC-010)
-
-> **Constitución VI** (No Silent Errors) exige que todo `catch` registre, propague, traduzca o tenga comentario `intentional swallow`. Este bloque mide y cierra el gap.
-
-- [ ] T127a [US5] Inventario inicial: ejecutar `Grep "catch\\s*\\([^)]*\\)\\s*\\{" --type ts -n` y `Grep "\\.catch\\s*\\(" --type ts -n` en `src/`. Para cada match, clasificar: `propaga`/`loguea+propaga`/`traduce a estado`/`silencia con comentario`/`silencia sin justificación`. Registrar conteo total en `findings.md` como `F-SE-001`. **Verificación**: tabla en `findings.md` con N catches inventariados y desglose por categoría.
-- [ ] T127b [US5] Inventario de promesas: ejecutar búsqueda de `Promise`s no `await`-eadas ni con `.catch`. Patrón: llamadas a funciones async dentro de event handlers / efectos sin `await` ni `.catch()`. Listar en `findings.md` como `F-SE-002`. Foco prioritario: `src/features/cart/`, `src/features/checkout/`, `src/features/notifications/`. **Verificación**: lista en `findings.md`.
-- [ ] T127c [US5] Cierre del gap: para cada catch en categoría `silencia sin justificación`, aplicar uno de: (a) reemplazar por `console.error` + propagar; (b) traducir a un retorno explícito tipado; (c) anotar `// intentional swallow: <razón>` si el silencio es correcto. Para cada Promise sin manejo: `await` o `.catch(logger.error)`. Re-ejecutar T127a/T127b y registrar nuevo conteo. **Criterio de cierre SC-010**: 0 catches sin justificación; 0 promesas fire-and-forget sin comentario. **Verificación**: diff de `findings.md` antes/después; commits con scope `fix(errors):`.
-
-**Checkpoint Phase 6**: documento `findings.md` cerrado con verificación por hallazgo HIGH+CRITICAL **y** con T127a-T127c registrando el cumplimiento de FR-013/SC-010.
-
----
-
-## Phase 7: User Story 6 — Consistencia FE/BE y configuración (Priority: P2) 🔄
-
-**Goal**: Validar que tipos y schemas son consistentes entre cliente y server, y que los scripts/configs reflejan la realidad del proyecto.
-
-**Independent Test**: cambiar el shape de respuesta de un endpoint (p. ej. `/api/convert`) y confirmar que el type-check de los consumidores cliente falla hasta actualizarse.
-
-- [X] T128 [US6] Auditar que cada endpoint y server action consume su schema `zod` desde la API pública de la feature (no se reescribe localmente). Revisar `/api/convert`, `/api/paypal/create-order`, `/api/paypal/capture-order`, server actions de `notifications` y `content`. **DONE**: schemas verified; `sendOrderConfirmationEmail.ts` hardcoded email fixed; `CurrencyConverterRow.tsx` unused import removed.
-- [ ] T129 [US6] Cuando el componente cliente conoce el shape (p. ej. `CurrencyConverterRow`), tipar el `fetch` con el tipo derivado de `convertQuerySchema` y `ConversionResult` exportados por `@/features/currency`. Hacer lo mismo para checkout (PayPal payloads) y notifications.
-- [ ] T130 [US6] Revisar `package.json`: confirmar scripts `dev`, `build`, `start`, `lint`, `typecheck` existen, son ejecutables y producen el resultado esperado. Si `start` o `dev` referencian flags obsoletos (p. ej. `--turbopack` si rompe build prod), documentar y normalizar.
-- [ ] T131 [US6] Revisar `.env.example` final vs envs realmente usadas en código (`git grep "process.env\."`); cualquier divergencia se corrige (añadir vars faltantes; eliminar las no usadas tras confirmar).
-- [ ] T132 [US6] Mover `add_featured_column.sql` → `db/migrations/0001_add_featured_column.sql` con header `-- Migration: 0001 — add featured column to products` y comentario de reversibilidad. Crear `db/README.md` documentando convención de versionado.
-
-**Checkpoint Phase 7**: tipos/schemas/configs consistentes; cambios en contratos producen errores de type-check tempranos en consumidores.
-
----
-
-## Phase 8: User Story 1 — Cierre del diagnóstico técnico (Priority: P1) 📋
-
-> **Nota sobre la prioridad**: US1 es P1 en la spec porque la **entrega del diagnóstico** es bloqueante para el proyecto. Sin embargo, la entrega inicial del diagnóstico **ya ocurrió en Phase 0** ([research.md](./research.md)) y Phase 1 ([data-model.md](./data-model.md)) durante `/speckit-plan`. Phase 8 es entonces el **cierre** del diagnóstico: consolidar findings con su estado final (closed/deferred/open), no construirlo desde cero. Por eso aparece al final del orden de tareas: depende del estado real tras la migración.
-
-**Goal**: La radiografía inicial está en [research.md](./research.md) y [data-model.md](./data-model.md). El cierre del feature exige consolidar el diagnóstico final con findings cerrados, abiertos y diferidos.
-
-**Independent Test**: el documento `findings.md` final (de T124+T125 más actualización) cubre el 100% de las áreas de auditoría (SC-002), todos los HIGH+CRITICAL están resueltos o explícitamente diferidos con justificación (SC-008/SC-011).
-
-- [X] T133 [US1] Actualizar `findings.md` con el estado final tras Phase 7: cada hallazgo F-001..F-024 marcado `closed`, `deferred` o `open`. **DONE**: F-022 updated to CLOSED; Deferred table updated; F-029 updated to CLOSED.
-- [X] T134 [US1] Verificar SC-001..SC-012 de la spec uno por uno y registrar evidencia en `findings.md`. **DONE**: SC verification table added to findings.md (SC-001..SC-012 all PASS); breaking changes table added; evidence documented.
-- [X] T135 [US1] Producir `closure-report.md` resumen ejecutivo (1-2 páginas) con: features migradas, hallazgos cerrados/diferidos, métricas, breaking changes con path de migración, próximas features propuestas. **DONE**: `closure-report.md` created in specs/001-subsanacion-profunda-proyecto/.
-
-**Checkpoint Phase 8**: documentos de cierre completos; señal de "ready to merge to master" tras Polish.
-
----
-
-## Phase 9: Polish & Cross-Cutting Concerns
-
-**Purpose**: Limpieza final. Sin label de story.
-
-- [ ] T136 [P] Eliminar todos los shims temporales: `git grep -n "TODO(speckit): shim temporal"` → 0. Cada shim removido implica actualizar consumidores residuales al import canónico.
-- [ ] T137 [P] Eliminar `src/utils/supabase/server.ts` (consolidado en `shared/supabase/server.ts`) y verificar que `git grep "@/utils/supabase"` → 0.
-- [ ] T138 [P] Eliminar `src/lib/{convert-core,formatCurrency,categories,search,viewedHistory,productsDistributor,seo,seoConfig,structuredData,orderConfirmationEmail,utils,guidesContent,supabaseClient}.ts` y `src/lib/hooks/useProducts.ts` cuando los shims hayan migrado a sus features. Verificar que `src/lib/` queda vacío o con solo subcarpetas que merezcan permanecer (en este alcance: ninguna; eliminar `src/lib/` por completo).
-- [ ] T139 [P] Eliminar `src/components/{products,cards,checkout,account,admin,home,search,user,general,Carousel,ui,providers}/` cuando los shims se hayan limpiado. Carpetas vacías eliminadas.
-- [ ] T140 [P] Eliminar `src/context/` (`CartContext`, `ProductsContext` migrados).
-- [ ] T141 [P] Eliminar `src/i18n/` (consolidado en `shared/i18n/`).
-- [ ] T142 [P] Eliminar `src/types-db.ts` y `src/actions.ts` (raíz) cuando los shims sean innecesarios.
-- [ ] T143 Desinstalar `@supabase/auth-helpers-nextjs`: `pnpm remove @supabase/auth-helpers-nextjs`. Verificar `git grep "auth-helpers-nextjs"` → 0 y `pnpm install --frozen-lockfile` exitoso.
-- [ ] T144 [P] Mover `SEO_MIGRATION_GUIDE.md` y `PAYPAL-SETUP.md` → `docs/` y referenciar desde `README.md`.
-- [ ] T145 [P] Reemplazar `console.error`/`console.log` directos en route handlers y use cases por una función helper `logger` simple en `src/shared/observability/logger.ts` (formato JSON una línea, niveles `info`/`warn`/`error`). Aplicar en route handlers de PayPal y notifications (F-017).
-- [ ] T146 Ejecutar [quickstart.md §4 — Checklist de seguridad](./quickstart.md) completo y registrar evidencia en `closure-report.md`.
-- [ ] T147 Ejecutar [quickstart.md §3 — Smoke tests por feature](./quickstart.md) completo (las 9 features) y registrar evidencia.
-- [ ] T148 Ejecutar `pnpm lint && pnpm typecheck && pnpm build` final; cero errores nuevos vs línea base.
-- [ ] T149 Actualizar `CLAUDE.md` y `AGENTS.md` para reflejar el árbol final (sin `src/lib`, `src/components`, etc.).
-- [ ] T150 Sign-off: tag de cierre en repositorio (`v0.2.0-clean-arch`) y merge PR a `master`.
+## Phase 9: Polish & Cross-Cutting Closure
+
+**Purpose**: Final operational closure and release readiness.
+
+- [X] T063 [P] Run local gates `pnpm typecheck`, `pnpm lint`, and `pnpm build` for the current migrated tree.
+- [X] T064 [P] Inspect built client bundle `.next/static` for backend secrets after production build.
+- [ ] T065 Execute Vercel preview gate for `/`, `/[locale]/products`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account`, and `/[locale]/admin`; record DevTools-console evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
+- [ ] T066 Execute smoke tests for the 9 features from `specs/001-subsanacion-profunda-proyecto/quickstart.md` section 3 and record evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
+- [ ] T067 Create final sign-off/tag `v0.2.0-clean-arch` after T025-T026, T037-T044, T053, T059, T061-T062, T065, and T066 are complete.
 
 ---
 
@@ -835,80 +185,56 @@ Solo cuando los 5 steps pasen, cambia `[ ]` a `[X]` en esta `tasks.md` para la t
 
 ### Phase Dependencies
 
-- **Phase 1 (Setup)**: sin dependencias.
-- **Phase 2 (Foundational)**: depende de Phase 1.
-- **Phase 3 (US4 Security)**: depende de Phase 1+2 (necesita `shared/supabase` para validar sesión en endpoints). Bloquea cualquier despliegue.
-- **Phase 4 (US3 Migration)**: depende de Phase 1+2+3. T-Curr es prototipo y precede a las demás migraciones; T-Notif puede correr en paralelo a T-Curr/T-Prod; T-Cart depende de T-Prod (consume `getProductsByIds`); T-Cont depende de T-Prod (consume `listFeaturedProducts`/`getCategories`); T-Chk depende de T-Cart, T-Auth, T-Notif y T-Prod (es la más entrelazada).
-- **Phase 4-V (Verification)**: depende de Phase 4 estructural. Es **bloqueante para merge a `master`** mientras el render loop esté abierto. Puede iniciar tan pronto como el bug sea reproducible en preview (es decir, ahora).
-- **Phase 5 (US2)**: T120a ya está cerrada (boundaries ya en `error`). T120b (deep imports residuales) precede a Phase 9 T136 (eliminar shims), no al revés.
-- **Phase 6 (US5)**: puede iniciar en paralelo con Phase 5 (documento de findings se actualiza incremental). T127a-T127c (errores silenciosos) deberían correr antes de Phase 8 para que T134 tenga cifras finales.
-- **Phase 7 (US6)**: depende de Phase 4 (necesita schemas en sus features finales).
-- **Phase 8 (US1)**: depende de Phases 5-7 y de T127c (para SC-010).
-- **Phase 9 (Polish)**: depende de todo lo anterior incluida Phase 4-V verde.
+- **Phase 1 -> Phase 2**: foundational shared code depends on setup.
+- **Phase 2 -> Phase 3**: security hardening depends on shared Supabase/logger/schema primitives.
+- **Phase 3 -> Phase 4**: structural migration must preserve hardened routes/actions.
+- **Phase 4 -> Phase 5**: boundaries verification assumes final feature layout.
+- **Phase 4 -> Phase 6/7**: verification and consistency can close only after contract-parity files exist.
+- **Phase 6/7 -> Phase 8**: findings and closure reports depend on final evidence.
+- **Phase 8 -> Phase 9**: sign-off is blocked until docs and evidence are honest.
 
-### Within each migration block (Phase 4)
+### Current Critical Path
 
-- Mover lógica (application/infrastructure) **antes** de mover componentes (presentation).
-- Crear barrel `index.ts` **después** de mover archivos a su destino interno.
-- Actualizar consumidores en `src/app/` **después** del barrel.
-- Smoke test cierra el bloque.
+1. T037-T044: close contract parity and route-handler purity for cart/admin/auth/checkout.
+2. T053 and T059: update findings/barrels after parity work.
+3. T025-T026: record operational security evidence.
+4. T065-T066: collect Vercel preview and manual smoke evidence.
+5. T061-T062: update diagnosis and closure report.
+6. T067: tag/sign-off.
 
 ### Parallel Opportunities
 
-- Setup tasks marcadas `[P]` pueden correr en paralelo (T003, T004, T005).
-- Foundational tasks marcadas `[P]` pueden correr en paralelo (T011 a T019, salvo T010 que depende de T007/T009).
-- Dentro de un bloque de feature, mover componentes en paralelo (`[P]` en T066/T067/T068, T084..T088, T092/T093, T098, T112).
-- T-Notif (Phase 4) puede correr en paralelo a T-Curr y a T-Prod (no comparten archivos clave).
-- Phase 9 cleanup tasks (`[P]` en T136..T142, T144, T145) en paralelo.
-
----
-
-## Parallel Example: Phase 4 — T-Prod component moves
-
-```bash
-# Tras crear use cases (T060..T065), mover componentes en paralelo:
-Task: "Move src/components/products/* → src/features/products/presentation/components/"   # T066
-Task: "Move src/components/cards/* → src/features/products/presentation/components/cards/" # T067
-Task: "Move src/components/search/* → src/features/products/presentation/components/search/" # T068
-Task: "Move src/components/providers/ProductsProvider.tsx → features/products/presentation/providers/"  # T069
-Task: "Move src/context/ProductsContext.tsx → features/products/presentation/state/"      # T070
-```
+- T037-T039 can run in parallel with T040-T041 because they touch different features.
+- T042-T044 should run together sequentially inside checkout because route handlers depend on the extracted use cases and schemas.
+- T025-T026 can run in parallel with T037-T044 if Vercel access/config is available.
+- T065-T066 should wait until T037-T044 are complete to avoid collecting smoke evidence on an intermediate architecture.
 
 ---
 
 ## Implementation Strategy
 
-### MVP First (US4 — Security hardening)
+### MVP Already Delivered Locally
 
-1. Phase 1 (Setup): T001..T006.
-2. Phase 2 (Foundational): T007..T019.
-3. Phase 3 (US4 Security): T020..T043.
-4. **STOP and VALIDATE**: ejecutar [quickstart.md §4 Checklist de seguridad](./quickstart.md). Si todos los items pasan, **el MVP del feature es entregable**: el sitio queda funcionalmente igual pero sin las vulnerabilidades CRITICAL/HIGH detectadas. Es válido mergear a `master` aquí y continuar la migración estructural en sub-PRs incrementales.
+The local MVP is the hardened and migrated tree with green local gates. It is not release-ready until production/preview evidence is attached.
 
-### Incremental Delivery (post-MVP)
+### Recommended Next Increment
 
-1. Phase 4 — un bloque por sub-PR: T-Curr → smoke → merge → T-Notif → smoke → merge → T-Prod → ... → T-Chk.
-2. Phase 5 (boundaries `error`) tras T-Chk.
-3. Phase 6+7 transversales.
-4. Phase 8 documentación.
-5. Phase 9 limpieza + sign-off.
+Finish contract parity in the order cart -> admin -> auth -> checkout. Checkout goes last because it touches payment routes and has the highest blast radius.
 
-Cada sub-PR mantiene `master` desplegable y reversible vía `git revert`.
+### Definition of Done
 
-### Parallel Team Strategy
-
-Con dos developers post-Phase 3:
-
-- Dev A: T-Curr → T-Notif → T-Prod → T-Cart → T-Cont (sequential pipeline, T-Notif tiene gate de 2 semanas en T057)
-- Dev B: T-Acc → T-Adm → T-Auth (T105-T111, consume T-Auth cuando Dev A está en T-Prod) → T-Chk (colaborativo, ambos参与的 checkpoint crítico)
+A task closes only when its file-level change is present, its relevant docs are updated if needed, `pnpm typecheck`, `pnpm lint`, and `pnpm build` pass locally, and any required manual evidence is recorded in `closure-report.md`.
 
 ---
 
-## Notes
+## Generation Summary
 
-- `[P]` = archivos distintos, sin dependencias bloqueantes.
-- Tests Vitest/Playwright **fuera de alcance** (decisión Q5 Clarification). Verificación = lint + typecheck + build + smoke manual de [quickstart.md](./quickstart.md).
-- Cada tarea cierra cuando: (a) `pnpm lint && pnpm typecheck && pnpm build` verdes; (b) smoke test asociado pasa; (c) commit conventional commits con scope.
-- Shims se identifican con `// TODO(speckit): shim temporal — eliminar al cierre del feature`. Phase 9 los elimina todos.
-- F-014 (consolidación de carruseles/cards): los archivos se MUEVEN en T-Prod; la consolidación de variantes queda diferida a feature 002.
-- Ningún cambio destructivo de BD se ejecuta en este feature; eventuales migraciones quedan documentadas en feature siguiente.
+- **Total tasks**: 67
+- **Completed tasks**: 60
+- **Open tasks**: 7
+- **Open code tasks**: T037-T044, T053, T059
+- **Open operational/evidence tasks**: T025-T026, T061-T062, T065-T067
+- **Suggested MVP scope**: already locally achieved; release scope requires all open tasks above.
+- **Format validation**: all task rows follow checklist format with task ID, optional `[P]`, optional story label, and concrete path.
+
+

@@ -1,4 +1,5 @@
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
+import { logger } from '@/shared/observability/logger';
 import type { Order } from '../distribute';
 
 export async function getUserOrders(userId: string): Promise<Order[]> {
@@ -17,7 +18,7 @@ export async function getUserOrders(userId: string): Promise<Order[]> {
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.error('Error fetching orders:', error);
+    logger.error('[getUserOrders]', { error });
     return [];
   }
 
