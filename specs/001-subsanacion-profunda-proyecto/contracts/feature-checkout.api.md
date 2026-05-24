@@ -7,23 +7,15 @@ Server-only PayPal use cases live in `src/features/checkout/application/use-case
 ## Types
 
 ```ts
-export interface OrderInput {
-  userId: string;
-  items: { productId: number; quantity: number }[];
-  shippingAddressId: number;
-  paymentMethod: "paypal";
-}
+// Derived from createOrderInputSchema (z.infer)
+export type CreateOrderInput = z.infer<typeof createOrderInputSchema>;
 
-export interface PaypalOrderRef {
-  paypalOrderId: string;
-  internalOrderId: number;
-}
+// Derived from capturePaypalInputSchema (z.infer)
+export type CapturePaypalInput = z.infer<typeof capturePaypalInputSchema>;
 
-export interface CaptureResult {
-  status: "COMPLETED" | "FAILED" | "PENDING";
-  paypalOrderId: string;
-  internalOrderId: number;
-}
+// Cart / shipping / discount / payment types are re-exported from
+// `./application/distribute` and consumed by checkout presentation.
+export type { CartItem, ShippingAddress, DiscountInfo, PaymentMethod, Banco } from "./application/distribute";
 ```
 
 ## Client-safe public API
@@ -34,6 +26,9 @@ export { calculateCheckout, calculatePayPalTotal } from "./application/use-cases
 export { processSinpePayment, processPayPalPayment } from "./application/use-cases/processPayment";
 export { createOrderInputSchema } from "./application/schemas/createOrderInput";
 export { capturePaypalInputSchema } from "./application/schemas/capturePaypalInput";
+export { BANCOS, SHIPPING_COST, calculateSubtotal, calculateTotal, calculateCheckoutTotal, formatShippingAddress } from "./application/distribute";
+export { useCheckoutForm, useCheckoutSession } from "./application/hooks";
+export { CheckoutProvider, useCheckoutContext } from "./presentation";
 export { PaymentForm, PayPalCardMethod, StepOne, StepTwo } from "./presentation/components";
 ```
 

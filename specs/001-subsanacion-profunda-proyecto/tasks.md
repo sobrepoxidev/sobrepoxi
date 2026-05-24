@@ -9,17 +9,57 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 **Prerequisites**: [plan.md](./plan.md), [spec.md](./spec.md), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/), [quickstart.md](./quickstart.md)
 **Tests**: Vitest/Playwright are out of scope for feature 001. Verification is `pnpm lint`, `pnpm typecheck`, `pnpm build`, bundle-secret inspection, and manual smoke/security checklists in [quickstart.md](./quickstart.md).
 
-**Status Summary**:
+**Status Summary** (rev 2026-05-23):
 
 | Area | Status | Notes |
 |------|--------|-------|
 | Setup + foundational architecture | COMPLETE | Feature/shared layout, pnpm scripts, zod, tailwind-merge, boundaries and shared services are present. |
-| Security hardening | LOCAL COMPLETE / OPS PENDING | Code hardening is done locally; Vercel env evidence and final security checklist remain open. |
-| Structural migration | MOSTLY COMPLETE | Legacy `src/lib`, `src/components`, `src/context`, `src/i18n`, root actions/types shims are removed. |
-| Contract parity | OPEN | Some public API contract use cases are not yet represented as dedicated files in cart/admin/auth/checkout. |
-| Verification + closure | OPEN | Local gates are green; Vercel preview, manual smoke evidence, and sign-off remain. |
+| Security hardening | LOCAL COMPLETE + LOCAL CHECKLIST PASS | Local checklist quickstart §4: 7/8 PASS, 1 ⏸ por decisión operacional (plan §D2). Vercel env evidence (T025) remains open. |
+| Structural migration | COMPLETE | Legacy `src/lib`, `src/components`, `src/context`, `src/i18n`, root actions/types shims removed. |
+| Contract parity | COMPLETE | Audit T053/T059 (2026-05-23) confirmó paridad cart/admin/auth/checkout vs `contracts/`; barrel checkout types alineados. |
+| Verification + closure | PENDING OPS | Local gates verde (pnpm typecheck/lint/build) + bundle limpio. Vercel preview console (T065), smoke 9 features (T066), sign-off tag (T067) remain. |
 
 **Format note**: Completed work is retained as `[X]`; executable remaining work is `[ ]`. All task lines keep Spec Kit checklist shape with ID, optional `[P]`, optional story label, and concrete file path.
+
+---
+
+## Plan ID → Task ID Mapping
+
+`plan.md` §"Orden recomendado de implementación" uses nominal IDs (`T-Sec-*`, `T-Setup-*`, `T-Auth-*`, `T-Curr`, `T-Notif`, …). This table reconciles them with the canonical numeric IDs used in this file.
+
+| Plan ID (plan.md) | Task ID (this file) | Notes |
+|-------------------|---------------------|-------|
+| T-Sec-1 | T015 | Close `/api/send-email` relay → `notifications/application/actions/sendContactEmail.ts` |
+| T-Sec-2 | T016 | Close `/api/send-order-email` relay → `notifications/application/actions/sendOrderConfirmationEmail.ts` |
+| T-Sec-3 | T018 | `PAYPAL_USE_MOCK` flag |
+| T-Sec-4 | T024 + T025 | Add `PAYPAL_*_CLIENT_ID` server vars (keep `NEXT_PUBLIC_*` for SDK browser) |
+| T-Sec-5 | T021, T022 | PayPal order ownership validation |
+| T-Sec-6 | T019, T020, T054 | Zod input validation (PayPal + currency) |
+| T-Sec-7 | T023 | `ADMIN_EMAILS` env + central `requireAdmin` |
+| T-Setup-0 | T001, T002 | Scaffold `src/features/*` and `src/shared/*` |
+| T-Setup-1 | T003, T004 | `typecheck` script + `zod`/`tailwind-merge`/`eslint-plugin-boundaries` deps |
+| T-Setup-2 | T005 | `eslint-plugin-boundaries` + `no-restricted-imports` config |
+| T-Setup-3 | T013 | `cn()` helper with `clsx` + `tailwind-merge` |
+| T-Setup-4 | T010, T011, T012 | Move `i18n`, `seo`, `Database` type to `shared/` |
+| T-Auth-1 | T007, T008, T009 | Consolidate Supabase clients in `shared/supabase/{server,client,middleware}.ts` |
+| T-Auth-2 | T035, T041 | Migrate auth providers/session to `features/auth/` + contract files |
+| T-Auth-3 | T036 (Phase 9) | Remove `@supabase/auth-helpers-nextjs` from `package.json` |
+| T-Curr | T027 | Migrate currency to `features/currency/` |
+| T-Notif | T028 | Migrate notifications to `features/notifications/` |
+| T-Prod | T029 | Migrate products to `features/products/` |
+| T-Cart | T030, T037, T038, T039 | Cart provider + encode/decode + rebuild/sync use cases |
+| T-Cont | T032 | Migrate content (landings/guides/vcard) to `features/content/` |
+| T-Acc | T031 | Migrate account to `features/account/` |
+| T-Adm | T033, T040 | Migrate admin + `requireAdmin`/contract use cases |
+| T-Chk | T034, T042, T043, T044 | Migrate checkout + PayPal infrastructure + thin route handlers |
+| T-Clean-1 | T036 (Phase 9) | Remove shims; legacy folders dropped in Phase 9 |
+| T-Clean-2 | T036 (Phase 9) | Remove `src/lib/`, `src/components/`, `src/context/`, `src/i18n/`, `src/utils/` |
+| T-Clean-3 | (deferred) | Visual consolidation deferred to feature 002 (Clarification 2026-05-09) |
+| T-Doc-1 | T006, T048 | Update `AGENTS.md`, `CLAUDE.md` |
+| T-Sign-Off | T067 | Final sign-off + tag `v0.2.0-clean-arch` |
+| Feature 002 | (out of scope) | Visual consolidation of cards/Carousel/banner (F-014) |
+| Feature 003 | (out of scope) | Vitest + Playwright (testing infrastructure) |
+| T-Roles | (out of scope) | `user_roles` table (DB migration) |
 
 ---
 
@@ -71,8 +111,8 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - [X] T022 [US4] Validate order ownership before PayPal mutation in `src/app/api/paypal/capture-order/route.ts`.
 - [X] T023 [US4] Move admin emails to server env usage in `src/features/admin/application/`.
 - [X] T024 [US4] Add missing runtime env documentation in `.env.example`.
-- [ ] T025 [US4] Confirm production/preview values for `ADMIN_EMAILS`, `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`, `EMAIL_USER`, `EMAIL_PASS`, `EXRATE_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel project settings.
-- [ ] T026 [US4] Execute security checklist from `specs/001-subsanacion-profunda-proyecto/quickstart.md` section 4 and record evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
+- [ ] T025 [US4] Confirm production/preview values for `ADMIN_EMAILS`, `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`, `EMAIL_USER`, `EMAIL_PASS`, `EXRATE_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, and `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` in Vercel project settings. The `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` variants are required by the browser-side `<PayPalScriptProvider>` and are constitution §V documented exceptions; they must coexist with the server-only `PAYPAL_*_CLIENT_ID` variants.
+- [X] T026 [US4] Execute security checklist from `specs/001-subsanacion-profunda-proyecto/quickstart.md` section 4 and record evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`. (2026-05-23: 7/8 PASS + 1 ⏸ por decisión operacional plan §D2; evidencia en `closure-report.md` §"Security Checklist §4".)
 
 **Checkpoint**: MVP is locally hardened; production sign-off waits on T025-T026.
 
@@ -130,9 +170,9 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 - [X] T049 [US5] Maintain finding inventory in `specs/001-subsanacion-profunda-proyecto/findings.md`.
 - [X] T050 [US5] Record verification notes for closed HIGH/CRITICAL findings in `specs/001-subsanacion-profunda-proyecto/findings.md`.
-- [X] T051 [US5] Document silent-error inventory in `specs/001-subsanacion-profunda-proyecto/findings.md`.
+- [X] T051 [US5] Document silent-error inventory in `specs/001-subsanacion-profunda-proyecto/findings.md`. Closure criterion (SC-010): `git grep -nE "catch\s*\([^)]*\)\s*\{\s*\}" src/` and `git grep -nE "catch\s*\([^)]*\)\s*\{\s*return\s+null"` return either 0 matches or each match has a sibling `// intentional swallow: <reason>` comment (Constitution §VI).
 - [X] T052 [US5] Replace targeted direct `console.*` usage with logger in `src/features/` application/use-case layers and `src/app/api/` routes.
-- [X] T053 [US5] After T037-T044, rerun contract parity audit and update `specs/001-subsanacion-profunda-proyecto/findings.md` for F-025/F-026.
+- [X] T053 [US5] After T037-T044, rerun contract parity audit and update `specs/001-subsanacion-profunda-proyecto/findings.md` for F-025/F-026. FR-021 checkpoint: enumerate any cross-feature ports/inversions currently in the codebase with their justification (cycle, test double, runtime adapter swap) or confirm "0 ports introduced in feature 001".
 
 **Checkpoint**: Verification documentation is complete except for final contract-parity closure.
 
@@ -175,7 +215,7 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 
 - [X] T063 [P] Run local gates `pnpm typecheck`, `pnpm lint`, and `pnpm build` for the current migrated tree.
 - [X] T064 [P] Inspect built client bundle `.next/static` for backend secrets after production build.
-- [ ] T065 Execute Vercel preview gate for `/`, `/[locale]/products`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account`, and `/[locale]/admin`; record DevTools-console evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
+- [ ] T065 Execute Vercel preview gate for `/`, `/[locale]/products`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/account`, and `/[locale]/admin`. Pass criteria (Constitution §VII): (1) 0 red console errors, (2) 0 hydration mismatch warnings, (3) page renders without `Application error: a client-side exception has occurred` overlay, (4) network tab shows no 5xx for first-paint requests. Attach screenshot per route to `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
 - [ ] T066 Execute smoke tests for the 9 features from `specs/001-subsanacion-profunda-proyecto/quickstart.md` section 3 and record evidence in `specs/001-subsanacion-profunda-proyecto/closure-report.md`.
 - [ ] T067 Create final sign-off/tag `v0.2.0-clean-arch` after T025-T026, T037-T044, T053, T059, T061-T062, T065, and T066 are complete.
 
@@ -193,14 +233,16 @@ description: "Task list for feature 001-subsanacion-profunda-proyecto"
 - **Phase 6/7 -> Phase 8**: findings and closure reports depend on final evidence.
 - **Phase 8 -> Phase 9**: sign-off is blocked until docs and evidence are honest.
 
-### Current Critical Path
+### Current Critical Path (rev 2026-05-23)
 
-1. T037-T044: close contract parity and route-handler purity for cart/admin/auth/checkout.
-2. T053 and T059: update findings/barrels after parity work.
-3. T025-T026: record operational security evidence.
-4. T065-T066: collect Vercel preview and manual smoke evidence.
-5. T061-T062: update diagnosis and closure report.
-6. T067: tag/sign-off.
+1. ✅ T037-T044: contract parity and route-handler purity cerrados.
+2. ✅ T053/T059: paridad re-auditada y barrels alineados.
+3. ✅ T026: local security checklist completo (evidencia en closure-report.md §"Security Checklist §4").
+4. ✅ T063/T064: local gates verde + bundle inspection clean.
+5. ⏳ T025: setear envs en Vercel (operacional).
+6. ⏳ T065-T066: Vercel preview + smoke 9 features (requiere deploy).
+7. ⏳ T061-T062: actualizar findings.md y closure-report.md tras T065-T066.
+8. ⏳ T067: tag/sign-off `v0.2.0-clean-arch`.
 
 ### Parallel Opportunities
 
@@ -227,14 +269,14 @@ A task closes only when its file-level change is present, its relevant docs are 
 
 ---
 
-## Generation Summary
+## Generation Summary (rev 2026-05-23)
 
 - **Total tasks**: 67
-- **Completed tasks**: 60
-- **Open tasks**: 7
-- **Open code tasks**: T037-T044, T053, T059
-- **Open operational/evidence tasks**: T025-T026, T061-T062, T065-T067
-- **Suggested MVP scope**: already locally achieved; release scope requires all open tasks above.
+- **Completed tasks**: 62 (T026 + T053/T059/T063/T064 cerrados; T061-T062 sincronizados)
+- **Open tasks**: 5
+- **Open code tasks**: 0 — todo el código está cerrado.
+- **Open operational/evidence tasks**: T025 (Vercel envs), T061-T062 (final sync tras T065/T066), T065 (Vercel preview console), T066 (smoke 9 features), T067 (sign-off tag).
+- **Suggested MVP scope**: already locally achieved; release scope requires operational/evidence tasks above.
 - **Format validation**: all task rows follow checklist format with task ID, optional `[P]`, optional story label, and concrete path.
 
 

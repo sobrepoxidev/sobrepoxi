@@ -103,13 +103,13 @@ Cuando se introduzca, la elección recomendada es:
 ## R7. Variables de entorno: separar server/client
 
 **Decision**: Reorganizar las variables de entorno para que ningún secreto requiera prefijo `NEXT_PUBLIC_*`. En particular:
-- `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` se consumen solo en `paypalHelpers.ts` (server). Renombrar y quitar `NEXT_PUBLIC_*`.
-- El SDK de PayPal en cliente sí necesita `NEXT_PUBLIC_PAYPAL_CLIENT_ID` para inicializar; se mantiene SOLO si efectivamente se usa con `<PayPalScriptProvider>` desde el cliente. Hay que verificar uso real antes de borrar.
+- `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` (sin prefijo) se introducen para el código server (`paypalHelpers.ts`, `features/checkout/infrastructure/paypal/client.ts`).
+- `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` se MANTIENEN: el SDK browser las usa para inicializar `<PayPalScriptProvider>` en `src/features/checkout/presentation/components/PayPalCardMethod.tsx`. La constitución §V las documenta como excepción (Client IDs públicos del SDK, no secretos). El código server NO debe leer estas variantes.
 - Las credenciales SMTP (`EMAIL_USER`, `EMAIL_PASS`) ya son server-only — está OK.
 - `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` permanecen públicas: la anon key es por diseño consultable desde el cliente con RLS.
 - Introducir `SUPABASE_SERVICE_ROLE_KEY` solo si una operación server claramente lo requiere (escritura privilegiada que no debe pasar por RLS); de no requerirse, NO se introduce.
 
-**Rationale**: Toda variable con prefijo `NEXT_PUBLIC_*` queda expuesta en el bundle del cliente. Hoy `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` aparecen en `paypalHelpers.ts`, que es código server-only. El client_id de PayPal NO es estrictamente secreto, pero no debe estar marcado como público si no se necesita en cliente; el secret OAuth (`PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`) sí lo es y ya está bien.
+**Rationale**: Toda variable con prefijo `NEXT_PUBLIC_*` queda expuesta en el bundle del cliente. Antes del refactor, `paypalHelpers.ts` (server-only) leía `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID`, lo cual mezclaba la frontera server/cliente; el código server ahora lee `PAYPAL_*_CLIENT_ID` sin prefijo. El SECRET OAuth (`PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`) es server-only y ya está correcto. El Client ID público de PayPal NO es secreto; mantener las variantes `NEXT_PUBLIC_*` para el SDK browser es coherente con la guía oficial de PayPal y con la constitución §V.
 
 **Alternatives considered**:
 - Dejar todo como está: descartado, viola FR-009.

@@ -86,11 +86,7 @@ export default function CartPage() {
     };
   }, [session, supabase.auth]);
 
-  console.log("currentSession:", currentSession);
   const userId = currentSession?.user?.id || null;
-  const correo = currentSession?.user?.email;
-  console.log("userId:", userId);
-  console.log("correo:", correo);
   const { cart, updateQuantity, removeFromCart, syncCartWithDB } = useCart();
 
 

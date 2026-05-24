@@ -20,15 +20,22 @@ NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 EMAIL_USER=...
 EMAIL_PASS=...
-PAYPAL_CLIENT_ID=...           # post-renombre (antes NEXT_PUBLIC_PAYPAL_CLIENT_ID en server)
+
+# PayPal — server-only (sin prefijo)
+PAYPAL_CLIENT_ID=...
 PAYPAL_SECRET=...
 PAYPAL_LIVE_CLIENT_ID=...      # solo en producción
 PAYPAL_LIVE_SECRET=...         # solo en producción
 PAYPAL_USE_MOCK=0              # opt-in para mocks (default off)
-ADMIN_EMAILS=email1@dom,email2@dom   # introducido por T-... admin
+
+# PayPal — client-side (excepción constitucional §V; usadas por <PayPalScriptProvider>)
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
+NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID=...
+
+ADMIN_EMAILS=email1@dom,email2@dom
 ```
 
-`NEXT_PUBLIC_PAYPAL_CLIENT_ID` permanece SOLO si `<PayPalScriptProvider>` se inicializa en cliente con esa variable (verificar uso real durante T-Sec-2).
+Las variantes `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` se MANTIENEN: el SDK browser de PayPal las requiere para inicializar el provider en `src/features/checkout/presentation/components/PayPalCardMethod.tsx`. El código server NO las debe leer (usa las variantes sin prefijo).
 
 ---
 
@@ -112,15 +119,16 @@ Tras cada feature migrada se ejecuta el smoke test manual correspondiente. Si fa
 
 ## 4. Checklist de seguridad (corre después de tareas Sec)
 
-- [ ] `git grep -nE 'NEXT_PUBLIC_(PAYPAL_(LIVE_)?CLIENT_ID|.*SECRET)'` → no aparece ningún secreto bajo `NEXT_PUBLIC_*`.
+- [ ] `git grep -nE 'NEXT_PUBLIC_.*(SECRET|EMAIL_PASS|SERVICE_ROLE)'` → 0 secretos verdaderos bajo prefijo `NEXT_PUBLIC_*`. NOTA: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` son excepciones documentadas en constitución §V (Client IDs públicos del SDK browser de PayPal, NO secretos).
 - [ ] `git grep -n 'AUTHORIZED_ADMINS'` en código fuente → 0 resultados.
-- [ ] Build inspect: el bundle de cliente no contiene `EMAIL_PASS`, `PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`, ni la lista de admins.
-  - Comando: `pnpm build && grep -rE "(EMAIL_PASS|PAYPAL_SECRET|PAYPAL_LIVE_SECRET)" .next/static .next/server/app | head` → 0 matches en `.next/static`.
-- [ ] Endpoints `/api/send-email` y `/api/send-order-email` ya no existen (`Test-Path src/app/api/send-email` → False).
-- [ ] `/api/paypal/create-order` y `/api/paypal/capture-order` validan sesión (probar sin cookie → 401).
+- [ ] Build inspect: el bundle de cliente no contiene `EMAIL_PASS`, `PAYPAL_SECRET`, `PAYPAL_LIVE_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, ni la lista de admins (`ADMIN_EMAILS`).
+  - Comando: `pnpm build && grep -rE "(EMAIL_PASS|PAYPAL_(LIVE_)?SECRET|SUPABASE_SERVICE_ROLE_KEY|ADMIN_EMAILS)" .next/static` → 0 matches.
+- [ ] Endpoints `/api/send-email` y `/api/send-order-email`: o están eliminados (`Test-Path src/app/api/send-email/route.ts` → False) **o** están vivos con guard `requireSession` + `requireSameOrigin` + zod schema + logger de callers. La decisión de eliminar depende de los logs de callers durante ≥1 sprint (plan §D2).
+- [ ] `/api/paypal/create-order` y `/api/paypal/capture-order` validan sesión (probar sin cookie → 401) y ownership (`orders.user_id === session.user.id`).
 - [ ] `/api/convert` valida `amount` y `to` (probar input fuera de whitelist → 400).
-- [ ] No quedan `console.error(...)` que devuelvan stack al cliente; los handlers devuelven mensajes genéricos.
+- [ ] No quedan `console.error(...)` que devuelvan stack al cliente; los handlers devuelven mensajes genéricos. Usar logger compartido `@/shared/observability/logger` para detalle interno.
 - [ ] Secretos en historial git: si hubo exposición previa, ejecutar rotación de credenciales antes de cerrar la feature.
+- [ ] **Silent errors (SC-010, Constitución §VI)**: `git grep -nE "catch\s*\([^)]*\)\s*\{\s*\}"` y `git grep -nE "catch\s*\([^)]*\)\s*\{\s*return\s+null"` → 0 matches, o cada match acompañado por `// intentional swallow: <razón>`.
 
 ---
 

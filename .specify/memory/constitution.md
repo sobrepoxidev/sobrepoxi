@@ -28,7 +28,7 @@ Reglas duras:
 - **Prohibido**: imports cross-feature que apunten a paths distintos de `@/features/<f>` (sin profundidad). Ejemplo prohibido: `import { foo } from "@/features/products/application/use-cases/getProductById"`.
 - **Prohibido**: imports desde `shared/` hacia `features/` (la dirección es features ← shared, nunca al revés).
 - Ambas reglas están enforced por `eslint-plugin-boundaries` + `no-restricted-imports` con severidad `error` en `eslint.config.mjs`.
-- **Excepción de routing Next.js**: los módulos de `src/app/**/page.tsx`, `layout.tsx`, `route.ts` y metadata/static params pueden importar directamente desde `src/features/<f>/presentation/pages/*` cuando el módulo importado usa APIs server-only de Next (`next/headers`, `next-intl/server`, Supabase server clients, etc.). Esos route modules actúan como adaptadores del App Router y no deben reexportarse desde barrels consumidos por componentes cliente.
+- **Excepción de routing Next.js**: los módulos de `src/app/**/page.tsx`, `layout.tsx`, `route.ts` y metadata/static params pueden importar directamente desde `src/features/<f>/presentation/pages/*` y desde `src/features/<f>/application/use-cases/*` cuando los módulos importados usan APIs server-only (`next/headers`, `next-intl/server`, Supabase server clients, OAuth handshake, PayPal SDK con secretos, etc.) y por tanto NO pueden ser reexportados desde el barrel client-safe. Esos route modules actúan como adaptadores del App Router. Cada feature debe declarar en su contrato (`specs/.../contracts/feature-<f>.api.md`) qué use cases server-only quedan fuera del barrel y son accesibles via deep import desde route handlers.
 
 **Why**: Sin barrels, cualquier consumidor termina dependiendo de la estructura interna de la feature y la refactorización se vuelve cross-cutting. Con barrels, la feature puede reorganizar su interior sin romper consumidores.
 
@@ -69,7 +69,7 @@ Excepciones aceptables (deben anotarse con comentario):
 
 Estas reglas son **no negociables** y CRÍTICAS:
 
-- **Cero secretos en bundle cliente**. Variables con secreto NO llevan prefijo `NEXT_PUBLIC_*`. Verificación: `grep -rE "(EMAIL_PASS|PAYPAL_(LIVE_)?SECRET|SUPABASE_SERVICE_ROLE_KEY)" .next/static` → 0 matches tras `pnpm build`. Excepción única documentada: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` es el Client ID público del SDK browser de PayPal, no un secreto.
+- **Cero secretos en bundle cliente**. Variables con secreto NO llevan prefijo `NEXT_PUBLIC_*`. Verificación: `grep -rE "(EMAIL_PASS|PAYPAL_(LIVE_)?SECRET|SUPABASE_SERVICE_ROLE_KEY)" .next/static` → 0 matches tras `pnpm build`. Excepciones documentadas (Client IDs públicos del SDK browser de PayPal, no secretos): `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID`. Estas conviven con sus contrapartes server-only `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` que usa la infraestructura de pagos en el servidor; las dos variantes (cliente y servidor) son intencionales.
 - **Sesión obligatoria en endpoints sensibles**. Todo route handler que muta estado (PayPal, órdenes, envío de correo, formularios admin) valida `session` vía `createServerSupabaseClient()` de `@/shared/supabase/server`. Sin sesión → `401`. Sin permisos → `403`.
 - **Validación de owner en operaciones por usuario**. Toda operación que toca `orders`, `cart_items`, `addresses`, `vcards` valida que `entity.user_id === session.user.id` antes de leer o mutar. No hay caminos alternativos para invitados en checkout (decisión Clarification 2026-05-09).
 - **Mensajes de error genéricos al cliente**. `error.message` de proveedores externos (PayPal, Supabase, nodemailer) NUNCA se devuelve al cliente. El detalle queda en `console.error` server-only.
@@ -187,4 +187,4 @@ Fault-injection periódico: cada feature mete un import prohibido en una rama te
 - **Runtime guidance**: las reglas operativas (comandos `pnpm`, comandos de verificación, paths) viven en `CLAUDE.md` y `AGENTS.md`. Esta constitución fija los principios; las guías fijan los comandos.
 - **Quality gate de PR**: todo PR a `master` debe incluir en su descripción la lista de Verification Gates relevantes con su evidencia (commit del lint verde, captura del preview, item del checklist).
 
-**Version**: 1.0.1 | **Ratified**: 2026-05-11 | **Last Amended**: 2026-05-14
+**Version**: 1.0.2 | **Ratified**: 2026-05-11 | **Last Amended**: 2026-05-23

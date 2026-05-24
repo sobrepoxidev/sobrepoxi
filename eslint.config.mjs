@@ -53,6 +53,14 @@ const eslintConfig = [
           ],
         },
       ],
+      // Constitution §III — No BIG Components. Thresholds match the principle
+      // (300 LOC per file, 100 LOC per function, complexity ≤ 15). Severity is
+      // "warn" because 23 legacy files exceed 300 LOC pre-Feature-002 (visual
+      // consolidation). Feature 002 promotes these to "error" after the
+      // refactor. See plan.md Complexity Tracking.
+      "max-lines": ["warn", { max: 300, skipBlankLines: true, skipComments: true }],
+      "max-lines-per-function": ["warn", { max: 100, skipBlankLines: true, skipComments: true, IIFEs: true }],
+      complexity: ["warn", 15],
     },
   },
   {
@@ -61,6 +69,20 @@ const eslintConfig = [
       // Next route modules are the only approved place for direct imports to
       // server-only page adapters under feature presentation/pages.
       "no-restricted-imports": "off",
+    },
+  },
+  {
+    // Constitution §III exception — static templates and seed data are exempt
+    // from size limits (HTML email templates, locale dictionaries, etc.).
+    files: [
+      "src/features/*/application/templates/**/*.{ts,tsx}",
+      "src/features/*/application/data/**/*.{ts,tsx}",
+      "src/features/*/application/guides/data.ts",
+      "src/shared/i18n/messages/**/*.{ts,tsx,json}",
+    ],
+    rules: {
+      "max-lines": "off",
+      "max-lines-per-function": "off",
     },
   },
 ];

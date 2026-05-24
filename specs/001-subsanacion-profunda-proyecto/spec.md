@@ -2,7 +2,8 @@
 
 **Feature Branch**: `001-subsanacion-profunda-proyecto`
 **Created**: 2026-05-09
-**Status**: Draft
+**Last Updated**: 2026-05-23
+**Status**: In Progress — Pending Sign-Off
 **Input**: User description: "Subsanación profunda del proyecto existente: auditar y corregir arquitectura, deuda técnica, duplicación, validaciones, manejo de errores, separación de responsabilidades, seguridad básica, pruebas y consistencia general; replanteando el sistema como una arquitectura limpia basada en features (vertical slices) para reorganizar todo el código, sin reescribir desde cero y conservando la base de datos y funcionalidad existentes. Entregables: diagnóstico, lista priorizada de problemas, plan de refactor incremental, tareas implementables y verificaciones por área corregida."
 
 ## Clarifications

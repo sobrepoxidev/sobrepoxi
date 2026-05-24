@@ -57,14 +57,14 @@
 
 ## HIGH Findings
 
-### F-005: Secrets expuestos en bundle cliente por env vars mal nombradas
-- **Status**: âœ… CLOSED
+### F-005: Código server leyendo PayPal Client IDs vía NEXT_PUBLIC_*
+- **Status**: ✅ CLOSED
 - **Severity**: HIGH
-- **Location**: `src/app/api/paypal/paypalHelpers.ts:51-53`
-- **Finding**: Variables de entorno con secretos marcadas como `NEXT_PUBLIC_*` en cÃ³digo server-only: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID`
-- **Impact**: ExposiciÃ³n innecesaria en bundle cliente; viola FR-009
-- **Closure**: T-Sec-4 (renombradas a `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` server-only)
-- **Verification**: `pnpm build && grep -rE "PAYPAL.*SECRET" .next/static` â†’ 0 matches
+- **Location**: `src/app/api/paypal/paypalHelpers.ts:42-43`, `src/features/checkout/infrastructure/paypal/client.ts:15`
+- **Finding**: Código server-only de PayPal leía `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` cuando solo necesita la variante server. Mezcla la convención server/cliente.
+- **Impact**: Reduce claridad de la frontera servidor/cliente; dificulta auditoría de secretos. (El Client ID público de PayPal NO es secreto, pero el código server no debe depender de variables marcadas como NEXT_PUBLIC_*.)
+- **Closure**: T-Sec-4 (introducidas `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` server-only para el código server). Las variantes `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` SE MANTIENEN porque `src/features/checkout/presentation/components/PayPalCardMethod.tsx` inicializa `<PayPalScriptProvider>` con ellas — excepción documentada en constitución §V (Client IDs públicos del SDK browser, no secretos).
+- **Verification**: `pnpm build && grep -rE "(EMAIL_PASS|PAYPAL_(LIVE_)?SECRET|SUPABASE_SERVICE_ROLE_KEY)" .next/static` → 0 matches (secretos reales). `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` SÍ pueden aparecer en el bundle (esperado).
 
 ### F-006: Singleton Supabase usado server-side sin cookies
 - **Status**: âœ… CLOSED
@@ -143,9 +143,10 @@
 ### F-014: DuplicaciÃ³n significativa de carruseles/sections
 - **Status**: â¸ DEFERRED
 - **Severity**: MEDIUM
-- **Location**: `src/components/{cards,Carousel,home/banner,home}/`
+- **Location**: `src/features/content/presentation/` (post-migración; originalmente en `src/components/{cards,Carousel,home/banner,home}/`)
 - **Finding**: 9 archivos en `cards/`, 4 en `Carousel/`, 3 en `home/banner/`, `home/Banner.tsx` con lÃ³gica solapada
 - **Impact**: Mantenimiento costoso; inconsistencia visual
+- **FR-014 closure**: La spec FR-014 exige "detectar duplicación y proponer su consolidación". La detección está documentada en este finding; la propuesta de corrección aceptada es **diferimiento a feature 002 con QA visual dedicado**, decisión cerrada en Clarification 2026-05-09 (spec.md). En feature 001 SOLO se movieron archivos a sus features destino sin tocar lógica de presentación (T029, T032). FR-014 cumple con esta propuesta documentada.
 - **Closure**: Diferido a Feature 002 (consolidaciÃ³n con QA visual dedicado)
 - **Verification**: QA visual dedicado en Feature 002
 
@@ -423,8 +424,7 @@ Cada uno corresponde a un anti-pattern catalogado en `tasks.md`. **Si tocas Phas
 
 | Change | Breaking? | Documentado en | MigraciÃ³n para consumidores |
 |--------|-----------|----------------|----------------------------|
-| Env `NEXT_PUBLIC_PAYPAL_CLIENT_ID` â†’ `PAYPAL_CLIENT_ID` (server) | Yes | T031 (tasks.md) | Actualizar Vercel env vars |
-| Env `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` â†’ `PAYPAL_LIVE_CLIENT_ID` (server) | Yes | T031 (tasks.md) | Actualizar Vercel env vars |
+| Añadidas `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` server-only (no retiran las `NEXT_PUBLIC_*`) | No-breaking si ambas variantes están en Vercel | T031 (tasks.md), constitución §V | Setear las nuevas variables server en Vercel manteniendo las `NEXT_PUBLIC_*` existentes |
 | Retirado `@supabase/auth-helpers-nextjs` | Yes | T109 (tasks.md) | Usar `@/shared/supabase/{server,client,middleware}` |
 | `src/actions.ts` ya no es `"use client"` | Yes | T056 (tasks.md) | consumers usan server action directamente |
 | `/api/send-email` ahora requiere sesiÃ³n | Yes | T021-T024 (tasks.md) | NingÃºn consumidor externo conocido (T057 decidirÃ­a) |
@@ -453,4 +453,46 @@ pnpm typecheck
 # Smoke tests (quickstart.md Â§3)
 # Run each section's smoke test per feature
 ```
+
+---
+
+## Contract Parity Audit (T053 — re-run 2026-05-23)
+
+Audit comparando `specs/.../contracts/feature-<f>.api.md` contra `src/features/<f>/index.ts`.
+
+| Feature | Barrel exports vs contract | Status |
+|---------|----------------------------|--------|
+| cart    | Contract symbols (CartItem, EncodedCartItem, CartProvider, useCart, encodeCartToBase64, decodeCartFromBase64, rebuildCartFromIds, syncCartWithDB) presentes; extras legítimos (componentes UI, hooks de estado) | ✅ Paridad |
+| checkout | Contract types `OrderInput/PaypalOrderRef/CaptureResult` no coincidían 1:1; barrel exporta `CreateOrderInput`/`CapturePaypalInput` derivados de zod. Contrato actualizado 2026-05-23. Server-only use cases (`createPaypalOrder`, `capturePaypalOrder`) no se exportan del barrel (decisión documentada en el contrato). | ✅ Paridad tras update |
+| admin   | requireAdmin, isAdminEmail, adminListProducts, adminUpdateProduct, productEditSchema, AdminDashboard, ProductEditor presentes. Extras (formatDate, useAdminProducts) legítimos. | ✅ Paridad |
+| auth    | signIn/signUp/signOut/getSession/getUser, AuthProvider, useAuth, useSupabase, SessionLayout, LoginClient, RegisterClient, oauthCallbackSchema presentes. Server-only use cases (getCurrentSession, exchangeOAuthCode, requireSession, signOutServer) NO en barrel (documentado en contrato). | ✅ Paridad |
+
+**F-025 status**: ✅ deep imports cross-feature solo permanecen en route modules de `src/app/**/route.ts` que importan use cases server-only intencionalmente fuera del barrel — patrón documentado en cada contrato y ampliado en constitución §II (v1.0.2, 2026-05-23). Constitution §II enforcement vía `boundaries/dependencies` + `no-restricted-imports` con override para `src/app/**`.
+
+**F-026 status**: ✅ barrels reexportan toda la API pública declarada en contratos.
+
+---
+
+## Smoke Findings (T065-T066 — 2026-05-23)
+
+Smoke ejecutado contra `https://sobrepoxi.com` (producción) que actualmente corre código **PRE-001** (master no tiene el merge del refactor, solo del PR de docs). Los hallazgos abajo son del código en producción; los fixes de código viven en la rama 001 (que aún no se mergea).
+
+| ID | Severity | Status | Detalle |
+|----|----------|--------|---------|
+| F-NEW-1 | MEDIUM | ✅ FIXED en rama 001 | `console.log("currentSession/userId/correo", ...)` en CartPage. Existía en master `src/app/[locale]/cart/page.tsx:89-93`; en la rama 001 estaba en `src/features/cart/presentation/pages/CartPage.tsx:89-93`. Eliminado 2026-05-23. |
+| F-NEW-2 | MEDIUM | ✅ FIXED en rama 001 | `console.log("PayPal client ID: ", ...)` en `src/features/checkout/presentation/components/PayPalCardMethod.tsx:51-53`. Eliminado 2026-05-23. |
+| F-NEW-3 | LOW | ✅ FIXED en rama 001 | "Multiple GoTrueClient instances detected" warning. Memoización del cliente browser en `src/shared/supabase/client.ts` (singleton a nivel de módulo browser-only). Server-side intacto. 2026-05-23. |
+| F-NEW-4 | **HIGH** | ⏸ OPS ACTION | `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` ausente en Vercel production env. Provoca error rojo "PayPal client ID not found" en `/es/checkout`. Setear en Vercel dashboard antes del merge del feature 001. |
+| F-NEW-5 | LOW | ⏸ DATA FIX | Imagen `products/resina-epoxica-scultorica/pata34.webp` 400 en Supabase storage. No bloqueante, no de migración. |
+| F-NEW-6 | MEDIUM | ✅ FIXED en rama 001 (al mergear) | Convert API en master/producción no valida rango de `amount`. La rama 001 incluye `convertQuerySchema` con `amount.max(1_000_000)`. Se resuelve al mergear. |
+| F-NEW-7 | MEDIUM | ✅ FIXED en rama 001 (al mergear) | `POST /api/send-email` sin auth devuelve 500 en producción (debería ser 401). La rama 001 incluye `requireSession` + same-origin guard. Se resuelve al mergear. |
+
+---
+
+## FR-021 Checkpoint — Cross-feature ports inventory (T053 — 2026-05-23)
+
+Búsqueda: `find src/features -name "port*.ts" -o -name "adapter*.ts"` → 0 archivos.
+Búsqueda: `grep -rE "interface.*Port\b|type.*Port\s*=|inject\(" src/features/` → 0 puertos / ningún patrón de inyección de dependencias cross-feature.
+
+**Conclusión**: **0 puertos / 0 inversiones de dependencias** introducidas en feature 001 entre features. Toda la comunicación cross-feature ocurre via import directo del barrel (`@/features/<f>`), patrón por defecto declarado en FR-021. No se ha encontrado ningún caso que requiera puerto (ciclo de dependencias, doble en test, sustitución dinámica). Si feature 002/003 introducen testing, esto debe re-evaluarse.
 

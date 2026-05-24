@@ -48,10 +48,6 @@ export default function PayPalCardMethod({
     };
   }, [supabase]);
 
-  useEffect(() => {
-    console.log('PayPal client ID: ', PAYPAL_CLIENT_ID);
-  }, []);
-
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       <div className="mb-3 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">

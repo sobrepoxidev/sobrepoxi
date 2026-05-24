@@ -194,7 +194,7 @@ Lista priorizada por (impacto × severidad / riesgo). Cada hallazgo se traduce e
 
 | ID | Hallazgo | Ubicación | Impacto |
 |---|---|---|---|
-| F-005 | Variables de entorno con secretos marcadas como `NEXT_PUBLIC_*` en código server-only: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` | `src/app/api/paypal/paypalHelpers.ts:51-53` | Exposición innecesaria en bundle cliente; viola FR-009 |
+| F-005 | El código server-only de PayPal leía `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` cuando solo necesita la variante server. Resolución: introducir `PAYPAL_CLIENT_ID` / `PAYPAL_LIVE_CLIENT_ID` (server-only, sin prefijo) para el código server. Las variantes `NEXT_PUBLIC_*` se mantienen porque `PayPalCardMethod.tsx` (cliente) inicializa `<PayPalScriptProvider>` con esos Client IDs públicos — excepción documentada en constitución §V | `src/app/api/paypal/paypalHelpers.ts:42-43`, `src/features/checkout/infrastructure/paypal/client.ts:15`, `src/features/checkout/presentation/components/PayPalCardMethod.tsx:14-17` | Eliminar lectura server desde NEXT_PUBLIC_*; conservar variantes públicas para SDK browser |
 | F-006 | Singleton `supabase` (`@supabase/supabase-js` con anon key) usado server-side sin cookies (`/api/paypal/*`, contexts cliente) | `src/lib/supabaseClient.ts` y consumidores | RLS evaluadas como anónimo; sesión ignorada en server reads |
 | F-007 | `AUTHORIZED_ADMINS` hardcoded en código fuente | `src/app/[locale]/admin/page.tsx:8` | Cambio de admins requiere release; lista filtrable en repos públicos |
 | F-008 | `src/actions.ts` declarado `"use client"` pero firma de server action; `fetch('/api/send-email')` desde server (`send-order-email/route.ts:45,52`) usa URL relativa | `src/actions.ts:1-2`, `src/app/api/send-order-email/route.ts:45,52` | Bugs intermitentes / rutas que no resuelven en runtime |
@@ -252,7 +252,7 @@ Lista priorizada por (impacto × severidad / riesgo). Cada hallazgo se traduce e
 
 ### Capa: Configuración y tooling (transversal)
 
-- Renombrar variables de entorno (`PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID` sin `NEXT_PUBLIC_*`) — F-005.
+- Introducir variables de entorno server-only `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` (sin prefijo) para el código server; conservar `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` para el SDK browser (excepción documentada en constitución §V) — F-005.
 - Añadir `tailwind-merge`, `zod`, `eslint-plugin-boundaries`, dev scripts `typecheck` — R3, R4, R5, R14.
 - Configurar `eslint-plugin-boundaries` y `no-restricted-imports` (ver [contracts/boundaries.config.md](./contracts/boundaries.config.md)) — F-019.
 - Crear scaffolds vacíos `src/features/<f>/{domain,application,infrastructure,presentation}/.gitkeep` y `src/shared/<área>/.gitkeep`.
@@ -324,7 +324,7 @@ Cumplir T-Setup-0..4 deja el repo configurado para soportar la migración por fe
 | Cambio | Naturaleza | Mitigación |
 |---|---|---|
 | **Eliminación de `/api/send-email` y `/api/send-order-email`** (F-001, F-002) | Quiebre de compatibilidad: si algún cliente externo o legacy llama esos endpoints, dejará de funcionar | Antes del PR de eliminación: (a) confirmar en logs / Vercel analytics que no hay tráfico externo a esos endpoints; (b) primer cambio: añadir auth simple + logging para detectar callers; si tras 1 sprint solo hay tráfico interno propio, entonces eliminar. Documentar en commit message. |
-| **Renombre `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` → `PAYPAL_*_CLIENT_ID`** (F-005) | Operacional: requiere setear nuevas vars en Vercel antes del merge | Tarea coordinada; deploy preview con vars nuevas; smoke test antes de promover a prod |
+| **Añadir `PAYPAL_*_CLIENT_ID` server-only manteniendo `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` para SDK browser** (F-005) | Operacional: requiere setear nuevas vars server en Vercel sin retirar las client-side | Tarea coordinada; deploy preview con ambas variantes presentes; smoke test antes de promover a prod |
 | **Renombre `AUTHORIZED_ADMINS` hardcoded → `ADMIN_EMAILS` env var** (F-007) | Operacional + seguridad | Setear `ADMIN_EMAILS` en Vercel ANTES de mergear; smoke test inmediato (login admin actual debe entrar al panel) |
 | **Reemplazar `@supabase/auth-helpers-nextjs` por `@supabase/ssr`** (F-009) | Funcional crítico (sesiones) | Tarea T-Auth-1; smoke completo de login email+OAuth+logout+middleware+admin |
 | **Reglas de boundaries** (F-019) | Bloqueo del lint si hay imports prohibidos | Aplicar tras crear los scaffolds vacíos; migrar feature por feature; cada PR pequeño |
@@ -378,7 +378,7 @@ Esta tarea NO está en el orden de implementación inicial. Se incorpora cuando 
 
 | Cambio | Plan de rollback |
 |---|---|
-| Renombre de env vars (PAYPAL, ADMIN_EMAILS) | Mantener vars antiguas en Vercel hasta confirmar 24h sin incidencias; revertir el commit y restaurar valores antiguos si aparece un fallo |
+| Adición de env vars server-only (PAYPAL_CLIENT_ID/LIVE_CLIENT_ID) y migración de ADMIN_EMAILS | Mantener vars `NEXT_PUBLIC_PAYPAL_*` en Vercel (siguen siendo necesarias para SDK browser); confirmar 24h sin incidencias; revertir el commit y restaurar valores antiguos si aparece un fallo |
 | Eliminación de `/api/send-email` y `/api/send-order-email` | Antes de eliminar, dejar el endpoint con `runtime check` que loguea callers durante 1 sprint. Si hay callers externos legítimos, NO eliminar; aplicar autenticación. Si se elimina y aparece un caller, re-añadir como endpoint autenticado en una tarea hotfix |
 | Migración a `@supabase/ssr` | El `git revert` de la tarea T-Auth-1 restaura `@supabase/auth-helpers-nextjs`. Vercel rollback al deployment anterior queda como mecanismo adicional |
 | Tabla `user_roles` (si se introduce) | Migración con `DROP TABLE user_roles;` y restaurar `ADMIN_EMAILS` env. La tarea registra ambos comandos |
@@ -401,7 +401,7 @@ Este orden refleja la regla "alto impacto, bajo riesgo primero" + las dependenci
 A1. **T-Sec-1**: Cerrar relay abierto `/api/send-email`. Implementación mínima previa a la eliminación: añadir guard que solo permite invocaciones desde same-origin con sesión Supabase autenticada y un schema `zod` que limita `to` al email del usuario o a un email interno fijo. Loguear callers. (F-001)
 A2. **T-Sec-2**: Mismo tratamiento a `/api/send-order-email`. Validar que `userEmail` coincide con la sesión activa o con el dueño del `orderId`. (F-002)
 A3. **T-Sec-3**: Restringir mocks de PayPal a `PAYPAL_USE_MOCK === '1'` y eliminar fallbacks silenciosos. Documentar en `.env.example`. (F-004)
-A4. **T-Sec-4**: Renombrar `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` (server-only) y verificar bundle cliente limpio. Setear vars nuevas en Vercel previamente. (F-005)
+A4. **T-Sec-4**: Introducir `PAYPAL_CLIENT_ID` y `PAYPAL_LIVE_CLIENT_ID` server-only para el código server; conservar `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` para el SDK browser (excepción constitucional §V). Verificar que el bundle cliente no contenga `PAYPAL_*_SECRET`. Setear vars server nuevas en Vercel previamente. (F-005)
 A5. **T-Sec-5**: Validar owner de orden en `/api/paypal/{create,capture}-order`. (F-003)
 A6. **T-Sec-6**: Añadir validación `zod` en `/api/convert` (rango de `amount`, whitelist de `to`). (F-012)
 A7. **T-Sec-7**: Mover `AUTHORIZED_ADMINS` a `ADMIN_EMAILS` env y centralizar `requireAdmin` (que en este momento sigue viviendo en `src/app/[locale]/admin/`; la centralización dentro de `features/admin` ocurre en Fase D). Setear var en Vercel ANTES del merge. (F-007)
@@ -481,7 +481,7 @@ Lista priorizada por (severidad × frecuencia de cambio). Cada candidato se trad
 21. **`src/app/api/convert/route.ts`** — añadir validación `zod`; manejar errores con mensaje genérico. (F-011, F-012)
 22. **`eslint.config.mjs`** — añadir boundaries + no-restricted-imports. (F-019)
 23. **`package.json`** — añadir `typecheck`, dependencias `tailwind-merge`/`zod`/`eslint-plugin-boundaries`; remover `@supabase/auth-helpers-nextjs` al cierre. (F-020)
-24. **`.env.example`** — agregar `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_USE_MOCK`, `ADMIN_EMAILS`; eliminar referencias `NEXT_PUBLIC_PAYPAL_*_CLIENT_ID` cuando se confirme.
+24. **`.env.example`** — agregar `PAYPAL_CLIENT_ID`, `PAYPAL_LIVE_CLIENT_ID`, `PAYPAL_USE_MOCK`, `ADMIN_EMAILS`. Conservar `NEXT_PUBLIC_PAYPAL_CLIENT_ID` y `NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID` documentadas como excepción constitucional (Client IDs públicos del SDK browser).
 25. **`src/types-db.ts`** — mover a `shared/types/database.ts`.
 
 ### Mid-tier (refactor en alcance pero menor riesgo)
@@ -511,4 +511,15 @@ Lista priorizada por (severidad × frecuencia de cambio). Cada candidato se trad
 
 ## Complexity Tracking
 
-> No se requieren justificaciones de complejidad. La constitución del proyecto está en plantilla y los gates derivados de spec/clarifications se cumplen con el plan tal como está. La introducción de tres nuevas dependencias (`tailwind-merge`, `zod`, `eslint-plugin-boundaries`) está justificada en R3, R4 y R5 de [research.md](./research.md), y reemplaza/complementa stack existente sin alternativa más simple aceptable.
+> No se requieren justificaciones de complejidad para el alcance original. La introducción de tres nuevas dependencias (`tailwind-merge`, `zod`, `eslint-plugin-boundaries`) está justificada en R3, R4 y R5 de [research.md](./research.md), y reemplaza/complementa stack existente sin alternativa más simple aceptable.
+
+### Desviación documentada: severidad del gate "No BIG Components" (Constitución §III)
+
+La constitución §III es MUST. Las reglas ESLint `max-lines` (300), `max-lines-per-function` (100) y `complexity` (15) se introdujeron en `eslint.config.mjs` durante la subsanación (2026-05-23) con severidad **`warn`** en lugar de `error`. Razón:
+
+- Baseline al activar las reglas: **16** archivos sobre 300 LOC, **55** funciones sobre 100 LOC, **74** instancias de complexity > 15 en `src/features/`.
+- El feature 001 se centra en migración estructural (movimientos y renombres) según FR-009 ("no reescritura desde cero"). Refactorizar 145+ violaciones requeriría reescritura, contradice FR-009 y excede el scope declarado.
+- La consolidación visual y descomposición de componentes está **diferida a feature 002** por Clarification 2026-05-09 (F-014).
+- Los archivos en `application/templates/`, `application/data/`, `application/guides/data.ts` y `shared/i18n/messages/` están exentos por el principio (excepciones constitucionales).
+
+**Promesa de cierre**: feature 002 (consolidación visual) promoverá las tres reglas a `error` tras reducir las violaciones a cero o documentar cada excepción con `// eslint-disable-next-line` + razón en línea con la constitución §III.
