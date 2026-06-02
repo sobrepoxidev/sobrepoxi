@@ -7,7 +7,7 @@
 // Mobile-first, works on desktop too.
 
 import { use } from "react";
-import Link from "next/link";
+import { Link } from "@/shared/i18n/navigation";
 import { getProductCategories } from "../../../application/search";
 
 interface Category {
