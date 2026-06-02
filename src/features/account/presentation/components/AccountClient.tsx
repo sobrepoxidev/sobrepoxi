@@ -122,14 +122,15 @@ export default function AccountClient({ user, initialProfile }: AccountClientPro
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+    <div className="min-h-screen bg-[#121212]">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+      <h1 className="text-2xl md:text-3xl font-bold gold-gradient-bright mb-6">
         {t('myAccount')}
       </h1>
 
       {loading && (
         <div className="flex justify-center py-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
         </div>
       )}
 
@@ -155,7 +156,7 @@ export default function AccountClient({ user, initialProfile }: AccountClientPro
           </TabsTrigger>
         </TabsList>
 
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+        <div className="bg-[#1a1a1a] p-4 md:p-6 rounded-xl shadow-sm border border-white/10">
           <TabsContent value="profile">
             <ProfileTab 
               user={user} 
@@ -178,6 +179,7 @@ export default function AccountClient({ user, initialProfile }: AccountClientPro
           </TabsContent>
         </div>
       </Tabs>
+      </div>
     </div>
   );
 }

@@ -29,8 +29,8 @@ export default function PaymentForm({
 }: PaymentFormProps) {
   const copiarMensaje = () => {
     if (bancoSeleccionado?.permiteSMS) {
-      navigator.clipboard.writeText(`PASE 1000 8888-9999`);
-      toast.success('Mensaje copiado al portapapeles', {
+      navigator.clipboard.writeText(`PASE ${total} 85850000 HM-ART`);
+      toast.success(locale === 'es' ? 'Mensaje copiado al portapapeles' : 'Message copied to clipboard', {
         duration: 3000,
         position: 'top-center',
         style: { background: '#10b981', color: 'white', fontWeight: '500' },

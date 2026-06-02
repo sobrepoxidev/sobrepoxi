@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/shared/i18n/navigation';
 import { Session } from '@supabase/supabase-js';
 import { ChevronDown, User, History, Heart } from 'lucide-react';
 import { useLocale } from "next-intl";
@@ -75,7 +75,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                       router.push(`/login?returnUrl=${fullPath}`);
                       setIsOpen(false);
                     }}
-                    className="block w-full text-center px-4 py-2 text-sm font-medium text-black bg-gold-gradient hover:bg-teal-700 rounded-md transition"
+                    className="block w-full text-center px-4 py-2 text-sm font-bold text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 rounded-md transition-all"
                   >
                     {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
                   </button>
@@ -104,12 +104,12 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
                     await onLogout(window.location.href);
                     setIsOpen(false);
                   }}
-                  className="text-xs text-red-600 hover:text-red-200"
+                  className="text-xs text-red-400 hover:text-red-300"
                 >
                   {locale === 'es' ? 'Cerrar sesión' : 'Sign out'}
                 </button>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-400">
                 {session.user.email}
               </div>
             </div>

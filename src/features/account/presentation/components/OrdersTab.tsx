@@ -27,7 +27,7 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
       try {
         setLoading(true);
         const supabase = createBrowserSupabaseClient();
-        
+
         const { data: ordersData, error: ordersError } = await supabase
           .from('orders')
           .select(`
@@ -39,9 +39,9 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
           `)
           .eq('user_id', userId)
           .order('created_at', { ascending: false });
-        
+
         if (ordersError) throw ordersError;
-        
+
         setOrders(ordersData || []);
       } catch (error) {
         console.error('Error loading orders:', error);
@@ -49,12 +49,12 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
         setLoading(false);
       }
     };
-    
+
     fetchOrders();
   }, [userId]);
 
   const formatPrice = (price: number) => `₡${price.toLocaleString()}`;
-  
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('es-CR', {
@@ -63,58 +63,60 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
       day: 'numeric',
     }).format(date);
   };
-  
+
   const toggleOrderExpansion = (orderId: number) => {
     setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
   };
-  
+
+  const infoBox = 'bg-[#121212] p-3 rounded-md text-sm border border-white/10';
+
   return (
-    <div className="text-gray-800">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+    <div className="text-gray-200">
+      <h2 className="text-xl font-semibold text-white mb-4">
         {t('orderHistory')}
       </h2>
-      
+
       {loading ? (
         <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-600"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-400"></div>
         </div>
       ) : orders.length === 0 ? (
-        <div className="bg-gray-50 rounded-md p-8 text-center border border-gray-200">
-          <p className="text-gray-500">{t('noOrders')}</p>
+        <div className="bg-[#121212] rounded-md p-8 text-center border border-white/10">
+          <p className="text-gray-400">{t('noOrders')}</p>
         </div>
       ) : (
         <div className="space-y-4">
           {orders.map((order) => (
-            <div 
-              key={order.id} 
-              className="border border-gray-200 rounded-md overflow-hidden"
+            <div
+              key={order.id}
+              className="border border-white/10 rounded-xl overflow-hidden"
             >
-              <div 
-                className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 cursor-pointer"
+              <div
+                className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#121212] cursor-pointer hover:bg-[#181818] transition-colors"
                 onClick={() => toggleOrderExpansion(order.id)}
               >
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                  <div className="flex items-center gap-2 text-sm text-gray-400 mb-1">
                     <span>{t('orderNumber')}:</span>
-                    <span className="font-medium text-gray-800">#{order.id}</span>
+                    <span className="font-medium text-gray-200">#{order.id}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
                     <span>{t('orderDate')}:</span>
-                    <span className="font-medium text-gray-800">
+                    <span className="font-medium text-gray-200">
                       {formatDate(order.created_at)}
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4 mt-2 md:mt-0">
                   <div className="text-right">
-                    <div className="text-sm text-gray-500">{t('total')}:</div>
-                    <div className="font-bold text-gray-800">
+                    <div className="text-sm text-gray-400">{t('total')}:</div>
+                    <div className="font-bold gold-gradient-bright">
                       {formatPrice(order.total_amount)}
                     </div>
                   </div>
-                  
-                  <div className="text-teal-600">
+
+                  <div className="text-amber-400">
                     {expandedOrderId === order.id ? (
                       <ChevronUp className="h-5 w-5" />
                     ) : (
@@ -123,35 +125,35 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
                   </div>
                 </div>
               </div>
-              
+
               {expandedOrderId === order.id && (
-                <div className="p-4 border-t border-gray-200">
-                  <div className="flex items-center gap-2 mb-4 p-2 bg-gray-50 rounded">
-                    <span className="text-sm font-medium">{t('status')}:</span>
-                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">
+                <div className="p-4 border-t border-white/10">
+                  <div className="flex items-center gap-2 mb-4 p-2 bg-[#121212] rounded">
+                    <span className="text-sm font-medium text-gray-300">{t('status')}:</span>
+                    <span className="bg-amber-400/10 text-amber-300 border border-amber-500/20 px-2 py-1 rounded text-xs font-medium">
                       {order.shipping_status || t('processing')}
                     </span>
                   </div>
-                  
-                  <div className="border rounded-md overflow-hidden mb-4">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+
+                  <div className="border border-white/10 rounded-md overflow-hidden mb-4">
+                    <table className="min-w-full divide-y divide-white/10">
+                      <thead className="bg-[#121212]">
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                             {t('product')}
                           </th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                             {t('quantity')}
                           </th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                             {t('price')}
                           </th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                             {t('subtotal')}
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-[#1a1a1a] divide-y divide-white/10 text-gray-200">
                         {order.order_items.map((item) => (
                           <tr key={item.id}>
                             <td className="px-4 py-3 whitespace-nowrap">
@@ -171,13 +173,13 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
                       </tbody>
                     </table>
                   </div>
-                  
+
                   {order.shipping_address && (
                     <div className="mb-4">
-                      <h3 className="text-sm font-medium text-gray-700 mb-2">
+                      <h3 className="text-sm font-medium text-gray-300 mb-2">
                         {t('shippingAddress')}
                       </h3>
-                      <div className="bg-gray-50 p-3 rounded-md text-sm">
+                      <div className={infoBox}>
                         <p className="font-medium">{order.shipping_address.name}</p>
                         <p>{order.shipping_address.address}</p>
                         <p>
@@ -188,30 +190,30 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <h3 className="text-sm font-medium text-gray-700 mb-2">
+                      <h3 className="text-sm font-medium text-gray-300 mb-2">
                         {t('paymentMethod')}
                       </h3>
-                      <div className="bg-gray-50 p-3 rounded-md text-sm">
+                      <div className={infoBox}>
                         <p className="capitalize">
                           {order.payment_method === 'paypal' ? 'PayPal' : 'SINPE Móvil'}
                         </p>
                         {order.payment_reference && (
-                          <p className="text-gray-500">
+                          <p className="text-gray-400">
                             {t('reference')}: {order.payment_reference}
                           </p>
                         )}
                       </div>
                     </div>
-                    
+
                     {order.tracking_number && (
                       <div>
-                        <h3 className="text-sm font-medium text-gray-700 mb-2">
+                        <h3 className="text-sm font-medium text-gray-300 mb-2">
                           {t('trackingInfo')}
                         </h3>
-                        <div className="bg-gray-50 p-3 rounded-md text-sm">
+                        <div className={infoBox}>
                           <p>{order.tracking_number}</p>
                         </div>
                       </div>

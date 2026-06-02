@@ -20,13 +20,17 @@ type AddressTabProps = {
   loading: boolean;
 };
 
-export default function AddressTab({ 
-  profile, 
-  updateShippingAddress, 
-  loading 
+const labelCls = 'block text-sm font-medium text-gray-300 mb-1';
+const inputCls = (hasError?: boolean) =>
+  `w-full p-2.5 bg-[#121212] border rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500/40 focus:border-amber-500/40 transition-colors disabled:opacity-60 ${hasError ? 'border-red-500' : 'border-white/10'}`;
+
+export default function AddressTab({
+  profile,
+  updateShippingAddress,
+  loading
 }: AddressTabProps) {
   const t = useTranslations('Account');
-  
+
   const [formData, setFormData] = useState<ShippingAddressForm>({
     name: '',
     address: '',
@@ -36,9 +40,9 @@ export default function AddressTab({
     postal_code: '',
     phone: '',
   });
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
+
   useEffect(() => {
     if (profile?.shipping_address) {
       const addr = profile.shipping_address;
@@ -53,15 +57,15 @@ export default function AddressTab({
       });
     }
   }, [profile]);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -69,10 +73,10 @@ export default function AddressTab({
       }));
     }
   };
-  
+
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) newErrors.name = t('requiredField');
     if (!formData.address.trim()) newErrors.address = t('requiredField');
     if (!formData.city.trim()) newErrors.city = t('requiredField');
@@ -81,26 +85,26 @@ export default function AddressTab({
     else if (!/^\d{8,}$/.test(formData.phone.replace(/\D/g, ''))) {
       newErrors.phone = t('invalidPhone');
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
     await updateShippingAddress(formData);
   };
-  
+
   return (
     <div>
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+      <h2 className="text-xl font-semibold text-white mb-4">
         {t('shippingAddress')}
       </h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-4 text-gray-800">
+
+      <form onSubmit={handleSubmit} className="space-y-4 text-gray-200">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="name" className={labelCls}>
             {t('fullName')} <span className="text-red-500">*</span>
           </label>
           <input
@@ -109,14 +113,14 @@ export default function AddressTab({
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full p-2 border rounded-md ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+            className={inputCls(!!errors.name)}
             disabled={loading}
           />
-          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+          {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
         </div>
-        
+
         <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="address" className={labelCls}>
             {t('address')} <span className="text-red-500">*</span>
           </label>
           <input
@@ -125,15 +129,15 @@ export default function AddressTab({
             name="address"
             value={formData.address}
             onChange={handleChange}
-            className={`w-full p-2 border rounded-md ${errors.address ? 'border-red-500' : 'border-gray-300'}`}
+            className={inputCls(!!errors.address)}
             disabled={loading}
           />
-          {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
+          {errors.address && <p className="text-red-400 text-xs mt-1">{errors.address}</p>}
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="city" className={labelCls}>
               {t('city')} <span className="text-red-500">*</span>
             </label>
             <input
@@ -142,13 +146,13 @@ export default function AddressTab({
               name="city"
               value={formData.city}
               onChange={handleChange}
-              className={`w-full p-2 border rounded-md ${errors.city ? 'border-red-500' : 'border-gray-300'}`}
+              className={inputCls(!!errors.city)}
               disabled={loading}
             />
-            {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+            {errors.city && <p className="text-red-400 text-xs mt-1">{errors.city}</p>}
           </div>
           <div>
-            <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="state" className={labelCls}>
               {t('province')} <span className="text-red-500">*</span>
             </label>
             <input
@@ -157,16 +161,16 @@ export default function AddressTab({
               name="state"
               value={formData.state}
               onChange={handleChange}
-              className={`w-full p-2 border rounded-md ${errors.state ? 'border-red-500' : 'border-gray-300'}`}
+              className={inputCls(!!errors.state)}
               disabled={loading}
             />
-            {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
+            {errors.state && <p className="text-red-400 text-xs mt-1">{errors.state}</p>}
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="country" className={labelCls}>
               {t('country')}
             </label>
             <input
@@ -175,12 +179,12 @@ export default function AddressTab({
               name="country"
               value={formData.country}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className={inputCls(false)}
               disabled={loading}
             />
           </div>
           <div>
-            <label htmlFor="postal_code" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="postal_code" className={labelCls}>
               {t('postalCode')}
             </label>
             <input
@@ -189,14 +193,14 @@ export default function AddressTab({
               name="postal_code"
               value={formData.postal_code}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className={inputCls(false)}
               disabled={loading}
             />
           </div>
         </div>
-        
+
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="phone" className={labelCls}>
             {t('phone')} <span className="text-red-500">*</span>
           </label>
           <input
@@ -205,24 +209,24 @@ export default function AddressTab({
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className={`w-full p-2 border rounded-md ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+            className={inputCls(!!errors.phone)}
             placeholder="8888-8888"
             disabled={loading}
           />
-          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+          {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
         </div>
-        
+
         <div className="flex justify-end pt-4">
           <button
             type="submit"
-            className="bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition disabled:opacity-50"
+            className="bg-gold-gradient text-black font-bold px-6 py-2.5 rounded-md hover:shadow-lg hover:shadow-amber-500/20 transition-all disabled:opacity-50"
             disabled={loading}
           >
             {loading ? t('saving') : t('saveAddress')}
           </button>
         </div>
-        
-        <div className="text-xs text-gray-500 mt-2">
+
+        <div className="text-xs text-gray-400 mt-2">
           <span className="text-red-500">*</span> {t('requiredFields')}
         </div>
       </form>
