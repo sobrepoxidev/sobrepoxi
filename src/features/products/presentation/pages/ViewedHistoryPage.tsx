@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
 import { ChevronRight, Trash2, Clock, AlertCircle } from 'lucide-react';
 import { useSupabase } from '@/app/supabase-provider/provider';
@@ -48,27 +48,28 @@ export default function ViewedHistoryPage() {
   };
 
   return (
+    <div className="min-h-screen bg-[#121212]">
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center text-sm text-gray-500">
-        <Link href="/" className="hover:text-teal-600">{locale == 'es' ? 'Inicio' : 'Home'}</Link>
+      <div className="mb-6 flex items-center text-sm text-gray-400">
+        <Link href="/" className="hover:text-amber-400 transition-colors">{locale == 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4 mx-1" />
-        <span className="font-medium text-gray-900">{locale == 'es' ? 'Historial de productos vistos' : 'Viewed history'}</span>
+        <span className="font-medium text-white">{locale == 'es' ? 'Historial de productos vistos' : 'Viewed history'}</span>
       </div>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{locale == 'es' ? 'Productos vistos recientemente' : 'Recently viewed products'}</h1>
-        <p className="text-gray-600">{locale == 'es' ? 'Aquí puedes ver los últimos productos que has visitado.' : 'Here you can see the last products you have visited.'}</p>
+        <h1 className="text-2xl font-bold text-white mb-2">{locale == 'es' ? 'Productos vistos recientemente' : 'Recently viewed products'}</h1>
+        <p className="text-gray-400">{locale == 'es' ? 'Aquí puedes ver los últimos productos que has visitado.' : 'Here you can see the last products you have visited.'}</p>
       </div>
 
       {!session && (
-        <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-6 flex items-center">
-          <AlertCircle className="h-5 w-5 text-blue-500 mr-3 flex-shrink-0" />
+        <div className="bg-[#1a1a1a] border border-white/10 rounded-xl p-4 mb-6 flex items-center">
+          <AlertCircle className="h-5 w-5 text-amber-400 mr-3 flex-shrink-0" />
           <div className="flex-grow">
-            <p className="text-blue-700 text-sm">
-              <strong>{locale == 'es' ? '¿Quieres guardar tu historial?' : 'Do you want to save your history?'}</strong> {locale == 'es' ? 'Inicia sesión para mantener tu historial de productos vistos en todos tus dispositivos.' : 'Sign in to keep your viewed product history on all your devices.'}
+            <p className="text-gray-300 text-sm">
+              <strong className="text-white">{locale == 'es' ? '¿Quieres guardar tu historial?' : 'Do you want to save your history?'}</strong> {locale == 'es' ? 'Inicia sesión para mantener tu historial de productos vistos en todos tus dispositivos.' : 'Sign in to keep your viewed product history on all your devices.'}
             </p>
           </div>
-          <Link href="/login?redirect_to=/viewed-history" className="ml-4 px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 whitespace-nowrap flex-shrink-0">
+          <Link href="/login?redirect_to=/viewed-history" className="ml-4 px-4 py-2 bg-gold-gradient text-black font-bold text-sm rounded-md hover:shadow-lg hover:shadow-amber-500/20 transition-all whitespace-nowrap flex-shrink-0">
             {locale == 'es' ? 'Iniciar sesión' : 'Sign in'}
           </Link>
         </div>
@@ -76,40 +77,40 @@ export default function ViewedHistoryPage() {
 
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-400"></div>
         </div>
       ) : history.length > 0 ? (
         <>
           <div className="flex justify-end mb-4">
-            <button onClick={handleClearAll} className="flex items-center text-sm text-red-600 hover:text-red-800 transition">
+            <button onClick={handleClearAll} className="flex items-center text-sm text-red-400 hover:text-red-300 transition">
               <Trash2 className="h-4 w-4 mr-1" />
               {locale == 'es' ? 'Limpiar historial' : 'Clear history'}
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {history.map((product) => (
-              <div key={`${product.id}-${product.viewedAt.toString()}`} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition relative group">
-                <button onClick={() => handleRemove(product.id)} className="absolute top-2 right-2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm hover:bg-gray-100" aria-label="Eliminar del historial">
-                  <Trash2 className="h-4 w-4 text-gray-500" />
+              <div key={`${product.id}-${product.viewedAt.toString()}`} className="bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden hover:border-amber-500/30 transition relative group">
+                <button onClick={() => handleRemove(product.id)} className="absolute top-2 right-2 bg-black/60 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 hover:bg-black/80" aria-label="Eliminar del historial">
+                  <Trash2 className="h-4 w-4 text-gray-300" />
                 </button>
                 <Link href={`/products?id=${product.id}`} className="block">
-                  <div className="relative h-48 overflow-hidden bg-gray-50 flex items-center justify-center p-4">
+                  <div className="relative h-48 overflow-hidden bg-[#121212] flex items-center justify-center p-4">
                     <Image src={product.imageUrl} alt={locale == 'es' ? product.name_es : product.name_en || ''} width={110} height={0} className="object-contain max-h-full w-auto group-hover:scale-105 transition-transform duration-300" />
-                    <span className="absolute top-3 left-3 bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-full border border-teal-100">{product.category || 'Artesanía'}</span>
+                    <span className="absolute top-3 left-3 bg-amber-400/10 text-amber-300 text-xs px-2 py-1 rounded-full border border-amber-500/20">{product.category || 'Artesanía'}</span>
                   </div>
                 </Link>
                 <div className="p-4">
                   <div className="mb-3">
-                    <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{locale == 'es' ? product.name_es : product.name_en}</h3>
+                    <h3 className="font-semibold text-gray-200 mb-1 line-clamp-2">{locale == 'es' ? product.name_es : product.name_en}</h3>
                     <div className="flex items-center justify-between">
-                      <p className="font-bold text-teal-700">{product.dolar_price ? `${formatUSD(product.dolar_price)}` : 'Consultar'}</p>
-                      <div className="flex items-center text-xs text-gray-500">
+                      <p className="font-bold text-amber-400">{product.dolar_price ? `${formatUSD(product.dolar_price)}` : 'Consultar'}</p>
+                      <div className="flex items-center text-xs text-gray-400">
                         <Clock className="h-3 w-3 mr-1" />
                         <span title={formatDate(product.viewedAt)}>{formatDate(product.viewedAt)}</span>
                       </div>
                     </div>
                   </div>
-                  <Link href={`/products?id=${product.id}`} className="block w-full text-center py-2 border border-teal-600 text-teal-700 rounded-md hover:bg-teal-50 transition text-sm">
+                  <Link href={`/products?id=${product.id}`} className="block w-full text-center py-2 border border-amber-500/40 text-amber-400 rounded-md hover:bg-amber-400/10 transition text-sm">
                     {locale == 'es' ? 'Ver producto' : 'View product'}
                   </Link>
                 </div>
@@ -118,17 +119,18 @@ export default function ViewedHistoryPage() {
           </div>
         </>
       ) : (
-        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-100">
+        <div className="text-center py-12 bg-[#1a1a1a] rounded-xl border border-white/10">
           <div className="mb-4">
-            <Image src="/empty-history.svg" alt="Historial vacío" width={180} height={180} className="mx-auto opacity-80" />
+            <Image src="/empty-history.svg" alt="Historial vacío" width={180} height={180} className="mx-auto opacity-70" />
           </div>
-          <h2 className="text-xl font-medium text-gray-700 mb-2">{locale == 'es' ? 'No hay productos en tu historial' : 'No products in your history'}</h2>
-          <p className="text-gray-500 mb-6">{locale == 'es' ? 'Explora nuestra tienda y vuelve aquí para ver tu historial de navegación' : 'Explore our store and come back here to see your navigation history'}</p>
-          <Link href="/products" className="inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition">
+          <h2 className="text-xl font-medium text-white mb-2">{locale == 'es' ? 'No hay productos en tu historial' : 'No products in your history'}</h2>
+          <p className="text-gray-400 mb-6">{locale == 'es' ? 'Explora nuestra tienda y vuelve aquí para ver tu historial de navegación' : 'Explore our store and come back here to see your navigation history'}</p>
+          <Link href="/products" className="inline-flex items-center justify-center px-5 py-2.5 bg-gold-gradient text-black font-bold rounded-lg hover:shadow-lg hover:shadow-amber-500/20 transition-all">
             {locale == 'es' ? 'Explorar productos' : 'Explore products'}
           </Link>
         </div>
       )}
+    </div>
     </div>
   );
 }
