@@ -2,7 +2,7 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/shared/i18n/navigation";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/features/cart";
 import { useSupabase } from "@/app/supabase-provider/provider";
@@ -20,7 +20,7 @@ import { CurrencyConverterRow } from "@/features/currency";
 const ShareCartButton: React.FC<{ locale: string }> = ({ locale }) => {
   const handleShare = async () => {
     const url = window.location.href;
-    const title = locale === 'es' ? 'Mira mi carrito en Handmade Art' : 'Check out my cart on Handmade Art';
+    const title = locale === 'es' ? 'Mira mi carrito en SobrePoxi' : 'Check out my cart on SobrePoxi';
     try {
       if (navigator.share) {
         await navigator.share({ title, url });
@@ -245,7 +245,7 @@ export default function CartPage() {
           </div>
 
           {cart.length === 0 && (
-            <p className="p-6 text-center text-slate-600">{locale === 'es' ? 'Tu carrito está vacío.' : 'Your cart is empty.'}</p>
+            <p className="p-6 text-center text-gray-400">{locale === 'es' ? 'Tu carrito está vacío.' : 'Your cart is empty.'}</p>
           )}
 
           {cart.map(({ product, quantity }) => (
@@ -317,7 +317,7 @@ export default function CartPage() {
                       <span className="text-xs text-gray-400 line-through">
                         {formatUSD(product.dolar_price || 0)}
                       </span>
-                      <span className="text-xs bg-red-100 text-red-700 px-0.5 py-0.5 rounded">
+                      <span className="text-xs bg-red-500/20 text-red-400 px-1 py-0.5 rounded">
                         {product.discount_percentage}% OFF
                       </span>
                     </>
@@ -361,7 +361,7 @@ export default function CartPage() {
                     }}
                   />
                   <button
-                    className={`px-6 py-2 rounded ${discountInfo ? 'bg-red-500 hover:bg-red-600' : 'bg-gold-gradient-90 hover:bg-teal-700'} text-white text-sm font-medium shadow flex items-center justify-center`}
+                    className={`px-6 py-2 rounded ${discountInfo ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-gold-gradient text-black hover:opacity-90'} text-sm font-bold shadow flex items-center justify-center transition-all`}
                     onClick={async (e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -467,9 +467,9 @@ export default function CartPage() {
                     {isApplyingDiscount ? (
                       <span className="animate-pulse">{locale === 'es' ? 'Validando...' : 'Validating...'}</span>
                     ) : discountInfo ? (
-                      <span className="text-black">{locale === 'es' ? 'ELIMINAR CÓDIGO' : 'REMOVE CODE'}</span>
+                      <span>{locale === 'es' ? 'ELIMINAR CÓDIGO' : 'REMOVE CODE'}</span>
                     ) : (
-                      <span className="text-gold-gradient hover:text-gray-600 cursor-pointer">{locale === 'es' ? 'APLICAR CÓDIGO' : 'APPLY CODE'}</span>
+                      <span>{locale === 'es' ? 'APLICAR CÓDIGO' : 'APPLY CODE'}</span>
                     )}
                   </button>
                 </div>
@@ -500,12 +500,12 @@ export default function CartPage() {
                   <span>{formatUSD(shipping)}</span>
                 </div>
                 {discountInfo && (
-                  <div className="flex justify-between text-sm text-green-600 font-medium">
+                  <div className="flex justify-between text-sm text-emerald-400 font-medium">
                     <span>{locale === 'es' ? 'Descuento' : 'Discount'} ({discountInfo.code})</span>
                     <span>- {formatUSD(discountInfo.discountAmount)}</span>
                   </div>
                 )}
-                <hr className="border-gray-300" />
+                <hr className="border-white/10" />
                 <div className="flex justify-between font-semibold text-base text-gray-200">
                   <span>{locale === 'es' ? 'Total del pedido' : 'Total of the order'}</span>
                   <span>{formatUSD(total)}</span>
@@ -533,7 +533,7 @@ export default function CartPage() {
                   // Proceed to checkout
                   router.push('/checkout');
                 }}
-                className="w-full py-3 rounded bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 rounded bg-gold-gradient text-black hover:shadow-lg hover:shadow-amber-500/20 font-bold text-lg transition-all flex items-center justify-center gap-2"
               >
                 <span>
                   {currentSession === null ? locale === 'es' ? 'INICIAR SESIÓN PARA COMPRAR' : 'SIGN IN TO BUY' : locale === 'es' ? 'COMPRAR' : 'BUY'}
