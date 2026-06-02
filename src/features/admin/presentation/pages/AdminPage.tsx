@@ -16,15 +16,15 @@ const AdminCard = ({
   locale: string
 }) => (
   <Link href={href} className="block group transition-transform hover:scale-[1.02]">
-    <div className="h-full p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-500 flex flex-col">
+    <div className="h-full p-6 bg-[#1a1a1a] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-white/10 hover:border-amber-500/40 flex flex-col">
       <div className="flex items-center mb-4">
-        <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+        <div className="p-2 bg-amber-400/10 rounded-lg text-amber-400">
           <Icon className="w-6 h-6" />
         </div>
-        <h3 className="ml-3 text-xl font-semibold text-gray-800 group-hover:text-blue-600">{title}</h3>
+        <h3 className="ml-3 text-xl font-semibold text-white group-hover:text-amber-400">{title}</h3>
       </div>
-      <p className="flex-grow text-gray-600">{description}</p>
-      <div className="mt-4 text-blue-600 font-medium flex items-center group-hover:translate-x-1 transition-transform">
+      <p className="flex-grow text-gray-400">{description}</p>
+      <div className="mt-4 text-amber-400 font-medium flex items-center group-hover:translate-x-1 transition-transform">
         {locale === 'es' ? 'Ir a' : 'Go to'} {title}
         <ArrowRight className="ml-1 w-4 h-4" />
       </div>
@@ -41,8 +41,8 @@ export default async function AdminPage({
   await requireAdmin(locale, `/${locale}/admin`)
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+    <div className="min-h-screen bg-[#121212]"><div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold gold-gradient-bright mb-8">
         {locale === 'es' ? 'Panel de Administracion' : 'Admin Panel'}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -69,6 +69,6 @@ export default async function AdminPage({
           locale={locale}
         />
       </div>
-    </div>
+    </div></div>
   )
 }

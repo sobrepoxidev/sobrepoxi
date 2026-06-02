@@ -1,4 +1,4 @@
-﻿import { Calendar, Plus, Clock, MapPin, Users } from 'lucide-react'
+import { Calendar, Plus, Clock, MapPin, Users } from 'lucide-react'
 import Link from 'next/link'
 import { requireAdmin } from '@/features/admin'
 
@@ -10,66 +10,63 @@ export default async function AdminEventsPage({
   const { locale } = await params
   await requireAdmin(locale, `/${locale}/admin/events`)
 
+  const newEventBtn = "inline-flex items-center px-4 py-2 text-sm font-bold rounded-md shadow-sm text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 focus:outline-none transition-all"
+
   return (
+    <div className="min-h-screen bg-[#121212]">
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 flex items-center">
-            <Calendar className="w-8 h-8 mr-3 text-blue-600" />
+          <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center">
+            <Calendar className="w-8 h-8 mr-3 text-amber-400" />
             Gestion de Eventos
           </h1>
-          <p className="text-gray-500 mt-1">Administra los eventos y actividades de la plataforma</p>
+          <p className="text-gray-400 mt-1">Administra los eventos y actividades de la plataforma</p>
         </div>
-        <Link
-          href={`/${locale}/admin/events/new`}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-        >
+        <Link href={`/${locale}/admin/events/new`} className={newEventBtn}>
           <Plus className="w-4 h-4 mr-2" />
           Nuevo Evento
         </Link>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-[#1a1a1a] border border-white/10 rounded-xl shadow overflow-hidden">
         <div className="p-6">
           <div className="text-center py-12">
-            <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-blue-50 mb-4">
-              <Calendar className="h-12 w-12 text-blue-600" />
+            <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-amber-400/10 mb-4">
+              <Calendar className="h-12 w-12 text-amber-400" />
             </div>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">No hay eventos programados</h3>
-            <p className="mt-1 text-sm text-gray-500">Comienza creando tu primer evento para mostrar aqui.</p>
+            <h3 className="mt-2 text-lg font-medium text-white">No hay eventos programados</h3>
+            <p className="mt-1 text-sm text-gray-400">Comienza creando tu primer evento para mostrar aqui.</p>
             <div className="mt-6">
-              <Link
-                href={`/${locale}/admin/events/new`}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-              >
+              <Link href={`/${locale}/admin/events/new`} className={newEventBtn}>
                 <Plus className="w-4 h-4 mr-2" />
                 Crear Evento
               </Link>
             </div>
           </div>
 
-          <div className="mt-8 border border-gray-200 rounded-lg overflow-hidden">
-            <div className="p-4 bg-gray-50 border-b border-gray-200">
-              <h4 className="text-sm font-medium text-gray-500">EJEMPLO</h4>
+          <div className="mt-8 border border-white/10 rounded-lg overflow-hidden">
+            <div className="p-4 bg-[#121212] border-b border-white/10">
+              <h4 className="text-sm font-medium text-gray-400">EJEMPLO</h4>
             </div>
             <div className="p-6">
               <div className="flex items-start">
-                <div className="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
-                  <Calendar className="h-6 w-6 text-blue-600" />
+                <div className="flex-shrink-0 bg-amber-400/10 p-3 rounded-lg">
+                  <Calendar className="h-6 w-6 text-amber-400" />
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Taller de Artesanias</h3>
-                  <div className="mt-2 space-y-2 text-sm text-gray-600">
+                  <h3 className="text-lg font-medium text-white">Taller de Artesanias</h3>
+                  <div className="mt-2 space-y-2 text-sm text-gray-300">
                     <div className="flex items-center">
-                      <Clock className="h-4 w-4 text-gray-400 mr-2" />
+                      <Clock className="h-4 w-4 text-gray-500 mr-2" />
                       <span>25 de Junio, 2024 - 10:00 AM a 2:00 PM</span>
                     </div>
                     <div className="flex items-center">
-                      <MapPin className="h-4 w-4 text-gray-400 mr-2" />
+                      <MapPin className="h-4 w-4 text-gray-500 mr-2" />
                       <span>Centro Cultural de la Ciudad</span>
                     </div>
                     <div className="flex items-center">
-                      <Users className="h-4 w-4 text-gray-400 mr-2" />
+                      <Users className="h-4 w-4 text-gray-500 mr-2" />
                       <span>15 participantes registrados</span>
                     </div>
                   </div>
@@ -79,6 +76,7 @@ export default async function AdminEventsPage({
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }
