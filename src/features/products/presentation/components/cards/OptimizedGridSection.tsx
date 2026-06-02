@@ -63,7 +63,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                           {locale === 'es' ? product.name_es : product.name_en}
                         </span>
                         {product.dolar_price && product.dolar_price > 0 ? (
-                          <span className="text-[10px] font-bold text-teal-700 mt-0.5">
+                          <span className="text-[10px] font-bold text-amber-400 mt-0.5">
                             {formatUSD(product.dolar_price)}
                           </span>
                         ) : (
@@ -78,7 +78,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                               );
                               window.open(`https://wa.me/+50684237555?text=${msg}`, '_blank', 'noopener');
                             }}
-                            className="inline-flex items-center justify-center text-xs font-medium text-teal-600 hover:text-teal-500 border-b border-current pb-0"
+                            className="inline-flex items-center justify-center text-xs font-medium text-amber-400 hover:text-amber-300 border-b border-current pb-0"
                           >
                             {locale === 'es' ? 'Consultar precio' : 'Check price'}
                             <svg className="w-2.5 h-2.5 ml-1 inline-block" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                     </Link>
                   ))}
                 </div>
-                <div className="mt-3 text-xs text-[#121212] hover:underline text-center">
+                <div className="mt-3 text-xs text-amber-400 hover:underline text-center">
                   <Link href={`/products?category=${category.name}`} target="_self" className="inline-flex items-center">
                     <span>{locale === 'es' ? 'Ver todo en ' + category.name_es : 'View all in ' + category.name_en}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
@@ -113,7 +113,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                    
                   />
                 </div>
-                <div className="mt-3 text-xs text-teal-600 hover:underline text-center">
+                <div className="mt-3 text-xs text-amber-400 hover:underline text-center">
                   <Link href={`/products?category=${category.name}`} target="_self" className="inline-flex items-center">
                     <span>{locale === 'es' ? 'Ver todo en ' + category.name_es : 'View all in ' + category.name_en}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
@@ -137,14 +137,14 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
         {/* Skeleton para desktop */}
         <div className="max-lg:hidden grid grid-cols-3 gap-5 mt-4 mb-4 mx-4 pb-6">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
+            <div key={i} className="bg-[#1a1a1a] animate-pulse h-64 rounded-lg"></div>
           ))}
         </div>
 
         {/* Skeleton para móvil */}
         <div className="lg:hidden grid grid-rows-3 gap-4 mt-4 mb-4 mx-4 pb-6">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
+            <div key={i} className="bg-[#1a1a1a] animate-pulse h-64 rounded-lg"></div>
           ))}
         </div>
       </>

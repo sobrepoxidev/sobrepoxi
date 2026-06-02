@@ -167,7 +167,7 @@ function MediaItemCard({ product, activeExpandButton, index}: MediaItemCardProps
         </div>
       ) : (
         <video
-          className="w-full h-full object-cover bg-teal-100"
+          className="w-full h-full object-cover bg-[#1a1a1a]"
           preload="none"
           controls
           poster="/video-thumbnail.jpg"

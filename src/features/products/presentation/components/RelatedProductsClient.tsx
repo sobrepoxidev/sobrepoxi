@@ -61,7 +61,7 @@ export default function RelatedProductsClient({
   if (loading) {
     return (
       <div ref={ref} className="mt-6 flex justify-center py-4">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-teal-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-400" />
       </div>
     );
   }

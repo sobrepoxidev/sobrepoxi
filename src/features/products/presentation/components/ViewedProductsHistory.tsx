@@ -145,9 +145,9 @@ export default function ViewedProductsHistory() {
   }
   
   return (
-    <div className="px-4 py-6 bg-gray-50 rounded-lg">
-      <h2 className="text-xl font-bold mb-4 flex items-center">
-        <Clock className="mr-2 h-5 w-5" />
+    <div className="px-4 py-6 bg-[#1a1a1a] border border-white/10 rounded-xl">
+      <h2 className="text-xl font-bold mb-4 flex items-center text-white">
+        <Clock className="mr-2 h-5 w-5 text-amber-400" />
         {locale === 'es' ? 'Vistos recientemente' : 'Recently viewed'}
       </h2>
       
@@ -158,7 +158,7 @@ export default function ViewedProductsHistory() {
             key={product.id}
             className="group"
           >
-            <div className="bg-white border border-gray-200 rounded-md overflow-hidden transition-shadow hover:shadow-md">
+            <div className="bg-[#121212] border border-white/10 rounded-lg overflow-hidden transition-all hover:border-amber-500/30">
               <div className="h-40 relative">
                 <Image
                   src={product.media?.[0]?.url || '/product-placeholder.png'}
@@ -169,10 +169,10 @@ export default function ViewedProductsHistory() {
                 />
               </div>
               <div className="p-2">
-                <h3 className="text-sm font-medium text-gray-800 line-clamp-1 group-hover:text-teal-600">
+                <h3 className="text-sm font-medium text-gray-200 line-clamp-1 group-hover:text-amber-400">
                   {product.name}
                 </h3>
-                <p className="text-sm font-semibold text-teal-700">
+                <p className="text-sm font-semibold text-amber-400">
                   {product.dolar_price ? `${formatUSD(product.dolar_price)}` : 'Precio a consultar'}
                 </p>
               </div>

@@ -288,9 +288,9 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
     <div className="max-w-[1500px] mx-auto px-4 bg-[#121212]">
       {/* Breadcrumb */}
       <div className="mb-1.5 flex items-center text-xs text-[#b68b44]">
-        <Link href="/" className="hover:text-teal-600">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
+        <Link href="/" className="hover:text-amber-400 transition-colors">{locale === 'es' ? 'Inicio' : 'Home'}</Link>
         <ChevronRight className="h-4 w-4" />
-        <Link href="/products" className="hover:text-teal-600"> {locale === 'es' ? 'Productos' : 'Products'}</Link>
+        <Link href="/products" className="hover:text-amber-400 transition-colors"> {locale === 'es' ? 'Productos' : 'Products'}</Link>
         <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-[#b68b44] truncate max-sm:max-w-[200px]">{locale === 'es' ? product.name_es : product.name_en}</span>
       </div>
@@ -590,15 +590,15 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
               <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Características' : 'Features'}</h2>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
-                  <span className="text-teal-700 font-medium mr-2">•</span>
+                  <span className="text-amber-400 font-medium mr-2">•</span>
                   <span className="text-gray-200">{locale === 'es' ? 'Producto hecho a mano con materiales de calidad' : 'Product made by hand with quality materials'}</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-teal-700 font-medium mr-2">•</span>
+                  <span className="text-amber-400 font-medium mr-2">•</span>
                   <span className="text-gray-200">{locale === 'es' ? 'Diseño único y exclusivo' : 'Unique and exclusive design'}</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-teal-700 font-medium mr-2">•</span>
+                  <span className="text-amber-400 font-medium mr-2">•</span>
                   <span className="text-gray-200">{locale === 'es' ? 'Artesanía local de Costa Rica' : 'Local craftsmanship from Costa Rica'}</span>
                 </li>
               </ul>
