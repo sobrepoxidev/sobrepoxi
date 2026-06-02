@@ -53,7 +53,8 @@ export default function ProductsPageContent() {
           .select('*')
           .order(locale === 'es' ? 'name_es' : 'name_en', { ascending: true });
 
-        setCategoryName(locale === 'es' ? categoriesData?.find(c => c.name === categoryFilter)?.name_es : categoriesData?.find(c => c.name === categoryFilter)?.name_en ?? '');
+        const matchedCat = categoriesData?.find(c => String(c.id) === categoryFilter || c.name === categoryFilter || c.name_es === categoryFilter || c.name_en === categoryFilter);
+        setCategoryName((locale === 'es' ? matchedCat?.name_es : matchedCat?.name_en) ?? '');
         if (categoriesError) throw categoriesError;
         setCategories(categoriesData as Category[]);
 
@@ -100,7 +101,7 @@ export default function ProductsPageContent() {
 
         if (categoryFilter) {
           const parentIds = categories
-            .filter(c => c.name === categoryFilter || c.name_es === categoryFilter || c.name_en === categoryFilter)
+            .filter(c => String(c.id) === categoryFilter || c.name === categoryFilter || c.name_es === categoryFilter || c.name_en === categoryFilter)
             .map(c => c.id);
           let allIds: number[] = [...parentIds];
           if (parentIds.length > 0) {
@@ -108,10 +109,16 @@ export default function ProductsPageContent() {
             allIds.push(...childLocal);
           }
           if (allIds.length === 0) {
+            const orFilter = [
+              ...(/^\d+$/.test(categoryFilter) ? [`id.eq.${categoryFilter}`] : []),
+              `name.eq.${categoryFilter}`,
+              `name_es.eq.${categoryFilter}`,
+              `name_en.eq.${categoryFilter}`,
+            ].join(',');
             const { data: catRows } = await supabase
               .from('categories')
               .select('id, parent_id')
-              .or(`name.eq.${categoryFilter},name_es.eq.${categoryFilter},name_en.eq.${categoryFilter}`);
+              .or(orFilter);
             const dbParentIds = (catRows ?? []).map(r => r.id);
             if (dbParentIds.length > 0) {
               allIds.push(...dbParentIds);
