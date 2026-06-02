@@ -35,8 +35,8 @@ export default function StepTwo({
   locale,
 }: StepTwoProps) {
   return (
-    <section className="text-gray-900 w-full">
-      <h2 className="text-xl font-semibold mb-4">{locale === 'es' ? 'Seleccione un método de pago' : 'Select a payment method'}</h2>
+    <section className="text-gray-200 w-full">
+      <h2 className="text-xl font-semibold mb-4 text-white">{locale === 'es' ? 'Seleccione un método de pago' : 'Select a payment method'}</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <PaymentOption
@@ -74,21 +74,21 @@ export default function StepTwo({
         locale={locale}
       />
 
-      <div className="mt-6 p-4 bg-gray-50 rounded-md">
-        <h3 className="text-lg font-medium mb-3">{locale === 'es' ? 'Resumen del pedido' : 'Order summary'}</h3>
+      <div className="mt-6 p-4 bg-[#1a1a1a] border border-white/10 rounded-xl">
+        <h3 className="text-lg font-medium mb-3 text-white">{locale === 'es' ? 'Resumen del pedido' : 'Order summary'}</h3>
         <div className="space-y-2">
-          <div className="flex justify-between text-sm text-slate-700">
+          <div className="flex justify-between text-sm text-gray-300">
             <span>{locale === 'es' ? 'Subtotal' : 'Subtotal'}</span>
             <span>${cart.reduce((sum, item) => sum + ((item.product.dolar_price || 0) * item.quantity), 0).toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-sm text-slate-700">
+          <div className="flex justify-between text-sm text-gray-300">
             <span>{locale === 'es' ? 'Envío' : 'Shipping'}</span>
             <span>$7(₡3.200)</span>
           </div>
-          <hr className="border-slate-300 my-2" />
-          <div className="flex justify-between font-semibold text-base text-slate-800">
+          <hr className="border-white/10 my-2" />
+          <div className="flex justify-between font-semibold text-base text-white">
             <span>{locale === 'es' ? 'Total del pedido' : 'Order total'}</span>
-            <span>$ {total.toFixed(2)}</span>
+            <span className="gold-gradient-bright">$ {total.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -107,15 +107,15 @@ function PaymentOption({ label, selected, onClick, img }: PaymentOptionProps) {
   return (
     <div
       onClick={onClick}
-      className={`cursor-pointer flex flex-col p-1 border-2 rounded-lg text-center justify-end transition ${selected ? 'border-teal-300 bg-teal-50' : 'border-gray-300 hover:border-gray-400'}`}
+      className={`cursor-pointer flex flex-col p-2 border-2 rounded-lg text-center justify-end transition ${selected ? 'border-amber-500 bg-amber-400/10' : 'border-white/10 bg-[#1a1a1a] hover:border-white/30'}`}
     >
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 bg-white rounded-md p-1">
         <Image src={img[0]} alt={label} width={56} height={56} layout="fixed" className="object-contain" />
         {img.length > 1 && (
           <Image src={img[1]} alt={label} width={56} height={56} layout="fixed" className="object-contain" />
         )}
       </div>
-      <div className="flex flex-col-reverse mb-2 font-semibold">{label}</div>
+      <div className="flex flex-col-reverse mt-2 font-semibold text-sm text-gray-200">{label}</div>
     </div>
   );
 }
