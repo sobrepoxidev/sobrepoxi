@@ -345,7 +345,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   <button
                     key={index}
                     className={`relative h-20 border rounded-md overflow-hidden transition hover:border-[#b68b44] ${
-                      activeImageIndex === index ? 'border-[#b68b44] ring-2 ring-[#b68b44]' : 'border-gray-200'
+                      activeImageIndex === index ? 'border-[#b68b44] ring-2 ring-[#b68b44]' : 'border-gray-700'
                     }`}
                     onClick={() => setActiveImageIndex(index)}
                     aria-label={`Ver media ${index + 1}`}
@@ -402,7 +402,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
           {/* Precio */}
           <div className="mb-6">
             {product.dolar_price ? (
-               <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center gap-1 sm:gap-4">
+               <div className="flex flex-col items-start gap-3">
                  {/* Price & discount section */}
                  <div className="flex items-center gap-0.5">
                    {product.discount_percentage && product.discount_percentage > 0 ? (
@@ -424,9 +424,8 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                    )}
                  </div>
 
-                 {/* Placeholder column for future parallel content */}
-                 <div className="flex items-center sm:mx-auto">
-                   {/* TODO: add additional content here (e.g., currency conversion or promos) */}
+                 {/* Currency conversion helper */}
+                 <div className="flex items-center max-w-full overflow-x-auto">
                    <CurrencyConverterRow amount={Number(product.dolar_price || 0)} />
                  </div>
                </div>
@@ -526,7 +525,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   {isFavorite ? (locale === 'es' ? 'Guardado' : 'Saved') : (locale === 'es' ? 'Favorito' : 'Favorite')}
                 </button>
                 <button 
-                  className="flex items-center justify-center flex-1 py-2 px-4 border border-gray-300 text-gray-200 rounded-lg hover:bg-[#303030] transition"
+                  className="flex items-center justify-center flex-1 py-2 px-4 border border-gray-700 text-gray-200 rounded-lg hover:bg-[#303030] transition"
                   onClick={() => {
                     // Use Web Share API if available
                     if (navigator.share) {
@@ -558,7 +557,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                 <h2 className="text-lg font-semibold mb-3 text-gray-200">{locale === 'es' ? 'Especificaciones' : 'Specifications'}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                   {Object.entries(product.specifications).map(([key, value]) => (
-                    <div key={key} className="py-1 border-b border-gray-100">
+                    <div key={key} className="py-1 border-b border-gray-800">
                       <span className="text-gray-200 text-sm">{key}: </span>
                       <span className="text-gray-200 font-medium text-sm">{String(value)}</span>
                     </div>
@@ -576,7 +575,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     <Link 
                       key={index} 
                       href={`/products?tag=${tag}`}
-                      className="inline-flex items-center px-1 py-0.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm transition"
+                      className="inline-flex items-center px-2.5 py-1 rounded-full bg-[#1a1a1a] hover:bg-[#252525] text-gray-300 hover:text-amber-400 border border-gray-700 hover:border-amber-500/40 text-sm transition"
                     >
                       <Tag className="h-3 w-3 mr-1" />
                       {locale === 'es' ? tag : tag}
@@ -620,7 +619,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
 
       {/* Reviews Section */}
       {!loading && !error && product && (
-        <div className="mt-16 border-t border-gray-200 pt-10">
+        <div className="mt-16 border-t border-gray-800 pt-10">
           <h2 className="text-2xl font-bold flex items-center mb-6 text-gray-200">
             <MessageSquare className="h-6 w-6 mr-2" />
             {locale === 'es' ? 'Reseñas y opiniones' : 'Reviews and opinions'}
