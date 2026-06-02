@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/shared/i18n/navigation'
 import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useLocale } from 'next-intl'
 import { useAuth } from '../providers/AuthProvider'
@@ -38,18 +38,26 @@ export default function LoginClient() {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) {
         if (error.message.includes('rate limit')) {
-          setErrorMsg('Has excedido el número de intentos permitidos. Por favor, espera unos minutos antes de intentarlo nuevamente o usa el inicio de sesión con Google.')
+          setErrorMsg(
+            locale === 'es'
+              ? 'Has excedido el número de intentos permitidos. Por favor, espera unos minutos antes de intentarlo nuevamente o usa el inicio de sesión con Google.'
+              : 'You have exceeded the allowed number of attempts. Please wait a few minutes before trying again or use Google sign-in.',
+          )
         } else {
           setErrorMsg(error.message)
         }
         setLoading(false)
       } else {
-        setConfirmationMsg('Iniciando sesión...')
+        setConfirmationMsg(locale === 'es' ? 'Iniciando sesión...' : 'Signing in...')
         router.replace(decodeURIComponent(returnUrl))
       }
     } catch (err) {
       console.error('[LoginClient] sign-in error:', err)
-      setErrorMsg('Error inesperado. Intenta de nuevo o usa el inicio de sesión con Google.')
+      setErrorMsg(
+        locale === 'es'
+          ? 'Error inesperado. Intenta de nuevo o usa el inicio de sesión con Google.'
+          : 'Unexpected error. Please try again or use Google sign-in.',
+      )
       setLoading(false)
     }
   }
@@ -78,78 +86,83 @@ export default function LoginClient() {
 
   if (!mounted) return null
 
+  const inputClass =
+    'w-full pl-10 pr-4 py-3 bg-[#121212] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500/40 focus:border-amber-500/40 transition-colors'
+  const inputClassPwd =
+    'w-full pl-10 pr-12 py-3 bg-[#121212] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500/40 focus:border-amber-500/40 transition-colors'
+
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-b from-[#b3d5c3] via-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+    <section className="relative overflow-hidden min-h-screen bg-[#121212] py-12 px-4 sm:px-6 lg:px-8 text-gray-200">
+      {/* Ambient theme glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px]" />
+
+      <div className="relative z-10 mx-auto max-w-md">
+        <div className="bg-[#1a1a1a] rounded-2xl shadow-xl p-8 border border-white/10">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            <h1 className="text-3xl font-black gold-gradient-bright mb-2">
               {locale === 'es' ? 'Inicia sesión' : 'Login'}
             </h1>
-            <p className="text-gray-600">
-              {locale === 'es' ? 'Bienvenido de nuevo a Handmade Art' : 'Welcome back to Handmade Art'}
+            <p className="text-gray-400 text-sm">
+              {locale === 'es' ? 'Bienvenido de nuevo a SobrePoxi' : 'Welcome back to SobrePoxi'}
             </p>
           </div>
 
           {confirmationMsg && (
-            <div className="mb-6 p-4 rounded-lg bg-teal-50 text-teal-700">
+            <div className="mb-6 p-4 rounded-lg bg-amber-400/10 text-amber-300 border border-amber-500/20 text-sm">
               {confirmationMsg}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5">
                 {locale === 'es' ? 'Correo electrónico' : 'Email'}
               </label>
               <div className="relative">
-                <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md text-gray-700 focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
+                  className={inputClass}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1.5">
                 {locale === 'es' ? 'Contraseña' : 'Password'}
               </label>
               <div className="relative">
-                <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 text-gray-700 rounded-md focus:ring-teal-500 focus:border-teal-500 shadow-sm transition-all duration-200 focus:shadow-md"
+                  className={inputClassPwd}
                   required
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 focus:outline-none"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  aria-label={showPassword ? (locale === 'es' ? 'Ocultar contraseña' : 'Hide password') : (locale === 'es' ? 'Mostrar contraseña' : 'Show password')}
                 >
                   {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
                 </button>
               </div>
             </div>
 
-            {errorMsg && (
-              <div className="text-red-500 text-sm">
-                {errorMsg}
-              </div>
-            )}
+            {errorMsg && <div className="text-red-400 text-sm">{errorMsg}</div>}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-70 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
+              className="w-full flex justify-center py-3 px-4 rounded-lg text-sm font-bold text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (locale === 'es' ? 'Iniciando sesión...' : 'Logging in...') : (locale === 'es' ? 'Iniciar sesión' : 'Login')}
             </button>
@@ -158,22 +171,22 @@ export default function LoginClient() {
           <div className="mt-6">
             <button
               onClick={() => signInWithGoogle(returnUrl)}
-              className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
+              className="w-full flex items-center justify-center py-2.5 px-4 border border-white/10 rounded-lg text-sm font-medium text-white bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
             >
-              <FaGoogle className="mr-2 h-5 w-5" />
+              <FaGoogle className="mr-2 h-5 w-5 text-amber-400" />
               {locale === 'es' ? 'Iniciar sesión con Google' : 'Login with Google'}
             </button>
           </div>
 
-          <div className="text-center text-sm text-gray-600 mt-4">
-            {locale === 'es' ? '¿No tienes una cuenta?' : 'Don\'t have an account?'}
+          <p className="text-center text-sm text-gray-400 mt-6">
+            {locale === 'es' ? '¿No tienes una cuenta?' : "Don't have an account?"}
             <Link
               href={`/register${returnUrl !== '/' ? `?returnUrl=${encodeURIComponent(returnUrl)}` : ''}`}
-              className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200"
+              className="font-medium text-amber-400 hover:text-amber-300 ml-2 transition-colors"
             >
               {locale === 'es' ? 'Regístrate aquí' : 'Register here'}
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </section>
