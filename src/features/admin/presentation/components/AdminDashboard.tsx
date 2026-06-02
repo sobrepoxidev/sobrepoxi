@@ -189,10 +189,11 @@ export function AdminDashboard({ locale }: { locale: string }) {
   }, [supabase, products, selectedProduct, locale]);
 
   return (
-    <div className="container mx-auto px-4 py-2 text-gray-800">
-      <h1 className="text-2xl font-bold mb-0.5">{locale === 'es' ? 'Panel de Administración' : 'Admin Dashboard'}</h1>
+    <div className="min-h-screen bg-[#121212] text-gray-100">
+    <div className="container mx-auto px-4 py-2">
+      <h1 className="text-2xl font-bold mb-0.5 gold-gradient-bright">{locale === 'es' ? 'Panel de Administración' : 'Admin Dashboard'}</h1>
       
-      <div className="bg-white rounded-lg shadow-md p-3 mb-4">
+      <div className="bg-[#1a1a1a] rounded-lg shadow-md p-3 mb-4">
         <div className="flex flex-col md:flex-row gap-2 md:gap-4">
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -201,7 +202,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
             <input
               type="text"
               placeholder={locale === 'es' ? 'Buscar por nombre o SKU...' : 'Search by name or SKU...'}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               aria-label="Buscar productos"
@@ -213,7 +214,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
               <Filter className="h-5 w-5 text-gray-400" />
             </div>
             <select
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               value={categoryFilter || ''}
               onChange={(e) => setCategoryFilter(e.target.value ? parseInt(e.target.value) : null)}
               aria-label="Filtrar por categoría"
@@ -229,7 +230,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
           
           <button
             onClick={() => fetchProducts()}
-            className="flex items-center justify-center px-3 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            className="flex items-center justify-center px-3 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
             disabled={loading}
           >
             <RefreshCw className={`h-5 w-5 mr-1 ${loading ? 'animate-spin' : ''}`} />
@@ -239,7 +240,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
           <div className="flex items-center space-x-2 ml-auto">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded ${viewMode === 'grid' ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-600'}`}
+              className={`p-2 rounded ${viewMode === 'grid' ? 'bg-amber-400/20 text-amber-400' : 'bg-[#252525] text-gray-400'}`}
               aria-label="Ver en cuadrícula"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -248,7 +249,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded ${viewMode === 'list' ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-600'}`}
+              className={`p-2 rounded ${viewMode === 'list' ? 'bg-amber-400/20 text-amber-400' : 'bg-[#252525] text-gray-400'}`}
               aria-label="Ver en lista"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -261,13 +262,13 @@ export function AdminDashboard({ locale }: { locale: string }) {
       
       {loading && !selectedProduct && (
         <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-teal-600 mb-2"></div>
-          <p className="text-gray-600">{locale === 'es' ? 'Cargando productos...' : 'Loading products...'}</p>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-500 mb-2"></div>
+          <p className="text-gray-400">{locale === 'es' ? 'Cargando productos...' : 'Loading products...'}</p>
         </div>
       )}
       
       {error && !selectedProduct && (
-        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+        <div className="bg-red-500/10 border-l-4 border-red-500 text-red-400 p-4 mb-6" role="alert">
           <p className="font-bold">{locale === 'es' ? 'Error' : 'Error'}</p>
           <p>{error}</p>
         </div>
@@ -275,7 +276,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
       
       {selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#1a1a1a] rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             <ProductEditor 
               locale={locale}
               product={selectedProduct} 
@@ -294,8 +295,8 @@ export function AdminDashboard({ locale }: { locale: string }) {
       )}
       
       {!loading && filteredProducts.length === 0 && (
-        <div className="text-center py-6 bg-gray-50 rounded-lg">
-          <p className="text-gray-600">{locale === 'es' ? 'No se encontraron productos' : 'No products found'}</p>
+        <div className="text-center py-6 bg-[#121212] rounded-lg">
+          <p className="text-gray-400">{locale === 'es' ? 'No se encontraron productos' : 'No products found'}</p>
         </div>
       )}
       
@@ -307,14 +308,14 @@ export function AdminDashboard({ locale }: { locale: string }) {
           {filteredProducts.map((product) => (
             <div 
               key={product.id}
-              className={`bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg ${
+              className={`bg-[#1a1a1a] rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg ${
                 viewMode === 'grid' ? 'transform hover:-translate-y-1' : 'flex flex-col md:flex-row'
               }`}
             >
               {viewMode === 'grid' ? (
                 <div className="cursor-pointer" onClick={() => setSelectedProduct(product)}>
                   <div className="h-48 sm:h-56 relative">
-                    <div className="h-full w-full flex items-center justify-center bg-teal-50 p-4">
+                    <div className="h-full w-full flex items-center justify-center bg-amber-400/10 p-4">
                      {product.media && product.media.length > 0 && product.media[0].url ? (
                       <Image 
                         src={product.media[0].url} 
@@ -326,7 +327,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                         sizes="(max-width: 768px) 100vw, 300px"
                       />
                     ) : (
-                      <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
+                      <div className="flex items-center justify-center h-full bg-[#303030] text-gray-400">
                         <span>{locale === 'es' ? 'Sin imagen' : 'No image'}</span>
                       </div>
                     )}
@@ -334,15 +335,15 @@ export function AdminDashboard({ locale }: { locale: string }) {
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-medium text-gray-900 line-clamp-2">
+                      <h3 className="text-lg font-medium text-white line-clamp-2">
                         {product.name_es || product.name || locale === 'es' ? `Producto #${product.id}` : `Product #${product.id}`}
                       </h3>
                       {product.is_active ? (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-emerald-400/10 text-emerald-300">
                           {locale === 'es' ? 'Activo' : 'Active'}
                         </span>
                       ) : (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-500/15 text-red-300">
                           {locale === 'es' ? 'Inactivo' : 'Inactive'}
                         </span>
                       )}
@@ -354,11 +355,11 @@ export function AdminDashboard({ locale }: { locale: string }) {
                           <div className="flex flex-col space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
                               <div className="flex items-center">
-                                <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
-                                  <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
+                                <div className="flex items-center border border-white/10 rounded-l overflow-hidden">
+                                  <span className="px-2 py-2 bg-[#121212] text-amber-400 font-bold border-r border-white/10">₡</span>
                                   <input 
                                     type="number" 
-                                    className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
+                                    className="w-24 px-2 py-2 text-xl font-bold text-amber-400 border-none focus:outline-none focus:ring-0" 
                                     value={product.colon_price || ''}
                                     onChange={(e) => {
                                       const newPrice = e.target.value ? parseFloat(e.target.value) : null;
@@ -372,7 +373,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                   />
                                 </div>
                                 <button 
-                                  className="px-3 py-2 ml-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                                  className="px-3 py-2 ml-1 bg-amber-500 hover:bg-amber-400 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                                   onClick={async (e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
@@ -391,7 +392,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
 
                               <div className="relative">
                                 <button 
-                                  className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+                                  className="p-2 text-gray-400 hover:bg-[#252525] rounded-full"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setShowProductMenu(showProductMenu === product.id ? null : product.id);
@@ -402,9 +403,9 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                 </button>
                                 
                                 {showProductMenu === product.id && (
-                                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
+                                  <div className="absolute right-0 mt-1 w-48 bg-[#1a1a1a] rounded-md shadow-lg py-1 z-10 border border-white/10">
                                     <button
-                                      className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-600 hover:bg-red-50' : 'text-green-600 hover:bg-green-50'}`}
+                                      className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-400 hover:bg-red-500/10' : 'text-emerald-400 hover:bg-emerald-400/10'}`}
                                       onClick={async (e) => {
                                         e.stopPropagation();
                                         const loadingToast = toast.loading(`${product.is_active ? (locale === 'es' ? 'Desactivando' : 'Deactivating') : (locale === 'es' ? 'Activando' : 'Activating')} producto...`);
@@ -427,7 +428,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                     </button>
                                     
                                     <button
-                                      className="w-full text-left px-4 py-2 text-sm flex items-center text-blue-600 hover:bg-blue-50"
+                                      className="w-full text-left px-4 py-2 text-sm flex items-center text-amber-400 hover:bg-amber-400/10"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         setSelectedProduct(product);
@@ -443,10 +444,10 @@ export function AdminDashboard({ locale }: { locale: string }) {
                             </div>
 
                             <div className="flex items-center">
-                              <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                              <div className="flex items-center border border-white/10 rounded-l overflow-hidden">
                                 <input 
                                   type="number" 
-                                  className="w-16 px-2 py-2 text-sm font-medium text-gray-700 border-none focus:outline-none focus:ring-0" 
+                                  className="w-16 px-2 py-2 text-sm font-medium text-gray-300 border-none focus:outline-none focus:ring-0" 
                                   value={product.discount_percentage || ''}
                                   onChange={(e) => {
                                     const newDiscount = e.target.value ? parseFloat(e.target.value) : null;
@@ -460,7 +461,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                   placeholder="0"
                                   onClick={(e) => e.stopPropagation()}
                                 />
-                                <span className="px-2 py-2 bg-gray-50 text-gray-700 font-medium border-l border-gray-300">%</span>
+                                <span className="px-2 py-2 bg-[#121212] text-gray-300 font-medium border-l border-white/10">%</span>
                               </div>
                               <button 
                                 className="px-3 py-2 ml-1 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
@@ -481,7 +482,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                       </div>
                       {product.discount_percentage !== null && (
                         <div className="flex items-center mt-1">
-                          <span className="text-xs font-medium bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
+                          <span className="text-xs font-medium bg-red-500/15 text-red-300 px-1.5 py-0.5 rounded">
                             {product.discount_percentage}% OFF
                           </span>
                         </div>
@@ -489,20 +490,20 @@ export function AdminDashboard({ locale }: { locale: string }) {
                     </div>
                     
                     {product.sku && (
-                      <div className="mt-2 text-sm text-gray-500">
+                      <div className="mt-2 text-sm text-gray-400">
                         SKU: {product.sku}
                       </div>
                     )}
                     
                     {product.category_id && (
                       <div className="mt-2">
-                        <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 text-xs rounded-full border border-teal-100">
+                        <span className="inline-block px-2 py-0.5 bg-amber-400/10 text-amber-400 text-xs rounded-full border border-amber-400/20">
                           {categories.find(cat => cat.id === product.category_id)?.name_es || 'Categoría'}
                         </span>
                       </div>
                     )}
                     
-                    <div className="mt-2 text-center text-xs text-gray-500">
+                    <div className="mt-2 text-center text-xs text-gray-400">
                       {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
                     </div>
                     <div className="mt-1 text-center text-xs text-gray-400 italic">
@@ -520,13 +521,13 @@ export function AdminDashboard({ locale }: { locale: string }) {
                       <Image 
                         src={product.media[0].url} 
                         alt={product.name || 'Producto'} 
-                        className="w-full h-full object-contain bg-gray-50"
+                        className="w-full h-full object-contain bg-[#121212]"
                         width={120}
                         height={120}
                         priority={false}
                       />
                     ) : (
-                      <div className="flex items-center justify-center h-full bg-gray-200 text-gray-400">
+                      <div className="flex items-center justify-center h-full bg-[#303030] text-gray-400">
                         <span>{locale === 'es' ? 'Sin imagen' : 'No image'}</span>
                       </div>
                     )}
@@ -534,12 +535,12 @@ export function AdminDashboard({ locale }: { locale: string }) {
                   
                   <div className="flex-grow cursor-pointer" onClick={() => setSelectedProduct(product)}>
                     <div className="flex flex-wrap justify-between items-center gap-2">
-                      <h3 className="text-lg font-medium text-gray-900 mr-2">
+                      <h3 className="text-lg font-medium text-white mr-2">
                         {product.name_es || product.name || `Producto #${product.id}`}
                       </h3>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-gray-400">
                       {product.sku && (
                         <div className="mr-3">
                           <span className="font-medium">SKU:</span> {product.sku}
@@ -547,33 +548,33 @@ export function AdminDashboard({ locale }: { locale: string }) {
                       )}
                       
                       {product.category_id && (
-                        <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 text-xs rounded-full border border-teal-100">
+                        <span className="inline-block px-2 py-0.5 bg-amber-400/10 text-amber-400 text-xs rounded-full border border-amber-400/20">
                           {categories.find(cat => cat.id === product.category_id)?.name_es || 'Categoría'}
                         </span>
                       )}
                     </div>
                     
-                    <div className="text-xs text-gray-500 mt-2">
+                    <div className="text-xs text-gray-400 mt-2">
                       {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
                     </div>
                   </div>
                   
                   <div className="flex flex-wrap md:flex-row md:items-center gap-2 md:ml-auto">
                     {product.is_active ? (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-emerald-400/10 text-emerald-300">
                           {locale === 'es' ? 'Activo' : 'Active'}
                         </span>
                       ) : (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-red-500/15 text-red-300">
                           {locale === 'es' ? 'Inactivo' : 'Inactive'}
                         </span>
                       )}
                     <div className="flex items-center">
-                      <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
-                        <span className="px-2 py-2 bg-gray-50 text-teal-700 font-bold border-r border-gray-300">₡</span>
+                      <div className="flex items-center border border-white/10 rounded-l overflow-hidden">
+                        <span className="px-2 py-2 bg-[#121212] text-amber-400 font-bold border-r border-white/10">₡</span>
                         <input 
                           type="number" 
-                          className="w-24 px-2 py-2 text-xl font-bold text-teal-700 border-none focus:outline-none focus:ring-0" 
+                          className="w-24 px-2 py-2 text-xl font-bold text-amber-400 border-none focus:outline-none focus:ring-0" 
                           value={product.colon_price || ''}
                           onChange={(e) => {
                             const newPrice = e.target.value ? parseFloat(e.target.value) : null;
@@ -587,7 +588,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                         />
                       </div>
                       <button 
-                        className="px-3 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                        className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                         onClick={async (e) => {
                           e.stopPropagation();
                           if (product.colon_price !== null) {
@@ -609,10 +610,10 @@ export function AdminDashboard({ locale }: { locale: string }) {
                     </div>
                     
                     <div className="flex items-center">
-                      <div className="flex items-center border border-gray-300 rounded-l overflow-hidden">
+                      <div className="flex items-center border border-white/10 rounded-l overflow-hidden">
                         <input 
                           type="number" 
-                          className="w-16 px-2 py-2 text-sm font-medium text-gray-700 border-none focus:outline-none focus:ring-0" 
+                          className="w-16 px-2 py-2 text-sm font-medium text-gray-300 border-none focus:outline-none focus:ring-0" 
                           value={product.discount_percentage || ''}
                           onChange={(e) => {
                             const newDiscount = e.target.value ? parseFloat(e.target.value) : null;
@@ -626,7 +627,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                           placeholder="0"
                           onClick={(e) => e.stopPropagation()}
                         />
-                        <span className="px-2 py-2 bg-gray-50 text-gray-700 font-medium border-l border-gray-300">%</span>
+                        <span className="px-2 py-2 bg-[#121212] text-gray-300 font-medium border-l border-white/10">%</span>
                       </div>
                       <button 
                         className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
@@ -645,7 +646,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                     
                     <div className="relative">
                       <button 
-                        className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+                        className="p-2 text-gray-400 hover:bg-[#252525] rounded-full"
                         onClick={(e) => {
                           e.stopPropagation();
                           e.preventDefault();
@@ -662,13 +663,13 @@ export function AdminDashboard({ locale }: { locale: string }) {
                       {showProductMenu === product.id && (
                         <div 
                           id={`product-menu-${product.id}`}
-                          className="absolute right-0 sm:right-auto sm:left-0 md:right-0 md:left-auto mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
+                          className="absolute right-0 sm:right-auto sm:left-0 md:right-0 md:left-auto mt-1 w-48 bg-[#1a1a1a] rounded-md shadow-lg py-1 z-50 border border-white/10"
                           role="menu"
                           aria-orientation="vertical"
                           style={{ maxWidth: 'calc(100vw - 20px)' }}
                         >
                           <button
-                            className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-600 hover:bg-red-50' : 'text-green-600 hover:bg-green-50'}`}
+                            className={`w-full text-left px-4 py-2 text-sm flex items-center ${product.is_active ? 'text-red-400 hover:bg-red-500/10' : 'text-emerald-400 hover:bg-emerald-400/10'}`}
                             onClick={async (e) => {
                               e.stopPropagation();
                               e.preventDefault();
@@ -693,7 +694,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                           </button>
                           
                           <button
-                            className="w-full text-left px-4 py-2 text-sm flex items-center text-blue-600 hover:bg-blue-50"
+                            className="w-full text-left px-4 py-2 text-sm flex items-center text-amber-400 hover:bg-amber-400/10"
                             onClick={(e) => {
                               e.stopPropagation();
                               e.preventDefault();
@@ -715,6 +716,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }
