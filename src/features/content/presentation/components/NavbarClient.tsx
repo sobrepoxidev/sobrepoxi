@@ -357,7 +357,7 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
               </div>
             </div>
 
-            <div className="my-3 h-px bg-gray-100"></div>
+            <div className="my-3 h-px bg-white/10"></div>
 
             {/* Mobile Navigation Links - Amazon Style */}
             <div>

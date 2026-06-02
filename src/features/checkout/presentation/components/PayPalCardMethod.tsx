@@ -50,13 +50,13 @@ export default function PayPalCardMethod({
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
-      <div className="mb-3 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">
+      <div className="mb-3 p-3 bg-[#121212] border border-white/10 rounded-lg text-xs text-gray-400">
         <p>Nota: {locale === 'es' ? 'Paypal aplica una tasa de conversión de 1 CRC = 0.0019128 USD' : 'Paypal applies a conversion rate of 1 CRC = 0.0019128 USD'}</p>
         <p className="text-center mt-1 text-xs">{locale === 'es' ? 'Podrás elegir pagar en CRC o USD' : 'You can choose to pay in CRC or USD'}</p>
       </div>
 
       {loading && !redirecting && (
-        <div className="flex items-center justify-center py-2 text-gray-600">
+        <div className="flex items-center justify-center py-2 text-gray-400">
           <Loader2 className="h-4 w-4 animate-spin mr-2" />
           <p>{locale === 'es' ? 'Procesando...' : 'Processing...'}</p>
         </div>

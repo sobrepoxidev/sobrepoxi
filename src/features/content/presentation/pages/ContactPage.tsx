@@ -85,7 +85,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
                 {/* Phone */}
                 <li className="flex gap-4 items-start">
-                  <span className="bg-blue-100 text-blue-600 p-3 rounded-full">
+                  <span className="bg-amber-400/10 text-amber-400 p-3 rounded-full">
                     <FaPhone className="w-5 h-5" />
                   </span>
                   <div>
@@ -118,7 +118,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
                 {/* Email */}
                 <li className="flex gap-4 items-start">
-                  <span className="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+                  <span className="bg-amber-400/10 text-amber-400 p-3 rounded-full">
                     <Mail className="w-5 h-5" />
                   </span>
                   <div>

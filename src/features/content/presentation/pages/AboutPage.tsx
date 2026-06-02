@@ -283,7 +283,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             href="/products"
-            className="bg-gold-gradient-90 text-black font-semibold px-6 py-3 rounded-md shadow hover:bg-gray-100 transition"
+            className="bg-gold-gradient text-black font-bold px-6 py-3 rounded-md shadow hover:shadow-lg hover:shadow-amber-500/20 transition-all"
           >
             {locale === "es" ? "Ver portafolio" : "View portfolio"}
           </Link>
