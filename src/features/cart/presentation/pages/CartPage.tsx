@@ -55,11 +55,9 @@ type DiscountInfo = {
 
 
 /**
- * CartPage – replica sencilla inspirada en la captura aportada.
- * Colores principales:
- *  - Secciones claras   -> #EFE9DB  (bg-[#EFE9DB])
- *  - Secciones acento   -> #E0D5BF  (bg-[#E0D5BF])
- *  - Botones primarios  -> bg-teal-500 / hover:bg-teal-600
+ * CartPage – shopping cart on the SobrePoxi dark + gold theme.
+ *  - Surfaces  -> #121212 / #303030
+ *  - Primary buttons -> bg-gold-gradient (gold)
  */
 
 export default function CartPage() {

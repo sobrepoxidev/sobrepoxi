@@ -248,7 +248,7 @@ export function FullscreenModal({
     >
     
       <div
-        className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-white sm:rounded-lg shadow-xl overflow-hidden"
+        className="relative w-full h-full sm:max-w-7xl sm:max-h-[95vh] bg-[#1a1a1a] sm:rounded-lg shadow-xl overflow-hidden"
       >
         <button
           className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
