@@ -19,7 +19,6 @@ export { default as ProductCard } from './presentation/components/ProductCard';
 export { default as ProductDetail } from './presentation/components/ProductDetail';
 export { default as ProductsPageContent } from './presentation/components/ProductsPageContent';
 export { default as ProductFilters } from './presentation/components/ProductFilters';
-export { default as RelatedProducts } from './presentation/components/RelatedProducts';
 export { default as RelatedProductsClient } from './presentation/components/RelatedProductsClient';
 export { ProductCardModal } from './presentation/components/ProductModal';
 export { ProductCardModalWithTracking } from './presentation/components/ProductModalWithTracking';
@@ -43,13 +42,8 @@ export { default as CategoryCarousel } from './presentation/components/search/Ca
 
 // Card components
 export { default as Card } from './presentation/components/cards/Card';
-export { default as FeaturedProductsSection } from './presentation/components/cards/FeaturedProductsSection';
-export { default as CarrucelSection } from './presentation/components/cards/CarrucelSection';
 export { default as CarrucelSectionA } from './presentation/components/cards/CarrucelSectionA';
-export { default as GiftsCarouselSection } from './presentation/components/cards/GiftsCarouselSection';
-export { default as GridSection } from './presentation/components/cards/GridSection';
 export { default as OptimizedGridSection } from './presentation/components/cards/OptimizedGridSection';
-export { default as OptimizedCarrucelSection } from './presentation/components/cards/OptimizedCarrucelSection';
 export { default as CarouselClient } from './presentation/components/cards/CarouselClient';
 
 

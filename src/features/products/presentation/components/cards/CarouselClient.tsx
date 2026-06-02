@@ -77,7 +77,7 @@ const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
       {showLeftArrow && (
         <button
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-gray-700 bg-transparent rounded-full p-2"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-gray-300 hover:text-amber-400 bg-black/30 backdrop-blur-sm rounded-full p-2 transition-colors"
           aria-label="Anterior elemento"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -111,7 +111,7 @@ const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
       {showRightArrow && (
         <button
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-gray-700 bg-transparent rounded-full p-2"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-gray-300 hover:text-amber-400 bg-black/30 backdrop-blur-sm rounded-full p-2 transition-colors"
           aria-label="Siguiente elemento"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
