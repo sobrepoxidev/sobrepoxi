@@ -105,7 +105,7 @@ function HeroSection({ locale }: { locale: string }) {
 
             {/* Headline */}
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white">
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight text-white">
                 {c.headline}
                 <br />
                 <span className="gold-gradient-bright">{c.headlineAccent}</span>
@@ -157,7 +157,7 @@ function HeroSection({ locale }: { locale: string }) {
 
           {/* Right — Visual grid */}
           <div className="relative hidden lg:block">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 max-w-[480px] 2xl:max-w-[520px] mx-auto">
               <div className="space-y-3">
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5">
                   <Image
@@ -191,7 +191,7 @@ function HeroSection({ locale }: { locale: string }) {
                   </div>
                 </div>
               </div>
-              <div className="space-y-3 pt-8">
+              <div className="space-y-3 pt-6">
                 <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/5">
                   <Image
                     src="/home/luxury-floor.webp"
@@ -328,7 +328,7 @@ function ServicesSection({ locale }: { locale: string }) {
             <Link
               key={i}
               href={svc.href}
-              className="group relative rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 hover:border-amber-500/30 transition-all duration-500"
+              className="group relative flex flex-col rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 hover:border-amber-500/30 transition-all duration-500"
             >
               {/* Image */}
               <div className="relative h-48 sm:h-56 overflow-hidden">
@@ -349,7 +349,7 @@ function ServicesSection({ locale }: { locale: string }) {
               </div>
 
               {/* Content */}
-              <div className="p-5 sm:p-6">
+              <div className="p-5 sm:p-6 flex flex-1 flex-col">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center shrink-0">
                     <svc.icon className="w-5 h-5 text-amber-400" />
@@ -361,7 +361,7 @@ function ServicesSection({ locale }: { locale: string }) {
                 <p className="text-sm text-gray-400 leading-relaxed mb-4">
                   {svc.desc}
                 </p>
-                <div className="flex items-center gap-1 text-sm font-semibold text-amber-400 group-hover:gap-2 transition-all">
+                <div className="mt-auto flex items-center gap-1 text-sm font-semibold text-amber-400 group-hover:gap-2 transition-all">
                   {locale === 'es' ? 'Explorar' : 'Explore'}
                   <ChevronRight className="w-4 h-4" />
                 </div>
