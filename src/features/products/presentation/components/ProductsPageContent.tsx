@@ -371,7 +371,9 @@ export default function ProductsPageContent() {
                       </div>
 
                       <p className="text-sm text-gray-400 mb-4 line-clamp-2">
-                        {product.description || (locale === 'es' ? 'Producto artesanal de resina epóxica.' : 'Handcrafted epoxy resin product.')}
+                        {(locale === 'es' ? product.description_es : product.description_en)
+                          || product.description
+                          || (locale === 'es' ? 'Producto artesanal de resina epóxica.' : 'Handcrafted epoxy resin product.')}
                       </p>
 
                       <div className="mt-auto flex flex-wrap items-center justify-between gap-3">

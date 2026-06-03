@@ -461,7 +461,9 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
           <div className="mb-8 border-b border-[#b68b44] pb-6">
             <h2 className="text-lg font-semibold mb-2 text-gray-200">{locale === 'es' ? 'Descripción' : 'Description'}</h2>
             <p className="text-gray-300 whitespace-pre-line">
-              {product.description || 'No hay descripción disponible para este producto.'}
+              {(locale === 'es' ? product.description_es : product.description_en)
+                || product.description
+                || (locale === 'es' ? 'No hay descripción disponible para este producto.' : 'No description available for this product.')}
             </p>
           </div>
           

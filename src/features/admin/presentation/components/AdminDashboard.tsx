@@ -3,13 +3,37 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { Database } from '@/shared/types/database';
-import { Search, Filter, RefreshCw, MoreVertical, Check, X, Edit } from 'lucide-react';
+import { Search, Filter, RefreshCw, MoreVertical, Check, X, Edit, Plus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { ProductEditor } from './ProductEditor';
 import { formatModifiedDate } from '../../application/distribute';
+import { deleteProductMediaByUrl } from '../../application/productMedia';
 
 type Product = Database['products'];
+
+const EMPTY_PRODUCT: Product = {
+  id: 0,
+  created_at: '',
+  modified_at: '',
+  name: null,
+  name_es: null,
+  name_en: null,
+  description: null,
+  description_es: null,
+  description_en: null,
+  media: null,
+  colon_price: null,
+  dolar_price: null,
+  category_id: null,
+  sku: null,
+  brand: null,
+  is_featured: false,
+  is_active: true,
+  specifications: null,
+  discount_percentage: null,
+  tags: null,
+};
 
 export function AdminDashboard({ locale }: { locale: string }) {
   const { supabase } = useSupabase();
@@ -22,6 +46,8 @@ export function AdminDashboard({ locale }: { locale: string }) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showProductMenu, setShowProductMenu] = useState<number | null>(null);
+  const [creating, setCreating] = useState(false);
+  const es = locale === 'es';
 
   useEffect(() => {
     fetchProducts();
@@ -188,10 +214,73 @@ export function AdminDashboard({ locale }: { locale: string }) {
     }
   }, [supabase, products, selectedProduct, locale]);
 
+  // Full save from the modal editor (all fields). Generic toast.
+  const saveExistingProduct = useCallback(async (productId: number, payload: Partial<Product>) => {
+    try {
+      const { error } = await supabase.from('products').update(payload).eq('id', productId);
+      if (error) throw error;
+      setProducts(prev => prev.map(p => (p.id === productId ? { ...p, ...payload } as Product : p)));
+      toast.success(es ? 'Producto actualizado' : 'Product updated');
+      return { success: true };
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'error';
+      toast.error(`Error: ${msg}`);
+      return { success: false, error: msg };
+    }
+  }, [supabase, es]);
+
+  // Create a brand-new product.
+  const createProduct = useCallback(async (payload: Partial<Product>) => {
+    try {
+      const { data, error } = await supabase.from('products').insert(payload).select().single();
+      if (error) throw error;
+      setProducts(prev => [data as Product, ...prev]);
+      toast.success(es ? 'Producto creado' : 'Product created');
+      return { success: true };
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'error';
+      toast.error(`Error: ${msg}`);
+      return { success: false, error: msg };
+    }
+  }, [supabase, es]);
+
+  // Delete a product (with best-effort storage cleanup).
+  const deleteProduct = useCallback(async (product: Product) => {
+    const label = product.name_es || product.name || `#${product.id}`;
+    const ok = window.confirm(
+      es
+        ? `¿Eliminar "${label}"? Esta acción no se puede deshacer.`
+        : `Delete "${label}"? This action cannot be undone.`
+    );
+    if (!ok) return;
+    try {
+      if (product.media?.length) {
+        await Promise.all(product.media.map(m => deleteProductMediaByUrl(m.url)));
+      }
+      const { error } = await supabase.from('products').delete().eq('id', product.id);
+      if (error) throw error;
+      setProducts(prev => prev.filter(p => p.id !== product.id));
+      setShowProductMenu(null);
+      toast.success(es ? 'Producto eliminado' : 'Product deleted');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'error';
+      toast.error(`Error: ${msg}`);
+    }
+  }, [supabase, es]);
+
   return (
     <div className="min-h-screen bg-[#121212] text-gray-100">
     <div className="container mx-auto px-4 py-2">
-      <h1 className="text-2xl font-bold mb-0.5 gold-gradient-bright">{locale === 'es' ? 'Panel de Administración' : 'Admin Dashboard'}</h1>
+      <div className="flex items-center justify-between gap-3 mb-0.5">
+        <h1 className="text-2xl font-bold gold-gradient-bright">{locale === 'es' ? 'Panel de Administración' : 'Admin Dashboard'}</h1>
+        <button
+          onClick={() => { setCreating(true); setSelectedProduct(null); }}
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-md text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 transition-all"
+        >
+          <Plus className="h-4 w-4" />
+          {es ? 'Nuevo producto' : 'New product'}
+        </button>
+      </div>
       
       <div className="bg-[#1a1a1a] rounded-lg shadow-md p-3 mb-4">
         <div className="flex flex-col md:flex-row gap-2 md:gap-4">
@@ -276,21 +365,24 @@ export function AdminDashboard({ locale }: { locale: string }) {
         </div>
       )}
       
-      {selectedProduct && (
+      {(selectedProduct || creating) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-[#1a1a1a] rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-            <ProductEditor 
+            <ProductEditor
               locale={locale}
-              product={selectedProduct} 
+              product={creating ? EMPTY_PRODUCT : (selectedProduct as Product)}
               categories={categories}
               onSave={async (updates) => {
-                const result = await updateProduct(selectedProduct.id, updates);
+                const result = creating
+                  ? await createProduct(updates)
+                  : await saveExistingProduct((selectedProduct as Product).id, updates);
                 if (result.success) {
                   setSelectedProduct(null);
+                  setCreating(false);
                 }
                 return result;
               }}
-              onCancel={() => setSelectedProduct(null)}
+              onCancel={() => { setSelectedProduct(null); setCreating(false); }}
             />
           </div>
         </div>
@@ -439,6 +531,16 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                     >
                                       <Edit className="h-4 w-4 mr-2" />
                                       {locale === 'es' ? 'Editar producto' : 'Edit product'}
+                                    </button>
+                                    <button
+                                      className="w-full text-left px-4 py-2 text-sm flex items-center text-red-400 hover:bg-red-500/10 border-t border-white/10"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteProduct(product);
+                                      }}
+                                    >
+                                      <Trash2 className="h-4 w-4 mr-2" />
+                                      {locale === 'es' ? 'Eliminar producto' : 'Delete product'}
                                     </button>
                                   </div>
                                 )}
@@ -711,6 +813,18 @@ export function AdminDashboard({ locale }: { locale: string }) {
                           >
                             <Edit className="h-4 w-4 mr-2" />
                             {locale === 'es' ? 'Editar producto' : 'Edit product'}
+                          </button>
+                          <button
+                            className="w-full text-left px-4 py-2 text-sm flex items-center text-red-400 hover:bg-red-500/10 border-t border-white/10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              deleteProduct(product);
+                            }}
+                            role="menuitem"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            {locale === 'es' ? 'Eliminar producto' : 'Delete product'}
                           </button>
                         </div>
                       )}

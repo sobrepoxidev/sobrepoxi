@@ -1,4 +1,4 @@
-interface MediaItem {
+export interface MediaItem {
   url: string;
   type: "image" | "video";
   caption?: string;
@@ -108,6 +108,8 @@ export type Database = {
     name_es: string | null;
     name_en: string | null;
     description: string | null;
+    description_es: string | null;
+    description_en: string | null;
     media: MediaItem[] | null;
     colon_price: number | null;
     dolar_price: number | null;
