@@ -74,7 +74,7 @@ function HeroSection({ locale }: { locale: string }) {
   const c = t[locale as 'es' | 'en'] || t.es;
 
   return (
-    <section className="relative min-h-[calc(100vh-120px)] sm:min-h-[90vh] flex items-start sm:items-center overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-start overflow-hidden">
       {/* Background layers */}
       <div className="absolute inset-0 bg-[#0a0a0a]" />
       <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-transparent" />
@@ -91,10 +91,10 @@ function HeroSection({ locale }: { locale: string }) {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:pt-8 sm:pb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left — Text */}
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-6">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-500/20 rounded-full px-4 py-1.5">
               <MapPin className="w-3.5 h-3.5 text-amber-400" />
@@ -105,7 +105,7 @@ function HeroSection({ locale }: { locale: string }) {
 
             {/* Headline */}
             <div>
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight text-white">
+              <h1 className="text-4xl sm:text-5xl 2xl:text-6xl font-black leading-[1.1] tracking-tight text-white">
                 {c.headline}
                 <br />
                 <span className="gold-gradient-bright">{c.headlineAccent}</span>
