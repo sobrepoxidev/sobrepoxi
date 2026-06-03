@@ -217,9 +217,10 @@ export function AdminDashboard({ locale }: { locale: string }) {
   // Full save from the modal editor (all fields). Generic toast.
   const saveExistingProduct = useCallback(async (productId: number, payload: Partial<Product>) => {
     try {
-      const { error } = await supabase.from('products').update(payload).eq('id', productId);
+      const stamped = { ...payload, modified_at: new Date().toISOString() };
+      const { error } = await supabase.from('products').update(stamped).eq('id', productId);
       if (error) throw error;
-      setProducts(prev => prev.map(p => (p.id === productId ? { ...p, ...payload } as Product : p)));
+      setProducts(prev => prev.map(p => (p.id === productId ? { ...p, ...stamped } as Product : p)));
       toast.success(es ? 'Producto actualizado' : 'Product updated');
       return { success: true };
     } catch (err: unknown) {
@@ -232,7 +233,12 @@ export function AdminDashboard({ locale }: { locale: string }) {
   // Create a brand-new product.
   const createProduct = useCallback(async (payload: Partial<Product>) => {
     try {
-      const { data, error } = await supabase.from('products').insert(payload).select().single();
+      const now = new Date().toISOString();
+      const { data, error } = await supabase
+        .from('products')
+        .insert({ created_at: now, modified_at: now, ...payload })
+        .select()
+        .single();
       if (error) throw error;
       setProducts(prev => [data as Product, ...prev]);
       toast.success(es ? 'Producto creado' : 'Product created');
