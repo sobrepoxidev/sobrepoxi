@@ -40,7 +40,7 @@ export default async function Navbar({ locale }: { locale: string }) {
         {/* Logo - SSR (Left) */}
 
         <div className="lg:hidden bg-[#121212]">
-          <Link href="/" className="flex items-center focus-visible:outline-" aria-label="HandMadeArt Home">
+          <Link href="/" className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded" aria-label={locale === 'es' ? 'SobrePoxi - Inicio' : 'SobrePoxi - Home'}>
             <div className="relative overflow-hidden flex items-center gap-3">
 
               {/* <div className="lg:hidden">

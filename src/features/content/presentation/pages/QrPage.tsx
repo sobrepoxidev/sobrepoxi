@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import toast from 'react-hot-toast';
+import { useLocale } from 'next-intl';
 import {
   CheckCircle,
   Copy,
@@ -32,6 +33,7 @@ import {
  * ------------------------------------------------------------------
  */
 const QRGenerator: React.FC = React.memo(() => {
+  const locale = useLocale();
   // ──────────────────────── state ─────────────────────────
   const [url, setUrl] = useState('');
   const [fgColor, setFgColor] = useState('#000000');
@@ -73,15 +75,15 @@ const QRGenerator: React.FC = React.memo(() => {
 
   const handleGenerate = () => {
     if (!url) {
-      setError('Por favor ingresa una URL');
+      setError(locale === 'es' ? 'Por favor ingresa una URL' : 'Please enter a URL');
       return;
     }
     if (!isValidUrl(url)) {
-      setError('Ingresa una URL válida que empiece con http:// o https://');
+      setError(locale === 'es' ? 'Ingresa una URL válida que empiece con http:// o https://' : 'Enter a valid URL starting with http:// or https://');
       return;
     }
     if (url.length > 3000) {
-      setError('La URL es demasiado larga (máx. 3000 caracteres)');
+      setError(locale === 'es' ? 'La URL es demasiado larga (máx. 3000 caracteres)' : 'The URL is too long (max. 3000 characters)');
       return;
     }
     setError('');
@@ -95,17 +97,17 @@ const QRGenerator: React.FC = React.memo(() => {
   const handleDownload = useCallback(() => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) {
-      toast.error('No se pudo generar el código QR');
+      toast.error(locale === 'es' ? 'No se pudo generar el código QR' : 'Could not generate the QR code');
       return;
     }
 
     // Mostrar notificación de carga
-    const toastId = toast.loading('Preparando descarga...');
+    const toastId = toast.loading(locale === 'es' ? 'Preparando descarga...' : 'Preparing download...');
   
     // 1️⃣ Generamos un Blob (más eficiente que toDataURL)
     canvas.toBlob((blob) => {
       if (!blob) {
-        toast.error('Error al generar el archivo', { id: toastId });
+        toast.error(locale === 'es' ? 'Error al generar el archivo' : 'Error generating the file', { id: toastId });
         return;
       }
   
@@ -120,7 +122,7 @@ const QRGenerator: React.FC = React.memo(() => {
       link.click();
 
       // Actualizar notificación a éxito
-      toast.success('¡Código QR descargado!', { 
+      toast.success(locale === 'es' ? '¡Código QR descargado!' : 'QR code downloaded!', {
         id: toastId,
         duration: 3000,
         style: {

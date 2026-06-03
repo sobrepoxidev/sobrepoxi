@@ -90,7 +90,7 @@ export default function ViewedHistoryPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {history.map((product) => (
               <div key={`${product.id}-${product.viewedAt.toString()}`} className="bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden hover:border-amber-500/30 transition relative group">
-                <button onClick={() => handleRemove(product.id)} className="absolute top-2 right-2 bg-black/60 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 hover:bg-black/80" aria-label="Eliminar del historial">
+                <button onClick={() => handleRemove(product.id)} className="absolute top-2 right-2 bg-black/60 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 hover:bg-black/80" aria-label={locale == 'es' ? 'Eliminar del historial' : 'Remove from history'}>
                   <Trash2 className="h-4 w-4 text-gray-300" />
                 </button>
                 <Link href={`/products?id=${product.id}`} className="block">
@@ -121,7 +121,7 @@ export default function ViewedHistoryPage() {
       ) : (
         <div className="text-center py-12 bg-[#1a1a1a] rounded-xl border border-white/10">
           <div className="mb-4">
-            <Image src="/empty-history.svg" alt="Historial vacío" width={180} height={180} className="mx-auto opacity-70" />
+            <Image src="/empty-history.svg" alt={locale == 'es' ? 'Historial vacío' : 'Empty history'} width={180} height={180} className="mx-auto opacity-70" />
           </div>
           <h2 className="text-xl font-medium text-white mb-2">{locale == 'es' ? 'No hay productos en tu historial' : 'No products in your history'}</h2>
           <p className="text-gray-400 mb-6">{locale == 'es' ? 'Explora nuestra tienda y vuelve aquí para ver tu historial de navegación' : 'Explore our store and come back here to see your navigation history'}</p>

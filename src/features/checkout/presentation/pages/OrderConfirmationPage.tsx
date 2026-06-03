@@ -119,7 +119,7 @@ export default function OrderConfirmationPage() {
           </dl>
 
           <div className="mt-8 text-center">
-            <Link href="/products" className="inline-flex items-center px-5 py-2.5 text-sm font-bold rounded-lg text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 transition-all focus:outline-none">
+            <Link href="/products" className="inline-flex items-center px-5 py-2.5 text-sm font-bold rounded-lg text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]">
               {locale === 'es' ? 'Continuar comprando' : 'Continue shopping'}
             </Link>
           </div>

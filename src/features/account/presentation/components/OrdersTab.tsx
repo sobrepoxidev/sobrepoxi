@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserSupabaseClient } from '@/shared/supabase/client';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import type { Database } from '@/shared/types/database';
@@ -18,6 +18,7 @@ type OrdersTabProps = {
 
 export default function OrdersTab({ userId }: OrdersTabProps) {
   const t = useTranslations('Account');
+  const locale = useLocale();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState<number | null>(null);
@@ -57,7 +58,7 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('es-CR', {
+    return new Intl.DateTimeFormat(locale === 'es' ? 'es-CR' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -92,8 +93,17 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
               className="border border-white/10 rounded-xl overflow-hidden"
             >
               <div
-                className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#121212] cursor-pointer hover:bg-[#181818] transition-colors"
+                role="button"
+                tabIndex={0}
+                aria-expanded={expandedOrderId === order.id}
+                className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#121212] cursor-pointer hover:bg-[#181818] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-amber-500/40"
                 onClick={() => toggleOrderExpansion(order.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleOrderExpansion(order.id);
+                  }
+                }}
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2 text-sm text-gray-400 mb-1">
@@ -157,7 +167,7 @@ export default function OrdersTab({ userId }: OrdersTabProps) {
                         {order.order_items.map((item) => (
                           <tr key={item.id}>
                             <td className="px-4 py-3 whitespace-nowrap">
-                              <span className="font-medium">{item.product.name || 'Producto'}</span>
+                              <span className="font-medium">{item.product.name || (locale === 'es' ? 'Producto' : 'Product')}</span>
                             </td>
                             <td className="px-4 py-3 text-right whitespace-nowrap">
                               {item.quantity}

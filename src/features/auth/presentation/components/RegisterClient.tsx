@@ -290,7 +290,7 @@ export default function RegisterClient() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 rounded-lg text-sm font-bold text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+              className="w-full flex justify-center py-3 px-4 rounded-lg text-sm font-bold text-black bg-gold-gradient hover:shadow-lg hover:shadow-amber-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (locale === 'es' ? 'Registrando...' : 'Registering...') : (locale === 'es' ? 'Registrarme' : 'Register')}
             </button>

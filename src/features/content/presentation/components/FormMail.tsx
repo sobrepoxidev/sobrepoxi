@@ -28,7 +28,7 @@ export default function FormMail() {
               type="text"
               name="name"
               required
-              placeholder="Tu nombre"
+              placeholder={locale === "es" ? "Tu nombre" : "Your name"}
               className="w-full p-3 border border-gray-200 rounded-lg 
                        focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all text-sm md:text-base"
@@ -75,7 +75,7 @@ export default function FormMail() {
               name="message"
               required
               rows={4}
-              placeholder="¿Cómo podemos ayudarte?"
+              placeholder={locale === "es" ? "¿Cómo podemos ayudarte?" : "How can we help you?"}
               className="w-full p-3 border border-gray-200 rounded-lg 
                        focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
                        transition-all resize-y min-h-24 text-sm md:text-base"

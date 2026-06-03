@@ -47,8 +47,9 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
         toast(locale === 'es' ? 'No se han realizado cambios' : 'No changes made', {
           icon: '🔔',
           style: {
-            background: '#3498db',
-            color: '#fff'
+            background: '#1a1a1a',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)'
           }
         });
         return;
@@ -103,8 +104,8 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
         <h2 className="text-xl font-bold text-white">{locale === 'es' ? 'Editar Producto' : 'Edit Product'}</h2>
         <button
           onClick={onCancel}
-          className="p-2 rounded-full hover:bg-[#252525]"
-          aria-label="Cerrar"
+          className="p-2 rounded-full hover:bg-[#252525] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
+          aria-label={locale === 'es' ? 'Cerrar' : 'Close'}
         >
           <X className="h-6 w-6 text-gray-400" />
         </button>
@@ -151,7 +152,7 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
               className="w-full px-3 py-2 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               value={name || ''}
               onChange={(e) => setName(e.target.value || null)}
-              placeholder="Nombre del producto"
+              placeholder={locale === 'es' ? 'Nombre del producto' : 'Product name'}
             />
             <p className="mt-1 text-xs text-amber-500">
               {locale === 'es' ? 'El nombre es un campo importante que solo se puede editar aquí' : 'The name is an important field that can only be edited here'}
@@ -224,7 +225,7 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
                 min="0"
                 max="100"
                 step="0.1"
-                placeholder="Sin descuento"
+                placeholder={locale === 'es' ? 'Sin descuento' : 'No discount'}
               />
             </div>
           </div>
@@ -232,8 +233,9 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
         
         <div className="border border-white/10 rounded-lg overflow-hidden">
           <button
-            className="w-full flex justify-between items-center p-4 bg-[#121212] hover:bg-[#252525] focus:outline-none"
+            className="w-full flex justify-between items-center p-4 bg-[#121212] hover:bg-[#252525] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-amber-500/40"
             onClick={() => setShowAdvanced(!showAdvanced)}
+            aria-expanded={showAdvanced}
           >
             <span className="font-medium">{locale === 'es' ? 'Opciones avanzadas' : 'Advanced options'}</span>
             {showAdvanced ? (

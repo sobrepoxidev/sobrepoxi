@@ -74,7 +74,7 @@ export function ProductCardModal({
                             <div className="flex items-center border border-white/10 rounded-lg overflow-hidden shadow-sm bg-[#121212]">
                                 <button
                                     className="px-3 py-2 hover:bg-white/10 text-gray-200 transition-colors h-10"
-                                    aria-label="Disminuir cantidad"
+                                    aria-label={locale === 'es' ? 'Disminuir cantidad' : 'Decrease quantity'}
                                     onClick={handleDecrement}
                                 >
                                     −
@@ -84,7 +84,7 @@ export function ProductCardModal({
                                 </div>
                                 <button
                                     className="px-3 py-2 hover:bg-white/10 text-gray-200 transition-colors h-10"
-                                    aria-label="Aumentar cantidad"
+                                    aria-label={locale === 'es' ? 'Aumentar cantidad' : 'Increase quantity'}
                                     onClick={handleIncrement}
                                 >
                                     +

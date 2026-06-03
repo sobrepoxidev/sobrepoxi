@@ -15,8 +15,8 @@ export default function Footer({ locale }: { locale: string }) {
                 alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
                 width={350}
                 height={300}
-                className="w-40 h-32"
-                unoptimized
+                sizes="160px"
+                className="w-40 h-auto"
                 />
               
             </div>

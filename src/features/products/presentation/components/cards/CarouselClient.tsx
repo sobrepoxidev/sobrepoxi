@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import type { CarrucelItem } from './CarrucelSectionA';
 
 const CarouselCard: React.FC<{
@@ -40,6 +41,7 @@ interface CarouselClientProps {
 }
 
 const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
+  const locale = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -78,7 +80,7 @@ const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
         <button
           onClick={() => scroll('left')}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-gray-300 hover:text-amber-400 bg-black/30 backdrop-blur-sm rounded-full p-2 transition-colors"
-          aria-label="Anterior elemento"
+          aria-label={locale === 'es' ? 'Anterior elemento' : 'Previous item'}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
@@ -112,7 +114,7 @@ const CarouselClient: React.FC<CarouselClientProps> = ({ items }) => {
         <button
           onClick={() => scroll('right')}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-gray-300 hover:text-amber-400 bg-black/30 backdrop-blur-sm rounded-full p-2 transition-colors"
-          aria-label="Siguiente elemento"
+          aria-label={locale === 'es' ? 'Siguiente elemento' : 'Next item'}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />

@@ -288,8 +288,8 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
 
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute top-0 right-0 p-1 text-white hover:bg-gray-950 rounded lg:block hidden z-50"
-            aria-label="Cerrar menú"
+            className="absolute top-0 right-0 p-1 text-white hover:bg-gray-950 rounded lg:block hidden z-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
+            aria-label={locale === 'es' ? 'Cerrar menú' : 'Close menu'}
           >
             <X className="h-5 w-5" />
           </button>

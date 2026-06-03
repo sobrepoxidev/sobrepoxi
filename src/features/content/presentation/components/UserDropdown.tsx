@@ -47,7 +47,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 text-sm  px-3 py-1.5 text-white hover:bg-gray-950 p-1 rounded focus:outline-none transition"
+        className="flex items-center space-x-1 text-sm  px-3 py-1.5 text-white hover:bg-gray-950 p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 transition"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -121,7 +121,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
-              <User className="h-4 w-4 mr-3 text-gray-500" />
+              <User className="h-4 w-4 mr-3 text-gray-400" />
               {locale === 'es' ? 'Mi cuenta' : 'My account'}
             </Link>
             <Link 
@@ -129,7 +129,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
-              <History className="h-4 w-4 mr-3 text-gray-500" />
+              <History className="h-4 w-4 mr-3 text-gray-400" />
               {locale === 'es' ? 'Artículos vistos recientemente' : 'Recently viewed items'}
             </Link>
             <Link 
@@ -137,7 +137,7 @@ export default function UserDropdown({ session, onLogout }: UserDropdownProps) {
               className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-950 transition"
               onClick={() => setIsOpen(false)}
             >
-              <Heart className="h-4 w-4 mr-3 text-gray-500" />
+              <Heart className="h-4 w-4 mr-3 text-gray-400" />
               {locale === 'es' ? 'Mis favoritos' : 'My favorites'}
             </Link>
           </div>

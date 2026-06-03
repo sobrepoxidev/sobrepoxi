@@ -69,7 +69,7 @@ export default function CurrencyConverterRow({
       <button
         onClick={onConvert}
         disabled={disabled}
-        title="Convertir"
+        title={locale === 'es' ? 'Convertir' : 'Convert'}
         className="px-6 py-1 rounded border border-transparent bg-black hover:border-[#303030] hover:bg-[#303030] hover:text-white transition-colors disabled:opacity-50"
       >
         {pending ? (

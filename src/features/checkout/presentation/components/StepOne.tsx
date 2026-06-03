@@ -57,7 +57,7 @@ export default function StepOne({ cart, onContinue, initialData, locale }: StepO
     };
 
     if (session && !userProfile?.shipping_address && !showAddressOptions) {
-      const confirmed = window.confirm('¿Deseas guardar esta dirección en tu perfil para futuros pedidos?');
+      const confirmed = window.confirm(locale === 'es' ? '¿Deseas guardar esta dirección en tu perfil para futuros pedidos?' : 'Do you want to save this address to your profile for future orders?');
       if (confirmed) {
         const addressToSave = { ...shippingAddress };
         try {

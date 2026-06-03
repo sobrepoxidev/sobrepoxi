@@ -205,7 +205,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
               className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              aria-label="Buscar productos"
+              aria-label={locale === 'es' ? 'Buscar productos' : 'Search products'}
             />
           </div>
           
@@ -217,7 +217,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
               className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               value={categoryFilter || ''}
               onChange={(e) => setCategoryFilter(e.target.value ? parseInt(e.target.value) : null)}
-              aria-label="Filtrar por categoría"
+              aria-label={locale === 'es' ? 'Filtrar por categoría' : 'Filter by category'}
             >
               <option value="">{locale === 'es' ? 'Todas las categorías' : 'All categories'}</option>
               {categories.map((category) => (
@@ -241,7 +241,8 @@ export function AdminDashboard({ locale }: { locale: string }) {
             <button
               onClick={() => setViewMode('grid')}
               className={`p-2 rounded ${viewMode === 'grid' ? 'bg-amber-400/20 text-amber-400' : 'bg-[#252525] text-gray-400'}`}
-              aria-label="Ver en cuadrícula"
+              aria-label={locale === 'es' ? 'Ver en cuadrícula' : 'Grid view'}
+              aria-pressed={viewMode === 'grid'}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -250,7 +251,8 @@ export function AdminDashboard({ locale }: { locale: string }) {
             <button
               onClick={() => setViewMode('list')}
               className={`p-2 rounded ${viewMode === 'list' ? 'bg-amber-400/20 text-amber-400' : 'bg-[#252525] text-gray-400'}`}
-              aria-label="Ver en lista"
+              aria-label={locale === 'es' ? 'Ver en lista' : 'List view'}
+              aria-pressed={viewMode === 'list'}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -319,7 +321,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                      {product.media && product.media.length > 0 && product.media[0].url ? (
                       <Image 
                         src={product.media[0].url} 
-                        alt={product.name || 'Producto'} 
+                        alt={product.name || (locale === 'es' ? 'Producto' : 'Product')} 
                         className="object-contain max-h-full max-w-full transition-transform duration-300"
                         width={300}
                         height={300}
@@ -468,11 +470,11 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                 onClick={async (e) => {
                                   e.stopPropagation();
                                   e.preventDefault();
-                                  const loadingToast = toast.loading('Actualizando descuento...');
+                                  const loadingToast = toast.loading(locale === 'es' ? 'Actualizando descuento...' : 'Updating discount...');
                                   await updateProduct(product.id, { discount_percentage: product.discount_percentage });
                                   toast.dismiss(loadingToast);
                                 }}
-                                title="Actualizar descuento"
+                                title={locale === 'es' ? 'Actualizar descuento' : 'Update discount'}
                               >
                                 <span>{locale === 'es' ? 'Aplicar descuento' : 'Apply discount'}</span>
                               </button>
@@ -498,13 +500,13 @@ export function AdminDashboard({ locale }: { locale: string }) {
                     {product.category_id && (
                       <div className="mt-2">
                         <span className="inline-block px-2 py-0.5 bg-amber-400/10 text-amber-400 text-xs rounded-full border border-amber-400/20">
-                          {categories.find(cat => cat.id === product.category_id)?.name_es || 'Categoría'}
+                          {categories.find(cat => cat.id === product.category_id)?.name_es || (locale === 'es' ? 'Categoría' : 'Category')}
                         </span>
                       </div>
                     )}
                     
                     <div className="mt-2 text-center text-xs text-gray-400">
-                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : (locale === 'es' ? 'No disponible' : 'Not available')}
                     </div>
                     <div className="mt-1 text-center text-xs text-gray-400 italic">
                       {locale === 'es' ? 'Click para más opciones de edición' : 'Click for more editing options'}
@@ -520,7 +522,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                     {product.media && product.media.length > 0 && product.media[0].url ? (
                       <Image 
                         src={product.media[0].url} 
-                        alt={product.name || 'Producto'} 
+                        alt={product.name || (locale === 'es' ? 'Producto' : 'Product')} 
                         className="w-full h-full object-contain bg-[#121212]"
                         width={120}
                         height={120}
@@ -549,13 +551,13 @@ export function AdminDashboard({ locale }: { locale: string }) {
                       
                       {product.category_id && (
                         <span className="inline-block px-2 py-0.5 bg-amber-400/10 text-amber-400 text-xs rounded-full border border-amber-400/20">
-                          {categories.find(cat => cat.id === product.category_id)?.name_es || 'Categoría'}
+                          {categories.find(cat => cat.id === product.category_id)?.name_es || (locale === 'es' ? 'Categoría' : 'Category')}
                         </span>
                       )}
                     </div>
                     
                     <div className="text-xs text-gray-400 mt-2">
-                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : 'No disponible'}
+                      {locale === 'es' ? 'Última modificación' : 'Last modification'}: {product.modified_at ? formatModifiedDate(product.modified_at) : (locale === 'es' ? 'No disponible' : 'Not available')}
                     </div>
                   </div>
                   
@@ -592,7 +594,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                         onClick={async (e) => {
                           e.stopPropagation();
                           if (product.colon_price !== null) {
-                            const loadingToast = toast.loading('Actualizando precio...');
+                            const loadingToast = toast.loading(locale === 'es' ? 'Actualizando precio...' : 'Updating price...');
                             const result = await updateProduct(product.id, { colon_price: product.colon_price });
                             toast.dismiss(loadingToast);
                             if (!result.success) {
@@ -602,8 +604,8 @@ export function AdminDashboard({ locale }: { locale: string }) {
                             toast.error(locale === 'es' ? 'El precio no puede estar vacío' : 'The price cannot be empty');
                           }
                         }}
-                        title="Actualizar precio"
-                        aria-label="Guardar precio"
+                        title={locale === 'es' ? 'Actualizar precio' : 'Update price'}
+                        aria-label={locale === 'es' ? 'Guardar precio' : 'Save price'}
                       >
                         <Check className="h-5 w-5" />
                       </button>
@@ -633,12 +635,12 @@ export function AdminDashboard({ locale }: { locale: string }) {
                         className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                         onClick={async (e) => {
                           e.stopPropagation();
-                          const loadingToast = toast.loading('Actualizando descuento...');
+                          const loadingToast = toast.loading(locale === 'es' ? 'Actualizando descuento...' : 'Updating discount...');
                           await updateProduct(product.id, { discount_percentage: product.discount_percentage });
                           toast.dismiss(loadingToast);
                         }}
                         title={locale === 'es' ? 'Actualizar descuento' : 'Update discount'}
-                        aria-label="Aplicar descuento"
+                        aria-label={locale === 'es' ? 'Aplicar descuento' : 'Apply discount'}
                       >
                         <Check className="h-5 w-5" />
                       </button>
@@ -653,7 +655,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                           setShowProductMenu(showProductMenu === product.id ? null : product.id);
                         }}
                         title={locale === 'es' ? 'Más opciones' : 'More options'}
-                        aria-label="Más opciones"
+                        aria-label={locale === 'es' ? 'Más opciones' : 'More options'}
                         aria-expanded={showProductMenu === product.id}
                         aria-controls={`product-menu-${product.id}`}
                       >
@@ -673,7 +675,11 @@ export function AdminDashboard({ locale }: { locale: string }) {
                             onClick={async (e) => {
                               e.stopPropagation();
                               e.preventDefault();
-                              const loadingToast = toast.loading(`${product.is_active ? 'Desactivando' : 'Activando'} producto...`);
+                              const loadingToast = toast.loading(
+                                locale === 'es'
+                                  ? `${product.is_active ? 'Desactivando' : 'Activando'} producto...`
+                                  : `${product.is_active ? 'Deactivating' : 'Activating'} product...`
+                              );
                               await updateProduct(product.id, { is_active: !product.is_active });
                               toast.dismiss(loadingToast);
                               setShowProductMenu(null);

@@ -323,8 +323,9 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                 ) : (
                   <Image
                     src={mainMediaUrl}
-                    alt={product.name || '' + locale === 'es' ? 'Pisos Epóxicos Costarricense' : 'Costarican Epoxy Floors'}
+                    alt={product.name || (locale === 'es' ? 'Pisos Epóxicos Costarricense' : 'Costa Rican Epoxy Floors')}
                     fill
+                    sizes="(max-width: 768px) 100vw, 58vw"
                     className={`object-contain transition-transform duration-300 ${isZoomed ? 'scale-150' : 'scale-100'}`}
                     style={isZoomed ? { transformOrigin: `${zoomPosition.x * 100}% ${zoomPosition.y * 100}%` } : undefined}
                     priority
@@ -364,8 +365,9 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     ) : (
                       <Image
                         src={item.url}
-                        alt={`Media ${index + 1} de ${locale === 'es' ? product.name_es : product.name_en}`}
+                        alt={`${locale === 'es' ? 'Imagen' : 'Image'} ${index + 1} ${locale === 'es' ? 'de' : 'of'} ${locale === 'es' ? product.name_es : product.name_en}`}
                         fill
+                        sizes="80px"
                         className="object-contain p-1"
                       />
                     )}
@@ -473,7 +475,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   onClick={handleDecrement}
                   disabled={quantity <= 1}
                   className="text-gray-200 disabled:text-gray-300"
-                  aria-label="Disminuir cantidad"
+                  aria-label={locale === 'es' ? 'Disminuir cantidad' : 'Decrease quantity'}
                 >
                   <MinusCircle className="h-6 w-6" />
                 </button>
@@ -482,7 +484,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                   onClick={handleIncrement}
                   disabled={quantity >= 10}
                   className="text-gray-200 disabled:text-gray-300"
-                  aria-label="Aumentar cantidad"
+                  aria-label={locale === 'es' ? 'Aumentar cantidad' : 'Increase quantity'}
                 >
                   <PlusCircle className="h-6 w-6" />
                 </button>
@@ -530,15 +532,15 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                     // Use Web Share API if available
                     if (navigator.share) {
                       navigator.share({
-                        title: product?.name || 'Producto artesanal',
-                        text: product?.description || 'Mira estE increíble artículo artesanal',
+                        title: product?.name || (locale === 'es' ? 'Producto artesanal' : 'Handcrafted product'),
+                        text: product?.description || (locale === 'es' ? 'Mira este increíble artículo artesanal' : 'Check out this amazing handcrafted item'),
                         url: window.location.href
                       })
                       .catch(err => console.error('Error al compartir:', err));
                     } else {
                       // Fallback - copy to clipboard
                       navigator.clipboard.writeText(window.location.href);
-                      alert('Enlace copiado al portapapeles');
+                      alert(locale === 'es' ? 'Enlace copiado al portapapeles' : 'Link copied to clipboard');
                     }
                   }}
                 >

@@ -100,6 +100,7 @@ export function ExpandButton({
   const searchParams = useSearchParams();
 const pathname = usePathname();
 const { replace } = useRouter();
+const locale = useLocale();
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -127,8 +128,8 @@ const { replace } = useRouter();
     <button
       className="absolute top-1 right-1 z-50 bg-black/70 bg-opacity-60 hover:bg-opacity-80 text-white p-1.5 rounded-full transition-all duration-200 transform hover:scale-110"
       onClick={handleClick}
-      aria-label="Ver en pantalla completa"
-      title="Ver en pantalla completa"
+      aria-label={locale === 'es' ? 'Ver en pantalla completa' : 'View fullscreen'}
+      title={locale === 'es' ? 'Ver en pantalla completa' : 'View fullscreen'}
     >
       <ExpandIcon />
     </button>
@@ -228,6 +229,7 @@ export function FullscreenModal({
   product: Product;
   onClose: () => void;
 }) {
+  const locale = useLocale();
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -253,7 +255,7 @@ export function FullscreenModal({
         <button
           className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
           onClick={onClose}
-          aria-label="Cerrar"
+          aria-label={locale === 'es' ? 'Cerrar' : 'Close'}
         >
           <CloseIcon className="w-5 h-5" />
         </button>

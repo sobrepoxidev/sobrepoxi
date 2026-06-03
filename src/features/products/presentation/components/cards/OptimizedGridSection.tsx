@@ -50,13 +50,13 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                             src={product.media && product.media.length > 0 ?
                               (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp') :
                               locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
-                            alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || "Producto"}
+                            alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || (locale === 'es' ? 'Producto' : 'Product')}
                             width={200}
                             height={200}
+                            sizes="(max-width: 768px) 50vw, 200px"
                             style={{ objectFit: 'contain', maxHeight: '100%' }}
                             className="group-hover:scale-105 transition-transform"
-                            priority // Solo priorizar las primeras imágenes
-                        
+                            loading="lazy"
                           />
                         </div>
                         <span className="text-[10px] text-center line-clamp-1 font-medium text-gray-200">
@@ -105,9 +105,10 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                 <div className="flex items-center justify-center h-48 overflow-hidden">
                   <Image
                     src={locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
-                    alt={category.name || 'Categoría'}
+                    alt={category.name || (locale === 'es' ? 'Categoría' : 'Category')}
                     width={200}
                     height={200}
+                    sizes="(max-width: 768px) 100vw, 200px"
                     style={{ objectFit: 'contain', maxHeight: '100%' }}
                     className="transition-transform hover:scale-105"
                    

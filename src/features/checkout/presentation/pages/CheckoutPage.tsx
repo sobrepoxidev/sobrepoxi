@@ -59,13 +59,13 @@ export default function CheckoutWizardPage() {
     setIsProcessing(true)
     try {
       if (!shippingAddress) {
-        alert('Se requiere dirección de envío')
+        alert(locale === 'es' ? 'Se requiere dirección de envío' : 'Shipping address is required')
         return
       }
 
       const userId = session?.user?.id || 'guest-user'
       if (!userId || userId === 'guest-user') {
-        alert('Error: No se pudo identificar al usuario. Por favor inicia sesión antes de continuar.')
+        alert(locale === 'es' ? 'Error: No se pudo identificar al usuario. Por favor inicia sesión antes de continuar.' : 'Error: Could not identify the user. Please sign in before continuing.')
         router.push('/login?redirect=checkout')
         return
       }
@@ -96,7 +96,7 @@ export default function CheckoutWizardPage() {
         .single()
 
       if (orderError || !orderInsert) {
-        alert(`Error creando la orden en la BD: ${orderError?.message}`)
+        alert(locale === 'es' ? `Error creando la orden en la BD: ${orderError?.message}` : `Error creating the order in the DB: ${orderError?.message}`)
         setIsProcessing(false)
         return
       }
@@ -115,7 +115,7 @@ export default function CheckoutWizardPage() {
       return orderInsert.id
     } catch (error) {
       console.error('Error al procesar la orden:', error)
-      alert('Error al procesar la orden. Inténtalo de nuevo.')
+      alert(locale === 'es' ? 'Error al procesar la orden. Inténtalo de nuevo.' : 'Error processing the order. Please try again.')
     } finally {
       setIsProcessing(false)
     }
@@ -123,17 +123,17 @@ export default function CheckoutWizardPage() {
 
   const validateStep2 = async () => {
     if (!paymentMethod) {
-      alert('Debes seleccionar un método de pago')
+      alert(locale === 'es' ? 'Debes seleccionar un método de pago' : 'You must select a payment method')
       return
     }
 
     if (paymentMethod === 'sinpe') {
       if (!bancoSeleccionado) {
-        alert('Selecciona un banco para SINPE')
+        alert(locale === 'es' ? 'Selecciona un banco para SINPE' : 'Select a bank for SINPE')
         return
       }
       if (ultimos4.length !== 4) {
-        alert('Faltan los últimos 4 dígitos del recibo')
+        alert(locale === 'es' ? 'Faltan los últimos 4 dígitos del recibo' : 'The last 4 digits of the receipt are missing')
         return
       }
     }
