@@ -181,10 +181,21 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
     const cleanDescEs = descEs.trim() || null;
     const cleanDescEn = descEn.trim() || null;
 
+    // `name` doubles as the URL slug. Never store raw display text there
+    // (spaces/accents break the /product/[id] lookup). Slugify the existing
+    // slug if present, otherwise derive one from the display name.
+    const slugSource = product.name?.trim() || cleanNameEs || cleanNameEn || '';
+    const slug = slugSource
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     const payload: Partial<Product> = {
       name_es: cleanNameEs,
       name_en: cleanNameEn,
-      name: cleanNameEs || cleanNameEn, // keep legacy/slug field in sync
+      name: slug || cleanNameEs || cleanNameEn, // URL slug (kept ASCII/hyphenated)
       description_es: cleanDescEs,
       description_en: cleanDescEn,
       description: cleanDescEs || cleanDescEn, // legacy consumers (search/cart)
