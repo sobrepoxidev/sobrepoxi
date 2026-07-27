@@ -32,6 +32,13 @@ export async function generateStaticParams() {
   return getAllGuideSlugs().map(({ slug, locale }) => ({ slug, locale }));
 }
 
+/* ──────────── Force 404 for unknown slugs ──────────── */
+// Con dynamicParams = false, Next.js devuelve HTTP 404 real para cualquier
+// slug que NO esté en generateStaticParams. Sin esto, las rutas inexistentes
+// (ej: /en/guias/<slug-es>) servían 200 con contenido "404" visual →
+// Google las marcaba como Soft 404. (Fix SEO.)
+export const dynamicParams = false;
+
 /* ──────────── SEO metadata ──────────── */
 export async function generateMetadata({
   params,
