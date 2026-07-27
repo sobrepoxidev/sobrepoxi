@@ -659,15 +659,548 @@ const guidesEN: Guide[] = [
     sections: [
       {
         heading: "Why choose epoxy flooring for your garage?",
-        content: `<p>The garage is one of the most demanding spaces in the home: supports the weight of vehicles, oil spills, chemicals and constant traffic. An <strong>epoxy floor</strong> transforms this space into a resistant, elegant and extremely easy-to-clean surface.</p>`
+        content: `<p>The garage is one of the most demanding spaces in the home: supports the weight of vehicles, oil spills, chemicals and constant traffic. An <strong>epoxy floor</strong> transforms this space into a resistant, elegant and extremely easy-to-clean surface.</p>
+<p>Unlike conventional concrete paint, epoxy resin creates a monolithic layer that chemically bonds to the substrate, forming an impermeable barrier that protects the concrete from moisture, stains and wear.</p>
+<ul>
+<li><strong>Stain resistance:</strong> Motor oil, gasoline and chemicals clean up easily</li>
+<li><strong>Extreme durability:</strong> Withstands the weight of heavy vehicles without cracking</li>
+<li><strong>Modern aesthetics:</strong> Glossy, metallic or decorative flake finishes</li>
+<li><strong>Easy maintenance:</strong> A damp mop pass is enough</li>
+<li><strong>Added value:</strong> A garage with an epoxy floor increases your property value</li>
+</ul>`
+      },
+      {
+        heading: "Types of epoxy floors for garages",
+        content: `<p>There are several epoxy resin systems designed specifically for garages, each with unique characteristics:</p>
+<h3>1. Solid Epoxy (100% solids)</h3>
+<p>The most resistant and durable system. Creates a thick layer of 2-3 mm that supports heavy vehicular traffic. Ideal for intensive-use garages.</p>
+<h3>2. Epoxy with Flakes (Flake System)</h3>
+<p>Combines epoxy resin with decorative vinyl flakes that give it a unique granite-like appearance. The flakes also provide anti-slip texture, perfect for areas where water may be present.</p>
+<h3>3. Metallic Epoxy</h3>
+<p>Uses metallic pigments that create impressive three-dimensional effects: lava, marble, ocean or galaxy. It is the most spectacular system visually and each floor is unique and unrepeatable.</p>
+<h3>4. Self-Leveling Epoxy</h3>
+<p>Applied as a liquid that self-levels, creating a perfectly smooth and uniform surface. Excellent for garages where a mirror-type finish is sought.</p>
+<h3>5. Polyurea/Polyaspartic</h3>
+<p>Although not technically epoxy, it is a hybrid system that cures in hours (vs. days for epoxy). Ideal for garages that need to be operational quickly.</p>`
+      },
+      {
+        heading: "Popular designs for epoxy garage floors",
+        content: `<p>The design possibilities with epoxy resin are practically infinite. These are the most requested designs:</p>
+<ul>
+<li><strong>Granite/Terrazzo effect:</strong> Multicolor flakes on a gray or black base — the most popular for garages</li>
+<li><strong>Metallic marble:</strong> Metallic pigments that imitate luxury marble in gray, white or black tones</li>
+<li><strong>Premium solid color:</strong> Anthracite gray, deep black or bone white — minimalist elegance</li>
+<li><strong>Industrial effect:</strong> Polished concrete gray with satin finish — modern style</li>
+<li><strong>Two-tone:</strong> Combination of two colors with demarcation lines — perfect for delimiting parking areas</li>
+</ul>
+<p>At <strong>SobrePoxi</strong> we work with you to design the ideal floor according to your home style and the use you give your garage.</p>`
       }
     ],
     faqs: [
-      { question: "How long does an epoxy floor last in a garage?", answer: "A professionally installed epoxy floor in a garage can last between 10 and 20 years with proper maintenance." },
-      { question: "Does epoxy flooring get slippery when wet?", answer: "Decorative flake systems or anti-slip additives provide excellent traction even when wet." }
+      { question: "How long does an epoxy floor last in a garage?", answer: "A professionally installed epoxy floor in a garage can last between 10 and 20 years with adequate maintenance. Durability depends on the system used and the level of traffic." },
+      { question: "Does epoxy flooring get slippery when wet?", answer: "Decorative flake systems or anti-slip additives provide excellent traction even when wet. We always recommend including anti-slip texture for garages." },
+      { question: "Can epoxy flooring be installed over old concrete?", answer: "Yes, as long as the concrete is structurally sound. Crack repairs and professional profiling are performed before application to guarantee perfect adhesion." },
+      { question: "Does car oil stain epoxy flooring?", answer: "No. One of the main advantages of epoxy is its resistance to oil, gasoline and other automotive chemical stains. They clean easily with water and soap." },
+      { question: "How long does it take to install epoxy flooring in a garage?", answer: "The complete installation takes between 3 and 5 days. You can walk on the floor after 24 hours and park vehicles after approximately 72 hours." }
     ],
-    relatedSlugs: ["types-of-epoxy-resin"],
+    relatedSlugs: ["types-of-epoxy-resin", "modern-epoxy-floors-interiors", "epoxy-floor-maintenance"],
     ctaText: "Ready to transform your garage? Request your free quote",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "modern-epoxy-floors-interiors",
+    locale: "en",
+    title: "Modern Epoxy Floors for Interiors: Living Rooms, Kitchens and More",
+    metaTitle: "Modern Epoxy Floors for Interiors | Living Rooms & Kitchens | SobrePoxi",
+    metaDescription: "Discover how epoxy floors transform living rooms, kitchens and interior spaces. Modern designs, trending colors and luxury finishes for your home in Costa Rica.",
+    keywords: "modern floors living rooms, epoxy interior floors, resin floors for home, modern kitchen floors, decorative home floors, seamless interior floors",
+    heroTitle: "Modern Epoxy Floors for Interiors",
+    heroSubtitle: "Give your home a contemporary look with seamless epoxy resin floors",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "11 min",
+    category: "Residential Flooring",
+    categorySlug: "residential-flooring",
+    sections: [
+      {
+        heading: "The seamless floor trend in interiors",
+        content: `<p>Epoxy floors have ceased to be exclusive to factories and industries. Today they are one of the <strong>strongest trends in interior design</strong>, especially in modern residential spaces where visual continuity and a minimalist style are sought.</p>
+<p>An epoxy floor creates a completely <strong>seamless surface without joints or union lines</strong>, which visually expands any space. This is especially impactful in living rooms, open kitchens and loft-type spaces.</p>`
+      },
+      {
+        heading: "Ideal spaces for epoxy floors in the home",
+        content: `<h3>Living rooms</h3>
+<p>Metallic floors in neutral tones (pearl gray, ivory white, sand) create a perfect canvas for any decoration style. Their glossy finish reflects natural light, making the living room feel more spacious and luminous.</p>
+<h3>Kitchens</h3>
+<p>The waterproof nature of epoxy makes it ideal for kitchens. It doesn't absorb liquids, resists wine, coffee and oil stains, and cleans in seconds. Plus, it eliminates joints where dirt accumulates.</p>
+<h3>Bathrooms</h3>
+<p>With anti-slip finish, epoxy floors are perfect for bathrooms. Zero joints means zero accumulated mold between tiles.</p>
+<h3>Covered terraces</h3>
+<p>For terraces protected from direct sun, epoxy offers an elegant finish that visually connects the interior with the exterior.</p>
+<h3>Hallways and transit areas</h3>
+<p>The visual continuity of epoxy eliminates interruptions between spaces, creating a natural flow throughout the home.</p>`
+      },
+      {
+        heading: "Trending colors and finishes for 2026",
+        content: `<p>This year's interior epoxy floor trends focus on a search for calm and connection with nature:</p>
+<ul>
+<li><strong>Warm earth tones:</strong> Beige, sand, soft terracotta — they connect with nature</li>
+<li><strong>Sophisticated grays:</strong> From pearl gray to graphite — timeless elegance</li>
+<li><strong>Creamy whites:</strong> White marble effect for luminous and minimalist spaces</li>
+<li><strong>Polished concrete effect:</strong> Industrial-chic look very popular in lofts and modern spaces</li>
+<li><strong>Soft green and blue tones:</strong> Organic hues that bring serenity</li>
+</ul>
+<p>At <strong>SobrePoxi</strong> we create physical samples of the color and finish you choose so you can see it in your space before deciding.</p>`
+      },
+      {
+        heading: "Advantages over other interior floors",
+        content: `<p>Compared to traditional options, epoxy flooring has unique advantages:</p>
+<ul>
+<li><strong>vs. Porcelain:</strong> Seamless, warmer to the touch, faster installation in large areas</li>
+<li><strong>vs. Wood/Laminate:</strong> 100% water resistant, doesn't scratch easily, doesn't swell</li>
+<li><strong>vs. Microcement:</strong> Greater chemical resistance, more color options, better gloss</li>
+<li><strong>vs. Marble:</strong> Fraction of the cost, more stain resistant, same visual effect</li>
+</ul>`
+      },
+      {
+        heading: "How to integrate epoxy floors with your existing decoration",
+        content: `<p>One of the most common fears is that the epoxy floor won't match the current decoration. The reality is that it's one of the most versatile floors to integrate with any style:</p>
+<h3>Minimalist / Nordic Style</h3>
+<p>Epoxy in white, light gray or beige tones with satin finish. The continuous seamless surface reinforces the visual cleanliness that defines this style. It combines perfectly with straight-line furniture, light woods and plants.</p>
+<h3>Industrial / Loft Style</h3>
+<p>Epoxy with polished concrete effect or dark gray with matte or satin finish. It complements exposed brick, metallic structures and robust furniture. The look is effortlessly sophisticated.</p>
+<h3>Tropical / Coastal Style</h3>
+<p>Epoxy in sand tones, soft turquoise or white with ocean effect. Perfect for beach houses in Guanacaste or the Costa Rican Caribbean. Combines with rattan, natural woods and organic textiles.</p>
+<h3>Contemporary / Luxury Style</h3>
+<p>Metallic epoxy in graphite, black or gold tones. Creates a dramatic visual impact that elevates any space. Ideal for premium residences, penthouses and entertainment spaces.</p>
+<h3>Rustic / Country Style</h3>
+<p>Epoxy in terracotta, honey or natural stone effect tones. Complements wooden beams, stone walls and country furniture without sacrificing the practicality of a modern surface.</p>
+<p>At <strong>SobrePoxi</strong> we help you select the color, texture and finish that best integrates with your decoration. We create physical samples that you can take home to see them with your lighting and real furniture.</p>`
+      },
+      {
+        heading: "Epoxy floors in apartments and condominiums",
+        content: `<p>Apartments present unique challenges that epoxy resolves better than other floors:</p>
+<ul>
+<li><strong>Compact spaces:</strong> The seamless surface visually expands small apartments by up to 15-20% perceived</li>
+<li><strong>Noise:</strong> Epoxy over concrete doesn't generate the heel noise that porcelain does. An insulating layer can be added under the system for greater acoustic reduction</li>
+<li><strong>Pets:</strong> In pet-friendly condominiums, epoxy doesn't get damaged by dog nails or absorb odors like wood or carpet</li>
+<li><strong>Resale:</strong> An apartment with design epoxy flooring stands out in the real estate market and can justify a higher price</li>
+<li><strong>Regulations:</strong> Unlike wood that can spread in fires, epoxy is non-flammable, complying with building codes for residential buildings</li>
+</ul>
+<p><strong>Important note for Costa Rica:</strong> In apartment towers, substrate preparation must consider that concrete slabs may have less thickness than a foundation slab. A professional diagnosis ensures the chosen system is compatible with the existing structure.</p>`
+      }
+    ],
+    faqs: [
+      { question: "Are epoxy floors cold for interiors?", answer: "They have a similar temperature to concrete. They are compatible with radiant heating systems and in climates like Costa Rica, their freshness is actually an advantage." },
+      { question: "Can epoxy flooring be installed over existing ceramic tile?", answer: "In many cases yes, depending on the state of the ceramic. A technical evaluation is performed to determine if it's necessary to remove the existing floor or if it can be applied directly." },
+      { question: "Do epoxy floors yellow over time?", answer: "Systems with aliphatic polyurethane or polyaspartic topcoat are designed to resist yellowing from UV rays. It's important to use the correct system for interiors with lots of natural light." },
+      { question: "Are epoxy floors safe for children and pets?", answer: "Yes. Once fully cured (72 hours), epoxy floors are inert, non-toxic and don't emit gases. They are a hygienic surface ideal for families with children and pets." }
+    ],
+    relatedSlugs: ["epoxy-flooring-garages", "epoxy-floor-design-trends", "types-of-epoxy-resin"],
+    ctaText: "Want to see how an epoxy floor would look in your home? Schedule a design consultation",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "types-of-epoxy-resin",
+    locale: "en",
+    title: "Types of Epoxy Resin: Complete Guide to Choose the Right One",
+    metaTitle: "Types of Epoxy Resin | Complete Guide | SobrePoxi",
+    metaDescription: "Learn about the different types of epoxy resin: for floors, furniture, art and more. Find out which is best for your project. Expert guide from SobrePoxi Costa Rica.",
+    keywords: "types epoxy resin, epoxy resin for floors, resin for furniture, crystal clear resin, epoxy resin uses, which epoxy resin to use, epoxy resin differences",
+    heroTitle: "Types of Epoxy Resin",
+    heroSubtitle: "Complete guide to choose the right resin for your project",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "14 min",
+    category: "Technical Guides",
+    categorySlug: "technical-guides",
+    sections: [
+      {
+        heading: "What is epoxy resin?",
+        content: `<p><strong>Epoxy resin</strong> is a thermosetting polymer formed by mixing two components: a base resin (bisphenol A or F) and a hardener (amine or polyamide). This chemical reaction produces an extraordinarily hard, resistant and versatile material.</p>
+<p>Not all epoxy resins are the same. There are specific formulations designed for different applications: industrial floors, artistic furniture, art, construction and more. Using the wrong resin is the most common mistake and can ruin a project.</p>`
+      },
+      {
+        heading: "Epoxy resin for floors",
+        content: `<p>Floor resins are formulated to withstand traffic, impacts and abrasion. They are classified as:</p>
+<h3>100% Solids Epoxy</h3>
+<p>Solvent-free. Creates thick layers (up to 3mm per application). The most resistant option for industrial floors and garages. Requires professional equipment for application.</p>
+<h3>Water-Based Epoxy</h3>
+<p>Easier to apply and with less odor. Ideal for residential spaces and areas with little ventilation. Lower chemical resistance than 100% solids.</p>
+<h3>Solvent-Based Epoxy</h3>
+<p>Excellent concrete penetration. Used mainly as a primer or sealer. Stronger odor during application.</p>
+<h3>Metallic Epoxy</h3>
+<p>Special formulation with metallic pigments that creates three-dimensional effects. Used for high-end decorative floors in residences and businesses.</p>`
+      },
+      {
+        heading: "Epoxy resin for furniture and art",
+        content: `<p>For furniture and art, resins with different properties than flooring are required:</p>
+<h3>Crystal Clear Resin (Table Top)</h3>
+<p>High transparency, self-leveling and UV yellowing resistant. Perfect for river tables, encapsulations and resin art. Can be poured in thick layers without generating excessive bubbles.</p>
+<h3>Lamination Resin</h3>
+<p>Low viscosity to impregnate fibers (carbon, fiberglass) or create thin layers. Used in manufacturing surfboards, jewelry and thin coatings.</p>
+<h3>Pouring Resin (Deep Pour)</h3>
+<p>Designed for deep pours of up to 5cm per layer. Generates less exothermic heat, which prevents cracking. Ideal for river tables and large-volume artistic pieces.</p>`
+      },
+      {
+        heading: "Epoxy resin for construction and industry",
+        content: `<p>In the construction and industrial sector, epoxy resins have critical applications:</p>
+<ul>
+<li><strong>Epoxy mortar:</strong> Structural concrete repair and bolt anchoring</li>
+<li><strong>Crack injection:</strong> Sealing and repair of fissures in concrete structures</li>
+<li><strong>Anti-corrosive coating:</strong> Protection of tanks, pipes and metallic structures</li>
+<li><strong>Structural adhesive:</strong> Bonding dissimilar materials with superior resistance</li>
+</ul>`
+      },
+      {
+        heading: "How to choose the right resin for your project?",
+        content: `<p>Use this quick guide to select the appropriate resin:</p>
+<ul>
+<li><strong>For garage or industrial floors:</strong> 100% solids epoxy + polyaspartic topcoat</li>
+<li><strong>For decorative home floors:</strong> Metallic epoxy + UV resistant topcoat</li>
+<li><strong>For river tables or encapsulations:</strong> Crystal clear Table Top or Deep Pour resin depending on thickness</li>
+<li><strong>For art and jewelry:</strong> Low viscosity crystal clear resin</li>
+<li><strong>For concrete repairs:</strong> Epoxy mortar or injection resin</li>
+</ul>
+<p>At <strong>SobrePoxi</strong> we are experts in all these systems. We advise you at no cost so you use the correct product in your project.</p>`
+      },
+      {
+        heading: "Resin brands and qualities: what you should know",
+        content: `<p>Not all epoxy resins are the same, and product quality directly determines the final result of your project:</p>
+<h3>Professional grade vs. commercial resins</h3>
+<p>Professional grade resins have a higher percentage of solids, better chemical resistance and longer service life. Commercial grade resins (those found in hardware stores) are thinner, less resistant and can fail in demanding applications such as garage floors or daily-use furniture.</p>
+<h3>Factors that determine quality</h3>
+<ul>
+<li><strong>Solids percentage:</strong> 100% solids resins have no solvents that evaporate — everything you apply stays. Resins with 50-70% solids lose thickness when curing</li>
+<li><strong>Compressive strength:</strong> Good floor resins exceed 10,000 PSI compressive strength. Economy ones may be below 5,000 PSI</li>
+<li><strong>UV resistance:</strong> Resins without UV stabilizers yellow in weeks. Look for resins with integrated UV protection or always apply a protective topcoat</li>
+<li><strong>Working time (pot life):</strong> A professional resin gives you 30-45 minutes of working time. Economy ones can cure in 15-20 minutes, making application difficult</li>
+<li><strong>Viscosity:</strong> For floors, a medium viscosity allows self-leveling without running. For tables, you need low viscosity to eliminate bubbles</li>
+</ul>
+<h3>Why does SobrePoxi use premium products?</h3>
+<p>We work exclusively with professional grade resins with quality certifications. This means your floor or furniture will maintain its appearance and performance for decades, not months. The cost difference between a good product and a mediocre one is minimal compared to the cost of redoing a failed project.</p>`
+      },
+      {
+        heading: "Glossary of epoxy resin terms",
+        content: `<p>If you're researching epoxy resin, these are the terms you'll encounter frequently:</p>
+<ul>
+<li><strong>Pot life:</strong> The time you have to work the mixture before it starts to harden</li>
+<li><strong>Curing:</strong> Chemical process by which liquid resin becomes a hard solid. It's not the same as "drying" — it's an irreversible chemical reaction</li>
+<li><strong>Exothermic:</strong> The curing reaction generates heat. In large volumes (like river tables), excessive heat can cause cracking or yellowing</li>
+<li><strong>CSP (Concrete Surface Profile):</strong> Level of concrete roughness necessary for epoxy to adhere. Achieved with grinding or shot blasting</li>
+<li><strong>Topcoat:</strong> Final transparent layer that protects epoxy from UV rays, abrasion and chemicals</li>
+<li><strong>Polyaspartic:</strong> Type of aliphatic polyurea used as a high-resistance topcoat. Cures fast and has excellent UV resistance</li>
+<li><strong>Deep pour:</strong> Resin formulated for deep pours (up to 5cm per layer) without generating excessive heat</li>
+<li><strong>Table top:</strong> High transparency resin designed for furniture surfaces and thin encapsulations</li>
+<li><strong>Live edge:</strong> Natural uncut wood edge, used in river tables and artistic furniture</li>
+<li><strong>Flake:</strong> Decorative vinyl pieces scattered over wet epoxy to give texture and design</li>
+<li><strong>Primer:</strong> First layer that penetrates concrete and seals pores to improve system adhesion</li>
+<li><strong>Broadcast:</strong> Technique of scattering sand, quartz or flakes over the wet epoxy surface</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "What is the difference between epoxy and polyester resin?", answer: "Epoxy resin is more resistant, durable and has better adhesion than polyester. Polyester is more economical but yellows quickly and is less resistant to chemicals. For quality floors and furniture, we always recommend epoxy." },
+      { question: "Is epoxy resin toxic?", answer: "During application it may emit irritating vapors and protective equipment should be used (gloves, mask, goggles). Once fully cured (48-72 hours), it is inert and safe for food contact in certified formulations." },
+      { question: "How long does epoxy resin take to cure?", answer: "It depends on the formulation: floor resins cure to the touch in 12-24 hours and completely in 5-7 days. Furniture resins (deep pour) may take 48-72 hours to the touch. Temperature and humidity affect curing time." },
+      { question: "Can a damaged epoxy floor be repaired?", answer: "Yes. Localized damage can be repaired without redoing the entire floor. The affected area is sanded and a new layer of resin is applied. This is one of the system's advantages." }
+    ],
+    relatedSlugs: ["epoxy-flooring-garages", "epoxy-resin-furniture-guide", "modern-epoxy-floors-interiors"],
+    ctaText: "Don't know which resin you need? Contact us and we'll advise you for free",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "epoxy-floor-maintenance",
+    locale: "en",
+    title: "Epoxy Floor Maintenance: How to Care for Them to Last Longer",
+    metaTitle: "Epoxy Floor Maintenance | Care Guide | SobrePoxi",
+    metaDescription: "Learn how to clean and maintain your epoxy floors so they last 20+ years. Professional cleaning tips, recommended products and mistakes to avoid.",
+    keywords: "epoxy floor maintenance, how to clean epoxy floor, resin floor care, epoxy floor cleaning, epoxy floor lifespan, epoxy cleaning products",
+    heroTitle: "Epoxy Floor Maintenance",
+    heroSubtitle: "Professional tips to keep your floor looking like new for decades",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "5 min",
+    category: "Technical Guides",
+    categorySlug: "technical-guides",
+    sections: [
+      {
+        heading: "Daily cleaning is easier than you think",
+        content: `<p>One of the greatest advantages of epoxy floors is how <strong>incredibly easy they are to clean</strong>. Their non-porous surface prevents dirt from penetrating, so daily cleaning is reduced to:</p>
+<ol>
+<li><strong>Sweeping or vacuuming:</strong> Remove dust and loose particles with a soft broom or vacuum</li>
+<li><strong>Damp mopping:</strong> Use warm water with a neutral cleaner (pH 7-8). You don't need special products</li>
+<li><strong>Drying:</strong> Optionally, dry with a microfiber mop for a glossy finish</li>
+</ol>
+<p>That's it! A floor that takes minutes to clean versus tile joints that accumulate dirt.</p>`
+      },
+      {
+        heading: "Deep cleaning (monthly)",
+        content: `<p>Once a month, perform a more thorough cleaning:</p>
+<ul>
+<li>Use a mild degreaser cleaner diluted in water</li>
+<li>Apply with a microfiber mop in circular motions</li>
+<li>Rinse well with clean water</li>
+<li>For tough stains, let the cleaner act 5-10 minutes before scrubbing</li>
+</ul>
+<p><strong>Professional tip:</strong> Never use muriatic acid, concentrated chlorine or abrasive cleaners. These can damage the epoxy finish.</p>`
+      },
+      {
+        heading: "Products you SHOULD and SHOULD NOT use",
+        content: `<h3>Recommended products</h3>
+<ul>
+<li>Warm water + neutral soap (the safest and most effective)</li>
+<li>Multipurpose cleaners with neutral pH</li>
+<li>Diluted biodegradable degreasers</li>
+<li>Diluted ammonia (1/4 cup per gallon of water) for tough stains</li>
+</ul>
+<h3>Products to AVOID</h3>
+<ul>
+<li><strong>Muriatic acid:</strong> Corrodes the topcoat and dulls the floor</li>
+<li><strong>Pure vinegar:</strong> Its acidity can damage the gloss over time</li>
+<li><strong>Concentrated chlorine:</strong> Discolors and weakens the resin</li>
+<li><strong>Abrasive powder cleaners:</strong> Scratch the surface</li>
+<li><strong>Floor waxes:</strong> Create a layer that dulls epoxy's natural shine</li>
+</ul>`
+      },
+      {
+        heading: "How to prevent damage and extend service life",
+        content: `<p>With these simple care steps, your epoxy floor can last 20 years or more:</p>
+<ul>
+<li><strong>Furniture protectors:</strong> Use adhesive felt pads on table and chair legs</li>
+<li><strong>Entry mats:</strong> Capture sand and stones that can scratch the surface</li>
+<li><strong>Immediate spill cleaning:</strong> Although epoxy resists stains, quick cleaning is better</li>
+<li><strong>Avoid dragging heavy objects:</strong> Lift furniture when moving it</li>
+<li><strong>Sun protection:</strong> In areas with direct UV light, curtains help prevent discoloration</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "How often should I clean my epoxy floor?", answer: "Daily or every 2 days sweeping, and damp mopping 1-2 times per week is sufficient for most homes. Deep cleaning once a month." },
+      { question: "Can a pressure washer be used on epoxy floors?", answer: "Yes, but with caution. Use low-medium pressure and keep the nozzle at least 30cm from the floor. Excessive pressure can damage the topcoat over time." },
+      { question: "Does epoxy flooring lose gloss over time?", answer: "A slight loss of gloss after several years of use is normal. It can be restored with a new topcoat application without redoing the entire floor." },
+      { question: "What do I do if my epoxy floor gets scratched?", answer: "Superficial scratches can be polished with a fine polishing pad. For deep scratches, a professional can repair the affected area without intervening the rest of the floor." }
+    ],
+    relatedSlugs: ["epoxy-flooring-garages", "modern-epoxy-floors-interiors", "epoxy-floors-for-businesses"],
+    ctaText: "Does your epoxy floor need professional maintenance? Contact us",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "epoxy-floor-design-trends",
+    locale: "en",
+    title: "Epoxy Floor Designs: Trends and Ideas to Inspire You",
+    metaTitle: "Epoxy Floor Designs | Trends & Ideas | SobrePoxi",
+    metaDescription: "Explore the most striking epoxy floor designs: metallic, marble effect, 3D, flakes and more. Design ideas for homes and businesses in Costa Rica.",
+    keywords: "epoxy floor designs, metallic epoxy floors, resin marble effect floor, 3D epoxy floors, resin floor ideas, decorative epoxy floors",
+    heroTitle: "Epoxy Floor Designs",
+    heroSubtitle: "Trends, ideas and inspiration for your next project",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "6 min",
+    category: "Inspiration",
+    categorySlug: "inspiration",
+    sections: [
+      {
+        heading: "Metallic epoxy floors: the king of designs",
+        content: `<p><strong>Metallic floors</strong> are undoubtedly the most striking and requested design. They use special metallic pigments that, when manipulated during application, create unique three-dimensional effects:</p>
+<ul>
+<li><strong>Lava effect:</strong> Color flows simulating volcanic lava — dramatic and impactful</li>
+<li><strong>Ocean effect:</strong> Blue and turquoise tones with wave and depth effect</li>
+<li><strong>Marble effect:</strong> Natural veins imitating high-end Italian marble</li>
+<li><strong>Galaxy effect:</strong> Combination of blacks, blues and metallic sparkles</li>
+<li><strong>Cloud effect:</strong> Soft whites and grays with ethereal transitions</li>
+</ul>
+<p>Each metallic floor is <strong>100% unique and unrepeatable</strong> — literally a work of art under your feet.</p>`
+      },
+      {
+        heading: "Flake system (Flake Floor)",
+        content: `<p>The flake system is the most popular for garages, gyms and commercial areas due to its combination of aesthetics and functionality:</p>
+<ul>
+<li><strong>Classic multicolor:</strong> Mix of 3-4 colors that hides imperfections and dirt</li>
+<li><strong>Elegant monochromatic:</strong> A single flake color on a contrasting base</li>
+<li><strong>Partial coverage:</strong> Flakes distributed with spacing for a more subtle look</li>
+<li><strong>Total coverage:</strong> Flakes covering 100% for maximum texture and durability</li>
+</ul>
+<p>Flakes also provide <strong>anti-slip texture</strong>, making these floors functional as well as beautiful.</p>`
+      },
+      {
+        heading: "Designs with quartz and sand",
+        content: `<p>For environments requiring maximum resistance and an industrial-chic look:</p>
+<ul>
+<li><strong>Quartz broadcast:</strong> Colored quartz sand scattered over epoxy — ultra traffic resistant</li>
+<li><strong>Epoxy terrazzo:</strong> Simulates traditional terrazzo but seamless and with customizable colors</li>
+<li><strong>Natural sand:</strong> Creates organic textures evoking natural stone or beach</li>
+</ul>`
+      },
+      {
+        heading: "Color trends for 2026",
+        content: `<p>This year's most requested colors reflect a search for calm and connection with nature:</p>
+<ul>
+<li><strong>#1 Warm gray (Greige):</strong> The gray and beige mix dominates residential projects</li>
+<li><strong>#2 Pearl white:</strong> Luminosity and visual amplitude — favorite for apartments</li>
+<li><strong>#3 Satin black:</strong> Maximum elegance for premium and commercial spaces</li>
+<li><strong>#4 Earthy tones:</strong> Terracotta, clay and honey — natural warmth</li>
+<li><strong>#5 Deep blue:</strong> Sophistication and personality for unique spaces</li>
+</ul>`
+      },
+      {
+        heading: "How to choose the perfect design for your space",
+        content: `<p>Consider these factors when choosing your design:</p>
+<ul>
+<li><strong>Space lighting:</strong> Dark spaces benefit from light colors and glossy finishes</li>
+<li><strong>Area size:</strong> Light and uniform colors visually expand small spaces</li>
+<li><strong>Space use:</strong> High-traffic areas benefit from multicolor designs that hide wear</li>
+<li><strong>Decoration style:</strong> The floor should complement, not compete with, furniture and decoration</li>
+<li><strong>Desired maintenance:</strong> Dark colors show more dust; light colors show stains</li>
+</ul>
+<p>At <strong>SobrePoxi</strong> we create physical samples so you can see exactly how your floor will look before committing.</p>`
+      }
+    ],
+    faqs: [
+      { question: "Can any epoxy floor design be customized?", answer: "Yes. Epoxy floors are completely customizable in color, pattern, texture and finish. We can match any Pantone color or create unique combinations according to your vision." },
+      { question: "Does metallic flooring look the same in photos as in person?", answer: "Metallic floors are even more impressive in person. Photos don't capture the three-dimensional depth or how effects change according to the light angle. We recommend seeing samples live." },
+      { question: "Can I include logos or custom designs on the floor?", answer: "Yes. We can incorporate logos, names, geometric designs or any custom image on your epoxy floor. It's popular in businesses, showrooms and enthusiast garages." }
+    ],
+    relatedSlugs: ["epoxy-flooring-garages", "modern-epoxy-floors-interiors", "epoxy-floors-for-businesses"],
+    ctaText: "Already have an idea in mind? Tell us your vision and we'll make it reality",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "epoxy-resin-furniture-guide",
+    locale: "en",
+    title: "Epoxy Resin Furniture: River Tables, Art and Unique Designs",
+    metaTitle: "Epoxy Resin Furniture | River Tables & Designs | SobrePoxi",
+    metaDescription: "Everything about epoxy resin furniture: river tables, coffee tables, bars and more. Discover designs, manufacturing process and how to order your unique piece in Costa Rica.",
+    keywords: "epoxy resin furniture, epoxy river table, resin and wood table, epoxy furniture Costa Rica, epoxy resin bar, epoxy resin art, resin coffee table",
+    heroTitle: "Epoxy Resin Furniture",
+    heroSubtitle: "Unique pieces where nature meets art",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "7 min",
+    category: "Furniture",
+    categorySlug: "furniture",
+    sections: [
+      {
+        heading: "What is epoxy resin furniture?",
+        content: `<p><strong>Epoxy resin furniture</strong> is furniture pieces that combine natural materials —mainly wood— with crystal clear or pigmented epoxy resin. The result is furniture that fuses wood's organic beauty with resin's artistic effects.</p>
+<p>The most iconic piece is the <strong>"river table"</strong>: two pieces of live-edge wood joined by a river of transparent or colored resin that flows between them. But the possibilities go much further.</p>`
+      },
+      {
+        heading: "Types of epoxy resin furniture",
+        content: `<ul>
+<li><strong>River Tables:</strong> The crown jewel. Dining tables, desks or coffee tables with resin rivers between wood planks</li>
+<li><strong>Coffee tables:</strong> Compact pieces with artistic designs, including encapsulations of decorative objects</li>
+<li><strong>Bars and counters:</strong> Bar surfaces with resin incorporating LEDs, objects or custom designs</li>
+<li><strong>Artistic cutting boards:</strong> Functional and decorative pieces for the kitchen</li>
+<li><strong>Wall clocks:</strong> Functional art with wood and resin combinations</li>
+<li><strong>Shelves and bookcases:</strong> Decorative pieces with live edge and resin</li>
+<li><strong>Wall art:</strong> Three-dimensional paintings and murals in resin</li>
+</ul>`
+      },
+      {
+        heading: "The creation process of a river table",
+        content: `<p>Creating a river table is an artisanal process that requires patience and experience:</p>
+<ol>
+<li><strong>Wood selection:</strong> Live edge planks are chosen — each piece is unique for its natural shapes</li>
+<li><strong>Preparation:</strong> Drying, planing and sealing the wood to prevent air bubbles</li>
+<li><strong>Mold construction:</strong> A custom mold is created where the wood and resin will be placed</li>
+<li><strong>Resin pouring:</strong> The resin is mixed and poured (often in multiple layers for thick pieces)</li>
+<li><strong>Bubble removal:</strong> A heat gun or torch removes trapped bubbles</li>
+<li><strong>Curing:</strong> 48-72 hours of curing controlling temperature and humidity</li>
+<li><strong>Demolding and cutting:</strong> Removed from the mold and cut to final dimensions</li>
+<li><strong>Progressive sanding:</strong> From grit 80 to 3000 to achieve crystal transparency</li>
+<li><strong>Finishing:</strong> Oil, varnish or final protective topcoat</li>
+<li><strong>Legs/structure:</strong> Metal, wood or custom design legs are installed</li>
+</ol>`
+      },
+      {
+        heading: "Why invest in resin furniture?",
+        content: `<ul>
+<li><strong>100% unique piece:</strong> Each piece is unrepeatable due to wood's natural shapes and resin's effects</li>
+<li><strong>Exceptional durability:</strong> Epoxy resin is highly resistant to scratches, stains and moisture</li>
+<li><strong>Artistic value:</strong> They are functional art pieces that become the center of attention in any space</li>
+<li><strong>Total customization:</strong> Resin color, wood type, dimensions, design — all made to measure</li>
+<li><strong>Long-term investment:</strong> Well-made resin furniture maintains and even increases its value over time</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "How much does a river table cost?", answer: "The price varies according to size, wood type and design complexity. Coffee tables start in an accessible range, while large dining tables represent a greater investment. Request a quote for your specific project." },
+      { question: "Does resin on tables turn yellow?", answer: "The professional quality resins we use at SobrePoxi include UV stabilizers that minimize yellowing. Additionally, we apply protective UV topcoats to maintain transparency for years." },
+      { question: "Can a river table be used as a daily dining table?", answer: "Yes. With the appropriate protective finish, a river table is completely functional for daily use. It resists moderate heat, stains and moisture. We recommend using coasters for very hot drinks." },
+      { question: "How long does it take to make a river table?", answer: "Depending on size and complexity, the complete process takes between 3 and 6 weeks: wood selection, preparation, pouring, curing, sanding and finishing." }
+    ],
+    relatedSlugs: ["types-of-epoxy-resin", "epoxy-floor-design-trends"],
+    ctaText: "Want your own river table or custom furniture? Let's talk about your idea",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "epoxy-floors-for-businesses",
+    locale: "en",
+    title: "Epoxy Floors for Businesses: Restaurants, Stores, Offices and More",
+    metaTitle: "Epoxy Floors for Businesses | Commercial & Offices | SobrePoxi",
+    metaDescription: "Commercial epoxy floors for restaurants, stores, offices, clinics and more. Professional designs, high durability and regulatory compliance in Costa Rica.",
+    keywords: "epoxy floors businesses, resin floor restaurant, epoxy floor office, commercial floors Costa Rica, epoxy floor clinic, floors for stores",
+    heroTitle: "Epoxy Floors for Businesses",
+    heroSubtitle: "Impress your customers with a floor that reflects your brand quality",
+    publishedDate: "2026-02-08",
+    updatedDate: "2026-02-08",
+    readingTime: "6 min",
+    category: "Commercial Flooring",
+    categorySlug: "commercial-flooring",
+    sections: [
+      {
+        heading: "Why do businesses choose epoxy floors?",
+        content: `<p>The floor is one of the largest surfaces in any business and has a direct impact on your customers' perception. A <strong>professional epoxy floor</strong> communicates quality, modernity and attention to detail.</p>
+<p>Beyond aesthetics, epoxy floors offer operational advantages that make them ideal for commercial environments:</p>
+<ul>
+<li><strong>Extreme durability:</strong> Withstand intense traffic, impacts and abrasion without deteriorating</li>
+<li><strong>Easy cleaning:</strong> Non-porous surface allows quick and efficient cleaning</li>
+<li><strong>Hygiene:</strong> No joints where bacteria accumulate, ideal for food and health</li>
+<li><strong>Aesthetic versatility:</strong> Customizable designs that reinforce brand identity</li>
+</ul>`
+      },
+      {
+        heading: "Ideal sectors for epoxy floors",
+        content: `<h3>Restaurants and industrial kitchens</h3>
+<p>Epoxy floors are the most hygienic option for professional kitchens. They don't absorb fats, don't develop mold and resist liquid spills. Anti-slip systems prevent accidents in preparation areas.</p>
+<h3>Stores and retail</h3>
+<p>A glossy, custom epoxy floor creates a memorable shopping experience. Metallic designs or special effects impress customers from the first moment.</p>
+<h3>Corporate offices</h3>
+<p>The visual continuity of epoxy conveys professionalism and modernity. Neutral tones and polished concrete effects are popular in corporate spaces.</p>
+<h3>Clinics and laboratories</h3>
+<p>Epoxy's antimicrobial and impermeable surface makes it perfect for health environments. It complies with the strictest hygiene regulations.</p>
+<h3>Gyms and sports centers</h3>
+<p>Systems with quartz or flakes provide the anti-slip texture necessary for high-traffic zones and weight areas.</p>`
+      },
+      {
+        heading: "Installation considerations in commercial environments",
+        content: `<p>Installing epoxy floors in businesses requires special considerations:</p>
+<ul>
+<li><strong>Installation time:</strong> 3-5 days for complete systems. Can be planned in stages to minimize operational impact.</li>
+<li><strong>Chemical resistance:</strong> Gastronomic venue floors must resist oils, fats and aggressive cleaning products.</li>
+<li><strong>Inventory movement:</strong> In warehouses and distribution centers, resistance to impacts and forklift traffic is critical.</li>
+<li><strong>Regulatory compliance:</strong> In Costa Rica, commercial floors must comply with accessibility and safety codes.</li>
+</ul>`
+      },
+      {
+        heading: "Commercial epoxy floor trends for 2026",
+        content: `<p>Commercial epoxy floor trends focus on:</p>
+<ul>
+<li><strong>Premium marble effect:</strong> Imitation natural marble at a fraction of the cost, with greater durability</li>
+<li><strong>Corporate tones:</strong> Sophisticated grays, technical whites and subtle metallic tones</li>
+<li><strong>Antimicrobial systems:</strong> Integrated bacterial resistance for health and food environments</li>
+<li><strong>Conductive epoxy:</strong> For environments with sensitive electronic equipment</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "How long does an epoxy floor last in a business?", answer: "A professional epoxy floor in a commercial environment can last between 10 and 20 years with adequate maintenance. Durability depends on the chosen system and traffic level." },
+      { question: "Can epoxy be installed in a venue with active operations?", answer: "Yes, but requires planning. It can be installed in sections to not completely interrupt operations. There are also fast-curing systems that allow reopening in less time." },
+      { question: "What maintenance does a commercial epoxy floor require?", answer: "Maintenance is simple: daily sweeping, periodic mopping with neutral cleaner. For high-traffic zones, monthly deep cleaning with specialized products is recommended." }
+    ],
+    relatedSlugs: ["epoxy-floor-design-trends", "epoxy-floor-maintenance"],
+    ctaText: "Need an epoxy floor for your business? Request a personalized quote",
     ctaLink: "/contact"
   }
 ];
