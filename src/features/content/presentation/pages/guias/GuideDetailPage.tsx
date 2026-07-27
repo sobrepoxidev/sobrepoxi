@@ -47,7 +47,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const foundGuide = getGuideBySlug(slug, locale);
-  if (!foundGuide) return {};
+  if (!foundGuide) {
+    // Guía inexistente: marcar como noindex para evitar Soft 404.
+    //
+    // El notFound() del componente renderiza la página 404 visual, pero el
+    // LocaleLayout sigue inyectando sus propios meta por encima (robots
+    // "index, follow" + canonical al locale). Con este override explícito,
+    // Google trata la URL como "Excluida por noindex" (estado aceptable)
+    // en vez de "Soft 404" (error). Combinado con el sitemap que no lista
+    // estos slugs, Google los irá descartando.
+    return {
+      title: "Página no encontrada | SobrePoxi",
+      robots: { index: false, follow: false },
+      alternates: {
+        canonical: `https://sobrepoxi.com/${locale}/guias/${slug}`,
+      },
+    };
+  }
 
   return buildMetadata({
     locale,
