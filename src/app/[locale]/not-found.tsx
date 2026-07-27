@@ -1,30 +1,29 @@
-'use client';
+// src/app/[locale]/not-found.tsx
+//
+// Server Component (sin 'use client'). Next.js solo emite HTTP 404 real
+// cuando not-found.tsx es un Server Component. Una versión 'use client'
+// sirve status 200 con contenido "404" visual → Google lo marca como
+// Soft 404 y degrada el sitio. (Fix SEO.)
 
-import { Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-export default function NotFoundPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <NotFoundContent />
-    </Suspense>
-  );
-}
-
-function NotFoundContent() {
-  const router = useRouter();
-  
+export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#121212]">
-      <div className="text-center">
-        <h1 className="text-6xl font-bold gold-gradient mb-4">404</h1>
-        <p className="text-2xl gold-gradient-bright mb-8">Page Not Found</p>
-        <button
-          onClick={() => router.push('/')}
-          className="px-6 py-2 bg-[#303030] text-[#b68b44] rounded hover:bg-[#81786c]"
+      <div className="text-center px-4">
+        <h1 className="text-6xl md:text-7xl font-bold gold-gradient mb-4">404</h1>
+        <p className="text-xl md:text-2xl gold-gradient-bright mb-2">
+          Página no encontrada
+        </p>
+        <p className="text-gray-400 mb-8 max-w-md mx-auto">
+          La página que buscas no existe o fue movida.
+        </p>
+        <Link
+          href="/es"
+          className="inline-block px-6 py-2.5 bg-amber-500 text-black font-semibold rounded-lg hover:bg-amber-400 transition-colors"
         >
-          Go Home
-        </button>
+          Volver al inicio
+        </Link>
       </div>
     </div>
   );

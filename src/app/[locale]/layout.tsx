@@ -24,7 +24,6 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
   const CANONICAL_HOST = "sobrepoxi.com";
 
   const path = pathname === "/" ? "" : pathname;
-  const otherLocale = locale === "es" ? "en" : "es";
 
   return {
     metadataBase: new URL(`https://${CANONICAL_HOST}`),
@@ -41,14 +40,15 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
     }),
 
     // ——— Canonical + hreflangs ———
+    // x-default SIEMPRE apunta a la versión por defecto (es) en TODAS las
+    // páginas. Google exige consistencia: si x-default varía entre páginas,
+    // ignora todo el cluster de hreflang. (Fix SEO: /en sin indexar.)
     alternates: {
       canonical: `https://${CANONICAL_HOST}/${locale}${path}`,
       languages: {
-        [locale === "es" ? "es-cr" : "en-us"]:
-          `https://${CANONICAL_HOST}/${locale}${path}`,
-        [otherLocale === "es" ? "es-cr" : "en-us"]:
-          `https://${CANONICAL_HOST}/${otherLocale}${path}`,
-        "x-default": `https://${CANONICAL_HOST}/${locale}${path}`,
+        "es-cr": `https://${CANONICAL_HOST}/es${path}`,
+        "en-us": `https://${CANONICAL_HOST}/en${path}`,
+        "x-default": `https://${CANONICAL_HOST}/es${path}`,
       },
     },
   };
@@ -97,27 +97,25 @@ export default async function LocaleLayout({
               url: "https://sobrepoxi.com",
               logo: "https://sobrepoxi.com/logo.png",
               image: [
-                "https://sobrepoxi.com/og-image.jpg",
-                "https://sobrepoxi.com/gallery/epoxy-floors-1.jpg",
-                "https://sobrepoxi.com/gallery/luxury-furniture-1.jpg"
+                "https://sobrepoxi.com/og-image.webp",
               ],
               areaServed: "Costa Rica",
-              telephone: "+506 8888-8888",
+              telephone: "+50685850000",
               email: "info@sobrepoxi.com",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Barrio San José, 200 metros sur de la Iglesia Católica",
-                addressLocality: "San José",
-                addressRegion: "San José",
-                postalCode: "10101",
+                streetAddress: "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
+                addressLocality: "Vásquez de Coronado",
+                addressRegion: "San Isidro",
+                postalCode: "11101",
                 addressCountry: "CR"
               },
               geo: {
                 "@type": "GeoCoordinates",
-                latitude: 9.9281,
-                longitude: -84.0907
+                latitude: 9.9355431,
+                longitude: -84.1545449
               },
-              hasMap: "https://maps.google.com/?q=9.9281,-84.0907",
+              hasMap: "https://maps.google.com/?q=9.9355431,-84.1545449",
               priceRange: "$$-$$$",
               openingHours: [
                 "Mo-Fr 08:00-17:00",
