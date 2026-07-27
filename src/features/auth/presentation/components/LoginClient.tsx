@@ -6,6 +6,7 @@ import { Link } from '@/shared/i18n/navigation'
 import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useLocale } from 'next-intl'
 import { useAuth } from '../providers/AuthProvider'
+import { getSafeRedirectPath } from '@/shared/utils/safeRedirect'
 
 export default function LoginClient() {
   const router = useRouter()
@@ -25,8 +26,9 @@ export default function LoginClient() {
   useEffect(() => {
     setMounted(true)
     const returnUrlParam = searchParams.get('returnUrl') || searchParams.get('redirect')
+    // Sanitizamos para prevenir open redirect / phishing via redirect.
     if (returnUrlParam) {
-      setReturnUrl(returnUrlParam)
+      setReturnUrl(getSafeRedirectPath(returnUrlParam, '/'))
     }
   }, [searchParams])
 
@@ -49,7 +51,8 @@ export default function LoginClient() {
         setLoading(false)
       } else {
         setConfirmationMsg(locale === 'es' ? 'Iniciando sesión...' : 'Signing in...')
-        router.replace(decodeURIComponent(returnUrl))
+        // returnUrl ya está sanitizado en el useEffect; refuerzo defensivo.
+        router.replace(getSafeRedirectPath(returnUrl, '/'))
       }
     } catch (err) {
       console.error('[LoginClient] sign-in error:', err)

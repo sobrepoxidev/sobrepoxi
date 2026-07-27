@@ -1,19 +1,16 @@
 ﻿import { NextResponse } from 'next/server'
 import { exchangeOAuthCode } from '@/features/auth/application/use-cases/exchangeOAuthCode'
+import { getSafeRedirectPath } from '@/shared/utils/safeRedirect'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  let next = searchParams.get('next') ?? '/'
+  // Sanitizamos `next` para prevenir open redirect / phishing via redirect
+  // (política "Páginas engañosas" de Google Safe Browsing).
+  const next = getSafeRedirectPath(searchParams.get('next'), '/')
 
   if (!code) {
     return NextResponse.redirect(`${origin}/login?error=code_missing`)
-  }
-
-  try {
-    next = decodeURIComponent(next)
-  } catch {
-    // use original value
   }
 
   const result = await exchangeOAuthCode({ code, next })

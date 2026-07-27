@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { FaEnvelope, FaLock, FaUser, FaPhone, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useLocale } from 'next-intl'
 import { useAuth } from '../providers/AuthProvider'
+import { getSafeRedirectPath } from '@/shared/utils/safeRedirect'
 
 export default function RegisterClient() {
   const { supabase } = useAuth()
@@ -97,7 +98,8 @@ export default function RegisterClient() {
     setMounted(true)
     const returnUrlParam = searchParams.get('returnUrl')
     if (returnUrlParam) {
-      setReturnUrl(returnUrlParam)
+      // Sanitizamos para prevenir open redirect / phishing via redirect.
+      setReturnUrl(getSafeRedirectPath(returnUrlParam, '/'))
     }
   }, [searchParams])
 
