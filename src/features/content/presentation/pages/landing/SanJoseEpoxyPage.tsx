@@ -9,7 +9,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/shared/seo/structuredData";
@@ -234,19 +233,19 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
 
   return (
     <>
-      {/* Structured data */}
-      <Script
-        id="sanjose-localbusiness-schema"
+      {/* Structured data — <script> nativo (no next/script) para SSR.
+          next/script carga los JSON-LD del lado del cliente y Googlebot
+          no siempre los ejecuta, perdiendo rich snippets. Con <script>
+          nativo el JSON-LD queda en el HTML inicial. */}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
-      <Script
-        id="sanjose-breadcrumb-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <Script
-        id="sanjose-faq-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
