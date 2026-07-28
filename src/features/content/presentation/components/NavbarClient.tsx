@@ -131,17 +131,17 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
                               priority
                               unoptimized
                             />
-              <h1
+              <span
                 className="
                   flex items-center gap-0
                   text-md md:text-3xl font-extrabold tracking-wider
-                  gold-gradient              
+                  gold-gradient
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
-                  motion-safe:animate-shine 
+                  motion-safe:animate-shine
                   sr-only"
               >
                 SobrePoxi
-              </h1>
+              </span>
             </Link>
           </div>
 

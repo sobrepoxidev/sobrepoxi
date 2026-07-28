@@ -75,18 +75,18 @@ export default async function Navbar({ locale }: { locale: string }) {
                 unoptimized
               />
 
-              <h1
+              <span
                 className="
                   flex items-center gap-0
                   text-lg md:text-3xl font-extrabold tracking-wider
-                  gold-gradient-bright            
+                  gold-gradient-bright
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
                   motion-safe:animate-shine sr-only"
 
 
               >
                 SobrePoxi
-              </h1>
+              </span>
             </div>
           </Link>
         </div>
