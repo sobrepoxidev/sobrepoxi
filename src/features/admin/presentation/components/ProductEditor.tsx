@@ -192,6 +192,18 @@ export function ProductEditor({ locale, product, categories, onSave, onCancel }:
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
+    // Detectar posible variante duplicada (deep-ocean-2, pacific-coast-1, etc.).
+    // No bloquea el guardado — solo avisa para que el admin confirme si es un
+    // producto legítimamente distinto o un duplicado por error. Slugs duplicados
+    // crean URLs que compiten entre sí en Google (canibalización SEO).
+    if (/-\d+$/.test(slug)) {
+      console.warn(
+        `[ProductEditor] El slug "${slug}" termina en -<número>. ` +
+        `Si es un duplicado de otro producto, considera editarlo en vez de crear uno nuevo. ` +
+        `Slugs duplicados causan canibalización SEO.`
+      );
+    }
+
     const payload: Partial<Product> = {
       name_es: cleanNameEs,
       name_en: cleanNameEn,
