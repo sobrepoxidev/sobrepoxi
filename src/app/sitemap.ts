@@ -65,6 +65,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { base: 'industrial-epoxy-flooring', priority: 0.8, freq: 'monthly' as const },
     // Páginas de servicio local (SEO geográfico)
     { base: 'pisos-epoxicos-san-jose', priority: 0.9, freq: 'monthly' as const },
+    { base: 'pisos-epoxicos-cartago', priority: 0.8, freq: 'monthly' as const },
+    { base: 'pisos-epoxicos-heredia', priority: 0.8, freq: 'monthly' as const },
+    { base: 'pisos-epoxicos-alajuela', priority: 0.8, freq: 'monthly' as const },
+    { base: 'pisos-epoxicos-guanacaste', priority: 0.8, freq: 'monthly' as const },
   ]
 
   const staticEntries: MetadataRoute.Sitemap = []

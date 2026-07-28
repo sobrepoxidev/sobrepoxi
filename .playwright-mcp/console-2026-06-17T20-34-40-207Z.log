@@ -1,0 +1,2 @@
+[    1258ms] [ERROR] Failed to load resource: the server responded with a status of 406 () @ https://jhrrachvacurxgotsvbf.supabase.co/rest/v1/products?select=*&name=eq.Piso%2520Ep%25C3%25B3xico%2520Rojo%2520Magma:0
+[    1260ms] [ERROR] [ProductDetail] fetch error: {code: PGRST116, details: The result contains 0 rows, hint: null, message: JSON object requested, multiple (or no) rows returned} @ https://sobrepoxi.com/_next/static/chunks/2621-4002dd4d4dae40be.js?dpl=dpl_DtChCg7BsB6FqfaakXWKrN2cKPfT:0

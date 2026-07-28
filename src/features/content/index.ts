@@ -9,6 +9,11 @@ export { getFooterNavigation } from './application/use-cases/getFooterNavigation
 // Guides
 export { getGuides, getGuideBySlug, getAllGuideSlugs, getRelatedGuides, getGuideCategories } from './application/guides/data';
 
+// City epoxy pages (SEO local) — data only; the component is imported
+// directly from its file to avoid a circular barrel dependency.
+export { CITY_CONFIGS, getCityConfig, getAllCitySlugs } from './application/cityEpoxyData';
+export type { CityEpoxyConfig } from './application/cityEpoxyData';
+
 // Components
 export { default as Navbar } from './presentation/components/Navbar';
 export { default as NavbarClient } from './presentation/components/NavbarClient';
