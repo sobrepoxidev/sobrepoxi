@@ -638,6 +638,373 @@ const guidesES: Guide[] = [
     relatedSlugs: ["disenos-pisos-epoxicos-tendencias", "mantenimiento-pisos-epoxicos"],
     ctaText: "¿Necesitas un piso epóxico para tu negocio? Solicita una cotización personalizada",
     ctaLink: "/contact"
+  },
+  {
+    slug: "precios-pisos-epoxicos-costa-rica",
+    locale: "es",
+    title: "Precios de Pisos Epóxicos en Costa Rica 2026: Guía Completa de Costos",
+    metaTitle: "Precios de Pisos Epóxicos en Costa Rica 2026 | Guía de Costos | SobrePoxi",
+    metaDescription: "Descubre cuánto cuesta un piso epóxico en Costa Rica en 2026. Precios por metro cuadrado según tipo (sólido, metálico, escamas), comparativa y factores que afectan el costo.",
+    keywords: "precio piso epóxico Costa Rica, costo piso epóxico, precio resina epóxica CR, cuánto cuesta piso epóxico, presupuesto piso epoxi Costa Rica, precio metro cuadrado epóxico",
+    heroTitle: "Precios de Pisos Epóxicos en Costa Rica",
+    heroSubtitle: "Guía completa y honesta de costos 2026: qué incluye cada precio y cómo ahorrar",
+    publishedDate: "2026-07-27",
+    updatedDate: "2026-07-27",
+    readingTime: "9 min",
+    category: "Precios y Costos",
+    categorySlug: "precios",
+    sections: [
+      {
+        heading: "Rango general de precios en Costa Rica 2026",
+        content: `<p>El precio de un piso epóxico en Costa Rica depende del sistema elegido, el área a cubrir y el estado del concreto existente. Estos son los rangos típicos del mercado costarricense en 2026, <strong>incluyendo materiales y mano de obra profesional</strong>:</p>
+<ul>
+<li><strong>Sistema básico (epóxico sólido monocapa):</strong> Desde ₡8,000 a ₡12,000 por m²</li>
+<li><strong>Sistema con escamas (flake):</strong> Desde ₡12,000 a ₡18,000 por m²</li>
+<li><strong>Sistema tricapa premium:</strong> Desde ₡18,000 a ₡28,000 por m²</li>
+<li><strong>Epóxico metálico decorativo:</strong> Desde ₡22,000 a ₡38,000 por m²</li>
+<li><strong>Sistema industrial de alto tráfico:</strong> Desde ₡15,000 a ₡30,000 por m²</li>
+</ul>
+<p>Estos precios son referenciales para proyectos desde 30 m². Para áreas menores, el costo por m² suele ser mayor por los costos fijos de movilización y preparación.</p>`
+      },
+      {
+        heading: "Qué incluye realmente un precio profesional",
+        content: `<p>Una cotización seria de piso epóxico debe incluir los siguientes componentes. Si un precio parece demasiado bajo, probablemente omite alguno:</p>
+<ol>
+<li><strong>Visita técnica y evaluación del sustrato:</strong> Medición de humedad, revisión de grietas y evaluación de la preparación necesaria</li>
+<li><strong>Preparación mecánica del concreto:</strong> Esmerilado o shot blasting para lograr el perfil de superficie adecuado (CSP 2-3)</li>
+<li><strong>Reparación de grietas y juntas:</strong> Sellado de fisuras con mortero epóxico antes de aplicar el sistema</li>
+<li><strong>Imprimante (primer):</strong> Primera capa que sella los poros del concreto y garantiza adherencia</li>
+<li><strong>Capas intermedias:</strong> Cuerpo del sistema con el color o diseño elegido</li>
+<li><strong>Topcoat protector:</strong> Capa final de poliuretano o poliaspártico que protege contra UV y abrasión</li>
+<li><strong>Mano de obra especializada:</strong> Aplicadores certificados con equipo profesional</li>
+<li><strong>Materiales de calidad:</strong> Resinas de grado profesional, no productos comerciales de ferretería</li>
+<li><strong>Garantía escrita:</strong> Mínimo 2 años en instalación profesional seria</li>
+</ol>`
+      },
+      {
+        heading: "Factores que afectan el precio",
+        content: `<p>El costo final de tu proyecto puede variar según estos factores:</p>
+<ul>
+<li><strong>Área total:</strong> A mayor superficie, menor precio por m² (economía de escala)</li>
+<li><strong>Estado del concreto:</strong> Concretos dañados requieren más preparación y suben el costo</li>
+<li><strong>Complejidad del diseño:</strong> Los pisos metálicos con efectos personalizados requieren más tiempo de aplicación</li>
+<li><strong>Acceso al sitio:</strong> Trabajos en altura, sótanos o lugares de difícil acceso aumentan el costo</li>
+<li><strong>Plazo de ejecución:</strong> Si necesitas acabados urgentes (curado rápido poliaspártico), el precio sube</li>
+<li><strong>Ubicación geográfica:</strong> Proyectos fuera del Gran Área Metropolitana pueden tener recargo por viáticos</li>
+</ul>`
+      },
+      {
+        heading: "Comparativa: ¿conviene el piso epóxico o alternativas?",
+        content: `<p>Para decidir si el piso epóxico es la mejor inversión, compara su costo total de propiedad con otras opciones populares en Costa Rica:</p>
+<table>
+<thead><tr><th>Opción</th><th>Costo inicial (m²)</th><th>Vida útil</th><th>Mantenimiento</th></tr></thead>
+<tbody>
+<tr><td>Piso epóxico profesional</td><td>₡8,000 - ₡38,000</td><td>15-20 años</td><td>Mínimo (limpieza húmeda)</td></tr>
+<tr><td>Porcelanato</td><td>₡10,000 - ₡25,000</td><td>15-20 años</td><td>Moderado (juntas acumulan suciedad)</td></tr>
+<tr><td>Madera/laminado</td><td>₡6,000 - ₡18,000</td><td>10-15 años</td><td>Alto (se raya, absorbe humedad)</td></tr>
+<tr><td>Concreto pulido</td><td>₡5,000 - ₡12,000</td><td>20+ años</td><td>Bajo</td></tr>
+<tr><td>Mármol natural</td><td>₡25,000 - ₡60,000</td><td>30+ años</td><td>Alto (manchas, sellado periódico)</td></tr>
+</tbody>
+</table>
+<p>El piso epóxico ofrece la mejor relación costo-beneficio cuando se busca durabilidad + estética premium sin juntas.</p>`
+      },
+      {
+        heading: "Cómo ahorrar en tu proyecto sin sacrificar calidad",
+        content: `<p>Hay formas legítimas de reducir el costo de tu piso epóxico sin caer en instalaciones de mala calidad:</p>
+<ul>
+<li><strong>Agrupa proyectos con vecinos:</strong> Si varios hogares de tu zona contratan juntos, el contratista ahorra en movilización y puede ofrecer mejor precio</li>
+<li><strong>Elige temporada baja:</strong> Los meses de menor demanda (octubre-noviembre) suelen tener mejores precios</li>
+<li><strong>Prepara el sitio:</strong> Retira muebles y limpia el área tú mismo para ahorrar horas de mano de obra</li>
+<li><strong>Pide varios sistemas:</strong> Pide cotización de 2-3 opciones para comparar relación costo-beneficio real</li>
+<li><strong>No escatimes en la preparación:</strong> El 90% de los fallos de pisos epóxicos son por mala preparación del concreto</li>
+</ul>
+<p><strong>Advertencia:</strong> Huye de ofertas que parecen demasiado buenas. Un piso epóxico "desde ₡4,000/m²" casi siempre significa materiales de ferretería comercial y sin preparación del sustrato. Durará meses, no años.</p>`
+      },
+      {
+        heading: "¿Por qué pedir cotización personalizada?",
+        content: `<p>Los precios publicados en internet son referenciales. Tu proyecto tiene características únicas que solo una visita técnica puede evaluar:</p>
+<ul>
+<li>Estado real del concreto (humedad, grietas, nivelación)</li>
+<li>Condiciones ambientales del sitio (sol directo, ventilación)</li>
+<li>Uso específico del espacio (vehicular, peatonal, industrial)</li>
+<li>Tu presupuesto y expectativas de diseño</li>
+</ul>
+<p>En <strong>SobrePoxi</strong> realizamos visitas técnicas sin costo en el Gran Área Metropolitana. Te damos un presupuesto honesto y detallado, sin sorpresas, con todos los componentes del sistema claramente especificados.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuál es el precio del metro cuadrado de piso epóxico en Costa Rica?", answer: "En 2026, el precio por metro cuadrado de piso epóxico en Costa Rica varía entre ₡8,000 y ₡38,000 CRC, incluyendo materiales y mano de obra. El rango exacto depende del sistema elegido: desde el epóxico sólido básico hasta los pisos metálicos decorativos de alta gama." },
+      { question: "¿El precio del piso epóxico incluye garantía?", answer: "Las instalaciones profesionales serias en Costa Rica incluyen garantía escrita de mínimo 2 años. Si un proveedor no ofrece garantía o sus precios son muy bajos, es una señal de alarma sobre la calidad de los materiales y la preparación." },
+      { question: "¿Cuánto cuesta un piso epóxico para una cochera de 2 carros?", answer: "Para una cochera estándar de 2 vehículos (aproximadamente 30-35 m²), un sistema de epóxico con escamas de calidad profesional cuesta entre ₡400,000 y ₡650,000 CRC total, incluyendo preparación, materiales, mano de obra y garantía." },
+      { question: "¿Por qué hay tanta diferencia de precios entre proveedores?", answer: "La diferencia suele estar en: (1) calidad de los materiales (profesional vs comercial), (2) preparación del concreto (esmerilado vs solo barrido), (3) número de capas del sistema, y (4) presencia o no de topcoat protector UV. Siempre pide desglose detallado del sistema." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-para-cocheras", "tipos-de-resina-epoxica", "mantenimiento-pisos-epoxicos"],
+    ctaText: "¿Quieres un presupuesto honesto y detallado para tu proyecto? Solicita visita técnica gratuita",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "cuanto-cuesta-piso-epoxico-cochera",
+    locale: "es",
+    title: "¿Cuánto Cuesta un Piso Epóxico para Cochera en Costa Rica?",
+    metaTitle: "Costo Piso Epóxico Cochera 2026 | Presupuesto Real | SobrePoxi",
+    metaDescription: "Cuánto cuesta realmente un piso epóxico para cochera en Costa Rica en 2026. Precios por tamaño, comparativa de sistemas y qué incluir en el presupuesto.",
+    keywords: "precio piso epóxico cochera, costo piso garaje epóxico, presupuesto cochera resina Costa Rica, piso garaje precio CR, cuanto cuesta piso epoxi cochera",
+    heroTitle: "¿Cuánto Cuesta un Piso Epóxico para Cochera?",
+    heroSubtitle: "Presupuestos reales 2026 según tamaño y sistema para tu garaje en Costa Rica",
+    publishedDate: "2026-07-27",
+    updatedDate: "2026-07-27",
+    readingTime: "8 min",
+    category: "Precios y Costos",
+    categorySlug: "precios",
+    sections: [
+      {
+        heading: "Precio estimado según tamaño de cochera",
+        content: `<p>El costo total de un piso epóxico para cochera depende principalmente del tamaño del área. Estos son presupuestos estimados en Costa Rica 2026 para el <strong>sistema más popular (epóxico con escamas)</strong>, incluyendo preparación, materiales, mano de obra y topcoat protector:</p>
+<table>
+<thead><tr><th>Tamaño de cochera</th><th>Superficie aprox.</th><th>Precio total estimado</th></tr></thead>
+<tbody>
+<tr><td>Cochera 1 vehículo</td><td>15-20 m²</td><td>₡220,000 - ₡360,000</td></tr>
+<tr><td>Cochera 2 vehículos</td><td>30-35 m²</td><td>₡400,000 - ₡650,000</td></tr>
+<tr><td>Cochera 3 vehículos</td><td>45-55 m²</td><td>₡580,000 - ₡990,000</td></tr>
+<tr><td>Cochera doble con bodega</td><td>50-70 m²</td><td>₡650,000 - ₡1,260,000</td></tr>
+</tbody>
+</table>
+<p>Estos precios son referenciales. Una visita técnica es necesaria para un presupuesto exacto según el estado de tu concreto.</p>`
+      },
+      {
+        heading: "Comparativa de sistemas para cochera",
+        content: `<p>No todos los pisos epóxicos para cochera son iguales. Estos son los tres sistemas más comunes, ordenados por precio y durabilidad:</p>
+<h3>1. Epóxico sólido monocapa (económico)</h3>
+<p><strong>Precio:</strong> ₡8,000 - ₡12,000 por m²</p>
+<p>Una sola capa de epóxico sólido color. Es la opción más económica pero tiene menor resistencia a la abrasión de neumáticos y muestra más el desgaste con el tiempo. Adecuado para cocheras de uso liviano.</p>
+<h3>2. Epóxico con escamas (estándar)</h3>
+<p><strong>Precio:</strong> ₡12,000 - ₡18,000 por m²</p>
+<p>El sistema más popular para cocheras. Combina epóxico con escamas decorativas de vinilo que aportan estética tipo granito, textura antideslizante y ocultan mejor el desgaste. Recomendado para uso residencial estándar.</p>
+<h3>3. Sistema tricapa con topcoat poliaspártico (premium)</h3>
+<p><strong>Precio:</strong> ₡18,000 - ₡28,000 por m²</p>
+<p>Sistema completo con primer, cuerpo con escamas y capa final de poliaspártico de alta resistencia UV. Es la opción más durable (20+ años) y la que mejor resiste el sol directo en cocheras con entrada de luz.</p>`
+      },
+      {
+        heading: "Costos adicionales a considerar",
+        content: `<p>Algunos presupuestos baratos no incluyen costos que después aparecen. Asegúrate de que tu cotización contemple:</p>
+<ul>
+<li><strong>Reparación de grietas existentes:</strong> ₡3,000 - ₡8,000 por metro lineal de grieta (si tu concreto tiene fisuras)</li>
+<li><strong>Nivelación de losas irregulares:</strong> ₡2,000 - ₡5,000 por m² adicional si hay desniveles pronunciados</li>
+<li><strong>Tratamiento de manchas de aceite:</strong> ₡1,500 - ₡3,000 por m² si hay derrames antiguos de aceite que requieren remoción química</li>
+<li><strong>Demarcación de puestos:</strong> ₡8,000 - ₡15,000 por línea amarilla de demarcación (opcional)</li>
+<li><strong>Garantía extendida:</strong> Algunos contratistas cobran extra por garantías de 5+ años</li>
+</ul>
+<p>En SobrePoxi siempre incluimos todos estos items en el presupuesto inicial, sin costos ocultos.</p>`
+      },
+      {
+        heading: "¿Vale la pena la inversión?",
+        content: `<p>Una cochera con piso epóxico de calidad es una de las inversiones más rentables para tu hogar en Costa Rica:</p>
+<ul>
+<li><strong>Aumento de valor de la propiedad:</strong> Una cochera con piso epóxico profesional puede aumentar el valor de venta de tu casa entre 3% y 7%</li>
+<li><strong>Ahorro en mantenimiento:</strong> vs concreto desnudo, el epóxico elimina la necesidad de repintar cada 2-3 años y el polvo constante</li>
+<li><strong>Protección del concreto:</strong> Evita que la humedad, aceites y químicos dañen la losa permanentemente</li>
+<li><strong>Estética:</strong> Transforma un espacio utilitario en una extensión atractiva del hogar</li>
+<li><strong>Durabilidad:</strong> 15-20 años de vida útil con mantenimiento mínimo</li>
+</ul>
+<p>Considerando que una cochera de 2 vehículos cuesta entre ₡400,000 y ₡650,000, y dura 20 años, el costo amortizado es de apenas ₡1,600 - ₡2,700 mensuales. Una inversión inteligente.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuánto tiempo toma instalar un piso epóxico en la cochera?", answer: "Entre 3 y 5 días laborables: 1 día de preparación (esmerilado, reparación), 1-2 días de aplicación de capas, y 24-72 horas de curado antes de poder estacionar vehículos. El tiempo exacto depende del sistema y condiciones climáticas." },
+      { question: "¿Puedo usar la cochera durante la instalación?", answer: "No. Necesitas retirar tu vehículo durante los 3-5 días que dura el proceso y mantener el área libre de tráfico hasta el curado completo. Planifica un estacionamiento alternativo." },
+      { question: "¿El piso epóxico de cochera resiste el peso de un SUV o pickup?", answer: "Sí. Un sistema epóxico profesional (100% sólidos o tricapa) soporta sin problema el peso de vehículos pesados, incluyendo SUVs, pickups y hasta vehículos comerciales. La resistencia a compresión supera los 10,000 PSI." },
+      { question: "¿Cuál es la mejor época del año para instalar piso epóxico en Costa Rica?", answer: "La época seca (diciembre a abril) es ideal porque la humedad ambiental es menor, lo que favorece el curado. Sin embargo, con sistemas modernos como poliaspártico, se puede instalar en cualquier época con las precauciones adecuadas." }
+    ],
+    relatedSlugs: ["pisos-epoxicos-para-cocheras", "precios-pisos-epoxicos-costa-rica", "mantenimiento-pisos-epoxicos"],
+    ctaText: "¿Quieres un presupuesto exacto para tu cochera? Agenda visita técnica gratuita",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "precio-mesa-resina-epoxica",
+    locale: "es",
+    title: "Precio de Mesas de Resina Epóxica en Costa Rica 2026: Guía de Costos",
+    metaTitle: "Precio Mesa de Resina Epóxica 2026 | Mesas Río Costa Rica | SobrePoxi",
+    metaDescription: "Descubre cuánto cuesta una mesa de resina epóxica o mesa río en Costa Rica en 2026. Precios según tipo, tamaño, madera y diseño. Cotización personalizada.",
+    keywords: "precio mesa resina epóxica, costo mesa río, precio mesa epoxi Costa Rica, mesa centro resina precio, cuánto cuesta mesa río CR, mesa madera resina precio",
+    heroTitle: "Precio de Mesas de Resina Epóxica",
+    heroSubtitle: "Cuánto cuestan las mesas río y de resina en Costa Rica 2026: factores y rangos honestos",
+    publishedDate: "2026-07-27",
+    updatedDate: "2026-07-27",
+    readingTime: "7 min",
+    category: "Precios y Costos",
+    categorySlug: "precios",
+    sections: [
+      {
+        heading: "Rangos de precios según tipo de mesa",
+        content: `<p>El precio de una mesa de resina epóxica varía enormemente según el tipo, tamaño y madera utilizada. Estos son los rangos típicos del mercado costarricense e internacional en 2026:</p>
+<table>
+<thead><tr><th>Tipo de mesa</th><th>Tamaño típico</th><th>Rango de precio</th></tr></thead>
+<tbody>
+<tr><td>Mesa de centro pequeña</td><td>80-100 cm</td><td>₡150,000 - ₡450,000</td></tr>
+<tr><td>Mesa de centro mediana</td><td>100-140 cm</td><td>₡350,000 - ₡800,000</td></tr>
+<tr><td>Mesa de comedor río (6 personas)</td><td>180-200 cm</td><td>₡650,000 - ₡1,800,000</td></tr>
+<tr><td>Mesa de comedor río (8-10 personas)</td><td>220-280 cm</td><td>₡1,200,000 - ₡3,500,000</td></tr>
+<tr><td>Barra/mostrador con resina</td><td>variable</td><td>₡400,000 - ₡1,500,000</td></tr>
+<tr><td>Tabla decorativa/arte</td><td>pequeña</td><td>₡40,000 - ₡180,000</td></tr>
+</tbody>
+</table>
+<p>Para referencia, en el mercado internacional las mesas río de lujo cuestan entre $864 y $6,300 USD según portales como ThunderWood Studio y KazanaHome.</p>`
+      },
+      {
+        heading: "Factores que determinan el precio",
+        content: `<p>Cada mesa de resina es única y su precio depende de estos factores clave:</p>
+<ul>
+<li><strong>Tipo de madera:</strong> Maderas costarricenses premium (guapinol, cristóbal, ronrón) o importadas (nogal, roble) afectan el costo. El borde vivo (live edge) suma valor por su carácter único</li>
+<li><strong>Volumen de resina:</strong> A mayor ancho del "río" de resina, mayor cantidad de material (deep pour premium). Una mesa río de 15 cm de ancho usa mucha más resina que una de 5 cm</li>
+<li><strong>Tamaño total:</strong> Mesas de comedor grandes requieren más madera, resina y horas de lijado progresivo</li>
+<li><strong>Complejidad del diseño:</strong> Efectos de color (océano, galaxia, mármol), encapsulados de objetos, o diseños personalizados suman horas de trabajo artesanal</li>
+<li><strong>Tipo de patas/estructura:</strong> Patas de metal hechas a medida, estructuras de madera maciza o diseños personalizados añaden costo</li>
+<li><strong>Tiempo de fabricación:</strong> Una mesa río de calidad toma entre 3 y 6 semanas, lo que se refleja en el precio</li>
+</ul>`
+      },
+      {
+        heading: "¿Por qué las mesas de resina son una inversión?",
+        content: `<p>Una mesa de resina epóxica de calidad NO es un mueble más. Es una pieza de arte funcional que justifica su precio por varias razones:</p>
+<ul>
+<li><strong>Pieza única e irrepetible:</strong> Cada mesa es un ejemplar único. No existen dos mesas río idénticas en el mundo, ni siquiera del mismo artesano</li>
+<li><strong>Durabilidad excepcional:</strong> La resina epóxica premium con topcoat UV dura décadas sin amarillear ni perder brillo. Mientras que muebles convencionales se reemplazan cada 5-10 años</li>
+<li><strong>Valor artístico:</strong> Es funcionalidad + arte. Una mesa río bien ejecutada es el punto focal de cualquier espacio y una conversación constante</li>
+<li><strong>Personalización total:</strong> Tú eliges la madera, el color de la resina, el tamaño, las patas. Es un mueble hecho exactamente para tu espacio y gusto</li>
+<li><strong>Revalorización:</strong> A diferencia de muebles en serie que pierden valor, las piezas artesanales de resina bien mantenidas se revalorizan con el tiempo</li>
+</ul>`
+      },
+      {
+        heading: "Cómo elegir la mesa correcta para tu presupuesto",
+        content: `<p>Si quieres una mesa de resina pero tienes un presupuesto definido, considera estas estrategias:</p>
+<ul>
+<li><strong>Empieza con una mesa de centro:</strong> Más accesible que un comedor grande y te permite tener una pieza artesanal de calidad</li>
+<li><strong>Reduce el ancho del "río":</strong> Una mesa con río de resina angosto (5-8 cm) usa menos material y cuesta menos que una de río amplio</li>
+<li><strong>Elige maderas locales:</strong> El guapinol, ronrón o cenízaro costarricenses son hermosos y más accesibles que importadas</li>
+<li><strong>Simplifica el color:</strong> Una resina transparente o de un solo color cuesta menos que efectos multicapa complejos</li>
+<li><strong>Pregunta por stock:</strong> Algunos artesanos tienen piezas terminadas a precio menor que un encargo a medida</li>
+</ul>
+<p>En <strong>SobrePoxi</strong> trabajamos contigo para encontrar la mejor pieza dentro de tu presupuesto, sin sacrificar calidad de materiales ni ejecución artesanal.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuánto cuesta una mesa río en Costa Rica?", answer: "Una mesa río de comedor para 6 personas cuesta entre ₡650,000 y ₡1,800,000 CRC en Costa Rica, dependiendo del tipo de madera, tamaño y diseño. Las mesas de centro de resina empiezan desde ₡150,000." },
+      { question: "¿Por qué las mesas de resina son tan caras?", answer: "Porque son piezas únicas artesanales. Cada mesa requiere: selección de madera con borde vivo, construcción de molde a medida, vertido de resina premium en múltiples capas, curado controlado de 48-72 horas y lijado progresivo desde grano 80 hasta 3000. El proceso completo toma 3-6 semanas." },
+      { question: "¿Vale la pena invertir en una mesa de resina?", answer: "Sí, si buscas una pieza única y duradera. A diferencia de muebles en serie que se reemplazan cada pocos años, una mesa de resina bien hecha dura décadas y se revaloriza. Es arte funcional, no solo un mueble." },
+      { question: "¿Hacen envíos las mesas de resina dentro de Costa Rica?", answer: "Sí, en SobrePoxi entregamos e instalamos en todo el país. El costo de envío varía según la zona. Las mesas grandes requieren embalaje especial para protección." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "tipos-de-resina-epoxica", "precios-pisos-epoxicos-costa-rica"],
+    ctaText: "¿Sueñas con tu propia mesa de resina? Cuéntanos tu idea y te damos presupuesto",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "costo-piso-epoxico-metro-cuadrado",
+    locale: "es",
+    title: "Costo de Piso Epóxico por Metro Cuadrado: Desglose Detallado 2026",
+    metaTitle: "Costo Piso Epóxico por m² 2026 | Desglose Detallado | SobrePoxi",
+    metaDescription: "Análisis detallado del costo de piso epóxico por metro cuadrado en Costa Rica. Qué incluye cada precio, comparativa de sistemas y cómo calcular tu presupuesto.",
+    keywords: "costo piso epóxico metro cuadrado, precio m² epóxico, calcular presupuesto piso epoxi, costo resina epóxica m² Costa Rica, precio instalación epóxico m²",
+    heroTitle: "Costo de Piso Epóxico por Metro Cuadrado",
+    heroSubtitle: "Desglose detallado y transparente de qué pagas por cada m² de piso epóxico en Costa Rica",
+    publishedDate: "2026-07-27",
+    updatedDate: "2026-07-27",
+    readingTime: "10 min",
+    category: "Precios y Costos",
+    categorySlug: "precios",
+    sections: [
+      {
+        heading: "Precios por m² según sistema en Costa Rica",
+        content: `<p>El precio por metro cuadrado varía significativamente según el sistema epóxico elegido. Estos son los rangos del mercado costarricense en 2026, <strong>incluyendo materiales y mano de obra profesional</strong>:</p>
+<table>
+<thead><tr><th>Sistema</th><th>Precio por m² (CRC)</th><th>Uso recomendado</th></tr></thead>
+<tbody>
+<tr><td>Epóxico sólido monocapa</td><td>₡8,000 - ₡12,000</td><td>Bodegas, áreas de bajo tráfico</td></tr>
+<tr><td>Epóxico bicapa con escamas</td><td>₡12,000 - ₡18,000</td><td>Cocheras residenciales, talleres</td></tr>
+<tr><td>Sistema tricapa con topcoat UV</td><td>₡18,000 - ₡28,000</td><td>Cocheras premium, patios, terrazas</td></tr>
+<tr><td>Epóxico metálico decorativo</td><td>₡22,000 - ₡38,000</td><td>Interiores residenciales, comercios</td></tr>
+<tr><td>Sistema industrial antideslizante</td><td>₡15,000 - ₡30,000</td><td>Industria, cocinas, zonas húmedas</td></tr>
+<tr><td>Sistema conductivo/ESD</td><td>₡25,000 - ₡45,000</td><td>Electrónica, laboratorios</td></tr>
+</tbody>
+</table>`
+      },
+      {
+        heading: "Desglose del precio: ¿en qué se va tu dinero?",
+        content: `<p>Para entender por qué un m² de piso epóxico cuesta lo que cuesta, este es el desglose aproximado de un sistema estándar de ₡15,000/m²:</p>
+<table>
+<thead><tr><th>Componente</th><th>% del precio</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>Preparación del sustrato</td><td>20-25%</td><td>Esmerilado, reparación de grietas, perfilado CSP 2-3</td></tr>
+<tr><td>Materiales (resina + endurecedor)</td><td>30-35%</td><td>Resina de grado profesional, no comercial</td></tr>
+<tr><td>Imprimante y accesorios</td><td>10%</td><td>Primer, escamas, cintas, rodillos</td></tr>
+<tr><td>Topcoat protector</td><td>15%</td><td>Poliuretano o poliaspártico UV</td></tr>
+<tr><td>Mano de obra especializada</td><td>20-25%</td><td>Aplicadores certificados, equipo</td></tr>
+</tbody>
+</table>
+<p>Como ves, más del 50% del costo son materiales y preparación. Por eso los precios extremadamente bajos suelen significar materiales comerciales de baja calidad o preparación mínima (solo barrido, sin esmerilado).</p>`
+      },
+      {
+        heading: "Cómo calcular el presupuesto de tu proyecto",
+        content: `<p>Para estimar el costo de tu proyecto, sigue este cálculo paso a paso:</p>
+<ol>
+<li><strong>Mide el área:</strong> Largo × ancho = metros cuadrados totales. Para áreas irregulares, divide en rectángulos</li>
+<li><strong>Elige el sistema:</strong> Según uso (ver tabla anterior). Para cochera residencial: bicapa con escamas (₡15,000/m² promedio)</li>
+<li><strong>Multiplica:</strong> Área × precio por m² = subtotal</li>
+<li><strong>Suma costos adicionales:</strong> Reparación de grietas, nivelación, demarcación (si aplica)</li>
+<li><strong>Considera IVA:</strong> En Costa Rica, los servicios profesionales incluyen 13% de IVA</li>
+</ol>
+<p><strong>Ejemplo:</strong> Cochera de 32 m² con sistema bicapa escamas (₡15,000/m²)</p>
+<ul>
+<li>Subtotal: 32 × ₡15,000 = ₡480,000</li>
+<li>Reparación de grietas (10m lineales): + ₡50,000</li>
+<li>Subtotal: ₡530,000</li>
+<li>IVA (13%): + ₡68,900</li>
+<li><strong>Total estimado: ₡598,900</strong></li>
+</ul>`
+      },
+      {
+        heading: "Descuentos por volumen",
+        content: `<p>Para proyectos grandes, el precio por m² disminuye por economía de escala. Esto es típico:</p>
+<ul>
+<li><strong>30-50 m²:</strong> Precio base</li>
+<li><strong>50-100 m²:</strong> Descuento del 5-10% en precio por m²</li>
+<li><strong>100-300 m²:</strong> Descuento del 10-15% en precio por m²</li>
+<li><strong>300+ m²:</strong> Descuento del 15-20% + condiciones especiales</li>
+</ul>
+<p>Para proyectos industriales de gran escala (zonas francas, bodegas), existen sistemas optimizados que pueden bajar el costo por m² manteniendo calidad. Solicita cotización específica.</p>`
+      },
+      {
+        heading: "Comparativa internacional de precios",
+        content: `<p>Para contexto, esto es lo que cuesta el metro cuadrado de piso epóxico en otros mercados (2026):</p>
+<table>
+<thead><tr><th>País</th><th>Precio básico (m²)</th><th>Precio premium (m²)</th></tr></thead>
+<tbody>
+<tr><td>Costa Rica</td><td>₡8,000 (~$16 USD)</td><td>₡38,000 (~$76 USD)</td></tr>
+<tr><td>España</td><td>15€ (~₡11,000)</td><td>150€ (~₡110,000)</td></tr>
+<tr><td>México</td><td>$315 MXN (~₡9,000)</td><td>$590 MXN (~₡17,000)</td></tr>
+<tr><td>EE.UU.</td><td>$3 USD (~₡15,000)</td><td>$12 USD (~₡60,000)</td></tr>
+</tbody>
+</table>
+<p>Costa Rica tiene precios competitivos a nivel internacional, especialmente comparado con mercados europeos premium.</p>`
+      },
+      {
+        heading: "Errores que encarecen tu proyecto",
+        content: `<p>Algunas decisiones aparentemente de ahorro terminan costándote más a largo plazo:</p>
+<ul>
+<li><strong>Elegir el sistema más barato para uso intensivo:</strong> Un sistema monocapa en una cochera de alto tráfico se desgastará en 2-3 años, obligándote a reinstalar. Más caro a largo plazo</li>
+<li><strong>No hacer prueba de humedad:</strong> Si aplicas epóxico sobre concreto con humedad ascendente, se ampollará y deberás remover todo y rehacer. Duplica el costo</li>
+<li><strong>Omitir el topcoat UV:</strong> En áreas con sol directo, el epóxico sin protección UV se amarillea en meses. El topcoat cuesta +15% pero es indispensable</li>
+<li><strong>Contratar instaladores no certificados:</strong> Si falla, tendrás que remover el epóxico defectuoso (costoso) y reinstalar. Paga una vez bien, no dos veces mal</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuál es el costo promedio por metro cuadrado de piso epóxico en Costa Rica?", answer: "El costo promedio por metro cuadrado de piso epóxico en Costa Rica en 2026 es de ₡15,000 CRC (aproximadamente $30 USD), para un sistema estándar de calidad profesional. Los sistemas más básicos empiezan en ₡8,000/m² y los premium llegan a ₡38,000/m²." },
+      { question: "¿El precio por m² incluye IVA?", answer: "Depende del proveedor. En Costa Rica el IVA es del 13%. Siempre pregunta si el precio cotizado incluye IVA o es antes de impuestos. En SobrePoxi cotizamos con IVA incluido para evitar sorpresas." },
+      { question: "¿Hay costo mínimo de proyecto?", answer: "Sí, la mayoría de instaladores profesionales tienen un costo mínimo de proyecto porque hay costos fijos (movilización, equipo, preparación) que no dependen del área. Típicamente el mínimo es de 15-20 m² o un monto mínimo de ₡150,000-₡200,000." },
+      { question: "¿El precio incluye la visita técnica de evaluación?", answer: "En SobrePoxi la visita técnica en el Gran Área Metropolitana es gratuita. Algunos proveedores cobran la visita (₡15,000-₡30,000) pero la descuentan del total si contratas. Siempre aclara este punto antes." }
+    ],
+    relatedSlugs: ["precios-pisos-epoxicos-costa-rica", "cuanto-cuesta-piso-epoxico-cochera", "tipos-de-resina-epoxica"],
+    ctaText: "¿Quieres calcular el costo exacto de tu proyecto? Pídenos cotización detallada",
+    ctaLink: "/contact"
   }
 ];
 
