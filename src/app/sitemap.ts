@@ -63,6 +63,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { base: 'luxury-furniture', priority: 0.8, freq: 'monthly' as const },
     { base: 'epoxy-floors', priority: 0.8, freq: 'monthly' as const },
     { base: 'industrial-epoxy-flooring', priority: 0.8, freq: 'monthly' as const },
+    // Páginas de servicio local (SEO geográfico)
+    { base: 'pisos-epoxicos-san-jose', priority: 0.9, freq: 'monthly' as const },
   ]
 
   const staticEntries: MetadataRoute.Sitemap = []
