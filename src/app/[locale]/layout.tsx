@@ -6,7 +6,7 @@ import { routing } from "@/shared/i18n/routing";
 import {
   buildMetadata
 } from "@/shared/seo/seoConfig";
-import Script from "next/script";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { Navbar, Footer, WhatsAppBubble } from "@/features/content";
 import { SessionLayout } from "@/features/auth";
 import { NextIntlClientProvider } from "next-intl";
@@ -83,11 +83,9 @@ export default async function LocaleLayout({
             </SessionLayout>
           </NextIntlClientProvider>
         </ErrorBoundary>
-        <Script
+        <JsonLd
           id="structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+          data={{
               "@context": "https://schema.org",
               "@type": "HomeAndConstructionBusiness",
               name: "SobrePoxi",
@@ -127,7 +125,6 @@ export default async function LocaleLayout({
                 "https://www.tiktok.com/@sobrepoxi",
                 "https://www.youtube.com/@sobrepoxi"
               ]
-            })
           }}
         />
       </body>

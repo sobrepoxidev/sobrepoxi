@@ -13,10 +13,10 @@ import { Suspense }                 from "react";
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
 import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
 import Link from "next/link";
-import Script from "next/script";
 
 import type { Metadata }            from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
+import { JsonLd } from "@/shared/seo/JsonLd";
 
 /* ---------  Lazy-loaded client modules (SSR enabled)  --------- */
 
@@ -197,13 +197,14 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
 
         </section>
       </div>
-       <Script id="ld-contact-localbusiness" type="application/ld+json">
-      {JSON.stringify({
+       <JsonLd
+      id="ld-contact-localbusiness"
+      data={{
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "@id": "https://sobrepoxi.com/#sobrepoxi",
         "name": "SobrePoxi",
-        "description": locale === "es" 
+        "description": locale === "es"
           ? "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU."
           : "Luxury furniture in wood and resin, and designer & industrial epoxy floors. Projects in Costa Rica and USA.",
         "url": "https://sobrepoxi.com",
@@ -243,8 +244,8 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
             "availableLanguage": ["Spanish", "English"]
           }
         ]
-      })}
-    </Script>
+      }}
+    />
     </Suspense>
 
 

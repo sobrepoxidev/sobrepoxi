@@ -6,9 +6,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/shared/seo/structuredData";
 import { ChevronRight, ArrowRight, Star, Shield, Paintbrush, Sparkles, CheckCircle2, Phone } from "lucide-react";
 
@@ -207,10 +207,11 @@ export default async function EpoxyFloorsPage(
 
   return (
     <main className="min-h-screen bg-[#121212] text-white">
-      <Script id="epoxy-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id="epoxy-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <Script id="ld-epoxy-service" type="application/ld+json">
-        {JSON.stringify({
+      <JsonLd id="epoxy-breadcrumb" data={breadcrumbSchema} />
+      <JsonLd id="epoxy-faq" data={faqSchema} />
+      <JsonLd
+        id="ld-epoxy-service"
+        data={{
           "@context": "https://schema.org",
           "@type": "Service",
           "serviceType": locale === "es" ? "Instalación de Pisos Epóxicos" : "Epoxy Floor Installation",
@@ -235,8 +236,8 @@ export default async function EpoxyFloorsPage(
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Self-Leveling Epoxy" } },
             ]
           }
-        })}
-      </Script>
+        }}
+      />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">

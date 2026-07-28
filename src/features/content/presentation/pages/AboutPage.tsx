@@ -10,9 +10,9 @@
 import Link                      from "next/link";
 
 import Image                     from "next/image";
-import Script                    from "next/script";
 import type { Metadata }         from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
+import { JsonLd } from "@/shared/seo/JsonLd";
 
 type ParamsPromise = Promise<{ locale: "es" | "en" }>;
 
@@ -296,15 +296,16 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         </div>
       </section>
     </div>
-     <Script id="ld-organization" type="application/ld+json">
-      {JSON.stringify({
+     <JsonLd
+      id="ld-organization"
+      data={{
         "@context": "https://schema.org",
         "@type": "Organization",
         "@id": "https://sobrepoxi.com/#organization",
         "name": "SobrePoxi",
         "url": "https://sobrepoxi.com",
         "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
-        "description": locale === "es" 
+        "description": locale === "es"
           ? "En SobrePoxi, unimos dos mundos: la precisión de la ingeniería para crear pisos industriales de máxima durabilidad y la sensibilidad del arte para diseñar pisos y muebles de lujo que se convierten en el alma de un espacio. Con sede en Costa Rica, nuestra pasión es transformar materiales en experiencias únicas."
           : "At SobrePoxi, we unite two worlds: the precision of engineering to create maximum-durability industrial floors, and the sensitivity of art to design luxury floors and furniture that become the soul of a space. Based in Costa Rica, our passion is to transform materials into unique experiences.",
         "foundingDate": "2018",
@@ -333,8 +334,8 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
           "https://www.tiktok.com/@sobrepoxi3?_t=ZM-8xiKO9MHzEe&_r=1"
         ]
-      })}
-    </Script>
+      }}
+    />
     </>
   );
 }

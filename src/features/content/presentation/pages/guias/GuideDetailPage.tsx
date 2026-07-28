@@ -12,7 +12,7 @@ import {
   getAllGuideSlugs,
   getRelatedGuides,
 } from "@/features/content";
-import Script from "next/script";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/shared/seo/structuredData";
 import { SEO_CONFIG } from "@/shared/seo/seoConfig";
 import {
@@ -169,21 +169,18 @@ export default async function GuideDetailPage({
   return (
     <>
       {/* Structured data scripts */}
-      <Script
+      <JsonLd
         id="guide-breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        data={breadcrumbSchema}
       />
-      <Script
+      <JsonLd
         id="guide-article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        data={articleSchema}
       />
       {faqSchema && (
-        <Script
+        <JsonLd
           id="guide-faq-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          data={faqSchema}
         />
       )}
 

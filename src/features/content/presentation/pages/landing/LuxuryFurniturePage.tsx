@@ -6,9 +6,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/shared/seo/structuredData";
 import {
   ChevronRight,
@@ -204,10 +204,11 @@ export default async function LuxuryFurniturePage(
 
   return (
     <main className="min-h-screen bg-[#121212] text-white">
-      <Script id="furniture-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id="furniture-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <Script id="ld-furniture-product" type="application/ld+json">
-        {JSON.stringify({
+      <JsonLd id="furniture-breadcrumb" data={breadcrumbSchema} />
+      <JsonLd id="furniture-faq" data={faqSchema} />
+      <JsonLd
+        id="ld-furniture-product"
+        data={{
           "@context": "https://schema.org",
           "@type": "Product",
           "name": locale === "es" ? "Muebles de Lujo en Resina Epóxica y Madera" : "Luxury Epoxy Resin & Wood Furniture",
@@ -236,8 +237,8 @@ export default async function LuxuryFurniturePage(
               { "@type": "OfferCatalog", "name": "Hospitality Furniture" },
             ]
           }
-        })}
-      </Script>
+        }}
+      />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">

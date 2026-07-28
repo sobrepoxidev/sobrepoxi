@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import Script from "next/script";
 import { buildMetadata } from "@/shared/seo/seoConfig";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { LoadingGallery as Loading, ProductsPageContent } from "@/features/products";
 import { createServerSupabaseClient } from '@/shared/supabase/server';
 
@@ -110,8 +110,9 @@ export default async function ProductsPage({ params }: { params: tParams }) {
       </Suspense>
       
       {/* Schema.org markup for Products page */}
-      <Script id="ld-products" type="application/ld+json">
-        {JSON.stringify({
+      <JsonLd
+        id="ld-products"
+        data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
           "itemListElement": [
@@ -152,8 +153,8 @@ export default async function ProductsPage({ params }: { params: tParams }) {
               }
             }
           ]
-        })}
-      </Script>
+        }}
+      />
     </>
   );
 }

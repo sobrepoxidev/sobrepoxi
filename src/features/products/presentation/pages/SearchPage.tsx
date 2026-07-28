@@ -1,7 +1,7 @@
 import { SearchResultsPage } from '@/features/products'
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { buildMetadata } from '@/shared/seo/seoConfig'
+import { JsonLd } from '@/shared/seo/JsonLd'
 
 type tParams = Promise<{ locale: string }>
 type tSearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -67,8 +67,9 @@ export default async function SearchPage({
       <SearchResultsPage locale={locale} />
 
       {/* Schema.org markup for Search Results Page */}
-      <Script id="ld-search" type="application/ld+json">
-        {JSON.stringify({
+      <JsonLd
+        id="ld-search"
+        data={{
           '@context': 'https://schema.org',
           '@type': 'SearchResultsPage',
           mainEntity: {
@@ -99,8 +100,8 @@ export default async function SearchPage({
               },
             ],
           },
-        })}
-      </Script>
+        }}
+      />
     </div>
   )
 }

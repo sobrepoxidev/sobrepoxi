@@ -7,7 +7,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
 import { getGuides, getGuideCategories } from "@/features/content";
-import Script from "next/script";
+import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateBreadcrumbSchema } from "@/shared/seo/structuredData";
 import { BookOpen, ArrowRight, ChevronRight } from "lucide-react";
 import GuidesGrid from "./GuidesGrid";
@@ -98,15 +98,13 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
 
   return (
     <>
-      <Script
+      <JsonLd
         id="guides-breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        data={breadcrumbSchema}
       />
-      <Script
+      <JsonLd
         id="guides-collection-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        data={collectionSchema}
       />
 
       <main className="min-h-screen bg-[#121212]">

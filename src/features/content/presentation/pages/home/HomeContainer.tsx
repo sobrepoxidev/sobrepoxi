@@ -1,5 +1,5 @@
 import HomePageData from './HomePageData'
-import Script from 'next/script'
+import { JsonLd } from '@/shared/seo/JsonLd'
 
 /**
  * Componente contenedor para la página de inicio
@@ -12,8 +12,9 @@ export default function HomeContainer({ locale }: { locale: string }) {
       </main>
 
       {/* Schema.org markup for Website */}
-      <Script id="ld-website" type="application/ld+json">
-        {JSON.stringify({
+      <JsonLd
+        id="ld-website"
+        data={{
           '@context': 'https://schema.org',
           '@type': 'WebSite',
           name: 'SobrePoxi',
@@ -36,8 +37,8 @@ export default function HomeContainer({ locale }: { locale: string }) {
             'https://www.tiktok.com/@sobrepoxi',
             'https://www.youtube.com/@sobrepoxi',
           ],
-        })}
-      </Script>
+        }}
+      />
     </div>
   )
 }
