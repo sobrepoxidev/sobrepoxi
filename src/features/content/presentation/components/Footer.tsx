@@ -177,7 +177,17 @@ export default function Footer({ locale }: { locale: string }) {
           <p className="text-gray-400 text-sm mb-2">
             © {new Date().getFullYear()} SobrePoxi. {locale === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
           </p>
-         
+          <p className="text-gray-400 text-sm">
+            {locale === 'es' ? 'Sitio desarrollado por' : 'Website developed by'}{' '}
+            <a
+              href="https://www.aisolutionscr.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#d4af37] transition-colors"
+            >
+              AI Solutions
+            </a>
+          </p>
         </div>
 
       </div>
