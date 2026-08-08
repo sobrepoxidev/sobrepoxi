@@ -1,16 +1,30 @@
 /* --------------------------------------------------------------------------
- *  EpoxyFloorsPage · SobrePoxi — Complete redesign
- *  Most indexed page on Google — premium design with images, gallery,
- *  FAQ schema, testimonials and dense SEO content
+ *  EpoxyFloorsPage · SobrePoxi — Cinematic rework
+ *  Most indexed page on Google — hero asset with dark negative space for the
+ *  headline, editorial sections, scroll-linked reveals (CSS only, no JS),
+ *  local WebP assets (no remote hero), FAQ/Service/Breadcrumb schema intact.
  * ----------------------------------------------------------------------- */
 
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Playfair_Display, Inter } from "next/font/google";
 import { buildMetadata } from "@/shared/seo/seoConfig";
 import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/shared/seo/structuredData";
-import { ChevronRight, ArrowRight, Star, Shield, Paintbrush, Sparkles, CheckCircle2, Phone } from "lucide-react";
+import { ChevronRight, ArrowRight, Star, CheckCircle2, Phone } from "lucide-react";
+
+const serifDisplay = Playfair_Display({
+  subsets: ["latin"],
+  style: ["italic"],
+  display: "swap",
+  variable: "--font-epx-serif",
+});
+
+const sansDisplay = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-epx-sans",
+});
 
 export type tParams = Promise<{ id: string; locale: "es" | "en" }>;
 
@@ -43,30 +57,26 @@ export default async function EpoxyFloorsPage(
 ) {
   const { locale } = await params;
 
-  /* ── Gallery images ── */
+  /* ── Gallery images (real projects only) ── */
   const galleryImages = [
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp", alt: locale === "es" ? "Piso epóxico negro espejo de alto brillo" : "High-gloss black mirror epoxy floor" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/5.webp", alt: locale === "es" ? "Piso epóxico metálico efecto mármol negro" : "Black marble metallic epoxy floor" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob1.webp", alt: locale === "es" ? "Piso epóxico decorativo efecto oceánico" : "Oceanic effect decorative epoxy floor" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob2.webp", alt: locale === "es" ? "Detalle de piso epóxico con efecto metálico azul" : "Blue metallic epoxy floor detail" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp", alt: locale === "es" ? "Piso epóxico gris efecto concreto pulido" : "Grey polished concrete effect epoxy floor" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog2.webp", alt: locale === "es" ? "Piso epóxico metálico gris para interiores" : "Grey metallic epoxy floor for interiors" },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog3.webp", alt: locale === "es" ? "Piso epóxico efecto piedra natural" : "Natural stone effect epoxy floor" },
-    { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/lujo1.webp", alt: locale === "es" ? "Piso epóxico de lujo instalado en residencia" : "Luxury epoxy floor installed in residence" },
+    { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/lujo1.webp", alt: locale === "es" ? "Piso epóxico de lujo negro con vetas doradas instalado en residencia" : "Luxury black epoxy floor with gold veins installed in residence", featured: true },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp", alt: locale === "es" ? "Piso epóxico efecto galaxia de alto brillo" : "High-gloss galaxy effect epoxy floor", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog2.webp", alt: locale === "es" ? "Piso epóxico negro con destellos para interiores" : "Black sparkle epoxy floor for interiors", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob1.webp", alt: locale === "es" ? "Piso epóxico metálico efecto mármol blanco y oro" : "White and gold marble effect metallic epoxy floor", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog3.webp", alt: locale === "es" ? "Piso epóxico de alto tráfico en cochera residencial" : "Heavy-duty epoxy floor in residential garage", featured: false },
   ];
 
   /* ── Copy ── */
   const t = {
     breadcrumbHome: locale === "es" ? "Inicio" : "Home",
-    heroTag: locale === "es" ? "Pisos Epóxicos Profesionales" : "Professional Epoxy Floors",
-    heroTitle: locale === "es"
-      ? "El piso que tu espacio merece"
-      : "The floor your space deserves",
+    heroTag: locale === "es" ? "Pisos Epóxicos Profesionales · Costa Rica" : "Professional Epoxy Floors · Costa Rica",
+    heroTitle1: locale === "es" ? "El piso que" : "The floor",
+    heroTitle2: locale === "es" ? "tu espacio merece" : "your space deserves",
     heroSub: locale === "es"
       ? "Superficies sin juntas, ultra resistentes y con diseños únicos que transforman cocheras, salas, comercios e industrias en toda Costa Rica."
       : "Seamless, ultra-resistant surfaces with unique designs that transform garages, living rooms, commercial and industrial spaces across Costa Rica.",
     heroCta: locale === "es" ? "Cotización gratuita" : "Free quote",
-    heroSecondary: locale === "es" ? "Ver galería" : "View gallery",
+    heroSecondary: locale === "es" ? "Ver proyectos" : "View projects",
     // Stats
     stats: locale === "es"
       ? [["15+", "Años de durabilidad"], ["500+", "m² instalados"], ["100%", "Personalizable"], ["3-5", "Días de instalación"]]
@@ -79,15 +89,15 @@ export default async function EpoxyFloorsPage(
     // Types
     typesTitle: locale === "es" ? "Tipos de pisos epóxicos" : "Types of epoxy floors",
     types: locale === "es" ? [
-      { icon: "sparkles", name: "Metálico 3D", desc: "Efectos lava, océano, mármol y galaxia con pigmentos metálicos. Cada piso es único e irrepetible. Ideal para salas, lobbies y espacios premium.", tag: "Más popular" },
-      { icon: "shield", name: "Industrial de Alto Tráfico", desc: "100% sólidos con cuarzo broadcast. Resiste montacargas, químicos y tráfico pesado 24/7. Para bodegas, fábricas y estacionamientos.", tag: "Máxima resistencia" },
-      { icon: "paintbrush", name: "Escamas Decorativas", desc: "Escamas de vinilo multicolor sobre resina. Textura antideslizante natural. Perfecto para cocheras, gimnasios y locales comerciales.", tag: "Versátil" },
-      { icon: "star", name: "Autonivelante Sólido", desc: "Superficie lisa como espejo en color sólido personalizado. Acabado minimalista para oficinas, clínicas y espacios modernos.", tag: "Elegante" },
+      { img: "/epoxy/type-metalico.webp", name: "Metálico 3D", desc: "Efectos lava, océano, mármol y galaxia con pigmentos metálicos. Cada piso es único e irrepetible. Ideal para salas, lobbies y espacios premium.", tag: "Más popular" },
+      { img: "/epoxy/type-industrial.webp", name: "Industrial de Alto Tráfico", desc: "100% sólidos con cuarzo broadcast. Resiste montacargas, químicos y tráfico pesado 24/7. Para bodegas, fábricas y estacionamientos.", tag: "Máxima resistencia" },
+      { img: "/epoxy/type-escamas.webp", name: "Escamas Decorativas", desc: "Escamas de vinilo multicolor sobre resina. Textura antideslizante natural. Perfecto para cocheras, gimnasios y locales comerciales.", tag: "Versátil" },
+      { img: "/epoxy/type-autonivelante.webp", name: "Autonivelante Sólido", desc: "Superficie lisa como espejo en color sólido personalizado. Acabado minimalista para oficinas, clínicas y espacios modernos.", tag: "Elegante" },
     ] : [
-      { icon: "sparkles", name: "3D Metallic", desc: "Lava, ocean, marble and galaxy effects with metallic pigments. Each floor is unique. Ideal for living rooms, lobbies and premium spaces.", tag: "Most popular" },
-      { icon: "shield", name: "Industrial Heavy-Duty", desc: "100% solids with quartz broadcast. Withstands forklifts, chemicals and 24/7 heavy traffic. For warehouses, factories and parking.", tag: "Maximum resistance" },
-      { icon: "paintbrush", name: "Decorative Flakes", desc: "Multi-color vinyl flakes over resin. Natural anti-slip texture. Perfect for garages, gyms and commercial spaces.", tag: "Versatile" },
-      { icon: "star", name: "Self-Leveling Solid", desc: "Mirror-smooth surface in custom solid color. Minimalist finish for offices, clinics and modern spaces.", tag: "Elegant" },
+      { img: "/epoxy/type-metalico.webp", name: "3D Metallic", desc: "Lava, ocean, marble and galaxy effects with metallic pigments. Each floor is unique. Ideal for living rooms, lobbies and premium spaces.", tag: "Most popular" },
+      { img: "/epoxy/type-industrial.webp", name: "Industrial Heavy-Duty", desc: "100% solids with quartz broadcast. Withstands forklifts, chemicals and 24/7 heavy traffic. For warehouses, factories and parking.", tag: "Maximum resistance" },
+      { img: "/epoxy/type-escamas.webp", name: "Decorative Flakes", desc: "Multi-color vinyl flakes over resin. Natural anti-slip texture. Perfect for garages, gyms and commercial spaces.", tag: "Versatile" },
+      { img: "/epoxy/type-autonivelante.webp", name: "Self-Leveling Solid", desc: "Mirror-smooth surface in custom solid color. Minimalist finish for offices, clinics and modern spaces.", tag: "Elegant" },
     ],
     // Architects
     architectsTitle: locale === "es" ? "Para Arquitectos y Diseñadores" : "For Architects & Designers",
@@ -165,7 +175,8 @@ export default async function EpoxyFloorsPage(
     // FAQ
     faqTitle: locale === "es" ? "Preguntas frecuentes" : "Frequently asked questions",
     // CTA
-    ctaTitle: locale === "es" ? "¿Listo para transformar tu espacio?" : "Ready to transform your space?",
+    ctaTitle1: locale === "es" ? "¿Listo para transformar" : "Ready to transform",
+    ctaTitle2: locale === "es" ? "tu espacio?" : "your space?",
     ctaSub: locale === "es"
       ? "Agenda una visita técnica gratuita. Evaluamos tu espacio, te mostramos muestras y te damos una cotización sin compromiso."
       : "Schedule a free site visit. We assess your space, show you samples and give you a no-obligation quote.",
@@ -198,15 +209,42 @@ export default async function EpoxyFloorsPage(
   ]);
   const faqSchema = generateFAQSchema(faqs);
 
-  const iconMap: Record<string, React.ReactNode> = {
-    sparkles: <Sparkles className="h-6 w-6" />,
-    shield: <Shield className="h-6 w-6" />,
-    paintbrush: <Paintbrush className="h-6 w-6" />,
-    star: <Star className="h-6 w-6" />,
-  };
-
   return (
-    <main className="min-h-screen bg-[#121212] text-white">
+    <main className={`${serifDisplay.variable} ${sansDisplay.variable} efx-sans min-h-screen bg-[#0b0a09] text-white`}>
+      {/* Scoped motion + typography system. CSS-only: entrance is a one-shot
+          animation, section reveals ride the scroll timeline where supported
+          and render statically everywhere else. */}
+      <style>{`
+        .efx-serif { font-family: var(--font-epx-serif), Georgia, serif; }
+        .efx-sans { font-family: var(--font-epx-sans), system-ui, Arial, sans-serif; }
+        @media (prefers-reduced-motion: no-preference) {
+          @keyframes efx-rise {
+            from { opacity: 0; transform: translateY(26px); filter: blur(10px); }
+            to { opacity: 1; transform: none; filter: blur(0); }
+          }
+          @keyframes efx-kb {
+            from { transform: scale(1.07); }
+            to { transform: scale(1); }
+          }
+          .efx-in { animation: efx-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+          .efx-in-2 { animation-delay: 0.18s; }
+          .efx-in-3 { animation-delay: 0.34s; }
+          .efx-in-4 { animation-delay: 0.5s; }
+          .efx-kb { animation: efx-kb 14s cubic-bezier(0.33, 1, 0.68, 1) both; }
+          @supports (animation-timeline: view()) {
+            @keyframes efx-rise-soft {
+              from { opacity: 0; transform: translateY(28px); }
+              to { opacity: 1; transform: none; }
+            }
+            .efx-reveal {
+              animation: efx-rise-soft linear both;
+              animation-timeline: view();
+              animation-range: entry 5% entry 42%;
+            }
+          }
+        }
+      `}</style>
+
       <JsonLd id="epoxy-breadcrumb" data={breadcrumbSchema} />
       <JsonLd id="epoxy-faq" data={faqSchema} />
       <JsonLd
@@ -240,157 +278,190 @@ export default async function EpoxyFloorsPage(
       />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp"
-          alt={locale === "es" ? "Piso epóxico de lujo instalado por SobrePoxi en Costa Rica" : "Luxury epoxy floor installed by SobrePoxi in Costa Rica"}
-          fill
-          priority
-          className="object-cover"
-          unoptimized
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
-        <div className="relative z-10 max-w-6xl mx-auto px-4 py-20">
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-sm text-gray-400">
-            <Link href={`/${locale}`} className="hover:text-white transition-colors">{t.breadcrumbHome}</Link>
+      {/* The asset carries the composition: gold-veined floor in the bottom
+          40%, near-black negative space above where the headline lives — no
+          overlay, no scrim. */}
+      <section className="relative min-h-[92dvh] overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/epoxy/hero-mobile.webp" />
+            <img
+              src="/epoxy/hero.webp"
+              alt={locale === "es" ? "Piso epóxico de mármol negro con vetas doradas instalado por SobrePoxi en Costa Rica" : "Black marble epoxy floor with gold veins installed by SobrePoxi in Costa Rica"}
+              fetchPriority="high"
+              decoding="async"
+              className="efx-kb h-full w-full object-cover"
+            />
+          </picture>
+        </div>
+        {/* Dissolve into the page surface before the next section begins */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0b0a09] to-transparent" />
+
+        <div className="relative z-10 mx-auto flex min-h-[92dvh] max-w-6xl flex-col justify-center px-4 pb-[16vh] pt-10">
+          <nav aria-label="Breadcrumb" className="efx-in mb-10 flex items-center gap-2 text-sm text-white/50">
+            <Link href={`/${locale}`} className="transition-colors hover:text-white">{t.breadcrumbHome}</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-white">{locale === "es" ? "Pisos Epóxicos" : "Epoxy Floors"}</span>
+            <span className="text-white/80">{locale === "es" ? "Pisos Epóxicos" : "Epoxy Floors"}</span>
           </nav>
 
-          <span className="inline-block mb-4 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 px-4 py-1.5 text-sm font-medium">
+          <p className="efx-in mb-6 text-[11px] font-medium uppercase tracking-[0.35em] text-white/60 sm:text-xs">
             {t.heroTag}
-          </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-2xl leading-tight">
-            <span className="gold-gradient-bright">{t.heroTitle}</span>
+          </p>
+          <h1 className="efx-in efx-in-2 mb-7 max-w-4xl">
+            <span className="efx-serif block text-4xl italic font-normal leading-tight text-white/90 sm:text-5xl md:text-6xl">
+              {t.heroTitle1}
+            </span>
+            <span className="gold-gradient-bright block text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl md:text-8xl">
+              {t.heroTitle2}
+            </span>
           </h1>
-          <p className="text-lg text-gray-200 mb-8 max-w-xl leading-relaxed">
+          <p className="efx-in efx-in-3 mb-10 max-w-xl text-lg leading-relaxed text-white/70">
             {t.heroSub}
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="efx-in efx-in-4 flex flex-wrap items-center gap-4">
             <Link
               href={`/${locale}/contact`}
-              className="inline-flex items-center gap-2 bg-gold-gradient px-6 py-3.5 rounded-lg font-semibold text-black hover:opacity-90 transition-opacity"
+              className="bg-gold-gradient inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold text-black transition-opacity hover:opacity-90"
             >
               {t.heroCta}
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href="#galeria"
-              className="inline-flex items-center gap-2 border border-white/30 px-6 py-3.5 rounded-lg font-medium text-white hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-4 font-medium text-white/80 transition-colors hover:text-white"
             >
               {t.heroSecondary}
+              <ArrowRight className="h-4 w-4" />
             </a>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ STATS BAR ═══════════════ */}
-      <section className="bg-[#1a1a1a] border-y border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+      {/* ═══════════════ STATS ═══════════════ */}
+      <section className="border-b border-white/10">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-14 md:grid-cols-4">
           {t.stats.map(([value, label]) => (
-            <div key={label} className="text-center">
-              <p className="text-3xl md:text-4xl font-bold gold-gradient-bright">{value}</p>
-              <p className="text-sm text-gray-400 mt-1">{label}</p>
+            <div key={label} className="efx-reveal text-center">
+              <p className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">{value}</p>
+              <p className="mt-2 text-sm text-white/50">{label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══════════════ WHAT IS ═══════════════ */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t.whatTitle}</h2>
-            <p className="text-gray-300 leading-relaxed text-lg">{t.whatContent}</p>
-            <div className="mt-8 grid grid-cols-2 gap-4">
+      <section className="py-20 md:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-2 md:gap-16">
+          <div className="efx-reveal">
+            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+              <span className="efx-serif italic font-normal">{t.whatTitle}</span>
+            </h2>
+            <p className="text-lg leading-relaxed text-white/70">{t.whatContent}</p>
+            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4">
               {(locale === "es"
                 ? ["Sin juntas", "Resistente a químicos", "Ultra duradero", "Fácil de limpiar", "Antideslizante", "Personalizable"]
                 : ["Seamless", "Chemical resistant", "Ultra durable", "Easy to clean", "Anti-slip", "Customizable"]
               ).map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm text-gray-300">
-                  <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
+                <div key={item} className="flex items-center gap-2.5 text-sm text-white/70">
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-white/40" />
                   <span>{item}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-            <Image
-              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp"
-              alt={locale === "es" ? "Piso epóxico negro espejo de alta calidad" : "High quality black mirror epoxy floor"}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+          <div className="efx-reveal relative aspect-[4/3] overflow-hidden rounded-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/epoxy/type-metalico.webp"
+              alt={locale === "es" ? "Detalle de piso epóxico metálico negro y oro de alta calidad" : "High quality black and gold metallic epoxy floor detail"}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </div>
       </section>
 
       {/* ═══════════════ TYPES ═══════════════ */}
-      <section className="py-16 md:py-24 bg-[#0e0e0e]">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">{t.typesTitle}</h2>
-          <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
-            {locale === "es"
-              ? "Cada espacio tiene necesidades únicas. Te ayudamos a elegir el sistema perfecto."
-              : "Each space has unique needs. We help you choose the perfect system."}
-          </p>
-          <div className="grid md:grid-cols-2 gap-6">
+      <section className="bg-[#100f0d] py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="efx-reveal mb-14 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              <span className="efx-serif italic font-normal">{t.typesTitle}</span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-white/50">
+              {locale === "es"
+                ? "Cada espacio tiene necesidades únicas. Te ayudamos a elegir el sistema perfecto."
+                : "Each space has unique needs. We help you choose the perfect system."}
+            </p>
+          </div>
+          <div className="grid gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-14">
             {t.types.map((type) => (
-              <div key={type.name} className="relative bg-[#1a1a1a] rounded-xl p-6 border border-gray-800 hover:border-amber-600/40 transition-colors group">
-                {type.tag && (
-                  <span className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-amber-400 bg-amber-400/10 rounded-full px-2.5 py-0.5">
+              <article key={type.name} className="efx-reveal group">
+                <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-2xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={type.img}
+                    alt={`${type.name} — SobrePoxi`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-xl font-semibold text-white">{type.name}</h3>
+                  <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
                     {type.tag}
                   </span>
-                )}
-                <div className="w-12 h-12 rounded-lg bg-amber-400/10 text-amber-400 flex items-center justify-center mb-4">
-                  {iconMap[type.icon]}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-amber-400 transition-colors">{type.name}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{type.desc}</p>
-              </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{type.desc}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══════════════ FOR ARCHITECTS ═══════════════ */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t.architectsTitle}</h2>
-            <p className="text-gray-300 leading-relaxed text-lg mb-6">{t.architectsContent}</p>
+      <section className="py-20 md:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-2 md:gap-16">
+          <div className="efx-reveal relative order-2 aspect-[4/3] overflow-hidden rounded-2xl md:order-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob2.webp"
+              alt={locale === "es" ? "Piso epóxico efecto mármol diseñado para proyecto arquitectónico" : "Marble effect epoxy floor designed for architectural project"}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+          <div className="efx-reveal order-1 md:order-2">
+            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+              <span className="efx-serif italic font-normal">{t.architectsTitle}</span>
+            </h2>
+            <p className="mb-8 text-lg leading-relaxed text-white/70">{t.architectsContent}</p>
             <ul className="space-y-3">
               {t.architectsPoints.map((point, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-                  <span className="text-gray-300">{point}</span>
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-white/40" />
+                  <span className="text-white/70">{point}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-            <Image
-              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp"
-              alt={locale === "es" ? "Piso epóxico diseñado para proyecto arquitectónico" : "Epoxy floor designed for architectural project"}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
         </div>
       </section>
 
-      {/* ═══════════════ BENEFITS ═══════════════ */}
-      <section className="py-16 md:py-24 bg-[#0e0e0e]">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.benefitsTitle}</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* ═══════════════ BENEFITS · editorial list ═══════════════ */}
+      <section className="bg-[#100f0d] py-20 md:py-28">
+        <div className="mx-auto max-w-4xl px-4">
+          <h2 className="efx-reveal mb-12 text-center text-3xl font-bold text-white md:text-4xl">
+            <span className="efx-serif italic font-normal">{t.benefitsTitle}</span>
+          </h2>
+          <div className="border-t border-white/10">
             {t.benefits.map(([title, text]) => (
-              <div key={title} className="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800">
-                <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{text}</p>
+              <div key={title} className="efx-reveal grid gap-2 border-b border-white/10 py-6 md:grid-cols-[1fr_2fr] md:gap-8">
+                <h3 className="efx-serif text-xl italic text-white">{title}</h3>
+                <p className="text-sm leading-relaxed text-white/60 md:text-base">{text}</p>
               </div>
             ))}
           </div>
@@ -398,33 +469,47 @@ export default async function EpoxyFloorsPage(
       </section>
 
       {/* ═══════════════ GALLERY ═══════════════ */}
-      <section id="galeria" className="py-16 md:py-24 scroll-mt-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">{t.galleryTitle}</h2>
-          <p className="text-center text-gray-400 mb-12 max-w-xl mx-auto">{t.gallerySub}</p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {galleryImages.map((img, i) => (
-              <div key={i} className={`relative rounded-xl overflow-hidden ${i === 0 || i === 5 ? "md:col-span-2 md:row-span-2 aspect-square" : "aspect-[3/4]"}`}>
-                <Image src={img.src} alt={img.alt} fill className="object-cover hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 50vw, 25vw" />
+      <section id="galeria" className="scroll-mt-20 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="efx-reveal mb-14 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              <span className="efx-serif italic font-normal">{t.galleryTitle}</span>
+            </h2>
+            <p className="mx-auto max-w-xl text-white/50">{t.gallerySub}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+            {galleryImages.map((img) => (
+              <div
+                key={img.src}
+                className={`efx-reveal relative overflow-hidden rounded-2xl ${img.featured ? "col-span-2 row-span-2 aspect-square" : "aspect-[3/4]"}`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ PROCESS ═══════════════ */}
-      <section className="py-16 md:py-24 bg-[#0e0e0e]">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.processTitle}</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+      {/* ═══════════════ PROCESS · editorial steps ═══════════════ */}
+      <section className="bg-[#100f0d] py-20 md:py-28">
+        <div className="mx-auto max-w-4xl px-4">
+          <h2 className="efx-reveal mb-12 text-center text-3xl font-bold text-white md:text-4xl">
+            <span className="efx-serif italic font-normal">{t.processTitle}</span>
+          </h2>
+          <div className="border-t border-white/10">
             {t.steps.map((step) => (
-              <div key={step.num} className="flex gap-5">
-                <div className="shrink-0 w-14 h-14 rounded-full bg-gold-gradient flex items-center justify-center text-black font-bold text-lg">
-                  {step.num}
-                </div>
+              <div key={step.num} className="efx-reveal grid grid-cols-[3.5rem_1fr] items-baseline gap-4 border-b border-white/10 py-7 md:grid-cols-[5rem_1fr] md:gap-8">
+                <span className="icon-gold-bright text-sm font-semibold tracking-[0.3em]">{step.num}</span>
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-1">{step.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+                  <h3 className="mb-1.5 text-lg font-semibold text-white md:text-xl">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-white/60 md:text-base">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -433,55 +518,62 @@ export default async function EpoxyFloorsPage(
       </section>
 
       {/* ═══════════════ WHERE ═══════════════ */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.whereTitle}</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="efx-reveal mb-12 text-center text-3xl font-bold text-white md:text-4xl">
+            <span className="efx-serif italic font-normal">{t.whereTitle}</span>
+          </h2>
+          <div className="efx-reveal flex flex-wrap justify-center gap-x-3 gap-y-3">
             {t.whereItems.map((item) => (
-              <div key={item} className="flex items-center gap-3 bg-[#1a1a1a] rounded-lg px-4 py-3 border border-gray-800">
-                <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
-                <span className="text-sm text-gray-300">{item}</span>
-              </div>
+              <span key={item} className="rounded-full bg-white/[0.05] px-5 py-2.5 text-sm text-white/70">
+                {item}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══════════════ TESTIMONIALS ═══════════════ */}
-      <section className="py-16 md:py-24 bg-[#0e0e0e]">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.testimonialsTitle}</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+      <section className="bg-[#100f0d] py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="efx-reveal mb-14 text-center text-3xl font-bold text-white md:text-4xl">
+            <span className="efx-serif italic font-normal">{t.testimonialsTitle}</span>
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3 md:gap-8">
             {t.testimonials.map((test) => (
-              <div key={test.name} className="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800">
-                <div className="flex gap-0.5 mb-4">
+              <figure key={test.name} className="efx-reveal rounded-2xl bg-white/[0.04] p-8">
+                <div className="mb-5 flex gap-1">
                   {Array.from({ length: test.stars }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="icon-gold h-3.5 w-3.5 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-4 italic">&ldquo;{test.text}&rdquo;</p>
-                <div>
-                  <p className="text-white font-semibold text-sm">{test.name}</p>
-                  <p className="text-gray-500 text-xs">{test.role}</p>
-                </div>
-              </div>
+                <blockquote className="efx-serif mb-6 text-lg italic leading-relaxed text-white/80">
+                  &ldquo;{test.text}&rdquo;
+                </blockquote>
+                <figcaption>
+                  <p className="text-sm font-semibold text-white">{test.name}</p>
+                  <p className="text-xs text-white/40">{test.role}</p>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══════════════ FAQ ═══════════════ */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">{t.faqTitle}</h2>
-          <div className="space-y-3">
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-3xl px-4">
+          <h2 className="efx-reveal mb-12 text-center text-3xl font-bold text-white md:text-4xl">
+            <span className="efx-serif italic font-normal">{t.faqTitle}</span>
+          </h2>
+          <div className="efx-reveal border-t border-white/10">
             {faqs.map((faq, i) => (
-              <details key={i} className="group rounded-xl border border-gray-800 bg-[#1a1a1a] overflow-hidden">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 text-white font-medium hover:bg-gray-800/50 transition-colors">
+              <details key={i} className="group border-b border-white/10">
+                <summary className="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-white transition-colors hover:text-white/80">
                   <span className="text-sm md:text-base">{faq.question}</span>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-gray-500 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-white/40 transition-transform group-open:rotate-90" />
                 </summary>
-                <div className="px-6 pb-4 text-gray-300 text-sm leading-relaxed">
+                <div className="pb-5 text-sm leading-relaxed text-white/60">
                   {faq.answer}
                 </div>
               </details>
@@ -490,52 +582,51 @@ export default async function EpoxyFloorsPage(
         </div>
       </section>
 
-      {/* ═══════════════ GUIDES LINK ═══════════════ */}
-      <section className="py-12 bg-[#0e0e0e]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-gray-400 mb-3">
-            {locale === "es"
-              ? "¿Quieres aprender más sobre pisos epóxicos?"
-              : "Want to learn more about epoxy floors?"}
-          </p>
-          <Link
-            href={`/${locale}/guias`}
-            className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-medium transition-colors"
-          >
-            {locale === "es" ? "Explora nuestras guías completas" : "Explore our complete guides"}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+      {/* ═══════════════ CTA + GUIDES ═══════════════ */}
+      {/* Gold pour asset lives bottom-right on black — text occupies the
+          natural negative space on the left. No overlay. */}
+      <section className="relative overflow-hidden bg-black">
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/epoxy/gold-pour.webp"
+            alt=""
+            role="presentation"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-right-bottom"
+          />
         </div>
-      </section>
-
-      {/* ═══════════════ CTA ═══════════════ */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
-        <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp"
-          alt={locale === "es" ? "Piso epóxico industrial instalado por SobrePoxi" : "Industrial epoxy floor by SobrePoxi"}
-          fill
-          className="object-cover"
-          unoptimized
-        />
-        <div className="absolute inset-0 bg-black/75" />
-        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t.ctaTitle}</h2>
-          <p className="text-gray-300 mb-8 max-w-xl mx-auto">{t.ctaSub}</p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href={`/${locale}/contact`}
-              className="inline-flex items-center gap-2 bg-gold-gradient px-8 py-4 rounded-lg font-semibold text-black hover:opacity-90 transition-opacity"
-            >
-              {t.ctaButton}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a
-              href="tel:+50685850000"
-              className="inline-flex items-center gap-2 text-white hover:text-amber-400 transition-colors"
-            >
-              <Phone className="h-4 w-4" />
-              <span>{t.ctaPhone} <strong>+506 8585-0000</strong></span>
-            </a>
+        <div className="relative z-10 mx-auto max-w-6xl px-4 py-24 md:py-36">
+          <div className="efx-reveal max-w-xl">
+            <h2 className="mb-5">
+              <span className="efx-serif block text-3xl italic font-normal text-white/90 md:text-4xl">{t.ctaTitle1}</span>
+              <span className="gold-gradient-bright block text-4xl font-extrabold tracking-tight md:text-6xl">{t.ctaTitle2}</span>
+            </h2>
+            <p className="mb-9 leading-relaxed text-white/70">{t.ctaSub}</p>
+            <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+              <Link
+                href={`/${locale}/contact`}
+                className="bg-gold-gradient inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold text-black transition-opacity hover:opacity-90"
+              >
+                {t.ctaButton}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href="tel:+50685850000"
+                className="inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white"
+              >
+                <Phone className="h-4 w-4" />
+                <span>{t.ctaPhone} <strong>+506 8585-0000</strong></span>
+              </a>
+            </div>
+            <p className="mt-14 text-sm text-white/50">
+              {locale === "es" ? "¿Quieres aprender más sobre pisos epóxicos?" : "Want to learn more about epoxy floors?"}{" "}
+              <Link href={`/${locale}/guias`} className="inline-flex items-center gap-1 font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline">
+                {locale === "es" ? "Explora nuestras guías" : "Explore our guides"}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </p>
           </div>
         </div>
       </section>
