@@ -103,8 +103,8 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 9.9355431,
-      longitude: -84.1545449,
+      latitude: 9.9760383,
+      longitude: -84.0098602,
     },
     areaServed: [
       { "@type": "City", name: "San José" },

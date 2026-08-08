@@ -18,15 +18,15 @@ export const SEO_CONFIG = {
     address: {
       streetAddress: "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
       addressLocality: "Vásquez de Coronado",
-      addressRegion: "San Isidro",
+      addressRegion: "San José",
       postalCode: "11101",
       addressCountry: "CR"
     },
     phone: "+50685850000",
     email: "info@sobrepoxi.com",
     geo: {
-      latitude: 9.9355431,
-      longitude: -84.1545449
+      latitude: 9.9760383,
+      longitude: -84.0098602
     }
   }
 } as const;

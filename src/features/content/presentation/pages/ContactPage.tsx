@@ -216,12 +216,12 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
           "@type": "PostalAddress",
           "streetAddress": "Centro Comercial Velasuma, 2da. Planta local No. 9, San Isidro Downtown",
           "addressLocality": "Vásquez de Coronado",
-          "addressRegion": "San Isidro",
+          "addressRegion": "San José",
           "postalCode": "11101",
           "addressCountry": "CR"
         },
-        "geo": { "@type": "GeoCoordinates", "latitude": 9.9355431, "longitude": -84.1545449 },
-        "hasMap": "https://maps.app.goo.gl/6HMDWY7bBbwdS3rN7",
+        "geo": { "@type": "GeoCoordinates", "latitude": 9.9760383, "longitude": -84.0098602 },
+        "hasMap": "https://maps.google.com/?q=9.9760383,-84.0098602",
         "sameAs": [
           "https://www.facebook.com/share/14EpJLUsXwc/",
           "https://www.instagram.com/sobrepoxi?igsh=MTZzd2ljaXNwbWVzaA==",
