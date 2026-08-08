@@ -43,14 +43,14 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
       alt: "Piso epólico negro sparkle metálico de alto rendimiento UV",
     },
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp",
-      alt: "Piso epóxico espejo negro premium para villa costera",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp",
+      alt: "Piso epóxico de alto brillo efecto galaxia para villa costera",
     },
   ];
   const residential = [
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp",
-      alt: "Piso epóxico negro espejo de alto brillo residencial",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob1.webp",
+      alt: "Piso epóxico metálico efecto mármol de alto brillo residencial",
     },
     {
       src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/beige-gold-epoxy-floor/1.webp",
@@ -63,8 +63,8 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
   ];
   const commercial = [
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp",
-      alt: "Piso epóxico comercial negro espejo alto tráfico",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob2.webp",
+      alt: "Piso epóxico comercial efecto mármol para alto tráfico",
     },
     {
       src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/beige-gold-epoxy-floor/1.webp",
@@ -81,8 +81,8 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
       alt: "Piso epóxico industrial antideslizante para bodega",
     },
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/black-mirror-floor/mesa_sombra.webp",
-      alt: "Piso epólico industrial fácil limpieza para nave",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog3.webp",
+      alt: "Piso epóxico industrial de alto tráfico y fácil limpieza para nave",
     },
     {
       src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/beige-gold-epoxy-floor/1.webp",
