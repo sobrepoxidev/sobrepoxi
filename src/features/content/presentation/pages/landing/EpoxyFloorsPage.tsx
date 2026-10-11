@@ -626,6 +626,13 @@ export default async function EpoxyFloorsPage(
               </a>
             </div>
             <p className="mt-14 text-sm text-white/50">
+              {locale === "es" ? "¿Cuánto cuesta tu piso?" : "How much would your floor cost?"}{" "}
+              <Link href={`/${locale}/resina-epoxica-para-pisos#calculadora`} className="inline-flex items-center gap-1 font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline">
+                {locale === "es" ? "Calculalo en un minuto" : "Estimate it in a minute"}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </p>
+            <p className="mt-3 text-sm text-white/50">
               {locale === "es" ? "¿Quieres aprender más sobre pisos epóxicos?" : "Want to learn more about epoxy floors?"}{" "}
               <Link href={`/${locale}/guias`} className="inline-flex items-center gap-1 font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline">
                 {locale === "es" ? "Explora nuestras guías" : "Explore our guides"}

@@ -61,6 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { base: 'privacy-policies', priority: 0.3, freq: 'yearly' as const },
     { base: 'conditions-service', priority: 0.3, freq: 'yearly' as const },
     { base: 'luxury-furniture', priority: 0.8, freq: 'monthly' as const },
+    { base: 'resina-epoxica-para-pisos', priority: 0.9, freq: 'monthly' as const },
     { base: 'epoxy-floors', priority: 0.8, freq: 'monthly' as const },
     { base: 'industrial-epoxy-flooring', priority: 0.8, freq: 'monthly' as const },
     // Páginas de servicio local (SEO geográfico)

@@ -15,6 +15,7 @@ import {
 import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/shared/seo/structuredData";
 import { SEO_CONFIG } from "@/shared/seo/seoConfig";
+import FloorCalculator from "../../components/FloorCalculator";
 import {
   Clock,
   Calendar,
@@ -26,6 +27,8 @@ import {
 } from "lucide-react";
 
 type tParams = Promise<{ locale: "es" | "en"; slug: string }>;
+
+const PRICE_GUIDES = new Set(["precios-pisos-epoxicos-costa-rica", "costo-piso-epoxico-metro-cuadrado"]);
 
 /* ──────────── Static params for ISR ──────────── */
 export async function generateStaticParams() {
@@ -277,6 +280,26 @@ export default async function GuideDetailPage({
 
           {/* Main content */}
           <article className="min-w-0 flex-1">
+            {/* Price guides carry the floor calculator right after the hero:
+                it answers the reader's question and opens WhatsApp with data. */}
+            {PRICE_GUIDES.has(guide.slug) && (
+              <section id="calculadora" className="mb-12 scroll-mt-24">
+                <h2 className="mb-2 text-2xl font-bold text-white">
+                  {locale === "es" ? "Calculá el precio de tu piso" : "Estimate your floor"}
+                </h2>
+                <p className="mb-5 text-gray-400">
+                  {locale === "es"
+                    ? "Con los precios de esta guía: elegí el espacio, los metros y el acabado."
+                    : "Using the prices in this guide: pick the space, the area and the finish."}
+                </p>
+                <FloorCalculator locale={locale} refTag={guide.slug} />
+                <Link href={`/${locale}/resina-epoxica-para-pisos`} className="mt-4 inline-block text-sm text-amber-400 hover:text-amber-300">
+                  {locale === "es"
+                    ? "Ver acabados y preguntas sobre resina epóxica para pisos →"
+                    : "See finishes and FAQ about epoxy resin flooring →"}
+                </Link>
+              </section>
+            )}
             {/* Sections */}
             {guide.sections.map((section, i) => (
               <section

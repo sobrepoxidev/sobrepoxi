@@ -42,3 +42,17 @@ https://claude.ai/artifact/HpgVEx5NZ4ct16C7dvdKA3
 - Bot de Mauricio: leer `[ref: …]` del primer mensaje y guardarlo como origen de la conversación.
 - Medir en 4 semanas el CTR de las fichas y guías y los eventos `whatsapp_click` por `ref`.
 - Siguiente bloque (lleva diseño antes del código): landing «resina epóxica para pisos» y calculadora de m² que abre WhatsApp con los datos.
+
+## Bloque 2 — landing «resina epóxica para pisos» y calculadora (11 oct 2026)
+
+- Diseño aprobado antes del código: https://claude.ai/artifact/EsaStGPE5MTwGswiQR51Br (prototipo navegable, 5 tamaños).
+- Ruta nueva `/[locale]/resina-epoxica-para-pisos`, en el sitemap con prioridad 0,9. Apunta a la familia de consultas
+  con más impresiones en posición 5–7 («resina epóxica para pisos costa rica», «pisos de resina», «porcelanato líquido»,
+  «granito líquido»). Schemas: BreadcrumbList, FAQPage y Service con AggregateOffer en CRC.
+- Calculadora (`FloorCalculator.tsx`): espacio, m², acabado y provincia → rango en colones con los precios por m² que ya
+  publica la guía de precios 2026 (`floorPricing.ts`, fuente única). El botón abre WhatsApp con los datos y
+  `[ref: calculadora.<página>]`.
+- La calculadora también aparece en las guías `precios-pisos-epoxicos-costa-rica` y `costo-piso-epoxico-metro-cuadrado`,
+  con enlace a la landing. `/epoxy-floors` enlaza a la calculadora.
+- Verificado con el build de producción en local: 375 px y 1366 px sin scroll horizontal; con casa, 25 m² y metálico da
+  ₡550.000 – ₡950.000 y el mensaje de WhatsApp lleva los cuatro datos y la referencia.
