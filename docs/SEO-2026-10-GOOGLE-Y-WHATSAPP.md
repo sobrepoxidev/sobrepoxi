@@ -38,10 +38,13 @@ https://claude.ai/artifact/HpgVEx5NZ4ct16C7dvdKA3
 
 ## Pendiente
 
-- Desplegar y pedir reindexación de las fichas y guías en Search Console. **NO VERIFICADO en producción.**
+- Bloque 1 desplegado (`f79b22c`, Vercel READY) y verificado en vivo como Googlebot el 11 oct: títulos de fichas y
+  guías, h1 en las fichas, `noindex` en carrito y enlaces de WhatsApp con `[ref]`.
+- Pedir reindexación de fichas, guías y la landing nueva en Search Console (inspección de URL). **Pendiente, a mano.**
 - Bot de Mauricio: leer `[ref: …]` del primer mensaje y guardarlo como origen de la conversación.
 - Medir en 4 semanas el CTR de las fichas y guías y los eventos `whatsapp_click` por `ref`.
-- Siguiente bloque (lleva diseño antes del código): landing «resina epóxica para pisos» y calculadora de m² que abre WhatsApp con los datos.
+- Search Console marca 3 «fragmentos de productos» no válidos; revisar cuáles (probablemente `LuxuryFurniturePage` o
+  el `ItemList` de `/products`). **NO VERIFICADO.**
 
 ## Bloque 2 — landing «resina epóxica para pisos» y calculadora (11 oct 2026)
 

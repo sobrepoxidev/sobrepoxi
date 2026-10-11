@@ -110,6 +110,8 @@ export default async function ProductsPage({ params }: { params: tParams }) {
       </Suspense>
       
       {/* Schema.org markup for Products page */}
+      {/* Items are category pages, not purchasable products: typed as WebPage so
+          Google does not flag them as Product snippets without offers. */}
       <JsonLd
         id="ld-products"
         data={{
@@ -120,7 +122,7 @@ export default async function ProductsPage({ params }: { params: tParams }) {
               "@type": "ListItem",
               "position": 1,
               "item": {
-                "@type": "Product",
+                "@type": "WebPage",
                 "name": locale === "es" ? "Muebles de Lujo en Resina y Madera" : "Luxury Resin & Wood Furniture",
                 "description": locale === "es"
                   ? "Piezas únicas de mobiliario artesanal en madera y resina epóxica."
@@ -132,7 +134,7 @@ export default async function ProductsPage({ params }: { params: tParams }) {
               "@type": "ListItem",
               "position": 2,
               "item": {
-                "@type": "Product",
+                "@type": "WebPage",
                 "name": locale === "es" ? "Pisos Epóxicos Residenciales y Comerciales" : "Residential & Commercial Epoxy Floors",
                 "description": locale === "es"
                   ? "Pisos epóxicos de lujo y diseño para residencias, oficinas y espacios comerciales."
@@ -144,7 +146,7 @@ export default async function ProductsPage({ params }: { params: tParams }) {
               "@type": "ListItem",
               "position": 3,
               "item": {
-                "@type": "Product",
+                "@type": "WebPage",
                 "name": locale === "es" ? "Pisos Epóxicos Industriales" : "Industrial Epoxy Flooring",
                 "description": locale === "es"
                   ? "Pisos epóxicos industriales de alta resistencia para fábricas, bodegas y plantas alimenticias."
