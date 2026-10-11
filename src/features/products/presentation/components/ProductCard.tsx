@@ -1,5 +1,6 @@
 'use client';
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Link } from '@/shared/i18n/navigation';
@@ -204,9 +205,10 @@ export default function ProductCard({ product }: { product: Product }) {
               </button>
             ) : (
               <Link
-                href={`https://wa.me/50685850000?text=${encodeURIComponent(
-                  `Hola, me gustaría consultar sobre: ${locale === 'es' ? product.name_es : product.name_en} (https://sobrepoxi.com/product/${product.name})`
-                )}`}
+                href={buildWhatsAppUrl(
+                  `Hola, me gustaría consultar sobre: ${locale === 'es' ? product.name_es : product.name_en} (https://sobrepoxi.com/${locale}/product/${product.name})`,
+                  `tarjeta.${product.name ?? product.id}`
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg border border-emerald-600/30 text-emerald-400 hover:bg-emerald-400/10 transition-colors"

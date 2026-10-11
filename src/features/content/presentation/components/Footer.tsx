@@ -1,3 +1,4 @@
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import { Link } from '@/shared/i18n/navigation';
 import { Facebook, Instagram, Phone, Mail, Youtube, MapPin } from 'lucide-react';
 import Image from 'next/image';
@@ -142,7 +143,7 @@ export default function Footer({ locale }: { locale: string }) {
                 <Youtube className="w-5 h-5" />
               </a>
               <a
-                href="https://wa.me/50685850000?text=Hola%2C%20me%20gustaría%20hacer%20una%20consulta%20acerca%20de%20los%20productos%20y%20servicios%20que%20ofrece%20SobrePoxi."
+                href={buildWhatsAppUrl('Hola SobrePoxi, quiero cotizar un piso epóxico', 'footer')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366] hover:bg-[#128C7E] p-2 rounded-full transition-colors"

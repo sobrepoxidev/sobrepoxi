@@ -9,6 +9,7 @@
  *  que los schemas queden en el HTML SSR que lee Googlebot.
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -211,13 +212,12 @@ export async function CityEpoxyPage({
         climate: "Climate",
       };
 
-  const waMsg = isEs
-    ? `Hola%20SobrePoxi,%20quiero%20cotizar%20piso%20epoxico%20en%20${encodeURIComponent(
-        city.cityName
-      )}`
-    : `Hello%20SobrePoxi,%20I%20want%20a%20quote%20for%20epoxy%20floor%20in%20${encodeURIComponent(
-        city.cityName
-      )}`;
+  const waHref = buildWhatsAppUrl(
+    isEs
+      ? `Hola SobrePoxi, quiero cotizar piso epóxico en ${city.cityName}`
+      : `Hello SobrePoxi, I want a quote for an epoxy floor in ${city.cityName}`,
+    `ciudad-${city.cityName}`
+  );
 
   return (
     <>
@@ -296,7 +296,7 @@ export async function CityEpoxyPage({
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
               <a
-                href={`https://wa.me/50685850000?text=${waMsg}`}
+                href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 font-semibold text-black hover:opacity-90 transition-opacity"
@@ -511,7 +511,7 @@ export async function CityEpoxyPage({
               <p className="text-gray-300 mb-6 max-w-xl mx-auto">{t.ctaSub}</p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a
-                  href={`https://wa.me/50685850000?text=${waMsg}`}
+                  href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 font-semibold text-black hover:opacity-90 transition-opacity"

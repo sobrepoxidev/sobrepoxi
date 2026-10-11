@@ -3,6 +3,7 @@
  *  Captures informational search traffic about epoxy resin topics
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/shared/seo/seoConfig";
@@ -153,7 +154,9 @@ export default async function GuidesIndexPage({ params }: { params: tParams }) {
               {t.ctaSubtitle}
             </p>
             <Link
-              href={`/${locale}/contact`}
+              href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un piso epóxico" : "Hello SobrePoxi, I would like a quote for an epoxy floor", "guias")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 font-semibold text-black hover:opacity-90 transition-opacity"
             >
               {t.ctaButton}

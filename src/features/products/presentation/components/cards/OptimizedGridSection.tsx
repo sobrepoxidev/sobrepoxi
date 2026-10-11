@@ -1,5 +1,7 @@
 'use client';
 
+import { track } from '@vercel/analytics';
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import React, { useMemo } from "react";
 import Card from "./Card";
 import { Link } from "@/shared/i18n/navigation";
@@ -71,12 +73,18 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                             <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              const msg = encodeURIComponent(
-                                locale === 'es'
-                                  ? `Hola, estoy interesado en el producto: ${product?.name_es} (${window.location.href})`
-                                  : `Hello, I am interested in the product: ${product?.name_en} (${window.location.href})`
+                              const ref = `grilla.${product?.name ?? product?.id}`;
+                              track('whatsapp_click', { ref, path: window.location.pathname });
+                              window.open(
+                                buildWhatsAppUrl(
+                                  locale === 'es'
+                                    ? `Hola, estoy interesado en el producto: ${product?.name_es} (${window.location.href})`
+                                    : `Hello, I am interested in the product: ${product?.name_en} (${window.location.href})`,
+                                  ref
+                                ),
+                                '_blank',
+                                'noopener'
                               );
-                              window.open(`https://wa.me/+50684237555?text=${msg}`, '_blank', 'noopener');
                             }}
                             className="inline-flex items-center justify-center text-xs font-medium text-amber-400 hover:text-amber-300 border-b border-current pb-0"
                           >

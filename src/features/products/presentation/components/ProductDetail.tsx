@@ -27,13 +27,14 @@ import ReviewsList from './ReviewsList';
 import RelatedProductsClient from './RelatedProductsClient';
 import ReviewForm from './ReviewForm';
 import { formatUSD } from '@/shared/utils/formatCurrency';
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import { Database } from '@/shared/types/database';
 
 type Product = Database['products'];
 type Category = Database['categories'];
 
 // The client component that handles UI and state
-export default function ProductDetail({ name, locale }: { name: string, locale: string }) {
+export default function ProductDetail({ name, locale, initialProduct = null }: { name: string, locale: string, initialProduct?: Product | null }) {
   const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
 
   // Ensure viewport starts at top when navigating to product page
@@ -43,11 +44,13 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
     }
   }, []);
 
-  const [product, setProduct] = useState<Product | null>(null);
+  // Server-rendered product (SEO): when present, the page renders immediately
+  // and the effect below only loads the per-user / live data.
+  const [product, setProduct] = useState<Product | null>(initialProduct);
   const [category, setCategory] = useState<Category | null>(null);
   const [inventory, setInventory] = useState<number>(0);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialProduct);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -64,17 +67,21 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
   // Cargar producto por ID y sus datos relacionados
   useEffect(() => {
     async function fetchProductAndRelatedData() {
-      setLoading(true);
+      if (!initialProduct) setLoading(true);
       try {
-        // Fetch product data
-        const { data: productData, error: productError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('name', name)
-          .single();
+        // Fetch product data (skipped when the server already rendered it)
+        let productData = initialProduct;
+        if (!productData) {
+          const { data, error: productError } = await supabase
+            .from('products')
+            .select('*')
+            .eq('name', name)
+            .single();
 
-        if (productError) {
-          throw productError;
+          if (productError) {
+            throw productError;
+          }
+          productData = data as Product | null;
         }
 
         if (!productData) {
@@ -139,7 +146,7 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
     if (name) {
       fetchProductAndRelatedData();
     }
-  }, [name, session?.user, supabase]); // Use id as dependency
+  }, [name, session?.user, supabase, initialProduct]);
 
   // Manejar la cantidad
   const handleIncrement = () => {
@@ -505,9 +512,12 @@ export default function ProductDetail({ name, locale }: { name: string, locale: 
                 </button>
               ) : (
                 <Link 
-                  href={`https://wa.me/5068585000?text=${encodeURIComponent(
-                    locale === 'es' ? 'Hola, estoy interesado en el producto: ' + product?.name_es + ' (' + window.location.href + ')' : 'Hello, I am interested in the product: ' + product?.name_en + ' (' + window.location.href + ')'
-                  )}`}
+                  href={buildWhatsAppUrl(
+                    locale === 'es'
+                      ? `Hola SobrePoxi, quiero cotizar: ${product.name_es} (https://sobrepoxi.com/es/product/${product.name})`
+                      : `Hello SobrePoxi, I would like a quote for: ${product.name_en} (https://sobrepoxi.com/en/product/${product.name})`,
+                    `ficha.${product.name ?? product.id}`
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                    className="flex items-center bg-gold-gradient justify-center w-full px-4 py-2 text-sm sm:text-lg  text-black hover:text-[#303030] font-bold border border-[#b68b44] rounded-md hover:bg-gold-gradient-bright transition-colors"

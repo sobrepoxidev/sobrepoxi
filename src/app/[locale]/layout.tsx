@@ -1,6 +1,5 @@
 // src/app/[locale]/layout.tsx
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { hasLocale } from "next-intl";
 import { routing } from "@/shared/i18n/routing";
 import {
@@ -11,46 +10,32 @@ import { Navbar, Footer, WhatsAppBubble } from "@/features/content";
 import { SessionLayout } from "@/features/auth";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import WhatsAppClickTracker from "@/shared/contact/WhatsAppClickTracker";
 import { Toaster } from "react-hot-toast";
 import { ErrorBoundary } from "@/shared/ui/ErrorBoundary";
 
 type tParams = Promise<{ locale: string }>;
 export async function generateMetadata({ params }: { params: tParams }): Promise<Metadata> {
-  const headersList = await headers();
-  const pathname = headersList.get("x-invoke-pathname")?.trim() || "/";
   const { locale } = await params;
+  const isEs = locale === "es";
+  const base = buildMetadata({
+    locale: isEs ? "es" : "en",
+    pathname: `/${locale}`,
+  });
 
-  // Always use the canonical domain — never trust host headers (avoids www / http variants)
-  const CANONICAL_HOST = "sobrepoxi.com";
-
-  const path = pathname === "/" ? "" : pathname;
-
+  // Only site-wide defaults live here. Canonical and hreflang are set by each
+  // page: a layout-level canonical would be inherited by every page that lacks
+  // its own and point them all at the home page.
   return {
-    metadataBase: new URL(`https://${CANONICAL_HOST}`),
-
-    ...buildMetadata({
-      locale: locale === "es" ? "es" : "en",
-      pathname,
-      title: locale === "es"
-        ? "SobrePoxi - Muebles con Resina Epóxica y Pisos Epóxicos Industriales en Costa Rica"
-        : "SobrePoxi - Epoxy Resin Furniture and Industrial Epoxy Floors in Costa Rica",
-      description: locale === "es"
-        ? "Empresa líder en Costa Rica especializada en muebles únicos con resina epóxica y pisos epóxicos industriales de alta resistencia. Calidad garantizada y diseños personalizados."
-        : "Leading company in Costa Rica specialized in unique epoxy resin furniture and high-resistance industrial epoxy floors. Guaranteed quality and custom designs."
-    }),
-
-    // ——— Canonical + hreflangs ———
-    // x-default SIEMPRE apunta a la versión por defecto (es) en TODAS las
-    // páginas. Google exige consistencia: si x-default varía entre páginas,
-    // ignora todo el cluster de hreflang. (Fix SEO: /en sin indexar.)
-    alternates: {
-      canonical: `https://${CANONICAL_HOST}/${locale}${path}`,
-      languages: {
-        "es-cr": `https://${CANONICAL_HOST}/es${path}`,
-        "en-us": `https://${CANONICAL_HOST}/en${path}`,
-        "x-default": `https://${CANONICAL_HOST}/es${path}`,
-      },
+    ...base,
+    metadataBase: new URL("https://sobrepoxi.com"),
+    title: {
+      default: isEs ? "Pisos epóxicos en Costa Rica | SobrePoxi" : "Epoxy floors in Costa Rica | SobrePoxi",
+      template: "%s | SobrePoxi",
     },
+    alternates: undefined,
+    openGraph: { ...base.openGraph, url: undefined },
   };
 }
 
@@ -80,6 +65,8 @@ export default async function LocaleLayout({
               <WhatsAppBubble />
               <Toaster position="top-center" />
               <Analytics />
+              <SpeedInsights />
+              <WhatsAppClickTracker />
             </SessionLayout>
           </NextIntlClientProvider>
         </ErrorBoundary>

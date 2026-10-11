@@ -52,16 +52,6 @@ export const metadata: Metadata = {
     images:      ["https://sobrepoxi.com/og-image.webp"],
   },
 
-  // ——— Alternates (se sobreescribirán por‐página) ———
-  alternates: {
-    canonical: "https://sobrepoxi.com/es",
-    languages: {
-      "es-cr": "https://sobrepoxi.com/es",
-      "en-us": "https://sobrepoxi.com/en",
-      "x-default": "https://sobrepoxi.com",
-    },
-  },
-
   // ——— Otros micro‐detalles útiles ———
   icons: { icon: "/favicon.ico" },
   robots: {

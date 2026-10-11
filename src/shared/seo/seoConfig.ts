@@ -37,7 +37,7 @@ export const SEO_CONFIG = {
 export const SEO_TEXT = {
   es: {
     title: {
-      default: "SobrePoxi | Muebles con resina epóxica y pisos epóxicos en Costa Rica",
+      default: "Pisos epóxicos en Costa Rica | SobrePoxi",
       template: "%s | SobrePoxi"
     },
     description:
@@ -88,7 +88,7 @@ export const SEO_TEXT = {
   },
   en: {
     title: {
-      default: "SobrePoxi | Luxury epoxy resin furniture & industrial epoxy floors Costa Rica",
+      default: "Epoxy floors in Costa Rica | SobrePoxi",
       template: "%s | SobrePoxi"
     },
     description:
@@ -177,10 +177,12 @@ export function buildMetadata(opts: {
   /* --------------------------------------------------------------------- */
   /* Título optimizado con plantilla                                       */
   /* --------------------------------------------------------------------- */
-  const pageTitle = title || t.title.default;
-  const metaTitle = title 
-    ? { default: title, template: t.title.template }
-    : t.title;
+  // Absolute titles: the brand is appended exactly once, whether or not the
+  // caller already included it (avoids "… | SobrePoxi | SobrePoxi").
+  const pageTitle = title
+    ? (/sobrepoxi/i.test(title) ? title : `${title} | ${config.siteName}`)
+    : t.title.default;
+  const metaTitle = title ? { absolute: pageTitle } : t.title;
 
   /* --------------------------------------------------------------------- */
   /* Imagen OG optimizada                                                  */

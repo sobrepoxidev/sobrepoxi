@@ -1,9 +1,9 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
-const WA_NUMBER = '50685850000';
-const WA_URL = `https://wa.me/+${WA_NUMBER}?text=Hola%20SobrePoxi%2C%20quiero%20información`;
 const SIZE = 56;
 const EDGE_MARGIN = 12;
 // Movement threshold (px) before a touch/pointer interaction is considered a drag.
@@ -16,6 +16,10 @@ const DRAG_THRESHOLD = 8;
  * When released, it snaps to the nearest horizontal edge.
  */
 export default function WhatsAppBubble() {
+  const pathname = usePathname();
+  // ref = the page the visitor is on, e.g. burbuja.epoxy-floors
+  const pageSlug = pathname?.split('/').filter(Boolean).slice(1).join('.') || 'inicio';
+  const WA_URL = buildWhatsAppUrl('Hola SobrePoxi, quiero información', `burbuja.${pageSlug}`);
   const bubbleRef = useRef<HTMLAnchorElement>(null);
   const [pos, setPos] = useState({ x: -1, y: -1 });
   const [dragging, setDragging] = useState(false);

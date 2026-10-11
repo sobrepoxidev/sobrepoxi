@@ -7,6 +7,7 @@
  *  con geo-coordenadas. No es doorway page: contenido único sobre la zona.
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -302,7 +303,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://wa.me/50685850000?text=Hola%20SobrePoxi,%20quiero%20cotizar%20piso%20epoxico%20en%20San%20José"
+                href={buildWhatsAppUrl('Hola SobrePoxi, quiero cotizar piso epóxico en San José', 'ciudad-san-jose')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 font-semibold text-black hover:opacity-90 transition-opacity"
@@ -534,7 +535,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a
-                  href="https://wa.me/50685850000?text=Hola%20SobrePoxi,%20quiero%20cotizar%20piso%20epoxico%20en%20San%20José"
+                  href={buildWhatsAppUrl('Hola SobrePoxi, quiero cotizar piso epóxico en San José', 'ciudad-san-jose')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 font-semibold text-black hover:opacity-90 transition-opacity"

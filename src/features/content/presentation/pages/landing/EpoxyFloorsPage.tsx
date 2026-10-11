@@ -5,6 +5,7 @@
  *  local WebP assets (no remote hero), FAQ/Service/Breadcrumb schema intact.
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
@@ -320,7 +321,9 @@ export default async function EpoxyFloorsPage(
           </p>
           <div className="efx-in efx-in-4 flex flex-wrap items-center gap-4">
             <Link
-              href={`/${locale}/contact`}
+              href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un piso epóxico" : "Hello SobrePoxi, I would like a quote for an epoxy floor", "pisos-epoxicos")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-gold-gradient inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold text-black transition-opacity hover:opacity-90"
             >
               {t.heroCta}
@@ -606,7 +609,9 @@ export default async function EpoxyFloorsPage(
             <p className="mb-9 leading-relaxed text-white/70">{t.ctaSub}</p>
             <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <Link
-                href={`/${locale}/contact`}
+                href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un piso epóxico" : "Hello SobrePoxi, I would like a quote for an epoxy floor", "pisos-epoxicos")}
+              target="_blank"
+              rel="noopener noreferrer"
                 className="bg-gold-gradient inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold text-black transition-opacity hover:opacity-90"
               >
                 {t.ctaButton}

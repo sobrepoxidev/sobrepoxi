@@ -8,6 +8,7 @@
  *  – SEO helpers: <title>, description & Open Graph via generateMetadata
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import { Suspense }                 from "react";
 
 import { FaPhone, FaWhatsapp }      from "react-icons/fa";
@@ -106,7 +107,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
                     <h3 className="font-semibold">WhatsApp</h3>
                     <p className="text-gray-300 font-semibold">(+506) 8585-0000</p>
                     <a
-                      href="https://wa.me/50685850000"
+                      href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un proyecto" : "Hello SobrePoxi, I would like a quote", "contacto")}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"

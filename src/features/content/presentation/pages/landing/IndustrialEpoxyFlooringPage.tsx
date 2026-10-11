@@ -4,6 +4,7 @@
  *  case studies, testimonials and structured data
  * ----------------------------------------------------------------------- */
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -269,7 +270,9 @@ export default async function IndustrialEpoxyFlooringPage(
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
-              href={`/${locale}/contact`}
+              href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un piso epóxico industrial" : "Hello SobrePoxi, I would like a quote for an industrial epoxy floor", "pisos-industriales")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gold-gradient px-6 py-3.5 rounded-lg font-semibold text-black hover:opacity-90 transition-opacity"
             >
               {t.heroCta}
@@ -546,7 +549,9 @@ export default async function IndustrialEpoxyFlooringPage(
           <p className="text-gray-300 mb-8 max-w-xl mx-auto">{t.ctaSub}</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href={`/${locale}/contact`}
+              href={buildWhatsAppUrl(locale === "es" ? "Hola SobrePoxi, quiero cotizar un piso epóxico industrial" : "Hello SobrePoxi, I would like a quote for an industrial epoxy floor", "pisos-industriales")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gold-gradient px-8 py-4 rounded-lg font-semibold text-black hover:opacity-90 transition-opacity"
             >
               {t.ctaButton}

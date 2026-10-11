@@ -1,5 +1,6 @@
 'use client';
 
+import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import React from 'react';
 import Image from 'next/image';
 import { ProductsProvider, OptimizedGridSection } from '@/features/products';
@@ -120,7 +121,7 @@ function HeroSection({ locale }: { locale: string }) {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link
-                href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto"
+                href={buildWhatsAppUrl('Hola SobrePoxi, quiero cotizar un proyecto', 'inicio')}
                 target="_blank"
                 className="inline-flex items-center justify-center gap-2 bg-gold-gradient text-black font-bold px-6 py-3.5 rounded-xl hover:shadow-lg hover:shadow-amber-500/20 transition-all text-sm sm:text-base"
               >
@@ -542,7 +543,7 @@ function FinalCTASection({ locale }: { locale: string }) {
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            href="https://wa.me/+50685850000?text=Hola%20SobrePoxi%2C%20quiero%20cotizar%20un%20proyecto"
+            href={buildWhatsAppUrl('Hola SobrePoxi, quiero cotizar un proyecto', 'inicio')}
             target="_blank"
             className="inline-flex items-center justify-center gap-2 bg-gold-gradient text-black font-bold px-8 py-4 rounded-xl hover:shadow-lg hover:shadow-amber-500/20 transition-all"
           >
