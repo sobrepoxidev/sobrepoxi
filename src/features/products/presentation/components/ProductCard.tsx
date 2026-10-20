@@ -25,6 +25,8 @@ export default function ProductCard({ product }: { product: Product }) {
   const [supabase] = useState<SupabaseClient>(() => createBrowserSupabaseClient());
 
   const mainImageUrl = product?.media?.[0]?.url || '/product-placeholder.png';
+  // Piezas a pedido (tag "a-pedido"): sin stock pero cotizables.
+  const isMadeToOrder = (product?.tags ?? []).includes('a-pedido');
 
   useEffect(() => {
     async function fetchData() {
@@ -180,6 +182,8 @@ export default function ProductCard({ product }: { product: Product }) {
                   ? (locale === 'es' ? 'En stock' : 'In stock')
                   : `${inventory} ${locale === 'es' ? 'disponibles' : 'available'}`}
               </span>
+            ) : isMadeToOrder ? (
+              <span className="text-amber-400">{locale === 'es' ? 'Se fabrica a su medida' : 'Made to order'}</span>
             ) : (
               <span className="text-gray-500">{locale === 'es' ? 'Consultar disponibilidad' : 'Check availability'}</span>
             )}

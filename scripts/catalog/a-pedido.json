@@ -1,0 +1,1036 @@
+{
+  "meta": {
+    "batch": "a-pedido-2026-10",
+    "sources": "scripts/catalog/fuentes/tanda1-textos.md, tanda2-textos.md (tono) y tanda1-briefs.py, tanda2-briefs.py (mueble exacto)",
+    "currency_note": "dolar_price y colon_price en 0: precio a consultar por WhatsApp",
+    "image_spec": "WebP calidad 82, lado largo 1600 px. 6 tomas por producto: 01-heroe (portada), 02-cenital, 03-detalle, 04-canto, 05-proceso, 06-ambiente",
+    "media_dir_note": "media_dir apunta a la carpeta YA EXISTENTE en tienda/. En productos con slug corregido, el slug no coincide con la carpeta: no renombrar carpetas.",
+    "category_keys": {
+      "coastal": "id 1 Serie Costa de Resina (existe)",
+      "tables": "id 2 Mesas (existe)",
+      "custom": "NUEVA custom-furniture / Muebles a la medida / Custom Furniture",
+      "decor": "NUEVA resin-decor / Decoración en resina / Resin Decor",
+      "floors": "id 4 Pisos de Resina Epóxica (existe)"
+    }
+  },
+  "products": [
+    {
+      "sku": "SP-AP-001",
+      "name": "laguna-reef-coffee-table",
+      "name_es": "Mesa de centro Laguna",
+      "name_en": "Laguna Reef Coffee Table",
+      "category": "coastal",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "mesa-de-centro",
+        "rodaja-de-madera",
+        "resina-turquesa",
+        "guanacaste",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (rodaja)",
+        "Resina": "Azul turquesa con arena y conchas",
+        "Medida de referencia": "90 cm de diámetro × 7 cm de espesor (medida de referencia, se ajusta a su espacio)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Mesa de centro redonda de 90 cm, hecha de una rodaja de guanacaste de 7 cm de espesor con el centro relleno de resina azul turquesa, arena y conchas pequeñas en la orilla. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Escríbanos por WhatsApp y la cotizamos del tamaño que necesite.",
+      "description_en": "Round 90 cm coffee table made from a 7 cm thick guanacaste wood slice, its center filled with turquoise-blue resin, sand, and small shells along the wooden edge. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Message us on WhatsApp for a quote in the size you need.",
+      "media_dir": "laguna-reef-dining-table",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-002",
+      "name": "island-reef-dining-table",
+      "name_es": "Comedor Isla",
+      "name_en": "Island Reef Dining Table",
+      "category": "coastal",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "mesa-de-comedor",
+        "comedor-redondo",
+        "resina-azul",
+        "pedestal-acero",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (isla central)",
+        "Resina": "Azul profundo con nubes blancas y anillo de arena",
+        "Medida de referencia": "130 cm de diámetro (medida de referencia, se ajusta a su espacio)",
+        "Base": "Pedestal de acero negro",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Comedor redondo de 130 cm con una isla de guanacaste de forma irregular al centro, rodeada de resina azul profundo con nubes blancas y un anillo de arena, con canto de resina recto sobre pedestal de acero negro. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Escríbanos por WhatsApp y lo cotizamos para su comedor.",
+      "description_en": "Round 130 cm dining table with an irregular guanacaste island at its center, surrounded by deep-blue resin with white clouds and a sand ring, with a straight resin edge on a black steel pedestal base. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Message us on WhatsApp for a quote for your dining room.",
+      "media_dir": "home-river-kitchen-island",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-003",
+      "name": "rio-celeste-bar-counter",
+      "name_es": "Barra Río Celeste",
+      "name_en": "Rio Celeste Bar Counter",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "barra",
+        "barra-de-bar",
+        "rio-celeste",
+        "cenizaro",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Cenízaro (tablón de 6 cm, borde natural)",
+        "Resina": "Celeste lechoso (río central)",
+        "Medida de referencia": "2,8 m de largo (medida de referencia, se ajusta a su espacio)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Barra de 2,8 m en tablón de cenízaro de 6 cm, con borde natural al frente y un río de resina celeste lechoso al centro, de aire sereno inspirado en Río Celeste. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Escríbanos por WhatsApp con el largo que necesita y la cotizamos.",
+      "description_en": "2.8 m bar in 6 cm cenizaro planks with a natural front edge and a milky sky-blue resin river down the middle, a calm piece inspired by Rio Celeste. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Message us on WhatsApp with the length you need for a quote.",
+      "media_dir": "workshop-river-bar-counter",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-004",
+      "name": "sunset-reef-console-table",
+      "name_es": "Consola Atardecer",
+      "name_en": "Sunset Reef Console Table",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "consola",
+        "recibidor",
+        "resina-coral",
+        "cristobal",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Cristóbal rojiza (borde natural)",
+        "Resina": "Degradé coral, naranja y dorado apagado con espuma blanca",
+        "Medida de referencia": "160 × 40 × 80 cm (medida de referencia, se ajusta a su espacio)",
+        "Base": "Marco de acero negro",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Consola de 160 × 40 × 80 cm con tapa de cristóbal rojiza de 5 cm, borde natural y franja trasera de resina marmoleada en degradé coral, naranja y dorado apagado con una línea fina de espuma blanca, sobre marco de acero negro. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Consúltenos por WhatsApp y la hacemos al tamaño de su entrada o pasillo.",
+      "description_en": "160 × 40 × 80 cm console with a 5 cm reddish cristobal top, natural edge, and a rear band of marbled resin fading from coral to muted orange and gold with a fine white foam line, on a black steel frame. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Ask us on WhatsApp and we will build it to fit your entryway or hallway.",
+      "media_dir": "sunset-reef-console-table",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-005",
+      "name": "arenal-lava-desk",
+      "name_es": "Escritorio Arenal",
+      "name_en": "Arenal Lava Desk",
+      "category": "tables",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "escritorio",
+        "oficina",
+        "resina-negra",
+        "laurel",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Laurel negro (dos tablones)",
+        "Resina": "Negra marmoleada con vetas rojo magma",
+        "Medida de referencia": "150 × 70 cm (medida de referencia, se ajusta a su espacio)",
+        "Base": "Patas en U de acero negro",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Escritorio de 150 × 70 cm con tapa de dos tablones de laurel negro y un río de resina negra marmoleada con vetas rojo magma, sobre patas en U de acero negro. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Díganos por WhatsApp el largo que necesita para su oficina o estudio y le cotizamos.",
+      "description_en": "150 × 70 cm desk with a top of two black laurel planks and a marbled black resin river with magma-red veins, on U-shaped black steel legs. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Tell us on WhatsApp the length you need for your office or studio for a quote.",
+      "media_dir": "sandbank-river-desk",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-006",
+      "name": "mangrove-river-bench",
+      "name_es": "Banca Manglar",
+      "name_en": "Mangrove River Bench",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "banca",
+        "roble-sabana",
+        "resina-verde",
+        "corredor",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Roble sabana (tronco partido)",
+        "Resina": "Verde agua translúcida en grietas",
+        "Medida de referencia": "180 cm de largo (medida de referencia, se ajusta a su espacio)",
+        "Base": "Base sencilla de madera",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Banca de 180 cm hecha de un tronco partido de roble sabana, con tapa plana de 5 cm, cantos rectos y grietas rellenas de resina verde agua translúcida, sobre base sencilla de madera. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Escríbanos por WhatsApp y la hacemos al largo que necesite para su corredor o comedor.",
+      "description_en": "180 cm bench made from a split savanna oak trunk, with a flat 5 cm top, straight edges, and cracks filled with translucent sea-green resin, on a simple wooden base. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Message us on WhatsApp and we will build it in the length you need for your porch or dining room.",
+      "media_dir": "mangrove-river-bench",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-007",
+      "name": "shell-reef-serving-boards",
+      "name_es": "Tablas Conchal",
+      "name_en": "Conchal Serving Boards",
+      "category": "decor",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "tablas-de-servir",
+        "cocina",
+        "regalo",
+        "guanacaste",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste macizo",
+        "Resina": "Orilla estilo playa: arena, turquesa y espuma blanca",
+        "Medida de referencia": "Juego de 5 tablas (medida de referencia, se ajusta a su espacio)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Cinco tablas de servir de guanacaste macizo, con cantos rectos pulidos y una orilla angosta de resina estilo playa: arena, agua turquesa y espuma blanca. Se fabrican a pedido; cada pieza es única porque la veta y la resina cambian. Las medidas publicadas son de referencia y se ajustan a lo que necesite. Pídalas por WhatsApp, para regalo o para su casa.",
+      "description_en": "Five solid guanacaste serving boards with polished straight edges and a narrow beach-style resin rim: sand, turquoise water, and white foam. They are made to order; every piece is one of a kind because the grain and the resin vary. The listed sizes are a reference and are adjusted to what you need. Order them on WhatsApp, as a gift or for your home.",
+      "media_dir": "shell-reef-serving-boards",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "Las piezas en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-008",
+      "name": "papagayo-river-kitchen-island",
+      "name_es": "Isla de cocina Papagayo",
+      "name_en": "Papagayo River Kitchen Island",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "isla-de-cocina",
+        "cubierta",
+        "resina-azul",
+        "cocina",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Resina": "Mar azul y turquesa con olas blancas y orilla de arena",
+        "Medida de referencia": "220 × 90 cm (medida de referencia, se ajusta a su espacio)",
+        "Cuerpo": "Melamina",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Cubierta para isla de cocina de 220 × 90 cm, con resina de mar azul y turquesa, olas blancas y orilla de arena, cantos rectos y cuerpo de melamina, pensada para el uso de todos los días. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su cocina. Mándenos las medidas por WhatsApp y le cotizamos.",
+      "description_en": "220 × 90 cm kitchen island top with blue-and-turquoise sea resin, white waves, and a sand shoreline, straight edges and a melamine body, made for everyday use. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your kitchen. Send us your measurements on WhatsApp for a quote.",
+      "media_dir": "papagayo-river-kitchen-island",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-009",
+      "name": "double-pacific-reef-table",
+      "name_es": "Comedor Pacífico",
+      "name_en": "Pacific Double-River Dining Table",
+      "category": "coastal",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "mesa-de-comedor",
+        "comedor-grande",
+        "doble-rio",
+        "guanacaste",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (tres tablones)",
+        "Resina": "Dos ríos: turquesa y azul profundo con nubes y espuma",
+        "Medida de referencia": "240 × 100 cm, para 8 personas (medida de referencia, se ajusta a su espacio)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Comedor de 240 × 100 cm para ocho personas, con tapa de tres tablones de guanacaste separados por dos ríos de resina, uno turquesa y uno azul profundo, con nubes y espuma blanca. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Escríbanos por WhatsApp y lo cotizamos para su comedor.",
+      "description_en": "240 × 100 cm eight-seat dining table with a top of three guanacaste planks divided by two resin rivers — one turquoise, one deep blue — with clouds and white foam. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Message us on WhatsApp for a quote for your dining room.",
+      "media_dir": "double-pacific-reef-table",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-010",
+      "name": "tidepool-reef-nightstand",
+      "name_es": "Mesas de noche Charco",
+      "name_en": "Tidepool Nightstands",
+      "category": "coastal",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "mesas-de-noche",
+        "dormitorio",
+        "tronco-macizo",
+        "resina-turquesa",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (tronco macizo, corteza lijada)",
+        "Resina": "Charco de marea turquesa con arena",
+        "Medida de referencia": "45 cm de diámetro × 55 cm de alto (medida de referencia, se ajusta a su espacio)",
+        "Base": "Sin patas (el tronco apoya directo al piso)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Mesas de noche hechas de un trozo cilíndrico macizo de tronco de guanacaste, de 45 cm de diámetro y 55 cm de alto, sin patas: el tronco entero apoyado en el piso, con un charco de marea en resina turquesa con arena en un costado. Se fabrican a pedido; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Pídalas por WhatsApp, el par o por unidad.",
+      "description_en": "Nightstands made from a solid cylindrical guanacaste trunk section, 45 cm across and 55 cm tall, with no legs — the whole trunk rests on the floor — with a turquoise tidepool resin pour and sand on one side. They are made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Order the pair or a single unit on WhatsApp.",
+      "media_dir": "tidepool-reef-nightstand",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-011",
+      "name": "river-reef-floating-shelves",
+      "name_es": "Repisas Río",
+      "name_en": "River Reef Floating Shelves",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "repisas",
+        "repisas-flotantes",
+        "resina-turquesa",
+        "guanacaste",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste macizo",
+        "Resina": "Turquesa (franja fina a lo largo)",
+        "Medida de referencia": "3 repisas de 80 × 22 × 4 cm (medida de referencia, se ajusta a su espacio)",
+        "Montaje": "Herrajes ocultos",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Juego de tres repisas flotantes de guanacaste macizo, de 80 cm de ancho, 22 cm de fondo y 4 cm de grosor, cada una cruzada por una franja fina de resina turquesa, con herrajes ocultos. Se fabrican a pedido; cada pieza es única porque la veta y la resina cambian. Las medidas publicadas son de referencia y se ajustan a su pared. Díganos el largo por WhatsApp y le cotizamos.",
+      "description_en": "Set of three solid guanacaste floating shelves, 80 cm wide, 22 cm deep, and 4 cm thick, each crossed by a slim turquoise resin stripe, with hidden brackets. They are made to order; every piece is one of a kind because the grain and the resin vary. The listed sizes are a reference and are adjusted to fit your wall. Tell us the length on WhatsApp for a quote.",
+      "media_dir": "river-reef-floating-shelves",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista de frente",
+          "caption_en": "Front view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "Las piezas en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-012",
+      "name": "surf-reef-bed-headboard",
+      "name_es": "Cabecera Oleaje",
+      "name_en": "Surf Reef Bed Headboard",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "cabecera",
+        "dormitorio",
+        "cenizaro",
+        "resina-azul",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Cenízaro (tablones verticales)",
+        "Resina": "Azul marmoleado con olas y espuma blanca",
+        "Medida de referencia": "160 × 100 cm, matrimonial (medida de referencia, se ajusta a su espacio)",
+        "Montaje": "Firme a la pared",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Cabecera matrimonial de 160 × 100 cm, con tablones verticales de cenízaro y una banda diagonal de resina azul marmoleada con olas y espuma blanca fina, de montaje firme a la pared. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta al tamaño de su cama. Escríbanos por WhatsApp con la medida y le cotizamos.",
+      "description_en": "160 × 100 cm double-bed headboard with vertical cenizaro planks and a diagonal band of marbled blue resin with waves and fine white foam, firmly wall-mounted. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your bed. Message us on WhatsApp with your size for a quote.",
+      "media_dir": "surf-reef-bed-headboard",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista de frente",
+          "caption_en": "Front view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-013",
+      "name": "reef-bar-table",
+      "name_es": "Mesa de bar Arrecife",
+      "name_en": "Reef Bar Table",
+      "category": "tables",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "mesa-de-bar",
+        "mesa-alta",
+        "bancos-altos",
+        "resina-turquesa",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (rodaja de borde natural)",
+        "Resina": "Turquesa con orilla de arena",
+        "Medida de referencia": "70 cm de diámetro × 105 cm de alto (medida de referencia, se ajusta a su espacio)",
+        "Base": "Tubo central de acero negro con aro reposapiés y dos bancos altos",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Mesa alta de bar redonda de 70 cm de diámetro y 105 cm de alto, con tapa de rodaja gruesa de guanacaste de borde natural, charco de resina turquesa y orilla de arena; base de tubo central de acero negro con aro reposapiés y dos bancos altos. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Consúltenos por WhatsApp y la cotizamos.",
+      "description_en": "Round 70 cm, 105 cm tall bar table with a thick natural-edge guanacaste slice top, turquoise resin pool, and sand shoreline; black steel center-post base with footrest ring and two tall stools. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Ask us on WhatsApp for a quote.",
+      "media_dir": "reef-bar-table",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-014",
+      "name": "river-bathroom-vanity-top",
+      "name_es": "Cubierta de baño",
+      "name_en": "River Bathroom Vanity Top",
+      "category": "custom",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "cubierta-de-bano",
+        "bano",
+        "guanacaste",
+        "resina-azul",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste macizo",
+        "Resina": "Azul marmoleado",
+        "Medida de referencia": "100 × 50 cm (medida de referencia, se ajusta a su espacio)",
+        "Uso": "Para lavatorio blanco de sobreponer",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Cubierta de baño rectangular de 100 × 50 cm en guanacaste macizo, con zona de resina azul marmoleada, pensada para un lavatorio blanco de sobreponer con grifería sencilla. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su mueble. Mándenos las medidas por WhatsApp y le cotizamos.",
+      "description_en": "Rectangular 100 × 50 cm bathroom top in solid guanacaste with a marbled blue resin area, designed for a white vessel sink with a simple faucet. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your vanity. Send us your measurements on WhatsApp for a quote.",
+      "media_dir": "river-bathroom-vanity-top",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-015",
+      "name": "shell-reef-terrace-floor",
+      "name_es": "Piso de terraza Conchal",
+      "name_en": "Conchal Reef Terrace Floor",
+      "category": "floors",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "piso-de-resina",
+        "terraza",
+        "exterior",
+        "conchal",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Material": "Resina epóxica continua",
+        "Resina": "Arena claro con vetas suaves",
+        "Medida de referencia": "Terraza de unos 20 m² (medida de referencia, se ajusta a su espacio)",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Piso epóxico continuo para una terraza de unos 20 m², en tono arena claro con vetas marmoleadas suaves y brillo moderado, que llega limpio hasta las paredes y la puerta. Se fabrica a su medida; cada paño es único porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Mándenos los metros de su terraza por WhatsApp y le cotizamos.",
+      "description_en": "Seamless epoxy floor for a terrace of about 20 m², in light sand tone with soft marbled veining and a moderate sheen, running clean to the walls and the door. It is made to order; every pour is one of a kind because the veining and the resin vary. The listed size is a reference and is adjusted to fit your space. Send us your terrace measurements on WhatsApp for a quote.",
+      "media_dir": "shell-reef-terrace-floor",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista cenital",
+          "caption_en": "Top view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle del acabado",
+          "caption_en": "Finish detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del borde",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en sitio",
+          "caption_en": "On-site process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "El piso en ambiente",
+          "caption_en": "Styled in place"
+        }
+      ]
+    },
+    {
+      "sku": "SP-AP-016",
+      "name": "wood-slice-reef-clock",
+      "name_es": "Reloj de rodaja",
+      "name_en": "Wood-Slice Reef Clock",
+      "category": "decor",
+      "brand": "SobrePoxi",
+      "is_active": true,
+      "is_featured": false,
+      "dolar_price": 0,
+      "colon_price": 0,
+      "discount_percentage": 0,
+      "tags": [
+        "a-pedido",
+        "a-la-medida",
+        "reloj",
+        "reloj-de-pared",
+        "decoracion",
+        "rodaja-de-madera",
+        "hecho-en-costa-rica"
+      ],
+      "specifications": {
+        "Madera": "Guanacaste (rodaja de borde natural)",
+        "Resina": "Laguna turquesa",
+        "Medida de referencia": "40 cm de diámetro (medida de referencia, se ajusta a su espacio)",
+        "Mecanismo": "Dos agujas negras, sin números",
+        "Fabricación": "A la medida"
+      },
+      "description_es": "Reloj de pared funcional hecho de una rodaja redonda de guanacaste de unos 40 cm de diámetro, con una laguna de resina turquesa al centro y dos agujas negras sencillas, sin números. Se fabrica a su medida; cada pieza es única porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Pídalo por WhatsApp del diámetro que prefiera.",
+      "description_en": "Functional wall clock made from a round guanacaste slice about 40 cm across, with a turquoise resin lagoon at its center and two simple black hands, no numbers. It is made to order; every piece is one of a kind because the grain and the resin vary. The listed size is a reference and is adjusted to fit your space. Order it on WhatsApp in the diameter you prefer.",
+      "media_dir": "wood-slice-reef-clock",
+      "media_files": [
+        {
+          "file": "01-heroe.webp",
+          "caption_es": "Vista principal",
+          "caption_en": "Main view"
+        },
+        {
+          "file": "02-cenital.webp",
+          "caption_es": "Vista de frente",
+          "caption_en": "Front view"
+        },
+        {
+          "file": "03-detalle.webp",
+          "caption_es": "Detalle de la veta y la resina",
+          "caption_en": "Grain and resin detail"
+        },
+        {
+          "file": "04-canto.webp",
+          "caption_es": "Detalle del canto",
+          "caption_en": "Edge detail"
+        },
+        {
+          "file": "05-proceso.webp",
+          "caption_es": "Trabajo en el taller",
+          "caption_en": "Workshop process"
+        },
+        {
+          "file": "06-ambiente.webp",
+          "caption_es": "La pieza en ambiente",
+          "caption_en": "Styled in a room"
+        }
+      ]
+    }
+  ]
+}

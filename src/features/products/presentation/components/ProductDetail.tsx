@@ -287,9 +287,11 @@ export default function ProductDetail({ name, locale, initialProduct = null }: {
   }
 
   // Detect current media item and type
-  const currentMedia = product.media?.[activeImageIndex];
+  const currentMedia = product?.media?.[activeImageIndex];
   const mainMediaUrl = currentMedia?.url || '/product-placeholder.png';
   const isVideo = currentMedia?.type === 'video';
+  // Piezas a pedido (tag "a-pedido"): sin stock pero cotizables, nunca "Vendido".
+  const isMadeToOrder = (product?.tags ?? []).includes('a-pedido');
 
   return (
     <div className="max-w-[1500px] mx-auto px-4 bg-[#121212]">
@@ -451,6 +453,8 @@ export default function ProductDetail({ name, locale, initialProduct = null }: {
                   <Check className="h-4 w-4 mr-1" />
                   {inventory > 10 ? 'En stock' : inventory==1 ? 'Última unidad' : `Solo quedan ${inventory} unidades`}
                 </span>
+              ) : isMadeToOrder ? (
+                <span className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-0.5 text-amber-400">{locale === 'es' ? 'Se fabrica a su medida' : 'Made to order'}</span>
               ) : (
                 <span className="text-red-600">{locale === 'es' ? 'Vendido' : 'Sold out'}</span>
               )}
