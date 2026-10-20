@@ -9,8 +9,8 @@ import { JsonLd } from "@/shared/seo/JsonLd";
 import { Navbar, Footer, WhatsAppBubble } from "@/features/content";
 import { SessionLayout } from "@/features/auth";
 import { NextIntlClientProvider } from "next-intl";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
+import { UMAMI_SCRIPT_SRC, UMAMI_WEBSITE_ID } from "@/shared/analytics/track";
 import WhatsAppClickTracker from "@/shared/contact/WhatsAppClickTracker";
 import { Toaster } from "react-hot-toast";
 import { ErrorBoundary } from "@/shared/ui/ErrorBoundary";
@@ -64,12 +64,16 @@ export default async function LocaleLayout({
               <Footer locale={locale} />
               <WhatsAppBubble />
               <Toaster position="top-center" />
-              <Analytics />
-              <SpeedInsights />
               <WhatsAppClickTracker />
             </SessionLayout>
           </NextIntlClientProvider>
         </ErrorBoundary>
+        <Script
+          src={UMAMI_SCRIPT_SRC}
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains="sobrepoxi.com,www.sobrepoxi.com"
+          strategy="afterInteractive"
+        />
         <JsonLd
           id="structured-data"
           data={{

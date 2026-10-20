@@ -1,6 +1,6 @@
 'use client';
 
-import { track } from '@vercel/analytics';
+import { track } from '@/shared/analytics/track';
 import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
 import React, { useMemo } from "react";
 import Card from "./Card";

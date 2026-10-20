@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { track } from '@vercel/analytics';
+import { track } from '@/shared/analytics/track';
 import { refFromWhatsAppHref } from './whatsapp';
 
 /**
  * One delegated listener for every WhatsApp CTA on the site: records a
- * `whatsapp_click` event with the page and the link's ref, so Vercel Analytics
+ * `whatsapp_click` event with the page and the link's ref, so Umami
  * shows which pages produce conversations without wiring each button.
  */
 export default function WhatsAppClickTracker() {
