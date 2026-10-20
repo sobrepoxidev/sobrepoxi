@@ -39,6 +39,7 @@ export function getNavigationLinks(locale: string): NavigationLink[] {
     { name: locale === 'es' ? 'Pisos Industriales' : 'Industrial Flooring', path: '/industrial-epoxy-flooring' },
     { name: locale === 'es' ? 'Muebles de Lujo' : 'Luxury Furniture', path: '/luxury-furniture' },
     { name: locale === 'es' ? 'Guías' : 'Guides', path: '/guias' },
+    { name: locale === 'es' ? 'Videos' : 'Videos', path: '/videos' },
   ];
 }
 

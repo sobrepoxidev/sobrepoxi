@@ -1,3 +1,5 @@
+import { buildGuideVideo } from "./videos";
+
 export interface GuideSection {
   heading: string;
   content: string;
@@ -8,6 +10,16 @@ export interface GuideSection {
 export interface GuideFAQ {
   question: string;
   answer: string;
+}
+
+export interface GuideVideo {
+  slug: string;
+  title: string;
+  description: string;
+  /** Duración ISO 8601, ej. "PT30S". */
+  durationISO: string;
+  /** Fecha de subida ISO, ej. "2026-10-20". */
+  uploadDate: string;
 }
 
 export interface Guide {
@@ -29,6 +41,8 @@ export interface Guide {
   relatedSlugs: string[];
   ctaText: string;
   ctaLink: string;
+  /** Video educativo asociado (misma slug, en Supabase Storage). */
+  video?: GuideVideo;
 }
 
 const guidesES: Guide[] = [
@@ -1005,6 +1019,260 @@ const guidesES: Guide[] = [
     relatedSlugs: ["precios-pisos-epoxicos-costa-rica", "cuanto-cuesta-piso-epoxico-cochera", "tipos-de-resina-epoxica"],
     ctaText: "¿Quieres calcular el costo exacto de tu proyecto? Pídenos cotización detallada",
     ctaLink: "/contact"
+  },
+  {
+    slug: "que-es-mesa-rio",
+    locale: "es",
+    title: "Qué es una mesa río: madera de borde natural y resina epóxica",
+    metaTitle: "Qué es una mesa río | Madera y resina | SobrePoxi",
+    metaDescription: "Descubra qué es una mesa río: madera de borde natural unida por un cauce de resina epóxica. Cada pieza es única por su veta. Video incluido.",
+    keywords: "qué es mesa río, mesa río madera resina, mesa resina epóxica, muebles resina Costa Rica, river table Costa Rica",
+    heroTitle: "Qué es una mesa río",
+    heroSubtitle: "Madera de borde natural y resina epóxica en una pieza única",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("que-es-mesa-rio", "es"),
+    sections: [
+      {
+        heading: "La idea: un río entre dos orillas de madera",
+        content: `<p>Una <strong>mesa río</strong> es un mueble que combina dos tablones de madera con un cauce central de resina epóxica, como un río que corre entre dos orillas. La madera aporta la calidez y el dibujo natural; la resina aporta el color y la unión entre ambas piezas.</p>
+<p>El resultado es una superficie continua donde se lee con claridad el encuentro de los dos materiales: la veta viva de la madera y el cauce liso de la resina.</p>`
+      },
+      {
+        heading: "El borde natural, protagonista de la pieza",
+        content: `<p>La madera de una mesa río conserva su <strong>borde natural</strong>: no se corta en línea recta, sino que se dejan ver las curvas que el árbol ya traía. Ese borde es el que dibuja la forma del río.</p>
+<p>Cada tablón trae su propio dibujo de veta —líneas, nudos y tonos— y por eso ninguna mesa río se repite. Dos mesas del mismo tamaño y color nunca se ven iguales.</p>`
+      },
+      {
+        heading: "La resina: color y unión",
+        content: `<p>La resina epóxica se pigmenta en el tono que usted elija: <strong>turquesa, azul profundo, celeste, negro o coral</strong>. Al endurecerse, une ambos tablones en una sola superficie pareja.</p>
+<p>En la resina también se pueden encapsular elementos como <strong>arena, conchas o piedras</strong>, que quedan a la vista dentro del cauce y le dan un carácter todavía más personal a la pieza.</p>`
+      },
+      {
+        heading: "Dónde luce una mesa río",
+        content: `<p>Por su presencia, la mesa río suele ser la pieza central del ambiente: comedores, salas de estar, oficinas y recepciones. Al ser un mueble a pedido, se adapta al espacio donde va a vivir.</p>
+<p>Si quiere ver una de cerca, escríbanos por WhatsApp y coordinamos una visita a nuestro taller en Coronado.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cada mesa río es diferente?", answer: "Sí. Como la veta y el borde natural de la madera nunca se repiten, cada mesa río es una pieza única, aunque comparta medidas y color con otra." },
+      { question: "¿Puedo elegir el color de la resina?", answer: "Sí. Los tonos más pedidos son turquesa, azul profundo, celeste, negro y coral. Usted elige el que mejor combine con su espacio." },
+      { question: "¿Qué es el borde natural de la madera?", answer: "Es el borde del tablón tal como venía en el árbol, con sus curvas originales. En la mesa río, ese borde dibuja la forma del cauce de resina." },
+      { question: "¿Se pueden incluir objetos dentro de la resina?", answer: "Sí. Elementos como arena, conchas o piedras se pueden encapsular en la resina y quedan visibles dentro del cauce." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "tipos-de-resina-epoxica", "disenos-pisos-epoxicos-tendencias"],
+    ctaText: "¿Quiere su propia mesa río? Cuéntenos su idea",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "asi-nace",
+    locale: "es",
+    title: "Así nace una mesa río: el proceso paso a paso",
+    metaTitle: "Cómo nace una mesa río | El proceso | SobrePoxi",
+    metaDescription: "Conozca cómo nace una mesa río: escogencia de tablones, molde, vaciado de resina por capas, desmolde, lijado y pulido. Video incluido.",
+    keywords: "cómo se hace mesa río, proceso mesa resina, molde melamina resina, lijado pulido resina",
+    heroTitle: "Así nace una mesa río",
+    heroSubtitle: "Del tablón al mueble terminado, paso a paso",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("asi-nace", "es"),
+    sections: [
+      {
+        heading: "Paso 1: escoger los tablones",
+        content: `<p>Todo empieza con la <strong>escogencia de los tablones</strong>. Se buscan piezas de borde natural cuya veta combine bien con el diseño de la mesa: el dibujo de la madera es lo que va a definir el carácter de la pieza.</p>
+<p>Los tablones se preparan y se presentan uno frente al otro para decidir el ancho del cauce de resina que va a correr entre ellos.</p>`
+      },
+      {
+        heading: "Paso 2: el molde y el vaciado por capas",
+        content: `<p>Luego se arma un <strong>molde de melamina</strong> a la medida de la mesa, se colocan los tablones y se <strong>vacía la resina por capas</strong>. Vaciar por capas ayuda a que la pieza quede pareja y sin defectos.</p>
+<p>Con <strong>calor se revientan las burbujas</strong> que suben a la superficie, para que el cauce quede limpio y traslúcido.</p>`
+      },
+      {
+        heading: "Paso 3: desmolde, lijado y pulido",
+        content: `<p>Ya firme la pieza, se <strong>desmolda</strong>: se retira el molde de melamina y aparece la mesa en su forma real. Después se <strong>lija</strong> progresivamente hasta emparejar madera y resina en una sola superficie.</p>
+<p>El último paso es el <strong>pulido</strong>, que le devuelve a la resina su traslucidez y deja la mesa lista para recibir su estructura o patas.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Por qué la resina se vacía por capas?", answer: "Vaciar por capas ayuda a que la pieza quede pareja y permite reventar las burbujas de cada capa antes de seguir con la siguiente." },
+      { question: "¿Cómo se quitan las burbujas de la resina?", answer: "Las burbujas suben a la superficie y se revientan con calor, dejando el cauce limpio y traslúcido." },
+      { question: "¿Qué es el molde de melamina?", answer: "Es el molde armado a la medida de la mesa donde se colocan los tablones y se vacía la resina. Al desmoldar, la pieza ya tiene su forma final." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "tipos-de-resina-epoxica"],
+    ctaText: "¿Le gustaría ver el proceso en persona? Visítenos",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "escoger-su-mesa",
+    locale: "es",
+    title: "Cómo escoger su mesa río: medida, madera y color",
+    metaTitle: "Cómo escoger su mesa río | Guía | SobrePoxi",
+    metaDescription: "Encargar su mesa río se resume en tres decisiones: medida, madera de veta clara u oscura y color de resina. Video incluido.",
+    keywords: "cómo escoger mesa río, elegir mesa resina, colores resina epóxica turquesa azul negro coral, mesa a pedido",
+    heroTitle: "Cómo escoger su mesa río",
+    heroSubtitle: "Tres decisiones: medida, madera y color de resina",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("escoger-su-mesa", "es"),
+    sections: [
+      {
+        heading: "Decisión 1: la medida",
+        content: `<p>La primera decisión es la <strong>medida</strong>: el largo y el ancho según el espacio donde va a vivir la mesa. Mida el área disponible y deje espacio libre alrededor para circular y mover las sillas.</p>
+<p>Si ya midió su comedor, compártanos las medidas por WhatsApp y le ayudamos a definir el tamaño ideal.</p>`
+      },
+      {
+        heading: "Decisión 2: la madera",
+        content: `<p>La segunda decisión es la <strong>madera</strong>: <strong>veta clara</strong> para ambientes luminosos y de líneas suaves, o <strong>veta oscura</strong> para espacios de carácter y contraste.</p>
+<p>Cada tablón aporta su propio dibujo, así que la veta que usted elija es la que va a hacer única su mesa.</p>`
+      },
+      {
+        heading: "Decisión 3: el color de la resina",
+        content: `<p>La tercera decisión es el <strong>color de la resina</strong>. Los tonos que trabajamos son <strong>turquesa, azul profundo, celeste, negro y coral</strong>.</p>
+<ul>
+<li><strong>Turquesa y celeste:</strong> frescura y luz, muy pedidos para casas de playa y ambientes abiertos</li>
+<li><strong>Azul profundo y negro:</strong> elegancia y contraste, ideales como pieza central</li>
+<li><strong>Coral:</strong> calidez y personalidad para espacios alegres</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "¿Qué colores de resina puedo elegir?", answer: "Trabajamos turquesa, azul profundo, celeste, negro y coral. Usted elige el que mejor combine con su espacio." },
+      { question: "¿Veta clara u oscura?", answer: "La veta clara va bien en ambientes luminosos y suaves; la veta oscura aporta carácter y contraste. Ambas hacen única la pieza por su dibujo natural." },
+      { question: "¿Cómo sé qué medida pedir?", answer: "Mida el largo y el ancho del área disponible y deje espacio libre alrededor para circular. Con esas medidas le ayudamos a definir el tamaño por WhatsApp." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "tipos-de-resina-epoxica", "disenos-pisos-epoxicos-tendencias"],
+    ctaText: "¿Ya sabe qué quiere? Pida su mesa a pedido",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "mida-su-espacio",
+    locale: "es",
+    title: "Mida su espacio antes de pedir su mesa",
+    metaTitle: "Cómo medir su comedor | Guía | SobrePoxi",
+    metaDescription: "Mida su comedor antes de encargar la mesa: 90 cm libres alrededor, 75 cm de alto y 60 cm por persona. Video incluido.",
+    keywords: "medir espacio mesa comedor, tamaño mesa comedor, altura mesa comedor 75 cm, espacio por persona mesa",
+    heroTitle: "Mida su espacio antes de pedir",
+    heroSubtitle: "Tres medidas que le evitan errores con el tamaño",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "3 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("mida-su-espacio", "es"),
+    sections: [
+      {
+        heading: "El espacio libre alrededor: unos 90 cm",
+        content: `<p>Antes de encargar su mesa, <strong>mida el espacio</strong>. Deje unos <strong>90 centímetros libres alrededor</strong> de la mesa para circular con comodidad y mover las sillas sin topar paredes ni muebles.</p>
+<p>Marque el contorno con cinta en el piso: ver el rectángulo a tamaño real ayuda más que cualquier número en un papel.</p>`
+      },
+      {
+        heading: "La altura: unos 75 cm",
+        content: `<p>Como referencia común, una <strong>mesa de comedor mide unos 75 centímetros de alto</strong>. Esa altura combina con las sillas de comedor estándar y deja espacio cómodo para las piernas.</p>`
+      },
+      {
+        heading: "El ancho por persona: unos 60 cm",
+        content: `<p>Para calcular el largo, tome en cuenta que se calculan unos <strong>60 centímetros de ancho por persona</strong>. Una mesa para seis personas, por ejemplo, necesita holgura suficiente para seis puestos cómodos.</p>
+<p>Con esas tres medidas en mano —largo, ancho y espacio libre— es mucho más fácil acertar con el tamaño de su mesa a pedido.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Cuánto espacio libre dejo alrededor de la mesa?", answer: "Unos 90 centímetros libres alrededor permiten circular con comodidad y mover las sillas sin topar nada." },
+      { question: "¿Cuál es la altura normal de una mesa de comedor?", answer: "Como referencia común, unos 75 centímetros de alto, que combina con las sillas de comedor estándar." },
+      { question: "¿Cuánto espacio necesita cada persona?", answer: "Se calculan unos 60 centímetros de ancho por persona para comer con comodidad." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "pisos-epoxicos-modernos-para-interiores"],
+    ctaText: "¿Ya tiene sus medidas? Cuéntenos su proyecto",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "que-podemos-hacer",
+    locale: "es",
+    title: "Qué podemos hacer por usted: muebles a pedido",
+    metaTitle: "Muebles a pedido | Mesas, barras, islas y más | SobrePoxi",
+    metaDescription: "Muebles a pedido en Costa Rica: mesas, barras, islas de cocina, consolas, bancas, repisas, cabeceras, tablas de servir y pisos epóxicos. Video incluido.",
+    keywords: "muebles a pedido Costa Rica, mesas barras islas resina, bancas consolas repisas resina, tablas de servir resina",
+    heroTitle: "Qué podemos hacer por usted",
+    heroSubtitle: "Muebles a pedido que combinan madera y resina",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("que-podemos-hacer", "es"),
+    sections: [
+      {
+        heading: "Mesas para cada ambiente",
+        content: `<p>Además de las mesas río de comedor, hacemos <strong>mesas de centro, escritorios y mesas de reunión</strong>, siempre a la medida de su espacio y con el color de resina que usted elija.</p>`
+      },
+      {
+        heading: "Barras, islas, consolas y bancas",
+        content: `<p>Para la cocina y el área social fabricamos <strong>barras e islas de cocina</strong>, además de <strong>consolas, bancas y repisas</strong> que visten entradas, pasillos y terrazas.</p>
+<p>Cada pieza se diseña con usted: medidas, madera y color según el ambiente donde va a vivir.</p>`
+      },
+      {
+        heading: "Piezas pequeñas y pisos epóxicos",
+        content: `<p>También hacemos piezas más pequeñas como <strong>cabeceras y tablas de servir</strong>, ideales para regalar o para empezar a disfrutar la resina en casa.</p>
+<p>Y para los pisos, aplicamos <strong>recubrimientos epóxicos</strong> que visten ambientes completos con diseños continuos y sin juntas visibles.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿Solo hacen mesas río?", answer: "No. Además de mesas, hacemos barras, islas de cocina, consolas, bancas, repisas, cabeceras, tablas de servir y pisos epóxicos." },
+      { question: "¿Los muebles se hacen a la medida?", answer: "Sí. Cada pieza se diseña con usted: medidas, madera y color de resina según el espacio donde va a vivir." },
+      { question: "¿Cómo empiezo mi proyecto?", answer: "Cuéntenos su idea por WhatsApp, con medidas y fotos del espacio si las tiene, y le ayudamos a darle forma." }
+    ],
+    relatedSlugs: ["muebles-resina-epoxica-guia", "pisos-epoxicos-para-negocios", "tipos-de-resina-epoxica"],
+    ctaText: "Cuéntenos su idea y le ayudamos a darle forma",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "la-resina-es-arte",
+    locale: "es",
+    title: "La resina es arte: color y objetos encapsulados",
+    metaTitle: "La resina epóxica es arte | SobrePoxi",
+    metaDescription: "La resina epóxica nace de mezclar resina y endurecedor; se pigmenta y encapsula arena, conchas o piedras. Video incluido.",
+    keywords: "resina epóxica arte, pigmentos resina epóxica, encapsulados resina arena conchas piedras",
+    heroTitle: "La resina es arte",
+    heroSubtitle: "Color y objetos encapsulados en cada pieza",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "3 min",
+    category: "Aprenda",
+    categorySlug: "aprenda",
+    video: buildGuideVideo("la-resina-es-arte", "es"),
+    sections: [
+      {
+        heading: "Dos componentes que se vuelven uno",
+        content: `<p>La resina epóxica se forma al mezclar dos componentes: <strong>la resina y el endurecedor</strong>. Al unirse, la mezcla se endurece y se vuelve una superficie sólida y traslúcida.</p>
+<p>Esa transformación —de líquido a sólido— es la que permite crear cauces, encapsulados y superficies continuas que con la madera sola no serían posibles.</p>`
+      },
+      {
+        heading: "El color: pigmentos",
+        content: `<p>Antes de endurecer, a la mezcla se le da color con <strong>pigmentos</strong>. Los tonos que trabajamos son <strong>turquesa, azul profundo, celeste, negro y coral</strong>.</p>
+<p>El pigmento se distribuye en la resina y deja vetas y profundidades que cambian según la luz: ningún cauce se ve igual dos veces.</p>`
+      },
+      {
+        heading: "Los encapsulados: arena, conchas y piedras",
+        content: `<p>Dentro de la resina se pueden <strong>encapsular elementos</strong> como <strong>arena, conchas o piedras</strong>, que quedan a la vista dentro de la pieza, suspendidos en el cauce.</p>
+<p>Esa combinación de color y objetos encapsulados es lo que convierte cada mueble en una pieza de arte: madera, color y memoria en una sola superficie.</p>`
+      }
+    ],
+    faqs: [
+      { question: "¿De qué está hecha la resina epóxica?", answer: "Se forma al mezclar dos componentes, la resina y el endurecedor, que al unirse se endurecen en una superficie sólida y traslúcida." },
+      { question: "¿Qué colores se pueden lograr?", answer: "Con pigmentos se logran tonos como turquesa, azul profundo, celeste, negro y coral, con vetas y profundidades que cambian según la luz." },
+      { question: "¿Qué objetos se pueden encapsular?", answer: "Elementos como arena, conchas o piedras, que quedan visibles y suspendidos dentro del cauce de resina." }
+    ],
+    relatedSlugs: ["tipos-de-resina-epoxica", "muebles-resina-epoxica-guia", "disenos-pisos-epoxicos-tendencias"],
+    ctaText: "¿Quiere una pieza con su historia dentro? Hablemos",
+    ctaLink: "/contact"
   }
 ];
 
@@ -1568,6 +1836,260 @@ const guidesEN: Guide[] = [
     ],
     relatedSlugs: ["epoxy-floor-design-trends", "epoxy-floor-maintenance"],
     ctaText: "Need an epoxy floor for your business? Request a personalized quote",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "que-es-mesa-rio",
+    locale: "en",
+    title: "What a river table is: natural-edge wood and epoxy resin",
+    metaTitle: "What a river table is | Wood & resin | SobrePoxi",
+    metaDescription: "Learn what a river table is: natural-edge wood joined by a channel of epoxy resin. Each piece is unique thanks to its grain. Video included.",
+    keywords: "what is river table, river table wood resin, epoxy resin table, resin furniture Costa Rica",
+    heroTitle: "What a river table is",
+    heroSubtitle: "Natural-edge wood and epoxy resin in a one-of-a-kind piece",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("que-es-mesa-rio", "en"),
+    sections: [
+      {
+        heading: "The idea: a river between two wooden banks",
+        content: `<p>A <strong>river table</strong> is a piece of furniture that combines two wood slabs with a central channel of epoxy resin, like a river flowing between two banks. The wood brings warmth and natural pattern; the resin brings color and joins both pieces.</p>
+<p>The result is a continuous surface where the meeting of both materials reads clearly: the living grain of the wood and the smooth channel of resin.</p>`
+      },
+      {
+        heading: "The natural edge, star of the piece",
+        content: `<p>The wood of a river table keeps its <strong>natural edge</strong>: it is not cut in a straight line, so the curves the tree already had stay visible. That edge draws the shape of the river.</p>
+<p>Each slab brings its own grain pattern —lines, knots and tones— so no river table ever repeats. Two tables of the same size and color never look alike.</p>`
+      },
+      {
+        heading: "The resin: color and union",
+        content: `<p>Epoxy resin is pigmented in the tone you choose: <strong>turquoise, deep blue, sky blue, black or coral</strong>. As it hardens, it joins both slabs into a single even surface.</p>
+<p>Elements such as <strong>sand, shells or stones</strong> can also be encapsulated in the resin, staying visible inside the channel and giving the piece an even more personal character.</p>`
+      },
+      {
+        heading: "Where a river table shines",
+        content: `<p>With its presence, the river table is usually the centerpiece of the room: dining rooms, living rooms, offices and receptions. As a made-to-order piece, it adapts to the space where it will live.</p>
+<p>If you would like to see one up close, message us on WhatsApp and we will arrange a visit to our workshop in Coronado.</p>`
+      }
+    ],
+    faqs: [
+      { question: "Is each river table different?", answer: "Yes. Since the grain and the natural edge of the wood never repeat, every river table is a one-of-a-kind piece, even when it shares size and color with another." },
+      { question: "Can I choose the resin color?", answer: "Yes. The most requested tones are turquoise, deep blue, sky blue, black and coral. You choose the one that best matches your space." },
+      { question: "What is the natural edge of wood?", answer: "It is the edge of the slab just as it came from the tree, with its original curves. In a river table, that edge draws the shape of the resin channel." },
+      { question: "Can objects be included inside the resin?", answer: "Yes. Elements such as sand, shells or stones can be encapsulated in the resin and stay visible inside the channel." }
+    ],
+    relatedSlugs: ["epoxy-resin-furniture-guide", "types-of-epoxy-resin", "epoxy-floor-design-trends"],
+    ctaText: "Want your own river table? Tell us your idea",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "asi-nace",
+    locale: "en",
+    title: "How a river table is born: the process step by step",
+    metaTitle: "How a river table is born | The process | SobrePoxi",
+    metaDescription: "See how a river table is born: choosing the slabs, the mold, pouring resin in layers, demolding, sanding and polishing. Video included.",
+    keywords: "how river table is made, resin table process, melamine mold resin, resin sanding polishing",
+    heroTitle: "How a river table is born",
+    heroSubtitle: "From slab to finished furniture, step by step",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("asi-nace", "en"),
+    sections: [
+      {
+        heading: "Step 1: choosing the slabs",
+        content: `<p>It all starts with <strong>choosing the slabs</strong>. We look for natural-edge pieces whose grain suits the design of the table: the pattern of the wood is what will define the character of the piece.</p>
+<p>The slabs are prepared and presented facing each other to decide the width of the resin channel that will run between them.</p>`
+      },
+      {
+        heading: "Step 2: the mold and pouring in layers",
+        content: `<p>Then a <strong>melamine mold</strong> is built to the size of the table, the slabs are set in place and the <strong>resin is poured in layers</strong>. Pouring in layers helps the piece come out even and flawless.</p>
+<p><strong>Heat is used to pop the bubbles</strong> that rise to the surface, so the channel stays clean and translucent.</p>`
+      },
+      {
+        heading: "Step 3: demolding, sanding and polishing",
+        content: `<p>Once the piece is firm, it is <strong>demolded</strong>: the melamine mold is removed and the table appears in its real shape. Then it is <strong>sanded</strong> progressively until wood and resin sit in a single surface.</p>
+<p>The last step is <strong>polishing</strong>, which brings back the translucency of the resin and leaves the table ready for its frame or legs.</p>`
+      }
+    ],
+    faqs: [
+      { question: "Why is resin poured in layers?", answer: "Pouring in layers helps the piece come out even and lets us pop the bubbles of each layer before moving on to the next." },
+      { question: "How are bubbles removed from resin?", answer: "Bubbles rise to the surface and are popped with heat, leaving the channel clean and translucent." },
+      { question: "What is a melamine mold?", answer: "It is the mold built to the size of the table where the slabs are placed and the resin is poured. At demolding, the piece already has its final shape." }
+    ],
+    relatedSlugs: ["epoxy-resin-furniture-guide", "types-of-epoxy-resin"],
+    ctaText: "Would you like to see the process in person? Visit us",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "escoger-su-mesa",
+    locale: "en",
+    title: "How to choose your river table: size, wood and color",
+    metaTitle: "How to choose your river table | Guide | SobrePoxi",
+    metaDescription: "Ordering your river table comes down to three decisions: size, light or dark grain wood, and resin color. Video included.",
+    keywords: "how to choose river table, custom resin table, turquoise blue black coral epoxy colors, custom table",
+    heroTitle: "How to choose your river table",
+    heroSubtitle: "Three decisions: size, wood and resin color",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("escoger-su-mesa", "en"),
+    sections: [
+      {
+        heading: "Decision 1: the size",
+        content: `<p>The first decision is the <strong>size</strong>: length and width according to the space where the table will live. Measure the available area and leave clearance around it to move and pull out the chairs.</p>
+<p>If you already measured your dining room, share the measurements on WhatsApp and we will help you define the ideal size.</p>`
+      },
+      {
+        heading: "Decision 2: the wood",
+        content: `<p>The second decision is the <strong>wood</strong>: <strong>light grain</strong> for bright rooms with soft lines, or <strong>dark grain</strong> for spaces with character and contrast.</p>
+<p>Each slab brings its own pattern, so the grain you choose is what will make your table unique.</p>`
+      },
+      {
+        heading: "Decision 3: the resin color",
+        content: `<p>The third decision is the <strong>resin color</strong>. The tones we work with are <strong>turquoise, deep blue, sky blue, black and coral</strong>.</p>
+<ul>
+<li><strong>Turquoise and sky blue:</strong> freshness and light, much requested for beach houses and open spaces</li>
+<li><strong>Deep blue and black:</strong> elegance and contrast, ideal as a centerpiece</li>
+<li><strong>Coral:</strong> warmth and personality for cheerful spaces</li>
+</ul>`
+      }
+    ],
+    faqs: [
+      { question: "Which resin colors can I choose?", answer: "We work with turquoise, deep blue, sky blue, black and coral. You choose the one that best matches your space." },
+      { question: "Light or dark grain?", answer: "Light grain suits bright, soft rooms; dark grain brings character and contrast. Both make the piece unique through their natural pattern." },
+      { question: "How do I know which size to order?", answer: "Measure the length and width of the available area and leave clearance around it to move. With those measurements we help you define the size on WhatsApp." }
+    ],
+    relatedSlugs: ["epoxy-resin-furniture-guide", "types-of-epoxy-resin", "epoxy-floor-design-trends"],
+    ctaText: "Already know what you want? Order your custom table",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "mida-su-espacio",
+    locale: "en",
+    title: "Measure your space before ordering your table",
+    metaTitle: "How to measure your dining room | Guide | SobrePoxi",
+    metaDescription: "Measure your dining room before ordering the table: 90 cm of clearance around it, 75 cm high and 60 cm per person. Video included.",
+    keywords: "measure dining room space, dining table size, 75 cm dining table height, space per person table",
+    heroTitle: "Measure your space before ordering",
+    heroSubtitle: "Three measurements that prevent sizing mistakes",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "3 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("mida-su-espacio", "en"),
+    sections: [
+      {
+        heading: "Clearance around it: about 90 cm",
+        content: `<p>Before ordering your table, <strong>measure the space</strong>. Leave about <strong>90 centimeters of clearance around</strong> the table to move comfortably and pull out the chairs without hitting walls or furniture.</p>
+<p>Mark the outline with tape on the floor: seeing the full-size rectangle helps more than any number on paper.</p>`
+      },
+      {
+        heading: "The height: about 75 cm",
+        content: `<p>As a common reference, a <strong>dining table is about 75 centimeters high</strong>. That height pairs with standard dining chairs and leaves comfortable legroom.</p>`
+      },
+      {
+        heading: "Width per person: about 60 cm",
+        content: `<p>To work out the length, keep in mind that about <strong>60 centimeters of width per person</strong> are planned. A table for six, for example, needs enough room for six comfortable seats.</p>
+<p>With those three measurements in hand —length, width and clearance— getting the size of your custom table right is much easier.</p>`
+      }
+    ],
+    faqs: [
+      { question: "How much clearance do I leave around the table?", answer: "About 90 centimeters of clearance around it lets you move comfortably and pull out the chairs without hitting anything." },
+      { question: "What is the standard height of a dining table?", answer: "As a common reference, about 75 centimeters high, which pairs with standard dining chairs." },
+      { question: "How much space does each person need?", answer: "About 60 centimeters of width per person are planned for comfortable dining." }
+    ],
+    relatedSlugs: ["epoxy-resin-furniture-guide", "modern-epoxy-floors-interiors"],
+    ctaText: "Already have your measurements? Tell us about your project",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "que-podemos-hacer",
+    locale: "en",
+    title: "What we can make for you: custom furniture",
+    metaTitle: "Custom furniture | Tables, bars, islands & more | SobrePoxi",
+    metaDescription: "Custom furniture in Costa Rica: tables, bars, kitchen islands, consoles, benches, shelves, headboards, serving boards and epoxy floors. Video included.",
+    keywords: "custom furniture Costa Rica, resin tables bars islands, resin consoles benches shelves, resin serving boards",
+    heroTitle: "What we can make for you",
+    heroSubtitle: "Made-to-order furniture combining wood and resin",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "4 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("que-podemos-hacer", "en"),
+    sections: [
+      {
+        heading: "Tables for every room",
+        content: `<p>Beyond dining river tables, we make <strong>coffee tables, desks and meeting tables</strong>, always sized to your space and with the resin color you choose.</p>`
+      },
+      {
+        heading: "Bars, islands, consoles and benches",
+        content: `<p>For the kitchen and social areas we build <strong>bars and kitchen islands</strong>, plus <strong>consoles, benches and shelves</strong> that dress entries, hallways and terraces.</p>
+<p>Each piece is designed with you: measurements, wood and color according to the room where it will live.</p>`
+      },
+      {
+        heading: "Small pieces and epoxy floors",
+        content: `<p>We also make smaller pieces such as <strong>headboards and serving boards</strong>, ideal as gifts or to start enjoying resin at home.</p>
+<p>And for floors, we apply <strong>epoxy coatings</strong> that dress entire rooms with continuous, visibly seamless designs.</p>`
+      }
+    ],
+    faqs: [
+      { question: "Do you only make river tables?", answer: "No. Beyond tables, we make bars, kitchen islands, consoles, benches, shelves, headboards, serving boards and epoxy floors." },
+      { question: "Is furniture made to measure?", answer: "Yes. Each piece is designed with you: measurements, wood and resin color according to the space where it will live." },
+      { question: "How do I start my project?", answer: "Tell us your idea on WhatsApp, with measurements and photos of the space if you have them, and we will help you shape it." }
+    ],
+    relatedSlugs: ["epoxy-resin-furniture-guide", "epoxy-floors-for-businesses", "types-of-epoxy-resin"],
+    ctaText: "Tell us your idea and we will help you shape it",
+    ctaLink: "/contact"
+  },
+  {
+    slug: "la-resina-es-arte",
+    locale: "en",
+    title: "Resin is art: color and encapsulated objects",
+    metaTitle: "Epoxy resin is art | SobrePoxi",
+    metaDescription: "Epoxy resin is born from mixing resin and hardener; it takes pigment and encapsulates sand, shells or stones. Video included.",
+    keywords: "epoxy resin art, epoxy resin pigments, resin encapsulations sand shells stones",
+    heroTitle: "Resin is art",
+    heroSubtitle: "Color and encapsulated objects in each piece",
+    publishedDate: "2026-10-20",
+    updatedDate: "2026-10-20",
+    readingTime: "3 min",
+    category: "Learn",
+    categorySlug: "learn",
+    video: buildGuideVideo("la-resina-es-arte", "en"),
+    sections: [
+      {
+        heading: "Two components becoming one",
+        content: `<p>Epoxy resin is formed by mixing two components: <strong>the resin and the hardener</strong>. Once combined, the mixture hardens into a solid, translucent surface.</p>
+<p>That transformation —from liquid to solid— is what makes it possible to create channels, encapsulations and continuous surfaces that wood alone could not achieve.</p>`
+      },
+      {
+        heading: "The color: pigments",
+        content: `<p>Before hardening, the mixture is colored with <strong>pigments</strong>. The tones we work with are <strong>turquoise, deep blue, sky blue, black and coral</strong>.</p>
+<p>The pigment spreads through the resin leaving veins and depths that shift with the light: no channel ever looks the same twice.</p>`
+      },
+      {
+        heading: "Encapsulations: sand, shells and stones",
+        content: `<p>Inside the resin, elements such as <strong>sand, shells or stones</strong> can be <strong>encapsulated</strong>, staying visible inside the piece, suspended in the channel.</p>
+<p>That combination of color and encapsulated objects is what turns each piece of furniture into art: wood, color and memory in a single surface.</p>`
+      }
+    ],
+    faqs: [
+      { question: "What is epoxy resin made of?", answer: "It is formed by mixing two components, the resin and the hardener, which once combined harden into a solid, translucent surface." },
+      { question: "Which colors can be achieved?", answer: "With pigments, tones such as turquoise, deep blue, sky blue, black and coral are achieved, with veins and depths that shift with the light." },
+      { question: "Which objects can be encapsulated?", answer: "Elements such as sand, shells or stones, which stay visible and suspended inside the resin channel." }
+    ],
+    relatedSlugs: ["types-of-epoxy-resin", "epoxy-resin-furniture-guide", "epoxy-floor-design-trends"],
+    ctaText: "Want a piece with your story inside? Let's talk",
     ctaLink: "/contact"
   }
 ];

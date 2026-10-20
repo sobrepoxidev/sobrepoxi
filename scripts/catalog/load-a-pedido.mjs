@@ -1,8 +1,12 @@
-// Carga idempotente de los 16 productos a pedido (scripts/catalog/a-pedido.json).
+// Carga idempotente de los 16 productos a pedido (scripts/catalog/a-pedido.json)
+// + los 6 videos educativos (espejo de VIDEO_SLUGS en
+// src/features/content/application/guides/videos.ts).
 // Por defecto DRY-RUN: valida el JSON y los archivos locales e imprime lo que haría.
 // Con --apply: crea las 2 categorías nuevas si no existen, sube los webp al bucket
-// `products` (upsert), inserta el producto si no existe ese `name` y crea el
-// inventory { quantity: 0 } si no existe. Sin --apply NO escribe nada en Supabase.
+// `products` (upsert), inserta el producto si no existe ese `name`, crea el
+// inventory { quantity: 0 } si no existe, sube los 12 archivos de video
+// (6 .mp4 + 6 .jpg) a products/videos/ (upsert, contentType correcto) y hace
+// HEAD a cada URL pública. Sin --apply NO escribe nada en Supabase.
 //
 // Uso:
 //   node scripts/catalog/load-a-pedido.mjs            # dry-run
@@ -134,7 +138,40 @@ try {
 } catch (e) {
   console.log(`CONTENT_DIR inaccesible (${e.code || e.message}): ${CONTENT_DIR}`);
 }
+// ---- Videos educativos: <CONTENT_DIR>/videos/<slug>.mp4 + <slug>.jpg ----
+// Misma lista que VIDEO_SLUGS (src/features/content/application/guides/videos.ts).
+const VIDEO_SLUGS = [
+  'que-es-mesa-rio',
+  'asi-nace',
+  'escoger-su-mesa',
+  'mida-su-espacio',
+  'que-podemos-hacer',
+  'la-resina-es-arte',
+];
+const VIDEOS_DIR = join(CONTENT_DIR, 'videos');
+const VIDEO_FILES = VIDEO_SLUGS.flatMap((slug) => [
+  { file: `${slug}.mp4`, contentType: 'video/mp4' },
+  { file: `${slug}.jpg`, contentType: 'image/jpeg' },
+]);
+
+let videosOk = 0;
+let videosMissing = 0;
+const videosMissingSamples = [];
+for (const v of VIDEO_FILES) {
+  if (existsSync(join(VIDEOS_DIR, v.file))) {
+    videosOk++;
+  } else {
+    videosMissing++;
+    if (videosMissingSamples.length < 12) videosMissingSamples.push(`videos/${v.file}`);
+  }
+}
+
 console.log(`archivos webp: ok=${filesOk} faltantes=${filesMissing}`);
+console.log(`videos ok=${videosOk} faltantes=${videosMissing}`);
+if (videosMissingSamples.length) {
+  console.log('ej. videos faltantes:');
+  for (const s of videosMissingSamples) console.log(`  - ${s}`);
+}
 if (missingSamples.length) {
   console.log('ej. faltantes:');
   for (const s of missingSamples) console.log(`  - ${s}`);
@@ -160,10 +197,12 @@ if (!APPLY) {
   console.log('- storage: subir 96 webp a products/a-pedido/<slug>/<archivo> (upsert, image/webp)');
   console.log('- productos: insertar si no existe ese name (idempotente; si existe, no duplicar)');
   console.log('- inventory: crear { product_id, quantity: 0 } si no existe');
+  console.log('- videos: subir 12 archivos (6 .mp4 video/mp4 + 6 .jpg image/jpeg) a products/videos/<archivo> (upsert) y HEAD a cada URL pública');
   if (!SERVICE_KEY || !URL) {
     console.log('(sin service key: solo se validaron archivos y JSON; no se contactó Supabase)');
   }
   if (filesMissing > 0) fail(`faltan ${filesMissing} webp en ${CONTENT_DIR}`);
+  if (videosMissing > 0) fail(`faltan ${videosMissing} videos en ${VIDEOS_DIR}`);
   console.log('dry-run OK: sin escrituras.');
   process.exit(0);
 }
@@ -188,10 +227,17 @@ async function resolveCategory(key) {
     .maybeSingle();
   if (selErr) throw selErr;
   if (existing) return existing.id;
-  const { data: created, error: insErr } = await supabase.from('categories').insert(def.create).select('id').single();
+  const { data: created, error: insErr } = await supabase.from('categories').insert({ id: await nextId('categories'), ...def.create }).select('id').single();
   if (insErr) throw insErr;
   console.log(`categoría creada: ${def.create.name} (id=${created.id})`);
   return created.id;
+}
+
+// The catalog tables were seeded with explicit ids, so their identity sequences lag behind: pick max(id)+1.
+async function nextId(table) {
+  const { data, error } = await supabase.from(table).select('id').order('id', { ascending: false }).limit(1);
+  if (error) throw error;
+  return (data?.[0]?.id ?? 0) + 1;
 }
 
 const catIds = {};
@@ -226,6 +272,7 @@ for (const p of products) {
     const { data: inserted, error: insErr } = await supabase
       .from('products')
       .insert({
+        id: await nextId('products'),
         name: p.name,
         name_es: p.name_es,
         name_en: p.name_en,
@@ -257,7 +304,7 @@ for (const p of products) {
     .maybeSingle();
   if (invSelErr) throw invSelErr;
   if (!inv) {
-    const { error: invInsErr } = await supabase.from('inventory').insert({ product_id: productId, quantity: 0 });
+    const { error: invInsErr } = await supabase.from('inventory').insert({ id: await nextId('inventory'), product_id: productId, quantity: 0 });
     if (invInsErr) throw invInsErr;
   }
   rows.push({ slug: p.name, id: productId, media: media.length });
@@ -266,3 +313,19 @@ for (const p of products) {
 console.log('--- resultado ---');
 console.log('slug -> id -> nº media');
 for (const r of rows) console.log(`${r.slug} -> ${r.id} -> ${r.media}`);
+
+// 4) videos educativos (upsert + HEAD a la URL pública)
+console.log('--- videos educativos ---');
+for (const v of VIDEO_FILES) {
+  const localPath = join(VIDEOS_DIR, v.file);
+  if (!existsSync(localPath)) fail(`falta archivo local: videos/${v.file}`);
+  const buf = readFileSync(localPath);
+  const storagePath = `videos/${v.file}`;
+  const { error: upErr } = await supabase.storage
+    .from('products')
+    .upload(storagePath, buf, { upsert: true, contentType: v.contentType });
+  if (upErr) throw upErr;
+  const { data } = supabase.storage.from('products').getPublicUrl(storagePath);
+  const head = await fetch(data.publicUrl, { method: 'HEAD' });
+  console.log(`${v.file} -> status=${head.status} content-length=${head.headers.get('content-length') ?? '?'}`);
+}

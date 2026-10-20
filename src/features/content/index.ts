@@ -8,6 +8,11 @@ export { getFooterNavigation } from './application/use-cases/getFooterNavigation
 
 // Guides
 export { getGuides, getGuideBySlug, getAllGuideSlugs, getRelatedGuides, getGuideCategories } from './application/guides/data';
+export type { Guide, GuideVideo } from './application/guides/data';
+
+// Videos (educational video catalog + VideoObject helpers)
+export { VIDEO_SLUGS, VIDEO_CATALOG, VIDEO_DURATION_ISO, VIDEO_UPLOAD_DATE, getVideoEntry, getVideos, getVideoFileUrls, buildGuideVideo, buildVideoObjectJsonLd } from './application/guides/videos';
+export type { VideoEntry, VideoLocaleContent, VideoSlug, VideoLocale } from './application/guides/videos';
 
 // City epoxy pages (SEO local) — data only; the component is imported
 // directly from its file to avoid a circular barrel dependency.

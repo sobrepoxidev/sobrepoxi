@@ -8,7 +8,7 @@
 //   que generaban Soft 404.
 import type { MetadataRoute } from 'next'
 import slugify from 'slugify'
-import { getAllGuideSlugs } from '@/features/content'
+import { getAllGuideSlugs, VIDEO_SLUGS, getVideoEntry, getVideoFileUrls } from '@/features/content'
 
 const SITE = 'https://sobrepoxi.com'
 
@@ -140,5 +140,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   }
 
-  return [...staticEntries, ...productEntries, ...guideEntries]
+  /* ─────────── Videos (índice + 1 página por video y locale, con extensión video) ─────────── */
+  // Los slugs de video son los mismos en ambos locales, así que el hreflang
+  // alterno sí existe en el otro idioma (a diferencia de las guías).
+  const videoEntries: MetadataRoute.Sitemap = []
+  for (const locale of ['es', 'en'] as const) {
+    videoEntries.push({
+      url: `${SITE}/${locale}/videos`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+      alternates: hreflangs('videos'),
+    })
+  }
+
+  for (const slug of VIDEO_SLUGS) {
+    const { contentUrl, thumbnailUrl } = getVideoFileUrls(slug)
+    for (const locale of ['es', 'en'] as const) {
+      const entry = getVideoEntry(slug, locale)
+      if (!entry) continue
+      videoEntries.push({
+        url: `${SITE}/${locale}/videos/${slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+        alternates: hreflangs(`videos/${slug}`),
+        videos: [
+          {
+            title: entry.content.title,
+            thumbnail_loc: thumbnailUrl,
+            description: entry.content.description,
+            content_loc: contentUrl,
+          },
+        ],
+      })
+    }
+  }
+
+  return [...staticEntries, ...productEntries, ...guideEntries, ...videoEntries]
 }

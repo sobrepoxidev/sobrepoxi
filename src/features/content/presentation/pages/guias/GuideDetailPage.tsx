@@ -11,6 +11,8 @@ import {
   getGuideBySlug,
   getAllGuideSlugs,
   getRelatedGuides,
+  getVideoFileUrls,
+  buildVideoObjectJsonLd,
 } from "@/features/content";
 import { JsonLd } from "@/shared/seo/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/shared/seo/structuredData";
@@ -160,6 +162,16 @@ export default async function GuideDetailPage({
     inLanguage: locale === "es" ? "es-CR" : "en-US",
   };
 
+  /* ── Video (si la guía tiene video educativo asociado) ── */
+  const videoUrls = guide.video ? getVideoFileUrls(guide.video.slug) : null;
+  const videoSchema = guide.video
+    ? buildVideoObjectJsonLd({
+        locale,
+        pageUrl: `${SEO_CONFIG.siteUrl}/${locale}/guias/${slug}`,
+        video: guide.video,
+      })
+    : null;
+
   const formatDate = (iso: string) => {
     const d = new Date(iso);
     return d.toLocaleDateString(locale === "es" ? "es-CR" : "en-US", {
@@ -180,6 +192,12 @@ export default async function GuideDetailPage({
         id="guide-article-schema"
         data={articleSchema}
       />
+      {videoSchema && (
+        <JsonLd
+          id="guide-video-schema"
+          data={videoSchema}
+        />
+      )}
       {faqSchema && (
         <JsonLd
           id="guide-faq-schema"
@@ -280,6 +298,32 @@ export default async function GuideDetailPage({
 
           {/* Main content */}
           <article className="min-w-0 flex-1">
+            {/* Video educativo (si la guía lo tiene): arriba del contenido,
+                vertical responsivo — 100% en mobile, máx 420px en desktop. */}
+            {guide.video && videoUrls && (
+              <section
+                aria-label={guide.video.title}
+                className="mb-12"
+              >
+                <div className="mx-auto w-full max-w-[420px]">
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={videoUrls.thumbnailUrl}
+                    className="aspect-[9/16] w-full rounded-xl border border-gray-800 bg-black"
+                  >
+                    <source
+                      src={videoUrls.contentUrl}
+                      type="video/mp4"
+                    />
+                  </video>
+                  <p className="mt-2 text-center text-sm text-gray-500">
+                    {guide.video.title} · 0:30
+                  </p>
+                </div>
+              </section>
+            )}
             {/* Price guides carry the floor calculator right after the hero:
                 it answers the reader's question and opens WhatsApp with data. */}
             {PRICE_GUIDES.has(guide.slug) && (

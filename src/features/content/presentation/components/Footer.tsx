@@ -86,6 +86,11 @@ export default function Footer({ locale }: { locale: string }) {
                 </Link>
               </li>
               <li>
+                <Link href="/videos" className="text-gray-300 hover:gold-gradient-bright transition-colors">
+                  {locale === 'es' ? 'Videos' : 'Videos'}
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy-policies" className="text-gray-300 hover:gold-gradient-bright transition-colors">
                   {locale === 'es' ? 'Políticas de Privacidad' : 'Privacy Policies'}
                 </Link>
