@@ -130,14 +130,14 @@ export default async function LuxuryFurniturePage(
       { num: "01", title: "Consulta de diseño", desc: "Escuchamos tu visión, medimos el espacio y definimos juntos el diseño ideal: tipo de madera, color de resina, dimensiones y estilo. Te mostramos muestras de maderas y resinas." },
       { num: "02", title: "Selección de madera", desc: "Elegimos personalmente cada losa de madera por su veta, color y carácter. Usamos maderas nobles costarricenses secadas al horno para garantizar estabilidad dimensional." },
       { num: "03", title: "Taller artesanal", desc: "Preparamos la madera, construimos el molde, vertimos la resina en capas controladas y dejamos curar. Los diseños metálicos requieren técnicas especiales de manipulación de pigmentos." },
-      { num: "04", title: "Lijado y pulido", desc: "Lijado progresivo desde grano 80 hasta 3000. Pulido a espejo que resalta la profundidad de la resina y la calidez de la veta natural de la madera." },
+      { num: "04", title: "Lijado y pulido", desc: "Lijado y pulido progresivo hasta el acabado espejo, que resalta la profundidad de la resina y la calidez de la veta natural de la madera." },
       { num: "05", title: "Acabado protector", desc: "Aplicamos topcoat de poliuretano resistente a UV, calor y rayones. Protección para uso diario sin perder la belleza del acabado cristalino." },
       { num: "06", title: "Entrega e instalación", desc: "Entregamos e instalamos en tu espacio. Incluimos guía de cuidado para que tu pieza mantenga su belleza por generaciones." },
     ] : [
       { num: "01", title: "Design consultation", desc: "We listen to your vision, measure the space and define the ideal design together: wood type, resin color, dimensions and style. We show you wood and resin samples." },
       { num: "02", title: "Wood selection", desc: "We personally select each wood slab for its grain, color and character. We use kiln-dried Costa Rican fine woods to guarantee dimensional stability." },
       { num: "03", title: "Artisan workshop", desc: "We prepare the wood, build the mold, pour resin in controlled layers and let it cure. Metallic designs require special pigment manipulation techniques." },
-      { num: "04", title: "Sanding & polishing", desc: "Progressive sanding from 80 to 3000 grit. Mirror polish that highlights the depth of the resin and the warmth of the natural wood grain." },
+      { num: "04", title: "Sanding & polishing", desc: "Progressive sanding and polishing to a mirror finish, highlighting the depth of the resin and the warmth of the natural wood grain." },
       { num: "05", title: "Protective finish", desc: "We apply UV, heat and scratch-resistant polyurethane topcoat. Protection for daily use without losing the beauty of the crystal finish." },
       { num: "06", title: "Delivery & installation", desc: "We deliver and install in your space. Includes care guide so your piece maintains its beauty for generations." },
     ],
@@ -164,17 +164,17 @@ export default async function LuxuryFurniturePage(
   };
 
   const faqs = locale === "es" ? [
-    { question: "¿Cuánto cuesta una mesa river table?", answer: "El precio depende del tamaño, tipo de madera, complejidad del diseño de resina y acabados especiales. Una mesa de centro inicia desde $800 y una mesa de comedor para 6-8 personas desde $2,500. Cada pieza se cotiza individualmente. Solicita una consulta gratuita para recibir un presupuesto exacto." },
-    { question: "¿Cuánto tiempo toma fabricar una pieza?", answer: "El proceso completo toma entre 4 y 8 semanas dependiendo de la complejidad: selección de madera (1 semana), secado y preparación (1-2 semanas), vertido y curado de resina (1-2 semanas), lijado, pulido y acabado (1-2 semanas). Las piezas complejas con múltiples capas de resina pueden tomar hasta 10 semanas." },
+    { question: "¿Cuánto cuesta una mesa river table?", answer: "No publicamos precios: cada pieza se cotiza a la medida según el tamaño, la madera y el diseño. Mandanos las medidas y fotos del espacio por WhatsApp y te damos presupuesto para tu proyecto." },
+    { question: "¿Cuánto tiempo toma fabricar una pieza?", answer: "El plazo de fabricación depende del tamaño y la complejidad de la pieza y se confirma en la cotización. Escribinos por WhatsApp con tu idea y te damos los tiempos de tu proyecto." },
     { question: "¿Qué tipos de madera utilizan?", answer: "Trabajamos con maderas nobles costarricenses: Guanacaste (nuestra favorita por sus vetas dramáticas), Cenízaro, Laurel, Cocobolo y Teca. Todas nuestras maderas son de fuentes sostenibles y secadas al horno para garantizar estabilidad. También podemos trabajar con maderas importadas bajo pedido." },
     { question: "¿La resina es tóxica?", answer: "No. Usamos resina epóxica de grado artístico libre de VOC (compuestos orgánicos volátiles). Una vez curada, la superficie es completamente inerte, segura para contacto con alimentos y no emite gases. Nuestras resinas tienen certificación de seguridad alimentaria." },
     { question: "¿Cómo cuido mi mueble de resina?", answer: "El mantenimiento es muy sencillo: limpieza diaria con paño húmedo y jabón neutro. Evite colocar objetos calientes directamente (use posavasos). No requiere encerado ni tratamientos especiales. El topcoat de poliuretano protege contra UV, rayones superficiales y líquidos." },
     { question: "¿Hacen muebles para proyectos comerciales?", answer: "Sí. Trabajamos con hoteles, restaurantes, oficinas y espacios comerciales. Nuestras piezas comerciales tienen construcción reforzada para uso de alto tráfico. Podemos producir series pequeñas (5-20 piezas) manteniendo el carácter artesanal y la unicidad de cada pieza." },
-    { question: "¿Hacen envíos fuera de Costa Rica?", answer: "Actualmente nos enfocamos en Costa Rica donde podemos garantizar entrega e instalación personal. Para proyectos internacionales especiales, evaluamos caso por caso la logística de embalaje y envío." },
+    { question: "¿Hacen envíos fuera de Costa Rica?", answer: "Actualmente nos enfocamos en Costa Rica. Coordinamos la entrega e instalación según tu zona: escribinos por WhatsApp y te confirmamos la logística para tu proyecto." },
     { question: "¿Puedo elegir el color de la resina?", answer: "¡Por supuesto! Tenemos más de 50 pigmentos disponibles: transparentes, opacos, metálicos, neón y fosforescentes. Los efectos más populares son océano turquesa, galaxia púrpura, transparente cristalino y negro metálico. Te mostramos muestras físicas en la consulta de diseño." },
   ] : [
-    { question: "How much does a river table cost?", answer: "Price depends on size, wood type, resin design complexity and special finishes. A coffee table starts from $800 and a 6-8 person dining table from $2,500. Each piece is individually quoted. Request a free consultation for an exact budget." },
-    { question: "How long does it take to make a piece?", answer: "The complete process takes 4-8 weeks depending on complexity: wood selection (1 week), drying and preparation (1-2 weeks), resin pour and curing (1-2 weeks), sanding, polishing and finishing (1-2 weeks)." },
+    { question: "How much does a river table cost?", answer: "We don't publish prices: each piece is quoted made-to-measure according to size, wood and design. Send us the measurements and photos of the space on WhatsApp and we'll quote your project." },
+    { question: "How long does it take to make a piece?", answer: "The manufacturing timeline depends on the size and complexity of the piece and is confirmed in the quote. Message us on WhatsApp with your idea and we'll give you your project's timeline." },
     { question: "What types of wood do you use?", answer: "We work with Costa Rican fine woods: Guanacaste (our favorite for its dramatic grain), Cenízaro, Laurel, Cocobolo and Teak. All our woods are sustainably sourced and kiln-dried for stability." },
     { question: "Is the resin toxic?", answer: "No. We use VOC-free artistic-grade epoxy resin. Once cured, the surface is completely inert, food-safe and emits no gases. Our resins have food safety certification." },
     { question: "How do I care for my resin furniture?", answer: "Very simple maintenance: daily cleaning with a damp cloth and neutral soap. Avoid placing hot objects directly (use coasters). No waxing or special treatments needed. The polyurethane topcoat protects against UV, superficial scratches and liquids." },
@@ -225,7 +225,6 @@ export default async function LuxuryFurniturePage(
             ? "Muebles artesanales de lujo en resina epóxica y madera noble para hogares, hoteles y oficinas en Costa Rica."
             : "Handcrafted luxury epoxy resin and fine wood furniture for homes, hotels and offices in Costa Rica.",
           "material": ["Epoxy Resin", "Guanacaste Wood", "Cenízaro Wood", "Laurel Wood"],
-          "offers": { "@type": "AggregateOffer", "areaServed": "Costa Rica", "availability": "https://schema.org/PreOrder", "priceCurrency": "USD", "lowPrice": "800" },
           "category": ["Luxury Furniture", "River Tables", "Epoxy Resin Furniture", "Custom Furniture", "Hospitality Furniture"],
           "hasOfferCatalog": {
             "@type": "OfferCatalog",

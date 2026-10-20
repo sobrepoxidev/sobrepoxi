@@ -247,7 +247,7 @@ export const COMMON_SCHEMAS = {
       {
         question: "¿Ofrecen garantía en sus trabajos?",
         answer:
-          "Sí, ofrecemos garantía de 2 años en todos nuestros trabajos de pisos epóxicos y 1 año en muebles con resina epóxica.",
+          "Para cada proyecto, el alcance del servicio se define en la visita técnica y la cotización. Escribinos por WhatsApp y te damos todos los detalles de tu proyecto.",
       },
     ]),
 };

@@ -383,13 +383,13 @@ function Timeline({ locale }: { locale: "es" | "en" }) {
         ["Concepto", "Escuchamos tu idea, medimos el espacio y diseñamos renders a escala."],
         ["Selección de materiales", "Elegimos maderas certificadas y paleta de resinas."],
         ["Fabricación", "Maestros ebanistas y técnicos en epoxi dan vida a la pieza."],
-        ["Instalación", "Transportamos e instalamos con garantía de por vida en uniones."],
+        ["Instalación", "Transportamos e instalamos con cuidado cada unión."],
       ]
     : [
         ["Concept", "We capture your idea, survey the space and design scaled renders."],
         ["Material selection", "We choose certified woods and a bespoke resin palette."],
         ["Fabrication", "Master woodworkers and epoxy technicians bring the piece to life."],
-        ["Installation", "We deliver and install on-site with lifetime joint warranty."],
+        ["Installation", "We deliver and install on-site with care in every joint."],
       ];
 
   return (

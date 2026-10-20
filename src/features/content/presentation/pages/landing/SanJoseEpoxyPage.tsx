@@ -292,7 +292,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
               </span>
               <span className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-amber-400" />
-                {locale === "es" ? "Garantía escrita" : "Written warranty"}
+                {locale === "es" ? "Visita técnica sin costo" : "Free site visit"}
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 text-amber-400" />

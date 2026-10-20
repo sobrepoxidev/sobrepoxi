@@ -1,7 +1,13 @@
-// Price ranges per m² published in the 2026 price guide
-// (guides/data.ts → "precios-pisos-epoxicos-costa-rica"): materials,
-// concrete preparation, labour and written warranty included. Single source
-// for the floor calculator and the resin-floors landing.
+// Single price range per m² for all epoxy floor finishes.
+// Source: official Mapei price list + confirmation from don Mauricio
+// (owner) 2026-10-20 — installed 5 mm floor, ₡75.000–₡96.100 per m²,
+// VAT included; price within the range depends on the finish (the 75–92k
+// audio is the same range before VAT). Materials, concrete preparation
+// and installation included (no warranty promised). Single source for
+// the floor calculator and the resin-floors landing. Note: an epoxy
+// floor is NEVER quoted by multiplying range × area — the exact total
+// is confirmed at the site visit, based on thickness (5 mm), concrete
+// condition and finish.
 
 export type FinishKey = 'solido' | 'escamas' | 'metalico' | 'industrial';
 export type SpaceKey = 'casa' | 'cochera' | 'bano' | 'comercio' | 'industria';
@@ -26,8 +32,8 @@ export const FLOOR_FINISHES: FloorFinish[] = [
   {
     key: 'solido',
     image: '/epoxy/type-autonivelante.webp',
-    minPerM2: 8000,
-    maxPerM2: 12000,
+    minPerM2: 75000,
+    maxPerM2: 96100,
     name: { es: 'Color sólido', en: 'Solid color' },
     description: {
       es: 'Autonivelante liso, el llamado «porcelanato líquido». Oficinas, comercios y casas.',
@@ -37,8 +43,8 @@ export const FLOOR_FINISHES: FloorFinish[] = [
   {
     key: 'escamas',
     image: '/epoxy/type-escamas.webp',
-    minPerM2: 12000,
-    maxPerM2: 18000,
+    minPerM2: 75000,
+    maxPerM2: 96100,
     name: { es: 'Escamas', en: 'Flakes' },
     description: {
       es: 'Escamas de vinilo sobre la resina: textura antideslizante, ideal para cocheras y terrazas.',
@@ -48,8 +54,8 @@ export const FLOOR_FINISHES: FloorFinish[] = [
   {
     key: 'metalico',
     image: '/epoxy/type-metalico.webp',
-    minPerM2: 22000,
-    maxPerM2: 38000,
+    minPerM2: 75000,
+    maxPerM2: 96100,
     name: { es: 'Metálico / mármol', en: 'Metallic / marble' },
     description: {
       es: 'Pigmentos metálicos con efecto 3D, mármol o galaxia. Cada piso es único.',
@@ -59,8 +65,8 @@ export const FLOOR_FINISHES: FloorFinish[] = [
   {
     key: 'industrial',
     image: '/epoxy/type-industrial.webp',
-    minPerM2: 15000,
-    maxPerM2: 30000,
+    minPerM2: 75000,
+    maxPerM2: 96100,
     name: { es: 'Industrial', en: 'Industrial' },
     description: {
       es: 'Sistema de alto tráfico para bodegas y plantas: químicos, montacargas y uso continuo.',

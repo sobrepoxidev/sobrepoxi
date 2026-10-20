@@ -193,7 +193,7 @@ export default async function EpoxyFloorsPage(
     { question: "¿Cuánto tarda la instalación?", answer: "Un espacio residencial promedio (50-100m²) toma 3-5 días. Se puede caminar a las 24 horas y usar completamente a los 5-7 días. Para negocios, podemos trabajar por secciones para minimizar interrupciones." },
     { question: "¿El epóxico se pone amarillo con el sol?", answer: "No con nuestros sistemas. Usamos topcoats de poliuretano alifático o poliaspártico con estabilizadores UV que previenen el amarillamiento. Es crítico usar el sistema correcto para áreas con exposición solar." },
     { question: "¿Trabajan en todo Costa Rica?", answer: "Sí. Realizamos proyectos en toda la GAM, Guanacaste, Puntarenas, Limón, zona norte y zona sur. Para proyectos fuera de la GAM coordinamos logística especial." },
-    { question: "¿Ofrecen garantía?", answer: "Sí. Todos nuestros proyectos incluyen garantía de instalación. Además, realizamos seguimiento post-instalación para asegurar tu completa satisfacción." },
+    { question: "¿Hacen seguimiento post-instalación?", answer: "Sí. Realizamos seguimiento post-instalación para asegurar tu completa satisfacción." },
   ] : [
     { question: "How much does an epoxy floor cost in Costa Rica?", answer: "Price depends on the system, area, concrete condition and design complexity. We offer options from basic to premium metallic systems. Request a free site visit for an exact quote." },
     { question: "How long does an epoxy floor last?", answer: "A professionally installed epoxy floor lasts 15-20 years with basic maintenance (water and neutral soap). The key is proper substrate preparation and professional-grade systems." },
@@ -263,8 +263,8 @@ export default async function EpoxyFloorsPage(
           },
           "areaServed": { "@type": "Country", "name": "Costa Rica" },
           "description": locale === "es"
-            ? "Instalación profesional de pisos epóxicos en Costa Rica: metálicos, industriales, decorativos y 3D. Servicio llave en mano con garantía."
-            : "Professional epoxy floor installation in Costa Rica: metallic, industrial, decorative and 3D. Turnkey service with warranty.",
+            ? "Instalación profesional de pisos epóxicos en Costa Rica: metálicos, industriales, decorativos y 3D. Servicio llave en mano."
+            : "Professional epoxy floor installation in Costa Rica: metallic, industrial, decorative and 3D. Turnkey service.",
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": locale === "es" ? "Tipos de Pisos Epóxicos" : "Epoxy Floor Types",

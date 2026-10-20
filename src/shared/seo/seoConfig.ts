@@ -61,7 +61,7 @@ export const SEO_TEXT = {
       },
       epoxyFloors: {
         title: "Pisos Epóxicos | Instalación profesional en Costa Rica",
-        description: "Pisos epóxicos de alta calidad para uso industrial y comercial. Instalación profesional con garantía en Costa Rica.",
+        description: "Pisos epóxicos de alta calidad para uso industrial y comercial. Instalación profesional en Costa Rica.",
         keywords: "pisos epóxicos Costa Rica, instalación pisos epóxicos, pisos industriales epóxicos, pisos comerciales resina"
       },
       luxuryFlooring: {
@@ -112,7 +112,7 @@ export const SEO_TEXT = {
       },
       epoxyFloors: {
         title: "Epoxy Floors | Professional installation Costa Rica",
-        description: "High-quality epoxy floors for industrial and commercial use. Professional installation with warranty in Costa Rica.",
+        description: "High-quality epoxy floors for industrial and commercial use. Professional installation in Costa Rica.",
         keywords: "epoxy floors Costa Rica, epoxy flooring installation, industrial epoxy floors, commercial resin floors"
       },
       luxuryFlooring: {

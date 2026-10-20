@@ -8,7 +8,6 @@ import {
   CR_PROVINCES,
   FLOOR_FINISHES,
   FLOOR_SPACES,
-  estimateRange,
   formatColones,
   type FinishKey,
   type SpaceKey,
@@ -26,12 +25,14 @@ const COPY = {
     hint: '¿No sabés los metros? Largo × ancho. Una cochera de 2 carros ronda 30–35 m².',
     presets: [['1 carro', 18], ['2 carros', 32], ['Sala', 25], ['Bodega', 150]] as const,
     perM2: 'por m²',
+    perM2Installed: 'por m² instalado (piso de 5 mm, según el acabado, IVA incluido)',
+    totalNote: 'El total exacto lo confirma la visita técnica, según el estado del concreto y el acabado.',
     estimate: 'Precio orientativo',
     space: 'Espacio',
     area: 'Área',
     finish: 'Acabado',
     province: 'Provincia',
-    included: ['Materiales y preparación del concreto', 'Instalación por nuestro equipo', 'Garantía escrita'],
+    included: ['Materiales y preparación del concreto', 'Instalación por nuestro equipo'],
     send: 'Enviar por WhatsApp',
     preview: 'Así llega tu mensaje',
     fine: 'Grietas, desniveles o manchas de aceite se cotizan aparte en la visita técnica. Precios en colones, 2026.',
@@ -39,7 +40,7 @@ const COPY = {
     more: 'Más metros',
     m2Label: 'Metros cuadrados',
     message: (space: string, m2: number, finish: string, prov: string, range: string) =>
-      `Hola SobrePoxi, quiero cotizar un piso:\n• ${space}\n• ${m2} m²\n• ${finish}\n• ${prov}\nLa calculadora me dio ${range}.`,
+      `Hola SobrePoxi, quiero cotizar un piso:\n• ${space}\n• ${m2} m²\n• ${finish}\n• ${prov}\nEl rango orientativo es ${range} por m² (IVA incluido).`,
   },
   en: {
     step1: 'Where is the floor going?',
@@ -49,12 +50,14 @@ const COPY = {
     hint: "Don't know the area? Length × width. A 2-car garage is about 30–35 m².",
     presets: [['1 car', 18], ['2 cars', 32], ['Living room', 25], ['Warehouse', 150]] as const,
     perM2: 'per m²',
+    perM2Installed: 'per m² installed (5 mm floor, depending on finish, VAT included)',
+    totalNote: 'The exact total is confirmed at the site visit, based on the concrete condition and the finish.',
     estimate: 'Estimated price',
     space: 'Space',
     area: 'Area',
     finish: 'Finish',
     province: 'Province',
-    included: ['Materials and concrete preparation', 'Installation by our team', 'Written warranty'],
+    included: ['Materials and concrete preparation', 'Installation by our team'],
     send: 'Send on WhatsApp',
     preview: 'Your message will read',
     fine: 'Cracks, uneven slabs or oil stains are quoted separately at the site visit. Prices in colones, 2026.',
@@ -62,7 +65,7 @@ const COPY = {
     more: 'More meters',
     m2Label: 'Square meters',
     message: (space: string, m2: number, finish: string, prov: string, range: string) =>
-      `Hello SobrePoxi, I would like a floor quote:\n• ${space}\n• ${m2} m²\n• ${finish}\n• ${prov}\nThe calculator gave me ${range}.`,
+      `Hello SobrePoxi, I would like a floor quote:\n• ${space}\n• ${m2} m²\n• ${finish}\n• ${prov}\nThe guide range is ${range} per m² (VAT included).`,
   },
 };
 
@@ -86,8 +89,10 @@ export default function FloorCalculator({ locale, refTag }: { locale: string; re
 
   const finish = FLOOR_FINISHES.find((f) => f.key === finishKey) ?? FLOOR_FINISHES[0];
   const spaceName = FLOOR_SPACES.find((s) => s.key === space)?.name[lang] ?? '';
-  const { min, max } = estimateRange(finish, m2);
-  const rangeText = `${formatColones(min)} – ${formatColones(max)}`;
+  // Per-m² guide range only: an epoxy floor is never quoted by multiplying
+  // range × area. The area is collected for the WhatsApp message; the exact
+  // total is confirmed at the site visit.
+  const rangeText = `${formatColones(finish.minPerM2)} – ${formatColones(finish.maxPerM2)}`;
   const message = t.message(spaceName, m2, finish.name[lang], province, rangeText);
   const waHref = useMemo(() => buildWhatsAppUrl(message, `calculadora.${refTag}`), [message, refTag]);
 
@@ -226,8 +231,9 @@ export default function FloorCalculator({ locale, refTag }: { locale: string; re
         <span className="text-xs uppercase tracking-[0.14em] text-white/60">{t.estimate}</span>
         <p className="efx-serif font-serif text-3xl italic tabular-nums leading-tight text-white sm:text-4xl">{rangeText}</p>
         <p className="text-sm tabular-nums text-white/60">
-          {formatColones(finish.minPerM2)} – {formatColones(finish.maxPerM2)} {t.perM2} · {finish.name[lang]}
+          {formatColones(finish.minPerM2)} – {formatColones(finish.maxPerM2)} {t.perM2Installed}
         </p>
+        <p className="text-sm leading-relaxed text-amber-200/80">{t.totalNote}</p>
         <dl className="grid gap-1.5 border-y border-white/10 py-3 text-sm">
           {[
             [t.space, spaceName],

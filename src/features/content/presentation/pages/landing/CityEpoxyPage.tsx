@@ -289,7 +289,7 @@ export async function CityEpoxyPage({
               </span>
               <span className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-amber-400" />
-                {isEs ? "Garantía escrita" : "Written warranty"}
+                {isEs ? "Visita técnica sin costo" : "Free site visit"}
               </span>
             </div>
 
