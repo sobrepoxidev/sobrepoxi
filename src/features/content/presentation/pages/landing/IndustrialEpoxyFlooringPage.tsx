@@ -243,7 +243,7 @@ export default async function IndustrialEpoxyFlooringPage(
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
         <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp"
+          src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp"
           alt={locale === "es" ? "Piso epóxico industrial de alto rendimiento por SobrePoxi en Costa Rica" : "High-performance industrial epoxy floor by SobrePoxi in Costa Rica"}
           fill
           priority
@@ -537,7 +537,7 @@ export default async function IndustrialEpoxyFlooringPage(
       {/* ═══════════════ CTA ═══════════════ */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp"
+          src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp"
           alt={locale === "es" ? "Piso epóxico industrial SobrePoxi" : "SobrePoxi industrial epoxy floor"}
           fill
           className="object-cover"

@@ -108,7 +108,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
             <div className="h-48 overflow-hidden">
               <Image 
-                src="/home/luxury-floor.webp" 
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/luxury-floor.webp" 
                 alt={locale === "es" ? "Piso epóxico de lujo" : "Luxury epoxy floor"}
                 width={400}
                 height={300}
@@ -135,7 +135,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
             <div className="h-48 overflow-hidden">
               <Image 
-                src="/home/industrial-floor.webp" 
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp" 
                 alt={locale === "es" ? "Piso epóxico industrial" : "Industrial epoxy floor"}
                 width={400}
                 height={300}

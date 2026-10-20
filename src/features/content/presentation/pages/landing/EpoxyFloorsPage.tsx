@@ -61,10 +61,10 @@ export default async function EpoxyFloorsPage(
   /* ── Gallery images (real projects only) ── */
   const galleryImages = [
     { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/lujo1.webp", alt: locale === "es" ? "Piso epóxico de lujo negro con vetas doradas instalado en residencia" : "Luxury black epoxy floor with gold veins installed in residence", featured: true },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp", alt: locale === "es" ? "Piso epóxico efecto galaxia de alto brillo" : "High-gloss galaxy effect epoxy floor", featured: false },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog2.webp", alt: locale === "es" ? "Piso epóxico negro con destellos para interiores" : "Black sparkle epoxy floor for interiors", featured: false },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob1.webp", alt: locale === "es" ? "Piso epóxico metálico efecto mármol blanco y oro" : "White and gold marble effect metallic epoxy floor", featured: false },
-    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog3.webp", alt: locale === "es" ? "Piso epóxico de alto tráfico en cochera residencial" : "Heavy-duty epoxy floor in residential garage", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog1.webp", alt: locale === "es" ? "Piso epóxico efecto galaxia de alto brillo" : "High-gloss galaxy effect epoxy floor", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog2.webp", alt: locale === "es" ? "Piso epóxico negro con destellos para interiores" : "Black sparkle epoxy floor for interiors", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisob1.webp", alt: locale === "es" ? "Piso epóxico metálico efecto mármol blanco y oro" : "White and gold marble effect metallic epoxy floor", featured: false },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog3.webp", alt: locale === "es" ? "Piso epóxico de alto tráfico en cochera residencial" : "Heavy-duty epoxy floor in residential garage", featured: false },
   ];
 
   /* ── Copy ── */
@@ -430,7 +430,7 @@ export default async function EpoxyFloorsPage(
           <div className="efx-reveal relative order-2 aspect-[4/3] overflow-hidden rounded-2xl md:order-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob2.webp"
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisob2.webp"
               alt={locale === "es" ? "Piso epóxico efecto mármol diseñado para proyecto arquitectónico" : "Marble effect epoxy floor designed for architectural project"}
               loading="lazy"
               decoding="async"

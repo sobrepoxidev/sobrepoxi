@@ -162,7 +162,7 @@ function HeroSection({ locale }: { locale: string }) {
               <div className="space-y-3">
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5">
                   <Image
-                    src="/home/industrial-floor.webp"
+                    src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp"
                     alt="Industrial epoxy floor"
                     fill
                     className="object-cover"
@@ -195,7 +195,7 @@ function HeroSection({ locale }: { locale: string }) {
               <div className="space-y-3 pt-6">
                 <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/5">
                   <Image
-                    src="/home/luxury-floor.webp"
+                    src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/luxury-floor.webp"
                     alt="Luxury epoxy floor"
                     fill
                     className="object-cover"
@@ -233,9 +233,9 @@ function HeroSection({ locale }: { locale: string }) {
           <div className="relative lg:hidden -mx-4">
             <div className="grid grid-cols-3 gap-2 px-4">
               {[
-                { src: '/home/industrial-floor.webp', label: locale === 'es' ? 'Industrial' : 'Industrial' },
-                { src: '/home/luxury-floor.webp', label: locale === 'es' ? 'Lujo' : 'Luxury' },
-                { src: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp', label: locale === 'es' ? 'Muebles' : 'Furniture' },
+                { src: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp', label: locale === 'es' ? 'Industrial' : 'Industrial' },
+                { src: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/luxury-floor.webp', label: locale === 'es' ? 'Lujo' : 'Luxury' },
+                { src: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp', label: locale === 'es' ? 'Muebles' : 'Furniture' },
               ].map((img, i) => (
                 <div key={i} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5">
                   <Image src={img.src} alt={img.label} fill className="object-cover" sizes="33vw" priority={i === 0} unoptimized={img.src.startsWith('http')} />
@@ -262,7 +262,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Pisos Epóxicos Industriales',
           desc: 'Alto rendimiento para fábricas, bodegas, plantas de producción y estacionamientos. Resistencia química y mecánica certificada.',
           href: '/industrial-epoxy-flooring',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp',
           tag: 'Industrial',
         },
         {
@@ -270,7 +270,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Pisos Epóxicos de Lujo',
           desc: 'Diseños 3D, efectos mármol, espejo y metálicos para residencias, oficinas premium y espacios comerciales.',
           href: '/epoxy-floors',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/luxury-floor.webp',
           tag: 'Residencial',
         },
         {
@@ -278,7 +278,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Muebles de Lujo',
           desc: 'Mesas river table, barras, escritorios y piezas únicas en madera y resina epóxica hechas a medida.',
           href: '/luxury-furniture',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp',
           tag: 'Artesanal',
         },
       ]
@@ -288,7 +288,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Industrial Epoxy Flooring',
           desc: 'High-performance solutions for factories, warehouses, production plants and parking facilities. Certified chemical and mechanical resistance.',
           href: '/industrial-epoxy-flooring',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial-floor.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/industrial-floor.webp',
           tag: 'Industrial',
         },
         {
@@ -296,7 +296,7 @@ function ServicesSection({ locale }: { locale: string }) {
           title: 'Luxury Epoxy Floors',
           desc: '3D designs, marble, mirror and metallic effects for residences, premium offices and commercial spaces.',
           href: '/epoxy-floors',
-          img: 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/luxury-floor.webp',
+          img: 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/luxury-floor.webp',
           tag: 'Residential',
         },
         {

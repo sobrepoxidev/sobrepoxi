@@ -191,7 +191,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
   /* ── Galería (imágenes reales de pisos del catálogo) ── */
   const galleryImages = [
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog1.webp",
       alt: "Piso epóxico efecto galaxia de alto brillo instalado en San José Costa Rica",
     },
     {

@@ -44,13 +44,13 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
       alt: "Piso epólico negro sparkle metálico de alto rendimiento UV",
     },
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog1.webp",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog1.webp",
       alt: "Piso epóxico de alto brillo efecto galaxia para villa costera",
     },
   ];
   const residential = [
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob1.webp",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisob1.webp",
       alt: "Piso epóxico metálico efecto mármol de alto brillo residencial",
     },
     {
@@ -64,7 +64,7 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
   ];
   const commercial = [
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisob/pisob2.webp",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisob2.webp",
       alt: "Piso epóxico comercial efecto mármol para alto tráfico",
     },
     {
@@ -82,7 +82,7 @@ function getGalleryImages(focus: CityEpoxyConfig["galleryFocus"]) {
       alt: "Piso epóxico industrial antideslizante para bodega",
     },
     {
-      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pisog/pisog3.webp",
+      src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog3.webp",
       alt: "Piso epóxico industrial de alto tráfico y fácil limpieza para nave",
     },
     {

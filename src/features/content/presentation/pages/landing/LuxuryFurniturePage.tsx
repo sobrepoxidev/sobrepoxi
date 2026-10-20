@@ -61,7 +61,7 @@ export default async function LuxuryFurniturePage(
 
   /* ── Gallery images ── */
   const galleryImages = [
-    { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp", alt: locale === "es" ? "Mesa river table de resina epóxica y madera de Guanacaste" : "River table in epoxy resin and Guanacaste wood" },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp", alt: locale === "es" ? "Mesa river table de resina epóxica y madera de Guanacaste" : "River table in epoxy resin and Guanacaste wood" },
     { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp", alt: locale === "es" ? "Mesa river de madera y resina turquesa" : "River table with turquoise resin and wood" },
     { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pacific-xl/main2.webp", alt: locale === "es" ? "Mesa river table Pacific XL de resina epóxica y madera noble" : "Pacific XL river table in epoxy resin and fine wood" },
     { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/lujo1.webp", alt: locale === "es" ? "Pieza de mobiliario de lujo con resina y madera" : "Luxury furniture piece with resin and wood" },
@@ -243,7 +243,7 @@ export default async function LuxuryFurniturePage(
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
         <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp"
+          src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp"
           alt={locale === "es" ? "Mesa river table de resina epóxica y madera de Guanacaste por SobrePoxi" : "River table in epoxy resin and Guanacaste wood by SobrePoxi"}
           fill
           priority
@@ -476,7 +476,7 @@ export default async function LuxuryFurniturePage(
       {/* ═══════════════ CTA ═══════════════ */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         <Image
-          src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero_banner2-UU5JSGUliJzY8K0pdtxeg0AeGpHaUq.webp"
+          src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp"
           alt={locale === "es" ? "Mesa river table artesanal por SobrePoxi" : "Handcrafted river table by SobrePoxi"}
           fill
           className="object-cover"

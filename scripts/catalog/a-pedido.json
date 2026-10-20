@@ -928,12 +928,12 @@
       ],
       "specifications": {
         "Material": "Resina epóxica continua",
-        "Resina": "Arena claro con vetas suaves",
+        "Resina": "Base arena claro con vetas turquesa y blanco espuma; conchas y coral encapsulados",
         "Medida de referencia": "Terraza de unos 20 m² (medida de referencia, se ajusta a su espacio)",
         "Fabricación": "A la medida"
       },
-      "description_es": "Piso epóxico continuo para una terraza de unos 20 m², en tono arena claro con vetas marmoleadas suaves y brillo moderado, que llega limpio hasta las paredes y la puerta. Se fabrica a su medida; cada paño es único porque la veta y la resina cambian. La medida publicada es de referencia y se ajusta a su espacio. Mándenos los metros de su terraza por WhatsApp y le cotizamos.",
-      "description_en": "Seamless epoxy floor for a terrace of about 20 m², in light sand tone with soft marbled veining and a moderate sheen, running clean to the walls and the door. It is made to order; every pour is one of a kind because the veining and the resin vary. The listed size is a reference and is adjusted to fit your space. Send us your terrace measurements on WhatsApp for a quote.",
+      "description_es": "Piso epóxico continuo para una terraza de unos 20 m², con base color arena claro, vetas de resina turquesa y blanco tipo espuma de mar, y conchas y pedacitos de coral encapsulados bajo la capa transparente. Brillo moderado con textura antideslizante leve. Se fabrica a su medida; cada paño es único porque la veta y la colocación de las conchas cambian. La medida publicada es de referencia y se ajusta a su espacio. Mándenos los metros de su terraza por WhatsApp y le cotizamos.",
+      "description_en": "Seamless epoxy floor for a terrace of about 20 m², with a light sand base, turquoise and sea-foam white resin veining, and shells and small coral pieces encapsulated under the clear coat. Moderate sheen with a light anti-slip texture. It is made to order; every pour is one of a kind because the veining and the shell placement vary. The listed size is a reference and is adjusted to fit your space. Send us your terrace measurements on WhatsApp for a quote.",
       "media_dir": "shell-reef-terrace-floor",
       "media_files": [
         {
@@ -948,13 +948,13 @@
         },
         {
           "file": "03-detalle.webp",
-          "caption_es": "Detalle del acabado",
-          "caption_en": "Finish detail"
+          "caption_es": "Detalle de las conchas encapsuladas",
+          "caption_en": "Encapsulated shells detail"
         },
         {
           "file": "04-canto.webp",
-          "caption_es": "Detalle del borde",
-          "caption_en": "Edge detail"
+          "caption_es": "Detalle del borde en el escalón",
+          "caption_en": "Step edge detail"
         },
         {
           "file": "05-proceso.webp",
@@ -963,8 +963,8 @@
         },
         {
           "file": "06-ambiente.webp",
-          "caption_es": "El piso en ambiente",
-          "caption_en": "Styled in place"
+          "caption_es": "El piso en la terraza",
+          "caption_en": "The floor on the terrace"
         }
       ]
     },
