@@ -50,8 +50,8 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
                         <div className="h-44 flex items-center justify-center mb-1 overflow-hidden">
                           <Image
                             src={product.media && product.media.length > 0 ?
-                              (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp') :
-                              locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
+                              (typeof product.media[0]["url"] === 'string' ? product.media[0]["url"] : locale === 'es' ? 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp') :
+                              locale === 'es' ? 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
                             alt={(locale === 'es' ? product.name_es : product.name_en) || product.name || (locale === 'es' ? 'Producto' : 'Product')}
                             width={200}
                             height={200}
@@ -112,7 +112,7 @@ const OptimizedGridSection: React.FC<GridSectionProps> = ({
               <>
                 <div className="flex items-center justify-center h-48 overflow-hidden">
                   <Image
-                    src={locale === 'es' ? 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
+                    src={locale === 'es' ? 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/placeholder_es-knQ3ZPLukUBoZ1S4t6C9Ad4sJrI4tb.webp' : 'https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/image_en-ovvACAz2v6p2aXrceAdO2AH7a89puh.webp'}
                     alt={category.name || (locale === 'es' ? 'Categoría' : 'Category')}
                     width={200}
                     height={200}

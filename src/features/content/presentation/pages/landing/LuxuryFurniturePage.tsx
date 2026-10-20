@@ -62,9 +62,9 @@ export default async function LuxuryFurniturePage(
   /* ── Gallery images ── */
   const galleryImages = [
     { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/muebles-banner.webp", alt: locale === "es" ? "Mesa river table de resina epóxica y madera de Guanacaste" : "River table in epoxy resin and Guanacaste wood" },
-    { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp", alt: locale === "es" ? "Mesa river de madera y resina turquesa" : "River table with turquoise resin and wood" },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp", alt: locale === "es" ? "Mesa river de madera y resina turquesa" : "River table with turquoise resin and wood" },
     { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/pacific-xl/main2.webp", alt: locale === "es" ? "Mesa river table Pacific XL de resina epóxica y madera noble" : "Pacific XL river table in epoxy resin and fine wood" },
-    { src: "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/lujo1.webp", alt: locale === "es" ? "Pieza de mobiliario de lujo con resina y madera" : "Luxury furniture piece with resin and wood" },
+    { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/lujo1.webp", alt: locale === "es" ? "Pieza de mobiliario de lujo con resina y madera" : "Luxury furniture piece with resin and wood" },
   ];
 
   /* ── Copy ── */
@@ -320,7 +320,7 @@ export default async function LuxuryFurniturePage(
           </div>
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
             <Image
-              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp"
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp"
               alt={locale === "es" ? "Detalle de mesa river table con resina turquesa y madera" : "Detail of river table with turquoise resin and wood"}
               fill
               className="object-cover"

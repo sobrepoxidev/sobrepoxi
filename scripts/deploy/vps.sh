@@ -33,7 +33,9 @@ ln -sfn $REL $BASE/current
 if pm2 describe sobrepoxi > /dev/null 2>&1; then
   pm2 reload sobrepoxi --update-env
 else
-  cd $BASE/current && PORT=3150 HOSTNAME=127.0.0.1 pm2 start node_modules/next/dist/bin/next --name sobrepoxi --cwd $BASE/current -- start -p 3150 -H 127.0.0.1
+  # -H localhost, not 127.0.0.1: next-intl rewrites to localhost:<port>, and with another
+  # hostname Next treats them as external and proxies them to itself (ECONNRESET, 500).
+  cd $BASE/current && NODE_OPTIONS=--dns-result-order=ipv4first PORT=3150 pm2 start node_modules/next/dist/bin/next --name sobrepoxi --cwd $BASE/current -- start -p 3150 -H localhost
   pm2 save
 fi
 sleep 4

@@ -320,7 +320,7 @@ export default async function IndustrialEpoxyFlooringPage(
           </div>
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
             <Image
-              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial.webp"
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/industrial.webp"
               alt={locale === "es" ? "Piso epóxico industrial en centro logístico" : "Industrial epoxy floor in logistics center"}
               fill
               className="object-cover"
@@ -378,7 +378,7 @@ export default async function IndustrialEpoxyFlooringPage(
             <div className="bg-[#1a1a1a] rounded-xl overflow-hidden border border-gray-800 group">
               <div className="relative aspect-video overflow-hidden">
                 <Image
-                  src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/after-before.webp"
+                  src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/after-before.webp"
                   alt={locale === "es" ? "Antes y después piso epóxico planta alimenticia" : "Before and after food plant epoxy floor"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -408,7 +408,7 @@ export default async function IndustrialEpoxyFlooringPage(
             <div className="bg-[#1a1a1a] rounded-xl overflow-hidden border border-gray-800 group">
               <div className="relative aspect-video overflow-hidden">
                 <Image
-                  src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/industrial.webp"
+                  src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/industrial.webp"
                   alt={locale === "es" ? "Centro de distribución logística con piso epóxico" : "Logistics distribution center with epoxy floor"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"

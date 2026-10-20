@@ -87,7 +87,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           {/* --- Image --- */}
           <div className="w-full lg:w-1/2 flex justify-center">
             <Image
-              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp"
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp"
               alt={locale === "es" ? "Mesa río SobrePoxi" : "SobrePoxi river table"}
               width={450}
               height={450}
@@ -162,7 +162,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
           <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
             <div className="h-48 overflow-hidden">
               <Image 
-                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp" 
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/hero-7P2YkpjviaOMNuCSiZzgwWXpIRzcGc.webp" 
                 alt={locale === "es" ? "Mesa de río en madera y resina" : "River table in wood and resin"}
                 width={400}
                 height={300}
@@ -219,7 +219,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8">
           <div className="w-full lg:w-1/2">
             <Image
-              src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/creaters-jmaVe9NzJWkXM1VpBKoVj9HcgvH8Q7.webp"
+              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/creaters-jmaVe9NzJWkXM1VpBKoVj9HcgvH8Q7.webp"
               alt={locale === "es" ? "Fundadores de SobrePoxi" : "SobrePoxi founders"}
               width={520}
               height={350}
@@ -304,7 +304,7 @@ export default async function AboutPage({ params }: { params: ParamsPromise }) {
         "@id": "https://sobrepoxi.com/#organization",
         "name": "SobrePoxi",
         "url": "https://sobrepoxi.com",
-        "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
+        "logo": "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
         "description": locale === "es"
           ? "En SobrePoxi, unimos dos mundos: la precisión de la ingeniería para crear pisos industriales de máxima durabilidad y la sensibilidad del arte para diseñar pisos y muebles de lujo que se convierten en el alma de un espacio. Con sede en Costa Rica, nuestra pasión es transformar materiales en experiencias únicas."
           : "At SobrePoxi, we unite two worlds: the precision of engineering to create maximum-durability industrial floors, and the sensitivity of art to design luxury floors and furniture that become the soul of a space. Based in Costa Rica, our passion is to transform materials into unique experiences.",

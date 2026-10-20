@@ -40,13 +40,6 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
-      // Self-hosting cutover: Let's Encrypt follows this redirect to the VPS, so the
-      // certificate exists before DNS moves. Harmless after the move (nginx answers first).
-      {
-        source: '/.well-known/acme-challenge/:token',
-        destination: 'http://sobrepoxi-acme.31-97-210-100.sslip.io/.well-known/acme-challenge/:token',
-        permanent: false,
-      },
       {
         source: '/:locale/luxury-design-flooring',
         destination: '/:locale/epoxy-floors',

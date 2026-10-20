@@ -45,7 +45,7 @@ export default async function Navbar({ locale }: { locale: string }) {
 
               {/* <div className="lg:hidden">
               <Image
-                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -56,7 +56,7 @@ export default async function Navbar({ locale }: { locale: string }) {
               </div>
               <div className="hidden lg:block">
               <Image
-                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt="Hand Made Art Logo"
                 width={65}
                 height={0}
@@ -66,7 +66,7 @@ export default async function Navbar({ locale }: { locale: string }) {
               />
               </div> */}
               <Image
-                src="https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
                 alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
                 width={51}
                 height={43}

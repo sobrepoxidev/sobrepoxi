@@ -209,7 +209,7 @@ export default async function ContactPage({ params }: { params: ParamsPromise })
           ? "Muebles de lujo en madera y resina, y pisos epóxicos de diseño e industriales. Proyectos en Costa Rica y EE. UU."
           : "Luxury furniture in wood and resin, and designer & industrial epoxy floors. Projects in Costa Rica and USA.",
         "url": "https://sobrepoxi.com",
-        "logo": "https://hhn7iitaso3wzd0d.public.blob.vercel-storage.com/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
+        "logo": "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp",
         "areaServed": ["CR", "US"],
         "telephone": "+50685850000",
         "email": "info@sobrepoxi.com",
