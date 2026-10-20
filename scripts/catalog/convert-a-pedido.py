@@ -79,7 +79,11 @@ def convert_one(src: Path, dst: Path) -> tuple[int, int]:
 
 def toma_key(folder_name: str, design: str) -> str | None:
     """Extrae la toma desde '<diseno>-<toma>'. Devuelve None si no calza."""
-    rest = folder_name[len(design) + 1 :] if folder_name.startswith(design + "-") else folder_name
+    # Only this design's folders: falling back to any folder made every design take
+    # the series of the first one in alphabetical order (19-oct-2026).
+    if not folder_name.startswith(design + "-"):
+        return None
+    rest = folder_name[len(design) + 1 :]
     rest = rest.lower()
     for toma in TOMA_ORDER:
         if toma in rest:

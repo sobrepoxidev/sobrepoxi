@@ -63,6 +63,8 @@ function fail(msg) {
   process.exit(1);
 }
 
+const MEDIA_VERSION = 'v2';
+
 const catalog = JSON.parse(readFileSync(join(HERE, 'a-pedido.json'), 'utf8'));
 const products = catalog.products;
 if (!Array.isArray(products) || products.length !== 16) {
@@ -93,8 +95,8 @@ for (const [idx, p] of products.entries()) {
   for (const w of BANNED) {
     if (w === 'ia' ? /\bia\b/.test(blob) : blob.includes(w)) errors.push(`${tag}: copy con palabra prohibida "${w}"`);
   }
-  if (!Array.isArray(p.media_files) || p.media_files.length !== 6) {
-    errors.push(`${tag}: media_files debe tener 6 tomas`);
+  if (!Array.isArray(p.media_files) || p.media_files.length < 5 || p.media_files.length > 6) {
+    errors.push(`${tag}: media_files debe tener 5 o 6 tomas (se quita la que contradiga al producto)`);
   }
 }
 
@@ -194,7 +196,7 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || envLocal.SUPABASE_S
 if (!APPLY) {
   console.log('--- dry-run: lo que se haría con --apply ---');
   console.log('- categorías: verificar id 1 (coastal), id 2 (tables), id 4 (floors); crear si faltan: custom-furniture, resin-decor (por name)');
-  console.log('- storage: subir 96 webp a products/a-pedido/<slug>/<archivo> (upsert, image/webp)');
+  console.log('- storage: subir los webp a products/a-pedido/<slug>/<versión>/<archivo> (upsert, image/webp)');
   console.log('- productos: insertar si no existe ese name (idempotente; si existe, no duplicar)');
   console.log('- inventory: crear { product_id, quantity: 0 } si no existe');
   console.log('- videos: subir 12 archivos (6 .mp4 video/mp4 + 6 .jpg image/jpeg) a products/videos/<archivo> (upsert) y HEAD a cada URL pública');
@@ -254,7 +256,9 @@ for (const p of products) {
     const localPath = join(CONTENT_DIR, p.media_dir, m.file);
     if (!existsSync(localPath)) fail(`falta archivo local: ${p.media_dir}/${m.file}`);
     const buf = readFileSync(localPath);
-    const storagePath = `a-pedido/${p.name}/${m.file}`;
+    // MEDIA_VERSION in the path: an overwritten file keeps its URL, and Supabase's CDN and
+    // the Next image cache (31 days) would keep serving the old picture.
+    const storagePath = `a-pedido/${p.name}/${MEDIA_VERSION}/${m.file}`;
     const { error: upErr } = await supabase.storage
       .from('products')
       .upload(storagePath, buf, { upsert: true, contentType: 'image/webp' });
@@ -268,6 +272,8 @@ for (const p of products) {
   if (selErr) throw selErr;
   if (existing) {
     productId = existing.id;
+    const { error: mediaErr } = await supabase.from('products').update({ media }).eq('id', productId);
+    if (mediaErr) throw mediaErr;
   } else {
     const { data: inserted, error: insErr } = await supabase
       .from('products')
