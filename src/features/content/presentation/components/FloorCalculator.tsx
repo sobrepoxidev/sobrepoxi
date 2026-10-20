@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Check, Minus, Plus } from 'lucide-react';
 import { buildWhatsAppUrl } from '@/shared/contact/whatsapp';
+import { track } from '@/shared/analytics/track';
 import {
   CR_PROVINCES,
   FLOOR_FINISHES,
@@ -95,6 +96,17 @@ export default function FloorCalculator({ locale, refTag }: { locale: string; re
   const rangeText = `${formatColones(finish.minPerM2)} – ${formatColones(finish.maxPerM2)}`;
   const message = t.message(spaceName, m2, finish.name[lang], province, rangeText);
   const waHref = useMemo(() => buildWhatsAppUrl(message, `calculadora.${refTag}`), [message, refTag]);
+
+  // One `calculator_use` per visit, on the first change the visitor makes, so Umami
+  // separates people who played with the calculator from those who only saw it.
+  const mounted = useRef(false);
+  const used = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return; }
+    if (used.current) return;
+    used.current = true;
+    track('calculator_use', { ref: refTag });
+  }, [space, finishKey, m2, province, refTag]);
 
   const setArea = (value: number) => setM2(Math.max(MIN_M2, Math.min(MAX_M2, Math.round(Number.isFinite(value) ? value : MIN_M2))));
 
@@ -257,6 +269,7 @@ export default function FloorCalculator({ locale, refTag }: { locale: string; re
         </ul>
         <a
           href={waHref}
+          onClick={() => track('calculator_send', { ref: refTag, space, finish: finishKey, m2, province })}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-semibold text-[#08140c] transition-opacity hover:opacity-90"

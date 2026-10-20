@@ -46,14 +46,14 @@ function HeroSection({ locale }: { locale: string }) {
       sub: 'Transformamos espacios con acabados de clase mundial. Desde pisos industriales de alto rendimiento hasta muebles artesanales con resina y madera.',
       cta1: 'Cotizar Proyecto',
       cta2: 'Ver Productos',
-      stat1: '500+',
-      stat1Label: 'Proyectos',
-      stat2: '10+',
-      stat2Label: 'Años',
-      stat3: '100%',
-      stat3Label: 'Garantía',
-      stat4: '4.9',
-      stat4Label: 'Calificación',
+      stat1: '₡75–96 mil',
+      stat1Label: 'm² instalado',
+      stat2: '5 mm',
+      stat2Label: 'Espesor',
+      stat3: 'IVA',
+      stat3Label: 'Incluido',
+      stat4: 'A medida',
+      stat4Label: 'Muebles',
     },
     en: {
       badge: 'Costa Rica',
@@ -62,14 +62,14 @@ function HeroSection({ locale }: { locale: string }) {
       sub: 'We transform spaces with world-class finishes. From high-performance industrial floors to artisan resin and wood furniture.',
       cta1: 'Get a Quote',
       cta2: 'View Products',
-      stat1: '500+',
-      stat1Label: 'Projects',
-      stat2: '10+',
-      stat2Label: 'Years',
-      stat3: '100%',
-      stat3Label: 'Warranty',
-      stat4: '4.9',
-      stat4Label: 'Rating',
+      stat1: '₡75–96k',
+      stat1Label: 'Per m² installed',
+      stat2: '5 mm',
+      stat2Label: 'Thickness',
+      stat3: 'VAT',
+      stat3Label: 'Included',
+      stat4: 'Custom',
+      stat4Label: 'Furniture',
     },
   };
   const c = t[locale as 'es' | 'en'] || t.es;
@@ -143,12 +143,11 @@ function HeroSection({ locale }: { locale: string }) {
                 { value: c.stat1, label: c.stat1Label },
                 { value: c.stat2, label: c.stat2Label },
                 { value: c.stat3, label: c.stat3Label },
-                { value: c.stat4, label: c.stat4Label, icon: true },
+                { value: c.stat4, label: c.stat4Label },
               ].map((stat, i) => (
                 <div key={i} className="text-center sm:text-left">
                   <div className="flex items-center justify-center sm:justify-start gap-1">
                     <span className="text-xl sm:text-2xl font-black text-white">{stat.value}</span>
-                    {stat.icon && <Star className="w-4 h-4 text-amber-400 fill-amber-400" />}
                   </div>
                   <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider">{stat.label}</span>
                 </div>
@@ -381,20 +380,20 @@ function ServicesSection({ locale }: { locale: string }) {
 function WhyChooseUsSection({ locale }: { locale: string }) {
   const features = locale === 'es'
     ? [
-        { icon: Shield, title: 'Garantía Total', desc: 'Respaldamos cada proyecto con garantía. Tu inversión está protegida.' },
+        { icon: Shield, title: 'Precio Claro', desc: '₡75.000–₡96.100 por m² instalado, IVA incluido. El total se confirma en la visita.' },
         { icon: Award, title: 'Calidad Premium', desc: 'Materiales importados de primera calidad y acabados impecables.' },
         { icon: Zap, title: 'Instalación Rápida', desc: 'Equipos especializados que minimizan tiempos de ejecución.' },
         { icon: Hammer, title: 'A Tu Medida', desc: 'Cada proyecto es único. Diseñamos según tus necesidades exactas.' },
         { icon: Sparkles, title: 'Diseño Exclusivo', desc: 'Efectos únicos: 3D, metálico, mármol, espejo y más.' },
-        { icon: CheckCircle2, title: 'Experiencia Real', desc: '+500 proyectos ejecutados en Costa Rica y la región.' },
+        { icon: CheckCircle2, title: 'Hecho en Costa Rica', desc: 'Fabricamos e instalamos con nuestro propio equipo en Costa Rica.' },
       ]
     : [
-        { icon: Shield, title: 'Full Warranty', desc: 'We back every project with a warranty. Your investment is protected.' },
+        { icon: Shield, title: 'Clear Pricing', desc: '₡75,000–₡96,100 per m² installed, VAT included. The total is confirmed at the site visit.' },
         { icon: Award, title: 'Premium Quality', desc: 'First-class imported materials and flawless finishes.' },
         { icon: Zap, title: 'Fast Installation', desc: 'Specialized teams that minimize execution times.' },
         { icon: Hammer, title: 'Custom Made', desc: 'Every project is unique. We design to your exact needs.' },
         { icon: Sparkles, title: 'Exclusive Design', desc: 'Unique effects: 3D, metallic, marble, mirror and more.' },
-        { icon: CheckCircle2, title: 'Proven Track Record', desc: '500+ completed projects in Costa Rica and the region.' },
+        { icon: CheckCircle2, title: 'Made in Costa Rica', desc: 'We build and install with our own team in Costa Rica.' },
       ];
 
   return (

@@ -80,8 +80,8 @@ export default async function EpoxyFloorsPage(
     heroSecondary: locale === "es" ? "Ver proyectos" : "View projects",
     // Stats
     stats: locale === "es"
-      ? [["15+", "Años de durabilidad"], ["500+", "m² instalados"], ["100%", "Personalizable"], ["3-5", "Días de instalación"]]
-      : [["15+", "Years durability"], ["500+", "sqm installed"], ["100%", "Customizable"], ["3-5", "Days installation"]],
+      ? [["15+", "Años de durabilidad"], ["5 mm", "Espesor"], ["100%", "Personalizable"], ["IVA", "Incluido en el precio"]]
+      : [["15+", "Years durability"], ["5 mm", "Thickness"], ["100%", "Customizable"], ["VAT", "Included in price"]],
     // What section
     whatTitle: locale === "es" ? "¿Qué es un piso epóxico?" : "What is an epoxy floor?",
     whatContent: locale === "es"

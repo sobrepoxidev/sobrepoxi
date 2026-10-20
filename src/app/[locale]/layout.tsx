@@ -81,7 +81,7 @@ export default async function LocaleLayout({
               "@type": "HomeAndConstructionBusiness",
               name: "SobrePoxi",
               description: locale === "es"
-                ? "Empresa líder en Costa Rica especializada en muebles únicos con resina epóxica y pisos epóxicos industriales de alta resistencia. Calidad garantizada y diseños personalizados."
+                ? "Empresa costarricense especializada en muebles únicos con resina epóxica y pisos epóxicos industriales de alta resistencia, con diseños personalizados."
                 : "Leading company in Costa Rica specialized in unique epoxy resin furniture and high-resistance industrial epoxy floors. Guaranteed quality and custom designs.",
               url: "https://sobrepoxi.com",
               logo: "https://sobrepoxi.com/logo.png",

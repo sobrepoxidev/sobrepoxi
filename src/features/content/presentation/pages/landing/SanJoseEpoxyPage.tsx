@@ -288,7 +288,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
             <div className="flex flex-wrap gap-4 mb-8 text-sm text-gray-400">
               <span className="flex items-center gap-1.5">
                 <Star className="h-4 w-4 text-amber-400" />
-                {locale === "es" ? "500+ proyectos en CR" : "500+ projects in CR"}
+                {locale === "es" ? "₡75.000–₡96.100/m² instalado" : "₡75,000–₡96,100/m² installed"}
               </span>
               <span className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-amber-400" />
