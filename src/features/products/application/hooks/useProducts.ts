@@ -50,11 +50,11 @@ export function useProducts(
     loading: initialCategories.length > 0 && initialProducts.length > 0 ? false : true,
     error: null,
     productsByCategory: initialProductsByCategory,
-    sectionProducts: {
-      gridByCategory: {},
-      gifts: [],
-      featured: [],
-    },
+    // Computed up front: when the server data is enough the effect returns early and never fills it.
+    sectionProducts:
+      initialCategories.length > 0 && initialProducts.length > 0
+        ? distributeProducts([...initialProducts], initialCategories)
+        : { gridByCategory: {}, gifts: [], featured: [] },
   });
 
   useEffect(() => {
