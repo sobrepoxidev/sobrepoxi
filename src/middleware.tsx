@@ -49,14 +49,11 @@ export async function middleware(req: NextRequest) {
   }
 
   /* --- 2. Resto del sitio → intl + Supabase --- */
-  const intlRes = intlMiddleware(req);
-  const res = NextResponse.next({
-    request: { headers: intlRes.headers },
-    status: intlRes.status
-  });
-
+  // The intl response already carries next-intl's request-header override. Copying
+  // its headers into a new NextResponse.next({ request }) re-prefixed them on every
+  // pass and `next start` answered 431 (Vercel tolerated it).
+  const res = intlMiddleware(req);
   res.headers.set("x-middleware-next-intl", "processed");
-  for (const [k, v] of intlRes.headers) if (!res.headers.has(k)) res.headers.set(k, v);
 
   // Forzar redirecciones next-intl como PERMANENTES (308) en lugar de 307.
   // Google transfiere PageRank e indexación con 308, no con 307.

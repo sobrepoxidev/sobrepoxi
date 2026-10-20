@@ -26,8 +26,8 @@ ssh "$HOST" bash -s <<EOF
 set -euo pipefail
 cd $REL
 ln -sf $BASE/shared/.env .env.production
-npx -y pnpm@11.1.2 install --frozen-lockfile --prod=false > install.log 2>&1 || { tail -20 install.log; exit 1; }
-NODE_OPTIONS=--max-old-space-size=3072 npx -y pnpm@11.1.2 run build > build.log 2>&1 || { tail -30 build.log; exit 1; }
+npx -y pnpm@10.18.3 install --frozen-lockfile --prod=false > install.log 2>&1 || { tail -20 install.log; exit 1; }
+NODE_OPTIONS=--max-old-space-size=3072 npx -y pnpm@10.18.3 run build > build.log 2>&1 || { tail -30 build.log; exit 1; }
 grep -E "Generating static pages \(|Compiled" build.log | tail -2
 ln -sfn $REL $BASE/current
 if pm2 describe sobrepoxi > /dev/null 2>&1; then
