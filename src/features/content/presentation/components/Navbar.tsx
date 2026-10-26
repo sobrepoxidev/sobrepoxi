@@ -3,7 +3,7 @@
 import { Link } from '@/shared/i18n/navigation';
 import Image from 'next/image';
 import NavbarClient from './NavbarClient';
-import { SearchBar, CategoryCarousel } from '@/features/products';
+import NavbarSearchArea from './NavbarSearchArea';
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
@@ -101,15 +101,11 @@ export default async function Navbar({ locale }: { locale: string }) {
         </div>
       </div>
 
-      {/* Mobile Search Bar - Visible by default on mobile */}
-      <div className="lg:hidden bg-[#121212] px-0 py-0.5">
-        <SearchBar
-          variant="mobile"
-          initialCategory={locale === 'es' ? 'Todo' : 'All'}
-          locale={locale}
-          className="w-full px-2"
-        />
-        <CategoryCarousel locale={locale} className="mt-1" categories={[]} />
+      {/* Second row: product search on catalogue routes, quote funnel everywhere
+          else. It used to be the search bar on every page, which pushed the hero
+          down on mobile without helping anyone outside the shop. */}
+      <div className="lg:hidden bg-[#121212]">
+        <NavbarSearchArea locale={locale} variant="mobile" />
       </div>
     </header>
   );

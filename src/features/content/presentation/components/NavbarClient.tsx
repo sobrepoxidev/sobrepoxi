@@ -10,7 +10,8 @@ import { Session } from '@supabase/supabase-js';
 import { useSupabase } from '@/app/supabase-provider/provider';
 import { useCart } from '@/features/cart';
 import UserDropdown from './UserDropdown';
-import { SearchBar, CategoryCarousel, getCategoriesFromDB } from '@/features/products';
+import { getCategoriesFromDB } from '@/features/products';
+import NavbarSearchArea from './NavbarSearchArea';
 import LocaleSwitcher from './LocaleSwitcher';
 
 type NavLink = {
@@ -160,29 +161,8 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
           </div>
         </div>
 
-        {/* Top Row: Search bar with filter dropdown */}
-        <div className="flex w-full items-center justify-center pt-3 px-4">
-          <div className="flex w-full max-w-6xl items-center">
-            <div
-              className="relative w-full flex items-center rounded-md border border-gray-300 bg-white overflow-visible"
-              style={{
-                zIndex: 40, // Lower z-index to stay below mobile menu
-                position: 'relative',
-              }}
-            >
-              {/* Integrated SearchBar component with higher z-index to ensure dropdowns appear */}
-              <SearchBar
-                variant="navbar"
-                initialCategory={locale === 'es' ? 'Todo' : 'All'}
-                locale={locale}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Category carousel - horizontally scrollable */}
-        {/* reservar espacio mientras se carga */}
-        <div className="w-full flex justify-center h-8"><CategoryCarousel locale={locale} categories={categoryList} className="mt-1 max-w-6xl" /></div>
+        {/* Second row: catalogue search, or the quote funnel on content pages */}
+        <NavbarSearchArea locale={locale} variant="desktop" categories={categoryList} />
 
         {/* Desktop action icons */}
         <div className="hidden">
