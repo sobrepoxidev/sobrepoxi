@@ -37,7 +37,7 @@ const COPY = {
     ctaCalc: 'Calcular mi piso',
     ctaWa: 'Cotizar por WhatsApp',
     waMsg: 'Hola SobrePoxi, quiero cotizar resina epóxica para piso',
-    trust: [['Precio orientativo', '₡75.000 – ₡96.100 por m² (IVA incluido)'], ['Visita técnica', 'sin costo'], ['Piso de 5 mm', 'instalado']],
+    trust: [['Precio orientativo', '₡75.000 – ₡96.100 por m² (IVA incluido)'], ['Visita técnica', 'en todo el país'], ['Piso de 5 mm', 'instalado']],
     calcEyebrow: 'Calculadora',
     calcH2a: '¿Cuánto cuesta',
     calcH2b: 'tu piso?',

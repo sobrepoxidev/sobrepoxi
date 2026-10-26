@@ -177,14 +177,14 @@ export async function CityEpoxyPage({
         gallerySub: `Sistemas recomendados para ${city.cityName} según sus características.`,
         coverageTitle: "Cobertura en la zona",
         coverageSub:
-          "Visita técnica gratuita en estas áreas. Para zonas remotas coordinamos viáticos.",
+          "Visita técnica en estas áreas. El costo de la visita se revisa al coordinar la cita según el sitio; para zonas remotas se coordinan viáticos.",
         useCasesTitle: `Proyectos ideales en ${city.cityName}`,
         climateTitle: `Pisos epóxicos y el clima de ${city.cityName}`,
         faqTitle: "Preguntas frecuentes",
         ctaTitle: `¿Listo para tu piso epóxico en ${city.cityName}?`,
         ctaSub:
-          "Agenda tu visita técnica gratuita. Evaluamos tu concreto y te damos un presupuesto honesto sin compromiso.",
-        btnQuote: `Cotizar gratis en ${city.cityName}`,
+          "Agenda tu visita técnica. Evaluamos tu concreto y te damos un presupuesto honesto sin compromiso. El costo de la visita se revisa al coordinar la cita según el sitio.",
+        btnQuote: `Cotizar en ${city.cityName}`,
         btnCall: "Llamar ahora",
         climateData: "Datos climáticos",
         altitude: "Altitud",
@@ -203,7 +203,7 @@ export async function CityEpoxyPage({
         faqTitle: "Frequently asked questions",
         ctaTitle: `Ready for your epoxy floor in ${city.cityName}?`,
         ctaSub:
-          "Schedule your free technical visit. We evaluate your concrete and give you an honest quote with no obligation.",
+          "Schedule your technical visit. We evaluate your concrete and give you an honest quote with no obligation. The cost of the visit is reviewed when scheduling, depending on the site.",
         btnQuote: `Free quote in ${city.cityName}`,
         btnCall: "Call now",
         climateData: "Climate data",
@@ -289,7 +289,7 @@ export async function CityEpoxyPage({
               </span>
               <span className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-amber-400" />
-                {isEs ? "Visita técnica sin costo" : "Free site visit"}
+                {isEs ? "Visita técnica en la zona" : "Technical visit in the area"}
               </span>
             </div>
 

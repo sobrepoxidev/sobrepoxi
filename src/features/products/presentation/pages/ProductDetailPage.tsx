@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: { params: tParams }): Promise
       : `${displayName} · ${floor ? 'Epoxy floor in Costa Rica' : 'Epoxy resin Costa Rica'}`
   const fallbackDescription =
     locale === 'es'
-      ? `${displayName}: ${floor ? 'piso epóxico' : 'pieza en resina epóxica'} instalado por SobrePoxi en Costa Rica. Muestras, visita técnica y cotización gratis por WhatsApp.`
-      : `${displayName}: ${floor ? 'epoxy floor' : 'epoxy resin piece'} by SobrePoxi in Costa Rica. Samples, site visit and free quote on WhatsApp.`
+      ? `${displayName}: ${floor ? 'piso epóxico' : 'pieza en resina epóxica'} instalado por SobrePoxi en Costa Rica. Muestras, visita técnica y cotización por WhatsApp.`
+      : `${displayName}: ${floor ? 'epoxy floor' : 'epoxy resin piece'} by SobrePoxi in Costa Rica. Samples, site visit and quote on WhatsApp.`
   const description =
     plainText(locale === 'es' ? product.description_es ?? product.description : product.description_en ?? product.description) ||
     fallbackDescription

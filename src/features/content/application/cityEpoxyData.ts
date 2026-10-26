@@ -189,8 +189,8 @@ export const CITY_CONFIGS: CityEpoxyConfig[] = [
       en: "Epoxy Floors in Cartago, Costa Rica | Cold-Climate Curing | SobrePoxi",
     },
     metaDescription: {
-      es: "Pisos epóxicos en Cartago, Costa Rica. Sistemas adaptados al clima frío y brumoso de la Ciudad de las Brumas. Endurecedores acelerados, visita técnica gratis en todo el cantón.",
-      en: "Epoxy floors in Cartago, Costa Rica. Systems adapted to the cold, misty climate of the City of Mists. Accelerated hardeners, free technical visit throughout the canton.",
+      es: "Pisos epóxicos en Cartago, Costa Rica. Sistemas adaptados al clima frío y brumoso de la Ciudad de las Brumas. Endurecedores acelerados, visita técnica en todo el cantón.",
+      en: "Epoxy floors in Cartago, Costa Rica. Systems adapted to the cold, misty climate of the City of Mists. Accelerated hardeners, technical visit throughout the canton.",
     },
     keywords: {
       es: "pisos epoxicos Cartago, piso epoxico Cartago Costa Rica, resina epoxica Cartago, piso garaje Cartago frio, instalador epoxico Cartago brumas",
@@ -333,8 +333,8 @@ export const CITY_CONFIGS: CityEpoxyConfig[] = [
       en: "Epoxy Floors in Heredia, Costa Rica | Moisture-Resistant | SobrePoxi",
     },
     metaDescription: {
-      es: "Pisos epóxicos en Heredia, Costa Rica. Sistemas con barrera de humedad para las lluvias intensas y zonas de cultivo. Visita técnica gratis en Heredia Centro, Belén, Barva y más.",
-      en: "Epoxy floors in Heredia, Costa Rica. Systems with moisture barriers for intense rains and crop areas. Free technical visit in Heredia Centro, Belén, Barva and more.",
+      es: "Pisos epóxicos en Heredia, Costa Rica. Sistemas con barrera de humedad para las lluvias intensas y zonas de cultivo. Visita técnica en Heredia Centro, Belén, Barva y más.",
+      en: "Epoxy floors in Heredia, Costa Rica. Systems with moisture barriers for intense rains and crop areas. Technical visit in Heredia Centro, Belén, Barva and more.",
     },
     keywords: {
       es: "pisos epoxicos Heredia, piso epoxico Heredia Costa Rica, resina epoxica Heredia, piso garaje Heredia, instalador epoxico Heredia Belen Barva",
@@ -477,8 +477,8 @@ export const CITY_CONFIGS: CityEpoxyConfig[] = [
       en: "Epoxy Floors in Alajuela, Costa Rica | UV Protection | SobrePoxi",
     },
     metaDescription: {
-      es: "Pisos epóxicos en Alajuela, Costa Rica. Sistemas con topcoat UV reforzado para el clima cálido y soleado. Visita técnica gratis en Alajuela Centro, La Garita, Río Segundo y más.",
-      en: "Epoxy floors in Alajuela, Costa Rica. Systems with reinforced UV topcoat for the warm, sunny climate. Free technical visit in Alajuela Centro, La Garita, Río Segundo and more.",
+      es: "Pisos epóxicos en Alajuela, Costa Rica. Sistemas con topcoat UV reforzado para el clima cálido y soleado. Visita técnica en Alajuela Centro, La Garita, Río Segundo y más.",
+      en: "Epoxy floors in Alajuela, Costa Rica. Systems with reinforced UV topcoat for the warm, sunny climate. Technical visit in Alajuela Centro, La Garita, Río Segundo and more.",
     },
     keywords: {
       es: "pisos epoxicos Alajuela, piso epoxico Alajuela Costa Rica, resina epoxica Alajuela, piso garaje Alajuela sol, instalador epoxico Alajuela aeropuerto",

@@ -143,7 +143,7 @@ const guidesES: Guide[] = [
 <p>Calor intenso, humedad alta y salinidad. Aquí se requiere un sistema de alto rendimiento: epóxico 100% sólidos con topcoat de poliaspártico para máxima resistencia UV y a la sal. La preparación del sustrato es aún más crítica por la humedad ascendente.</p>
 <h3>Zona de montaña (Cartago, zonas altas de Heredia)</h3>
 <p>Temperaturas más bajas y alta humedad. Se debe prestar especial atención al tiempo de curado, ya que las temperaturas bajas lo prolongan. Recomendamos sistemas con endurecedores acelerados para estas zonas.</p>
-<p>En todos los casos, un profesional debe evaluar las condiciones específicas del sitio antes de recomendar el sistema. En <strong>SobrePoxi</strong> realizamos visitas técnicas sin costo para garantizar el sistema correcto.</p>`
+<p>En todos los casos, un profesional debe evaluar las condiciones específicas del sitio antes de recomendar el sistema. En <strong>SobrePoxi</strong> realizamos visitas técnicas para garantizar el sistema correcto; el costo de la visita se revisa al coordinar la cita según el sitio.</p>`
       }
     ],
     faqs: [
@@ -735,7 +735,7 @@ const guidesES: Guide[] = [
 <li>Uso específico del espacio (vehicular, peatonal, industrial)</li>
 <li>Tu presupuesto y expectativas de diseño</li>
 </ul>
-<p>En <strong>SobrePoxi</strong> realizamos visitas técnicas sin costo en el Gran Área Metropolitana. Te damos un presupuesto honesto y detallado, sin sorpresas, con todos los componentes del sistema claramente especificados.</p>`
+<p>En <strong>SobrePoxi</strong> realizamos visitas técnicas en el Gran Área Metropolitana; el costo de la visita se revisa al coordinar la cita según el sitio. Te damos un presupuesto honesto y detallado, sin sorpresas, con todos los componentes del sistema claramente especificados.</p>`
       }
     ],
     faqs: [
@@ -745,7 +745,7 @@ const guidesES: Guide[] = [
       { question: "¿Por qué hay tanta diferencia de precios entre proveedores?", answer: "La diferencia suele estar en: (1) calidad de los materiales (profesional vs comercial), (2) preparación del concreto (esmerilado vs solo barrido), (3) número de capas del sistema, y (4) presencia o no de topcoat protector UV. Siempre pide desglose detallado del sistema." }
     ],
     relatedSlugs: ["pisos-epoxicos-para-cocheras", "tipos-de-resina-epoxica", "mantenimiento-pisos-epoxicos"],
-    ctaText: "¿Quieres un presupuesto honesto y detallado para tu proyecto? Solicita visita técnica gratuita",
+    ctaText: "¿Quieres un presupuesto honesto y detallado para tu proyecto? Coordina una visita técnica",
     ctaLink: "/contact"
   },
   {
@@ -809,7 +809,7 @@ const guidesES: Guide[] = [
       { question: "¿Cuál es la mejor época del año para instalar piso epóxico en Costa Rica?", answer: "La época seca (diciembre a abril) es ideal porque la humedad ambiental es menor, lo que favorece el curado. Sin embargo, con sistemas modernos como poliaspártico, se puede instalar en cualquier época con las precauciones adecuadas." }
     ],
     relatedSlugs: ["pisos-epoxicos-para-cocheras", "precios-pisos-epoxicos-costa-rica", "mantenimiento-pisos-epoxicos"],
-    ctaText: "¿Quieres un presupuesto exacto para tu cochera? Agenda visita técnica gratuita",
+    ctaText: "¿Quieres un presupuesto exacto para tu cochera? Agenda tu visita técnica",
     ctaLink: "/contact"
   },
   {
@@ -967,7 +967,7 @@ const guidesES: Guide[] = [
       { question: "¿Cuál es el costo promedio por metro cuadrado de piso epóxico en Costa Rica?", answer: "El precio orientativo por metro cuadrado de piso epóxico en Costa Rica en 2026 es de ₡75,000 a ₡96,100 CRC por m² instalado (piso de 5 mm, según el acabado, IVA incluido), para un sistema de calidad profesional con materiales, preparación del concreto e instalación. Un piso epóxico se cotiza por el espesor, no solo por m²: el total exacto lo confirma la visita técnica." },
       { question: "¿El precio por m² incluye IVA?", answer: "Depende del proveedor. En Costa Rica el IVA es del 13%. Siempre pregunta si el precio cotizado incluye IVA o es antes de impuestos. En SobrePoxi cotizamos con IVA incluido para evitar sorpresas." },
       { question: "¿Hay costo mínimo de proyecto?", answer: "Sí, la mayoría de instaladores profesionales tienen un costo mínimo de proyecto porque hay costos fijos (movilización, equipo, preparación) que no dependen del área. En SobrePoxi el mínimo se define en la cotización según tu proyecto." },
-      { question: "¿El precio incluye la visita técnica de evaluación?", answer: "En SobrePoxi la visita técnica en el Gran Área Metropolitana es gratuita. Siempre aclara este punto con tu proveedor antes de contratar." }
+      { question: "¿El precio incluye la visita técnica de evaluación?", answer: "El costo de la visita técnica se revisa al coordinar la cita: depende del sitio y de la distancia. La visita es lo que permite dar el total exacto, porque ahí se miden humedad, nivelación y acceso. Siempre aclara este punto con tu proveedor antes de contratar." }
     ],
     relatedSlugs: ["precios-pisos-epoxicos-costa-rica", "cuanto-cuesta-piso-epoxico-cochera", "tipos-de-resina-epoxica"],
     ctaText: "¿Quieres calcular el costo exacto de tu proyecto? Pídenos cotización detallada",

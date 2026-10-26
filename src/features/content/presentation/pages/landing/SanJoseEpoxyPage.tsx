@@ -46,8 +46,8 @@ export async function generateMetadata({
         : "Epoxy Floors in San José, Costa Rica | Local Installation | SobrePoxi",
     description:
       locale === "es"
-        ? "Pisos epóxicos profesionales en San José y Vásquez de Coronado. Taller local, visita técnica gratis en GAM, consideraciones climáticas del Valle Central. Cotización sin costo."
-        : "Professional epoxy floors in San José and Vásquez de Coronado. Local workshop, free technical visit in the Greater Metropolitan Area, climate considerations for the Central Valley. Free quote.",
+        ? "Pisos epóxicos profesionales en San José y Vásquez de Coronado. Taller local, visita técnica en la GAM, consideraciones climáticas del Valle Central. Cotización sin costo."
+        : "Professional epoxy floors in San José and Vásquez de Coronado. Local workshop, technical visit in the Greater Metropolitan Area, climate considerations for the Central Valley. Free quote.",
     keywords:
       locale === "es"
         ? "pisos epoxicos San José, piso epoxico Vásquez de Coronado, resina epoxica San José Costa Rica, piso garaje San José, instalador epoxico GAM, pisos epoxicos Coronado"
@@ -65,8 +65,8 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
       ? {
           hero: "Pisos Epóxicos en San José",
           heroSub:
-            "Taller local en Vásquez de Coronado. Visita técnica gratis en todo el Gran Área Metropolitana.",
-          btnQuote: "Cotizar gratis en San José",
+            "Taller local en Vásquez de Coronado. Visita técnica en todo el Gran Área Metropolitana.",
+          btnQuote: "Cotizar en San José",
           btnCall: "Llamar ahora",
           zoneTitle: "Por qué elegir un instalador local en San José",
         }
@@ -86,8 +86,8 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
     name: "SobrePoxi",
     description:
       locale === "es"
-        ? "Instalación profesional de pisos epóxicos en San José, Costa Rica. Taller en Vásquez de Coronado, visita técnica gratuita en el Gran Área Metropolitana."
-        : "Professional epoxy floor installation in San José, Costa Rica. Workshop in Vásquez de Coronado, free technical visit in the Greater Metropolitan Area.",
+        ? "Instalación profesional de pisos epóxicos en San José, Costa Rica. Taller en Vásquez de Coronado, visita técnica en el Gran Área Metropolitana."
+        : "Professional epoxy floor installation in San José, Costa Rica. Workshop in Vásquez de Coronado, technical visit in the Greater Metropolitan Area.",
     url: "https://sobrepoxi.com/es/pisos-epoxicos-san-jose",
     telephone: "+50685850000",
     email: "info@sobrepoxi.com",
@@ -143,9 +143,9 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
     locale === "es"
       ? [
           {
-            question: "¿Hacen visitas técnicas gratis en todo San José?",
+            question: "¿La visita técnica tiene costo en San José?",
             answer:
-              "Sí. La visita técnica de evaluación es gratuita en todo el cantón central de San José y la Gran Área Metropolitana (Escazú, Santa Ana, Tibás, Montes de Oca, Curridabat, Goicoechea, Vásquez de Coronado). Para zonas fuera de la GAM coordinamos viáticos.",
+              "Se revisa al coordinar la cita: depende del sitio y de la distancia. Atendemos el cantón central de San José y la Gran Área Metropolitana (Escazú, Santa Ana, Tibás, Montes de Oca, Curridabat, Goicoechea, Vásquez de Coronado); para zonas fuera de la GAM se coordinan viáticos. La visita es lo que permite dar el total exacto.",
           },
           {
             question: "¿Cuánto demora la instalación de un piso epóxico en San José?",
@@ -165,9 +165,9 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
         ]
       : [
           {
-            question: "Do you offer free technical visits throughout San José?",
+            question: "Does the technical visit cost anything in San José?",
             answer:
-              "Yes. The technical evaluation visit is free throughout central San José and the Greater Metropolitan Area (Escazú, Santa Ana, Tibás, Montes de Oca, Curridabat, Goicoechea, Vásquez de Coronado). For areas outside the GAM we coordinate travel expenses.",
+              "It is reviewed when scheduling the appointment: it depends on the site and the distance. We cover central San José and the Greater Metropolitan Area (Escazú, Santa Ana, Tibás, Montes de Oca, Curridabat, Goicoechea, Vásquez de Coronado); for areas outside the GAM travel costs are coordinated. The visit is what makes the exact total possible.",
           },
           {
             question: "How long does epoxy floor installation take in San José?",
@@ -292,7 +292,7 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
               </span>
               <span className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-amber-400" />
-                {locale === "es" ? "Visita técnica sin costo" : "Free site visit"}
+                {locale === "es" ? "Visita técnica en la GAM" : "Technical visit in the GAM"}
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 text-amber-400" />
@@ -477,8 +477,8 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
             </h2>
             <p className="text-gray-400 text-center mb-8 max-w-2xl mx-auto">
               {locale === "es"
-                ? "Visita técnica gratuita en todos estos cantones de San José. Para proyectos fuera de la GAM coordinamos viáticos."
-                : "Free technical visit in all these San José cantons. For projects outside the GAM we coordinate travel expenses."}
+                ? "Visita técnica en todos estos cantones de San José. El costo de la visita se revisa al coordinar la cita según el sitio; para proyectos fuera de la GAM se coordinan viáticos."
+                : "Technical visit in all these San José cantons. The cost of the visit is reviewed when scheduling, depending on the site; for projects outside the GAM travel costs are coordinated."}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {zonasCobertura.map((zona, i) => (
@@ -530,8 +530,8 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
               </h2>
               <p className="text-gray-300 mb-6 max-w-xl mx-auto">
                 {locale === "es"
-                  ? "Agenda tu visita técnica gratuita. Evaluamos tu concreto, medimos humedad y te damos un presupuesto honesto sin compromiso."
-                  : "Schedule your free technical visit. We evaluate your concrete, measure moisture and give you an honest quote with no obligation."}
+                  ? "Agenda tu visita técnica. Evaluamos tu concreto, medimos humedad y te damos un presupuesto honesto sin compromiso. El costo de la visita se revisa al coordinar la cita según el sitio."
+                  : "Schedule your technical visit. We evaluate your concrete, measure moisture and give you an honest quote with no obligation. The cost of the visit is reviewed when scheduling, depending on the site."}
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a
