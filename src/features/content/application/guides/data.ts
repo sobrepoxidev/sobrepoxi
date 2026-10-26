@@ -2057,8 +2057,8 @@ export function getGuideBySlug(slug: string, locale: "es" | "en"): Guide | undef
   return allGuides.find(g => g.slug === slug && g.locale === locale);
 }
 
-export function getAllGuideSlugs(): { slug: string; locale: "es" | "en" }[] {
-  return allGuides.map(({ slug, locale }) => ({ slug, locale }));
+export function getAllGuideSlugs(): { slug: string; locale: "es" | "en"; updatedDate: string }[] {
+  return allGuides.map(({ slug, locale, updatedDate }) => ({ slug, locale, updatedDate }));
 }
 
 export function getGuidesByCategory(categorySlug: string, locale: "es" | "en"): Guide[] {

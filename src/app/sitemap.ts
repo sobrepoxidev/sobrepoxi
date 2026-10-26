@@ -2,10 +2,14 @@
 //
 // Sitemap SEO-friendly:
 // - Cada versión de idioma (/es y /en) tiene su PROPIA entrada <loc>.
-// - Cada entrada incluye hreflang completo: self-reference + otra locale +
-//   x-default apuntando siempre a /es (consistente en todo el sitio).
+// - hreflang completo (self + otro locale + x-default) sólo cuando la ruta existe
+//   en ambos idiomas. En las guías de pisos el slug cambia según el locale, así
+//   que ahí se declaran únicamente los idiomas que existen.
 // - No incluye variantes de guías cruzadas de locale (ej: /en/guias/<slug-es>)
 //   que generaban Soft 404.
+// - lastModified sólo cuando hay una fecha real: la guía o el producto. Antes
+//   todas las URLs llevaban la hora de regeneración del sitemap (cada 30 min),
+//   que Google aprende a ignorar.
 import type { MetadataRoute } from 'next'
 import slugify from 'slugify'
 import { getAllGuideSlugs, VIDEO_SLUGS, getVideoEntry, getVideoFileUrls } from '@/features/content'
@@ -15,11 +19,11 @@ const SITE = 'https://sobrepoxi.com'
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-async function fetchActiveProductSlugs(): Promise<string[]> {
+async function fetchActiveProducts(): Promise<{ slug: string; lastModified?: Date }[]> {
   if (!SUPABASE_URL || !SUPABASE_KEY) return []
 
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/products?select=name&is_active=eq.true`,
+    `${SUPABASE_URL}/rest/v1/products?select=name,modified_at&is_active=eq.true`,
     {
       headers: {
         apikey: SUPABASE_KEY,
@@ -30,14 +34,18 @@ async function fetchActiveProductSlugs(): Promise<string[]> {
   )
 
   if (!res.ok) return []
-  const rows: { name: string | null }[] = await res.json()
+  const rows: { name: string | null; modified_at: string | null }[] = await res.json()
   return rows
-    .map(({ name }) => (name ? slugify(name, { lower: true, strict: true }) : null))
-    .filter(Boolean) as string[]
+    .filter(({ name }) => Boolean(name))
+    .map(({ name, modified_at }) => ({
+      slug: slugify(name as string, { lower: true, strict: true }),
+      lastModified: modified_at ? new Date(modified_at) : undefined,
+    }))
 }
 
 // Genera hreflang completo y consistente para un path base (sin locale).
 // x-default siempre → /es (Google exige consistencia en todo el sitio).
+// Sólo para rutas que existen en ambos idiomas.
 function hreflangs(base: string): { languages: Record<string, string> } {
   const suffix = base ? `/${base}` : ''
   return {
@@ -49,9 +57,19 @@ function hreflangs(base: string): { languages: Record<string, string> } {
   }
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
+// Las guías de pisos tienen slug distinto en cada idioma, así que declarar el par
+// cruzado apuntaba a una URL que devuelve "Página no encontrada" y Google
+// descartaba el clúster de hreflang completo. Aquí sólo se declaran los idiomas
+// en los que el slug existe de verdad.
+function guideHreflangs(slug: string, existing: Set<string>): { languages: Record<string, string> } {
+  const languages: Record<string, string> = {}
+  if (existing.has(`es:${slug}`)) languages['es-cr'] = `${SITE}/es/guias/${slug}`
+  if (existing.has(`en:${slug}`)) languages['en-us'] = `${SITE}/en/guias/${slug}`
+  languages['x-default'] = languages['es-cr'] ?? languages['en-us']
+  return { languages }
+}
 
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   /* ─────────── Páginas estáticas (una entrada por locale) ─────────── */
   const staticBases = [
     { base: '', priority: 1.0, freq: 'weekly' as const },
@@ -78,7 +96,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Entrada /es
     staticEntries.push({
       url: `${SITE}/es${suffix}`,
-      lastModified: now,
       changeFrequency: freq,
       priority,
       alternates: hreflangs(base),
@@ -86,7 +103,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Entrada /en (propia, no solo alternate)
     staticEntries.push({
       url: `${SITE}/en${suffix}`,
-      lastModified: now,
       changeFrequency: freq,
       priority,
       alternates: hreflangs(base),
@@ -94,21 +110,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   /* ─────────── Productos (una entrada por locale) ─────────── */
-  const productSlugs = await fetchActiveProductSlugs()
+  const products = await fetchActiveProducts()
   const productEntries: MetadataRoute.Sitemap = []
-  for (const slug of productSlugs) {
+  for (const { slug, lastModified } of products) {
     const base = `product/${slug}`
     const suffix = `/${base}`
     productEntries.push({
       url: `${SITE}/es${suffix}`,
-      lastModified: now,
+      lastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: hreflangs(base),
     })
     productEntries.push({
       url: `${SITE}/en${suffix}`,
-      lastModified: now,
+      lastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: hreflangs(base),
@@ -121,7 +137,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const locale of ['es', 'en'] as const) {
     guideEntries.push({
       url: `${SITE}/${locale}/guias`,
-      lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
       alternates: hreflangs('guias'),
@@ -129,14 +144,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Una entrada por guía EXISTENTE en su locale. Evita generar /en/guias/<slug-es>
-  // que no existen y generaban Soft 404.
-  for (const { slug, locale } of getAllGuideSlugs()) {
+  // que no existen y generaban Soft 404. lastmod sale de la fecha real de
+  // actualización de la guía, no de la hora en que se regeneró el sitemap.
+  const guideSlugs = getAllGuideSlugs()
+  const existingGuides = new Set(guideSlugs.map(({ slug, locale }) => `${locale}:${slug}`))
+
+  for (const { slug, locale, updatedDate } of guideSlugs) {
     guideEntries.push({
       url: `${SITE}/${locale}/guias/${slug}`,
-      lastModified: now,
+      lastModified: new Date(updatedDate),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-      alternates: hreflangs(`guias/${slug}`),
+      alternates: guideHreflangs(slug, existingGuides),
     })
   }
 
@@ -147,7 +166,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const locale of ['es', 'en'] as const) {
     videoEntries.push({
       url: `${SITE}/${locale}/videos`,
-      lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
       alternates: hreflangs('videos'),
@@ -161,7 +179,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (!entry) continue
       videoEntries.push({
         url: `${SITE}/${locale}/videos/${slug}`,
-        lastModified: now,
         changeFrequency: 'monthly' as const,
         priority: 0.7,
         alternates: hreflangs(`videos/${slug}`),
