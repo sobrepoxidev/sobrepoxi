@@ -378,6 +378,10 @@ Móvil es 1.871 de 2.368 clics (77,8 %) a posición 5,16 — mejor que escritori
 | Keyword en el subtítulo del hero (H1 intacto) | `EpoxyFloorsPage.tsx` | Palabras visibles: 769 → 958 |
 | Eliminado `estimateRange()` (multiplicaba rango × área: violaría D-390 si alguien lo usara) | `application/floorPricing.ts` | `tsc` + `build` exit 0 |
 | Redacción «sistema **estándar** de 5 mm» en toda superficie pública | página + barra + stats | No se lee como si 5 mm fuera el único espesor |
+| Diez promesas de «visita técnica gratuita» eliminadas (pisos, industrial, 4 provincias, San José, 4 guías, ficha) | 8 archivos | 0 ocurrencias en el HTML servido; FAQ «¿La visita técnica tiene costo?» publicada |
+| Vista de lista de `/products` enlaza por nombre y no por id numérico | `ProductsPageContent.tsx:343,359,400` | Los enlaces ya no caen en «Producto no encontrado» |
+| Calculadora y enlace a la landing de resina en 6 guías de pisos, industrial, 4 provincias y San José | `GuideDetailPage.tsx`, `IndustrialEpoxyFlooringPage.tsx`, `CityEpoxyPage.tsx`, `SanJoseEpoxyPage.tsx` | La landing pasa de 1 enlace entrante a 12; verificado en producción |
+| Sitemap: hreflang sólo entre locales que existen + `lastModified` real | `src/app/sitemap.ts`, `guides/data.ts` | 138 `<loc>`, 92 `<lastmod>` (guías y productos), 0 `lastmod` con hora de regeneración; guía sólo-ES ya no declara `en-us` |
 
 `tsc --noEmit` exit 0 · `next build` exit 0 · verificado en el servidor de producción local a 390×844 y 1440×900.
 
@@ -387,13 +391,13 @@ Móvil es 1.871 de 2.368 clics (77,8 %) a posición 5,16 — mejor que escritori
 
 | # | Acción | Pilar | Esfuerzo | Bloqueante | Estado |
 |---|---|---|---|---|---|
-| 1 | Enlazar `/es/resina-epoxica-para-pisos` desde `epoxy-floors`, industrial, 4 guías y 5 provincias | 1 | 3 h | No | **Hecho desde `epoxy-floors`** (bloque de clúster). Falta industrial, guías y provincias |
-| 2 | Solicitar indexación en GSC (resina, guías de pisos, fichas de piso) | 1 | 30 min | No | **Pendiente: requiere acceso a GSC** |
-| 3 | Arreglar enlaces `/product/<id>` → `/product/<name>` | 6 | 30 min | No | Pendiente |
-| 4 | Soft 404s de guías → 404 real | 6 | 2 h | No | Pendiente |
+| 1 | Enlazar `/es/resina-epoxica-para-pisos` desde `epoxy-floors`, industrial, guías y provincias | 1 | 3 h | No | **Hecho en las 12 superficies** (epoxy-floors, industrial, 6 guías, 4 provincias, San José) |
+| 2 | Solicitar indexación en GSC (resina, guías de pisos, fichas de piso) | 1 | 30 min | No | **Pendiente: requiere acceso a GSC** (ver `SEO-2026-10-26-PASOS-SEARCH-CONSOLE.md`) |
+| 3 | Arreglar enlaces `/product/<id>` → `/product/<name>` | 6 | 30 min | No | **Hecho** |
+| 4 | Soft 404s de guías → 404 real | 6 | 2 h | No | **Pendiente**: la causa es que el layout llama `cookies()` y todo el árbol es dinámico; Next no puede fijar el status 404 después de empezar a transmitir. Requiere sacar la sesión del navbar al cliente |
 | 5 | Bloque «Guías» + «Piezas» + «Industrial» en `/es/epoxy-floors` | 2 | 1 día | No | **Hecho** (falta el párrafo de provincias) |
-| 6 | Calculadora en `/es/epoxy-floors` | 3 | 2 h | No | Pendiente |
-| 7 | Sitemap: `lastmod` real + alternates condicionales + extensión `images` | 6 | 3 h | No | Pendiente |
+| 6 | Calculadora en `/es/epoxy-floors` | 3 | 2 h | No | **No hecho a propósito**: es la página más pesada (19 chunks, tarea de 473 ms); meterle otro client component empeora el INP de la página con más tráfico. Conviene resolver antes el punto 13 |
+| 7 | Sitemap: `lastmod` real + alternates condicionales | 6 | 3 h | No | **Hecho** (falta la extensión `images`) |
 | 8 | Barra de búsqueda solo en catálogo + barra de embudo en el resto | 2 y 3 | 3 h | No | **Hecho** |
 | 9 | Precio autorizado en el hero y en la FAQ de `/es/epoxy-floors` | 3 | 1 h | No | **Hecho** |
 
