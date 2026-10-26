@@ -67,6 +67,44 @@ export default async function EpoxyFloorsPage(
     { src: "https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/web-v2/pisog3.webp", alt: locale === "es" ? "Piso epóxico de alto tráfico en cochera residencial" : "Heavy-duty epoxy floor in residential garage", featured: false },
   ];
 
+  /* ── Cluster hub ──
+     This page absorbs most of the site's organic clicks, so it has to hand
+     authority to the rest of the cluster: the price guides, the industrial
+     landing, the resin calculator and the floor pieces it already installs.
+     Every href below maps to a real route or product name in the sitemap. */
+  const clusterLinks = [
+    {
+      title: locale === "es" ? "Precios y guías" : "Prices and guides",
+      items: [
+        { label: locale === "es" ? "Precios de pisos epóxicos en Costa Rica 2026" : "Epoxy floor prices in Costa Rica 2026", href: `/${locale}/guias/precios-pisos-epoxicos-costa-rica`, note: locale === "es" ? "Tabla por sistema y comparación" : "Table by system and comparison" },
+        { label: locale === "es" ? "Costo por metro cuadrado, desglosado" : "Cost per square metre, broken down", href: `/${locale}/guias/costo-piso-epoxico-metro-cuadrado`, note: locale === "es" ? "Material, mano de obra y preparación" : "Material, labour and preparation" },
+        { label: locale === "es" ? "Cuánto cuesta un piso para cochera" : "What a garage floor costs", href: `/${locale}/guias/cuanto-cuesta-piso-epoxico-cochera`, note: locale === "es" ? "Rango por tamaño y acabado" : "Range by size and finish" },
+        { label: locale === "es" ? "Tipos de resina epóxica" : "Types of epoxy resin", href: `/${locale}/guias/tipos-de-resina-epoxica`, note: locale === "es" ? "Cuál sirve para cada uso" : "Which one fits each use" },
+        { label: locale === "es" ? "Mantenimiento de pisos epóxicos" : "Epoxy floor maintenance", href: `/${locale}/guias/mantenimiento-pisos-epoxicos`, note: locale === "es" ? "Cómo hacer que dure 15 años" : "How to make it last 15 years" },
+        { label: locale === "es" ? "Diseños y tendencias" : "Designs and trends", href: `/${locale}/guias/disenos-pisos-epoxicos-tendencias`, note: locale === "es" ? "Ideas por ambiente" : "Ideas by room" },
+      ],
+    },
+    {
+      title: locale === "es" ? "Sistemas" : "Systems",
+      items: [
+        { label: locale === "es" ? "Resina epóxica para pisos: precios y calculadora" : "Epoxy resin floors: prices and calculator", href: `/${locale}/resina-epoxica-para-pisos`, note: locale === "es" ? "Calculá el rango de tu espacio" : "Estimate the range for your space" },
+        { label: locale === "es" ? "Pisos epóxicos industriales" : "Industrial epoxy floors", href: `/${locale}/industrial-epoxy-flooring`, note: locale === "es" ? "Bodegas, plantas y alto tráfico" : "Warehouses, plants and heavy traffic" },
+        { label: locale === "es" ? "Catálogo completo" : "Full catalogue", href: `/${locale}/products`, note: locale === "es" ? "Pisos y mobiliario" : "Floors and furniture" },
+      ],
+    },
+    {
+      title: locale === "es" ? "Piezas ya instaladas" : "Pieces already installed",
+      items: [
+        { label: locale === "es" ? "Piso Epóxico Negro Sparkle" : "Black Sparkle Epoxy Floor", href: `/${locale}/product/black-sparkle-epoxy-floor`, note: "Sparkle" },
+        { label: locale === "es" ? "Piso Epóxico Negro Espejo" : "Black Mirror Epoxy Floor", href: `/${locale}/product/black-mirror-epoxy-floor`, note: locale === "es" ? "Efecto espejo" : "Mirror finish" },
+        { label: locale === "es" ? "Piso Epóxico Beige Dorado" : "Beige Gold Epoxy Floor", href: `/${locale}/product/beige-gold-epoxy-floor`, note: locale === "es" ? "Mármol dorado" : "Gold marble" },
+        { label: locale === "es" ? "Piso Epóxico Beige Dorado Marmoleado" : "Beige Gold Marble Epoxy Floor", href: `/${locale}/product/beige-gold-marble-epoxy-floor`, note: locale === "es" ? "Vetas marmoladas" : "Marble veining" },
+        { label: locale === "es" ? "Piso Epóxico Rojo Magma" : "Red Magma Epoxy Floor", href: `/${locale}/product/piso-epoxico-rojo-magma`, note: locale === "es" ? "Lava" : "Lava" },
+        { label: locale === "es" ? "Terraza Shell Reef" : "Shell Reef Terrace", href: `/${locale}/product/shell-reef-terrace-floor`, note: locale === "es" ? "Exterior" : "Outdoor" },
+      ],
+    },
+  ];
+
   /* ── Copy ── */
   const t = {
     breadcrumbHome: locale === "es" ? "Inicio" : "Home",
@@ -74,14 +112,21 @@ export default async function EpoxyFloorsPage(
     heroTitle1: locale === "es" ? "El piso que" : "The floor",
     heroTitle2: locale === "es" ? "tu espacio merece" : "your space deserves",
     heroSub: locale === "es"
-      ? "Superficies sin juntas, ultra resistentes y con diseños únicos que transforman cocheras, salas, comercios e industrias en toda Costa Rica."
-      : "Seamless, ultra-resistant surfaces with unique designs that transform garages, living rooms, commercial and industrial spaces across Costa Rica.",
+      ? "Pisos epóxicos sin juntas, ultra resistentes y con diseños únicos que transforman cocheras, salas, comercios e industrias en toda Costa Rica."
+      : "Seamless, ultra-resistant epoxy floors with unique designs that transform garages, living rooms, commercial and industrial spaces across Costa Rica.",
+    // Authorised reference only: one per-m² range for the standard system. Never
+    // multiplied by area, never in USD (owner rule, 7 oct 2026). "Standard" is
+    // explicit because 5 mm is not the only system SobrePoxi installs — the
+    // thickness is defined per project at the site visit.
+    heroPrice: locale === "es"
+      ? "Sistema estándar de 5 mm · ₡75.000 – ₡96.100 por m² instalado, IVA incluido. El espesor y el total exacto los confirma la visita técnica."
+      : "5 mm standard system · ₡75,000 – ₡96,100 per m² installed, VAT included. Thickness and exact total are confirmed at the site visit.",
     heroCta: locale === "es" ? "Cotización gratuita" : "Free quote",
     heroSecondary: locale === "es" ? "Ver proyectos" : "View projects",
     // Stats
     stats: locale === "es"
-      ? [["15+", "Años de durabilidad"], ["5 mm", "Espesor"], ["100%", "Personalizable"], ["IVA", "Incluido en el precio"]]
-      : [["15+", "Years durability"], ["5 mm", "Thickness"], ["100%", "Customizable"], ["VAT", "Included in price"]],
+      ? [["15+", "Años de durabilidad"], ["5 mm", "Espesor estándar"], ["100%", "Personalizable"], ["IVA", "Incluido en el precio"]]
+      : [["15+", "Years durability"], ["5 mm", "Standard thickness"], ["100%", "Customizable"], ["VAT", "Included in price"]],
     // What section
     whatTitle: locale === "es" ? "¿Qué es un piso epóxico?" : "What is an epoxy floor?",
     whatContent: locale === "es"
@@ -141,12 +186,12 @@ export default async function EpoxyFloorsPage(
     // Process
     processTitle: locale === "es" ? "Nuestro proceso" : "Our process",
     steps: locale === "es" ? [
-      { num: "01", title: "Visita técnica gratuita", desc: "Evaluamos tu espacio: medimos humedad, nivelación y estado del concreto. Te recomendamos el sistema ideal y creamos muestras de color." },
+      { num: "01", title: "Visita técnica", desc: "Evaluamos tu espacio: medimos humedad, nivelación y estado del concreto. Te recomendamos el sistema ideal y creamos muestras de color. El costo de la visita se revisa al coordinar la cita según el sitio." },
       { num: "02", title: "Preparación profesional", desc: "Esmerilado mecánico con aspiración de polvo, reparación de grietas y perfilado del sustrato. La base del éxito." },
       { num: "03", title: "Aplicación del sistema", desc: "Primer, capa base de resina epóxica y elementos decorativos. Aquí se crea la magia — cada piso metálico es una obra de arte." },
       { num: "04", title: "Sellado y entrega", desc: "Topcoat protector de poliuretano o poliaspártico con resistencia UV. Tráfico peatonal a las 24h, uso completo a los 5 días." },
     ] : [
-      { num: "01", title: "Free site visit", desc: "We assess your space: moisture, leveling and concrete condition. We recommend the ideal system and create color samples." },
+      { num: "01", title: "Site visit", desc: "We assess your space: moisture, leveling and concrete condition. We recommend the ideal system and create color samples. The cost of the visit is reviewed when scheduling, depending on the site." },
       { num: "02", title: "Professional preparation", desc: "Mechanical grinding with dust extraction, crack repair and substrate profiling. The foundation of success." },
       { num: "03", title: "System application", desc: "Primer, epoxy base coat and decorative elements. This is where the magic happens — each metallic floor is a work of art." },
       { num: "04", title: "Sealing and delivery", desc: "Protective polyurethane or polyaspartic topcoat with UV resistance. Foot traffic at 24h, full use at 5 days." },
@@ -179,14 +224,16 @@ export default async function EpoxyFloorsPage(
     ctaTitle1: locale === "es" ? "¿Listo para transformar" : "Ready to transform",
     ctaTitle2: locale === "es" ? "tu espacio?" : "your space?",
     ctaSub: locale === "es"
-      ? "Agenda una visita técnica gratuita. Evaluamos tu espacio, te mostramos muestras y te damos una cotización sin compromiso."
-      : "Schedule a free site visit. We assess your space, show you samples and give you a no-obligation quote.",
+      ? "Agenda una visita técnica. Evaluamos tu espacio, te mostramos muestras y te damos una cotización sin compromiso. El costo de la visita se revisa al coordinar la cita según el sitio."
+      : "Schedule a site visit. We assess your space, show you samples and give you a no-obligation quote. The cost of the visit is reviewed when scheduling, depending on the site.",
     ctaButton: locale === "es" ? "Solicitar cotización gratuita" : "Request free quote",
     ctaPhone: locale === "es" ? "O llámanos:" : "Or call us:",
   };
 
   const faqs = locale === "es" ? [
-    { question: "¿Cuánto cuesta un piso epóxico en Costa Rica?", answer: "El precio depende del sistema elegido, el área, la condición del concreto y la complejidad del diseño. Ofrecemos opciones desde sistemas básicos hasta premium metálicos. Solicita una visita técnica gratuita para recibir una cotización exacta para tu proyecto." },
+    { question: "¿Cuánto cuesta un piso epóxico en Costa Rica?", answer: "El sistema estándar de SobrePoxi es de 5 mm y se instala entre ₡75.000 y ₡96.100 por m², IVA incluido, según el acabado y el estado actual del piso. Ese rango no se multiplica por el área: el total exacto lo confirma la visita técnica, que revisa humedad, nivelación y acceso." },
+    { question: "¿Qué espesor tiene el piso epóxico y por qué importa?", answer: "El sistema estándar de SobrePoxi es de 5 mm, y el espesor final se define en la visita técnica según el uso y el estado del sustrato. En el mercado costarricense es común ver sistemas de 1,5 a 2 mm: parecen más baratos porque usan cerca de un tercio del material, y el desgaste suele aparecer al año. Con 5 mm el piso soporta el tráfico real, la limpieza química y el uso para el que se especificó." },
+    { question: "¿La visita técnica tiene costo?", answer: "Se revisa al coordinar la cita: depende del sitio y de la distancia. La visita es lo que permite dar el total exacto, porque ahí se miden humedad, nivelación, acceso y estado del concreto. Fuera del Gran Área Metropolitana se coordinan viáticos." },
     { question: "¿Cuánto dura un piso epóxico?", answer: "Un piso epóxico profesionalmente instalado dura entre 15 y 20 años con mantenimiento básico (solo agua y jabón neutro). La clave es la preparación correcta del sustrato y el uso de sistemas de calidad profesional." },
     { question: "¿Se puede aplicar sobre el piso existente sin demoler?", answer: "En la mayoría de casos sí. Se puede aplicar sobre concreto, cerámica y porcelanato existente, previa evaluación técnica. Esto ahorra hasta un 40% comparado con demoler e instalar piso nuevo." },
     { question: "¿El piso epóxico es resbaloso?", answer: "Con el topcoat antideslizante adecuado, no. Siempre incluimos acabados con textura anti-slip para áreas donde hay riesgo de agua o humedad (cocheras, cocinas, baños, industrias)." },
@@ -195,7 +242,9 @@ export default async function EpoxyFloorsPage(
     { question: "¿Trabajan en todo Costa Rica?", answer: "Sí. Realizamos proyectos en toda la GAM, Guanacaste, Puntarenas, Limón, zona norte y zona sur. Para proyectos fuera de la GAM coordinamos logística especial." },
     { question: "¿Hacen seguimiento post-instalación?", answer: "Sí. Realizamos seguimiento post-instalación para asegurar tu completa satisfacción." },
   ] : [
-    { question: "How much does an epoxy floor cost in Costa Rica?", answer: "Price depends on the system, area, concrete condition and design complexity. We offer options from basic to premium metallic systems. Request a free site visit for an exact quote." },
+    { question: "How much does an epoxy floor cost in Costa Rica?", answer: "SobrePoxi's standard system is 5 mm and is installed between ₡75,000 and ₡96,100 per m², VAT included, depending on the finish and the current condition of the floor. That range is never multiplied by the area: the exact total is confirmed at the site visit, which checks moisture, leveling and access." },
+    { question: "What thickness does the epoxy floor have and why does it matter?", answer: "SobrePoxi's standard system is 5 mm, and the final thickness is defined at the site visit according to the use and the condition of the substrate. In the Costa Rican market it is common to see 1.5 to 2 mm systems: they look cheaper because they use about a third of the material, and wear usually shows up within a year. At 5 mm the floor withstands real traffic, chemical cleaning and the use it was specified for." },
+    { question: "Does the site visit cost anything?", answer: "It is reviewed when scheduling the appointment: it depends on the site and the distance. The visit is what makes the exact total possible, because moisture, leveling, access and concrete condition are measured there. Outside the Greater Metropolitan Area travel costs are coordinated." },
     { question: "How long does an epoxy floor last?", answer: "A professionally installed epoxy floor lasts 15-20 years with basic maintenance (water and neutral soap). The key is proper substrate preparation and professional-grade systems." },
     { question: "Can it be applied over existing flooring?", answer: "In most cases yes. We can apply over concrete, tile and porcelain, after technical evaluation. This saves up to 40% compared to demolishing and installing new flooring." },
     { question: "Is epoxy flooring slippery?", answer: "With proper anti-slip topcoat, no. We always include anti-slip finishes for areas with water or moisture risk." },
@@ -337,6 +386,11 @@ export default async function EpoxyFloorsPage(
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
+          {/* Price answers the first objection before the visitor has to ask,
+              and it is the only figure the owner authorises publishing. */}
+          <p className="mt-6 max-w-xl text-sm leading-relaxed text-white/50">
+            {t.heroPrice}
+          </p>
         </div>
       </section>
 
@@ -419,6 +473,51 @@ export default async function EpoxyFloorsPage(
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{type.desc}</p>
               </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ CLUSTER HUB ═══════════════ */}
+      <section className="border-t border-white/10 py-16 md:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="efx-reveal mb-10 max-w-2xl">
+            <h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">
+              <span className="efx-serif italic font-normal">
+                {locale === "es" ? "Precios, guías y piezas" : "Prices, guides and pieces"}
+              </span>
+            </h2>
+            <p className="text-white/50">
+              {locale === "es"
+                ? "Lo que más nos preguntan, con cifras: cuánto cuesta el metro cuadrado, qué cambia entre sistemas y qué pisos ya instalamos."
+                : "The questions we get most, with numbers: what a square metre costs, what changes between systems, and the floors we have already installed."}
+            </p>
+          </div>
+          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+            {clusterLinks.map((group) => (
+              <div key={group.title}>
+                <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/40">
+                  {group.title}
+                </h3>
+                <ul className="space-y-1">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="group -mx-3 flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/5"
+                      >
+                        <span className="flex flex-col">
+                          <span className="text-sm font-medium text-white/85 transition-colors group-hover:text-white">
+                            {item.label}
+                          </span>
+                          <span className="text-xs text-white/40">{item.note}</span>
+                        </span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-white/25 transition-colors group-hover:text-white/70" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>

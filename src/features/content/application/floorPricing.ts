@@ -91,6 +91,7 @@ export function formatColones(amount: number): string {
   return `₡${rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
 }
 
-export function estimateRange(finish: FloorFinish, m2: number): { min: number; max: number } {
-  return { min: finish.minPerM2 * m2, max: finish.maxPerM2 * m2 };
-}
+// There is deliberately no `range × area` helper here. The owner's rule
+// (7 oct 2026) forbids quoting a total from the per-m² range: the exact total is
+// confirmed at the site visit, and `FloorCalculator` shows the range per m² only.
+
