@@ -340,7 +340,7 @@ export default function ProductsPageContent() {
                     className="flex flex-col sm:flex-row bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden hover:border-amber-600/40 transition-colors"
                   >
                     <Link
-                      href={`/product/${product.id}`}
+                      href={`/product/${product.name}`}
                       className="sm:w-48 h-40 sm:h-auto relative bg-[#121212] shrink-0"
                     >
                       <Image
@@ -356,7 +356,7 @@ export default function ProductsPageContent() {
                     <div className="flex-1 p-4 flex flex-col">
                       <div className="flex items-start gap-2 mb-2">
                         <Link
-                          href={`/product/${product.id}`}
+                          href={`/product/${product.name}`}
                           className="text-base font-medium text-white hover:text-amber-400 transition-colors"
                         >
                           {locale === 'es' ? product.name_es : product.name_en}
@@ -397,7 +397,7 @@ export default function ProductsPageContent() {
                         </div>
 
                         <Link
-                          href={`/product/${product.id}`}
+                          href={`/product/${product.name}`}
                           className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-700 text-white hover:border-amber-500/50 hover:text-amber-400 transition-all"
                         >
                           {locale === 'es' ? 'Ver detalles' : 'View details'}
