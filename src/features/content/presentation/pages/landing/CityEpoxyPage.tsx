@@ -291,6 +291,13 @@ export async function CityEpoxyPage({
                 <Shield className="h-4 w-4 text-amber-400" />
                 {isEs ? "Visita técnica en la zona" : "Technical visit in the area"}
               </span>
+              <Link
+                href={`/${locale}/resina-epoxica-para-pisos#calculadora`}
+                className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 transition-colors"
+              >
+                <ArrowRight className="h-4 w-4" />
+                {isEs ? "Calculá tu precio por m²" : "Estimate your price per m²"}
+              </Link>
             </div>
 
             {/* CTAs */}

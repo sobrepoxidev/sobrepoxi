@@ -30,7 +30,20 @@ import {
 
 type tParams = Promise<{ locale: "es" | "en"; slug: string }>;
 
-const PRICE_GUIDES = new Set(["precios-pisos-epoxicos-costa-rica", "costo-piso-epoxico-metro-cuadrado"]);
+// Slugs that carry the floor calculator plus the link to the resin landing.
+// The price guides do it because the reader is asking about cost; the floor
+// guides do it because the reader is about to ask, and because the landing needs
+// inbound links from the guides Google already ranks.
+const PRICE_GUIDES = new Set([
+  "precios-pisos-epoxicos-costa-rica",
+  "costo-piso-epoxico-metro-cuadrado",
+  "cuanto-cuesta-piso-epoxico-cochera",
+  "tipos-de-resina-epoxica",
+  "mantenimiento-pisos-epoxicos",
+  "pisos-epoxicos-para-cocheras",
+  "pisos-epoxicos-modernos-para-interiores",
+  "pisos-epoxicos-para-negocios",
+]);
 
 /* ──────────── Static params for ISR ──────────── */
 export async function generateStaticParams() {
@@ -333,8 +346,8 @@ export default async function GuideDetailPage({
                 </h2>
                 <p className="mb-5 text-gray-400">
                   {locale === "es"
-                    ? "Con los precios de esta guía: elegí el espacio, los metros y el acabado."
-                    : "Using the prices in this guide: pick the space, the area and the finish."}
+                    ? "Elegí el espacio, los metros y el acabado."
+                    : "Pick the space, the area and the finish."}
                 </p>
                 <FloorCalculator locale={locale} refTag={guide.slug} />
                 <Link href={`/${locale}/resina-epoxica-para-pisos`} className="mt-4 inline-block text-sm text-amber-400 hover:text-amber-300">

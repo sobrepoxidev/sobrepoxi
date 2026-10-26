@@ -298,6 +298,13 @@ export default async function SanJoseEpoxyPage({ params }: { params: tParams }) 
                 <MapPin className="h-4 w-4 text-amber-400" />
                 {locale === "es" ? "Taller en Coronado" : "Workshop in Coronado"}
               </span>
+              <Link
+                href={`/${locale}/resina-epoxica-para-pisos#calculadora`}
+                className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 transition-colors"
+              >
+                <ArrowRight className="h-4 w-4" />
+                {locale === "es" ? "Calculá tu precio por m²" : "Estimate your price per m²"}
+              </Link>
             </div>
 
             {/* CTAs */}

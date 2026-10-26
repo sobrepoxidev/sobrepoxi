@@ -524,13 +524,24 @@ export default async function IndustrialEpoxyFlooringPage(
               ? "¿Quieres aprender más sobre pisos industriales?"
               : "Want to learn more about industrial floors?"}
           </p>
-          <Link
-            href={`/${locale}/guias`}
-            className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-medium transition-colors"
-          >
-            {locale === "es" ? "Explora nuestras guías completas" : "Explore our complete guides"}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="flex flex-col items-center gap-3">
+            <Link
+              href={`/${locale}/guias`}
+              className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-medium transition-colors"
+            >
+              {locale === "es" ? "Explora nuestras guías completas" : "Explore our complete guides"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href={`/${locale}/resina-epoxica-para-pisos#calculadora`}
+              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-amber-300 transition-colors"
+            >
+              {locale === "es"
+                ? "Calculá el rango por m² de tu piso epóxico"
+                : "Estimate the per-m² range for your epoxy floor"}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
 
