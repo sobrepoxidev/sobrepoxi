@@ -117,7 +117,7 @@ export default function NavbarSearchArea({
           )}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-gold-gradient inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+          className="bg-gold-gradient inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-black transition-opacity hover:opacity-90 sm:min-h-9"
         >
           {locale === 'es' ? 'Cotizar' : 'Get a quote'}
           <ArrowRight className="h-4 w-4" />
