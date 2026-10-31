@@ -277,12 +277,12 @@ export default function CartPage() {
                   <div className="flex flex-wrap gap-1 mt-1">
 
                     {product.brand && (
-                      <span className="inline-flex items-center text-xs px-2 py-0.5 gold-gradient rounded-full border border-[#d2a857]">
+                      <span className="inline-flex items-center text-xs px-2 py-0.5 gold-gradient rounded-full border border-gold-600">
                         {product.brand}
                       </span>
                     )}
                     {stockWarnings[product.id] && (
-                      <span className="inline-flex items-center text-xs px-2 py-0.5 gold-gradient rounded-full border border-[#d2a857]">
+                      <span className="inline-flex items-center text-xs px-2 py-0.5 gold-gradient rounded-full border border-gold-600">
                         <AlertTriangle className="h-3 w-3 mr-1" />
                         {stockWarnings[product.id]}
                       </span>
@@ -476,7 +476,7 @@ export default function CartPage() {
                 <p className="text-red-500 text-sm mt-2">{discountError}</p>
               )}
               {discountInfo && (
-                <div className="mt-2 p-2 bg-[#303030] border border-[#d2a857] rounded-md">
+                <div className="mt-2 p-2 bg-[#303030] border border-gold-600 rounded-md">
                   <p className="gold-gradient text-sm font-bold">{locale === 'es' ? 'Código aplicado correctamente!' : 'Discount applied successfully!'}</p>
                   {discountInfo.description && (
                     <p className="text-sm text-gray-300">{discountInfo.description}</p>

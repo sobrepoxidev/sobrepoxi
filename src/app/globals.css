@@ -68,247 +68,156 @@ body {
 }
 
 /* ============================================================
-   EFECTO DORADO (gradiente + destello brillante opcional)
+   SISTEMA DE ORO · SobrePoxi
+   Todo el oro del sitio sale de la escala de abajo: texto,
+   superficies e iconos. Cambiar el metal = cambiar la escala.
    ============================================================ */
 
-/* 1️⃣  Keyframes del destello que recorre el texto */
-@keyframes shine {
-  0%,100% { background-position: -200% 0; }
-  50%     { background-position:  200% 0; }
+@theme {
+  /* Sombras cálidas (ámbar → marrón). El gris y el oliva son lo que
+     hace que un dorado parezca plástico. */
+  --color-gold-50: #fffbef;
+  --color-gold-100: #fff4cf;
+  --color-gold-200: #ffe7a8;
+  --color-gold-300: #f8d883;
+  --color-gold-400: #ebc265;
+  --color-gold-500: #d9a63c;
+  --color-gold-600: #bd8626;
+  --color-gold-700: #99671a;
+  --color-gold-800: #734c12;
+  --color-gold-900: #4e330b;
 }
 
-/* 2️⃣  Utilidades en la capa `utilities` para que
-       tengan la misma prioridad que las clases Tailwind */
+/* Destello que recorre el metal (primera capa de .animate-shine).
+   Con esa capa al 200% de ancho, 100% → 0% barre la banda especular de
+   izquierda a derecha sin salirse del texto. */
+@keyframes shine {
+  from { background-position: 100% 0, 0 0, 0 0; }
+  to   { background-position:   0% 0, 0 0, 0 0; }
+}
+
+/* Utilidades en `@layer utilities` para que tengan la misma
+   prioridad que las clases de Tailwind. */
 @layer utilities {
 
-  /* --- Gradiente dorado reutilizable ---------------------- */
-  .gold-gradient {
-    background: linear-gradient(
-      90deg,            /* de izquierda a derecha */
-      #997326 0%,       /* dorado oscuro */
-      #d2a857 25%,      /* dorado medio */
-      #857f58 50%,      /* brillo casi blanco */
-      #d2a857 75%,      /* vuelta a dorado medio */
-      #997326 100%      /* dorado oscuro */
-    );
-    /* “Pinta” solo las letras */
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent; /* Safari/Chrome */
-    color: transparent;                   /* fallback estándar */
-    background-size: 300% 100%;           /* suaviza la animación */
-  }
+  /* ─── Oro en texto ────────────────────────────────────────
+     Cómo se consigue metal de verdad:
+       · rampa de nueve tonos cálidos que se difuminan (nunca gris/oliva),
+       · brillo radial suave arriba-izquierda (la luz cae sobre el metal),
+       · rumbo 100% vertical: cualquier rampa inclinada ilumina un lado del
+         texto y oscurece el otro, que es justo lo que se notaba antes,
+       · `background-size: 100% 1lh` + `repeat-y`: la rampa mide una línea,
+         así cada renglón recibe la misma luz en vez de apagarse el último.
 
-  /* Variante más brillante para texto sobre fondos oscuros */
+     Nota histórica: estaba en `background-size: 300%`, así que cada texto
+     mostraba un trozo distinto de la rampa y el mismo oro parecía distinto
+     en cada pantalla. */
+  .gold-gradient,
   .gold-gradient-bright {
-    background: linear-gradient(
-      90deg,
-      #b98a2c 0%,     /* dorado más claro */
-      #ffca52 25%,    /* dorado vivo */
-      #fff2c4 50%,    /* casi blanco */
-      #ffca52 75%,    /* retorno dorado vivo */
-      #b98a2c 100%
-    );
+    background-repeat: no-repeat, repeat-y;
+    /* Si el navegador no entiende `lh`, cae al tamaño por defecto (= caja),
+       que sigue siendo una rampa vertical correcta. */
+    background-size: 100% 100%, 100% 1lh;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    background-size: 300% 100%;
+  }
+
+  /* Titulares y acentos grandes: especular alto y caída a oro profundo. */
+  .gold-gradient-bright {
+    background-image:
+      radial-gradient(90% 90% at 26% 0%, rgb(255 255 255 / 0.6) 0%, rgb(255 255 255 / 0) 62%),
+      linear-gradient(180deg,
+        #e2b552 0%, #f6d98c 12%, #fff3c9 26%, #fffbe8 34%,
+        #fbe7a6 46%, #efc761 60%, #e0b04a 76%, #cf9a33 90%, #c8902c 100%);
+  }
+
+  /* Textos chicos, chips y el wordmark: mismo metal con menos recorrido,
+     para que a 12 px no se lea marrón. */
+  .gold-gradient {
+    background-image:
+      radial-gradient(85% 85% at 22% 0%, rgb(255 255 255 / 0.45) 0%, rgb(255 255 255 / 0) 58%),
+      linear-gradient(180deg,
+        #e2b552 0%, #f8dd94 18%, #ffeeb4 34%, #f6d98c 50%,
+        #e8bd5a 66%, #d9a63c 82%, #cf9a33 100%);
   }
 
   /* ----- Utilidades de color para iconos ----- */
+  /* Hex literal, no `var(--color-gold-*)`: Tailwind sólo emite los tokens
+     de la escala que algún utility usa, y estas clases no dependen de eso. */
   .icon-gold {
-    color: #d4af37; /* oro estándar */
+    color: #d9a63c;
   }
 
   .icon-gold-bright {
-    color: #ffca52; /* oro más luminoso */
+    color: #f8d883;
   }
 
+  /* ─── Oro en superficies (botones, barras) ────────────────
+     Barra vertical, no horizontal: una superficie metálica se lee por
+     el brillo del borde superior y la sombra cálida del inferior. La
+     rampa horizontal anterior dejaba el botón oscuro a la izquierda y
+     claro a la derecha, como si la luz entrara de costado. */
   .bg-gold-gradient {
-    background: linear-gradient(
-      90deg,
-      #997326 0%,
-      #d2a857 25%,
-      #fcefa6 50%,
-      #d2a857 75%,
-      #997326 100%
-    );
+    background-image:
+      /* filo superior de 1 px: el brillo de un borde mecanizado. Va
+         dibujado en el degradado (no con box-shadow) para no pelear
+         con los hover:shadow-* que ya usan los botones. */
+      linear-gradient(180deg, rgb(255 255 255 / 0.6) 0, rgb(255 255 255 / 0) 2px),
+      radial-gradient(120% 100% at 30% -30%, rgb(255 255 255 / 0.62) 0%, rgb(255 255 255 / 0) 55%),
+      linear-gradient(172deg, #ffeeb4 0%, #f8dd94 16%, #efc761 40%, #e0b04a 68%, #cf9a33 88%, #c8902c 100%);
   }
 
-  .bg-gold-gradient-5 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.05) 0%,
-      rgba(210, 168, 87, 0.05) 25%,
-      rgba(252, 239, 166, 0.05) 50%,
-      rgba(210, 168, 87, 0.05) 75%,
-      rgba(153, 115, 38, 0.05) 100%
-    );
+  /* Variante brillante para fondos #121212 */
+  .bg-gold-gradient-bright {
+    background-image:
+      linear-gradient(180deg, rgb(255 255 255 / 0.7) 0, rgb(255 255 255 / 0) 2px),
+      radial-gradient(120% 100% at 30% -25%, rgb(255 255 255 / 0.7) 0%, rgb(255 255 255 / 0) 58%),
+      linear-gradient(172deg, #fff6d6 0%, #ffeeb4 18%, #f6d98c 42%, #e8bd5a 70%, #d9a63c 90%, #cf9a33 100%);
   }
 
-  .bg-gold-gradient-10 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.1) 0%,
-      rgba(210, 168, 87, 0.1) 25%,
-      rgba(252, 239, 166, 0.1) 50%,
-      rgba(210, 168, 87, 0.1) 75%,
-      rgba(153, 115, 38, 0.1) 100%
-    );
-  }
-
-  .bg-gold-gradient-20 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.2) 0%,
-      rgba(210, 168, 87, 0.2) 25%,
-      rgba(251, 230, 112, 0.2) 50%,
-      rgba(210, 168, 87, 0.2) 75%,
-      rgba(153, 115, 38, 0.2) 100%
-    );
-  }
-
-  .bg-gold-gradient-25 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.25) 0%,
-      rgba(210, 168, 87, 0.25) 25%,
-      rgba(252, 239, 166, 0.25) 50%,
-      rgba(210, 168, 87, 0.25) 75%,
-      rgba(153, 115, 38, 0.25) 100%
-    );
-  }
-
-  .bg-gold-gradient-30 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.3) 0%,
-      rgba(210, 168, 87, 0.3) 25%,
-      rgba(252, 239, 166, 0.3) 50%,
-      rgba(210, 168, 87, 0.3) 75%,
-      rgba(153, 115, 38, 0.3) 100%
-    );
-  }
-
-  .bg-gold-gradient-40 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.4) 0%,
-      rgba(210, 168, 87, 0.4) 25%,
-      rgba(252, 239, 166, 0.4) 50%,
-      rgba(210, 168, 87, 0.4) 75%,
-      rgba(153, 115, 38, 0.4) 100%
-    );
-  }
-
-  .bg-gold-gradient-50 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.5) 0%,
-      rgba(210, 168, 87, 0.5) 25%,
-      rgba(252, 239, 166, 0.5) 50%,
-      rgba(210, 168, 87, 0.5) 75%,
-      rgba(153, 115, 38, 0.5) 100%
-    );
-  }
-
-  .bg-gold-gradient-60 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.6) 0%,
-      rgba(210, 168, 87, 0.6) 25%,
-      rgba(252, 239, 166, 0.6) 50%,
-      rgba(210, 168, 87, 0.6) 75%,
-      rgba(153, 115, 38, 0.6) 100%
-    );
-  }
-
-  .bg-gold-gradient-70 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.7) 0%,
-      rgba(210, 168, 87, 0.7) 25%,
-      rgba(252, 239, 166, 0.7) 50%,
-      rgba(210, 168, 87, 0.7) 75%,
-      rgba(153, 115, 38, 0.7) 100%
-    );
-  }
-
-  .bg-gold-gradient-75 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.75) 0%,
-      rgba(210, 168, 87, 0.75) 25%,
-      rgba(252, 239, 166, 0.75) 50%,
-      rgba(210, 168, 87, 0.75) 75%,
-      rgba(153, 115, 38, 0.75) 100%
-    );
-  }
-
-  .bg-gold-gradient-80 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.8) 0%,
-      rgba(210, 168, 87, 0.8) 25%,
-      rgba(252, 239, 166, 0.8) 50%,
-      rgba(210, 168, 87, 0.8) 75%,
-      rgba(153, 115, 38, 0.8) 100%
-    );
-  }
-
-  .bg-gold-gradient-90 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.9) 0%,
-      rgba(210, 168, 87, 0.9) 25%,
-      rgba(252, 239, 166, 0.9) 50%,
-      rgba(210, 168, 87, 0.9) 75%,
-      rgba(153, 115, 38, 0.9) 100%
-    );
-  }
-
-  .bg-gold-gradient-95 {
-    background: linear-gradient(
-      90deg,
-      rgba(153, 115, 38, 0.95) 0%,
-      rgba(210, 168, 87, 0.95) 25%,
-      rgba(252, 239, 166, 0.95) 50%,
-      rgba(210, 168, 87, 0.95) 75%,
-      rgba(153, 115, 38, 0.95) 100%
-    );
-  }
+  /* Lavados translúcidos: misma rampa de oro, un alfa por clase. */
+  .bg-gold-gradient-5 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.05), rgb(235 194 101 / 0.05) 50%, rgb(189 134 38 / 0.05)); }
+  .bg-gold-gradient-10 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.10), rgb(235 194 101 / 0.10) 50%, rgb(189 134 38 / 0.10)); }
+  .bg-gold-gradient-20 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.20), rgb(235 194 101 / 0.20) 50%, rgb(189 134 38 / 0.20)); }
+  .bg-gold-gradient-25 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.25), rgb(235 194 101 / 0.25) 50%, rgb(189 134 38 / 0.25)); }
+  .bg-gold-gradient-30 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.30), rgb(235 194 101 / 0.30) 50%, rgb(189 134 38 / 0.30)); }
+  .bg-gold-gradient-40 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.40), rgb(235 194 101 / 0.40) 50%, rgb(189 134 38 / 0.40)); }
+  .bg-gold-gradient-50 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.50), rgb(235 194 101 / 0.50) 50%, rgb(189 134 38 / 0.50)); }
+  .bg-gold-gradient-60 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.60), rgb(235 194 101 / 0.60) 50%, rgb(189 134 38 / 0.60)); }
+  .bg-gold-gradient-70 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.70), rgb(235 194 101 / 0.70) 50%, rgb(189 134 38 / 0.70)); }
+  .bg-gold-gradient-75 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.75), rgb(235 194 101 / 0.75) 50%, rgb(189 134 38 / 0.75)); }
+  .bg-gold-gradient-80 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.80), rgb(235 194 101 / 0.80) 50%, rgb(189 134 38 / 0.80)); }
+  .bg-gold-gradient-90 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.90), rgb(235 194 101 / 0.90) 50%, rgb(189 134 38 / 0.90)); }
+  .bg-gold-gradient-95 { background-image: linear-gradient(90deg, rgb(189 134 38 / 0.95), rgb(235 194 101 / 0.95) 50%, rgb(189 134 38 / 0.95)); }
 
   /* Fondo dorado totalmente opaco y algo más luminoso */
   .bg-gold-gradient-100 {
-    background: linear-gradient(
-      90deg,
-      #b98a2c 0%,
-      #ffca52 25%,
-      #fff9d6 50%,
-      #ffca52 75%,
-      #b98a2c 100%
-    );
+    background-image:
+      linear-gradient(180deg, rgb(255 255 255 / 0.7) 0, rgb(255 255 255 / 0) 2px),
+      radial-gradient(120% 100% at 30% -25%, rgb(255 255 255 / 0.7) 0%, rgb(255 255 255 / 0) 58%),
+      linear-gradient(172deg, #fff6d6 0%, #ffeeb4 18%, #f6d98c 42%, #e8bd5a 70%, #d9a63c 90%, #cf9a33 100%);
   }
 
-  /* Variante brillante con contraste para #121212 */
-  .bg-gold-gradient-bright {
-    background: linear-gradient(
-      90deg,
-      #c4962d 0%,
-      #ffd86a 25%,
-      #fff7e1 50%,
-      #ffd86a 75%,
-      #c4962d 100%
-    );
-  }
-
-  /* Alias al 100 % – equivale a bg-gold-gradient */
-
-
-  /* --- Animación opcional -------------------------------- */
+  /* ─── Destello opcional ───────────────────────────────────
+     Repite el metal de .gold-gradient y le suma una banda especular
+     que lo recorre de izquierda a derecha. Va al final de la capa para
+     ganar el empate de especificidad cuando se combinan las clases. */
   .animate-shine {
-    animation: shine 3s linear infinite;
+    background-image:
+      linear-gradient(100deg, rgb(255 255 255 / 0) 41%, rgb(255 255 255 / 0.85) 50%, rgb(255 255 255 / 0) 59%),
+      radial-gradient(85% 85% at 22% 0%, rgb(255 255 255 / 0.45) 0%, rgb(255 255 255 / 0) 58%),
+      linear-gradient(180deg,
+        #e2b552 0%, #f8dd94 18%, #ffeeb4 34%, #f6d98c 50%,
+        #e8bd5a 66%, #d9a63c 82%, #cf9a33 100%);
+    background-repeat: no-repeat, no-repeat, repeat-y;
+    background-size: 200% 100%, 100% 100%, 100% 1lh;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shine 4.5s cubic-bezier(0.45, 0, 0.25, 1) infinite;
   }
 }
 

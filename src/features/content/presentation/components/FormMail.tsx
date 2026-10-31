@@ -30,7 +30,7 @@ export default function FormMail() {
               required
               placeholder={locale === "es" ? "Tu nombre" : "Your name"}
               className="w-full p-3 border border-gray-200 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
@@ -46,7 +46,7 @@ export default function FormMail() {
               required
               placeholder="tu@email.com"
               className="w-full p-3 border border-gray-200 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
@@ -61,7 +61,7 @@ export default function FormMail() {
               name="phone"
               placeholder="+52 XXX XXX XXXX"
               className="w-full p-3 border border-gray-200 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent
                        transition-all text-sm md:text-base"
               disabled={isPending}
             />
@@ -77,7 +77,7 @@ export default function FormMail() {
               rows={4}
               placeholder={locale === "es" ? "¿Cómo podemos ayudarte?" : "How can we help you?"}
               className="w-full p-3 border border-gray-200 rounded-lg 
-                       focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent
                        transition-all resize-y min-h-24 text-sm md:text-base"
               disabled={isPending }
             />

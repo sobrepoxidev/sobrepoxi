@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Footer({ locale }: { locale: string }) {
   return (
-    <footer className="bg-[#000000] text-white py-2 px-4 border-t-4 border-[#d4af37]">
+    <footer className="bg-[#000000] text-white py-2 px-4 border-t-4 border-gold-500">
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo y descripción */}
@@ -37,27 +37,27 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <a
                   href="mailto:info@sobrepoxi.com"
-                  className="flex items-center text-gray-300 hover:text-[#d4af37] transition-colors"
+                  className="flex items-center text-gray-300 hover:text-gold-500 transition-colors"
                 >
-                  <Mail className="w-5 h-5 mr-2 text-[#d4af37]" />
+                  <Mail className="w-5 h-5 mr-2 text-gold-500" />
                   info@sobrepoxi.com
                 </a>
               </li>
               <li>
                 <a
                   href="tel:+50685850000"
-                  className="flex items-center text-gray-300 hover:text-[#d4af37] transition-colors"
+                  className="flex items-center text-gray-300 hover:text-gold-500 transition-colors"
                 >
-                  <Phone className="w-5 h-5 mr-2 text-[#d4af37]" />
+                  <Phone className="w-5 h-5 mr-2 text-gold-500" />
                   (+506) 8585-0000
                 </a>
               </li>
               <li>
                 <a
                   href="tel:+50688757576"
-                  className="flex items-center text-gray-300 hover:text-[#d4af37] transition-colors"
+                  className="flex items-center text-gray-300 hover:text-gold-500 transition-colors"
                 >
-                  <Phone className="w-5 h-5 mr-2 text-[#d4af37]" />
+                  <Phone className="w-5 h-5 mr-2 text-gold-500" />
                   (+506) 8875-7576
                 </a>
               </li>
@@ -163,7 +163,7 @@ export default function Footer({ locale }: { locale: string }) {
             {/* Dirección de la empresa */}
             <div className="mt-6 pt-4 border-t border-gray-700">
               <div className="flex items-start text-gray-300 text-sm">
-                <MapPin className="w-4 h-4 mr-2 text-[#d4af37] mt-0.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 mr-2 text-gold-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="leading-relaxed">
                     Centro Comercial Velasuma,<br />
@@ -189,7 +189,7 @@ export default function Footer({ locale }: { locale: string }) {
               href="https://www.aisolutionscr.tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-[#d4af37] transition-colors"
+              className="text-gray-300 hover:text-gold-500 transition-colors"
             >
               AI Solutions
             </a>
