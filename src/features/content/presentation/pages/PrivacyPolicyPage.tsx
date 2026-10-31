@@ -25,7 +25,7 @@ export default async function PoliticaPrivacidadPage({ params }: { params: tPara
           </p>
         </div>
 
-        <div className="px-6 py-8 prose prose-gray max-w-none text-gray-200 leading-relaxed">
+        <div className="px-6 py-8 text-gray-200 leading-relaxed">
           <div className="mb-12">
             <p className="text-lg font-medium">
               {locale === "es" ? "En SobrePoxi, respetamos su privacidad y nos comprometemos a proteger los datos personales que nos proporciona. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos su información cuando utiliza nuestro sitio web, solicita cotizaciones, realiza compras o contrata nuestros servicios de muebles con resina epóxica y pisos epóxicos." : "At SobrePoxi, we respect your privacy and we commit to protecting the personal data you provide. This Privacy Policy describes how we collect, use and protect your information when you use our website, request quotes, make purchases or hire our epoxy resin furniture and epoxy flooring services."}

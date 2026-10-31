@@ -367,15 +367,21 @@ export default async function GuideDetailPage({
                 <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
                   {section.heading}
                 </h2>
+                {/* Article body. Written with explicit utilities instead of
+                    `prose`: @tailwindcss/typography is not installed, so every
+                    prose-* class here compiled to nothing and the section text
+                    fell back to inheriting body's color. */}
                 <div
-                  className="prose prose-invert prose-amber max-w-none
-                    prose-p:text-gray-300 prose-p:leading-relaxed
-                    prose-li:text-gray-300
-                    prose-strong:text-white
-                    prose-h3:text-lg prose-h3:font-semibold prose-h3:text-white prose-h3:mt-6 prose-h3:mb-2
-                    prose-ul:space-y-1 prose-ol:space-y-1
-                    prose-table:border-gray-700 prose-th:bg-gray-800 prose-th:text-white prose-th:px-3 prose-th:py-2
-                    prose-td:border-gray-700 prose-td:px-3 prose-td:py-2 prose-td:text-gray-300"
+                  className="text-gray-300 leading-relaxed
+                    [&_p]:mb-4
+                    [&_strong]:font-semibold [&_strong]:text-white
+                    [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white
+                    [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5
+                    [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-5
+                    [&_table]:my-6 [&_table]:w-full [&_table]:border-collapse [&_table]:text-sm
+                    [&_th]:border [&_th]:border-gray-700 [&_th]:bg-gray-800 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-white
+                    [&_td]:border [&_td]:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_td]:text-gray-300
+                    [&>*:last-child]:mb-0"
                   dangerouslySetInnerHTML={{ __html: section.content }}
                 />
               </section>

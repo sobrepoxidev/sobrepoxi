@@ -25,7 +25,7 @@ export default async function TerminosCondicionesPage({ params }: { params: tPar
           </p>
         </div>
 
-        <div className="px-6 py-8 prose prose-gray max-w-none text-gray-200 leading-relaxed">
+        <div className="px-6 py-8 text-gray-200 leading-relaxed">
           <div className="mb-12">
             <p className="text-lg font-medium">
               {locale === "es" ? `Bienvenido a SobrePoxi. Estos Términos y Condiciones ("Términos") constituyen un acuerdo legal entre usted y SobrePoxi para la prestación de nuestros servicios de diseño, fabricación e instalación de muebles con resina epóxica y pisos epóxicos. Lea detenidamente estos Términos antes de contratar nuestros servicios.` : "Welcome to SobrePoxi. These Terms and Conditions (&ldquo;Terms&rdquo;) constitute a legal agreement between you and SobrePoxi for the provision of our design, manufacturing and installation services for epoxy resin furniture and epoxy floors. Read these Terms carefully before hiring our services."}
