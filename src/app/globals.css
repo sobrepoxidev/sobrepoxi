@@ -86,6 +86,16 @@ body {
   --color-gold-700: #99671a;
   --color-gold-800: #734c12;
   --color-gold-900: #4e330b;
+
+  /* Un solo oro en el sitio: `amber-*` era el acento que usaban ~430 clases
+     (chips, iconos, focus rings) y quedaba al lado del metal como un dorado
+     distinto. Se remapea a la misma escala conservando el orden de claridad. */
+  --color-amber-200: #ffe7a8;
+  --color-amber-300: #f8d883;
+  --color-amber-400: #ebc265;
+  --color-amber-500: #d9a63c;
+  --color-amber-600: #bd8626;
+  --color-amber-900: #734c12;
 }
 
 /* Destello que recorre el metal (primera capa de .animate-shine).

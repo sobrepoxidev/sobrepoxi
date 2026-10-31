@@ -21,7 +21,7 @@ export default function ScrollToTopButton() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-1 right-8 z-50 bg-amber-500 text-white px-2 py-1 rounded-full shadow-lg hover:bg-amber-600 transition hidden md:block animate-fade-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
+      className="fixed bottom-1 right-8 z-50 bg-amber-500 text-black px-2 py-1 rounded-full shadow-lg hover:bg-amber-600 transition hidden md:block animate-fade-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
       aria-label={locale === 'es' ? 'Volver arriba' : 'Scroll to top'}
       tabIndex={0}
     >

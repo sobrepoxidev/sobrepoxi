@@ -325,7 +325,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
           
           <button
             onClick={() => fetchProducts()}
-            className="flex items-center justify-center px-3 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+            className="flex items-center justify-center px-3 py-2 bg-amber-500 text-black rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
             disabled={loading}
           >
             <RefreshCw className={`h-5 w-5 mr-1 ${loading ? 'animate-spin' : ''}`} />
@@ -473,7 +473,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                                   />
                                 </div>
                                 <button 
-                                  className="px-3 py-2 ml-1 bg-amber-500 hover:bg-amber-400 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                                  className="px-3 py-2 ml-1 bg-amber-500 hover:bg-amber-400 text-black text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                                   onClick={async (e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
@@ -698,7 +698,7 @@ export function AdminDashboard({ locale }: { locale: string }) {
                         />
                       </div>
                       <button 
-                        className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-white text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
+                        className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-black text-sm font-medium rounded-r transition-colors duration-200 flex items-center justify-center"
                         onClick={async (e) => {
                           e.stopPropagation();
                           if (product.colon_price !== null) {

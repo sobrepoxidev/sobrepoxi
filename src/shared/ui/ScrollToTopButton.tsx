@@ -21,7 +21,7 @@ export default function ScrollToTopButton() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-1 right-8 z-50 bg-amber-500 text-white px-2 py-1 rounded-full shadow-lg hover:bg-amber-600 transition hidden md:block animate-fade-in"
+      className="fixed bottom-1 right-8 z-50 bg-amber-500 text-black px-2 py-1 rounded-full shadow-lg hover:bg-amber-600 transition hidden md:block animate-fade-in"
       aria-label="Volver arriba"
       tabIndex={0}
     >

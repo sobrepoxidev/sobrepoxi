@@ -65,25 +65,28 @@ export default async function Navbar({ locale }: { locale: string }) {
                 unoptimized
               />
               </div> */}
-              <Image
-                src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
-                width={51}
-                height={43}
-                className="w-[51px] h-[43px] md:w-[57px] md:h-[48px] object-contain ml-1.5"
-                priority
-                unoptimized
-              />
+              {/* El render 3D trae el wordmark rasterizado: a 51 px se volvía
+                  una mancha. Se usa sólo como emblema (recorte a la cubeta) y el
+                  nombre va en texto con el oro del sitio, que sí escala nítido. */}
+              <div className="relative h-[34px] w-[34px] shrink-0 overflow-hidden">
+                <Image
+                  src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                  alt=""
+                  width={1000}
+                  height={849}
+                  sizes="83px"
+                  className="absolute left-[-46px] top-[3px] h-auto w-[83px] max-w-none"
+                  priority
+                />
+              </div>
 
               <span
                 className="
                   flex items-center gap-0
-                  text-lg md:text-3xl font-extrabold tracking-wider
-                  gold-gradient-bright
+                  text-[20px] font-extrabold tracking-wider
+                  gold-gradient
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
-                  motion-safe:animate-shine sr-only"
-
-
+                  motion-safe:animate-shine"
               >
                 SobrePoxi
               </span>

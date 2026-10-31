@@ -122,24 +122,28 @@ export default function NavbarClient({ locale, session: initialSession }: { loca
             >
               {isMenuOpen ? <X className="h-5 w-5 text-white" /> : <Menu className="h-5 w-5 text-white" />}
             </button>
-            <Link href="/" target='_self' className="flex items-center gap-2">
-              <Image
-                              src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
-                              alt={locale === 'es' ? "Logo SobrePoxi - Muebles de lujo y pisos epóxicos Costa Rica" : "SobrePoxi Logo - Luxury furniture and epoxy floors Costa Rica"}
-                              width={66}
-                              height={56}
-                              className="w-[66px] h-[56px] object-contain ml-1.5"
-                              priority
-                              unoptimized
-                            />
+            <Link href="/" target='_self' className="flex items-center gap-2" aria-label={locale === 'es' ? 'SobrePoxi - Inicio' : 'SobrePoxi - Home'}>
+              {/* Igual que en mobile: el render 3D trae el wordmark rasterizado,
+                  así que aporta sólo el emblema (recorte a la cubeta) y el
+                  nombre va en texto con el oro del sitio. */}
+              <div className="relative h-[46px] w-[46px] shrink-0 overflow-hidden">
+                <Image
+                  src="https://jhrrachvacurxgotsvbf.supabase.co/storage/v1/object/public/products/blob-mirror/public/logo_sobrepoxi-bU2or8H7kNX2ViS8sklfTK4Nk7BENo.webp"
+                  alt=""
+                  width={1000}
+                  height={849}
+                  sizes="112px"
+                  className="absolute left-[-62px] top-[4px] h-auto w-[112px] max-w-none"
+                  priority
+                />
+              </div>
               <span
                 className="
                   flex items-center gap-0
-                  text-md md:text-3xl font-extrabold tracking-wider
+                  text-[26px] font-extrabold tracking-wider
                   gold-gradient
                   drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]
-                  motion-safe:animate-shine
-                  sr-only"
+                  motion-safe:animate-shine"
               >
                 SobrePoxi
               </span>
